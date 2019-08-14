@@ -369,6 +369,15 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
+			getWorkflowMetricsSLADefinitions(long companyId, int status) {
+
+		return _workflowMetricsSLADefinitionLocalService.
+			getWorkflowMetricsSLADefinitions(companyId, status);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(long companyId, long processId) {
 
 		return _workflowMetricsSLADefinitionLocalService.

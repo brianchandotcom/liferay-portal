@@ -2097,6 +2097,575 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_C_P_PROCESSID_2 =
 		"workflowMetricsSLADefinition.processId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_S;
+	private FinderPath _finderPathCountByC_S;
+
+	/**
+	 * Returns all the workflow metrics sla definitions where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching workflow metrics sla definitions
+	 */
+	@Override
+	public List<WorkflowMetricsSLADefinition> findByC_S(
+		long companyId, int status) {
+
+		return findByC_S(
+			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the workflow metrics sla definitions where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @return the range of matching workflow metrics sla definitions
+	 */
+	@Override
+	public List<WorkflowMetricsSLADefinition> findByC_S(
+		long companyId, int status, int start, int end) {
+
+		return findByC_S(companyId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	@Override
+	public List<WorkflowMetricsSLADefinition> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		return findByC_S(
+			companyId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the workflow metrics sla definitions where companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of workflow metrics sla definitions
+	 * @param end the upper bound of the range of workflow metrics sla definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching workflow metrics sla definitions
+	 */
+	@Override
+	public List<WorkflowMetricsSLADefinition> findByC_S(
+		long companyId, int status, int start, int end,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S;
+				finderArgs = new Object[] {companyId, status};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_S;
+			finderArgs = new Object[] {
+				companyId, status, start, end, orderByComparator
+			};
+		}
+
+		List<WorkflowMetricsSLADefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<WorkflowMetricsSLADefinition>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
+						list) {
+
+					if ((companyId !=
+							workflowMetricsSLADefinition.getCompanyId()) ||
+						(status != workflowMetricsSLADefinition.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(
+					WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<WorkflowMetricsSLADefinition>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception e) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	@Override
+	public WorkflowMetricsSLADefinition findByC_S_First(
+			long companyId, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws NoSuchSLADefinitionException {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			fetchByC_S_First(companyId, status, orderByComparator);
+
+		if (workflowMetricsSLADefinition != null) {
+			return workflowMetricsSLADefinition;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchSLADefinitionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	@Override
+	public WorkflowMetricsSLADefinition fetchByC_S_First(
+		long companyId, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		List<WorkflowMetricsSLADefinition> list = findByC_S(
+			companyId, status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a matching workflow metrics sla definition could not be found
+	 */
+	@Override
+	public WorkflowMetricsSLADefinition findByC_S_Last(
+			long companyId, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws NoSuchSLADefinitionException {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			fetchByC_S_Last(companyId, status, orderByComparator);
+
+		if (workflowMetricsSLADefinition != null) {
+			return workflowMetricsSLADefinition;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append("}");
+
+		throw new NoSuchSLADefinitionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow metrics sla definition, or <code>null</code> if a matching workflow metrics sla definition could not be found
+	 */
+	@Override
+	public WorkflowMetricsSLADefinition fetchByC_S_Last(
+		long companyId, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
+
+		int count = countByC_S(companyId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<WorkflowMetricsSLADefinition> list = findByC_S(
+			companyId, status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the workflow metrics sla definitions before and after the current workflow metrics sla definition in the ordered set where companyId = &#63; and status = &#63;.
+	 *
+	 * @param workflowMetricsSLADefinitionId the primary key of the current workflow metrics sla definition
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next workflow metrics sla definition
+	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
+	 */
+	@Override
+	public WorkflowMetricsSLADefinition[] findByC_S_PrevAndNext(
+			long workflowMetricsSLADefinitionId, long companyId, int status,
+			OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator)
+		throws NoSuchSLADefinitionException {
+
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+			findByPrimaryKey(workflowMetricsSLADefinitionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			WorkflowMetricsSLADefinition[] array =
+				new WorkflowMetricsSLADefinitionImpl[3];
+
+			array[0] = getByC_S_PrevAndNext(
+				session, workflowMetricsSLADefinition, companyId, status,
+				orderByComparator, true);
+
+			array[1] = workflowMetricsSLADefinition;
+
+			array[2] = getByC_S_PrevAndNext(
+				session, workflowMetricsSLADefinition, companyId, status,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected WorkflowMetricsSLADefinition getByC_S_PrevAndNext(
+		Session session,
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+		long companyId, int status,
+		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator,
+		boolean previous) {
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						workflowMetricsSLADefinition)) {
+
+				qPos.add(orderByConditionValue);
+			}
+		}
+
+		List<WorkflowMetricsSLADefinition> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the workflow metrics sla definitions where companyId = &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByC_S(long companyId, int status) {
+		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
+				findByC_S(
+					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(workflowMetricsSLADefinition);
+		}
+	}
+
+	/**
+	 * Returns the number of workflow metrics sla definitions where companyId = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the number of matching workflow metrics sla definitions
+	 */
+	@Override
+	public int countByC_S(long companyId, int status) {
+		FinderPath finderPath = _finderPathCountByC_S;
+
+		Object[] finderArgs = new Object[] {companyId, status};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_S_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 =
+		"workflowMetricsSLADefinition.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_S_STATUS_2 =
+		"workflowMetricsSLADefinition.status = ?";
+
 	private FinderPath _finderPathFetchByC_N_P;
 	private FinderPath _finderPathCountByC_N_P;
 
@@ -4144,6 +4713,15 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 			args = new Object[] {
 				workflowMetricsSLADefinitionModelImpl.getCompanyId(),
+				workflowMetricsSLADefinitionModelImpl.getStatus()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_S, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByC_S, args);
+
+			args = new Object[] {
+				workflowMetricsSLADefinitionModelImpl.getCompanyId(),
 				workflowMetricsSLADefinitionModelImpl.getProcessId(),
 				workflowMetricsSLADefinitionModelImpl.getStatus()
 			};
@@ -4223,6 +4801,30 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				finderCache.removeResult(_finderPathCountByC_P, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByC_P, args);
+			}
+
+			if ((workflowMetricsSLADefinitionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					workflowMetricsSLADefinitionModelImpl.
+						getOriginalCompanyId(),
+					workflowMetricsSLADefinitionModelImpl.getOriginalStatus()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_S, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
+
+				args = new Object[] {
+					workflowMetricsSLADefinitionModelImpl.getCompanyId(),
+					workflowMetricsSLADefinitionModelImpl.getStatus()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_S, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_S, args);
 			}
 
 			if ((workflowMetricsSLADefinitionModelImpl.getColumnBitmask() &
@@ -4672,6 +5274,33 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByC_S = new FinderPath(
+			WorkflowMetricsSLADefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLADefinitionModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLADefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_S = new FinderPath(
+			WorkflowMetricsSLADefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLADefinitionModelImpl.FINDER_CACHE_ENABLED,
+			WorkflowMetricsSLADefinitionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
+			WorkflowMetricsSLADefinitionModelImpl.STATUS_COLUMN_BITMASK |
+			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+
+		_finderPathCountByC_S = new FinderPath(
+			WorkflowMetricsSLADefinitionModelImpl.ENTITY_CACHE_ENABLED,
+			WorkflowMetricsSLADefinitionModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathFetchByC_N_P = new FinderPath(
 			WorkflowMetricsSLADefinitionModelImpl.ENTITY_CACHE_ENABLED,

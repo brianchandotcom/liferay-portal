@@ -338,6 +338,13 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
+			getWorkflowMetricsSLADefinitions(long companyId, int status) {
+
+		return getService().getWorkflowMetricsSLADefinitions(companyId, status);
+	}
+
+	public static java.util.List
+		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
 			getWorkflowMetricsSLADefinitions(long companyId, long processId) {
 
 		return getService().getWorkflowMetricsSLADefinitions(

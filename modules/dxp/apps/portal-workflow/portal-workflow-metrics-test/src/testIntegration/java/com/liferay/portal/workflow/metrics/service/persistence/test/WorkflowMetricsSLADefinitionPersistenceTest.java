@@ -284,6 +284,14 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
+	}
+
+	@Test
 	public void testCountByC_N_P() throws Exception {
 		_persistence.countByC_N_P(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong());

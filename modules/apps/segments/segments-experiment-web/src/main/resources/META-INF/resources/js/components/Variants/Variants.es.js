@@ -16,7 +16,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {segmentsVariantType} from '../../types.es';
+import {SegmentsVariantType} from '../../types.es';
 import VariantList from './internal/VariantList.es';
 import VariantForm from './internal/VariantForm.es';
 
@@ -115,7 +115,7 @@ Variants.propTypes = {
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	variants: PropTypes.arrayOf(segmentsVariantType)
+	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 
 export default Variants;

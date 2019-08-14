@@ -16,7 +16,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ClayTable from '@clayui/table';
 import Variant from './Variant.es';
-import {segmentsVariantType} from '../../../types.es';
+import {SegmentsVariantType} from '../../../types.es';
 
 function VariantList({
 	onVariantDeletion,
@@ -70,7 +70,7 @@ function VariantList({
 VariantList.propTypes = {
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
-	variants: PropTypes.arrayOf(segmentsVariantType)
+	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 
 export default VariantList;

@@ -30,14 +30,14 @@ const SegmentsExperienceType = PropTypes.shape({
 	segmentsExperiment: SegmentsExperimentType
 });
 
-const initialSegmentsVariantType = PropTypes.shape({
+const InitialSegmentsVariantType = PropTypes.shape({
 	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperimentId: PropTypes.string.isRequired,
 	segmentsExperimentRelId: PropTypes.string.isRequired
 });
 
-const segmentsVariantType = PropTypes.shape({
+const SegmentsVariantType = PropTypes.shape({
 	control: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
@@ -51,9 +51,9 @@ const SegmentsExperimentGoal = PropTypes.shape({
 });
 
 export {
-	initialSegmentsVariantType,
+	InitialSegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentGoal,
 	SegmentsExperimentType,
-	segmentsVariantType
+	SegmentsVariantType
 };

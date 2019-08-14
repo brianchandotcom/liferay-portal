@@ -55,15 +55,12 @@ public class DXPVariantUtilTest {
 
 		Assert.assertEquals(
 			segmentsExperimentRel.isControl(), dxpVariant.isControl());
-
 		Assert.assertEquals(
 			segmentsExperimentRel.getSegmentsExperienceKey(),
 			dxpVariant.getDXPVariantId());
-
 		Assert.assertEquals(
 			segmentsExperimentRel.getName(locale),
 			dxpVariant.getDXPVariantName());
-
 		Assert.assertEquals(
 			segmentsExperimentRel.getSplit(), dxpVariant.getTrafficSplit(), 0D);
 	}

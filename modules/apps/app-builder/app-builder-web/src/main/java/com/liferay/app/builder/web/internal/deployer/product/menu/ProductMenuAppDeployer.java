@@ -73,26 +73,26 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void undeploy(long appId) throws Exception {
-		if (_productMenuAppsMap.containsKey(appId)) {
-			AppBuilderApp appBuilderApp =
-				_appBuilderAppLocalService.getAppBuilderApp(appId);
+		List<ServiceRegistration> serviceRegistrations =
+			_productMenuAppsMap.get(appId);
 
-			List<ServiceRegistration> serviceRegistrations =
-				_productMenuAppsMap.get(appBuilderApp.getAppBuilderAppId());
-
-			for (ServiceRegistration serviceRegistration :
-					serviceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-
-			_productMenuAppsMap.remove(appId);
-
-			appBuilderApp.setStatus(
-				AppBuilderAppConstants.Status.UNDEPLOYED.getValue());
-
-			_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
+		if (serviceRegistrations == null) {
+			return;
 		}
+
+		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
+			serviceRegistration.unregister();
+		}
+
+		_productMenuAppsMap.remove(appId);
+
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.getAppBuilderApp(appId);
+
+		appBuilderApp.setStatus(
+			AppBuilderAppConstants.Status.UNDEPLOYED.getValue());
+
+		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
 	private void _addToMap(

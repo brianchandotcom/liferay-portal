@@ -114,7 +114,9 @@ public class CustomServletContextHelper
 
 		URL url = null;
 
-		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED && name.endsWith(".css")) {
+		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED &&
+			(name.endsWith(".css") || name.endsWith(".js"))) {
+
 			String overrideName = name.replace("/META-INF/resources", "");
 
 			File file = new File(_overrideDirName, overrideName);

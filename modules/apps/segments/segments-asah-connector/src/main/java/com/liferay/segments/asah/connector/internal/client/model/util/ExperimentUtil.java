@@ -23,12 +23,13 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.asah.connector.internal.client.model.DXPVariant;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
 import com.liferay.segments.asah.connector.internal.client.model.ExperimentStatus;
 import com.liferay.segments.asah.connector.internal.client.model.Goal;
@@ -40,8 +41,13 @@ import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Sarai Díaz
@@ -52,19 +58,18 @@ public class ExperimentUtil {
 	public static Experiment toExperiment(
 			CompanyLocalService companyLocalService, String dataSourceId,
 			GroupLocalService groupLocalService,
-			LayoutLocalService layoutLocalService, Portal portal,
+			LayoutLocalService layoutLocalService, Locale locale, Portal portal,
 			SegmentsEntryLocalService segmentsEntryLocalService,
 			SegmentsExperienceLocalService segmentsExperienceLocalService,
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
 		return toExperiment(
-			dataSourceId,
-			SegmentsEntryConstants.getDefaultSegmentsEntryName(
-				LocaleUtil.getDefault()),
+			DXPVariantUtil.createControlDXPVariant(locale), dataSourceId,
+			SegmentsEntryConstants.getDefaultSegmentsEntryName(locale),
 			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				LocaleUtil.getDefault()),
-			layoutLocalService,
+				locale),
+			layoutLocalService, locale,
 			_getLayoutFullURL(
 				portal, companyLocalService, groupLocalService,
 				layoutLocalService.getLayout(segmentsExperiment.getClassPK())),
@@ -73,10 +78,11 @@ public class ExperimentUtil {
 	}
 
 	protected static Experiment toExperiment(
-			String dataSourceId, String defaultSegmentsEntryName,
+			DXPVariant controlDXPVariant, String dataSourceId,
+			String defaultSegmentsEntryName,
 			String defaultSegmentsExperienceName,
-			LayoutLocalService layoutLocalService, String pageURL,
-			SegmentsEntryLocalService segmentsEntryLocalService,
+			LayoutLocalService layoutLocalService, Locale locale,
+			String pageURL, SegmentsEntryLocalService segmentsEntryLocalService,
 			SegmentsExperienceLocalService segmentsExperienceLocalService,
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
@@ -92,15 +98,27 @@ public class ExperimentUtil {
 
 		experiment.setDXPLayoutId(layout.getUuid());
 
+		List<SegmentsExperimentRel> segmentsExperimentRels =
+			segmentsExperiment.getSegmentsExperimentRels();
+
+		if (ListUtil.isNotEmpty(segmentsExperimentRels)) {
+			experiment.setDXPVariants(
+				DXPVariantUtil.toDXPVariantList(
+					locale, segmentsExperimentRels));
+		}
+		else {
+			experiment.setDXPVariants(
+				Collections.singletonList(controlDXPVariant));
+		}
+
 		experiment.setExperimentStatus(
 			_toExperimentStatus(segmentsExperiment.getStatus()));
 		experiment.setGoal(_toExperimentGoal(segmentsExperiment));
 		experiment.setId(segmentsExperiment.getSegmentsExperimentKey());
 		experiment.setModifiedDate(segmentsExperiment.getModifiedDate());
 		experiment.setName(segmentsExperiment.getName());
-		experiment.setPageRelativePath(
-			layout.getFriendlyURL(LocaleUtil.getDefault()));
-		experiment.setPageTitle(layout.getTitle(LocaleUtil.getDefault()));
+		experiment.setPageRelativePath(layout.getFriendlyURL(locale));
+		experiment.setPageTitle(layout.getTitle(locale));
 		experiment.setPageURL(pageURL);
 
 		if (segmentsExperiment.getSegmentsExperienceId() ==
@@ -119,16 +137,14 @@ public class ExperimentUtil {
 
 			experiment.setDXPExperienceId(
 				segmentsExperience.getSegmentsExperienceKey());
-			experiment.setDXPExperienceName(
-				segmentsExperience.getName(LocaleUtil.getDefault()));
+			experiment.setDXPExperienceName(segmentsExperience.getName(locale));
 
 			SegmentsEntry segmentsEntry =
 				segmentsEntryLocalService.getSegmentsEntry(
 					segmentsExperience.getSegmentsEntryId());
 
 			experiment.setDXPSegmentId(segmentsEntry.getSegmentsEntryKey());
-			experiment.setDXPSegmentName(
-				segmentsEntry.getName(LocaleUtil.getDefault()));
+			experiment.setDXPSegmentName(segmentsEntry.getName(locale));
 		}
 
 		return experiment;

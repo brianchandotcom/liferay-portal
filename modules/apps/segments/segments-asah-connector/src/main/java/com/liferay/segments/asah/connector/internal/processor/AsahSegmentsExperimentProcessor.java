@@ -18,15 +18,19 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.util.DXPVariantUtil;
 import com.liferay.segments.asah.connector.internal.client.model.util.ExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -72,7 +76,8 @@ public class AsahSegmentsExperimentProcessor {
 		Experiment experiment = _asahFaroBackendClient.addExperiment(
 			ExperimentUtil.toExperiment(
 				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
-				_groupLocalService, _layoutLocalService, _portal,
+				_groupLocalService, _layoutLocalService,
+				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
 				segmentsExperiment));
 
@@ -99,9 +104,34 @@ public class AsahSegmentsExperimentProcessor {
 		_asahFaroBackendClient.updateExperiment(
 			ExperimentUtil.toExperiment(
 				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
-				_groupLocalService, _layoutLocalService, _portal,
+				_groupLocalService, _layoutLocalService,
+				LocaleUtil.getSiteDefault(), _portal,
 				_segmentsEntryLocalService, _segmentsExperienceLocalService,
 				segmentsExperiment));
+	}
+
+	public void processUpdateSegmentsExperimentRel(
+			String segmentsExperimentKey,
+			List<SegmentsExperimentRel> segmentsExperimentRels)
+		throws PortalException {
+
+		if (segmentsExperimentRels == null) {
+			return;
+		}
+
+		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
+			_asahFaroBackendClientFactory.createAsahFaroBackendClient();
+
+		if (!asahFaroBackendClientOptional.isPresent()) {
+			return;
+		}
+
+		_asahFaroBackendClient = asahFaroBackendClientOptional.get();
+
+		_asahFaroBackendClient.updateExperimentDXPVariants(
+			segmentsExperimentKey,
+			DXPVariantUtil.toDXPVariants(
+				LocaleUtil.getSiteDefault(), segmentsExperimentRels));
 	}
 
 	private AsahFaroBackendClient _asahFaroBackendClient;

@@ -45,8 +45,9 @@
 									<#if syndEntry.getPublishedDate()??>
 										<div class="feed-date">
 											<@liferay_ui["icon"]
-												iconCssClass="icon-calendar"
+												icon="calendar"
 												label=true
+												markupView="lexicon"
 												message="${dateUtil.getDate(syndEntry.getPublishedDate(), dateFormat, locale)}"
 											/>
 										</div>

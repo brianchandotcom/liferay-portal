@@ -13,7 +13,6 @@ definition {
 		Page.tearDownCP();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test InstallUninstallApp {
 		var appName = "test-app-portlet";
@@ -25,7 +24,7 @@ definition {
 
 		AppManager.uploadAppCP(
 			appName = "${appName}",
-			warFileName = "${appName}-7.1.0.1.war");
+			warFileName = "${appName}-7.2.0.war");
 
 		AppManager.viewAppCP(
 			appName = "${appName}",

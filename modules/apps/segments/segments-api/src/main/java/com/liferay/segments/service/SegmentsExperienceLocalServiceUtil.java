@@ -341,6 +341,13 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
+		getSegmentsExperiences(long groupId, long classNameId, long classPK) {
+
+		return getService().getSegmentsExperiences(
+			groupId, classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.segments.model.SegmentsExperience>
 			getSegmentsExperiences(
 				long groupId, long classNameId, long classPK, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

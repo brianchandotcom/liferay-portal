@@ -25,7 +25,6 @@
 		<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
 		<%= Arrays.toString(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>,
 		<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>,
-		'<portlet:namespace />',
-		'<%= portletDisplay.getRootPortletId() %>'
+		'<portlet:namespace />'
 	);
 </aui:script>

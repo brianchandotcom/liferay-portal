@@ -102,43 +102,7 @@ public abstract class BaseLiferayResourceProperties
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(endpointHref);
 
-		List<String> parameterNames = parametersTable.columnName.getValue();
-		List<String> parameterTypes = parametersTable.typeColumnName.getValue();
-		List<String> parameterValues =
-			parametersTable.valueColumnName.getValue();
-
-		Stream<String> parameterNamesStream = parameterNames.stream();
-
-		parameterNames = parameterNamesStream.map(
-			name -> name.replace("*", "")
-		).collect(
-			Collectors.toList()
-		);
-
-		for (int i = 0; i < parameterNames.size(); i++) {
-			uriBuilder.resolveTemplate(
-				parameterNames.get(i), parameterValues.get(i));
-		}
-
-		for (int i = 0; i < parameterNames.size(); i++) {
-			String typeString = parameterTypes.get(i);
-
-			if (OASParameter.Type.PATH == OASParameter.Type.valueOf(
-					typeString.toUpperCase())) {
-
-				continue;
-			}
-
-			String parameterValue = parameterValues.get(i);
-
-			if ((parameterValue != null) &&
-				!Objects.equals(parameterValue, "")) {
-
-				uriBuilder.queryParam(parameterNames.get(i), parameterValue);
-			}
-		}
-
-		return uriBuilder.build();
+		return buildEndpointURI(uriBuilder);
 	}
 
 	@Override
@@ -229,6 +193,46 @@ public abstract class BaseLiferayResourceProperties
 	public ParametersTable parametersTable = new ParametersTable(
 		"parametersTable");
 	public ISchemaListener schemaListener;
+
+	protected URI buildEndpointURI(UriBuilder uriBuilder) {
+		List<String> parameterNames = parametersTable.columnName.getValue();
+		List<String> parameterTypes = parametersTable.typeColumnName.getValue();
+		List<String> parameterValues =
+			parametersTable.valueColumnName.getValue();
+
+		Stream<String> parameterNamesStream = parameterNames.stream();
+
+		parameterNames = parameterNamesStream.map(
+			name -> name.replace("*", "")
+		).collect(
+			Collectors.toList()
+		);
+
+		for (int i = 0; i < parameterNames.size(); i++) {
+			uriBuilder.resolveTemplate(
+				parameterNames.get(i), parameterValues.get(i));
+		}
+
+		for (int i = 0; i < parameterNames.size(); i++) {
+			String typeString = parameterTypes.get(i);
+
+			if (OASParameter.Type.PATH == OASParameter.Type.valueOf(
+					typeString.toUpperCase())) {
+
+				continue;
+			}
+
+			String parameterValue = parameterValues.get(i);
+
+			if ((parameterValue != null) &&
+				!Objects.equals(parameterValue, "")) {
+
+				uriBuilder.queryParam(parameterNames.get(i), parameterValue);
+			}
+		}
+
+		return uriBuilder.build();
+	}
 
 	protected abstract ValidationResult doAfterEndpoint(
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,

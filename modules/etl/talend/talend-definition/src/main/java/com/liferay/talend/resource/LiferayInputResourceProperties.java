@@ -16,15 +16,20 @@ package com.liferay.talend.resource;
 
 import com.liferay.talend.LiferayBaseComponentDefinition;
 import com.liferay.talend.common.oas.constants.OASConstants;
+import com.liferay.talend.common.util.StringUtil;
 import com.liferay.talend.properties.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.runtime.ValidatedSoSSandboxRuntime;
 
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.avro.Schema;
 
@@ -39,6 +44,9 @@ import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResultMutable;
+import org.talend.daikon.properties.presentation.Form;
+import org.talend.daikon.properties.property.Property;
+import org.talend.daikon.properties.property.StringProperty;
 
 /**
  * @author Zoltán Takács
@@ -103,6 +111,27 @@ public class LiferayInputResourceProperties
 		return null;
 	}
 
+	public void setupLayout() {
+		super.setupLayout();
+
+		Form referenceForm = getForm(Form.REFERENCE);
+
+		referenceForm.addRow(includeFields);
+		referenceForm.addRow(includeFieldsParameters);
+	}
+
+	public Property<String> includeFields = new StringProperty("includeFields");
+	public Property<String> includeFieldsParameters = new StringProperty(
+		"includeFieldsParameters");
+
+	@Override
+	protected URI buildEndpointURI(UriBuilder uriBuilder) {
+		_addNestedFields(uriBuilder);
+		_addNestedFieldsParameters(uriBuilder);
+
+		return super.buildEndpointURI(uriBuilder);
+	}
+
 	@Override
 	protected ValidationResult doAfterEndpoint(
 		LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime,
@@ -137,6 +166,31 @@ public class LiferayInputResourceProperties
 			liferaySourceOrSinkRuntime, OASConstants.OPERATION_GET);
 
 		return validationResultMutable;
+	}
+
+	private void _addNestedFields(UriBuilder uriBuilder) {
+		String includeFieldsValue = includeFields.getValue();
+
+		if (!StringUtil.isEmpty(includeFieldsValue)) {
+			uriBuilder.queryParam("nestedFields", includeFieldsValue);
+		}
+	}
+
+	private void _addNestedFieldsParameters(UriBuilder uriBuilder) {
+		String includeFieldsParametersValue =
+			includeFieldsParameters.getValue();
+
+		if (!StringUtil.isEmpty(includeFieldsParametersValue)) {
+			String[] includeFieldsParameters =
+				includeFieldsParametersValue.split(",");
+
+			for (String includeFieldsParameter : includeFieldsParameters) {
+				String[] parameterNameValue = includeFieldsParameter.split("=");
+
+				uriBuilder.queryParam(
+					parameterNameValue[0], parameterNameValue[1]);
+			}
+		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

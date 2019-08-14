@@ -243,12 +243,13 @@ definition {
 		var ddlDataDefinitionName = "Data Definition";
 
 		Search.searchCP(searchTerm = "${ddlDataDefinitionName}");
-		
-		if(IsElementNotPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1")){
-				AssertTextEquals(
+
+		if (IsElementNotPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1")) {
+			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No Data Definitions were found.");
-		}else{
+		}
+		else {
 
 			AssertTextNotEquals(
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1",

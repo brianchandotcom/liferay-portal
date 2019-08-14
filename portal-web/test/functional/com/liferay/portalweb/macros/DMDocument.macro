@@ -1267,7 +1267,7 @@ definition {
 			Click(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
 			Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
-			
+
 			MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
 
 			PortletEntry.clickMoveToRecycleBin();

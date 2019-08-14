@@ -122,7 +122,7 @@ exports[`Should render component 1`] = `
         <td
           className="pr-4 text-right"
         >
-          Feb 01, 12:00 AM
+          Feb 01, 2019, 12:00 AM
         </td>
       </tr>
       <tr>
@@ -173,7 +173,7 @@ exports[`Should render component 1`] = `
         <td
           className="pr-4 text-right"
         >
-          Feb 02, 12:00 AM
+          Feb 02, 2019, 12:00 AM
         </td>
       </tr>
       <tr>
@@ -224,7 +224,7 @@ exports[`Should render component 1`] = `
         <td
           className="pr-4 text-right"
         >
-          Feb 03, 12:00 AM
+          Feb 03, 2019, 12:00 AM
         </td>
       </tr>
       <tr>
@@ -256,7 +256,7 @@ exports[`Should render component 1`] = `
         <td
           className="pr-4 text-right"
         >
-          Feb 04, 12:00 AM
+          Feb 04, 2019, 12:00 AM
         </td>
       </tr>
     </tbody>

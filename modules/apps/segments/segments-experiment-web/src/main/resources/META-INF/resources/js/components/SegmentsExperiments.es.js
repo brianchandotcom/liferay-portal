@@ -20,7 +20,7 @@ import ClaySelect from '@clayui/select';
 import ClayDropDown from '@clayui/drop-down';
 import Variants from './Variants/Variants.es';
 import {
-	initialSegmentsVariantType,
+	InitialSegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentType
 } from '../types.es';
@@ -39,7 +39,7 @@ function SegmentsExperiments({
 }) {
 	const [dropdown, setDropdown] = useState(false);
 
-	const _selectedExperienceId = segmentsExperiment
+	const _selectedSegmentsExperienceId = segmentsExperiment
 		? segmentsExperiment.segmentsExperienceId
 		: selectedSegmentsExperienceId;
 
@@ -49,7 +49,7 @@ function SegmentsExperiments({
 				<div className="form-group">
 					<label>{Liferay.Language.get('select-experience')}</label>
 					<ClaySelect
-						defaultValue={_selectedExperienceId}
+						defaultValue={_selectedSegmentsExperienceId}
 						onChange={_handleExperienceSelection}
 					>
 						{segmentsExperiences.map(segmentsExperience => {
@@ -161,7 +161,7 @@ SegmentsExperiments.propTypes = {
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	segmentsExperiment: SegmentsExperimentType,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	variants: PropTypes.arrayOf(initialSegmentsVariantType)
+	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
 };
 
 export default SegmentsExperiments;

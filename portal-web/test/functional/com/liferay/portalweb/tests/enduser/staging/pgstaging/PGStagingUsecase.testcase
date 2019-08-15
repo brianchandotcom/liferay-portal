@@ -213,7 +213,7 @@ definition {
 
 		Staging.activateStagingCP(siteName = "Staging Organization Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Staging Organization Name");
+		Navigator.openSiteURL(siteName = "Staging Organization Name");
 
 		Navigator.gotoStagedView();
 

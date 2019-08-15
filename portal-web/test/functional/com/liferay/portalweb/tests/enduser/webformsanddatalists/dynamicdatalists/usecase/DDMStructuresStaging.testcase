@@ -16,7 +16,7 @@ definition {
 			groupName = "Staging Site Name",
 			layoutName = "Staging Page");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Staging Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

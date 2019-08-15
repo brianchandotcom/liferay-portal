@@ -35,8 +35,6 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openURL();
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMDocument.addCP(

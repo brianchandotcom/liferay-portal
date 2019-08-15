@@ -433,6 +433,10 @@ definition {
 
 		Site.addBlankCP(siteName = "Form Site");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Form Site",
+			layoutName = "Form Page");
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",

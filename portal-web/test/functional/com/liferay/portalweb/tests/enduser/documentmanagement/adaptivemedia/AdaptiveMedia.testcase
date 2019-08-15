@@ -686,7 +686,7 @@ definition {
 	test ViewNumberOfAdaptedImagesAfterAdaptingImages {
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -729,7 +729,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Another Site Name");
 
-		Navigator.openSiteURL(siteName = "Another Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Another Site Name");
 
 		for (var entryCount : list "1,2") {
 			ProductMenu.gotoPortlet(

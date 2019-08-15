@@ -12,7 +12,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

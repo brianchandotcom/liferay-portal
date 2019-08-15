@@ -941,7 +941,7 @@ definition {
 
 		AssetPublisherPortlet.removeSiteScope(removeSiteScopes = "Site Name A");
 
-		Navigator.openSiteURL(siteName = "Site Name A");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
 
 		LAR.exportSiteCP();
 
@@ -966,7 +966,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name B");
 
-		SitePages.openPagesAdmin(siteURLKey = "site-name-a");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",
@@ -989,7 +989,7 @@ definition {
 			groupName = "Site Name A",
 			title = "Web Content Title");
 
-		Navigator.openSiteURL(siteName = "Site Name A");
+		SitePages.openPagesAdmin(siteURLKey = "Site Name A");
 
 		LAR.exportSiteCP();
 

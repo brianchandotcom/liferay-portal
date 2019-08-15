@@ -1611,7 +1611,7 @@ definition {
 
 		var newSiteId = JSONGroup._getSiteIdByGroupName(groupName = "New Site");
 
-		Navigator.openSiteURL(siteName = "New Site");
+		SitePages.openPagesAdmin(siteURLKey = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -1253,7 +1253,7 @@ definition {
 			webContentContent = "WC Content Body",
 			webContentTitle = "WC Content Title");
 
-		Navigator.openSiteURL(siteNameURL = "Child SiteName");
+		SitePages.openPagesAdmin(siteURLKey = "Child SiteName");
 
 		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 

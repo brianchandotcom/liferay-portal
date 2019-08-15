@@ -787,7 +787,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Moon Rocks 101");
 
-		SitePages.openPagesAdmin(siteURLKey = "Moon Rocks 101");
+		JSONLayout.addPublicLayout(
+			groupName = "Moon Rocks 101",
+			layoutName = "Moon Rocks Page");
 
 		ProductMenu.gotoPortlet(
 			category = "Users",

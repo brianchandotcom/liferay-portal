@@ -241,9 +241,13 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 			httpServletRequest, "/combo", "minifierType=js", jsLastModified);
 
 		for (String url : urls) {
-			if (sb.length() == 0) {
-				sb.append("<script data-senna-track=\"permanent\" src=\"");
+			if ((sb.length() + url.length() + 1) >= 2048) {
+				_renderScriptURL(printWriter, sb.toString());
 
+				sb = new StringBundler();
+			}
+
+			if (sb.length() == 0) {
 				AbsolutePortalURLBuilder absolutePortalURLBuilder =
 					_absolutePortalURLBuilderFactory.
 						getAbsolutePortalURLBuilder(httpServletRequest);
@@ -256,14 +260,6 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 			sb.append(StringPool.AMPERSAND);
 			sb.append(url);
-
-			if (sb.length() >= 2048) {
-				sb.append("\" type = \"text/javascript\"></script>");
-
-				printWriter.println(sb.toString());
-
-				sb = new StringBundler();
-			}
 		}
 
 		if (sb.length() > 0) {

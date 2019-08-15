@@ -37,6 +37,8 @@ function getFormatPattern(dateEndMoment, dateStartMoment) {
 		dateStartMoment.date() === yesterday.date()
 	) {
 		dateEndPattern = Liferay.Language.get('dd-mmm-hh-mm-a');
+	} else if (dateEndMoment.diff(dateStartMoment, 'days') > 90) {
+		dateEndPattern = Liferay.Language.get('dd-mmm-yyyy');
 	}
 
 	return {

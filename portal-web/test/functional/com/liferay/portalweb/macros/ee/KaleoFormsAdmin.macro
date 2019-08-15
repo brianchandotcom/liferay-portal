@@ -471,7 +471,9 @@ definition {
 	}
 
 	macro publishWorkflow {
-		PortletEntry.publish();
+		Click.mouseDownMouseUp(
+			key_text = "Publish",
+			locator1 = "Button#ANY");
 
 		SelectFrame(value1 = "relative=top");
 

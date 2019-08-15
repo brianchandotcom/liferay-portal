@@ -117,6 +117,56 @@ definition {
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment.");
 	}
 
+	@description = "This test ensures that users can enable and disable Content Page comments at the instance level."
+	@priority = "4"
+	test DisableContentPageCommentsAtInstanceScope {
+		property test.name.skip.portal.instance = "ContentPageReview#DisableContentPageCommentsAtInstanceScope";
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Content Page Editor",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.enableCheckbox(fieldName = "Comments Enabled");
+
+		SystemSettings.saveConfiguration();
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		AssertElementPresent(
+			key_tabName = "Comments",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		PageEditor.clickPublish();
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Content Page Editor",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Comments Enabled");
+
+		SystemSettings.saveConfiguration();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		AssertElementNotPresent(
+			key_tabName = "Comments",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+	}
+
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
 	test ResolveComment {

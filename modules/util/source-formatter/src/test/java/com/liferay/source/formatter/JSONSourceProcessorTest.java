@@ -81,7 +81,7 @@ public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testJSONPropertyOrderCheck() throws Exception {
-		test(".npmbundlerrc");
+		test(".testnpmbundlerrc");
 	}
 
 }

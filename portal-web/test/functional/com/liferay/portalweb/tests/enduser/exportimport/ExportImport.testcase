@@ -1572,9 +1572,9 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addWithStructureCP(
-			fieldName = "DocumentsAndMedia",
+			fieldName = "DocumentsandMedia",
 			linkedPageName = "Test Page",
-			linkFieldName = "LinkToPage",
+			linkFieldName = "LinktoPage",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentDocumentsAndMedia = "DM Document Title.txt",

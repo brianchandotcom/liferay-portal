@@ -1,13 +1,11 @@
 <div class="fragment-configuration">
-	[#if configuration.hideBody == true]
-		<p>
-	[#else]
+	[#if configuration.hideBody != true]
 		<h3>Body Present!!</h3>
 	[/#if]
 
 	[#if configuration.makeBold == true]
 		<b>Bold Words</b>
 	[#else]
-		<p>Not bold words
+		<p>Not bold words</p>
 	[/#if]
 </div>

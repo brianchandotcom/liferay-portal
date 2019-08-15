@@ -17,6 +17,17 @@ AUI.add(
 		var PropertyListFormatter =
 			Liferay.KaleoDesignerUtils.PropertyListFormatter;
 
+		// Updates icons to produce lexicon SVG markup instead of default glyphicon
+
+		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
+			/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
+			Liferay.Util.getLexiconIconTpl('{iconClass}')
+		);
+
+		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
+			'{cssClass}'
+		);
+
 		var KaleoDesigner = A.Component.create({
 			ATTRS: {
 				aceEditorConfig: {
@@ -154,6 +165,23 @@ AUI.add(
 					instance.connectAll(connectors);
 				},
 
+				createField: function(val) {
+					var instance = this;
+
+					var field = KaleoDesigner.superclass.createField.call(
+						instance,
+						val
+					);
+
+					var controlsToolbar = field.get('controlsToolbar');
+
+					controlsToolbar.children[0].icon = 'times';
+
+					field.set('controlsToolbar', controlsToolbar);
+
+					return field;
+				},
+
 				editNode: function(diagramNode) {
 					var instance = this;
 
@@ -280,6 +308,45 @@ AUI.add(
 						dataTable,
 						'_onUITriggerSort'
 					);
+
+					// Dynamically removes unnecessary icons from editor toolbar buttons
+
+					var defaultGetEditorFn = dataTable.getEditor;
+
+					dataTable.getEditor = function() {
+						var editor = defaultGetEditorFn.apply(this, arguments);
+
+						if (editor) {
+							var defaultSetToolbarFn = A.bind(
+								editor._setToolbar,
+								editor
+							);
+
+							editor._setToolbar = function(val) {
+								var toolbar = defaultSetToolbarFn(val);
+
+								if (toolbar && toolbar.children) {
+									toolbar.children = toolbar.children.map(
+										function(children) {
+											children = children.map(function(
+												item
+											) {
+												delete item.icon;
+
+												return item;
+											});
+
+											return children;
+										}
+									);
+								}
+
+								return toolbar;
+							};
+						}
+
+						return editor;
+					};
 				},
 
 				_afterRenderSettingsTableBody: function() {
@@ -453,42 +520,42 @@ AUI.add(
 		KaleoDesigner.AVAILABLE_FIELDS = {
 			DEFAULT: [
 				{
-					iconClass: 'icon-db-condition',
+					iconClass: 'diamond',
 					label: Liferay.Language.get('condition-node'),
 					type: 'condition'
 				},
 				{
-					iconClass: 'icon-db-end',
+					iconClass: 'arrow-end',
 					label: Liferay.Language.get('end-node'),
 					type: 'end'
 				},
 				{
-					iconClass: 'icon-db-fork',
+					iconClass: 'arrow-split',
 					label: Liferay.Language.get('fork-node'),
 					type: 'fork'
 				},
 				{
-					iconClass: 'icon-db-join',
+					iconClass: 'arrow-join',
 					label: Liferay.Language.get('join-node'),
 					type: 'join'
 				},
 				{
-					iconClass: 'icon-db-joinxor',
+					iconClass: 'arrow-xor',
 					label: Liferay.Language.get('join-xor-node'),
 					type: 'join-xor'
 				},
 				{
-					iconClass: 'icon-db-start',
+					iconClass: 'arrow-start',
 					label: Liferay.Language.get('start-node'),
 					type: 'start'
 				},
 				{
-					iconClass: 'icon-db-state',
+					iconClass: 'circle',
 					label: Liferay.Language.get('state-node'),
 					type: 'state'
 				},
 				{
-					iconClass: 'icon-db-task',
+					iconClass: 'square',
 					label: Liferay.Language.get('task-node'),
 					type: 'task'
 				}

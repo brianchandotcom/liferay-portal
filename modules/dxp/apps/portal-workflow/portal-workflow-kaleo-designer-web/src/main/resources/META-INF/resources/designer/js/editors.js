@@ -512,7 +512,6 @@ AUI.add(
 
 						var addSectionButton = new A.Button({
 							disabled: true,
-							icon: 'icon-plus-sign',
 							id: 'addSectionButton',
 							label: strings.addSection,
 							on: {

@@ -20,6 +20,16 @@ AUI.add(
 		var PropertyListFormatter =
 			Liferay.KaleoDesignerUtils.PropertyListFormatter;
 
+		var renderShapeBoundary = function() {
+			var instance = this;
+
+			var boundary = (instance.boundary = instance
+				.get('graphic')
+				.addShape(instance.get('shapeBoundary')));
+
+			return boundary;
+		};
+
 		var Connector = A.Component.create({
 			ATTRS: {
 				default: {
@@ -65,7 +75,7 @@ AUI.add(
 				actions: {},
 
 				iconClass: {
-					value: 'icon-db-state'
+					value: 'circle'
 				},
 
 				initial: {
@@ -192,6 +202,8 @@ AUI.add(
 					return returnValue;
 				},
 
+				renderShapeBoundary: renderShapeBoundary,
+
 				updateMetadata: function(key, value) {
 					var instance = this;
 
@@ -205,9 +217,37 @@ AUI.add(
 				_afterNodeRender: function() {
 					var instance = this;
 
+					var icon = A.Node.create(
+						Liferay.Util.getLexiconIconTpl(
+							instance.get('iconClass')
+						)
+					);
+
+					icon.setAttribute('height', '34px');
+					icon.setAttribute('width', '34px');
+
 					instance
 						.get('contentBox')
-						.addClass(instance.get('iconClass'));
+						.one('svg')
+						.prepend(icon);
+
+					instance.boundary.set('transform', 'matrix(1,0,0,1,0,0)');
+
+					if (
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types.condition
+						) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.fork) ||
+						A.instanceOf(instance, A.DiagramBuilder.types.join) ||
+						A.instanceOf(
+							instance,
+							A.DiagramBuilder.types['join-xor']
+						)
+					) {
+						instance.boundary.rotate(45);
+						instance.boundary.translate(10, 0);
+					}
 				},
 
 				_uiSetXY: function(val) {
@@ -216,6 +256,14 @@ AUI.add(
 					DiagramNodeState.superclass._uiSetXY.apply(this, arguments);
 
 					instance.updateMetadata('xy', val);
+				},
+
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeState.prototype._valueShapeBoundary();
+
+					shape.radius = 17;
+
+					return shape;
 				}
 			}
 		});
@@ -225,11 +273,11 @@ AUI.add(
 		var DiagramNodeCondition = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 60
+					value: 34
 				},
 
 				iconClass: {
-					value: 'icon-db-condition'
+					value: 'diamond'
 				},
 
 				script: {
@@ -248,7 +296,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 60
+					value: 34
 				},
 
 				xmlType: {
@@ -348,11 +396,16 @@ AUI.add(
 					});
 				},
 
-				renderShapeBoundary:
-					A.DiagramNodeCondition.prototype.renderShapeBoundary,
+				renderShapeBoundary: renderShapeBoundary,
 
-				_valueShapeBoundary:
-					A.DiagramNodeCondition.prototype._valueShapeBoundary
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeCondition.prototype._valueShapeBoundary();
+
+					shape.width = 20;
+					shape.height = 20;
+
+					return shape;
+				}
 			}
 		});
 
@@ -361,11 +414,11 @@ AUI.add(
 		var DiagramNodeJoin = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 60
+					value: 34
 				},
 
 				iconClass: {
-					value: 'icon-db-join'
+					value: 'arrow-join'
 				},
 
 				type: {
@@ -374,7 +427,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 60
+					value: 34
 				},
 
 				xmlType: {
@@ -390,11 +443,16 @@ AUI.add(
 			prototype: {
 				hotPoints: A.DiagramNode.DIAMOND_POINTS,
 
-				renderShapeBoundary:
-					A.DiagramNodeJoin.prototype.renderShapeBoundary,
+				renderShapeBoundary: renderShapeBoundary,
 
-				_valueShapeBoundary:
-					A.DiagramNodeJoin.prototype._valueShapeBoundary
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
+
+					shape.width = 20;
+					shape.height = 20;
+
+					return shape;
+				}
 			}
 		});
 
@@ -403,7 +461,7 @@ AUI.add(
 		var DiagramNodeJoinXOR = A.Component.create({
 			ATTRS: {
 				iconClass: {
-					value: 'icon-db-joinxor'
+					value: 'arrow-xor'
 				},
 
 				type: {
@@ -419,7 +477,20 @@ AUI.add(
 
 			EXTENDS: DiagramNodeJoin,
 
-			NAME: 'diagram-node'
+			NAME: 'diagram-node',
+
+			prototype: {
+				renderShapeBoundary: renderShapeBoundary,
+
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeJoin.prototype._valueShapeBoundary();
+
+					shape.width = 20;
+					shape.height = 20;
+
+					return shape;
+				}
+			}
 		});
 
 		DiagramBuilderTypes['join-xor'] = DiagramNodeJoinXOR;
@@ -427,11 +498,11 @@ AUI.add(
 		var DiagramNodeFork = A.Component.create({
 			ATTRS: {
 				height: {
-					value: 60
+					value: 34
 				},
 
 				iconClass: {
-					value: 'icon-db-fork'
+					value: 'arrow-split'
 				},
 
 				type: {
@@ -440,7 +511,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 60
+					value: 34
 				},
 
 				xmlType: {
@@ -466,11 +537,16 @@ AUI.add(
 					return node;
 				},
 
-				renderShapeBoundary:
-					A.DiagramNodeFork.prototype.renderShapeBoundary,
+				renderShapeBoundary: renderShapeBoundary,
 
-				_valueShapeBoundary:
-					A.DiagramNodeFork.prototype._valueShapeBoundary
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeFork.prototype._valueShapeBoundary();
+
+					shape.width = 20;
+					shape.height = 20;
+
+					return shape;
+				}
 			}
 		});
 
@@ -479,7 +555,7 @@ AUI.add(
 		var DiagramNodeStart = A.Component.create({
 			ATTRS: {
 				iconClass: {
-					value: 'icon-db-start'
+					value: 'arrow-start'
 				},
 
 				initial: {
@@ -510,6 +586,16 @@ AUI.add(
 					});
 
 					return node;
+				},
+
+				renderShapeBoundary: renderShapeBoundary,
+
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeStart.prototype._valueShapeBoundary();
+
+					shape.radius = 17;
+
+					return shape;
 				}
 			}
 		});
@@ -519,7 +605,7 @@ AUI.add(
 		var DiagramNodeEnd = A.Component.create({
 			ATTRS: {
 				iconClass: {
-					value: 'icon-db-end'
+					value: 'arrow-end'
 				},
 
 				metadata: {
@@ -539,6 +625,8 @@ AUI.add(
 			NAME: 'diagram-node',
 
 			prototype: {
+				renderShapeBoundary: renderShapeBoundary,
+
 				_handleAddAnchorEvent: function(event) {
 					var instance = this;
 
@@ -560,6 +648,14 @@ AUI.add(
 						builder.addField(diagramNode);
 						diagramNode.addField({}).connect(source);
 					}
+				},
+
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeEnd.prototype._valueShapeBoundary();
+
+					shape.radius = 17;
+
+					return shape;
 				}
 			}
 		});
@@ -581,11 +677,11 @@ AUI.add(
 				},
 
 				height: {
-					value: 70
+					value: 34
 				},
 
 				iconClass: {
-					value: 'icon-db-task'
+					value: 'square'
 				},
 
 				type: {
@@ -594,7 +690,7 @@ AUI.add(
 				},
 
 				width: {
-					value: 70
+					value: 34
 				},
 
 				xmlType: {
@@ -614,11 +710,16 @@ AUI.add(
 
 				hotPoints: A.DiagramNode.SQUARE_POINTS,
 
-				renderShapeBoundary:
-					A.DiagramNodeTask.prototype.renderShapeBoundary,
+				renderShapeBoundary: renderShapeBoundary,
 
-				_valueShapeBoundary:
-					A.DiagramNodeTask.prototype._valueShapeBoundary
+				_valueShapeBoundary: function() {
+					var shape = A.DiagramNodeTask.prototype._valueShapeBoundary();
+
+					shape.width = 34;
+					shape.height = 34;
+
+					return shape;
+				}
 			}
 		});
 

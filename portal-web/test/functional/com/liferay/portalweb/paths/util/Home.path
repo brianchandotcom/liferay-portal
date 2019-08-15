@@ -95,17 +95,12 @@
 </tr>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//a[contains(@class,'logo')]//h1</td>
+	<td>//a[contains(@class,'logo')]//h2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_WRAPPER</td>
 	<td>//div[contains(@id,'wrapper')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_NAME_HEADER</td>
-	<td>//a[contains(@title,'Go to')]/h1 | //div[@id='heading']//div[contains(@class,'site-name')]</td>
 	<td></td>
 </tr>
 <tr>

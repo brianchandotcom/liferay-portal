@@ -114,7 +114,7 @@ const VelocityChart = () => {
 					select: {r: 5}
 				}}
 				resize={{
-					auto: false
+					auto: true
 				}}
 				tooltip={{
 					contents: VelocityChart.Tooltip(

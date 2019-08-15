@@ -21,6 +21,7 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,6 +77,7 @@ public class ChangeListsDisplayContext {
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		CTPreferencesLocalService ctPreferencesLocalService,
+		CTCollectionLocalService ctCollectionLocalService,
 		CTEntryLocalService ctEntryLocalService,
 		CTEngineManager ctEngineManager) {
 
@@ -82,6 +85,7 @@ public class ChangeListsDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
+		_ctCollectionLocalService = ctCollectionLocalService;
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctEngineManager = ctEngineManager;
 
@@ -94,6 +98,8 @@ public class ChangeListsDisplayContext {
 
 		soyContext.put(
 			"changeEntries", _getCTEntriesJSONArray()
+		).put(
+			"changeListsDropdownMenu", _getChangeListsDropdownMenuJSONArray()
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(
@@ -376,6 +382,44 @@ public class ChangeListsDisplayContext {
 		return ctPreferences.isConfirmationEnabled();
 	}
 
+	private JSONArray _getChangeListsDropdownMenuJSONArray() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
+
+		queryDefinition.setEnd(5);
+		queryDefinition.setStart(0);
+
+		OrderByComparator<CTCollection> orderByComparator =
+			OrderByComparatorFactoryUtil.create(
+				"CTCollection", "modifiedDate", false);
+
+		queryDefinition.setOrderByComparator(orderByComparator);
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		List<CTCollection> ctCollections =
+			_ctCollectionLocalService.getCTCollections(
+				_themeDisplay.getCompanyId(), queryDefinition, false);
+
+		long ctCollectionId = _getCTCollectionId();
+
+		for (CTCollection ctCollection : ctCollections) {
+			if (ctCollection.getCtCollectionId() != ctCollectionId) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonArray.put(
+					jsonObject.put(
+						"ctCollectionId", ctCollection.getCtCollectionId()
+					).put(
+						"label", ctCollection.getName()
+					));
+			}
+		}
+
+		return jsonArray;
+	}
+
 	private long _getCTCollectionId() {
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.fetchCTPreferences(
@@ -620,6 +664,7 @@ public class ChangeListsDisplayContext {
 		return portletURL;
 	}
 
+	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTEngineManager _ctEngineManager;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;

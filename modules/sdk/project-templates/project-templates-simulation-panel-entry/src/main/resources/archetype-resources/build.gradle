@@ -26,9 +26,14 @@ dependencies {
 #else
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
+#elseif (${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.liferay", name: "com.liferay.application.list.api", version: "4.0.2"
+#end
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.2.17"
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay", name: "com.liferay.product.navigation.simulation.api", version: "2.0.0"
+#elseif (${liferayVersion.startsWith("7.2")})
+	compileOnly group: "com.liferay", name: "com.liferay.product.navigation.simulation.api", version: "3.0.0"
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.3.0"
@@ -37,8 +42,6 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "3.1.2"
 #elseif (${liferayVersion.startsWith("7.2")})
-	compileOnly group: "com.liferay", name: "com.liferay.application.list.api", version: "4.0.2"
-	compileOnly group: "com.liferay", name: "com.liferay.product.navigation.simulation.api", version: "3.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "4.0.8"
 #end

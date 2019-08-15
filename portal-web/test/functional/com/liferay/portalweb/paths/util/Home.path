@@ -104,11 +104,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_NAME_HEADER</td>
-	<td>//a[contains(@title,'Go to')]/h1 | //div[@id='heading']//div[contains(@class,'site-name')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SITE_NAME_LOGO</td>
 	<td>//a[contains(@title,'Go to')]/img</td>
 	<td></td>

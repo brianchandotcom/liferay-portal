@@ -321,7 +321,7 @@ definition {
 
 	macro viewUserResultDetails {
 		AssertTextEquals(
-			locator1 = "Home#USER_NAME_HEADER",
+			locator1 = "Home#SITE_NAME",
 			value1 = "${userName}");
 
 		AssertTextEquals(

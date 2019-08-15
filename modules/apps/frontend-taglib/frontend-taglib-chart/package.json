@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"clay-charts": "2.16.2"
+		"clay-charts": "2.17.0"
 	},
 	"name": "frontend-taglib-chart",
 	"scripts": {

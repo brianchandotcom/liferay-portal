@@ -61,6 +61,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -404,13 +405,24 @@ public class ChangeListsDisplayContext {
 
 		long ctCollectionId = _getCTCollectionId();
 
+		PortletURL checkoutURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.ACTION_PHASE);
+
+		checkoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
+
 		for (CTCollection ctCollection : ctCollections) {
 			if (ctCollection.getCtCollectionId() != ctCollectionId) {
+				checkoutURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonArray.put(
 					jsonObject.put(
-						"ctCollectionId", ctCollection.getCtCollectionId()
+						"checkoutURL", checkoutURL.toString()
 					).put(
 						"label", ctCollection.getName()
 					));

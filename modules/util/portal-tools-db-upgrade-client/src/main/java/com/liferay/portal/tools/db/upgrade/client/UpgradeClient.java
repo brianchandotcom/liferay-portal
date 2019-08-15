@@ -406,6 +406,10 @@ public class UpgradeClient {
 			return false;
 		}
 
+		if (command.equals("")) {
+			return true;
+		}
+
 		String output = gogoShellClient.send(command);
 
 		int endOfFirstLineIndex = output.indexOf('\n');

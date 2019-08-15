@@ -34,7 +34,7 @@ const ClayTabs = ({children, ...otherProps}) => (
 );
 
 const ClayTabList = ({children, className, ...otherProps}) => {
-	const classesNav = getCN(
+	const navClasses = getCN(
 		'navbar',
 		'navbar-collapse-absolute',
 		'navbar-expand-md',
@@ -42,11 +42,15 @@ const ClayTabList = ({children, className, ...otherProps}) => {
 		'navigation-bar',
 		'navigation-bar-light'
 	);
-	const classes = getCN('navbar-nav', className);
+
+	const tabListClasses = getCN('navbar-nav', className);
 
 	return (
-		<nav className={classesNav}>
-			<TabList className={classes} {...otherProps}>
+		<nav
+			aria-label={Liferay.Language.get('navigation')}
+			className={navClasses}
+		>
+			<TabList className={tabListClasses} {...otherProps}>
 				{children}
 			</TabList>
 		</nav>

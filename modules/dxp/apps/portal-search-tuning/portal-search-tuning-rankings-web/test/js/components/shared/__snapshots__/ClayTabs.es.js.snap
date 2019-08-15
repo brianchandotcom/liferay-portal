@@ -6,40 +6,45 @@ exports[`ClayTabs renders 1`] = `
     class="react-tabs"
     data-tabs="true"
   >
-    <ul
-      class="nav nav-underline results-ranking-tabs"
-      role="tablist"
+    <nav
+      aria-label="Navigation"
+      class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
     >
-      <li
-        aria-controls="react-tabs-1"
-        aria-disabled="false"
-        aria-selected="true"
-        class="nav-item react-tabs__tab--selected"
-        id="react-tabs-0"
-        role="tab"
-        tabindex="0"
+      <ul
+        class="navbar-nav results-ranking-tabs"
+        role="tablist"
       >
-        <button
-          class="btn btn-unstyled nav-link active"
+        <li
+          aria-controls="react-tabs-1"
+          aria-disabled="false"
+          aria-selected="true"
+          class="nav-item react-tabs__tab--selected"
+          id="react-tabs-0"
+          role="tab"
+          tabindex="0"
         >
-          Tab 1
-        </button>
-      </li>
-      <li
-        aria-controls="react-tabs-3"
-        aria-disabled="false"
-        aria-selected="false"
-        class="nav-item"
-        id="react-tabs-2"
-        role="tab"
-      >
-        <button
-          class="btn btn-unstyled nav-link"
+          <button
+            class="btn btn-unstyled nav-link active"
+          >
+            Tab 1
+          </button>
+        </li>
+        <li
+          aria-controls="react-tabs-3"
+          aria-disabled="false"
+          aria-selected="false"
+          class="nav-item"
+          id="react-tabs-2"
+          role="tab"
         >
-          Tab 2
-        </button>
-      </li>
-    </ul>
+          <button
+            class="btn btn-unstyled nav-link"
+          >
+            Tab 2
+          </button>
+        </li>
+      </ul>
+    </nav>
     <div
       aria-labelledby="react-tabs-0"
       class="react-tabs__tab-panel react-tabs__tab-panel--selected"

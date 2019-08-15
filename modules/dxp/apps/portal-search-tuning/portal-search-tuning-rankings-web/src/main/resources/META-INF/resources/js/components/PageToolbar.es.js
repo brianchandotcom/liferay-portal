@@ -30,7 +30,10 @@ class PageToolbar extends Component {
 		const {onCancel, onPublish, onSaveAsDraft, submitDisabled} = this.props;
 
 		return (
-			<nav className="page-toolbar-root tbar upper-tbar">
+			<nav
+				aria-label={Liferay.Language.get('save')}
+				className="page-toolbar-root tbar upper-tbar"
+			>
 				<div className="container-fluid container-fluid-max-xl">
 					<ul className="tbar-nav">
 						<li className="tbar-item tbar-item-expand" />

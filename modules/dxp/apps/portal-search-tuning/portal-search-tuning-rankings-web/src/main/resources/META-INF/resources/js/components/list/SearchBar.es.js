@@ -251,7 +251,7 @@ class SearchBar extends Component {
 
 							{!this._hasSelectedIds() && (
 								<>
-									<div className="navbar-nav navbar-nav-expand">
+									<ul className="navbar-nav navbar-nav-expand">
 										{!!resultIds.length && (
 											<li className="nav-item">
 												<span className="navbar-text">
@@ -263,7 +263,7 @@ class SearchBar extends Component {
 												</span>
 											</li>
 										)}
-									</div>
+									</ul>
 
 									{onAddResultSubmit && (
 										<ul className="navbar-nav">

@@ -17,6 +17,7 @@ dependencies {
 #if (${dependencyManagementEnabled} == "true")
 	compileOnly group: "com.liferay", name: "com.liferay.application.list.api"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
@@ -28,11 +29,14 @@ dependencies {
 #end
 #if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "2.0"
 #elseif (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "3.1.2"
 #elseif (${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "4.4.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "4.0.8"
 #end
 #if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.0"

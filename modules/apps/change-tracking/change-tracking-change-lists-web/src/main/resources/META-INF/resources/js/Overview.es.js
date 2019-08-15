@@ -135,29 +135,6 @@ class Overview extends PortletBase {
 		);
 	}
 
-	_fetchRecentCollections(url) {
-		fetch(url)
-			.then(r => r.json())
-			.then(response => this._populateChangeListsDropdown(response))
-			.catch(error => {
-				const message =
-					typeof error === 'string'
-						? error
-						: Liferay.Util.sub(
-								Liferay.Language.get(
-									'an-error-occured-while-getting-data-from-x'
-								),
-								url
-						  );
-
-				openToast({
-					message,
-					title: Liferay.Language.get('error'),
-					type: 'danger'
-				});
-			});
-	}
-
 	_handleClickPublish() {
 		new PublishChangeList({
 			changeListDescription: this.descriptionActiveChangeList,
@@ -258,17 +235,6 @@ class Overview extends PortletBase {
 		}
 	}
 
-	_populateChangeListsDropdown(collectionResults) {
-		this.changeListsDropdownMenu = [];
-
-		collectionResults.forEach(ctCollection => {
-			this.changeListsDropdownMenu.push({
-				ctCollectionId: ctCollection.ctCollectionId,
-				label: ctCollection.name
-			});
-		});
-	}
-
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
@@ -298,18 +264,6 @@ class Overview extends PortletBase {
 			// Active Change List Description
 
 			this.descriptionActiveChangeList = activeCollection.description;
-
-			// Change Lists dropdown Menu
-
-			const urlRecentCollections =
-				this.urlCollectionsBase +
-				'?companyId=' +
-				Liferay.ThemeDisplay.getCompanyId() +
-				'&userId=' +
-				Liferay.ThemeDisplay.getUserId() +
-				'&type=recent&limit=5&sort=modifiedDate:desc';
-
-			this._fetchRecentCollections(urlRecentCollections);
 
 			// Active Change List Header Title
 
@@ -480,7 +434,7 @@ Overview.STATE = {
 			ctCollectionId: Config.string(),
 			label: Config.string()
 		})
-	),
+	).required(),
 
 	/**
 	 * Number of changes for the active change list.

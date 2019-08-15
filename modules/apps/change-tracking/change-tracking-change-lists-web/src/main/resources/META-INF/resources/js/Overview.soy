@@ -25,7 +25,7 @@
 	{@param? descriptionProductionInformation: string}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
-		ctCollectionId: string
+		checkoutURL: string
 	]>}
 	{@param? headerButtonDisabled: bool}
 	{@param? headerTitleActiveChangeList: string}
@@ -169,7 +169,7 @@
 	]>}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
-		ctCollectionId: string
+		checkoutURL: string
 	]>}
 	{@param? changeListsDropdownMenuTitle: string}
 	{@param? changeListsProductionDropdownMenuTitle: string}
@@ -251,7 +251,7 @@
 	{@param? cardEmpty: bool}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
-		ctCollectionId: string
+		checkoutURL: string
 	]>}
 	{@param? changeListsDropdownMenuTitle: string}
 	{@param? changeListsProductionDropdownMenuTitle: string}
@@ -303,7 +303,7 @@
 
 						<div aria-labelledby="" class="dropdown-menu">
 							{foreach $changeListsDropdownMenuItem in $changeListsDropdownMenu}
-								<a class="dropdown-item"  data-collection-id="{$changeListsDropdownMenuItem.ctCollectionId}" href="#" onclick="{$_handleClickRecentCollections}">{$changeListsDropdownMenuItem.label}</a>
+								<a class="dropdown-item" href="{$changeListsDropdownMenuItem.checkoutURL}">{$changeListsDropdownMenuItem.label}</a>
 							{/foreach}
 							<a class="dropdown-item dropdown-item-last" data-qa-id="selectChangeListMenuItem" href="{$urlSelectChangeList}">{$changeListsDropdownMenuTitle}</a>
 							<a class="dropdown-item" data-collection-id="{$productionCTCollectionId}" data-production="true" data-qa-id="selectProductionChangeListMenuItem" href="#" onclick="{$_handleClickRecentCollections}">{$changeListsProductionDropdownMenuTitle}</a>

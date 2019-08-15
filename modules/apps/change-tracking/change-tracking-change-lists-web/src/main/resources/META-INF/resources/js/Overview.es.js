@@ -431,7 +431,7 @@ Overview.STATE = {
 	 */
 	changeListsDropdownMenu: Config.arrayOf(
 		Config.shapeOf({
-			ctCollectionId: Config.string(),
+			checkoutURL: Config.string(),
 			label: Config.string()
 		})
 	).required(),

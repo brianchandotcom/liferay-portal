@@ -475,6 +475,8 @@ definition {
 			key_text = "Publish",
 			locator1 = "Button#ANY");
 
+		Alert.viewSuccessMessage();
+
 		SelectFrame(value1 = "relative=top");
 
 		Click(locator1 = "Icon#CLOSE");

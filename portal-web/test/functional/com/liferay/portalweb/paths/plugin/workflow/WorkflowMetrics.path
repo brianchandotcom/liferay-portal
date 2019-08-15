@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>WorkflowMetrics</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetrics</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>METRICS_WORKFLOW_PROCESS_NAME</td>
+	<td>//td//span[contains(text(),'${key_workflowProcessName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

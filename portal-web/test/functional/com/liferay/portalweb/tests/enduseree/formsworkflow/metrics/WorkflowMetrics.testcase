@@ -1,0 +1,88 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Workflow";
+	property test.run.environment = "EE";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Control Panel",
+				portlet = "Metrics");
+
+			WorkflowMetrics.tearDown();
+
+		}
+	}
+
+	@description = "Verify the user can set a SLA to Single Approver workflow (LPS-99765)"
+	@priority = "5"
+	test AddSLAtoSingleApprover {
+		property portal.acceptance = "true";
+
+		var key_testSLADefinitionDays = "1";
+		var key_testSLADefinitionDescription = "SLA Description";
+		var key_testSLADefinitionEnd = "Process Ends: Approved";
+		var key_testSLADefinitionName = "SLA Name";
+		var key_testSLADefinitionStart = "Process Begins";
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionDays = "${key_testSLADefinitionDays}",
+			slaDefinitionDescription = "${key_testSLADefinitionDescription}",
+			slaDefinitionEnd = "${key_testSLADefinitionEnd}",
+			slaDefinitionName = "${key_testSLADefinitionName}",
+			slaDefinitionStart = "${key_testSLADefinitionStart}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.goToCreatedSLAForm(workflowSLAName = "${key_testSLADefinitionName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "${key_testSLADefinitionName}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+			value1 = "${key_testSLADefinitionDescription}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_START",
+			value1 = "${key_testSLADefinitionStart}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_STEPS_STOP",
+			value1 = "${key_testSLADefinitionEnd}");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "${key_testSLADefinitionDays}");
+	}
+
+}

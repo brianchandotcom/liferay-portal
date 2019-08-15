@@ -1,0 +1,84 @@
+definition {
+
+	macro _deleteAllSLAs {
+		while (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
+
+			Click(locator1 = "WorkflowMetricsSLA#DELETE_SLA_BUTTON");
+
+			Click(locator1 = "WorkflowMetricsSLA#SLA_REMOVE_CONFIRMATION_BUTTON");
+
+		}
+	}
+
+	macro fillSLAForm {
+		var key_slaDefinitionDays = "${slaDefinitionDays}";
+		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
+		var key_slaDefinitionEnd = "${slaDefinitionEnd}";
+		var key_slaDefinitionName = "${slaDefinitionName}";
+		var key_slaDefinitionStart = "${slaDefinitionStart}";
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_NAME",
+			value1 = "${key_slaDefinitionName}");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DESCRIPTION",
+			value1 = "${key_slaDefinitionDescription}");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
+
+		AssertClick(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_START_OPTION",
+			value1 = "${key_slaDefinitionStart}");
+
+		Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_STOP");
+
+		AssertClick(
+			locator1 = "WorkflowMetricsSLA#SLA_DROPDOWN_STOP_OPTION",
+			value1 = "${key_slaDefinitionEnd}");
+
+		Type(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_DAYS",
+			value1 = "${key_slaDefinitionDays}");
+	}
+
+	macro goToCreatedSLAForm {
+		var key_workflowSLAName = "${workflowSLAName}";
+
+		Click(
+			locator1 = "WorkflowMetricsSLA#SLA_CREATED_FORM",
+			value1 = "${workflowSLAName}");
+	}
+
+	macro goToWorkflowProcess {
+		var key_workflowProcessName = "${workflowProcessName}";
+
+		Click(
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME",
+			value1 = "${workflowProcessName}");
+
+	}
+
+	macro goToWorkflowSLASettings {
+		var key_workflowProcessName = "${workflowProcessName}";
+
+		WorkflowMetrics.goToWorkflowProcess(workflowProcessName = "${workflowProcessName}");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
+
+		Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+
+	}
+
+	macro tearDown {
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		if (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TABLE")) {
+			WorkflowMetrics._deleteAllSLAs();
+
+		}
+
+	}
+
+}

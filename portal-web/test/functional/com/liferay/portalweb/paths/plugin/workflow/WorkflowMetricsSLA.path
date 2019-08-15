@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>WorkflowMetricsSLA</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetricsSLA</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_NEW_SLA_BUTTON</td>
+	<td>//a[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_SLA_BUTTON</td>
+	<td>//button[contains(text(),'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_MENU_SLA</td>
+	<td>//div[contains(@class, 'control-menu-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_SLA_SETTINGS</td>
+	<td>//a[@class='dropdown-item'][contains(@href,'InstanceCount')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKFLOW_PROCESS_NAME</td>
+	<td>//td//span[contains(text(),'${key_workflowProcessName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_CREATED_FORM</td>
+	<td>//a[contains(text(),'${key_workflowSLAName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_DAYS</td>
+	<td>//input[@id='sla_duration_days']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_DESCRIPTION</td>
+	<td>//input[@id='sla_description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_HOURS</td>
+	<td>//input[@id='sla_duration_hours']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_NAME</td>
+	<td>//input[@id='sla_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_PAUSE</td>
+	<td>//label[@for="sla_time_pause"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_START</td>
+	<td>//label[@for="sla_time_start"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_STOP</td>
+	<td>//label[@for="sla_time_stop"]/following-sibling::div[contains(@class, 'align-items-start')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DROPDOWN_START_OPTION</td>
+	<td>//a[contains(text(),'${key_slaDefinitionStart}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DROPDOWN_STOP_OPTION</td>
+	<td>//a[contains(text(),'${key_slaDefinitionEnd}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_ELLIPSIS_BUTTON</td>
+	<td>//*[contains(@class, 'ellipsis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_REMOVE_CONFIRMATION_BUTTON</td>
+	<td>//button[@id='remove_sla_button']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_SAVE_BUTTON</td>
+	<td>//button[contains(@class, 'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_STEPS_START</td>
+	<td>//label[@for="sla_time_start"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_STEPS_STOP</td>
+	<td>//label[@for="sla_time_stop"]/following-sibling::div//span[@class='label-item label-item-expand']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_TABLE</td>
+	<td>//div[contains(@class, 'table-responsive')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

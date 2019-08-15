@@ -1494,17 +1494,34 @@ definition {
 	test ExportViaGuest {
 		property test.name.skip.portal.instance = "ExportImport#ExportViaGuest";
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
 		LAR.exportSiteCP();
 
 		var downloadURL = selenium.getAttribute("//ul/li/div/h2/span/a@href");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
 		Navigator.openSpecificURL(url = "${downloadURL}");
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
-			value1 = "Not Found");
+			value1 = "Forbidden");
 	}
 
 	@description = "This is a use case for LPS-88831 and LPS-88889."

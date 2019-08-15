@@ -280,17 +280,22 @@ public class AggregateClassLoader extends ClassLoader {
 			ClassLoader classLoader, String name, boolean resolve)
 		throws ClassNotFoundException {
 
-		try {
-			return (Class<?>)_LOAD_CLASS_METHOD.invoke(
-				classLoader, name, resolve);
+		if (resolve) {
+			try {
+				return (Class<?>)_LOAD_CLASS_METHOD.invoke(
+					classLoader, name, true);
+			}
+			catch (InvocationTargetException ite) {
+				throw new ClassNotFoundException(
+					"Unable to load class " + name, ite.getTargetException());
+			}
+			catch (Exception e) {
+				throw new ClassNotFoundException(
+					"Unable to load class " + name, e);
+			}
 		}
-		catch (InvocationTargetException ite) {
-			throw new ClassNotFoundException(
-				"Unable to load class " + name, ite.getTargetException());
-		}
-		catch (Exception e) {
-			throw new ClassNotFoundException("Unable to load class " + name, e);
-		}
+
+		return classLoader.loadClass(name);
 	}
 
 	private static final Method _FIND_CLASS_METHOD;

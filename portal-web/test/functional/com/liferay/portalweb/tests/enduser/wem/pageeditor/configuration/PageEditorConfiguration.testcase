@@ -57,11 +57,11 @@ definition {
 
 		PageEditorConfiguration.checkConfigCheckbox(
 			checkboxName = "Hide Body",
-			fragmentPosition = "1");
+			fragmentName = "Checkbox Fragment Example");
 
 		PageEditorConfiguration.checkConfigCheckbox(
 			checkboxName = "Make Bold",
-			fragmentPosition = "1");
+			fragmentName = "Checkbox Fragment Example");
 
 		Button.clickPublish();
 
@@ -107,11 +107,11 @@ definition {
 
 		PageEditorConfiguration.checkConfigCheckbox(
 			checkboxName = "Hide Body",
-			fragmentPosition = "1");
+			fragmentName = "Checkbox Fragment Example");
 
 		PageEditorConfiguration.checkConfigCheckbox(
 			checkboxName = "Make Bold",
-			fragmentPosition = "1");
+			fragmentName = "Checkbox Fragment Example");
 
 		PageEditor.clickPublish();
 

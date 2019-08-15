@@ -2,8 +2,8 @@ definition {
 
 	macro checkConfigCheckbox {
 		Click(
-			key_position = "${fragmentPosition}",
-			locator1 = "PageEditor#SECTION");
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
 
 		Check.checkToggleSwitch(
 			checkboxName = "${checkboxName}",

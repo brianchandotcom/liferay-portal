@@ -182,6 +182,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_NAME</td>
+	<td>//section[contains(@class,'fragment-entry-link')][contains(.,'${fragment_name}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECTION_PROPERTIES_BUTTON</td>
 	<td>//button[@data-title='${key_button}']</td>
 	<td></td>

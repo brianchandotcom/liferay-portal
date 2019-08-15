@@ -330,9 +330,8 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContentDisplayPortlet.selectWebContent(
-			fromSite = "Site Name",
-			portletName = "Web Content Display",
+		WebContentDisplayPortlet.selectOtherSiteWebContent(
+			otherSiteName = "Site Name",
 			webContentTitle = "WC Title");
 
 		JSONGroup.deleteGroupByName(groupName = "Site Name");

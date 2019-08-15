@@ -244,8 +244,166 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return null;
 	}
 
-	private Object _getFieldValue(
-			String fieldName, NestedFieldsContext nestedFieldsContext)
+	private Object _getFieldValue(String fieldName, Object item)
+		throws Exception {
+
+		List<Class> itemClasses = new ArrayList<>();
+
+		Class<?> itemClass = item.getClass();
+
+		itemClasses.add(itemClass);
+
+		itemClasses.add(itemClass.getSuperclass());
+
+		for (Class curItemClass : itemClasses) {
+			try {
+				Field itemField = curItemClass.getDeclaredField(fieldName);
+
+				if (itemField != null) {
+					itemField.setAccessible(true);
+
+					return itemField.get(item);
+				}
+			}
+			catch (NoSuchFieldException nsfe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe.getMessage());
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private List<Object> _getItems(Object entity) {
+		List<Object> items = new ArrayList<>();
+
+		if (entity instanceof Collection) {
+			items.addAll((Collection)entity);
+		}
+		else if (entity instanceof Page) {
+			Page page = (Page)entity;
+
+			items.addAll(page.getItems());
+		}
+		else {
+			items.add(entity);
+		}
+
+		return items;
+	}
+
+	private Object[] _getMethodArgs(
+			String fieldName, Object item,
+			NestedFieldsContext nestedFieldsContext, Parameter[] parameters)
+		throws Exception {
+
+		Object[] args = new Object[parameters.length];
+
+		MultivaluedMap<String, String> pathParameters =
+			nestedFieldsContext.getPathParameters();
+		MultivaluedMap<String, String> queryParameters =
+			nestedFieldsContext.getQueryParameters();
+
+		for (int i = 0; i < parameters.length; i++) {
+			Parameter parameter = parameters[i];
+
+			args[i] = _getMethodArgValueFromRequest(
+				fieldName, nestedFieldsContext, pathParameters, queryParameters,
+				parameter);
+
+			if (args[i] == null) {
+				args[i] = _getMethodArgValueFromItem(
+					parameter.getAnnotations(), item);
+			}
+		}
+
+		return args;
+	}
+
+	private Object _getMethodArgValueFromItem(
+			Annotation[] annotations, Object item)
+		throws Exception {
+
+		if (annotations.length == 0) {
+			return null;
+		}
+
+		Object fieldValue = null;
+
+		for (Annotation annotation : annotations) {
+			if (annotation instanceof PathParam) {
+				PathParam pathParam = (PathParam)annotation;
+
+				fieldValue = _getFieldValue(pathParam.value(), item);
+
+				break;
+			}
+		}
+
+		return fieldValue;
+	}
+
+	private Object _getMethodArgValueFromRequest(
+		String fieldName, NestedFieldsContext nestedFieldsContext,
+		MultivaluedMap<String, String> pathParameters,
+		MultivaluedMap<String, String> queryParameters, Parameter parameter) {
+
+		Annotation[] annotations = parameter.getAnnotations();
+
+		if (annotations.length == 0) {
+			return null;
+		}
+
+		Object argValue = null;
+
+		for (Annotation annotation : annotations) {
+			if (annotation instanceof Context) {
+				Message message = _getNestedAwareMessage(
+					fieldName, nestedFieldsContext.getMessage());
+
+				argValue = _getContext(parameter.getType(), message);
+
+				_resetNestedAwareMessage(message);
+
+				break;
+			}
+			else if (annotation instanceof PathParam) {
+				PathParam pathParam = (PathParam)annotation;
+
+				argValue = _convert(
+					pathParameters.getFirst(pathParam.value()),
+					parameter.getType());
+
+				break;
+			}
+			else if (annotation instanceof QueryParam) {
+				QueryParam queryParam = (QueryParam)annotation;
+
+				argValue = _convert(
+					queryParameters.getFirst(
+						fieldName + "." + queryParam.value()),
+					parameter.getType());
+
+				break;
+			}
+		}
+
+		return argValue;
+	}
+
+	private Message _getNestedAwareMessage(String fieldName, Message message) {
+		message.put(
+			"HTTP.REQUEST",
+			new NestedFieldsHttpServletRequestWrapper(
+				fieldName, getHttpServletRequest(message)));
+
+		return message;
+	}
+
+	private Object _getNestedFieldValue(
+			String fieldName, Object item,
+			NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
 		for (Object resource : getResources()) {
@@ -267,79 +425,12 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				resource.getClass(), method);
 
 			Object[] args = _getMethodArgs(
-				fieldName, nestedFieldsContext, parameters);
+				fieldName, item, nestedFieldsContext, parameters);
 
 			return method.invoke(resource, args);
 		}
 
 		return null;
-	}
-
-	private Object[] _getMethodArgs(
-		String fieldName, NestedFieldsContext nestedFieldsContext,
-		Parameter[] parameters) {
-
-		Object[] args = new Object[parameters.length];
-
-		MultivaluedMap<String, String> pathParameters =
-			nestedFieldsContext.getPathParameters();
-		MultivaluedMap<String, String> queryParameters =
-			nestedFieldsContext.getQueryParameters();
-
-		for (int i = 0; i < parameters.length; i++) {
-			Parameter parameter = parameters[i];
-
-			Annotation[] annotations = parameter.getAnnotations();
-
-			if (annotations.length == 0) {
-				continue;
-			}
-
-			args[i] = null;
-
-			for (Annotation annotation : annotations) {
-				if (annotation instanceof Context) {
-					Message message = _getNestedAwareMessage(
-						fieldName, nestedFieldsContext.getMessage());
-
-					args[i] = _getContext(parameter.getType(), message);
-
-					_resetNestedAwareMessage(message);
-
-					break;
-				}
-				else if (annotation instanceof PathParam) {
-					PathParam pathParam = (PathParam)annotation;
-
-					args[i] = _convert(
-						pathParameters.getFirst(pathParam.value()),
-						parameter.getType());
-
-					break;
-				}
-				else if (annotation instanceof QueryParam) {
-					QueryParam queryParam = (QueryParam)annotation;
-
-					args[i] = _convert(
-						queryParameters.getFirst(
-							fieldName + "." + queryParam.value()),
-						parameter.getType());
-
-					break;
-				}
-			}
-		}
-
-		return args;
-	}
-
-	private Message _getNestedAwareMessage(String fieldName, Message message) {
-		message.put(
-			"HTTP.REQUEST",
-			new NestedFieldsHttpServletRequestWrapper(
-				fieldName, getHttpServletRequest(message)));
-
-		return message;
 	}
 
 	private Object _getReturnObject(Class<?> fieldType, Object result) {
@@ -381,20 +472,25 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			Object entity, NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
+		List<Object> items = _getItems(entity);
+
 		for (String fieldName : nestedFieldsContext.getFieldNames()) {
-			Field field = _getField(entity.getClass(), fieldName);
+			for (Object item : items) {
+				Field field = _getField(item.getClass(), fieldName);
 
-			if (field == null) {
-				continue;
+				if (field == null) {
+					continue;
+				}
+
+				field.setAccessible(true);
+
+				field.set(
+					item,
+					_getReturnObject(
+						field.getType(),
+						_getNestedFieldValue(
+							fieldName, item, nestedFieldsContext)));
 			}
-
-			field.setAccessible(true);
-
-			field.set(
-				entity,
-				_getReturnObject(
-					field.getType(),
-					_getFieldValue(fieldName, nestedFieldsContext)));
 		}
 	}
 

@@ -19,6 +19,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -93,6 +94,25 @@ public class FragmentTestUtil {
 
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
+			fragmentEntry.getFragmentEntryId(), classNameId, classPK,
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
+			serviceContext);
+	}
+
+	public static FragmentEntryLink addFragmentEntryLink(
+			long groupId, long fragmentEntryId, long classNameId, long classPK)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.getFragmentEntry(fragmentEntryId);
+
+		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			TestPropsValues.getUserId(), groupId, 0,
 			fragmentEntry.getFragmentEntryId(), classNameId, classPK,
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),

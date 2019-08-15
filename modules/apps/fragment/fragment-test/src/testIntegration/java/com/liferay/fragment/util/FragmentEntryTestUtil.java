@@ -55,8 +55,8 @@ public class FragmentEntryTestUtil {
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollectionId, StringPool.BLANK, name, StringPool.BLANK,
-			"<div></div>", StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
-			serviceContext);
+			"<div>TEST</div>", StringPool.BLANK,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	public static FragmentEntry addFragmentEntry(

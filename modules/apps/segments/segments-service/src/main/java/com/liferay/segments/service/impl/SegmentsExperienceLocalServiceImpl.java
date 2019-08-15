@@ -30,7 +30,6 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -120,14 +119,7 @@ public class SegmentsExperienceLocalServiceImpl
 	public void deleteSegmentsEntrySegmentsExperiences(long segmentsEntryId)
 		throws PortalException {
 
-		List<SegmentsExperience> segmentsExperiences =
-			segmentsExperiencePersistence.findBySegmentsEntryId(
-				segmentsEntryId);
-
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			segmentsExperienceLocalService.deleteSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId());
-		}
+		segmentsExperiencePersistence.removeBySegmentsEntryId(segmentsEntryId);
 	}
 
 	@Override
@@ -179,16 +171,10 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		List<SegmentsExperiment> segmentsExperiments =
-			segmentsExperimentPersistence.findByS_C_C(
-				segmentsExperience.getSegmentsExperienceId(),
-				segmentsExperience.getClassNameId(),
-				_getPublishedLayoutClassPK(segmentsExperience.getClassPK()));
-
-		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
-			segmentsExperimentPersistence.remove(
-				segmentsExperiment.getSegmentsExperimentId());
-		}
+		segmentsExperimentPersistence.removeByS_C_C(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperience.getClassNameId(),
+			_getPublishedLayoutClassPK(segmentsExperience.getClassPK()));
 
 		// Resources
 
@@ -203,28 +189,14 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		// Segments experiences
+		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
-		List<SegmentsExperience> segmentsExperiences =
-			segmentsExperiencePersistence.findByG_C_C(
-				groupId, classNameId, _getPublishedLayoutClassPK(classPK));
+		segmentsExperiencePersistence.removeByG_C_C(
+			groupId, classNameId, publishedClassPK);
 
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			segmentsExperienceLocalService.deleteSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId());
-		}
-
-		// Segments experiments
-
-		List<SegmentsExperiment> segmentsExperiments =
-			segmentsExperimentPersistence.findByS_C_C(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				_getPublishedLayoutClassPK(classPK));
-
-		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
-			segmentsExperimentPersistence.remove(
-				segmentsExperiment.getSegmentsExperimentId());
-		}
+		segmentsExperimentPersistence.removeByS_C_C(
+			SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+			publishedClassPK);
 	}
 
 	@Override

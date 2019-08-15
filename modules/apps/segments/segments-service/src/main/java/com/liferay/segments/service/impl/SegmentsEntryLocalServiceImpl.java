@@ -138,8 +138,7 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntryPersistence.findByGroupId(groupId);
 
 		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			segmentsEntryLocalService.deleteSegmentsEntry(
-				segmentsEntry.getSegmentsEntryId());
+			segmentsEntryLocalService.deleteSegmentsEntry(segmentsEntry);
 		}
 	}
 

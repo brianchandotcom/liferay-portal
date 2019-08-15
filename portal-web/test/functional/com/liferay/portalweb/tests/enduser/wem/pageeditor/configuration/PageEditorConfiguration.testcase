@@ -31,7 +31,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a content page template."
-	@priority = "4"
+	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPageTemplate {
 		property portal.acceptance = "true";
 
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a display page template."
-	@priority = "4"
+	@priority = "5"
 	test AddCheckboxConfigurationFragmentToDisplayPageTemplate {
 		property portal.acceptance = "true";
 
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
-	@priority = "4"
+	@priority = "5"
 	test AddCheckboxConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";
 

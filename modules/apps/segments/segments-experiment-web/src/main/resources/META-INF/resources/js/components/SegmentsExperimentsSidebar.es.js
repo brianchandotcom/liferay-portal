@@ -32,7 +32,9 @@ function SegmentsExperimentsSidebar({
 	initialSegmentsExperiment,
 	initialSelectedSegmentsExperienceId = '0'
 }) {
-	const {api, page} = useContext(SegmentsExperimentsContext);
+	const {segmentsExperimentsUtil, page} = useContext(
+		SegmentsExperimentsContext
+	);
 	const [creationModal, setCreationModal] = useState({active: false});
 	const [editionModal, setEditionModal] = useState({active: false});
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
@@ -130,7 +132,8 @@ function SegmentsExperimentsSidebar({
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId
 		};
 
-		api.createExperiment(body)
+		segmentsExperimentsUtil
+			.createExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {
 					segmentsExperiment,
@@ -187,7 +190,8 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 		};
 
-		api.editExperiment(body)
+		segmentsExperimentsUtil
+			.editExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {segmentsExperiment} = objectResponse;
 
@@ -241,7 +245,8 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			};
 
-			api.createVariant(body)
+			segmentsExperimentsUtil
+				.createVariant(body)
 				.then(({segmentsExperimentRel}) => {
 					const {
 						name,
@@ -273,7 +278,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentRelId: variantId
 		};
 
-		api.deleteVariant(body).then(() => {
+		segmentsExperimentsUtil.deleteVariant(body).then(() => {
 			setVariants(
 				variants.filter(
 					variant => variant.segmentsExperimentRelId !== variantId
@@ -291,7 +296,8 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentRelId: variantId
 			};
 
-			api.editVariant(body)
+			segmentsExperimentsUtil
+				.editVariant(body)
 				.then(({segmentsExperimentRel}) => {
 					setVariants(
 						variants.map(variant => {

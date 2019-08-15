@@ -33,13 +33,13 @@ import {
 } from '../fixtures.es';
 
 function _renderSegmentsExperimentsSidebarComponent({
-	api = {},
 	classNameId = '',
 	classPK = '',
 	initialGoals = segmentsGoals,
 	initialSegmentsExperiences = [],
 	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
+	segmentsExperimentsUtil = {},
 	selectedSegmentsExperienceId,
 	type = 'content'
 } = {}) {
@@ -49,22 +49,22 @@ function _renderSegmentsExperimentsSidebarComponent({
 		deleteVariant = () => {},
 		editExperiment = () => {},
 		editVariant = () => {}
-	} = api;
+	} = segmentsExperimentsUtil;
 
 	return render(
 		<SegmentsExperimentsContext.Provider
 			value={{
-				api: {
+				page: {
+					classNameId,
+					classPK,
+					type
+				},
+				segmentsExperimentsUtil: {
 					createExperiment,
 					createVariant,
 					deleteVariant,
 					editExperiment,
 					editVariant
-				},
-				page: {
-					classNameId,
-					classPK,
-					type
 				}
 			}}
 		>
@@ -231,12 +231,12 @@ describe('Variants ', () => {
 			getByText,
 			getByLabelText
 		} = _renderSegmentsExperimentsSidebarComponent({
-			api: {
-				createVariant: createVariantMock
-			},
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants,
+			segmentsExperimentsUtil: {
+				createVariant: createVariantMock
+			},
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId
 		});

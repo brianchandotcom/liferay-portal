@@ -15,7 +15,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ClayIconSpriteContext} from '@clayui/icon';
-import API from './API/index.es';
+import SegmentsExperimentsUtil from './util/index.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
 
@@ -35,7 +35,9 @@ export default function segmentsExperimentsApp(id, props, context) {
 	ReactDOM.render(
 		<SegmentsExperimentsContext.Provider
 			value={{
-				api: API({
+				editVariantLayoutURL: editSegmentsVariantLayoutURL,
+				page,
+				segmentsExperimentsUtil: SegmentsExperimentsUtil({
 					contentPageEditorNamespace:
 						context.contentPageEditorNamespace,
 					endpoints: {
@@ -46,9 +48,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 						editSegmentsVariantURL
 					},
 					namespace: context.namespace
-				}),
-				editVariantLayoutURL: editSegmentsVariantLayoutURL,
-				page
+				})
 			}}
 		>
 			<ClayIconSpriteContext.Provider value={context.spritemap}>

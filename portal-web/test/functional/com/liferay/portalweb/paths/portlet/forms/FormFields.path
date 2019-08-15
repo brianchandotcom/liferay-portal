@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>RADIO_OPTION_CHECKED</td>
-	<td>//label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="checked" and contains(@name,'${key_fieldName}')]</td>
+	<td>//label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="checked" and contains(@name,'${key_fieldName}')] | //label[contains(@*,'${key_radioOption}') or contains(.,'${key_radioOption}')]/input[@type='radio' and @checked="" and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

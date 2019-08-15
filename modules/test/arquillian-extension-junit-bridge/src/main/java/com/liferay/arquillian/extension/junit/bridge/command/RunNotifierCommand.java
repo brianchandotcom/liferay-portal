@@ -15,7 +15,6 @@
 package com.liferay.arquillian.extension.junit.bridge.command;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serializable;
 
@@ -46,30 +45,25 @@ public interface RunNotifierCommand extends Serializable {
 				new Failure(description, throwable));
 		}
 
-		try (ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream()) {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
 
-			throwable.printStackTrace(new PrintStream(byteArrayOutputStream));
+		throwable.printStackTrace(new PrintStream(byteArrayOutputStream));
 
-			String string = byteArrayOutputStream.toString();
+		Throwable stacklessThrowable = new Throwable(
+			byteArrayOutputStream.toString()) {
 
-			Throwable stacklessThrowable = new Throwable(string) {
+			@Override
+			public String toString() {
+				return getMessage();
+			}
 
-				@Override
-				public String toString() {
-					return getMessage();
-				}
+		};
 
-			};
+		stacklessThrowable.setStackTrace(new StackTraceElement[0]);
 
-			stacklessThrowable.setStackTrace(new StackTraceElement[0]);
-
-			return runNotifier -> runNotifier.fireTestFailure(
-				new Failure(description, stacklessThrowable));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		return runNotifier -> runNotifier.fireTestFailure(
+			new Failure(description, stacklessThrowable));
 	}
 
 	public static RunNotifierCommand testFinished(Description description) {

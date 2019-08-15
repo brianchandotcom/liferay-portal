@@ -520,26 +520,15 @@ class ResultsRankingForm extends Component {
 	};
 
 	/**
-	 * Handles removing an alias.
-	 * @param {String} label Removes the alias with given label.
+	 * Handles updating the alias list and filters out duplicate words.
+	 * @param {array} keywords The list of the new aliases (array of String).
 	 */
-	_handleRemoveAlias = label => {
-		this.setState(state => ({
-			aliases: state.aliases.filter(item => item !== label)
-		}));
-	};
-
-	/**
-	 * Handles adding to the alias list and filters out duplicate words.
-	 * @param {array} value The value of the new aliases (array of String).
-	 */
-	_handleUpdateAlias = value => {
-		this.setState(state => ({
-			aliases: [
-				...state.aliases,
-				...value.filter(item => !state.aliases.includes(item))
-			]
-		}));
+	_handleUpdateAliases = keywords => {
+		this.setState({
+			aliases: keywords.filter(
+				(item, index) => keywords.indexOf(item) === index
+			)
+		});
 	};
 
 	/**
@@ -717,13 +706,12 @@ class ResultsRankingForm extends Component {
 
 				<div className="container-fluid container-fluid-max-xl container-form-lg">
 					<div className="sheet sheet-lg form-section-header">
+						<label>{Liferay.Language.get('query')}</label>
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>
 
 						<Alias
 							keywords={aliases}
-							onClickDelete={this._handleRemoveAlias}
-							onClickSubmit={this._handleUpdateAlias}
-							searchQuery={searchQuery}
+							onChange={this._handleUpdateAliases}
 						/>
 					</div>
 

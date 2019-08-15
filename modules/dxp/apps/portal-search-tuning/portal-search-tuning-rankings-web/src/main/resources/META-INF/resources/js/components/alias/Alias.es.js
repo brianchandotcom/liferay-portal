@@ -9,12 +9,9 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import ClayModal from '@clayui/modal';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import Tag from './Tag.es';
 
 /**
  * Filters out empty strings from the passed in array.
@@ -28,31 +25,11 @@ function filterEmptyStrings(list) {
 class Alias extends Component {
 	static propTypes = {
 		keywords: PropTypes.arrayOf(String),
-		onClickDelete: PropTypes.func.isRequired,
-		onClickSubmit: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired
 	};
 
 	state = {
-		inputValue: '',
-		modalKeywords: [],
-		showModal: false
-	};
-
-	_handleCloseModal = () => {
-		this.setState({showModal: false});
-	};
-
-	_handleOpenModal = () => {
-		this.setState({
-			modalKeywords: [],
-			showModal: true
-		});
-	};
-
-	_handleSubmit = onClose => () => {
-		this.props.onClickSubmit(this.state.modalKeywords);
-
-		onClose();
+		inputValue: ''
 	};
 
 	_handleInputChange = value => {
@@ -60,106 +37,23 @@ class Alias extends Component {
 	};
 
 	_handleItemsChange = value => {
-		this.setState({modalKeywords: value});
+		this.props.onChange(filterEmptyStrings(value.map(item => item.trim())));
 	};
 
 	render() {
-		const {keywords, onClickDelete} = this.props;
+		const {keywords} = this.props;
 
-		const {inputValue, modalKeywords, showModal} = this.state;
+		const {inputValue} = this.state;
 
 		return (
-			<div className="results-ranking-alias-root">
-				<div className="sheet-text">
-					<div className="alias-title">
-						<strong>{Liferay.Language.get('aliases')}</strong>
-					</div>
-
-					<div className="input-group">
-						<div className="input-group-item input-group-item-shrink">
-							{filterEmptyStrings(keywords).map(word => (
-								<Tag
-									key={word}
-									label={word}
-									onClickDelete={onClickDelete}
-								/>
-							))}
-						</div>
-
-						<div className="input-group-item input-group-item-shrink">
-							<ClayButton
-								className="btn-outline-borderless"
-								displayType="secondary"
-								onClick={this._handleOpenModal}
-								small
-							>
-								{Liferay.Language.get('add-an-alias')}
-							</ClayButton>
-						</div>
-					</div>
-				</div>
-
-				{showModal && (
-					<ClayModal
-						className="results-ranking-modal-root"
-						data-testid="alias-modal"
-						onClose={this._handleCloseModal}
-						size="lg"
-					>
-						{onClose => (
-							<div className="alias-modal-root">
-								<ClayModal.Header>
-									{Liferay.Language.get('add-an-alias')}
-								</ClayModal.Header>
-
-								<ClayModal.Body>
-									<div className="alias-modal-description">
-										{Liferay.Language.get(
-											'add-an-alias-description'
-										)}
-									</div>
-
-									<ClayForm.MultiSelect
-										helpText={Liferay.Language.get(
-											'add-an-alias-instruction'
-										)}
-										inputValue={inputValue}
-										items={modalKeywords}
-										label={Liferay.Language.get('alias')}
-										onInputChange={this._handleInputChange}
-										onItemsChange={this._handleItemsChange}
-									/>
-								</ClayModal.Body>
-
-								<ClayModal.Footer
-									last={
-										<ClayButton.Group spaced>
-											<ClayButton
-												className="btn-outline-borderless"
-												displayType="secondary"
-												onClick={onClose}
-											>
-												{Liferay.Language.get('cancel')}
-											</ClayButton>
-
-											<ClayButton
-												disabled={
-													modalKeywords.length === 0
-												}
-												onClick={this._handleSubmit(
-													onClose
-												)}
-											>
-												{Liferay.Language.get('add')}
-											</ClayButton>
-										</ClayButton.Group>
-									}
-								/>
-							</div>
-						)}
-					</ClayModal>
-				)}
-			</div>
+			<ClayForm.MultiSelect
+				helpText={Liferay.Language.get('add-an-alias-instruction')}
+				inputValue={inputValue}
+				items={keywords}
+				label={Liferay.Language.get('aliases')}
+				onInputChange={this._handleInputChange}
+				onItemsChange={this._handleItemsChange}
+			/>
 		);
 	}
 }

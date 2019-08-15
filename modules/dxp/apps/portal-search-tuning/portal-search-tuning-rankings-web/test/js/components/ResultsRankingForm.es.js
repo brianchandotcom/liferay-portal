@@ -129,6 +129,55 @@ describe('ResultsRankingForm', () => {
 		expect(tagsElement[0]).not.toHaveTextContent('one');
 	});
 
+	it('renders blank aliases', () => {
+		const {container} = render(
+			<ResultsRankingForm
+				cancelUrl="cancel"
+				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
+				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				formName={FORM_NAME}
+				searchQuery=""
+			/>
+		);
+
+		const input = container.querySelector('.form-control-inset');
+
+		fireEvent.change(input, {target: {value: ' '}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		const tagsElement = container.querySelectorAll('.label-item-expand');
+
+		expect(tagsElement.length).toBe(0);
+
+		expect(input.getAttribute('value')).not.toEqual(' ');
+	});
+
+	it('does not allow duplicate aliases', () => {
+		const {container} = render(
+			<ResultsRankingForm
+				cancelUrl="cancel"
+				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
+				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				formName={FORM_NAME}
+				initialAliases={['one', 'two', 'three']}
+				searchQuery=""
+			/>
+		);
+
+		const input = container.querySelector('.form-control-inset');
+
+		fireEvent.change(input, {target: {value: 'one'}});
+
+		fireEvent.keyDown(input, {key: 'Enter', keyCode: 13, which: 13});
+
+		const tagsElement = container.querySelectorAll('.label-item-expand');
+
+		expect(tagsElement.length).toBe(3);
+
+		expect(input.getAttribute('value')).not.toEqual('one');
+	});
+
 	xit('updates the pinnedAdded', async () => {
 		const {container, getByTestId} = render(
 			<ResultsRankingForm

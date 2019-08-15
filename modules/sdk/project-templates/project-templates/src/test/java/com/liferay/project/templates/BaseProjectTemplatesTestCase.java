@@ -87,9 +87,9 @@ public interface BaseProjectTemplatesTestCase {
 
 	public static final String BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
 		Arrays.asList(
-			"*.js.map", "*manifest.json", "*pom.properties", "*pom.xml",
-			"*package.json", "Archiver-Version", "Build-Jdk", "Built-By",
-			"Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
+			"*jsp.class", "*.js.map", "*manifest.json", "*pom.properties",
+			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
+			"Built-By", "Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
 		',');
 
 	public static final String DEPENDENCY_MODULES_EXTENDER_API =

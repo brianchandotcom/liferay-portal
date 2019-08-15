@@ -181,7 +181,9 @@ const useSLA = (fetchClient, slaId, processId) => {
 	};
 
 	useEffect(() => {
-		fetchSLA(slaId);
+		if (slaId) {
+			fetchSLA(slaId);
+		}
 	}, []);
 
 	return {

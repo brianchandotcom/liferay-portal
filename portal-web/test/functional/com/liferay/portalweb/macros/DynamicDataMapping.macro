@@ -191,7 +191,7 @@ definition {
 
 		MouseOver(locator1 = "DDMEditStructure#FORM_FIELD");
 
-		ClickNoError(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_ICON");
+		SikuliClick(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "IFrame#DIALOG_BOX",

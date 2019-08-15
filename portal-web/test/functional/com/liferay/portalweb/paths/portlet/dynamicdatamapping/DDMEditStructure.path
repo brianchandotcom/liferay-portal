@@ -153,6 +153,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_DELETE_BUTTON</td>
+	<td>portal/screenshots/ddm/form_delete.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_DELETE_ICON</td>
 	<td>xpath=(//div[contains(@class,'component') and contains(@class,'form-builder-field')]/div/label[contains(.,'${key_fieldFieldLabel}')]/../../div/div/button/span[contains(@class,'trash')]/..)[1]</td>
 	<td></td>

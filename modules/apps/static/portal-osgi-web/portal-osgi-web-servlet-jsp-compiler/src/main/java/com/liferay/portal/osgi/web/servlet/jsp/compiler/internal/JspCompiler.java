@@ -581,6 +581,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		new ArrayList<>();
 	private JspCompilationContext _jspCompilationContext;
 	private JspRuntimeContext _jspRuntimeContext;
+	private final Map<String, Map<String, JavaFileObject>> _packageMap =
+		new ConcurrentHashMap<>();
 
 	private class JavaFileManagerWrapper
 		extends ForwardingJavaFileManager<JavaFileManager> {
@@ -594,8 +596,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			Location location, String className, JavaFileObject.Kind kind,
 			FileObject fileObject) {
 
-			Map<String, Map<String, JavaFileObject>> packageMap =
-				_jspRuntimeContext.getPackageMap();
+			Map<String, Map<String, JavaFileObject>> packageMap = _packageMap;
 
 			String packageName = className.substring(
 				0, className.lastIndexOf(CharPool.PERIOD));
@@ -642,7 +643,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				packageName.startsWith(Constants.JSP_PACKAGE_NAME)) {
 
 				Map<String, Map<String, JavaFileObject>> packageMap =
-					_jspRuntimeContext.getPackageMap();
+					_packageMap;
 
 				Map<String, JavaFileObject> javaFileObjectsMap = packageMap.get(
 					packageName);

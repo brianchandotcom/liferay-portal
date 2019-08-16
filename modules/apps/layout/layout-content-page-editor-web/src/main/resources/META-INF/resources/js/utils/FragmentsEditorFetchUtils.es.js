@@ -67,9 +67,9 @@ function addFragmentEntryLinkComment(fragmentEntryLinkId, body) {
  * @param {string} body
  */
 function addFragmentEntryLinkCommentReply(
-	body,
 	fragmentEntryLinkId,
-	parentCommentId
+	parentCommentId,
+	body
 ) {
 	const state = _store.getState();
 

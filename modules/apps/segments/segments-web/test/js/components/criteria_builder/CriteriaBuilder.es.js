@@ -13,8 +13,11 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import CriteriaBuilder from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaBuilder.es';
 import React from 'react';
+import {wrapInTestContext} from 'react-dnd-test-utils';
+import {default as Component} from '../../../../src/main/resources/META-INF/resources/js/components/criteria_builder/CriteriaBuilder.es';
+
+const CriteriaBuilder = wrapInTestContext(Component);
 
 describe('CriteriaBuilder', () => {
 	afterEach(cleanup);

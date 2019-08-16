@@ -10,6 +10,21 @@ exports[`CriteriaBuilder renders 1`] = `
     >
       x-with-property-x
     </h4>
+    <div
+      class="criteria-group-item-root color--user"
+    >
+      <div
+        class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
+      >
+        <div
+          class="drop-zone-target p-5"
+        >
+          <div
+            class="empty-drop-zone-indicator"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

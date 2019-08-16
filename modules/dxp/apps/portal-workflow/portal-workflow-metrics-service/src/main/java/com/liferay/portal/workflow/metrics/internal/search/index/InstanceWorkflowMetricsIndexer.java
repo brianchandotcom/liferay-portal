@@ -172,8 +172,9 @@ public class InstanceWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoInstance kaleoInstance) -> addDocument(
-				createDocument(kaleoInstance)));
+			(KaleoInstance kaleoInstance) ->
+				workflowMetricsPortalExecutor.execute(
+					() -> addDocument(createDocument(kaleoInstance))));
 
 		actionableDynamicQuery.performActions();
 	}

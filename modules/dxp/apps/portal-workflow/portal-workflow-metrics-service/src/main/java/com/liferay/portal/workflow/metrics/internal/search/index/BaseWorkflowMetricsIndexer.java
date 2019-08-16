@@ -37,6 +37,7 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 
 import java.io.Serializable;
 
@@ -226,6 +227,9 @@ public abstract class BaseWorkflowMetricsIndexer extends BaseIndexer<Object> {
 		target = "(search.engine.impl=Elasticsearch)"
 	)
 	protected volatile SearchEngineAdapter searchEngineAdapter;
+
+	@Reference
+	protected WorkflowMetricsPortalExecutor workflowMetricsPortalExecutor;
 
 	private void _updateDocument(Document document) {
 		if (searchEngineAdapter == null) {

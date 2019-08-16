@@ -231,7 +231,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				dynamicQuery.add(typeProperty.eq(NodeType.STATE.name()));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoNode kaleoNode) -> addDocument(createDocument(kaleoNode)));
+			(KaleoNode kaleoNode) -> workflowMetricsPortalExecutor.execute(
+				() -> addDocument(createDocument(kaleoNode))));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -250,7 +251,8 @@ public class NodeWorkflowMetricsIndexer extends BaseWorkflowMetricsIndexer {
 				dynamicQuery.add(companyIdProperty.eq(companyId));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(KaleoTask kaleoTask) -> addDocument(createDocument(kaleoTask)));
+			(KaleoTask kaleoTask) -> workflowMetricsPortalExecutor.execute(
+				() -> addDocument(createDocument(kaleoTask))));
 
 		actionableDynamicQuery.performActions();
 	}

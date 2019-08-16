@@ -12,16 +12,16 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.constants;
+package com.liferay.portal.search.tuning.synonyms.web.internal.constants;
 
 /**
  * @author Filipe Oshiro
  */
-public class SearchTuningPortletKeys {
+public class SynonymsPortletKeys {
 
-	public static final String SEARCH_TUNING =
-		"com_liferay_portal_search_tuning_web_internal_portlet_" +
-			"SearchTuningPortlet";
+	public static final String SYNONYMS =
+		"com_liferay_portal_search_tuning_synonyms_web_internal_portlet_" +
+			"SynonymsPortlet";
 
 	public static final String SYNONYMS_DISPLAY_CONTEXT =
 		"SYNONYMS_DISPLAY_CONTEXT";

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.synonym;
+package com.liferay.portal.search.tuning.synonyms.web.internal.synonym;
 
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -38,17 +38,13 @@ import org.osgi.service.component.annotations.Reference;
 public class SynonymIndexerImpl implements SynonymIndexer {
 
 	@Override
-	public String[] getSynonymSets(long companyId, String filterName)
-		throws SynonymException {
-
+	public String[] getSynonymSets(long companyId, String filterName) {
 		return getSynonymSets(
 			indexNameBuilder.getIndexName(companyId), filterName);
 	}
 
 	@Override
-	public String[] getSynonymSets(String indexName, String filterName)
-		throws SynonymException {
-
+	public String[] getSynonymSets(String indexName, String filterName) {
 		GetIndexIndexRequest getIndexIndexRequest = new GetIndexIndexRequest(
 			indexName);
 
@@ -63,7 +59,7 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 			jsonObject = jsonFactory.createJSONObject(settings.get(indexName));
 		}
 		catch (JSONException jsone) {
-			throw new SynonymException(jsone);
+			throw new RuntimeException(jsone);
 		}
 
 		return JSONUtil.toStringArray(
@@ -73,8 +69,7 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 
 	@Override
 	public void updateSynonymSets(
-			long companyId, String filterName, String[] synonymSets)
-		throws SynonymException {
+		long companyId, String filterName, String[] synonymSets) {
 
 		updateSynonymSets(
 			indexNameBuilder.getIndexName(companyId), filterName, synonymSets);
@@ -82,8 +77,7 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 
 	@Override
 	public void updateSynonymSets(
-			String indexName, String filterName, String[] synonymSets)
-		throws SynonymException {
+		String indexName, String filterName, String[] synonymSets) {
 
 		closeIndex(indexName);
 
@@ -96,9 +90,6 @@ public class SynonymIndexerImpl implements SynonymIndexer {
 			updateIndexSettingsIndexRequest.setSettings(settings);
 
 			searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
-		}
-		catch (Exception e) {
-			throw new SynonymException(e);
 		}
 		finally {
 			openIndex(indexName);

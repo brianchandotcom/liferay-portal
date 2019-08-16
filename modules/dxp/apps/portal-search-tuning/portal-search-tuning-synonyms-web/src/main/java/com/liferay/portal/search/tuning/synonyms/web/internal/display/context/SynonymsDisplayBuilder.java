@@ -12,21 +12,19 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.display.context;
+package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.tuning.web.internal.synonym.SynonymException;
-import com.liferay.portal.search.tuning.web.internal.synonym.SynonymIndexer;
+import com.liferay.portal.search.tuning.synonyms.web.internal.synonym.SynonymIndexer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +43,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SynonymsDisplayBuilder {
 
 	public SynonymsDisplayBuilder(
-			HttpServletRequest httpServletRequest, Language language,
-			Portal portal, RenderRequest renderRequest,
-			RenderResponse renderResponse, SynonymIndexer synonymIndexer)
-		throws PortalException {
+		HttpServletRequest httpServletRequest, Language language, Portal portal,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		SynonymIndexer synonymIndexer) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
@@ -61,7 +58,7 @@ public class SynonymsDisplayBuilder {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SynonymsDisplayContext build() throws PortalException {
+	public SynonymsDisplayContext build() {
 		SynonymsDisplayContext synonymsDisplayContext =
 			new SynonymsDisplayContext();
 
@@ -86,8 +83,7 @@ public class SynonymsDisplayBuilder {
 	}
 
 	protected SearchContainer<SynonymSetDisplayContext> buildSearchContainer(
-			List<SynonymSetDisplayContext> synonymSetsEntryDisplayContexts)
-		throws PortalException {
+		List<SynonymSetDisplayContext> synonymSetsEntryDisplayContexts) {
 
 		SearchContainer<SynonymSetDisplayContext> searchContainer =
 			new SearchContainer<>(
@@ -104,21 +100,14 @@ public class SynonymsDisplayBuilder {
 		return searchContainer;
 	}
 
-	protected List<SynonymSetDisplayContext> buildSynonymSetDisplayContexts()
-		throws PortalException {
-
+	protected List<SynonymSetDisplayContext> buildSynonymSetDisplayContexts() {
 		List<SynonymSetDisplayContext> synonymSetDisplayContexts =
 			new ArrayList<>();
 
 		String[] synonymSets = null;
 
-		try {
-			synonymSets = _synonymIndexer.getSynonymSets(
-				_themeDisplay.getCompanyId(), "liferay_filter_synonym_en");
-		}
-		catch (SynonymException se) {
-			throw new PortalException(se);
-		}
+		synonymSets = _synonymIndexer.getSynonymSets(
+			_themeDisplay.getCompanyId(), "liferay_filter_synonym_en");
 
 		for (String synonymSet : synonymSets) {
 			SynonymSetDisplayContext synonymSetDisplayContext =
@@ -216,8 +205,7 @@ public class SynonymsDisplayBuilder {
 	}
 
 	protected boolean isDisabledManagementBar(
-			List<SynonymSetDisplayContext> synonymSetDisplayContexts)
-		throws PortalException {
+		List<SynonymSetDisplayContext> synonymSetDisplayContexts) {
 
 		if (synonymSetDisplayContexts.isEmpty()) {
 			return true;

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.display.context;
+package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;

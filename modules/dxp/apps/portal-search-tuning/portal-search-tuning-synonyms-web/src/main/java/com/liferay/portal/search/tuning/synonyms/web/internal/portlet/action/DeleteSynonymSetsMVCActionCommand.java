@@ -12,15 +12,15 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.portlet.action;
+package com.liferay.portal.search.tuning.synonyms.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.tuning.web.internal.constants.SearchTuningPortletKeys;
-import com.liferay.portal.search.tuning.web.internal.synonym.SynonymIndexer;
+import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
+import com.liferay.portal.search.tuning.synonyms.web.internal.synonym.SynonymIndexer;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SearchTuningPortletKeys.SEARCH_TUNING,
+		"javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS,
 		"mvc.command.name=deleteSynonymSet"
 	},
 	service = MVCActionCommand.class

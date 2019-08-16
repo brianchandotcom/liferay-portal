@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.portlet.action;
+package com.liferay.portal.search.tuning.synonyms.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.tuning.web.internal.constants.SearchTuningPortletKeys;
+import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + SearchTuningPortletKeys.SEARCH_TUNING,
+		"javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS,
 		"mvc.command.name=updateSynonymSet"
 	},
 	service = MVCRenderCommand.class

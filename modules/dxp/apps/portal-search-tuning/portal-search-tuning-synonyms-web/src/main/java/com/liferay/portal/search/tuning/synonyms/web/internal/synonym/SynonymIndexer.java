@@ -12,25 +12,21 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.synonym;
+package com.liferay.portal.search.tuning.synonyms.web.internal.synonym;
 
 /**
  * @author Adam Brandizzi
  */
 public interface SynonymIndexer {
 
-	public String[] getSynonymSets(long companyId, String filterName)
-		throws SynonymException;
+	public String[] getSynonymSets(long companyId, String filterName);
 
-	public String[] getSynonymSets(String indexName, String filterName)
-		throws SynonymException;
+	public String[] getSynonymSets(String indexName, String filterName);
 
 	public void updateSynonymSets(
-			long companyId, String filterName, String[] synonymSets)
-		throws SynonymException;
+		long companyId, String filterName, String[] synonymSets);
 
 	public void updateSynonymSets(
-			String indexName, String filterName, String[] synonymSets)
-		throws SynonymException;
+		String indexName, String filterName, String[] synonymSets);
 
 }

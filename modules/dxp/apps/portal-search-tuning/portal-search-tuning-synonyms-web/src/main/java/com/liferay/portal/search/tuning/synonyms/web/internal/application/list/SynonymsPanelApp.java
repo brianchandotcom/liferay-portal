@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.application.list;
+package com.liferay.portal.search.tuning.synonyms.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.search.tuning.web.internal.constants.SearchTuningPortletKeys;
+import com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys;
+import com.liferay.portal.search.tuning.web.application.list.constants.SearchTuningPanelCategoryKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,20 +30,20 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=400",
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
+		"panel.category.key=" + SearchTuningPanelCategoryKeys.CONTROL_PANEL_SEARCH_TUNING
 	},
 	service = PanelApp.class
 )
-public class SearchTuningPanelApp extends BasePanelApp {
+public class SynonymsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SearchTuningPortletKeys.SEARCH_TUNING;
+		return SynonymsPortletKeys.SYNONYMS;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SearchTuningPortletKeys.SEARCH_TUNING + ")",
+		target = "(javax.portlet.name=" + SynonymsPortletKeys.SYNONYMS + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

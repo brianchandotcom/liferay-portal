@@ -17,12 +17,31 @@ import {
 	generateInstanceId,
 	getFieldProperties
 } from '../../../util/fieldSupport.es';
+import {generateFieldName} from '../util/fields.es';
+import {normalizeSettingsContextPages} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {addedToPlaceholder, focusedField, target} = event;
+	const {addedToPlaceholder, fieldType, target} = event;
+	const {defaultLanguageId, editingLanguageId, spritemap} = props;
+	const newFieldName = generateFieldName(state.pages, fieldType.label);
+
+	const focusedField = {
+		...fieldType,
+		fieldName: newFieldName,
+		settingsContext: {
+			...fieldType.settingsContext,
+			pages: normalizeSettingsContextPages(
+				fieldType.settingsContext.pages,
+				editingLanguageId,
+				fieldType,
+				newFieldName
+			),
+			type: fieldType.name
+		}
+	};
+
 	const {fieldName, name, settingsContext} = focusedField;
 	const {pageIndex, rowIndex} = target;
-	const {defaultLanguageId, editingLanguageId, spritemap} = props;
 	let {pages} = state;
 	let {columnIndex} = target;
 

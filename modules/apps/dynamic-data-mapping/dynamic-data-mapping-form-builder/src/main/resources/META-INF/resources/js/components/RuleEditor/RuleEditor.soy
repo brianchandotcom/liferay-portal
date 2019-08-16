@@ -141,7 +141,6 @@
 	{@param spritemap: string}
 	{@param? _handleActionAdded: any}
 	{@param? _handleActionSelection: any}
-	{@param? _handleCancelRule: any}
 	{@param? _handleConditionAdded: any}
 	{@param? _handleDataProviderInputEdited: any}
 	{@param? _handleDataProviderOutputEdited: any}
@@ -153,6 +152,7 @@
 	{@param? _handleModalButtonClicked: any}
 	{@param? _handleOperatorEdited: any}
 	{@param? _handleRuleAdded: any}
+	{@param? _handleRuleCancelled: any}
 	{@param? _handleSecondOperandFieldEdited: any}
 	{@param? _handleSecondOperandTypeEdited: any}
 	{@param? _handleSecondOperandValueEdited: any}
@@ -300,7 +300,7 @@
 
 			{call ClayButton.render}
 				{param events: [
-					'click': $_handleCancelRule
+					'click': $_handleRuleCancelled
 				] /}
 				{param label kind="text"}
 					{msg desc=""}cancel{/msg}

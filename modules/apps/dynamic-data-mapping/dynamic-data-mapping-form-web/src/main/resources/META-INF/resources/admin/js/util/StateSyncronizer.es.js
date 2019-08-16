@@ -93,30 +93,26 @@ class StateSyncronizer extends Component {
 	}
 
 	getState() {
-		const {
-			layoutProvider,
-			localizedDescription,
-			localizedName
-		} = this.props;
+		const {localizedDescription, localizedName, store} = this.props;
 
 		const state = {
 			availableLanguageIds: this.getAvailableLanguageIds(),
 			defaultLanguageId: this.getDefaultLanguageId(),
 			description: localizedDescription,
 			name: localizedName,
-			pages: layoutProvider.state.pages,
-			paginationMode: layoutProvider.state.paginationMode,
-			rules: layoutProvider.getRules(),
-			successPageSettings: layoutProvider.state.successPageSettings
+			pages: store.state.pages,
+			paginationMode: store.state.paginationMode,
+			rules: store.getRules(),
+			successPageSettings: store.state.successPageSettings
 		};
 
 		return state;
 	}
 
 	isEmpty() {
-		const {layoutProvider} = this.props;
+		const {store} = this.props;
 
-		return FormSupport.emptyPages(layoutProvider.state.pages);
+		return FormSupport.emptyPages(store.state.pages);
 	}
 
 	syncEditors(editingLanguageId = this.getDefaultLanguageId()) {
@@ -257,13 +253,13 @@ class StateSyncronizer extends Component {
 
 StateSyncronizer.PROPS = {
 	descriptionEditor: Config.any(),
-	layoutProvider: Config.any(),
 	localizedDescription: Config.object().value({}),
 	localizedName: Config.object().value({}),
 	nameEditor: Config.any(),
 	namespace: Config.string().required(),
 	published: Config.bool(),
 	settingsDDMForm: Config.any(),
+	store: Config.any(),
 	translationManager: Config.any()
 };
 

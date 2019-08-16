@@ -378,16 +378,6 @@ class RuleEditor extends Component {
 		});
 	}
 
-	syncVisible(visible) {
-		const addButton = document.querySelector('#addFieldButton');
-
-		super.syncVisible(visible);
-
-		if (addButton && visible) {
-			addButton.classList.add('hide');
-		}
-	}
-
 	willUpdate() {
 		this.setState({
 			invalidRule:
@@ -706,10 +696,6 @@ class RuleEditor extends Component {
 		});
 	}
 
-	_handleCancelRule() {
-		this.emit('ruleCancel', {});
-	}
-
 	_handleConditionAdded() {
 		const {conditions} = this;
 
@@ -947,6 +933,10 @@ class RuleEditor extends Component {
 			['logical-operator']: this.logicalOperator,
 			ruleEditedIndex
 		});
+	}
+
+	_handleRuleCancelled() {
+		this.emit('ruleCancelled', {});
 	}
 
 	_handleSecondOperandFieldEdited(event) {

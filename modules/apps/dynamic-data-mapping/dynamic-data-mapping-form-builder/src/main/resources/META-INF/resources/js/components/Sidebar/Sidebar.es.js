@@ -15,6 +15,7 @@
 import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import classnames from 'classnames';
 import ClayButton from 'clay-button';
+import ClayModal from 'clay-modal';
 import Component, {Fragment} from 'metal-jsx';
 import dom from 'metal-dom';
 import FieldTypeBox from '../FieldTypeBox/FieldTypeBox.es.js';
@@ -25,6 +26,7 @@ import {Config} from 'metal-state';
 import {Drag, DragDrop} from 'metal-drag-drop';
 import {EventHandler} from 'metal-events';
 import {focusedFieldStructure} from '../../util/config.es';
+import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import {
 	getFieldProperties,
 	normalizeSettingsContextPages
@@ -142,7 +144,6 @@ class Sidebar extends Component {
 
 		this._eventHandler.removeAllListeners();
 		this.disposeDragAndDrop();
-		this.emit('fieldBlurred');
 	}
 
 	getSettingsFormContext() {
@@ -185,7 +186,12 @@ class Sidebar extends Component {
 
 	open() {
 		const {container} = this.refs;
+		const {open} = this.state;
 		const {transitionEnd} = this;
+
+		if (open) {
+			return;
+		}
 
 		dom.once(container, transitionEnd, () => {
 			if (this._isEditMode()) {
@@ -221,60 +227,97 @@ class Sidebar extends Component {
 		const styles = classnames('sidebar-container', {open});
 
 		return (
-			<div class={styles} ref="container">
-				<div class="sidebar sidebar-light">
-					<nav class="component-tbar tbar">
-						<div class="container-fluid">
-							{this._renderTopBar()}
-						</div>
-					</nav>
-					<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
-						<a
-							aria-controls="sidebarLightCollapse00"
-							aria-expanded="false"
-							aria-label="Toggle Navigation"
-							class="collapsed navbar-toggler navbar-toggler-link"
-							data-toggle="collapse"
-							href="#sidebarLightCollapse00"
-							role="button"
-						>
-							<span class="navbar-text-truncate">
-								{'Details'}
-							</span>
-							<svg
-								aria-hidden="true"
-								class="lexicon-icon lexicon-icon-caret-bottom"
-							>
-								<use xlink:href={`${spritemap}#caret-bottom`} />
-							</svg>
-						</a>
-						<div
-							class="collapse navbar-collapse"
-							id="sidebarLightCollapse00"
-						>
-							<ul class="nav navbar-nav" role="tablist">
-								{this._renderNavItems()}
-							</ul>
-						</div>
-					</nav>
-					<div class="ddm-sidebar-body">
-						{!editMode &&
-							activeTab == 0 &&
-							this._renderFieldTypeGroups()}
-
-						{!editMode &&
-							activeTab == 1 &&
-							this._renderElementSets()}
-
-						{editMode && (
-							<div class="sidebar-body ddm-field-settings">
-								<div class="tab-content">
-									<form>{this._renderSettingsForm()}</form>
-								</div>
+			<div>
+				<div class={styles} ref="container">
+					<div class="sidebar sidebar-light">
+						<nav class="component-tbar tbar">
+							<div class="container-fluid">
+								{this._renderTopBar()}
 							</div>
-						)}
+						</nav>
+						<nav class="component-navigation-bar navbar navigation-bar navbar-collapse-absolute navbar-expand-md navbar-underline">
+							<a
+								aria-controls="sidebarLightCollapse00"
+								aria-expanded="false"
+								aria-label="Toggle Navigation"
+								class="collapsed navbar-toggler navbar-toggler-link"
+								data-toggle="collapse"
+								href="#sidebarLightCollapse00"
+								role="button"
+							>
+								<span class="navbar-text-truncate">
+									{'Details'}
+								</span>
+								<svg
+									aria-hidden="true"
+									class="lexicon-icon lexicon-icon-caret-bottom"
+								>
+									<use
+										xlink:href={`${spritemap}#caret-bottom`}
+									/>
+								</svg>
+							</a>
+							<div
+								class="collapse navbar-collapse"
+								id="sidebarLightCollapse00"
+							>
+								<ul class="nav navbar-nav" role="tablist">
+									{this._renderNavItems()}
+								</ul>
+							</div>
+						</nav>
+						<div class="ddm-sidebar-body">
+							{!editMode &&
+								activeTab == 0 &&
+								this._renderFieldTypeGroups()}
+
+							{!editMode &&
+								activeTab == 1 &&
+								this._renderElementSets()}
+
+							{editMode && (
+								<div class="sidebar-body ddm-field-settings">
+									<div class="tab-content">
+										<form>
+											{this._renderSettingsForm()}
+										</form>
+									</div>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
+
+				<ClayModal
+					body={Liferay.Language.get(
+						'are-you-sure-you-want-to-cancel'
+					)}
+					events={{
+						clickButton: this._handleCancelChangesModalButtonClicked.bind(
+							this
+						)
+					}}
+					footerButtons={[
+						{
+							alignment: 'right',
+							label: Liferay.Language.get('dismiss'),
+							style: 'primary',
+							type: 'close'
+						},
+						{
+							alignment: 'right',
+							label: Liferay.Language.get('yes-cancel'),
+							style: 'primary',
+							type: 'button'
+						}
+					]}
+					ref="cancelChangesModal"
+					size="sm"
+					spritemap={spritemap}
+					title={Liferay.Language.get(
+						'cancel-field-changes-question'
+					)}
+				/>
 			</div>
 		);
 	}
@@ -299,7 +342,7 @@ class Sidebar extends Component {
 
 	syncVisible(visible) {
 		if (!visible) {
-			this.emit('fieldBlurred');
+			this.dispatchFieldBlurred();
 		}
 	}
 
@@ -318,12 +361,24 @@ class Sidebar extends Component {
 		);
 	}
 
-	_cancelFieldChanges(indexes) {
-		this.emit('fieldChangesCanceled', indexes);
+	_cancelFieldChanges() {
+		const {cancelChangesModal} = this.refs;
+
+		cancelChangesModal.show();
 	}
 
 	_deleteField(indexes) {
-		this.emit('fieldDeleted', {indexes});
+		const {dispatch} = this.context;
+
+		dispatch('fieldDeleted', {indexes});
+	}
+
+	dispatchFieldBlurred() {
+		const {dispatch} = this.context;
+
+		if (!this.isDisposed()) {
+			dispatch('sidebarFieldBlurred');
+		}
 	}
 
 	_dropdownFieldTypesValueFn() {
@@ -342,7 +397,27 @@ class Sidebar extends Component {
 	}
 
 	_duplicateField(indexes) {
-		this.emit('fieldDuplicated', {indexes});
+		const {dispatch} = this.context;
+
+		dispatch('fieldDuplicated', {indexes});
+	}
+
+	_fetchFieldSet(fieldSetId) {
+		const {
+			editingLanguageId,
+			fieldSetDefinitionURL,
+			groupId,
+			portletNamespace
+		} = this.props;
+
+		return makeFetch({
+			method: 'GET',
+			url: `${fieldSetDefinitionURL}?ddmStructureId=${fieldSetId}&languageId=${editingLanguageId}&portletNamespace=${portletNamespace}&scopeGroupId=${groupId}`
+		})
+			.then(({pages}) => pages)
+			.catch(error => {
+				throw new Error(error);
+			});
 	}
 
 	_fieldTypesGroupValueFn() {
@@ -389,6 +464,24 @@ class Sidebar extends Component {
 		return eventName;
 	}
 
+	_handleCancelChangesModalButtonClicked(event) {
+		const {dispatch} = this.context;
+		const {target} = event;
+		const {cancelChangesModal} = this.refs;
+
+		event.stopPropagation();
+
+		if (this._isOutsideModal(target)) {
+			this.close();
+		}
+
+		cancelChangesModal.emit('hide');
+
+		if (!event.target.classList.contains('close-modal')) {
+			dispatch('fieldChangesCanceled', {});
+		}
+	}
+
 	_handleChangeFieldTypeItemClicked({data}) {
 		const newFieldType = data.item.name;
 
@@ -412,16 +505,18 @@ class Sidebar extends Component {
 			this.close();
 
 			dom.once(this.refs.container, transitionEnd, () =>
-				this.emit('fieldBlurred')
+				this.dispatchFieldBlurred()
 			);
 
 			if (!this._isModalElement(target)) {
-				setTimeout(() => this.emit('fieldBlurred'), 500);
+				setTimeout(() => this.dispatchFieldBlurred(), 500);
 			}
 		}
 	}
 
 	_handleDragEnded(data, event) {
+		const {dispatch} = this.context;
+
 		event.preventDefault();
 
 		if (!data.target) {
@@ -433,17 +528,25 @@ class Sidebar extends Component {
 		const target = FormSupport.getIndexes(data.target.parentElement);
 
 		if (fieldSetId) {
-			this.emit('fieldSetAdded', {
-				data,
-				fieldSetId,
-				target
+			this._fetchFieldSet(fieldSetId).then(pages => {
+				dispatch('fieldSetAdded', {
+					data,
+					fieldSetId,
+					fieldSetPages: pages,
+					target
+				});
 			});
 		} else {
 			const fieldType = fieldTypes.find(({name}) => {
 				return name === data.source.dataset.fieldTypeName;
 			});
 
-			this.emit('fieldAdded', {
+			const addedToPlaceholder = data.target.parentElement.parentElement.classList.contains(
+				'placeholder'
+			);
+
+			dispatch('fieldAdded', {
+				addedToPlaceholder,
 				data,
 				fieldType: {
 					...fieldType,
@@ -499,17 +602,35 @@ class Sidebar extends Component {
 		this.close();
 
 		dom.once(this.refs.container, transitionEnd, () => {
-			this.emit('fieldBlurred');
+			this.dispatchFieldBlurred();
 			this.open();
 		});
 	}
 
-	_handleSettingsFieldBlurred(event) {
-		this.emit('settingsFieldBlurred', event);
+	_handleSettingsFieldBlurred({fieldInstance, value}) {
+		const {dispatch} = this.context;
+		const {editingLanguageId} = this.props;
+		const {fieldName} = fieldInstance;
+
+		dispatch('fieldBlurred', {
+			editingLanguageId,
+			propertyName: fieldName,
+			propertyValue: value
+		});
 	}
 
-	_handleSettingsFieldEdited(event) {
-		this.emit('settingsFieldEdited', event);
+	_handleSettingsFieldEdited({fieldInstance, value}) {
+		if (fieldInstance && !fieldInstance.isDisposed()) {
+			const {editingLanguageId} = this.props;
+			const {fieldName} = fieldInstance;
+			const {dispatch} = this.context;
+
+			dispatch('fieldEdited', {
+				editingLanguageId,
+				propertyName: fieldName,
+				propertyValue: value
+			});
+		}
 	}
 
 	_handleSettingsFormAttached() {
@@ -546,6 +667,10 @@ class Sidebar extends Component {
 
 	_isModalElement(node) {
 		return dom.closest(node, '.modal');
+	}
+
+	_isOutsideModal(node) {
+		return !dom.closest(node, '.close-modal');
 	}
 
 	_isSettingsElement(target) {

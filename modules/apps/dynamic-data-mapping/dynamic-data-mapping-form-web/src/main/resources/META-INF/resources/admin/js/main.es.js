@@ -19,6 +19,7 @@ import compose from 'dynamic-data-mapping-form-renderer/js/util/compose.es';
 import core from 'metal';
 import dom from 'metal-dom';
 import LayoutProvider from 'dynamic-data-mapping-form-builder/js/components/LayoutProvider/LayoutProvider.es';
+import Sidebar from 'dynamic-data-mapping-form-builder/js/components/Sidebar/Sidebar.es';
 import Notifications from './util/Notifications.es';
 import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
@@ -48,7 +49,7 @@ import {sub} from 'dynamic-data-mapping-form-builder/js/util/strings.es';
 
 class Form extends Component {
 	attached() {
-		const {layoutProvider} = this.refs;
+		const {store} = this.refs;
 		const {
 			localizedDescription,
 			localizedName,
@@ -104,17 +105,24 @@ class Form extends Component {
 
 				translationManager.on('editingLocaleChange', event => {
 					this.props.editingLanguageId = event.newVal;
+
+					if (
+						translationManager.get('defaultLocale') === event.newVal
+					) {
+						this.showAddButton();
+					} else {
+						this.hideAddButton();
+					}
 				});
 
 				translationManager.on('deleteAvailableLocale', event => {
-					layoutProvider.emit('languageIdDeleted', event);
+					store.emit('languageIdDeleted', event);
 				});
 			}
 
 			this._stateSyncronizer = new StateSyncronizer(
 				{
 					descriptionEditor: results[1],
-					layoutProvider,
 					localizedDescription,
 					localizedName,
 					nameEditor: results[0],
@@ -122,6 +130,7 @@ class Form extends Component {
 					paginationMode,
 					published,
 					settingsDDMForm: results[3],
+					store,
 					translationManager
 				},
 				this.element
@@ -145,6 +154,11 @@ class Form extends Component {
 
 		this._eventHandler.add(
 			dom.on(
+				`#addFieldButton`,
+				'click',
+				this._handleAddFieldButtonClicked.bind(this)
+			),
+			dom.on(
 				`#${namespace}ControlMenu *[data-title="Back"]`,
 				'click',
 				this._handleBackButtonClicked
@@ -163,6 +177,50 @@ class Form extends Component {
 				this._showUnpublishedAlert();
 			}
 		}
+
+		if (!this._pageHasFields(store.getPages(), store.state.activePage)) {
+			this.openSidebar();
+		}
+
+		store.on('fieldDuplicated', () => this.openSidebar());
+
+		store.on('focusedFieldChanged', ({newVal}) => {
+			if (newVal && Object.keys(newVal).length > 0) {
+				this.openSidebar();
+			}
+		});
+
+		store.on('activePageChanged', () => {
+			const {activePage, pages} = store.state;
+
+			if (
+				activePage > -1 &&
+				pages[activePage] &&
+				!pages[activePage].successPageSettings &&
+				!this._pageHasFields(pages, activePage)
+			) {
+				this.openSidebar();
+			}
+		});
+
+		store.on('pagesChanged', ({prevVal, newVal}) => {
+			if (
+				newVal &&
+				prevVal &&
+				newVal.length !== prevVal.length &&
+				!this._pageHasFields(newVal, store.state.activePage)
+			) {
+				this.openSidebar();
+			}
+		});
+
+		store.on(
+			'paginationModeChanged',
+			this._handlePaginationModeChanded.bind(this)
+		);
+		store.on('ruleAdded', this._handleRuleSaved.bind(this));
+		store.on('ruleCancelled', this.showAddButton.bind(this));
+		store.on('ruleSaved', this._handleRuleSaved.bind(this));
 	}
 
 	checkEditorLimit(event, limit) {
@@ -206,6 +264,12 @@ class Form extends Component {
 		this._eventHandler.removeAllListeners();
 	}
 
+	hideAddButton() {
+		const addButton = document.querySelector('#addFieldButton');
+
+		addButton.classList.add('hide');
+	}
+
 	isForbiddenKey(event, limit) {
 		const charCode = event.which ? event.which : event.keyCode;
 		let forbidden = false;
@@ -217,6 +281,7 @@ class Form extends Component {
 		) {
 			forbidden = true;
 		}
+
 		return forbidden;
 	}
 
@@ -230,6 +295,10 @@ class Form extends Component {
 		const {ruleBuilderVisible} = this.state;
 
 		return ruleBuilderVisible && this.isFormBuilderView();
+	}
+
+	openSidebar() {
+		this.refs.sidebar.open();
 	}
 
 	preventCopyAndPaste(event, limit) {
@@ -273,47 +342,39 @@ class Form extends Component {
 		} = this.props;
 		const {saveButtonLabel} = this.state;
 
-		const layoutProviderProps = {
+		const storeProps = {
 			...this.props,
 			defaultLanguageId,
 			editingLanguageId,
-			events: {
-				paginationModeChanged: this._handlePaginationModeChanded,
-				ruleAdded: this._handleRuleSaved.bind(this),
-				ruleSaved: this._handleRuleSaved.bind(this)
-			},
 			initialPages: context.pages,
 			initialPaginationMode: context.paginationMode,
 			initialSuccessPageSettings: context.successPageSettings,
-			ref: 'layoutProvider'
+			ref: 'store'
 		};
 
 		const LayoutProviderTag = LayoutProvider;
 
 		return (
 			<div class={'ddm-form-builder'}>
-				<LayoutProviderTag {...layoutProviderProps}>
-					{this.isFormBuilderView() && (
-						<RuleBuilder
-							dataProviderInstanceParameterSettingsURL={
-								dataProviderInstanceParameterSettingsURL
-							}
-							dataProviderInstancesURL={dataProviderInstancesURL}
-							fieldTypes={fieldTypes}
-							functionsMetadata={functionsMetadata}
-							functionsURL={functionsURL}
-							groupId={groupId}
-							portletNamespace={namespace}
-							ref="ruleBuilder"
-							rolesURL={rolesURL}
-							rules={rules}
-							spritemap={spritemap}
-							visible={this.isShowRuleBuilder()}
-						/>
-					)}
+				<LayoutProviderTag {...storeProps}>
+					<RuleBuilder
+						dataProviderInstanceParameterSettingsURL={
+							dataProviderInstanceParameterSettingsURL
+						}
+						dataProviderInstancesURL={dataProviderInstancesURL}
+						fieldTypes={fieldTypes}
+						functionsMetadata={functionsMetadata}
+						functionsURL={functionsURL}
+						groupId={groupId}
+						portletNamespace={namespace}
+						ref="ruleBuilder"
+						rolesURL={rolesURL}
+						rules={rules}
+						spritemap={spritemap}
+						visible={this.isShowRuleBuilder()}
+					/>
 
 					<ComposedFormBuilder
-						fieldSetDefinitionURL={fieldSetDefinitionURL}
 						fieldSets={fieldSets}
 						fieldTypes={fieldTypes}
 						groupId={groupId}
@@ -322,6 +383,18 @@ class Form extends Component {
 						rules={rules}
 						spritemap={spritemap}
 						view={view}
+						visible={!this.isShowRuleBuilder()}
+					/>
+
+					<Sidebar
+						fieldSetDefinitionURL={fieldSetDefinitionURL}
+						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
+						fieldSets={fieldSets}
+						fieldTypes={fieldTypes}
+						portletNamespace={namespace}
+						ref="sidebar"
+						spritemap={spritemap}
 						visible={!this.isShowRuleBuilder()}
 					/>
 				</LayoutProviderTag>
@@ -412,6 +485,12 @@ class Form extends Component {
 		);
 	}
 
+	showAddButton() {
+		const addButton = document.querySelector('#addFieldButton');
+
+		addButton.classList.remove('hide');
+	}
+
 	submitForm() {
 		const {namespace} = this.props;
 
@@ -420,7 +499,7 @@ class Form extends Component {
 		submitForm(document.querySelector(`#${namespace}editForm`));
 	}
 
-	syncRuleBuilderVisible(ruleBuilderVisible) {
+	syncRuleBuilderVisible(visible) {
 		const {published, saved} = this.props;
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
 		const formBuilderButtons = document.querySelector(
@@ -434,7 +513,7 @@ class Form extends Component {
 			'.ddm-translation-manager'
 		);
 
-		if (ruleBuilderVisible) {
+		if (visible) {
 			formBasicInfo.classList.add('hide');
 			formBuilderButtons.classList.add('hide');
 			shareURLButton.classList.add('hide');
@@ -467,6 +546,16 @@ class Form extends Component {
 	willReceiveProps({published = {}}) {
 		if (published.newVal != null) {
 			this._updateShareFormIcon(published.newVal);
+		}
+	}
+
+	_handleAddFieldButtonClicked() {
+		if (this.isShowRuleBuilder()) {
+			this.refs.ruleBuilder.showRuleCreation();
+
+			this.hideAddButton();
+		} else {
+			this.openSidebar();
 		}
 	}
 
@@ -640,6 +729,8 @@ class Form extends Component {
 
 	_handleRuleSaved() {
 		this._autoSave.save(true);
+
+		this.showAddButton();
 	}
 
 	_handleSaveButtonClicked(event) {
@@ -650,6 +741,18 @@ class Form extends Component {
 		});
 
 		this.submitForm();
+	}
+
+	_pageHasFields(pages, pageIndex) {
+		const visitor = new PagesVisitor([pages[pageIndex]]);
+
+		let hasFields = false;
+
+		visitor.mapFields(() => {
+			hasFields = true;
+		});
+
+		return hasFields;
 	}
 
 	_pagesValueFn() {

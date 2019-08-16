@@ -275,10 +275,6 @@ class LayoutProvider extends Component {
 					activePage,
 					defaultLanguageId,
 					editingLanguageId,
-					events: {
-						...this.getEvents(),
-						...child.props.events
-					},
 					focusedField: this.getFocusedField(),
 					pages: this.getPages(),
 					paginationMode,
@@ -472,8 +468,6 @@ class LayoutProvider extends Component {
 		this.setState({
 			rules: [...this.state.rules, rule]
 		});
-
-		this.emit('ruleAdded', rule);
 	}
 
 	_handleRuleDeleted({ruleId}) {
@@ -639,7 +633,7 @@ LayoutProvider.PROPS = {
 	 * @type {?object}
 	 */
 
-	events: Config.setter('_setEvents'),
+	events: Config.setter('_setEvents').value({}),
 
 	/**
 	 * @default undefined

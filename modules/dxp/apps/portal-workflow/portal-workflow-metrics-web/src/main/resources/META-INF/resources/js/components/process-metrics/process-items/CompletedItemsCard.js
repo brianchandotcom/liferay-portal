@@ -2,11 +2,11 @@ import React, {useContext} from 'react';
 import {
 	TimeRangeContext,
 	TimeRangeProvider
-} from '../completion-velocity/store/TimeRangeStore';
+} from '../filter/store/TimeRangeStore';
 import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil';
 import ProcessItemsCard from './ProcessItemsCard';
 import Request from '../../../shared/components/request/Request';
-import {TimeRangeFilter} from '../completion-velocity/filter/TimeRangeFilter';
+import {TimeRangeFilter} from '../filter/TimeRangeFilter';
 
 function CompletedItemsCard({processId, query}) {
 	const {timeRange = []} = getFiltersParam(query);

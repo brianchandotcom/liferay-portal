@@ -1,9 +1,8 @@
+import React, {useContext} from 'react';
 import {CustomTimeRangeForm} from './CustomTimeRangeForm';
-import Filter from '../../../../shared/components/filter/Filter';
-import moment from '../../../../shared/util/moment';
-import React from 'react';
-import {TimeRangeContext} from '../store/TimeRangeStore';
-import {useContext} from 'react';
+import Filter from '../../../shared/components/filter/Filter';
+import moment from '../../../shared/util/moment';
+import {TimeRangeContext} from './store/TimeRangeStore';
 
 const TimeRangeFilter = ({filterKey = 'timeRange', position = 'right'}) => {
 	const {

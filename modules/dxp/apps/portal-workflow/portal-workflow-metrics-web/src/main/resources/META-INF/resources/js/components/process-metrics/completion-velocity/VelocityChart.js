@@ -7,8 +7,8 @@ import {
 } from '../../../shared/util/chart';
 import LineChart from '@clayui/charts';
 import {VelocityDataContext} from './store/VelocityDataStore';
-import {VelocityUnitContext} from './store/VelocityUnitStore';
-import {TimeRangeContext} from './store/TimeRangeStore';
+import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
+import {TimeRangeContext} from '../filter/store/TimeRangeStore';
 import moment from '../../../shared/util/moment';
 import React, {useContext} from 'react';
 import TooltipChart from '../../../shared/components/chart/TooltipChart';

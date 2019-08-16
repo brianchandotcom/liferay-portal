@@ -2,8 +2,8 @@ import {AppContext} from '../../../AppContext';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {ErrorContext} from '../../../../shared/components/request/Error';
 import {LoadingContext} from '../../../../shared/components/request/Loading';
-import {TimeRangeContext} from './TimeRangeStore';
-import {VelocityUnitContext} from './VelocityUnitStore';
+import {TimeRangeContext} from '../../filter/store/TimeRangeStore';
+import {VelocityUnitContext} from '../../filter/store/VelocityUnitStore';
 
 const useVelocityData = processId => {
 	const {client} = useContext(AppContext);

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {formatNumber} from '../../../shared/util/numeral';
 import {VelocityDataContext} from './store/VelocityDataStore';
-import {VelocityUnitContext} from './store/VelocityUnitStore';
+import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
 
 const ProcessVelocityInfo = () => {
 	const {getSelectedVelocityUnit} = useContext(VelocityUnitContext);

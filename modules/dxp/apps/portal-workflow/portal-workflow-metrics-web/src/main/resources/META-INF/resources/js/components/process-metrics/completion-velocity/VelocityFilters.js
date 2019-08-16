@@ -1,6 +1,6 @@
 import React from 'react';
-import {TimeRangeFilter} from './filter/TimeRangeFilter';
-import {VelocityUnitFilter} from './filter/VelocityUnitFilter';
+import {TimeRangeFilter} from '../filter/TimeRangeFilter';
+import {VelocityUnitFilter} from '../filter/VelocityUnitFilter';
 
 const VelocityFilters = () => {
 	return (

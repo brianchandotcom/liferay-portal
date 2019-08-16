@@ -1,7 +1,6 @@
-import Filter from '../../../../shared/components/filter/Filter';
-import React from 'react';
-import {VelocityUnitContext} from '../store/VelocityUnitStore';
-import {useContext} from 'react';
+import React, {useContext} from 'react';
+import Filter from '../../../shared/components/filter/Filter';
+import {VelocityUnitContext} from './store/VelocityUnitStore';
 
 const VelocityUnitFilter = () => {
 	const {

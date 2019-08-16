@@ -27,12 +27,13 @@ public class NestedFieldsContext {
 
 	public NestedFieldsContext(
 		List<String> fieldNames, Message message,
-		MultivaluedMap<String, String> pathParameters,
+		MultivaluedMap<String, String> pathParameters, String resourceVersion,
 		MultivaluedMap<String, String> queryParameters) {
 
 		_fieldNames = fieldNames;
 		_message = message;
 		_pathParameters = pathParameters;
+		_resourceVersion = resourceVersion;
 		_queryParameters = queryParameters;
 	}
 
@@ -52,9 +53,14 @@ public class NestedFieldsContext {
 		return _queryParameters;
 	}
 
+	public String getResourceVersion() {
+		return _resourceVersion;
+	}
+
 	private final List<String> _fieldNames;
 	private final Message _message;
 	private final MultivaluedMap<String, String> _pathParameters;
 	private final MultivaluedMap<String, String> _queryParameters;
+	private final String _resourceVersion;
 
 }

@@ -280,8 +280,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
-	public static final String JSP_PRECOMPILE_PROPERTY_NAME = "jsp.precompile";
-
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 
 	public static final String PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME =
@@ -3077,10 +3075,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskCompileJSP(
 		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
-		boolean jspPrecompileEnabled = GradleUtil.getProperty(
-			project, JSP_PRECOMPILE_PROPERTY_NAME, false);
+		boolean compileJspInclude= GradleUtil.getProperty(
+			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
 
-		if (!jspPrecompileEnabled) {
+		if (!compileJspInclude) {
 			return;
 		}
 
@@ -3249,10 +3247,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskGenerateJSPJava(
 		Project project, LiferayExtension liferayExtension) {
 
-		boolean jspPrecompileEnabled = GradleUtil.getProperty(
-			project, JSP_PRECOMPILE_PROPERTY_NAME, false);
+		boolean compileJspInclude = GradleUtil.getProperty(
+			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
 
-		if (!jspPrecompileEnabled) {
+		if (!compileJspInclude) {
 			return;
 		}
 

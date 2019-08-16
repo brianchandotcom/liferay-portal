@@ -16,14 +16,18 @@ package com.liferay.headless.delivery.graphql.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class KnowledgeBaseArticleGraphQLTest
 	extends BaseKnowledgeBaseArticleGraphQLTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"articleBody", "title"};
+	}
+
 }

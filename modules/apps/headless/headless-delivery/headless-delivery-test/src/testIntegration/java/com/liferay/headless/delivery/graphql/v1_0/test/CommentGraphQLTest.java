@@ -25,4 +25,10 @@ import org.junit.runner.RunWith;
 @Ignore
 @RunWith(Arquillian.class)
 public class CommentGraphQLTest extends BaseCommentGraphQLTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"text"};
+	}
+
 }

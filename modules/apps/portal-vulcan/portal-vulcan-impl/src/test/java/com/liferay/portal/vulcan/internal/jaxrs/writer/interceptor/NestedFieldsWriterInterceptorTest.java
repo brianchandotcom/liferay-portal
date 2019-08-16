@@ -626,7 +626,7 @@ public class NestedFieldsWriterInterceptorTest {
 			return Arrays.asList(_toProduct(1), _toProduct(2));
 		}
 
-		@NestedField("skus")
+		@NestedField(parentReturnType = Product.class, value = "skus")
 		@Override
 		public Page<Sku> getSkus(Long id, Pagination pagination) {
 			if (!Objects.equals(id, 1L)) {

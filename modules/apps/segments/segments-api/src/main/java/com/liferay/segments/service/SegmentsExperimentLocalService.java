@@ -202,6 +202,10 @@ public interface SegmentsExperimentLocalService
 	public SegmentsExperiment fetchSegmentsExperiment(
 		long segmentsExperienceId, long classNameId, long classPK, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long groupId, String segmentsExperimentKey);
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *

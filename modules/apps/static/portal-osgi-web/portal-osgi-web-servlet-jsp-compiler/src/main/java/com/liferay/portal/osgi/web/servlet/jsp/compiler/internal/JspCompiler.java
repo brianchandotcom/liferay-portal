@@ -14,16 +14,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
-import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 
 import java.net.URL;
 
@@ -117,20 +114,19 @@ public class JspCompiler {
 					new StringJavaFileObject(
 						className.substring(
 							className.lastIndexOf(CharPool.PERIOD) + 1),
-						_charArrayWriter.toString())));
+						FileUtil.read(
+							_jspCompilationContext.getServletJavaFileName()))));
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Compiling JSP: ".concat(className));
 			}
 
 			if (compilationTask.call()) {
-				for (BytecodeJavaFileObject bytecodeJavaFileObject :
-						_bytecodeJavaFileObjects) {
+				saveClassFile(
+					_jspCompilationContext.getFQCN(),
+					_jspCompilationContext.getClassFileName());
 
-					_jspRuntimeContext.setBytecode(
-						bytecodeJavaFileObject.getClassName(),
-						bytecodeJavaFileObject.getBytecode());
-				}
+				_bytecodeJavaFileObjects = null;
 
 				return null;
 			}
@@ -158,46 +154,9 @@ public class JspCompiler {
 		return javacErrorDetails;
 	}
 
-	public void doJavaFile(boolean keep) throws JasperException {
-		if (!keep) {
-			_charArrayWriter = null;
-
-			return;
-		}
-
-		try (Writer writer = new OutputStreamWriter(
-				Files.newOutputStream(Paths.get(_javaFileName)),
-				_javaEncoding)) {
-
-			writer.write(_charArrayWriter.toString());
-
-			_charArrayWriter = null;
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			_errorDispatcher.jspError(
-				"jsp.error.needAlternateJavaEncoding", _javaEncoding);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(unsupportedEncodingException);
-			}
-		}
-		catch (IOException ioException) {
-			throw new JasperException(ioException);
-		}
-	}
-
 	public long getClassLastModified() {
 		return _jspRuntimeContext.getBytecodeBirthTime(
 			_jspCompilationContext.getFullClassName());
-	}
-
-	public Writer getJavaWriter(String javaFileName, String javaEncoding) {
-		_javaFileName = javaFileName;
-		_javaEncoding = javaEncoding;
-
-		_charArrayWriter = new CharArrayWriter();
-
-		return _charArrayWriter;
 	}
 
 	public void init(
@@ -570,13 +529,10 @@ public class JspCompiler {
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames =
 		new HashMap<>(_jspBundleWiringPackageNames);
 	private List<BytecodeJavaFileObject> _bytecodeJavaFileObjects;
-	private CharArrayWriter _charArrayWriter;
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private final List<String> _compilerOptions = new ArrayList<>();
 	private ErrorDispatcher _errorDispatcher;
-	private String _javaEncoding;
-	private String _javaFileName;
 	private final List<JavaFileObjectResolver> _javaFileObjectResolvers =
 		new ArrayList<>();
 	private JspCompilationContext _jspCompilationContext;

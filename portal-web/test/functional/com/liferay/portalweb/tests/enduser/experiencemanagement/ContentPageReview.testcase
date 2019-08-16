@@ -1,8 +1,6 @@
 @component-name = "portal-collaboration"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorCommentsConfiguration-default.config";
-	property osgi.module.configurations = "enabled=B&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content Pages";
@@ -22,6 +20,19 @@ definition {
 			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
+
+		task ("Enable Content Page Comments at the instance level.") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Content Page Editor",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "Comments Enabled");
+
+			SystemSettings.saveConfiguration();
 		}
 	}
 
@@ -117,21 +128,10 @@ definition {
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment.");
 	}
 
-	@description = "This test ensures that users can enable and disable Content Page comments at the instance level."
+	@description = "This test ensures that Content Page Comments can be disabled at the instance level."
 	@priority = "4"
 	test DisableContentPageCommentsAtInstanceScope {
 		property test.name.skip.portal.instance = "ContentPageReview#DisableContentPageCommentsAtInstanceScope";
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Pages",
-			configurationName = "Content Page Editor",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "Comments Enabled");
-
-		SystemSettings.saveConfiguration();
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

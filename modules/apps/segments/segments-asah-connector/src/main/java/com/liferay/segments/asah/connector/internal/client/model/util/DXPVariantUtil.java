@@ -34,6 +34,7 @@ public class DXPVariantUtil {
 
 		DXPVariant dxpVariant = new DXPVariant();
 
+		dxpVariant.setChanges(0);
 		dxpVariant.setControl(segmentsExperimentRel.isControl());
 		dxpVariant.setDXPVariantId(
 			segmentsExperimentRel.getSegmentsExperienceKey());

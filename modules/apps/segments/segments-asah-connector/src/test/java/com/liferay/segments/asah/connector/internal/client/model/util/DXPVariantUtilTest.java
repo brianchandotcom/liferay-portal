@@ -51,7 +51,7 @@ public class DXPVariantUtilTest {
 		DXPVariant dxpVariant = DXPVariantUtil.toDXPVariant(
 			locale, segmentsExperimentRel);
 
-		Assert.assertNull(dxpVariant.getChanges());
+		Assert.assertEquals(Integer.valueOf(0), dxpVariant.getChanges());
 		Assert.assertEquals(
 			segmentsExperimentRel.isControl(), dxpVariant.isControl());
 		Assert.assertEquals(

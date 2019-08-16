@@ -1,0 +1,36 @@
+diff --git a/org/apache/felix/fileinstall/internal/BundleTransformer.java b/org/apache/felix/fileinstall/internal/BundleTransformer.java
+index f269dea..193da7f 100644
+--- a/org/apache/felix/fileinstall/internal/BundleTransformer.java
++++ b/org/apache/felix/fileinstall/internal/BundleTransformer.java
+@@ -39,9 +39,8 @@ public class BundleTransformer implements ArtifactUrlTransformer
+         {
+             // Handle OSGi bundles with the default deployer
+             String name = artifact.getName();
+-            if (!artifact.canRead()  
+-                || name.endsWith(".txt") || name.endsWith(".xml")
+-                || name.endsWith(".properties") || name.endsWith(".cfg"))
++            if (name.endsWith(".lpkg") || name.endsWith(".txt") || name.endsWith(".xml")
++                || name.endsWith(".properties") || name.endsWith(".cfg") || !artifact.canRead())
+             {
+                 // that's file type which is not supported as bundle and avoid
+                 // exception in the log
+@@ -81,3 +80,4 @@ public class BundleTransformer implements ArtifactUrlTransformer
+     }
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+index 334dc11..0f0f579 100644
+--- a/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
++++ b/org/apache/felix/fileinstall/internal/DirectoryWatcher.java
+@@ -820,8 +820,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
+             // /tmp/foo and /tmp//foo differently.
+             String location = bundle.getLocation();
+             String path = null;
+-            if (location != null &&
+-                    !location.equals(Constants.SYSTEM_BUNDLE_LOCATION)) {
++            if (location != null && !location.contains(watchedDirPath)) {
+                 URI uri;
+                 try {
+                     uri = new URI(bundle.getLocation()).normalize();

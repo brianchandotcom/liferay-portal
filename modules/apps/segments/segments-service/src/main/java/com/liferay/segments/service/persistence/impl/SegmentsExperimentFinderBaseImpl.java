@@ -86,4 +86,13 @@ public abstract class SegmentsExperimentFinderBaseImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentFinderBaseImpl.class);
 
+	static {
+		try {
+			Class.forName(SegmentsPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
+
 }

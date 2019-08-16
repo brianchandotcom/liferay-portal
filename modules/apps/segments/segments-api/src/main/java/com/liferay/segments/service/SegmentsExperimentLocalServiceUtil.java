@@ -225,6 +225,13 @@ public class SegmentsExperimentLocalServiceUtil {
 			segmentsExperienceId, classNameId, classPK, status);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+		fetchSegmentsExperiment(long groupId, String segmentsExperimentKey) {
+
+		return getService().fetchSegmentsExperiment(
+			groupId, segmentsExperimentKey);
+	}
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *

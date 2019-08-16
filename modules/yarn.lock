@@ -8149,7 +8149,7 @@ formatio@1.1.1:
   dependencies:
     samsam "~1.1"
 
-formik@1.4.3, formik@^1.4.1:
+formik@1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/formik/-/formik-1.4.3.tgz#a3bece72f545981f8fc825c21d5292d9aac524d2"
   integrity sha512-rwwcCPhidgiACnh1RBY8vp+Zp9ompHxezuGeIqmOh9RvmNCB8GCupoCWdDkWB0DZ1MBoDl76swB2v/FbMxeEmw==
@@ -15077,7 +15077,7 @@ react-dev-utils@^9.0.0:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-dnd-html5-backend@7.7.0, react-dnd-html5-backend@^7.7.0:
+react-dnd-html5-backend@7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-7.7.0.tgz#e2b8ea61a1bc34ba743b89cafcda6213b006c06a"
   integrity sha512-JgKmWOxqorFyfGPeWV+SAPhVGFe6+LrOR24jETE9rrYZU5hCppzwK9ujjS508kWibeDvbfEgi9j5qC2wB1/MoQ==
@@ -15096,7 +15096,7 @@ react-dnd-test-utils@7.7.0:
   resolved "https://registry.yarnpkg.com/react-dnd-test-utils/-/react-dnd-test-utils-7.7.0.tgz#627dbc7f35bfe9db73148bf8c1f438bbd7b2bdae"
   integrity sha512-OZAMws/26P6Jo5lVomxU3RZ9BEKyshG4szrkBK0ibF6SrfJ1ysEp4HOPtpeE0hVFdy3RG0eCsVDHXQSMY+6EBg==
 
-react-dnd@7.7.0, react-dnd@^7.7.0:
+react-dnd@7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-7.7.0.tgz#9d983331ecf87ba33d058d861e6ca9adb8253a2e"
   integrity sha512-anpJDKMgdXE6kXvtBFmIAe1fuaexpVy7meUyNjiTfCnjQ1mRvnttGTVvcW9fMKijsUQYadiyvzd3BRxteFuVXg==
@@ -15120,7 +15120,7 @@ react-docgen@^4.1.0:
     node-dir "^0.1.10"
     recast "^0.17.3"
 
-react-dom@16.8.6, react-dom@^16.6.3, react-dom@^16.8.3, react-dom@^16.8.6:
+react-dom@16.8.6, react-dom@^16.8.3, react-dom@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==
@@ -15326,7 +15326,7 @@ react-transition-group@^2.2.1:
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
 
-react@16.8.6, react@^16.6.3, react@^16.8.3, react@^16.8.6:
+react@16.8.6, react@^16.8.3, react@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
   integrity sha512-pC0uMkhLaHm11ZSJULfOBqV4tIZkx87ZLvbbQYunNixAAvjnC+snJCg0XQXn9VIsttVsbZP/H/ewzgsd5fxKXw==

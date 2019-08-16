@@ -14,7 +14,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ClayTable from '@clayui/table';
+import ClayList from '@clayui/list';
 import Variant from './Variant.es';
 import {SegmentsVariantType} from '../../../types.es';
 
@@ -26,29 +26,25 @@ function VariantList({
 }) {
 	return (
 		<>
-			<ClayTable bordered={false}>
-				<ClayTable.Body>
-					{variants.map(variant => {
-						return (
-							<Variant
-								active={
-									variant.segmentsExperienceId ===
-									selectedSegmentsExperienceId
-								}
-								control={variant.control}
-								key={variant.segmentsExperimentRelId}
-								name={variant.name}
-								onVariantDeletion={onVariantDeletion}
-								onVariantEdition={onVariantEdition}
-								segmentsExperienceId={
-									variant.segmentsExperienceId
-								}
-								variantId={variant.segmentsExperimentRelId}
-							/>
-						);
-					})}
-				</ClayTable.Body>
-			</ClayTable>
+			<ClayList>
+				{variants.map(variant => {
+					return (
+						<Variant
+							active={
+								variant.segmentsExperienceId ===
+								selectedSegmentsExperienceId
+							}
+							control={variant.control}
+							key={variant.segmentsExperimentRelId}
+							name={variant.name}
+							onVariantDeletion={onVariantDeletion}
+							onVariantEdition={onVariantEdition}
+							segmentsExperienceId={variant.segmentsExperienceId}
+							variantId={variant.segmentsExperimentRelId}
+						/>
+					);
+				})}
+			</ClayList>
 
 			{variants.length === 1 ? (
 				<>

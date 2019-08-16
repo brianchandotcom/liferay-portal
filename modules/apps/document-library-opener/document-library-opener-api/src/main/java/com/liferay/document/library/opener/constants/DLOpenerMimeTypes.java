@@ -111,10 +111,10 @@ public class DLOpenerMimeTypes {
 		ContentTypes.APPLICATION_TEXT, ".txt", APPLICATION_VND_DOCX, ".docx",
 		APPLICATION_VND_ODP, ".odp", APPLICATION_VND_ODS, ".ods",
 		APPLICATION_VND_ODT, ".odt", APPLICATION_VND_PPTX, ".pptx",
-		APPLICATION_VND_XLSX, ".xlsx", APPLICATION_VND_XSLX, ".xslx",
-		ContentTypes.IMAGE_PNG, ".png", ContentTypes.TEXT, ".txt",
-		ContentTypes.TEXT_CSV, ".csv", ContentTypes.TEXT_PLAIN, ".txt",
-		ContentTypes.TEXT_HTML, ".html", TEXT_TAB_SEPARATED_VALUES, ".tsv");
+		APPLICATION_VND_XLSX, ".xlsx", ContentTypes.IMAGE_PNG, ".png",
+		ContentTypes.TEXT, ".txt", ContentTypes.TEXT_CSV, ".csv",
+		ContentTypes.TEXT_PLAIN, ".txt", ContentTypes.TEXT_HTML, ".html",
+		TEXT_TAB_SEPARATED_VALUES, ".tsv");
 
 	/**
 	 * Returns the canonical file extension associated with the MIME type. The

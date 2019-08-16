@@ -281,7 +281,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String JSP_PRECOMPILE_PROPERTY_NAME =
-		"jsp.precompile.enabled";
+		"jsp.precompile";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
 

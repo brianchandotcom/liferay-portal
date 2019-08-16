@@ -286,6 +286,13 @@ public class AppBuilderAppLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(long companyId, int status) {
+
+		return _appBuilderAppLocalService.getAppBuilderApps(companyId, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getAppBuilderApps(
 			long groupId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

@@ -271,6 +271,12 @@ public class AppBuilderAppLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
+		getAppBuilderApps(long companyId, int status) {
+
+		return getService().getAppBuilderApps(companyId, status);
+	}
+
+	public static java.util.List<com.liferay.app.builder.model.AppBuilderApp>
 		getAppBuilderApps(
 			long groupId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

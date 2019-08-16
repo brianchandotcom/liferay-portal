@@ -787,10 +787,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Data Definition Name for List: DDL List Name",
+			searchAssetTitle = "New Entry for Form DDL List Name",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Data Definition Name for List: DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for Form DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -802,10 +802,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "123");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Data Definition Name for List: DDL List Name",
+			searchAssetTitle = "New Entry for Form DDL List Name",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Data Definition Name for List: DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for Form DDL List Name");
 
 		DDLRecord.viewSecondRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -919,10 +919,10 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
-			searchAssetTitle = "New Data Definition Name for List: DDL List Name",
+			searchAssetTitle = "New Entry for Form DDL List Name",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Data Definition Name for List: DDL List Name");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "New Entry for Form DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",

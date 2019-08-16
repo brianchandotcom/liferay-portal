@@ -166,7 +166,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		IconTag iconTag = new IconTag();
 
 		iconTag.setCssClass("icon-monospaced");
-		iconTag.setImage("star-half");
+		iconTag.setImage("test");
 		iconTag.setMarkupView("lexicon");
 
 		try {

@@ -10,17 +10,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
-	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
-	compileOnly project(":apps:portal-instances:portal-instances-api")
-	compileOnly project(":apps:portal-search-elasticsearch6:portal-search-elasticsearch6-api")
-	compileOnly project(":apps:portal-search:portal-search-api")
-	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
-	compileOnly project(":core:petra:petra-function")
-	compileOnly project(":core:petra:petra-lang")
-	compileOnly project(":core:petra:petra-string")
-
-	jsCompile project(":apps:frontend-taglib:frontend-taglib")
-	jsCompile project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":private:apps:portal-search-tuning:portal-search-tuning-web-api")
 }

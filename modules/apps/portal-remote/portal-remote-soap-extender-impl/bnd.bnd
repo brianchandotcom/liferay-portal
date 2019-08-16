@@ -31,4 +31,3 @@ Import-Package:\
 	!org.springframework.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 1.0.0

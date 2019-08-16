@@ -26,4 +26,3 @@ Import-Package:\
 	!org.objectweb.asm.util,\
 	\
 	*
-Liferay-Require-SchemaVersion: 1.0.0

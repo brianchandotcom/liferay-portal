@@ -70,6 +70,11 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
+	public List<AppBuilderApp> getAppBuilderApps(long companyId, int status) {
+		return appBuilderAppPersistence.findByC_S(companyId, status);
+	}
+
+	@Override
 	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator) {

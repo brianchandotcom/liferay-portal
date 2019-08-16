@@ -35,16 +35,14 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_C_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="ddmStructureId" />
-		</finder>
-		<finder name="G_C_D_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="companyId" />
-			<finder-column name="ddmStructureId" />
-			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->

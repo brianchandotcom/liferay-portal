@@ -48,6 +48,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
@@ -407,9 +408,18 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		throws Exception {
 
 		for (Object resource : getResources()) {
-			Method method = _getAnnotatedMethod(resource.getClass(), fieldName);
+			Class<?> resourceClass = resource.getClass();
+
+			Method method = _getAnnotatedMethod(resourceClass, fieldName);
 
 			if (method == null) {
+				continue;
+			}
+
+			if (!Objects.equals(
+					nestedFieldsContext.getResourceVersion(),
+					_getResourceVersion(resourceClass.getSuperclass()))) {
+
 				continue;
 			}
 
@@ -431,6 +441,23 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		}
 
 		return null;
+	}
+
+	private String _getResourceVersion(Class resourceBaseClass) {
+		Annotation[] annotations = resourceBaseClass.getAnnotations();
+
+		for (Annotation annotation : annotations) {
+			if (annotation instanceof Path) {
+				Path path = (Path)annotation;
+
+				String resourceVersion = path.value();
+
+				return resourceVersion.substring(1);
+			}
+		}
+
+		throw new IllegalStateException(
+			"No defined version for resource " + resourceBaseClass);
 	}
 
 	private Object _getReturnObject(Class<?> fieldType, Object result) {

@@ -23,8 +23,10 @@ import io.kubernetes.client.models.V1EnvVar;
 import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodSpec;
+import io.kubernetes.client.models.V1SecretVolumeSource;
 import io.kubernetes.client.models.V1SecurityContext;
 import io.kubernetes.client.models.V1Volume;
+import io.kubernetes.client.models.V1VolumeMount;
 
 import java.io.IOException;
 
@@ -171,12 +173,33 @@ public class ResourceConfigurationFactory {
 
 		return _newDatabaseConfigurationPod(
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
-			false);
+			Arrays.asList(_newEmptyDirConfigurationVolume()), null, false);
 	}
 
 	private static Pod _newDatabaseConfigurationPod(
 		String dockerBaseImageName, String dockerImageName,
 		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars,
+		Boolean privileged) {
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
+			Arrays.asList(_newEmptyDirConfigurationVolume()), null, privileged);
+	}
+
+	private static Pod _newDatabaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName,
+		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars,
+		List<V1Volume> v1Volumes, List<V1VolumeMount> v1VolumeMounts) {
+
+		return _newDatabaseConfigurationPod(
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
+			v1Volumes, v1VolumeMounts, false);
+	}
+
+	private static Pod _newDatabaseConfigurationPod(
+		String dockerBaseImageName, String dockerImageName,
+		List<V1ContainerPort> v1ContainerPorts, List<V1EnvVar> v1EnvVars,
+		List<V1Volume> v1Volumes, List<V1VolumeMount> v1VolumeMounts,
 		Boolean privileged) {
 
 		V1Pod v1Pod = new V1Pod();
@@ -201,14 +224,15 @@ public class ResourceConfigurationFactory {
 		v1Container.setSecurityContext(
 			_newConfigurationSecurityContext(privileged));
 
+		if (v1VolumeMounts != null) {
+			v1Container.setVolumeMounts(v1VolumeMounts);
+		}
+
 		V1PodSpec v1PodSpec = _newConfigurationPodSpec(v1Container);
 
 		v1PodSpec.setHostname(hostname.toLowerCase());
 		v1PodSpec.setSubdomain(serviceName);
-		v1PodSpec.setVolumes(
-			new ArrayList<>(
-				Arrays.asList(
-					_newEmptyDirConfigurationVolume(dockerBaseImageName))));
+		v1PodSpec.setVolumes(new ArrayList<>(v1Volumes));
 
 		v1Pod.setSpec(v1PodSpec);
 
@@ -246,13 +270,11 @@ public class ResourceConfigurationFactory {
 			true);
 	}
 
-	private static V1Volume _newEmptyDirConfigurationVolume(
-		String dockerImageName) {
-
+	private static V1Volume _newEmptyDirConfigurationVolume() {
 		V1Volume v1Volume = new V1Volume();
 
 		v1Volume.setEmptyDir(new V1EmptyDirVolumeSource());
-		v1Volume.setName(dockerImageName);
+		v1Volume.setName("empty-dir");
 
 		return v1Volume;
 	}
@@ -299,7 +321,10 @@ public class ResourceConfigurationFactory {
 		}
 
 		return _newDatabaseConfigurationPod(
-			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars,
+			Arrays.asList(
+				_newEmptyDirConfigurationVolume(), _newSSHSecretVolume()),
+			Arrays.asList(_newSSHSecretVolumeMount()));
 	}
 
 	private static Pod _newPostgreSQLConfigurationPod(
@@ -314,6 +339,28 @@ public class ResourceConfigurationFactory {
 
 		return _newDatabaseConfigurationPod(
 			dockerBaseImageName, dockerImageName, v1ContainerPorts, v1EnvVars);
+	}
+
+	private static V1Volume _newSSHSecretVolume() {
+		V1SecretVolumeSource secretVolumeSource = new V1SecretVolumeSource();
+
+		secretVolumeSource.secretName("ssh-secret");
+
+		V1Volume v1Volume = new V1Volume();
+
+		v1Volume.setSecret(secretVolumeSource);
+		v1Volume.setName("ssh-secret");
+
+		return v1Volume;
+	}
+
+	private static V1VolumeMount _newSSHSecretVolumeMount() {
+		V1VolumeMount sshSecretVolumeMount = new V1VolumeMount();
+
+		sshSecretVolumeMount.setMountPath("/mnt/ssh-secret-volume");
+		sshSecretVolumeMount.setName("ssh-secret");
+
+		return sshSecretVolumeMount;
 	}
 
 	private static Pod _newSybaseConfigurationPod(

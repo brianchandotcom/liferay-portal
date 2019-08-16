@@ -196,6 +196,10 @@ public class MappedContentUtil {
 					JSONObject editableJSONObject =
 						editableProcessorJSONObject.getJSONObject(editableKey);
 
+					if (editableJSONObject == null) {
+						continue;
+					}
+
 					if (!editableJSONObject.has("classNameId") ||
 						!editableJSONObject.has("classPK") ||
 						!editableJSONObject.has("fieldId")) {

@@ -168,6 +168,14 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long groupId, String segmentsExperimentKey) {
+
+		return segmentsExperimentPersistence.fetchByG_S(
+			groupId, segmentsExperimentKey);
+	}
+
+	@Override
 	public List<SegmentsExperiment> getSegmentsEntrySegmentsExperiments(
 		long segmentsEntryId) {
 

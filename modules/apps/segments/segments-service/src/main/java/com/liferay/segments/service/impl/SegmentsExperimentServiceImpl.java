@@ -71,6 +71,25 @@ public class SegmentsExperimentServiceImpl
 	}
 
 	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(
+			long groupId, String segmentsExperimentKey)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentLocalService.fetchSegmentsExperiment(
+				groupId, segmentsExperimentKey);
+
+		if ((segmentsExperiment != null) &&
+			_segmentsExperimentResourcePermission.contains(
+				getPermissionChecker(), segmentsExperiment, ActionKeys.VIEW)) {
+
+			return segmentsExperiment;
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<SegmentsExperiment> getSegmentsExperienceSegmentsExperiments(
 			long[] segmentsExperienceIds, long classNameId, long classPK,
 			int[] statuses, int start, int end)

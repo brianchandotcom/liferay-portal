@@ -38,13 +38,6 @@ public interface RunNotifierCommand extends Serializable {
 	public static RunNotifierCommand testFailure(
 		Description description, Throwable throwable) {
 
-		Throwable[] suppressions = throwable.getSuppressed();
-
-		if (suppressions.length == 0) {
-			return runNotifier -> runNotifier.fireTestFailure(
-				new Failure(description, throwable));
-		}
-
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 

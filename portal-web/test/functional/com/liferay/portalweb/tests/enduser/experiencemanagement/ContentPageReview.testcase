@@ -22,7 +22,7 @@ definition {
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
 
-		task ("Enable Content Page Comments at the instance level.") {
+		task ("Enable Content Page Comments at the instance level") {
 			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
@@ -259,7 +259,7 @@ definition {
 		PageEditor.resolveComment(fragmentComment = "This is a fragment comment.");
 	}
 
-	@description = "This test ensures that once the proper configuration file is added, Portal starts up with Content Page comments loaded."
+	@description = "This test ensures that Content Page Comments is being used once the proper configuration is enabled."
 	@priority = "5"
 	test Smoke {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");

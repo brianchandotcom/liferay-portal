@@ -16,9 +16,9 @@ package com.liferay.app.builder.web.internal.instance.lifecycle;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.deploy.AppDeployer;
+import com.liferay.app.builder.deploy.AppDeployerTracker;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
-import com.liferay.app.builder.web.internal.deploy.AppDeployerTrackerImpl;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Jeyvison Nascimento
@@ -56,9 +57,8 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 			JSONArray jsonArray = jsonObject.getJSONArray("deploymentTypes");
 
 			for (int i = 0; i < jsonArray.length(); i++) {
-				AppDeployer appDeployer =
-					_appDeployerTrackerImpl.getAppDeployer(
-						jsonArray.getString(i));
+				AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
+					jsonArray.getString(i));
 
 				if (appDeployer != null) {
 					appDeployer.deploy(appBuilderApp.getAppBuilderAppId());
@@ -70,7 +70,7 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
-	@Reference
-	private AppDeployerTrackerImpl _appDeployerTrackerImpl;
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	private AppDeployerTracker _appDeployerTracker;
 
 }

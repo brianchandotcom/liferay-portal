@@ -360,7 +360,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof Context) {
-				Message message = _getNestedAwareMessage(
+				Message message = _getNestedFieldsAwareMessage(
 					fieldName, nestedFieldsContext.getMessage());
 
 				argValue = _getContext(parameter.getType(), message);
@@ -393,7 +393,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return argValue;
 	}
 
-	private Message _getNestedAwareMessage(String fieldName, Message message) {
+	private Message _getNestedFieldsAwareMessage(
+		String fieldName, Message message) {
+
 		message.put(
 			"HTTP.REQUEST",
 			new NestedFieldsHttpServletRequestWrapper(

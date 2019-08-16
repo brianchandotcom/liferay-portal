@@ -44,7 +44,7 @@ definition {
 
 		AssertTextEquals(
 			key_title = "Dynamic and Customizable for a Healthier You",
-			locator1 = "Header#H1_TITLE",
+			locator1 = "Header#H2_TITLE",
 			value1 = "Dynamic and Customizable for a Healthier You");
 	}
 

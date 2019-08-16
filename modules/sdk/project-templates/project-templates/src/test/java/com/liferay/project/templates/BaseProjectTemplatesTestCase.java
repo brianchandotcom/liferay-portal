@@ -87,7 +87,7 @@ public interface BaseProjectTemplatesTestCase {
 
 	public static final String BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
 		Arrays.asList(
-			"*jsp.class", "*.js.map", "*manifest.json", "*pom.properties",
+			"*.js.map", "*_jsp.class", "*manifest.json", "*pom.properties",
 			"*pom.xml", "*package.json", "Archiver-Version", "Build-Jdk",
 			"Built-By", "Javac-Debug", "Javac-Deprecation", "Javac-Encoding"),
 		',');

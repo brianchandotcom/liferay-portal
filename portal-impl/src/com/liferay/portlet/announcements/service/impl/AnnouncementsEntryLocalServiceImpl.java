@@ -86,7 +86,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
-		// Entry
+		// Map.Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -215,7 +215,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	@Override
 	public void deleteEntry(AnnouncementsEntry entry) throws PortalException {
 
-		// Entry
+		// Map.Entry
 
 		announcementsEntryPersistence.remove(entry);
 
@@ -430,7 +430,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException {
 
-		// Entry
+		// Map.Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -669,12 +669,12 @@ public class AnnouncementsEntryLocalServiceImpl
 			fromAddress, fromName, toAddress, toName, subject, body, company,
 			entry);
 
-		for (String curToAddress : notifyUsersFullNames.keySet()) {
-			String curToName = notifyUsersFullNames.get(curToAddress);
+		for (Map.Entry<String, String> curEntry :
+				notifyUsersFullNames.entrySet()) {
 
 			_sendNotificationEmail(
-				fromAddress, fromName, curToAddress, curToName, subject, body,
-				company, entry);
+				fromAddress, fromName, curEntry.getKey(), curEntry.getValue(),
+				subject, body, company, entry);
 		}
 	}
 

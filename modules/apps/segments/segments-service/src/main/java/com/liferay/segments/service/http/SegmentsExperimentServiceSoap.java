@@ -108,6 +108,25 @@ public class SegmentsExperimentServiceSoap {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsExperimentSoap
+			fetchSegmentsExperiment(long groupId, String segmentsExperimentKey)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.fetchSegmentsExperiment(
+					groupId, segmentsExperimentKey);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.segments.model.SegmentsExperimentSoap[]
 			getSegmentsExperienceSegmentsExperiments(
 				long[] segmentsExperienceIds, long classNameId, long classPK,

@@ -240,6 +240,14 @@ public class SegmentsExperimentLocalServiceWrapper
 			segmentsExperienceId, classNameId, classPK, status);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+		fetchSegmentsExperiment(long groupId, String segmentsExperimentKey) {
+
+		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
+			groupId, segmentsExperimentKey);
+	}
+
 	/**
 	 * Returns the segments experiment matching the UUID and group.
 	 *

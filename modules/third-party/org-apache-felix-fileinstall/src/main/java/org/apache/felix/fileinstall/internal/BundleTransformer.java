@@ -41,7 +41,7 @@ public class BundleTransformer implements ArtifactUrlTransformer
             String name = artifact.getName();
             if (!artifact.canRead()  
                 || name.endsWith(".txt") || name.endsWith(".xml")
-                || name.endsWith(".properties") || name.endsWith(".cfg"))
+                || name.endsWith(".properties") || name.endsWith(".cfg") || name.endsWith(".lpkg"))
             {
                 // that's file type which is not supported as bundle and avoid
                 // exception in the log
@@ -81,3 +81,4 @@ public class BundleTransformer implements ArtifactUrlTransformer
     }
 
 }
+/* @generated */

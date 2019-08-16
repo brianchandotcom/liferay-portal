@@ -9,6 +9,11 @@
 		<tag-class>com.liferay.data.engine.taglib.servlet.taglib.DataLayoutBuilderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>dataDefinitionInputId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

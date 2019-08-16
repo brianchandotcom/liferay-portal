@@ -19,6 +19,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+java.lang.String componentId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:componentId"));
 java.lang.String dataDefinitionInputId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:dataDefinitionInputId"));
 java.lang.Long dataLayoutId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-builder:dataLayoutId")));
 java.lang.String dataLayoutInputId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayoutInputId"));

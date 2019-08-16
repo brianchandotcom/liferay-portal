@@ -2162,6 +2162,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final boolean jspPrecompileFromSource = GradleUtil.getProperty(
 			project, "jsp.precompile.from.source", true);
 
+		final File taglibDependencyDir = new File(
+			liferayExtension.getLiferayHome(), "osgi");
+		final File utilTaglibDependencyDir =
+			liferayExtension.getAppServerPortalDir();
+
 		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
 
 		ServiceRegistry serviceRegistry = gradleInternal.getServices();
@@ -2184,9 +2189,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					String group = externalModuleDependency.getGroup();
 					String name = externalModuleDependency.getName();
-
-					File appServerPortalDir =
-						liferayExtension.getAppServerPortalDir();
 
 					if (_isTaglibDependency(group, name)) {
 						String projectName = name.substring(12);
@@ -2220,7 +2222,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 								configuration, externalModuleDependency,
 								taglibProject);
 						}
-						else if (appServerPortalDir.exists() &&
+						else if (taglibDependencyDir.exists() &&
 								 jspPrecompileFromSource) {
 
 							Map<String, String> args = new HashMap<>();
@@ -2231,7 +2233,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							configuration.exclude(args);
 						}
 					}
-					else if (appServerPortalDir.exists() &&
+					else if (utilTaglibDependencyDir.exists() &&
 							 _isUtilTaglibDependency(group, name)) {
 
 						Map<String, String> args = new HashMap<>();
@@ -2264,12 +2266,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						File file;
 
 						if (_isTaglibDependency(group, name)) {
-							File dir = new File(
-								liferayExtension.getLiferayHome(), "osgi");
 							String fileName = name + ".jar";
 
 							try {
-								file = FileUtil.findFile(dir, fileName);
+								file = FileUtil.findFile(
+									taglibDependencyDir, fileName);
 							}
 							catch (IOException ioe) {
 								throw new UncheckedIOException(ioe);
@@ -2278,12 +2279,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							if (file == null) {
 								throw new GradleException(
 									"Unable to find " + fileName + " in " +
-										dir);
+										taglibDependencyDir);
 							}
 						}
 						else if (_isUtilTaglibDependency(group, name)) {
 							file = new File(
-								liferayExtension.getAppServerPortalDir(),
+								utilTaglibDependencyDir,
 								"WEB-INF/lib/util-taglib.jar");
 
 							if (!file.exists()) {

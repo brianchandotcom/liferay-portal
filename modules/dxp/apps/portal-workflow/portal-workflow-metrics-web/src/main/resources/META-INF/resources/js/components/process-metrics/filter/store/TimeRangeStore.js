@@ -51,10 +51,6 @@ const useTimeRange = timeRangeKeys => {
 			});
 	};
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
 	const defaultTimeRange = getDefaultTimeRange(timeRanges);
 
 	const getSelectedTimeRange = () => {
@@ -66,6 +62,10 @@ const useTimeRange = timeRangeKeys => {
 
 		return selectedTimeRanges.length ? selectedTimeRanges[0] : null;
 	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	return {
 		defaultTimeRange,

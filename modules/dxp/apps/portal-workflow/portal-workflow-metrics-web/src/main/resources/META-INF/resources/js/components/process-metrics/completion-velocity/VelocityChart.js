@@ -5,14 +5,14 @@ import {
 	getAxisMeasuresFromData,
 	getXAxisIntervals
 } from '../../../shared/util/chart';
+import {HOURS, MONTHS, WEEKS} from '../../../shared/util/chart-constants';
+import React, {useContext} from 'react';
 import LineChart from '@clayui/charts';
+import moment from '../../../shared/util/moment';
+import {TimeRangeContext} from '../filter/store/TimeRangeStore';
+import TooltipChart from '../../../shared/components/chart/TooltipChart';
 import {VelocityDataContext} from './store/VelocityDataStore';
 import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
-import {TimeRangeContext} from '../filter/store/TimeRangeStore';
-import moment from '../../../shared/util/moment';
-import React, {useContext} from 'react';
-import TooltipChart from '../../../shared/components/chart/TooltipChart';
-import {HOURS, MONTHS, WEEKS} from '../../../shared/util/chart-constants';
 
 const VelocityChart = () => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);

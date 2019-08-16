@@ -27,12 +27,6 @@ const useVelocityUnit = unitKeys => {
 		setVelocityUnits(velocityUnits);
 	};
 
-	useEffect(() => {
-		if (timeRange) {
-			fetchData(timeRange);
-		}
-	}, [timeRange]);
-
 	const defaultVelocityUnit = getDefaultVelocityUnit(velocityUnits);
 
 	const getSelectedVelocityUnit = () => {
@@ -44,6 +38,12 @@ const useVelocityUnit = unitKeys => {
 
 		return selectedVelocityUnits.length ? selectedVelocityUnits[0] : null;
 	};
+
+	useEffect(() => {
+		if (timeRange) {
+			fetchData(timeRange);
+		}
+	}, [timeRange]);
 
 	return {
 		defaultVelocityUnit,

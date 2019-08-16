@@ -23,8 +23,6 @@ import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
 
-import java.util.Objects;
-
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
@@ -68,14 +66,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			executeNpmTask.getProject(), "nodejs.node.env", (String)null);
 
 		if (Validator.isNotNull(nodeEnv)) {
-			String taskName = executeNpmTask.getName();
-
-			if (Objects.equals(taskName, NodePlugin.NPM_RUN_TEST_TASK_NAME)) {
-				executeNpmTask.environment("NODE_ENV", "test");
-			}
-			else {
-				executeNpmTask.environment("NODE_ENV", nodeEnv);
-			}
+			executeNpmTask.environment("NODE_ENV", nodeEnv);
 		}
 
 		String registry = GradleUtil.getProperty(

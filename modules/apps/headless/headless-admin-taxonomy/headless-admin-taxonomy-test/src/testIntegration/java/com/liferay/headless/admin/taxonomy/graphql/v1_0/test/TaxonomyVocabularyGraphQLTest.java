@@ -16,14 +16,18 @@ package com.liferay.headless.admin.taxonomy.graphql.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 /**
  * @author Javier Gamarra
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyGraphQLTest
 	extends BaseTaxonomyVocabularyGraphQLTestCase {
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"name"};
+	}
+
 }

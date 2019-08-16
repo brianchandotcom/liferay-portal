@@ -46,7 +46,7 @@ else {
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			iconCssClass="undo"
+			icon="undo"
 			markupView="lexicon"
 			message="revert"
 			url="<%= revertURL %>"

@@ -176,101 +176,98 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_populateProcessUsers(processUsers) {
-		AUI().use('liferay-portlet-url', () => {
-			const managementToolbar = Liferay.component(
-				'changeListHistoryManagementToolbar'
+		const managementToolbar = Liferay.component(
+			'changeListHistoryManagementToolbar'
+		);
+
+		const filterByUserIndex = managementToolbar.filterItems.findIndex(
+			e => e.label === 'Filter by User'
+		);
+
+		const filterByUserItems =
+			managementToolbar.filterItems[filterByUserIndex].items;
+
+		const updatedFilterByUserItems = [];
+
+		updatedFilterByUserItems.push(
+			filterByUserItems[
+				filterByUserItems.findIndex(e => e.label === 'All')
+			]
+		);
+
+		processUsers.forEach(processUser => {
+			const parameters = {
+				displayStyle: 'list',
+				orderByCol: this.orderByCol,
+				orderByType: this.orderByType,
+				user: processUser.userId
+			};
+
+			if (this.keywords) {
+				parameters.keywords = this.keywords;
+			}
+
+			const userFilterUrl = Liferay.Util.PortletURL.createURL(
+				this.baseURL,
+				parameters
 			);
 
-			const filterByUserIndex = managementToolbar.filterItems.findIndex(
-				e => e.label === 'Filter by User'
-			);
-
-			const filterByUserItems =
-				managementToolbar.filterItems[filterByUserIndex].items;
-
-			const updatedFilterByUserItems = [];
-
-			updatedFilterByUserItems.push(
-				filterByUserItems[
-					filterByUserItems.findIndex(e => e.label === 'All')
-				]
-			);
-
-			processUsers.forEach(processUser => {
-				const userFilterUrl = Liferay.PortletURL.createURL(
-					this.baseURL
-				);
-
-				userFilterUrl.setParameter('displayStyle', 'list');
-
-				if (this.keywords) {
-					userFilterUrl.setParameter('keywords', this.keywords);
-				}
-
-				userFilterUrl.setParameter('orderByCol', this.orderByCol);
-				userFilterUrl.setParameter('orderByType', this.orderByType);
-				userFilterUrl.setParameter('user', processUser.userId);
-
-				updatedFilterByUserItems.push({
-					active: this.filterUser === processUser.userId.toString(),
-					href: userFilterUrl.toString(),
-					label: processUser.userName,
-					type: 'item'
-				});
+			updatedFilterByUserItems.push({
+				active: this.filterUser === processUser.userId.toString(),
+				href: userFilterUrl,
+				label: processUser.userName,
+				type: 'item'
 			});
-
-			managementToolbar.filterItems[
-				filterByUserIndex
-			].items = updatedFilterByUserItems;
 		});
+
+		managementToolbar.filterItems[
+			filterByUserIndex
+		].items = updatedFilterByUserItems;
 	}
 
 	_populateProcessEntries(processEntries) {
-		AUI().use('liferay-portlet-url', () => {
-			this.processEntries = [];
+		this.processEntries = [];
 
-			processEntries.forEach(processEntry => {
-				const viewLink = Liferay.PortletURL.createURL(this.baseURL);
+		processEntries.forEach(processEntry => {
+			const viewURL = Liferay.Util.PortletURL.createURL(this.baseURL);
 
-				const detailsLink = Liferay.PortletURL.createURL(this.baseURL);
+			const parameters = {
+				mvcRenderCommandName: '/change_lists_history/view_details',
+				backURL: viewURL,
+				ctCollectionId: processEntry.ctcollection.ctCollectionId,
+				orderByCol: 'title',
+				orderByType: 'desc'
+			};
 
-				detailsLink.setParameter(
-					'mvcRenderCommandName',
-					'/change_lists_history/view_details'
-				);
-				detailsLink.setParameter('backURL', viewLink.toString());
-				detailsLink.setParameter(
-					'ctCollectionId',
-					processEntry.ctcollection.ctCollectionId
-				);
-				detailsLink.setParameter('orderByCol', 'title');
-				detailsLink.setParameter('orderByType', 'desc');
+			const detailsURL = Liferay.Util.PortletURL.createURL(
+				this.baseURL,
+				parameters
+			);
 
-				this.processEntries.push({
-					description: processEntry.ctcollection.description,
-					detailsLink: detailsLink.toString(),
-					name: processEntry.ctcollection.name,
-					percentage: processEntry.percentage,
-					state: ChangeListsHistory._getState(processEntry.status),
-					timestamp: new Intl.DateTimeFormat(
-						Liferay.ThemeDisplay.getBCP47LanguageId(),
-						{
-							day: 'numeric',
-							hour: 'numeric',
-							minute: 'numeric',
-							month: 'numeric',
-							year: 'numeric'
-						}
-					).format(new Date(processEntry.date)),
-					userInitials: processEntry.userInitials,
-					userName: processEntry.userName
-				});
+			this.processEntries.push({
+				description: processEntry.ctcollection.description,
+				detailsLink: detailsURL,
+				name: processEntry.ctcollection.name,
+				percentage: processEntry.percentage,
+				state: ChangeListsHistory._getState(processEntry.status),
+				timestamp: new Intl.DateTimeFormat(
+					Liferay.ThemeDisplay.getBCP47LanguageId(),
+					{
+						day: 'numeric',
+						hour: 'numeric',
+						minute: 'numeric',
+						month: 'numeric',
+						year: 'numeric'
+					}
+				).format(new Date(processEntry.date)),
+				userInitials: processEntry.userInitials,
+				userName: processEntry.userName
 			});
-
-			Liferay.component(
-				'changeListHistoryManagementToolbar'
-			).totalItems = this.processEntries.length;
 		});
+
+		Liferay.component(
+			'changeListHistoryManagementToolbar'
+		).totalItems = this.processEntries.length;
 
 		this.loaded = true;
 	}

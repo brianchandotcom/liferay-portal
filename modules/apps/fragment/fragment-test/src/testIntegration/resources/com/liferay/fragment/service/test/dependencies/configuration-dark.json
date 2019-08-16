@@ -3,6 +3,49 @@
 		{
 			"fields": [
 				{
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"label": "table-width",
+					"name": "tableWidth",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1.1"
+							},
+							{
+								"value": "3.2"
+							},
+							{
+								"value": "5.3"
+							},
+							{
+								"value": "7.4"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "3",
+					"label": "number-of-columns",
+					"name": "numberOfColumns",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "1"
+							},
+							{
+								"value": "3"
+							},
+							{
+								"value": "5"
+							}
+						]
+					}
+				},
+				{
 					"dataType": "string",
 					"defaultValue": "dark",
 					"label": "applied-style",
@@ -36,49 +79,6 @@
 							},
 							{
 								"value": "light"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "int",
-					"defaultValue": "3",
-					"label": "number-of-columns",
-					"name": "numberOfColumns",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "1"
-							},
-							{
-								"value": "3"
-							},
-							{
-								"value": "5"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "double",
-					"defaultValue": "1.1",
-					"label": "table-width",
-					"name": "tableWidth",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "1.1"
-							},
-							{
-								"value": "3.2"
-							},
-							{
-								"value": "5.3"
-							},
-							{
-								"value": "7.4"
 							}
 						]
 					}

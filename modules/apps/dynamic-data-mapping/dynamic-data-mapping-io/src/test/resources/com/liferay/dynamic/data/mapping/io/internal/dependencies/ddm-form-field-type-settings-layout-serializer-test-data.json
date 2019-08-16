@@ -6,9 +6,9 @@
 					"columns": [
 						{
 							"fieldNames": [
-								"c",
+								"a",
 								"b",
-								"a"
+								"c"
 							],
 							"size": 12
 						}
@@ -25,13 +25,13 @@
 					"columns": [
 						{
 							"fieldNames": [
-								"e"
+								"d"
 							],
 							"size": 6
 						},
 						{
 							"fieldNames": [
-								"d"
+								"e"
 							],
 							"size": 6
 						}

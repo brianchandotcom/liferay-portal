@@ -1,7 +1,7 @@
 {
-    "ignore": [
-        "**/config.js",
-        "**/navigation.js",
-        "**/main.js"
-    ]
+	"ignore": [
+		"**/config.js",
+		"**/main.js",
+		"**/navigation.js"
+	]
 }

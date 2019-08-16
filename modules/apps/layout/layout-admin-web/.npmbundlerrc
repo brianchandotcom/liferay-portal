@@ -1,6 +1,6 @@
 {
-    "ignore": [
-      "**/config.js",
-      "**/layout_customization_settings.js"
-    ]
+	"ignore": [
+		"**/config.js",
+		"**/layout_customization_settings.js"
+	]
 }

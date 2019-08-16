@@ -3,6 +3,12 @@
 		{
 			"fields": [
 				{
+					"dataType": "object",
+					"label": "text-color",
+					"name": "textColor",
+					"type": "colorPalette"
+				},
+				{
 					"dataType": "string",
 					"defaultValue": "h1",
 					"label": "heading-level",
@@ -34,22 +40,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "left"
+								"value": "center"
 							},
 							{
-								"value": "center"
+								"value": "left"
 							},
 							{
 								"value": "right"
 							}
 						]
 					}
-				},
-				{
-					"dataType": "object",
-					"label": "text-color",
-					"name": "textColor",
-					"type": "colorPalette"
 				}
 			]
 		}

@@ -3,6 +3,32 @@
 		{
 			"fields": [
 				{
+					"dataType": "object",
+					"label": "background-color",
+					"name": "backgroundColor",
+					"type": "colorPalette"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "left",
+					"label": "content-align",
+					"name": "contentAlign",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "center"
+							},
+							{
+								"value": "left"
+							},
+							{
+								"value": "right"
+							}
+						]
+					}
+				},
+				{
 					"dataType": "string",
 					"defaultValue": "p-2",
 					"label": "padding",
@@ -11,21 +37,15 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
-								"value": "p-2"
-							},
-							{
 								"label": "large",
 								"value": "p-4"
+							},
+							{
+								"label": "small",
+								"value": "p-2"
 							}
 						]
 					}
-				},
-				{
-					"dataType": "object",
-					"label": "background-color",
-					"name": "backgroundColor",
-					"type": "colorPalette"
 				},
 				{
 					"dataType": "string",
@@ -36,16 +56,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
+								"label": "large",
+								"value": "lg"
+							},
+							{
 								"label": "none",
 								"value": "none"
 							},
 							{
 								"label": "small",
 								"value": "sm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
 							}
 						]
 					}
@@ -59,36 +79,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
+								"label": "large",
+								"value": "lg"
+							},
+							{
 								"label": "none",
 								"value": "none"
 							},
 							{
 								"label": "small",
 								"value": "sm"
-							},
-							{
-								"label": "large",
-								"value": "lg"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "left",
-					"label": "content-align",
-					"name": "contentAlign",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "left"
-							},
-							{
-								"value": "center"
-							},
-							{
-								"value": "right"
 							}
 						]
 					}

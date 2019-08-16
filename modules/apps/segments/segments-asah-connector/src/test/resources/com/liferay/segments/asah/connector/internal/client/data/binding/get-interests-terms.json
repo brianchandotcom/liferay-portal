@@ -2,26 +2,12 @@
 	"_embedded": {
 		"interest-topics": [
 			{
-				"id": 7,
-				"terms": [
-					{
-						"keyword": "javascript",
-						"weight": 0.0945945945945946
-					},
-					{
-						"keyword": "jquery",
-						"weight": 0.08648648648648649
-					},
-					{
-						"keyword": "html",
-						"weight": 0.07027027027027027
-					}
-				],
-				"weight": 0.08653350323695352
-			},
-			{
 				"id": 1,
 				"terms": [
+					{
+						"keyword": "mysql",
+						"weight": 0.05509641873278237
+					},
 					{
 						"keyword": "php",
 						"weight": 0.1322314049586777
@@ -29,24 +15,38 @@
 					{
 						"keyword": "sql",
 						"weight": 0.06060606060606061
-					},
-					{
-						"keyword": "mysql",
-						"weight": 0.05509641873278237
 					}
 				],
 				"weight": 0.08027610626914822
 			},
 			{
+				"id": 7,
+				"terms": [
+					{
+						"keyword": "html",
+						"weight": 0.07027027027027027
+					},
+					{
+						"keyword": "javascript",
+						"weight": 0.0945945945945946
+					},
+					{
+						"keyword": "jquery",
+						"weight": 0.08648648648648649
+					}
+				],
+				"weight": 0.08653350323695352
+			},
+			{
 				"id": 9,
 				"terms": [
 					{
-						"keyword": "java",
-						"weight": 0.15204678362573099
-					},
-					{
 						"keyword": "android",
 						"weight": 0.10526315789473684
+					},
+					{
+						"keyword": "java",
+						"weight": 0.15204678362573099
 					},
 					{
 						"keyword": "multithreading",

@@ -2,63 +2,11 @@
 	{
 		"actions": [
 			{
-				"action": "show",
-				"target": "Field2"
-			}
-		],
-		"conditions": [
-			{
-
-				"operands": [
-					{
-						"type": "field",
-						"value": "Field1"
-					},
-					{
-						"type": "string",
-						"value": "Joe"
-					}
-				],
-				"operator": "not-equals-to"
-			},
-			{
-				"operands": [
-					{
-						"type": "field",
-						"value": "Field1"
-					},
-					{
-						"type": "string",
-						"value": "Blogs"
-					}
-				],
-				"operator": "not-contains"
-			}
-		],
-		"logical-operator": "OR"
-	},
-	{
-		"actions": [
-			{
 				"action": "enable",
 				"target": "Field3"
 			}
 		],
 		"conditions": [
-			{
-
-				"operands": [
-					{
-						"type": "field",
-						"value": "Field1"
-					},
-					{
-						"type": "field",
-						"value": "Field2"
-					}
-				],
-				"operator": "contains"
-			},
 			{
 				"operands": [
 					{
@@ -68,6 +16,20 @@
 					{
 						"type": "integer",
 						"value": "4"
+					}
+				],
+				"operator": "contains"
+			},
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
 					}
 				],
 				"operator": "contains"
@@ -88,15 +50,14 @@
 		],
 		"conditions": [
 			{
-
 				"operands": [
 					{
-						"type": "field",
-						"value": "Field1"
+						"type": "double",
+						"value": "5.3"
 					},
 					{
-						"type": "field",
-						"value": "Field2"
+						"type": "double",
+						"value": "5.3"
 					}
 				],
 				"operator": "equals-to"
@@ -108,24 +69,11 @@
 						"value": "Field2"
 					},
 					{
-						"type": "integer",
+						"type": "string",
 						"value": "4"
 					}
 				],
 				"operator": "contains"
-			},
-			{
-				"operands": [
-					{
-						"type": "integer",
-						"value": "5"
-					},
-					{
-						"type": "integer",
-						"value": "3"
-					}
-				],
-				"operator": "equals-to"
 			}
 		],
 		"logical-operator": "OR"
@@ -149,7 +97,7 @@
 						"value": "Field2"
 					},
 					{
-						"type": "string",
+						"type": "integer",
 						"value": "4"
 					}
 				],
@@ -158,15 +106,67 @@
 			{
 				"operands": [
 					{
-						"type": "double",
-						"value": "5.3"
+						"type": "integer",
+						"value": "3"
 					},
 					{
-						"type": "double",
-						"value": "5.3"
+						"type": "integer",
+						"value": "5"
 					}
 				],
 				"operator": "equals-to"
+			},
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
+					}
+				],
+				"operator": "equals-to"
+			}
+		],
+		"logical-operator": "OR"
+	},
+	{
+		"actions": [
+			{
+				"action": "show",
+				"target": "Field2"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "string",
+						"value": "Blogs"
+					}
+				],
+				"operator": "not-contains"
+			},
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "string",
+						"value": "Joe"
+					}
+				],
+				"operator": "not-equals-to"
 			}
 		],
 		"logical-operator": "OR"

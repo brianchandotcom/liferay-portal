@@ -4,26 +4,20 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "primary",
-					"label": "type",
-					"name": "buttonType",
+					"defaultValue": "left",
+					"label": "align",
+					"name": "buttonAlign",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "primary"
+								"value": "center"
 							},
 							{
-								"value": "secondary"
+								"value": "left"
 							},
 							{
-								"value": "link"
-							},
-							{
-								"value": "outline-primary"
-							},
-							{
-								"value": "outline-secondary"
+								"value": "right"
 							}
 						]
 					}
@@ -37,36 +31,42 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
-								"value": "sm"
+								"label": "large",
+								"value": "lg"
 							},
 							{
 								"label": "normal",
 								"value": "nm"
 							},
 							{
-								"label": "large",
-								"value": "lg"
+								"label": "small",
+								"value": "sm"
 							}
 						]
 					}
 				},
 				{
 					"dataType": "string",
-					"defaultValue": "left",
-					"label": "align",
-					"name": "buttonAlign",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "left"
+								"value": "link"
 							},
 							{
-								"value": "center"
+								"value": "outline-primary"
 							},
 							{
-								"value": "right"
+								"value": "outline-secondary"
+							},
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
 							}
 						]
 					}

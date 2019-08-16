@@ -6,7 +6,7 @@
 			}
 		}
 	},
-  "ignore": [
+	"ignore": [
 		"**/__tests__/*.js"
 	]
 }

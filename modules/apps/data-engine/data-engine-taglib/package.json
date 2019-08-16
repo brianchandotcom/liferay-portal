@@ -14,13 +14,13 @@
 					},
 					"rules": {
 						"no-unknown-property": [
-							2,
 							{
 								"ignore": [
 									"class",
 									"xlink:href"
 								]
-							}
+							},
+							2
 						]
 					}
 				}
@@ -40,8 +40,8 @@
 						"AlloyEditor": true,
 						"CKEDITOR": true,
 						"LayoutBuilder": true,
-						"MODULE_PATH": true,
-						"main": true
+						"main": true,
+						"MODULE_PATH": true
 					}
 				}
 			}

@@ -4,6 +4,16 @@
 			"asset-taglib": {
 				"/": ">=4.0.0"
 			},
+			"frontend-js-metal-web": {
+				"metal": ">=2.16.5",
+				"metal-component": ">=2.16.5",
+				"metal-dom": ">=2.16.5",
+				"metal-soy": ">=2.16.5",
+				"metal-state": ">=2.16.5"
+			},
+			"frontend-js-web": {
+				"/": ">=3.0.0"
+			},
 			"frontend-taglib-clay": {
 				"clay-autocomplete": ">=2.9.0",
 				"clay-button": ">=2.9.0",
@@ -14,16 +24,6 @@
 				"clay-multi-select": ">=2.9.0",
 				"clay-portal": ">=2.9.0",
 				"clay-radio": ">=2.9.0"
-			},
-			"frontend-js-metal-web": {
-				"metal": ">=2.16.5",
-				"metal-component": ">=2.16.5",
-				"metal-soy": ">=2.16.5",
-				"metal-state": ">=2.16.5",
-				"metal-dom": ">=2.16.5"
-			},
-			"frontend-js-web": {
-				"/": ">=3.0.0"
 			}
 		}
 	},

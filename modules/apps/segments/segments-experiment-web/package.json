@@ -15,8 +15,8 @@
 			"<rootDir>/test/js/setup.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/js/[^/]+\\.js",
-			"<rootDir>/node_modules/"
+			"<rootDir>/node_modules/",
+			"<rootDir>/test/js/[^/]+\\.js"
 		]
 	},
 	"name": "segments-experiment-web",

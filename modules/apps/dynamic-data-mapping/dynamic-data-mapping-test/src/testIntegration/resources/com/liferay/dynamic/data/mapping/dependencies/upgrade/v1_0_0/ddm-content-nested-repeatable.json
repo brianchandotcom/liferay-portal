@@ -16,10 +16,10 @@
 					}
 				},
 				{
-					"instanceId": "woyi",
-					"name": "TextRepeateable",
+					"instanceId": "qagd",
+					"name": "TextNestedBottom",
 					"value": {
-						"en_US": "Quisque rutrum"
+						"en_US": "Duis vel nibh at velit scelerisque suscipit"
 					}
 				},
 				{
@@ -30,17 +30,17 @@
 					}
 				},
 				{
+					"instanceId": "woyi",
+					"name": "TextRepeateable",
+					"value": {
+						"en_US": "Quisque rutrum"
+					}
+				},
+				{
 					"instanceId": "ysgc",
 					"name": "TextRepeateable",
 					"value": {
 						"en_US": "Sed libero"
-					}
-				},
-				{
-					"instanceId": "qagd",
-					"name": "TextNestedBottom",
-					"value": {
-						"en_US": "Duis vel nibh at velit scelerisque suscipit"
 					}
 				}
 			],

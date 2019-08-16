@@ -107,12 +107,12 @@
 					},
 					"fieldType": {
 						"enum": [
-							"select",
-							"radio",
-							"date",
 							"checkbox",
 							"checkbox_multiple",
-							"numeric"
+							"date",
+							"numeric",
+							"radio",
+							"select"
 						],
 						"type": "string"
 					},
@@ -756,12 +756,12 @@
 					},
 					"fieldType": {
 						"enum": [
-							"select",
-							"radio",
-							"date",
 							"checkbox",
 							"checkbox_multiple",
-							"numeric"
+							"date",
+							"numeric",
+							"radio",
+							"select"
 						],
 						"type": "string"
 					},
@@ -893,8 +893,8 @@
 					"subscriptionType": {
 						"enum": [
 							"day",
-							"week",
 							"month",
+							"week",
 							"year"
 						],
 						"type": "string"
@@ -917,11 +917,11 @@
 						"format": "int64",
 						"type": "integer"
 					},
-					"taxCategory": {
-						"type": "string"
-					},
 					"taxable": {
 						"type": "boolean"
+					},
+					"taxCategory": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -1134,105 +1134,6 @@
 	},
 	"openapi": "3.0.1",
 	"paths": {
-		"/v1.0/attachments/by-externalReferenceCode/{externalReferenceCode}": {
-			"delete": {
-				"operationId": "deleteAttachmentByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			},
-			"get": {
-				"operationId": "getAttachmentByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			},
-			"patch": {
-				"operationId": "patchAttachmentByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			}
-		},
 		"/v1.0/attachments/{id}": {
 			"delete": {
 				"operationId": "deleteAttachment",
@@ -1298,6 +1199,105 @@
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			}
+		},
+		"/v1.0/attachments/by-externalReferenceCode/{externalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteAttachmentByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			},
+			"get": {
+				"operationId": "getAttachmentByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			},
+			"patch": {
+				"operationId": "patchAttachmentByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -1847,203 +1847,6 @@
 				]
 			}
 		},
-		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}": {
-			"delete": {
-				"operationId": "deleteOptionByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Option"
-				]
-			},
-			"get": {
-				"operationId": "getOptionByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Option"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Option"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Option"
-				]
-			},
-			"patch": {
-				"operationId": "patchOptionByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Option"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Option"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Option"
-				]
-			}
-		},
-		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}/optionValue": {
-			"post": {
-				"operationId": "postOptionByExternalReferenceCodeOptionValue",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/OptionValue"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/OptionValue"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/OptionValue"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/OptionValue"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"OptionValue"
-				]
-			}
-		},
-		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}/optionValues": {
-			"get": {
-				"operationId": "getOptionByExternalReferenceCodeOptionValuesPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageOptionValue"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageOptionValue"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"OptionValue"
-				]
-			}
-		},
 		"/v1.0/options/{id}": {
 			"delete": {
 				"operationId": "deleteOption",
@@ -2199,6 +2002,203 @@
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageOptionValue"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageOptionValue"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"OptionValue"
+				]
+			}
+		},
+		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteOptionByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Option"
+				]
+			},
+			"get": {
+				"operationId": "getOptionByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Option"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Option"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Option"
+				]
+			},
+			"patch": {
+				"operationId": "patchOptionByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Option"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Option"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Option"
+				]
+			}
+		},
+		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}/optionValue": {
+			"post": {
+				"operationId": "postOptionByExternalReferenceCodeOptionValue",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OptionValue"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/OptionValue"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/OptionValue"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/OptionValue"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"OptionValue"
+				]
+			}
+		},
+		"/v1.0/options/by-externalReferenceCode/{externalReferenceCode}/optionValues": {
+			"get": {
+				"operationId": "getOptionByExternalReferenceCodeOptionValuesPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -2435,998 +2435,6 @@
 				},
 				"tags": [
 					"ProductOptionValue"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}": {
-			"delete": {
-				"operationId": "deleteProductByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Product"
-				]
-			},
-			"get": {
-				"operationId": "getProductByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Product"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Product"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Product"
-				]
-			},
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Product"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Product"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Product"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachment": {
-			"post": {
-				"operationId": "postProductByExternalReferenceCodeAttachment",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/categories": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeCategoriesPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageCategory"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageCategory"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Category"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/category": {
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCodeCategory",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"items": {
-									"$ref": "#/components/schemas/Category"
-								},
-								"type": "array"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"items": {
-									"$ref": "#/components/schemas/Category"
-								},
-								"type": "array"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Category"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductConfiguration"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductConfiguration"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductConfiguration"
-				]
-			},
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCodeConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductConfiguration"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductConfiguration"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductConfiguration"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/image": {
-			"post": {
-				"operationId": "postProductByExternalReferenceCodeImage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Attachment"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Attachment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeImagesPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageAttachment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageAttachment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/productOptions": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeProductOptionsPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageProductOption"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageProductOption"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductOption"
-				]
-			},
-			"post": {
-				"operationId": "postProductByExternalReferenceCodeProductOptionsPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"items": {
-									"$ref": "#/components/schemas/ProductOption"
-								},
-								"type": "array"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"items": {
-									"$ref": "#/components/schemas/ProductOption"
-								},
-								"type": "array"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageProductOption"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageProductOption"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductOption"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/relatedProduct": {
-			"post": {
-				"operationId": "postProductByExternalReferenceCodeRelatedProduct",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RelatedProduct"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/RelatedProduct"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RelatedProduct"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/RelatedProduct"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"RelatedProduct"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/relatedProducts": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeRelatedProductsPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "type",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageRelatedProduct"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageRelatedProduct"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"RelatedProduct"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeShippingConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductShippingConfiguration"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductShippingConfiguration"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductShippingConfiguration"
-				]
-			},
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCodeShippingConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductShippingConfiguration"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductShippingConfiguration"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductShippingConfiguration"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/sku": {
-			"post": {
-				"operationId": "postProductByExternalReferenceCodeSku",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Sku"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Sku"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Sku"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Sku"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Sku"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/skus": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeSkusPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageSku"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageSku"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Sku"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeSubscriptionConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductSubscriptionConfiguration"
-				]
-			},
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCodeSubscriptionConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductSubscriptionConfiguration"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeTaxConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductTaxConfiguration"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/ProductTaxConfiguration"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductTaxConfiguration"
-				]
-			},
-			"patch": {
-				"operationId": "patchProductByExternalReferenceCodeTaxConfiguration",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductTaxConfiguration"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductTaxConfiguration"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"ProductTaxConfiguration"
-				]
-			}
-		},
-		"/v1.0/products/by-externalReferenceCode{externalReferenceCode}/attachments": {
-			"get": {
-				"operationId": "getProductByExternalReferenceCodeexternalReferenceCodeAttachmentsPage",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "pageSize",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/PageAttachment"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/PageAttachment"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Attachment"
 				]
 			}
 		},
@@ -4060,13 +3068,6 @@
 					},
 					{
 						"in": "query",
-						"name": "type",
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
 						"name": "page",
 						"schema": {
 							"type": "string"
@@ -4075,6 +3076,13 @@
 					{
 						"in": "query",
 						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
 						"schema": {
 							"type": "string"
 						}
@@ -4422,6 +3430,998 @@
 				]
 			}
 		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteProductByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Product"
+				]
+			},
+			"get": {
+				"operationId": "getProductByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Product"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Product"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Product"
+				]
+			},
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Product"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Product"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Product"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/attachment": {
+			"post": {
+				"operationId": "postProductByExternalReferenceCodeAttachment",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/categories": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeCategoriesPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageCategory"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageCategory"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Category"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/category": {
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCodeCategory",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/Category"
+								},
+								"type": "array"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/Category"
+								},
+								"type": "array"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Category"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/configuration": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductConfiguration"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductConfiguration"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductConfiguration"
+				]
+			},
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCodeConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductConfiguration"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductConfiguration"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductConfiguration"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/image": {
+			"post": {
+				"operationId": "postProductByExternalReferenceCodeImage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Attachment"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Attachment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/images": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeImagesPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageAttachment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageAttachment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/productOptions": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeProductOptionsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageProductOption"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageProductOption"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductOption"
+				]
+			},
+			"post": {
+				"operationId": "postProductByExternalReferenceCodeProductOptionsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/ProductOption"
+								},
+								"type": "array"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"items": {
+									"$ref": "#/components/schemas/ProductOption"
+								},
+								"type": "array"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageProductOption"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageProductOption"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductOption"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/relatedProduct": {
+			"post": {
+				"operationId": "postProductByExternalReferenceCodeRelatedProduct",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RelatedProduct"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/RelatedProduct"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RelatedProduct"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/RelatedProduct"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"RelatedProduct"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/relatedProducts": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeRelatedProductsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageRelatedProduct"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageRelatedProduct"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"RelatedProduct"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/shippingConfiguration": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeShippingConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductShippingConfiguration"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductShippingConfiguration"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductShippingConfiguration"
+				]
+			},
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCodeShippingConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductShippingConfiguration"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductShippingConfiguration"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductShippingConfiguration"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/sku": {
+			"post": {
+				"operationId": "postProductByExternalReferenceCodeSku",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Sku"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Sku"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Sku"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Sku"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Sku"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/skus": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeSkusPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSku"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageSku"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Sku"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/subscriptionConfiguration": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeSubscriptionConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductSubscriptionConfiguration"
+				]
+			},
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCodeSubscriptionConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductSubscriptionConfiguration"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductSubscriptionConfiguration"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/taxConfiguration": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeTaxConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductTaxConfiguration"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductTaxConfiguration"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductTaxConfiguration"
+				]
+			},
+			"patch": {
+				"operationId": "patchProductByExternalReferenceCodeTaxConfiguration",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductTaxConfiguration"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductTaxConfiguration"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"ProductTaxConfiguration"
+				]
+			}
+		},
+		"/v1.0/products/by-externalReferenceCode{externalReferenceCode}/attachments": {
+			"get": {
+				"operationId": "getProductByExternalReferenceCodeexternalReferenceCodeAttachmentsPage",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PageAttachment"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/PageAttachment"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Attachment"
+				]
+			}
+		},
 		"/v1.0/relatedProducts/{id}": {
 			"delete": {
 				"operationId": "deleteRelatedProduct",
@@ -4479,105 +4479,6 @@
 				},
 				"tags": [
 					"RelatedProduct"
-				]
-			}
-		},
-		"/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}": {
-			"delete": {
-				"operationId": "deleteSkuByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Sku"
-				]
-			},
-			"get": {
-				"operationId": "getSkuByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Sku"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/Sku"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Sku"
-				]
-			},
-			"patch": {
-				"operationId": "patchSkuByExternalReferenceCode",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "externalReferenceCode",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Sku"
-							}
-						},
-						"application/xml": {
-							"schema": {
-								"$ref": "#/components/schemas/Sku"
-							}
-						}
-					}
-				},
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {},
-							"application/xml": {}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"Sku"
 				]
 			}
 		},
@@ -4646,6 +4547,105 @@
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Sku"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/Sku"
+							}
+						}
+					}
+				},
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Sku"
+				]
+			}
+		},
+		"/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}": {
+			"delete": {
+				"operationId": "deleteSkuByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {},
+							"application/xml": {}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Sku"
+				]
+			},
+			"get": {
+				"operationId": "getSkuByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Sku"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Sku"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Sku"
+				]
+			},
+			"patch": {
+				"operationId": "patchSkuByExternalReferenceCode",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
 						"required": true,
 						"schema": {
 							"type": "string"

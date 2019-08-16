@@ -19,9 +19,9 @@
 			"dataSourceId": "352371782732600843",
 			"dataSourceType": "LIFERAY",
 			"individualPKs": [
-				"b44ed31a-baad-bb17-b0e2-c9baaa7ab65e",
 				"2724f980-6a85-11e9-8b49-890d26f7ce31",
 				"91918ae0-6a85-11e9-b959-a7d2bf7a2eec",
+				"b44ed31a-baad-bb17-b0e2-c9baaa7ab65e",
 				"ba91b030-6a87-11e9-b8af-c12bc5a9fb8e"
 			]
 		}

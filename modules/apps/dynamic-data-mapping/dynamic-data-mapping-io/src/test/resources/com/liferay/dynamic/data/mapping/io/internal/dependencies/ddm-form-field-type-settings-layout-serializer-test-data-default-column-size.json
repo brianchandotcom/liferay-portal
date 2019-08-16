@@ -24,9 +24,9 @@
 					"columns": [
 						{
 							"fieldNames": [
-								"e",
 								"c",
-								"d"
+								"d",
+								"e"
 							],
 							"size": 12
 						}

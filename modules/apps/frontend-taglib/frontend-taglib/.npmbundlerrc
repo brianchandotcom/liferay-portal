@@ -1,7 +1,7 @@
 {
-    "ignore": [
-      "**/config.js",
-      "**/management_bar.js",
-      "**/sidebar_panel.js"
-    ]
+	"ignore": [
+		"**/config.js",
+		"**/management_bar.js",
+		"**/sidebar_panel.js"
+	]
 }

@@ -4,6 +4,26 @@
 			"fields": [
 				{
 					"dataType": "string",
+					"defaultValue": "left",
+					"label": "align",
+					"name": "imageAlign",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "center"
+							},
+							{
+								"value": "left"
+							},
+							{
+								"value": "right"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
 					"defaultValue": "w-100",
 					"label": "image-size",
 					"name": "imageSize",
@@ -17,26 +37,6 @@
 							{
 								"label": "original-size",
 								"value": "w-0"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "string",
-					"defaultValue": "left",
-					"label": "align",
-					"name": "imageAlign",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "left"
-							},
-							{
-								"value": "center"
-							},
-							{
-								"value": "right"
 							}
 						]
 					}

@@ -5,6 +5,30 @@
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Content"
+			},
+			"localizable": true,
+			"name": "content",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": ""
+			},
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-text-html"
+		},
+		{
 			"dataType": "image",
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
@@ -32,29 +56,6 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "Title"
-			},
-			"localizable": true,
-			"name": "title",
-			"predefinedValue": {
-				"en_US": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": true,
-			"showLabel": true,
-			"style": {
-				"en_US": ""
-			},
-			"tip": {
-				"en_US": ""
-			},
-			"type": "text"
-		},
-		{
-			"dataType": "string",
-			"indexType": "keyword",
-			"label": {
 				"en_US": "Sub Title"
 			},
 			"localizable": true,
@@ -75,20 +76,19 @@
 			"type": "text"
 		},
 		{
-			"dataType": "html",
-			"fieldNamespace": "ddm",
+			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"en_US": "Content"
+				"en_US": "Title"
 			},
 			"localizable": true,
-			"name": "content",
+			"name": "title",
 			"predefinedValue": {
 				"en_US": ""
 			},
 			"readOnly": false,
 			"repeatable": false,
-			"required": false,
+			"required": true,
 			"showLabel": true,
 			"style": {
 				"en_US": ""
@@ -96,7 +96,7 @@
 			"tip": {
 				"en_US": ""
 			},
-			"type": "ddm-text-html"
+			"type": "text"
 		}
 	]
 }

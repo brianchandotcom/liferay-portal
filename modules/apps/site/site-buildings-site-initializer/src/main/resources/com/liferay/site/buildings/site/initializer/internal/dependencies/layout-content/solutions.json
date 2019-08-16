@@ -27,6 +27,27 @@
 		{
 			"columns": [
 				{
+					"columnId": "1",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$symbol_white.png$\",\"config\":{\"imageSource\":\"$symbol-w.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"en_US\":\"Liferay &copy; 2019\",\"config\":{}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "1",
+			"type": "0"
+		},
+		{
+			"columns": [
+				{
 					"columnId": "3",
 					"fragmentEntries": [],
 					"size": "3"
@@ -90,27 +111,6 @@
 			},
 			"rowId": "4",
 			"type": "1"
-		},
-		{
-			"columns": [
-				{
-					"columnId": "1",
-					"fragmentEntries": [
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$symbol_white.png$\",\"config\":{\"imageSource\":\"$symbol-w.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"en_US\":\"Liferay &copy; 2019\",\"config\":{}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
-							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
-						}
-					],
-					"size": "12"
-				}
-			],
-			"config": {
-				"columnSpacing": true,
-				"paddingHorizontal": "0",
-				"paddingVertical": "0"
-			},
-			"rowId": "1",
-			"type": "0"
 		}
 	]
 }

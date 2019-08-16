@@ -3,45 +3,37 @@
 		{
 			"fields": [
 				{
-					"dataType": "string",
-					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
-					"label": "applied-style",
-					"name": "headingAppliedStyle",
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"description": "the-width-of-the-table",
+					"label": "table-width",
+					"name": "bodyTableWidth",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "dark"
+								"value": "1.1"
 							},
 							{
-								"value": "light"
+								"value": "3.2"
+							},
+							{
+								"value": "5.3"
 							}
 						]
 					}
-				}
-			],
-			"label": "heading"
-		},
-		{
-			"fields": [
+				},
 				{
-					"dataType": "string",
-					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
-					"label": "applied-style",
-					"name": "bodyAppliedStyle",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "dark"
-							},
-							{
-								"value": "light"
-							}
-						]
-					}
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"name": "buttonTextDouble",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "1",
+					"name": "buttonTextInt",
+					"type": "text"
 				},
 				{
 					"dataType": "int",
@@ -65,61 +57,33 @@
 					}
 				},
 				{
-					"dataType": "double",
-					"defaultValue": "1.1",
-					"description": "the-width-of-the-table",
-					"label": "table-width",
-					"name": "bodyTableWidth",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "1.1"
-							},
-							{
-								"value": "3.2"
-							},
-							{
-								"value": "5.3"
-							}
-						]
-					}
-				},
-				{
-					"name": "bodyHideBody",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": "true",
-					"name": "bodyHideTitle",
-					"type": "checkbox"
-				},
-				{
-					"defaultValue": true,
-					"name": "bodyHideSubtitle",
-					"type": "checkbox"
-				},
-				{
-					"name": "buttonTextDefault",
-					"type": "text"
-				},
-				{
 					"dataType": "string",
 					"defaultValue": "Default Text String",
 					"name": "buttonTextString",
 					"type": "text"
 				},
 				{
-					"dataType": "int",
-					"defaultValue": "1",
-					"name": "buttonTextInt",
-					"type": "text"
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "bodyAppliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "dark"
+							},
+							{
+								"value": "light"
+							}
+						]
+					}
 				},
 				{
-					"dataType": "double",
-					"defaultValue": "1.1",
-					"name": "buttonTextDouble",
-					"type": "text"
+					"defaultValue": "true",
+					"name": "bodyHideTitle",
+					"type": "checkbox"
 				},
 				{
 					"defaultValue": {
@@ -130,11 +94,47 @@
 					"type": "colorPalette"
 				},
 				{
+					"defaultValue": true,
+					"name": "bodyHideSubtitle",
+					"type": "checkbox"
+				},
+				{
+					"name": "bodyHideBody",
+					"type": "checkbox"
+				},
+				{
+					"name": "buttonTextDefault",
+					"type": "text"
+				},
+				{
 					"name": "textColor",
 					"type": "colorPalette"
 				}
 			],
 			"label": "body"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "headingAppliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "dark"
+							},
+							{
+								"value": "light"
+							}
+						]
+					}
+				}
+			],
+			"label": "heading"
 		}
 	]
 }

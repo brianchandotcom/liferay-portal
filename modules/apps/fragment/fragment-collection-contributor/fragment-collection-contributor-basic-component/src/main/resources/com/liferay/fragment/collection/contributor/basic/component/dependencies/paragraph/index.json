@@ -4,6 +4,12 @@
 		{
 			"fields": [
 				{
+					"dataType": "object",
+					"label": "text-color",
+					"name": "textColor",
+					"type": "colorPalette"
+				},
+				{
 					"dataType": "string",
 					"defaultValue": "left",
 					"label": "text-align",
@@ -12,25 +18,19 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "left"
-							},
-							{
 								"value": "center"
 							},
 							{
-								"value": "right"
+								"value": "justify"
 							},
 							{
-								"value": "justify"
+								"value": "left"
+							},
+							{
+								"value": "right"
 							}
 						]
 					}
-				},
-				{
-					"dataType": "object",
-					"label": "text-color",
-					"name": "textColor",
-					"type": "colorPalette"
 				}
 			]
 		}

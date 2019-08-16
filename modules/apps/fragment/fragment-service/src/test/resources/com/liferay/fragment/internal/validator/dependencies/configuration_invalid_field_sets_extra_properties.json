@@ -4,42 +4,22 @@
 		{
 			"fields": [
 				{
-					"dataType": "string",
-					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
-					"label": "applied-style",
-					"name": "appliedStyle",
+					"dataType": "double",
+					"defaultValue": "1.1",
+					"description": "the-width-of-the-table",
+					"label": "table-width",
+					"name": "tableWidth",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "dark"
+								"value": "1.1"
 							},
 							{
-								"value": "light"
-							}
-						]
-					}
-				}
-			],
-			"label": "Heading"
-		},
-		{
-			"fields": [
-				{
-					"dataType": "string",
-					"defaultValue": "light",
-					"description": "this-is-the-style-that-will-be-applied",
-					"label": "applied-style",
-					"name": "appliedStyle",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"value": "dark"
+								"value": "3.2"
 							},
 							{
-								"value": "light"
+								"value": "5.3"
 							}
 						]
 					}
@@ -66,28 +46,48 @@
 					}
 				},
 				{
-					"dataType": "double",
-					"defaultValue": "1.1",
-					"description": "the-width-of-the-table",
-					"label": "table-width",
-					"name": "tableWidth",
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "appliedStyle",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"value": "1.1"
+								"value": "dark"
 							},
 							{
-								"value": "3.2"
-							},
-							{
-								"value": "5.3"
+								"value": "light"
 							}
 						]
 					}
 				}
 			],
 			"label": "Body"
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "light",
+					"description": "this-is-the-style-that-will-be-applied",
+					"label": "applied-style",
+					"name": "appliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "dark"
+							},
+							{
+								"value": "light"
+							}
+						]
+					}
+				}
+			],
+			"label": "Heading"
 		}
 	]
 }

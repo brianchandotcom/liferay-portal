@@ -17,10 +17,10 @@
 				"english_with_synonym_analyzer": {
 					"filter": [
 						"english_possessive_stemmer",
-						"lowercase",
-						"liferay_filter_synonym_en",
+						"english_stemmer",
 						"english_stop",
-						"english_stemmer"
+						"liferay_filter_synonym_en",
+						"lowercase"
 					],
 					"tokenizer": "standard"
 				},

@@ -23,8 +23,8 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/setup/",
-			"<rootDir>/node_modules/"
+			"<rootDir>/node_modules/",
+			"<rootDir>/test/setup/"
 		],
 		"transformIgnorePatterns": [
 			"<rootDir>.*(node_modules)(?!.*metal.*).*$"

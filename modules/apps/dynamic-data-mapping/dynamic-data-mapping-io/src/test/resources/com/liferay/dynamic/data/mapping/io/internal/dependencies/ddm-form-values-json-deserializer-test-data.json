@@ -6,35 +6,11 @@
 	"defaultLanguageId": "en_US",
 	"fieldValues": [
 		{
-			"instanceId": "maky",
-			"name": "Boolean",
-			"value": {
-				"en_US": "false",
-				"pt_BR": "true"
-			}
-		},
-		{
 			"instanceId": "autx",
 			"name": "Documents_and_Media",
 			"value": {
 				"en_US": "{\"groupId\":10192,\"uuid\":\"c8acdf70-e101-46a6-83e5-c5f5e087b0dc\",\"version\":1.0}",
 				"pt_BR": "{\"groupId\":10192,\"uuid\":\"c8acdf70-e101-46a6-83e5-c5f5e087b0dc\",\"version\":1.0}"
-			}
-		},
-		{
-			"instanceId": "powq",
-			"name": "Geolocation",
-			"value": {
-				"en_US": "{\"latitude\":34.0286226,\"longitude\":-117.8103367}",
-				"pt_BR": "{\"latitude\":-8.0349219,\"longitude\":-34.91922120}"
-			}
-		},
-		{
-			"instanceId": "lamn",
-			"name": "HTML",
-			"value": {
-				"en_US": "<p>This is a test.<\/p>",
-				"pt_BR": "<p>Isto e um teste.<\/p>"
 			}
 		},
 		{
@@ -46,11 +22,35 @@
 			}
 		},
 		{
+			"instanceId": "lamn",
+			"name": "HTML",
+			"value": {
+				"en_US": "<p>This is a test.<\/p>",
+				"pt_BR": "<p>Isto e um teste.<\/p>"
+			}
+		},
+		{
+			"instanceId": "maky",
+			"name": "Boolean",
+			"value": {
+				"en_US": "false",
+				"pt_BR": "true"
+			}
+		},
+		{
 			"instanceId": "nast",
 			"name": "Link_to_Page",
 			"value": {
 				"en_US": "{\"groupId\":10192,\"layoutId\":1,\"privateLayout\":false}",
 				"pt_BR": "{\"groupId\":10192,\"layoutId\":2,\"privateLayout\":false}"
+			}
+		},
+		{
+			"instanceId": "powq",
+			"name": "Geolocation",
+			"value": {
+				"en_US": "{\"latitude\":34.0286226,\"longitude\":-117.8103367}",
+				"pt_BR": "{\"latitude\":-8.0349219,\"longitude\":-34.91922120}"
 			}
 		},
 		{

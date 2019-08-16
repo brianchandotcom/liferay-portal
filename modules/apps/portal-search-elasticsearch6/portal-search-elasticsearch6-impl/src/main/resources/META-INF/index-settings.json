@@ -8,19 +8,19 @@
 			"liferay_analyzer_en": {
 				"filter": [
 					"english_possessive_stemmer",
-					"lowercase",
-					"liferay_filter_synonym_en",
+					"english_stemmer",
 					"english_stop",
-					"english_stemmer"
+					"liferay_filter_synonym_en",
+					"lowercase"
 				],
 				"tokenizer": "standard"
 			},
 			"liferay_analyzer_es": {
 				"filter": [
-					"lowercase",
-					"spanish_stop",
 					"liferay_filter_synonym_es",
-					"spanish_stemmer"
+					"lowercase",
+					"spanish_stemmer",
+					"spanish_stop"
 				],
 				"tokenizer": "standard"
 			}

@@ -1,9 +1,9 @@
 {
-    "config": {
-        "imports": {
-            "hello-soy-web": {
-                "/": "^3.0.0"
-            }
-        }
-    }
+	"config": {
+		"imports": {
+			"hello-soy-web": {
+				"/": "^3.0.0"
+			}
+		}
+	}
 }

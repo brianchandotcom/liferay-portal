@@ -8,6 +8,32 @@
 		],
 		"conditions": [
 			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
+					}
+				],
+				"operator": "less-than"
+			},
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
+					}
+				],
+				"operator": "less-than-equals"
+			},
+			{
 
 				"operands": [
 					{
@@ -34,32 +60,6 @@
 					}
 				],
 				"operator": "greater-than-equals"
-			},
-			{
-				"operands": [
-					{
-						"type": "field",
-						"value": "Field1"
-					},
-					{
-						"type": "field",
-						"value": "Field2"
-					}
-				],
-				"operator": "less-than"
-			},
-			{
-				"operands": [
-					{
-						"type": "field",
-						"value": "Field1"
-					},
-					{
-						"type": "field",
-						"value": "Field2"
-					}
-				],
-				"operator": "less-than-equals"
 			}
 		],
 		"logical-operator": "AND"

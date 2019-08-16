@@ -63,31 +63,6 @@
 			"visibilityExpression": "true"
 		},
 		{
-			"dataType": "double",
-			"fieldNamespace": "ddm",
-			"indexType": "keyword",
-			"label": {
-				"en_US": "Decimal",
-				"pt_BR": "Decimal"
-			},
-			"localizable": true,
-			"multiple": false,
-			"name": "Decimal3479",
-			"predefinedValue": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"tip": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"type": "ddm-decimal",
-			"visibilityExpression": "false"
-		},
-		{
 			"dataType": "document-library",
 			"fieldNamespace": "ddm",
 			"indexType": "keyword",
@@ -112,6 +87,31 @@
 			},
 			"type": "ddm-documentlibrary",
 			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "double",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Decimal",
+				"pt_BR": "Decimal"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Decimal3479",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-decimal",
+			"visibilityExpression": "false"
 		},
 		{
 			"dataType": "geolocation",
@@ -366,35 +366,6 @@
 			"visibilityExpression": "true"
 		},
 		{
-			"fieldNamespace": "ddm",
-			"indexType": "keyword",
-			"label": {
-				"en_US": "Separator",
-				"pt_BR": "Separador"
-			},
-			"localizable": true,
-			"multiple": false,
-			"name": "Separator6279",
-			"predefinedValue": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"style": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"tip": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"type": "ddm-separator",
-			"visibilityExpression": "true"
-		},
-		{
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
@@ -417,31 +388,6 @@
 				"pt_BR": ""
 			},
 			"type": "text",
-			"visibilityExpression": "true"
-		},
-		{
-			"dataType": "string",
-			"indexType": "text",
-			"label": {
-				"en_US": "Text Box",
-				"pt_BR": "Caixa de Texto"
-			},
-			"localizable": true,
-			"multiple": false,
-			"name": "Text_Box6748",
-			"predefinedValue": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"readOnly": false,
-			"repeatable": false,
-			"required": false,
-			"showLabel": true,
-			"tip": {
-				"en_US": "",
-				"pt_BR": ""
-			},
-			"type": "textarea",
 			"visibilityExpression": "true"
 		},
 		{
@@ -548,6 +494,60 @@
 				"pt_BR": ""
 			},
 			"type": "text",
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "string",
+			"indexType": "text",
+			"label": {
+				"en_US": "Text Box",
+				"pt_BR": "Caixa de Texto"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Text_Box6748",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "textarea",
+			"visibilityExpression": "true"
+		},
+		{
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Separator",
+				"pt_BR": "Separador"
+			},
+			"localizable": true,
+			"multiple": false,
+			"name": "Separator6279",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"style": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"tip": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"type": "ddm-separator",
 			"visibilityExpression": "true"
 		}
 	],

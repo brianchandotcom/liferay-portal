@@ -19,19 +19,6 @@
 			]
 		},
 		{
-			"instanceId": "ywhr",
-			"name": "Separator",
-			"nestedFieldValues": [
-				{
-					"name": "Text",
-					"value": {
-						"en_US": "Content 1",
-						"pt_BR": "Conteudo 1"
-					}
-				}
-			]
-		},
-		{
 			"instanceId": "mahr",
 			"name": "Separator",
 			"nestedFieldValues": [
@@ -40,6 +27,19 @@
 					"value": {
 						"en_US": "Content 2",
 						"pt_BR": "Conteudo 2"
+					}
+				}
+			]
+		},
+		{
+			"instanceId": "ywhr",
+			"name": "Separator",
+			"nestedFieldValues": [
+				{
+					"name": "Text",
+					"value": {
+						"en_US": "Content 1",
+						"pt_BR": "Conteudo 1"
 					}
 				}
 			]

@@ -1,6 +1,6 @@
 {
-    "ignore": [
-        "**/blogs.js",
-        "**/config.js"
-    ]
+	"ignore": [
+		"**/blogs.js",
+		"**/config.js"
+	]
 }

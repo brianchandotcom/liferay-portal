@@ -14,19 +14,19 @@
 			}
 		},
 		{
-			"instanceId": "plwu",
-			"name": "Text",
-			"value": {
-				"en_US": "Name 1",
-				"pt_BR": "Nome 1"
-			}
-		},
-		{
 			"instanceId": "pkqa",
 			"name": "Text",
 			"value": {
 				"en_US": "Name 2",
 				"pt_BR": "Nome 2"
+			}
+		},
+		{
+			"instanceId": "plwu",
+			"name": "Text",
+			"value": {
+				"en_US": "Name 1",
+				"pt_BR": "Nome 1"
 			}
 		}
 	]

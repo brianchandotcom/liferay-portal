@@ -1,8 +1,8 @@
 {
 	"exclude": {
 		"*": [
-			"test?(s)/**/*",
-			"test.js"
+			"test.js",
+			"test?(s)/**/*"
 		],
 		"vm-browserify": [
 			"example/**/*",

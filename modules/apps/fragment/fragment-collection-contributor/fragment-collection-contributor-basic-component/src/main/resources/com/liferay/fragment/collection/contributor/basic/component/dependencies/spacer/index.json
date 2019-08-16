@@ -12,16 +12,16 @@
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
-								"value": "py-3"
+								"label": "large",
+								"value": "py-5"
 							},
 							{
 								"label": "medium",
 								"value": "py-4"
 							},
 							{
-								"label": "large",
-								"value": "py-5"
+								"label": "small",
+								"value": "py-3"
 							}
 						]
 					}

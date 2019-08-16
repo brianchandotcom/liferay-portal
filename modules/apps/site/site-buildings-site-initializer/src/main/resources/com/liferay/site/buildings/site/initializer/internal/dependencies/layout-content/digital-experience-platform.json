@@ -27,27 +27,48 @@
 		{
 			"columns": [
 				{
+					"columnId": "1",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$liferay_logo_white_2x.png$\",\"config\":{\"imageSource\":\"$symbol_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$symbol_white.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"en_US\":\"&copy; 2019\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Liferay &copy; 2019\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "0",
+				"paddingVertical": "0"
+			},
+			"rowId": "1",
+			"type": "0"
+		},
+		{
+			"columns": [
+				{
 					"columnId": "5",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Deliver personalized experiences for the entire customer journey.\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">DIGITAL EXPERIENCE PLATFORM<\/span>\"},\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Deliver personalized experiences for the entire customer journey.\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"segments-experience-id-0\":{\"en_US\":\"Request a Free Demo\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"segments-experience-id-0\":{\"en_US\":\"Request a Free Demo\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-primary-button"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
 						}
 					],
 					"size": "5"
@@ -75,93 +96,15 @@
 		{
 			"columns": [
 				{
-					"columnId": "38",
-					"fragmentEntries": [
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$dxp_logo_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$dxp_logo_white.png$\"}}}}",
-							"fragmentEntryKey": "secondary-header"
-						}
-					],
-					"size": "12"
-				}
-			],
-			"config": {
-				"columnSpacing": true,
-				"paddingHorizontal": "0",
-				"paddingVertical": "0"
-			},
-			"rowId": "21",
-			"type": "0"
-		},
-		{
-			"columns": [
-				{
-					"columnId": "14",
-					"fragmentEntries": [
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$connect_experiences_illustration.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$connect_experiences_illustration.png$\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-image"
-						}
-					],
-					"size": "5"
-				},
-				{
-					"columnId": "15",
-					"fragmentEntries": [],
-					"size": "1"
-				},
-				{
-					"columnId": "34",
-					"fragmentEntries": [
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2>Connect Your Experiences<\/h2>\\n\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>For a Single View<\/h4>\\n\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">Bring your business together onto a unified digital platform that makes it easy to host multiple systems in order to create cohesive customer experiences.<\/span>\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn About Experiences\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-link"
-						}
-					],
-					"size": "6"
-				}
-			],
-			"config": {
-				"backgroundColorCssClass": "lighter",
-				"columnSpacing": true,
-				"paddingHorizontal": "3",
-				"paddingVertical": "8"
-			},
-			"rowId": "7",
-			"type": "1"
-		},
-		{
-			"columns": [
-				{
 					"columnId": "11",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>At Every Point in the Journey<\/h4>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Create Personalized Experiences\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>At Every Point in the Journey<\/h4>\\n\"}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">Make each customer experience personal and stay relevant throughout their journeys. Liferay DXP makes it easy to create and deliver experiences to help you meet your customer&rsquo;s expectations.<\/span>\"}}}}",
@@ -170,6 +113,10 @@
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"segments-experience-id-0\":{\"en_US\":\"Learn About Personalization\"},\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
 						}
 					],
 					"size": "6"
@@ -202,6 +149,59 @@
 		{
 			"columns": [
 				{
+					"columnId": "14",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"segments-experience-id-0\":{\"en_US\":\"$connect_experiences_illustration.png$\"},\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$connect_experiences_illustration.png$\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
+						}
+					],
+					"size": "5"
+				},
+				{
+					"columnId": "15",
+					"fragmentEntries": [],
+					"size": "1"
+				},
+				{
+					"columnId": "34",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2>Connect Your Experiences<\/h2>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h4>For a Single View<\/h4>\\n\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<span class=\\\"text-secondary\\\">Bring your business together onto a unified digital platform that makes it easy to host multiple systems in order to create cohesive customer experiences.<\/span>\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn About Experiences\"}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
+						}
+					],
+					"size": "6"
+				}
+			],
+			"config": {
+				"backgroundColorCssClass": "lighter",
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "8"
+			},
+			"rowId": "7",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
 					"columnId": "17",
 					"fragmentEntries": [
 						{
@@ -220,10 +220,6 @@
 					"columnId": "19",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
-						},
-						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"<h2>Customize Your Solutions Quickly<\/h2>\\n\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
 						},
@@ -238,6 +234,10 @@
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Learn About Customization\"}}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-link"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-4x"
 						}
 					],
 					"size": "6"
@@ -255,44 +255,19 @@
 		{
 			"columns": [
 				{
-					"columnId": "30",
-					"fragmentEntries": [
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
-						},
-						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<div class=\\\"mb-2 mt-2\\\" style=\\\"text-align:center\\\">Case Studies<\/div>\\n\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
-						}
-					],
-					"size": "12"
-				}
-			],
-			"config": {
-				"columnSpacing": true,
-				"paddingHorizontal": "3",
-				"paddingVertical": "3"
-			},
-			"rowId": "15",
-			"type": "1"
-		},
-		{
-			"columns": [
-				{
 					"columnId": "20",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/unisys-study\"},\"fieldId\":\"CaseImage\"}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-image"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textColor\":\"secondary\"},\"fieldId\":\"CaseIntro\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-06$\",\"fieldId\":\"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"textColor\":\"secondary\"},\"fieldId\":\"CaseIntro\"}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-06$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/unisys-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/unisys-study\"}}}}",
@@ -305,16 +280,16 @@
 					"columnId": "21",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-05$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/spire-study\"},\"fieldId\":\"CaseImage\"}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-image"
-						},
-						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-05$\",\"fieldId\":\"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-05$\",\"fieldId\":\"CaseIntro\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-05$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/spire-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/spire-study\"}}}}",
@@ -331,16 +306,16 @@
 					"columnId": "22",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-04$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/federal-study\"},\"fieldId\":\"CaseImage\"}}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-image"
-						},
-						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-04$\",\"fieldId\":\"CaseTitle\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-4"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"defaultValue\":\"\\n\\t\\tA paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.\\n\\t\",\"config\":{\"textColor\":\"secondary\"},\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"classPK\":\"$WEB-CONTENT-04$\",\"fieldId\":\"CaseIntro\"}}}",
 							"fragmentEntryKey": "BASIC_COMPONENT-paragraph"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"image-square\":{\"classPK\":\"$WEB-CONTENT-04$\",\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAJCAYAAAA7KqwyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAkSURBVHgB7cxBEQAACAIwtH8Pzw52kxD8OBZgNXsPQUOUwCIgAz0DHTyygaAAAAAASUVORK5CYII=\",\"classNameId\":\"$com.liferay.journal.model.JournalArticle$\",\"config\":{\"imageLink\":\"/web/guest/w/federal-study\"},\"fieldId\":\"CaseImage\"}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-image"
 						},
 						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"/web/guest/w/federal-study\"}}}}",
@@ -374,12 +349,12 @@
 							"fragmentEntryKey": "BASIC_COMPONENT-heading-1"
 						},
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
-							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
-						},
-						{
 							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"link-center\":{\"defaultValue\":\"Go Somewhere\",\"config\":{\"href\":\"#\"},\"segments-experience-id-0\":{\"en_US\":\"Request a Live Demo\"}}}}",
 							"fragmentEntryKey": "link-green-center"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-2x"
 						}
 					],
 					"size": "8"
@@ -402,11 +377,36 @@
 		{
 			"columns": [
 				{
-					"columnId": "1",
+					"columnId": "30",
 					"fragmentEntries": [
 						{
-							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"en_US\":\"$liferay_logo_white_2x.png$\",\"config\":{\"imageSource\":\"$symbol_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$symbol_white.png$\"}},\"02-copy\":{\"defaultValue\":\"\\n\\t\\t\\t\\t© 2019 Sitebrand\\n\\t\\t\\t\",\"en_US\":\"&copy; 2019\",\"config\":{},\"segments-experience-id-0\":{\"en_US\":\"Liferay &copy; 2019\"}},\"03-link\":{\"defaultValue\":\"Sign In\",\"config\":{\"href\":\"#\"}}}}",
-							"fragmentEntryKey": "BASIC_SECTION-footer-nav-dark"
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"element-text\":{\"segments-experience-id-0\":{\"en_US\":\"<div class=\\\"mb-2 mt-2\\\" style=\\\"text-align:center\\\">Case Studies<\/div>\\n\"},\"defaultValue\":\"\\n\\t\\t\\tHeading Example\\n\\t\\t\",\"config\":{}}}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-heading-2"
+						},
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{}}",
+							"fragmentEntryKey": "BASIC_COMPONENT-spacer-8x"
+						}
+					],
+					"size": "12"
+				}
+			],
+			"config": {
+				"columnSpacing": true,
+				"paddingHorizontal": "3",
+				"paddingVertical": "3"
+			},
+			"rowId": "15",
+			"type": "1"
+		},
+		{
+			"columns": [
+				{
+					"columnId": "38",
+					"fragmentEntries": [
+						{
+							"editableValues": "{\"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor\":{\"01-logo\":{\"defaultValue\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAnSURBVHgB7cwxEQAACAOxgn8fHB7wBiK6MHwEJKpnZUiZCAgIvgQHmksDKxJ1SeoAAAAASUVORK5CYII=\",\"config\":{\"imageSource\":\"$dxp_logo_white.png$\"},\"segments-experience-id-0\":{\"en_US\":\"$dxp_logo_white.png$\"}}}}",
+							"fragmentEntryKey": "secondary-header"
 						}
 					],
 					"size": "12"
@@ -417,7 +417,7 @@
 				"paddingHorizontal": "0",
 				"paddingVertical": "0"
 			},
-			"rowId": "1",
+			"rowId": "21",
 			"type": "0"
 		}
 	]

@@ -6,18 +6,12 @@
 	"defaultLanguageId": "en_US",
 	"fieldValues": [
 		{
-			"instanceId": "uayx",
-			"name": "Separator",
-			"nestedFieldValues": [
-				{
-					"instanceId": "xyz0",
-					"name": "Text_Box",
-					"value": {
-						"en_US": "Content 0",
-						"pt_BR": "Conteudo 0"
-					}
-				}
-			]
+			"instanceId": "baht",
+			"name": "Text",
+			"value": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			}
 		},
 		{
 			"instanceId": "lahy",
@@ -32,29 +26,6 @@
 					}
 				}
 			]
-		},
-		{
-			"instanceId": "baht",
-			"name": "Text",
-			"value": {
-				"en_US": "Text",
-				"pt_BR": "Texto"
-			}
-		},
-		{
-			"instanceId": "uaht",
-			"name": "Image",
-			"value": "{\"alt\":\"This is a image description. 0\",\"data\":\"base64Value0\"}"
-		},
-		{
-			"instanceId": "pppj",
-			"name": "Image",
-			"value": "{\"alt\":\"This is a image description. 1\",\"data\":\"base64Value1\"}"
-		},
-		{
-			"instanceId": "nmab",
-			"name": "Image",
-			"value": "{\"alt\":\"This is a image description. 2\",\"data\":\"base64Value2\"}"
 		},
 		{
 			"instanceId": "njar",
@@ -81,6 +52,35 @@
 				"en_US": "false",
 				"pt_BR": "true"
 			}
+		},
+		{
+			"instanceId": "nmab",
+			"name": "Image",
+			"value": "{\"alt\":\"This is a image description. 2\",\"data\":\"base64Value2\"}"
+		},
+		{
+			"instanceId": "pppj",
+			"name": "Image",
+			"value": "{\"alt\":\"This is a image description. 1\",\"data\":\"base64Value1\"}"
+		},
+		{
+			"instanceId": "uaht",
+			"name": "Image",
+			"value": "{\"alt\":\"This is a image description. 0\",\"data\":\"base64Value0\"}"
+		},
+		{
+			"instanceId": "uayx",
+			"name": "Separator",
+			"nestedFieldValues": [
+				{
+					"instanceId": "xyz0",
+					"name": "Text_Box",
+					"value": {
+						"en_US": "Content 0",
+						"pt_BR": "Conteudo 0"
+					}
+				}
+			]
 		}
 	]
 }

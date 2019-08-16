@@ -58,6 +58,6 @@
 		],
 		"url": true
 	},
-    "output": "classes/META-INF/resources/",
-    "preset": "liferay-npm-bundler-preset-standard"
+	"output": "classes/META-INF/resources/",
+	"preset": "liferay-npm-bundler-preset-standard"
 }

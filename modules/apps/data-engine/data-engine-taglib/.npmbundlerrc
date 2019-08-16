@@ -13,10 +13,10 @@
 		}
 	},
 	"ignore": [
-		"**/*.js",
-		"**/__tests__/*.js",
 		"!**/*.es.js",
-		"!**/*.soy.js"
+		"!**/*.soy.js",
+		"**/*.js",
+		"**/__tests__/*.js"
 	],
 	"preset": "liferay-npm-bundler-preset-liferay-dev"
 }

@@ -318,32 +318,27 @@ AUI.add(
 
 				var container = instance.get('container');
 
-				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-				portletURL.setLifecycle(Liferay.PortletURL.RESOURCE_PHASE);
-				portletURL.setParameter('fieldName', instance.get('name'));
-				portletURL.setParameter('mode', instance.get('mode'));
-				portletURL.setParameter(
-					'namespace',
-					instance.get('fieldsNamespace')
-				);
-				portletURL.setParameter(
-					'p_p_auth',
-					container.getData('ddmAuthToken')
-				);
-				portletURL.setParameter('p_p_isolated', true);
-				portletURL.setParameter(
-					'portletNamespace',
-					instance.get('portletNamespace')
-				);
-				portletURL.setParameter('readOnly', instance.get('readOnly'));
-				portletURL.setPlid(instance.get('p_l_id'));
-				portletURL.setPortletId(
-					Liferay.PortletKeys.DYNAMIC_DATA_MAPPING
-				);
-				portletURL.setResourceId('renderStructureField');
-				portletURL.setWindowState('pop_up');
+				var parameters = {
+					doAsUserId: instance.get('doAsGroupId'),
+					fieldName: instance.get('name'),
+					mode: instance.get('mode'),
+					namespace: instance.get('fieldsNamespace'),
+					portletNamespace: instance.get('portletNamespace'),
+					readOnly: instance.get('readOnly'),
+					p_p_auth: container.getData('ddmAuthToken'),
+					p_p_isolated: true,
+					p_l_id: instance.get('p_l_id'),
+					p_p_id: Liferay.PortletKeys.DYNAMIC_DATA_MAPPING,
+					p_p_resource_id: 'renderStructureField',
+					p_p_state: 'pop_up'
+				};
 
-				return portletURL.toString();
+				var portletURL = Liferay.Util.PortletURL.createRenderURL(
+					themeDisplay.getURLControlPanel(),
+					parameters
+				);
+
+				return portletURL;
 			},
 
 			_valueDisplayLocale: function() {
@@ -1401,33 +1396,10 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					var portletURL = Liferay.PortletURL.createURL(
-						themeDisplay.getLayoutRelativeControlPanelURL()
-					);
-
-					portletURL.setParameter('criteria', criteria);
-					portletURL.setParameter(
-						'itemSelectedEventName',
-						portletNamespace + 'selectDocumentLibrary'
-					);
-					portletURL.setParameter(
-						'p_p_auth',
-						container.getData('itemSelectorAuthToken')
-					);
-
 					var criterionJSON = {
 						desiredItemSelectorReturnTypes:
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 					};
-
-					portletURL.setParameter(
-						'0_json',
-						JSON.stringify(criterionJSON)
-					);
-					portletURL.setParameter(
-						'1_json',
-						JSON.stringify(criterionJSON)
-					);
 
 					var uploadCriterionJSON = {
 						desiredItemSelectorReturnTypes:
@@ -1435,16 +1407,25 @@ AUI.add(
 						URL: instance.getUploadURL()
 					};
 
-					portletURL.setParameter(
-						'2_json',
-						JSON.stringify(uploadCriterionJSON)
+					var parameters = {
+						criteria: criteria,
+						itemSelectedEventName:
+							portletNamespace + 'selectDocumentLibrary',
+						'0_json': JSON.stringify(criterionJSON),
+						'1_json': JSON.stringify(criterionJSON),
+						'2_json': JSON.stringify(uploadCriterionJSON),
+						p_p_auth: container.getData('itemSelectorAuthToken'),
+						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+						p_p_mode: 'view',
+						p_p_state: 'pop_up'
+					};
+
+					var portletURL = Liferay.Util.PortletURL.createURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						parameters
 					);
 
-					portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-					portletURL.setPortletMode('view');
-					portletURL.setWindowState('pop_up');
-
-					return portletURL.toString();
+					return portletURL;
 				},
 
 				getParsedValue: function(value) {
@@ -1470,24 +1451,20 @@ AUI.add(
 				},
 
 				getUploadURL: function() {
-					var instance = this;
+					var parameters = {
+						cmd: 'add_temp',
+						'javax.portlet.action':
+							'/document_library/upload_file_entry',
+						p_auth: Liferay.authToken,
+						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
+					};
 
-					var portletURL = Liferay.PortletURL.createURL(
-						themeDisplay.getLayoutRelativeControlPanelURL()
+					var portletURL = Liferay.Util.PortletURL.createActionURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						parameters
 					);
 
-					portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
-					portletURL.setParameter('cmd', 'add_temp');
-					portletURL.setParameter(
-						'javax.portlet.action',
-						'/document_library/upload_file_entry'
-					);
-					portletURL.setParameter('p_auth', Liferay.authToken);
-					portletURL.setPortletId(
-						Liferay.PortletKeys.DOCUMENT_LIBRARY
-					);
-
-					return portletURL.toString();
+					return portletURL;
 				},
 
 				setValue: function(value) {
@@ -1671,10 +1648,6 @@ AUI.add(
 
 					var container = instance.get('container');
 
-					var url = Liferay.PortletURL.createRenderURL(
-						themeDisplay.getURLControlPanel()
-					);
-
 					var groupIdNode = A.one(
 						'#' + this.get('portletNamespace') + 'groupId'
 					);
@@ -1683,25 +1656,26 @@ AUI.add(
 						(groupIdNode && groupIdNode.getAttribute('value')) ||
 						themeDisplay.getScopeGroupId();
 
-					url.setParameter('eventName', 'selectContent');
-					url.setParameter('groupId', groupId);
-					url.setParameter(
-						'p_p_auth',
-						container.getData('assetBrowserAuthToken')
-					);
-					url.setParameter('selectedGroupId', groupId);
-					url.setParameter('showNonindexable', true);
-					url.setParameter('showScheduled', true);
-					url.setParameter(
-						'typeSelection',
-						'com.liferay.journal.model.JournalArticle'
-					);
-					url.setPortletId(
-						'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet'
-					);
-					url.setWindowState('pop_up');
+					var parameters = {
+						eventName: 'selectContent',
+						groupId: groupId,
+						p_p_auth: container.getData('assetBrowserAuthToken'),
+						selectedGroupId: groupId,
+						showNonindexable: true,
+						showScheduled: true,
+						typeSelection:
+							'com.liferay.journal.model.JournalArticle',
+						p_p_id:
+							'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet',
+						p_p_state: 'pop_up'
+					};
 
-					return url;
+					var portletURL = Liferay.Util.PortletURL.createRenderURL(
+						themeDisplay.getURLControlPanel(),
+						parameters
+					);
+
+					return portletURL;
 				},
 
 				setValue: function(value) {
@@ -3204,46 +3178,35 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					var portletURL = Liferay.PortletURL.createURL(
-						themeDisplay.getLayoutRelativeControlPanelURL()
-					);
-
-					portletURL.setParameter('criteria', criteria);
-					portletURL.setParameter(
-						'itemSelectedEventName',
-						portletNamespace + 'selectDocumentLibrary'
-					);
-					portletURL.setParameter(
-						'p_p_auth',
-						container.getData('itemSelectorAuthToken')
-					);
-
 					var journalCriterionJSON = {
 						desiredItemSelectorReturnTypes:
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
 						resourcePrimKey: parsedValue.resourcePrimKey
 					};
 
-					portletURL.setParameter(
-						'0_json',
-						JSON.stringify(journalCriterionJSON)
-					);
-
 					var imageCriterionJSON = {
 						desiredItemSelectorReturnTypes:
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 					};
 
-					portletURL.setParameter(
-						'1_json',
-						JSON.stringify(imageCriterionJSON)
+					var parameters = {
+						criteria: criteria,
+						itemSelectedEventName:
+							portletNamespace + 'selectDocumentLibrary',
+						'0_json': JSON.stringify(journalCriterionJSON),
+						'1_json': JSON.stringify(imageCriterionJSON),
+						p_p_auth: container.getData('itemSelectorAuthToken'),
+						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+						p_p_mode: 'view',
+						p_p_state: 'pop_up'
+					};
+
+					var portletURL = Liferay.Util.PortletURL.createURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						parameters
 					);
 
-					portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-					portletURL.setPortletMode('view');
-					portletURL.setWindowState('pop_up');
-
-					return portletURL.toString();
+					return portletURL;
 				},
 
 				getValue: function() {
@@ -4323,7 +4286,6 @@ AUI.add(
 			'liferay-layouts-tree-selectable',
 			'liferay-map-base',
 			'liferay-notice',
-			'liferay-portlet-url',
 			'liferay-translation-manager'
 		]
 	}

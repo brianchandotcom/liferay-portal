@@ -332,32 +332,10 @@ AUI.add(
 
 					var portletNamespace = instance.get('portletNamespace');
 
-					var portletURL = Liferay.PortletURL.createURL(
-						themeDisplay.getLayoutRelativeControlPanelURL()
-					);
-
-					portletURL.setParameter(
-						'criteria',
-						'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion'
-					);
-					portletURL.setParameter(
-						'itemSelectedEventName',
-						portletNamespace + 'selectDocumentLibrary'
-					);
-
 					var criterionJSON = {
 						desiredItemSelectorReturnTypes:
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 					};
-
-					portletURL.setParameter(
-						'0_json',
-						JSON.stringify(criterionJSON)
-					);
-					portletURL.setParameter(
-						'1_json',
-						JSON.stringify(criterionJSON)
-					);
 
 					var uploadCriterionJSON = {
 						desiredItemSelectorReturnTypes:
@@ -365,37 +343,44 @@ AUI.add(
 						URL: instance._getUploadURL()
 					};
 
-					portletURL.setParameter(
-						'2_json',
-						JSON.stringify(uploadCriterionJSON)
-					);
-					portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-					portletURL.setPortletMode('view');
-					portletURL.setWindowState('pop_up');
+					var parameters = {
+						criteria:
+							'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
+						itemSelectedEventName:
+							portletNamespace + 'selectDocumentLibrary',
+						'0_json': JSON.stringify(criterionJSON),
+						'1_json': JSON.stringify(criterionJSON),
+						'2_json': JSON.stringify(uploadCriterionJSON),
+						p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+						p_p_mode: 'view',
+						p_p_state: 'pop_up'
+					};
 
-					return portletURL.toString();
+					var portletURL = Liferay.Util.PortletURL.createURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						parameters
+					);
+
+					return portletURL;
 				},
 
 				_getUploadURL: function() {
 					var instance = this;
 
-					var portletURL = Liferay.PortletURL.createURL(
-						themeDisplay.getLayoutRelativeControlPanelURL()
+					var parameters = {
+						cmd: 'add_temp',
+						'javax.portlet.action':
+							'/document_library/upload_file_entry',
+						p_auth: Liferay.authToken,
+						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
+					};
+
+					var portletURL = Liferay.Util.PortletURL.createActionURL(
+						themeDisplay.getLayoutRelativeControlPanelURL(),
+						parameters
 					);
 
-					portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
-					portletURL.setParameter('cmd', 'add_temp');
-					portletURL.setParameter(
-						'javax.portlet.action',
-						'/document_library/upload_file_entry'
-					);
-					portletURL.setParameter('p_auth', Liferay.authToken);
-
-					portletURL.setPortletId(
-						Liferay.PortletKeys.DOCUMENT_LIBRARY
-					);
-
-					return portletURL.toString();
+					return portletURL;
 				},
 
 				_isDocumentLibraryDialogOpen: function() {
@@ -602,29 +587,26 @@ AUI.add(
 				_getWebContentSelectorURL: function() {
 					var instance = this;
 
-					var url = Liferay.PortletURL.createRenderURL(
-						themeDisplay.getURLControlPanel()
+					var parameters = {
+						eventName: 'selectContent',
+						groupId: themeDisplay.getScopeGroupId(),
+						p_auth: Liferay.authToken,
+						selectedGroupId: themeDisplay.getScopeGroupId(),
+						showNonindexable: true,
+						showScheduled: true,
+						typeSelection:
+							'com.liferay.journal.model.JournalArticle',
+						p_p_id:
+							'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet',
+						p_p_state: 'pop_up'
+					};
+
+					var portletURL = Liferay.Util.PortletURL.createRenderURL(
+						themeDisplay.getURLControlPanel(),
+						parameters
 					);
 
-					url.setParameter('eventName', 'selectContent');
-					url.setParameter('groupId', themeDisplay.getScopeGroupId());
-					url.setParameter('p_auth', Liferay.authToken);
-					url.setParameter(
-						'selectedGroupId',
-						themeDisplay.getScopeGroupId()
-					);
-					url.setParameter('showNonindexable', true);
-					url.setParameter('showScheduled', true);
-					url.setParameter(
-						'typeSelection',
-						'com.liferay.journal.model.JournalArticle'
-					);
-					url.setPortletId(
-						'com_liferay_asset_browser_web_portlet_AssetBrowserPortlet'
-					);
-					url.setWindowState('pop_up');
-
-					return url;
+					return portletURL;
 				},
 
 				_handleCancelEvent: function(event) {
@@ -2175,8 +2157,7 @@ AUI.add(
 			'aui-io-request',
 			'aui-url',
 			'liferay-item-selector-dialog',
-			'liferay-portlet-dynamic-data-mapping',
-			'liferay-portlet-url'
+			'liferay-portlet-dynamic-data-mapping'
 		]
 	}
 );

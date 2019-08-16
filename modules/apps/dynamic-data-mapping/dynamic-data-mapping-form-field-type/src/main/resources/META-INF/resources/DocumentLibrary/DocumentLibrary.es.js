@@ -21,7 +21,7 @@ import {Config} from 'metal-state';
 
 class DocumentLibrary extends Component {
 	created() {
-		AUI().use('liferay-item-selector-dialog', 'liferay-portlet-url', A => {
+		AUI().use('liferay-item-selector-dialog', A => {
 			this.A = A;
 		});
 	}
@@ -54,32 +54,10 @@ class DocumentLibrary extends Component {
 	getDocumentLibrarySelectorURL() {
 		const {itemSelectorAuthToken, portletNamespace} = this;
 
-		const portletURL = Liferay.PortletURL.createURL(
-			themeDisplay.getLayoutRelativeControlPanelURL()
-		);
-
-		portletURL.setParameter(
-			'criteria',
-			'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion'
-		);
-		portletURL.setParameter('doAsGroupId', themeDisplay.getScopeGroupId());
-		portletURL.setParameter(
-			'itemSelectedEventName',
-			`${portletNamespace}selectDocumentLibrary`
-		);
-		portletURL.setParameter('p_p_auth', itemSelectorAuthToken);
-		portletURL.setParameter(
-			'refererGroupId',
-			themeDisplay.getScopeGroupId()
-		);
-
 		const criterionJSON = {
 			desiredItemSelectorReturnTypes:
 				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 		};
-
-		portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
-		portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
 
 		const uploadCriterionJSON = {
 			URL: this.getUploadURL(),
@@ -87,33 +65,43 @@ class DocumentLibrary extends Component {
 				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 		};
 
-		portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
+		const parameters = {
+			criteria:
+				'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
+			doAsGroupId: themeDisplay.getScopeGroupId(),
+			itemSelectedEventName: `${portletNamespace}selectDocumentLibrary`,
+			refererGroupId: themeDisplay.getScopeGroupId(),
+			'0_json': JSON.stringify(criterionJSON),
+			'1_json': JSON.stringify(criterionJSON),
+			'2_json': JSON.stringify(uploadCriterionJSON),
+			p_p_auth: itemSelectorAuthToken,
+			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
+			p_p_mode: 'view',
+			p_p_state: 'pop_up'
+		};
 
-		portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
-		portletURL.setPortletMode('view');
-		portletURL.setWindowState('pop_up');
+		const portletURL = Liferay.Util.PortletURL.createURL(
+			themeDisplay.getLayoutRelativeControlPanelURL(),
+			parameters
+		);
 
-		return portletURL.toString();
+		return portletURL;
 	}
 
 	getUploadURL() {
-		const {groupId} = this;
+		const parameters = {
+			cmd: 'add_temp',
+			'javax.portlet.action': '/document_library/upload_file_entry',
+			p_auth: Liferay.authToken,
+			p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
+		};
 
-		const portletURL = Liferay.PortletURL.createURL(
-			themeDisplay.getLayoutRelativeURL()
+		const portletURL = Liferay.Util.PortletURL.createActionURL(
+			themeDisplay.getLayoutRelativeURL(),
+			parameters
 		);
 
-		portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
-		portletURL.setParameter(
-			'javax.portlet.action',
-			'/document_library/upload_file_entry'
-		);
-		portletURL.setParameter('p_auth', Liferay.authToken);
-		portletURL.setParameter('cmd', 'add_temp');
-		portletURL.setParameter('refererGroupId', groupId);
-		portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
-
-		return portletURL.toString();
+		return portletURL;
 	}
 
 	_handleClearButtonClicked() {

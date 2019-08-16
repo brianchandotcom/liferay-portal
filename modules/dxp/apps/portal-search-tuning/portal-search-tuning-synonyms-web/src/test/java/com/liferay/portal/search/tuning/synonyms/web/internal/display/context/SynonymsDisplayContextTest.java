@@ -12,17 +12,15 @@
  *
  */
 
-package com.liferay.portal.search.tuning.web.internal.display.context;
+package com.liferay.portal.search.tuning.synonyms.web.internal.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.tuning.web.internal.synonym.SynonymException;
-import com.liferay.portal.search.tuning.web.internal.synonym.SynonymIndexer;
+import com.liferay.portal.search.tuning.synonyms.web.internal.synonym.SynonymIndexer;
 
 import javax.portlet.ActionURL;
 import javax.portlet.RenderRequest;
@@ -45,7 +43,7 @@ import org.mockito.MockitoAnnotations;
  */
 public class SynonymsDisplayContextTest {
 
-	public void mockSynonymSets(String... synonymSets) throws SynonymException {
+	public void mockSynonymSets(String... synonymSets) {
 		Mockito.when(
 			_synonymIndexer.getSynonymSets(
 				Matchers.anyLong(), Matchers.anyString())
@@ -55,7 +53,7 @@ public class SynonymsDisplayContextTest {
 	}
 
 	@Before
-	public void setUp() throws SynonymException {
+	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
 		Mockito.when(
@@ -86,7 +84,7 @@ public class SynonymsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetItemsTotal() throws PortalException, SynonymException {
+	public void testGetItemsTotal() {
 		mockSynonymSets("car,automobile", "biscuit,cookie");
 
 		SynonymsDisplayBuilder synonymsDisplayBuilder =
@@ -101,7 +99,7 @@ public class SynonymsDisplayContextTest {
 	}
 
 	@Test
-	public void testIsDisabled() throws PortalException, SynonymException {
+	public void testIsDisabled() {
 		mockSynonymSets("car,automobile", "biscuit,cookie");
 
 		SynonymsDisplayBuilder synonymsDisplayBuilder =

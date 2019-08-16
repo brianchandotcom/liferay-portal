@@ -64,6 +64,7 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
+import com.liferay.gradle.plugins.tasks.DeployFastTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
@@ -182,6 +183,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
+		_configureTaskDeployFast(project, liferayExtension);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
@@ -1129,6 +1131,32 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		deployTask.finalizedBy(deployDepenciesTask);
+	}
+
+	private void _configureTaskDeployFast(
+		Project project, LiferayExtension liferayExtension) {
+
+		final BundleExtension bundleExtension = GradleUtil.getExtension(
+			project, BundleExtension.class);
+
+		String bundleSymbolicName = (String)bundleExtension.get(
+			"Bundle-SymbolicName");
+		String bundleVersion = (String)bundleExtension.get("Bundle-Version");
+
+		DeployFastTask deployFastTask = (DeployFastTask)GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
+
+		deployFastTask.setDestinationDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getLiferayHome(),
+						"work/" + bundleSymbolicName + "-" + bundleVersion);
+				}
+
+			});
 	}
 
 	private void _configureTaskJar(final Project project) {

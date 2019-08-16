@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.tasks.DeployFastTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.DockerDeployTask;
 import com.liferay.gradle.plugins.util.PortalTools;
@@ -46,11 +47,14 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayBasePlugin implements Plugin<Project> {
+
+	public static final String DEPLOY_FAST_TASK_NAME = "deployFast";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
@@ -70,6 +74,8 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		_addConfigurationPortal(project, liferayExtension);
 
 		Copy copy = _addTaskDeploy(project, liferayExtension);
+
+		_addTaskDeployFast(project);
 
 		String dockerContainerId = GradleUtil.getTaskPrefixedProperty(
 			copy, "docker.container.id");
@@ -215,6 +221,17 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		copy.setGroup(BasePlugin.BUILD_GROUP);
 
 		return copy;
+	}
+
+	private DeployFastTask _addTaskDeployFast(Project project) {
+		DeployFastTask deployFastTask = GradleUtil.addTask(
+			project, DEPLOY_FAST_TASK_NAME, DeployFastTask.class);
+
+		deployFastTask.setDescription(
+			"Builds and deploys resources to Liferay work directory.");
+		deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
+
+		return deployFastTask;
 	}
 
 	private DockerDeployTask _addTaskDockerDeploy(

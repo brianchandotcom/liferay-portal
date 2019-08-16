@@ -50,11 +50,11 @@ public class SearchSearchRequestExecutorImpl
 		_searchSearchRequestAssembler.assemble(
 			searchRequestBuilder, searchSearchRequest);
 
-		if (_log.isDebugEnabled()) {
-			String debugRequestString = _getDebugRequestString(
+		if (_log.isTraceEnabled()) {
+			String prettyPrintedRequestString = _getPrettyPrintedRequestString(
 				searchRequestBuilder);
 
-			_log.debug("Search query: " + debugRequestString);
+			_log.trace("Search query: " + prettyPrintedRequestString);
 		}
 
 		SearchResponse searchResponse = searchRequestBuilder.get();
@@ -97,7 +97,7 @@ public class SearchSearchRequestExecutorImpl
 		_searchSearchResponseAssembler = searchSearchResponseAssembler;
 	}
 
-	private String _getDebugRequestString(
+	private String _getPrettyPrintedRequestString(
 		SearchRequestBuilder searchRequestBuilder) {
 
 		GsonBuilder gsonBuilder = new GsonBuilder();

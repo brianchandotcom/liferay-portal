@@ -79,8 +79,6 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "WC Template Name");
 
-		Panel.expandPanel(panel = "Details");
-
 		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
 
 		Navigator.openURL();
@@ -118,10 +116,6 @@ definition {
 		Navigator.gotoPage(pageName = "Test Page");
 
 		WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = "WC WebContent Title");
-
-		SelectFrame(locator1 = "IFrame#DIALOG");
-
-		Panel.expandPanel(panel = "Details");
 
 		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
 	}

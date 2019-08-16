@@ -61,6 +61,14 @@ public class SegmentsExperimentServiceUtil {
 			segmentsExperienceId, classNameId, classPK, status);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			fetchSegmentsExperiment(long groupId, String segmentsExperimentKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchSegmentsExperiment(
+			groupId, segmentsExperimentKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

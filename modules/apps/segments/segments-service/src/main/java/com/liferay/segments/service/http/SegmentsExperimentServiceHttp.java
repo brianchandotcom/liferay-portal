@@ -220,6 +220,46 @@ public class SegmentsExperimentServiceHttp {
 		}
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			fetchSegmentsExperiment(
+				HttpPrincipal httpPrincipal, long groupId,
+				String segmentsExperimentKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentServiceUtil.class, "fetchSegmentsExperiment",
+				_fetchSegmentsExperimentParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, segmentsExperimentKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.segments.model.SegmentsExperiment>
 		getSegmentsExperiments(
 			HttpPrincipal httpPrincipal, long groupId, long classNameId,
@@ -228,7 +268,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "getSegmentsExperiments",
-				_getSegmentsExperimentsParameterTypes4);
+				_getSegmentsExperimentsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK);
@@ -262,7 +302,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes5);
+				_updateSegmentsExperimentParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId, name, description, goal,
@@ -303,7 +343,7 @@ public class SegmentsExperimentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes6);
+				_updateSegmentsExperimentParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentKey, status);
@@ -352,13 +392,15 @@ public class SegmentsExperimentServiceHttp {
 		};
 	private static final Class<?>[] _getSegmentsExperimentParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsExperimentsParameterTypes4 =
+	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes4 =
+		new Class[] {long.class, String.class};
+	private static final Class<?>[] _getSegmentsExperimentsParameterTypes5 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes5 =
+	private static final Class<?>[] _updateSegmentsExperimentParameterTypes6 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes6 =
+	private static final Class<?>[] _updateSegmentsExperimentParameterTypes7 =
 		new Class[] {String.class, int.class};
 
 }

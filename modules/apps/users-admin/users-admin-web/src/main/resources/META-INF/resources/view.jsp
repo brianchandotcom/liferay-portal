@@ -258,9 +258,7 @@ else {
 				<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
 			</portlet:renderURL>
 
-			var selectUsersURL = Liferay.PortletURL.createURL('<%= selectUsersURL.toString() %>');
-
-			selectUsersURL.setParameter('organizationId', organizationId);
+			var selectUsersURL = Liferay.Util.PortletURL.createURL('<%= selectUsersURL.toString() %>', {'organizationId': organizationId});
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
@@ -270,18 +268,23 @@ else {
 							var data = event.newVal;
 
 							if (data) {
-								var editAssignmentURL = Liferay.PortletURL.createURL('<portlet:actionURL name="/users_admin/edit_organization_assignments" />');
+								var assignmentsRedirectURL = Liferay.Util.PortletURL.createURL(
+									'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/view" /><portlet:param name="toolbarItem" value="view-all-organizations" /><portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" /></portlet:renderURL>',
+									{'organizationId': organizationId}
+								);
 
-								editAssignmentURL.setParameter('addUserIds', data.value);
-								editAssignmentURL.setParameter('organizationId', organizationId);
+								var parameters = {
+									'addUserIds': data.value,
+									'assignmentsRedirect': assignmentsRedirectURL,
+									'organizationId': organizationId
+								}
 
-								var assignmentsRedirectURL = Liferay.PortletURL.createURL('<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/view" /><portlet:param name="toolbarItem" value="view-all-organizations" /><portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" /></portlet:renderURL>');
+								var editAssignmentURL = Liferay.Util.PortletURL.createURL(
+									'<portlet:actionURL name="/users_admin/edit_organization_assignments" />',
+									parameters
+								);
 
-								assignmentsRedirectURL.setParameter('organizationId', organizationId);
-
-								editAssignmentURL.setParameter('assignmentsRedirect', assignmentsRedirectURL.toString());
-
-								submitForm(document.<portlet:namespace />fm, editAssignmentURL.toString());
+								submitForm(document.<portlet:namespace />fm, editAssignmentURL);
 							}
 						}
 					},
@@ -290,12 +293,12 @@ else {
 						cancel: '<liferay-ui:message key="cancel" />'
 					},
 					title: '<liferay-ui:message key="assign-users" />',
-					url: selectUsersURL.toString()
+					url: selectUsersURL
 				}
 			);
 
 			itemSelectorDialog.open();
 		},
-		['liferay-item-selector-dialog', 'liferay-portlet-url']
+		['liferay-item-selector-dialog']
 	);
 </aui:script>

@@ -57,10 +57,6 @@ public class ContainerLPKGUtil {
 				String name = zipEntry.getName();
 
 				if (!name.endsWith(".lpkg")) {
-					if (name.equals("index.xml")) {
-						continue;
-					}
-
 					return null;
 				}
 

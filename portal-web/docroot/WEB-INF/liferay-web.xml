@@ -246,14 +246,6 @@
 		<filter-class>com.liferay.portal.servlet.filters.password.modified.PasswordModifiedFilter</filter-class>
 	</filter>
 	<filter>
-		<filter-name>Remoting Servlet Filter</filter-name>
-		<filter-class>com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter</filter-class>
-		<init-param>
-			<param-name>portal_property_prefix</param-name>
-			<param-value>spring.remoting.servlet.</param-value>
-		</init-param>
-	</filter>
-	<filter>
 		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
 		<filter-class>com.liferay.portal.servlet.filters.secure.SecureFilter</filter-class>
 		<init-param>
@@ -993,13 +985,6 @@
 	<filter-mapping>
 		<filter-name>JSON Web Service Servlet Filter</filter-name>
 		<url-pattern>/api/jsonws/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Remoting Servlet Filter</filter-name>
-		<url-pattern>/api/spring/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>REQUEST</dispatcher>

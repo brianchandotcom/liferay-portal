@@ -230,12 +230,6 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
-		<servlet-name>Remoting Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.spring.servlet.RemotingServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-		<async-supported>true</async-supported>
-	</servlet>
-	<servlet>
 		<servlet-name>Robots Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.RobotsServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -988,10 +982,6 @@
 	<servlet-mapping>
 		<servlet-name>JSON Web Service Servlet</servlet-name>
 		<url-pattern>/api/jsonws/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Remoting Servlet</servlet-name>
-		<url-pattern>/api/spring/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Tunnel Servlet</servlet-name>

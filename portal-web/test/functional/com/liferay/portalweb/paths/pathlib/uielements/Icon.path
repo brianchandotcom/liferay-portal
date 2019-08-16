@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>OK</td>
-	<td>//span[contains(@class,'icon-ok')]</td>
+	<td>//*[name()='svg'][contains(@class,'check')]</td>
 	<td></td>
 </tr>
 <tr>

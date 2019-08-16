@@ -15,7 +15,7 @@
 						</#if>
 
 						<h3 class="title">
-							<a class="title-link" href="${viewEntryPortletURL.toString()}">${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</a>
+							<a class="title-link" href="${viewEntryPortletURL.toString()}">${htmlUtil.escape(blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry))}</a>
 						</h3>
 					</div>
 

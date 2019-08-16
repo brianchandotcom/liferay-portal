@@ -32,7 +32,7 @@
 
 								<h3 class="title">
 									<a class="title-link" href="${viewEntryPortletURL.toString()}">
-									${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</a>
+									${htmlUtil.escape(blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry))}</a>
 								</h3>
 							</div>
 

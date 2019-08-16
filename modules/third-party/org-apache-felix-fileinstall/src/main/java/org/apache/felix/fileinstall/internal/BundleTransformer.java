@@ -39,9 +39,8 @@ public class BundleTransformer implements ArtifactUrlTransformer
         {
             // Handle OSGi bundles with the default deployer
             String name = artifact.getName();
-            if (!artifact.canRead()  
-                || name.endsWith(".txt") || name.endsWith(".xml")
-                || name.endsWith(".properties") || name.endsWith(".cfg"))
+            if (name.endsWith(".lpkg") || name.endsWith(".txt") || name.endsWith(".xml")
+                || name.endsWith(".properties") || name.endsWith(".cfg") || !artifact.canRead())
             {
                 // that's file type which is not supported as bundle and avoid
                 // exception in the log
@@ -81,3 +80,4 @@ public class BundleTransformer implements ArtifactUrlTransformer
     }
 
 }
+/* @generated */

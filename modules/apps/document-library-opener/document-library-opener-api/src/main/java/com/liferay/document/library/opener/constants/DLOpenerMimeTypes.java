@@ -16,9 +16,11 @@ package com.liferay.document.library.opener.constants;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.AbstractMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Provides a set of constants and methods for working with the MIME types
@@ -106,15 +108,25 @@ public class DLOpenerMimeTypes {
 	public static final String TEXT_TAB_SEPARATED_VALUES =
 		"text/tab-separated-values";
 
-	public static final Map<String, String> extensions = MapUtil.fromArray(
-		ContentTypes.APPLICATION_PDF, ".pdf", APPLICATION_RTF, ".rtf",
-		ContentTypes.APPLICATION_TEXT, ".txt", APPLICATION_VND_DOCX, ".docx",
-		APPLICATION_VND_ODP, ".odp", APPLICATION_VND_ODS, ".ods",
-		APPLICATION_VND_ODT, ".odt", APPLICATION_VND_PPTX, ".pptx",
-		APPLICATION_VND_XLSX, ".xlsx", ContentTypes.IMAGE_PNG, ".png",
-		ContentTypes.TEXT, ".txt", ContentTypes.TEXT_CSV, ".csv",
-		ContentTypes.TEXT_PLAIN, ".txt", ContentTypes.TEXT_HTML, ".html",
-		TEXT_TAB_SEPARATED_VALUES, ".tsv");
+	public static final Map<String, String> extensions = Stream.of(
+		new AbstractMap.SimpleEntry<>(ContentTypes.APPLICATION_PDF, ".pdf"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_RTF, ".rtf"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.APPLICATION_TEXT, ".txt"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_DOCX, ".docx"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_ODP, ".odp"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_ODS, ".ods"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_ODT, ".odt"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_PPTX, ".pptx"),
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLSX, ".xlsx"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.IMAGE_PNG, ".png"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.TEXT, ".txt"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.TEXT_CSV, ".csv"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.TEXT_PLAIN, ".txt"),
+		new AbstractMap.SimpleEntry<>(ContentTypes.TEXT_HTML, ".html"),
+		new AbstractMap.SimpleEntry<>(TEXT_TAB_SEPARATED_VALUES, ".tsv")
+	).collect(
+		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
+	);
 
 	/**
 	 * Returns the canonical file extension associated with the MIME type. The

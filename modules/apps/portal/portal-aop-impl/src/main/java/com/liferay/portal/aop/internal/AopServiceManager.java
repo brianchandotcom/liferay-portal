@@ -28,11 +28,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -46,6 +46,16 @@ public class AopServiceManager {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
+		_synchronousBundleListener = bundleEvent -> {
+			if (bundleEvent.getType() == BundleEvent.STOPPING) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				_aopDependencyResolvers.remove(bundle.getBundleId());
+			}
+		};
+
+		_bundleContext.addBundleListener(_synchronousBundleListener);
+
 		_aopServiceServiceTracker = new ServiceTracker<>(
 			bundleContext, AopService.class,
 			new AopServiceServiceTrackerCustomizer());
@@ -57,20 +67,6 @@ public class AopServiceManager {
 			new TransactionExecutorServiceTrackerCustomizer());
 
 		_transactionExecutorServiceTracker.open(true);
-
-		_bundleTracker = new BundleTracker<Object>(
-			bundleContext, Bundle.ACTIVE, null) {
-
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent, Object object) {
-
-				_aopDependencyResolvers.remove(bundle.getBundleId());
-			}
-
-		};
-
-		_bundleTracker.open();
 	}
 
 	@Deactivate
@@ -79,7 +75,9 @@ public class AopServiceManager {
 
 		_transactionExecutorServiceTracker.close();
 
-		_bundleTracker.close();
+		_bundleContext.removeBundleListener(_synchronousBundleListener);
+
+		_aopDependencyResolvers.clear();
 	}
 
 	private final Map<Object, AopServiceResolver> _aopDependencyResolvers =
@@ -87,11 +85,11 @@ public class AopServiceManager {
 	private ServiceTracker<AopService, AopServiceRegistrar>
 		_aopServiceServiceTracker;
 	private BundleContext _bundleContext;
-	private BundleTracker<?> _bundleTracker;
 
 	@Reference(target = "(original.bean=true)")
 	private TransactionExecutor _portalTransactionExecutor;
 
+	private SynchronousBundleListener _synchronousBundleListener;
 	private ServiceTracker<TransactionExecutor, TransactionExecutorHolder>
 		_transactionExecutorServiceTracker;
 

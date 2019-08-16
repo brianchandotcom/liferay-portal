@@ -22,15 +22,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.search.tuning.web.internal.constants.SearchTuningPortletKeys" %><%@
-page import="com.liferay.portal.search.tuning.web.internal.display.context.SynonymsDisplayContext" %>
+<%@ page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
+page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymsDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.getAttribute(SearchTuningPortletKeys.SYNONYMS_DISPLAY_CONTEXT);
+SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.getAttribute(SynonymsPortletKeys.SYNONYMS_DISPLAY_CONTEXT);
 %>
 
 <clay:management-toolbar
@@ -57,7 +57,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 		searchContainer="<%= synonymsDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.search.tuning.web.internal.display.context.SynonymSetDisplayContext"
+			className="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.SynonymSetDisplayContext"
 			keyProperty="synonymSet"
 			modelVar="synonymSetDisplayContext"
 		>

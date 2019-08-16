@@ -48,6 +48,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
+	public static final String JSP_PRECOMPILE_ENABLED = "jsp.precompile";
+
 	@Override
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		_configureTaskGenerateJSPJava(project);
@@ -118,7 +120,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	private void _configureTaskJar(final Project project) {
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
-			project, "jsp.precompile.enabled", false);
+			project, JSP_PRECOMPILE_ENABLED, false);
 
 		if (!jspPrecompileEnabled) {
 			return;

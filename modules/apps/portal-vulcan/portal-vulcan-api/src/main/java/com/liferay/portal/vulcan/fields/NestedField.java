@@ -28,4 +28,6 @@ public @interface NestedField {
 
 	public String value();
 
+	public Class parentReturnType() default Void.class;
+
 }

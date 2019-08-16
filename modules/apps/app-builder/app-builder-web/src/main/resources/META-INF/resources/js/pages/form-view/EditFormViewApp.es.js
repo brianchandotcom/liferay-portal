@@ -13,24 +13,23 @@
  */
 
 import React from 'react';
-import {ManagementToolbar} from '../../components/management-toolbar/index.es';
-import Button from '../../components/button/Button.es';
+import {AppContextProvider} from '../../AppContext.es';
+import EditFormView from './EditFormView.es';
+import ReactDOM from 'react-dom';
 
-export default () => {
+const App = () => {
 	return (
-		<ManagementToolbar>
-			<ul className="tbar-nav">
-				<li className="tbar-item tbar-item-expand"></li>
-				<li className="tbar-item">
-					<div className="tbar-section text-right">
-						<Button
-							className="nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none"
-							symbol="plus"
-							tooltip={Liferay.Language.get('add-field')}
-						/>
-					</div>
-				</li>
-			</ul>
-		</ManagementToolbar>
+		<AppContextProvider>
+			<EditFormView />
+		</AppContextProvider>
+	);
+};
+
+export default id => {
+	const container = document.getElementById(id);
+	ReactDOM.render(<App />, container);
+
+	Liferay.once('destroyPortlet', () =>
+		ReactDOM.unmountComponentAtNode(container)
 	);
 };

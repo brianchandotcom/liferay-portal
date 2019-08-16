@@ -4,8 +4,8 @@
 		"formik": "1.4.3",
 		"prop-types": "15.7.2",
 		"react": "16.8.6",
-		"react-dnd": "7.0.2",
-		"react-dnd-html5-backend": "7.0.2",
+		"react-dnd": "^7.7.0",
+		"react-dnd-html5-backend": "^7.7.0",
 		"react-dom": "16.8.6"
 	},
 	"name": "frontend-js-react-web",

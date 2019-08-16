@@ -6,7 +6,7 @@
 		"liferay-karma-config": "0.0.3",
 		"liferay-npm-bundler": "2.7.1",
 		"liferay-npm-bundler-preset-standard": "2.7.1",
-		"liferay-npm-scripts": "7.0.0"
+		"liferay-npm-scripts": "7.1.0"
 	},
 	"private": true,
 	"scripts": {

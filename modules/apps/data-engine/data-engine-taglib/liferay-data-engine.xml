@@ -8,6 +8,12 @@
 	<component bodyContent="true" name="DataLayoutBuilder" writeJSP="true">
 		<attributes>
 			<attribute>
+				<name>componentId</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>dataDefinitionInputId</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

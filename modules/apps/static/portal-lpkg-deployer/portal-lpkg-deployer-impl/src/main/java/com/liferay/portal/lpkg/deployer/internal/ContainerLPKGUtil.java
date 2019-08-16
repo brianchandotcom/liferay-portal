@@ -19,6 +19,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -28,6 +29,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -38,7 +40,8 @@ import org.osgi.framework.BundleContext;
  */
 public class ContainerLPKGUtil {
 
-	public static List<File> deploy(File lpkgFile, BundleContext bundleContext)
+	public static List<File> deploy(
+			File lpkgFile, BundleContext bundleContext, Properties properties)
 		throws IOException {
 
 		Path deployerDirPath = Paths.get(
@@ -57,6 +60,19 @@ public class ContainerLPKGUtil {
 				String name = zipEntry.getName();
 
 				if (!name.endsWith(".lpkg")) {
+					if (properties != null) {
+						zipEntry = zipFile.getEntry(
+							"liferay-marketplace.properties");
+
+						if (zipEntry != null) {
+							try (InputStream inputStream =
+									zipFile.getInputStream(zipEntry)) {
+
+								properties.load(inputStream);
+							}
+						}
+					}
+
 					return null;
 				}
 

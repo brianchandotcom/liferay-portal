@@ -20,11 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
 
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,11 +60,10 @@ public class SegmentsExperimentTemplateContextContributor
 
 		String cssClass = GetterUtil.getString(
 			contextObjects.get("bodyCssClass"));
-		String segmentsExperimentPanelState = SessionClicks.get(
-			httpServletRequest,
-			"com.liferay.segments.experiment.web_panelState", "closed");
 
-		if (Objects.equals(segmentsExperimentPanelState, "open")) {
+		if (_segmentsExperimentProductNavigationControlMenuEntry.
+				isPanelStateOpen(httpServletRequest)) {
+
 			contextObjects.put(
 				"bodyCssClass",
 				cssClass + StringPool.SPACE +

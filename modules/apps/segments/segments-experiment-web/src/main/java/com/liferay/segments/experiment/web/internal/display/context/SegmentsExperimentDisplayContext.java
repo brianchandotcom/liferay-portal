@@ -235,12 +235,11 @@ public class SegmentsExperimentDisplayContext {
 			return _segmentsExperienceId;
 		}
 
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(_httpServletRequest);
+		_segmentsExperienceId = _getSegmentsExperienceId();
 
-		_segmentsExperienceId = ParamUtil.getLong(
-			originalHttpServletRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
+		if (_segmentsExperienceId == -1) {
+			_segmentsExperienceId = SegmentsExperienceConstants.ID_DEFAULT;
+		}
 
 		return _segmentsExperienceId;
 	}
@@ -272,16 +271,43 @@ public class SegmentsExperimentDisplayContext {
 		return Optional.ofNullable(segmentsExperiment);
 	}
 
+	private long _getSegmentsExperienceId() {
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(_httpServletRequest);
+
+		return ParamUtil.getLong(
+			originalHttpServletRequest, "segmentsExperienceId", -1);
+	}
+
 	private SegmentsExperiment _getSegmentsExperiment() throws PortalException {
 		if (_segmentsExperiment != null) {
 			return _segmentsExperiment;
 		}
 
-		_segmentsExperiment = _getDraftSegmentsExperimentOptional(
-			getSelectedSegmentsExperienceId()
-		).orElse(
-			null
-		);
+		if (_getSegmentsExperienceId() != -1) {
+			_segmentsExperiment = _getDraftSegmentsExperimentOptional(
+				getSelectedSegmentsExperienceId()
+			).orElse(
+				null
+			);
+		}
+		else {
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(_httpServletRequest);
+
+			String segmentsExperimentKey = ParamUtil.getString(
+				originalHttpServletRequest, "segmentsExperimentKey");
+
+			if (Validator.isNotNull(segmentsExperimentKey)) {
+				SegmentsExperiment segmentsExperiment =
+					_segmentsExperimentService.fetchSegmentsExperiment(
+						_themeDisplay.getScopeGroupId(), segmentsExperimentKey);
+
+				if (segmentsExperiment != null) {
+					_segmentsExperiment = segmentsExperiment;
+				}
+			}
+		}
 
 		return _segmentsExperiment;
 	}

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -128,11 +129,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 		Map<String, String> values = new HashMap<>();
 
-		String segmentsExperimentPanelState = SessionClicks.get(
-			httpServletRequest,
-			"com.liferay.segments.experiment.web_panelState", "closed");
-
-		if (Objects.equals(segmentsExperimentPanelState, "open")) {
+		if (isPanelStateOpen(httpServletRequest)) {
 			values.put("cssClass", "active");
 			values.put("dataURL", StringPool.BLANK);
 		}
@@ -185,6 +182,28 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		writer.write(StringUtil.replace(_ICON_TMPL_CONTENT, "${", "}", values));
 
 		return true;
+	}
+
+	public boolean isPanelStateOpen(HttpServletRequest httpServletRequest) {
+		String segmentsExperimentPanelState = SessionClicks.get(
+			httpServletRequest,
+			"com.liferay.segments.experiment.web_panelState", "closed");
+
+		if (Objects.equals(segmentsExperimentPanelState, "open")) {
+			return true;
+		}
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(httpServletRequest);
+
+		String segmentsExperimentKey = ParamUtil.getString(
+			originalHttpServletRequest, "segmentsExperimentKey");
+
+		if (Validator.isNotNull(segmentsExperimentKey)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -246,11 +265,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			jspWriter.write("<div class=\"");
 
-			String segmentsExperimentPanelState = SessionClicks.get(
-				httpServletRequest,
-				"com.liferay.segments.experiment.web_panelState", "closed");
-
-			if (Objects.equals(segmentsExperimentPanelState, "open")) {
+			if (isPanelStateOpen(httpServletRequest)) {
 				jspWriter.write(
 					"lfr-has-segments-experiment-panel open-admin-panel ");
 			}

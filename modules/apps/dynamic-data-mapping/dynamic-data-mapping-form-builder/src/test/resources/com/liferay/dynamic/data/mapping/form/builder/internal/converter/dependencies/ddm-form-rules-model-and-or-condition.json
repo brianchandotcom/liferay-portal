@@ -3,26 +3,26 @@
 		"actions": [
 			"setEnabled('Field3', true)"
 		],
-		"condition": "contains(getValue('Field1'), getValue('Field2')) AND contains(getValue('Field2'), 4)"
+		"condition": "contains(getValue('Field2'), 4) AND contains(getValue('Field1'), getValue('Field2'))"
 	},
 	{
 		"actions": [
 			"setEnabled('Field3', true)",
 			"setVisible('Field4', true)"
 		],
-		"condition": "contains(getValue('Field2'), '4') OR equals(5.3, 5.3)"
+		"condition": "contains(getValue('Field2'), 4) OR equals(3, 5) OR equals(getValue('Field1'), getValue('Field2'))"
 	},
 	{
 		"actions": [
 			"setEnabled('Field3', true)",
 			"setVisible('Field4', true)"
 		],
-		"condition": "equals(getValue('Field1'), getValue('Field2')) OR contains(getValue('Field2'), 4) OR equals(5, 3)"
+		"condition": "equals(5.3, 5.3) OR contains(getValue('Field2'), '4')"
 	},
 	{
 		"actions": [
 			"setVisible('Field2', true)"
 		],
-		"condition": "not(equals(getValue('Field1'), 'Joe')) OR not(contains(getValue('Field1'), 'Blogs'))"
+		"condition": "not(contains(getValue('Field1'), 'Blogs')) OR not(equals(getValue('Field1'), 'Joe'))"
 	}
 ]

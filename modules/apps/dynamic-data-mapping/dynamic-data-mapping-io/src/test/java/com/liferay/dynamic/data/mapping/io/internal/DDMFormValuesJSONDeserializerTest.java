@@ -222,12 +222,12 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 		Assert.assertEquals(
 			ddmFormFieldValues.toString(), 7, ddmFormFieldValues.size());
 
-		testBooleanDDMFormFieldValueValues(ddmFormFieldValues.get(0));
-		testDocumentLibraryDDMFormFieldValueValues(ddmFormFieldValues.get(1));
-		testGeolocationDDMFormFieldValueValues(ddmFormFieldValues.get(2));
-		testHTMLDDMFormFieldValueValues(ddmFormFieldValues.get(3));
-		testImageDDMFormFieldValueValues(ddmFormFieldValues.get(4));
-		testLinkToPageDDMFormFieldValueValues(ddmFormFieldValues.get(5));
+		testBooleanDDMFormFieldValueValues(ddmFormFieldValues.get(3));
+		testDocumentLibraryDDMFormFieldValueValues(ddmFormFieldValues.get(0));
+		testGeolocationDDMFormFieldValueValues(ddmFormFieldValues.get(5));
+		testHTMLDDMFormFieldValueValues(ddmFormFieldValues.get(2));
+		testImageDDMFormFieldValueValues(ddmFormFieldValues.get(1));
+		testLinkToPageDDMFormFieldValueValues(ddmFormFieldValues.get(4));
 		testSelectDDMFormFieldValueValues(ddmFormFieldValues.get(6));
 	}
 

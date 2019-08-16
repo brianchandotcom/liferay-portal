@@ -17,16 +17,16 @@
 			"instanceId": "pkqa",
 			"name": "Text",
 			"value": {
-				"en_US": "Name 2",
-				"pt_BR": "Nome 2"
+				"en_US": "Name 1",
+				"pt_BR": "Nome 1"
 			}
 		},
 		{
 			"instanceId": "plwu",
 			"name": "Text",
 			"value": {
-				"en_US": "Name 1",
-				"pt_BR": "Nome 1"
+				"en_US": "Name 2",
+				"pt_BR": "Nome 2"
 			}
 		}
 	]

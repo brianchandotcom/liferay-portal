@@ -70,9 +70,9 @@ public class IndividualSegmentJSONObjectMapperTest {
 
 		IndividualSegment individualSegment = individualSegments.get(0);
 
-		Assert.assertEquals("324849894334623092", individualSegment.getId());
-		Assert.assertEquals("British Developers", individualSegment.getName());
-		Assert.assertEquals(8L, individualSegment.getIndividualCount());
+		Assert.assertEquals("324760631477946369", individualSegment.getId());
+		Assert.assertEquals("Developers", individualSegment.getName());
+		Assert.assertEquals(35L, individualSegment.getIndividualCount());
 
 		Author author = individualSegment.getAuthor();
 

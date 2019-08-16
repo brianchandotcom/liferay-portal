@@ -50,8 +50,8 @@ public class InterestTermsJSONObjectMapperTest {
 
 		Topic.TopicTerm topicTerm = topicTerms.get(0);
 
-		Assert.assertEquals("javascript", topicTerm.getKeyword());
-		Assert.assertEquals(0.0945945945945946, topicTerm.getWeight(), _DELTA);
+		Assert.assertEquals("html", topicTerm.getKeyword());
+		Assert.assertEquals(0.07027027027027027, topicTerm.getWeight(), _DELTA);
 	}
 
 	@Test(expected = IOException.class)
@@ -70,15 +70,15 @@ public class InterestTermsJSONObjectMapperTest {
 
 		Topic topic = topics.get(0);
 
-		Assert.assertEquals(7, topic.getId());
-		Assert.assertEquals(0.08653350323695352, topic.getWeight(), _DELTA);
+		Assert.assertEquals(1, topic.getId());
+		Assert.assertEquals(0.08027610626914822, topic.getWeight(), _DELTA);
 
 		List<Topic.TopicTerm> topicTerms = topic.getTerms();
 
 		Topic.TopicTerm topicTerm = topicTerms.get(0);
 
-		Assert.assertEquals("javascript", topicTerm.getKeyword());
-		Assert.assertEquals(0.0945945945945946, topicTerm.getWeight(), _DELTA);
+		Assert.assertEquals("mysql", topicTerm.getKeyword());
+		Assert.assertEquals(0.05509641873278237, topicTerm.getWeight(), _DELTA);
 	}
 
 	@Test

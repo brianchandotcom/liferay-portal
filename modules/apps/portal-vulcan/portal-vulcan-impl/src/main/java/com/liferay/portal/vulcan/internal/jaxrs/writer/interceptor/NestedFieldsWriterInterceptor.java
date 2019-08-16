@@ -125,6 +125,36 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return resources;
 	}
 
+	private boolean _checkNestedFieldsMethod(
+		Object item, Method method, NestedFieldsContext nestedFieldsContext,
+		Class<?> resourceClass) {
+
+		if (method == null) {
+			return false;
+		}
+
+		if (!Objects.equals(
+				nestedFieldsContext.getResourceVersion(),
+				_getResourceVersion(resourceClass.getSuperclass()))) {
+
+			return false;
+		}
+
+		NestedField nestedField = method.getAnnotation(NestedField.class);
+
+		Class<?> parentReturnType = nestedField.parentReturnType();
+
+		if (nestedField.parentReturnType() != Void.class) {
+			if (item.getClass() == parentReturnType) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private Object _convert(String value, Class<?> type) {
 		if (value == null) {
 			return null;
@@ -199,10 +229,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		Class<?> baseResourceClass = clazz.getSuperclass();
 
-		Method interfaceMethod = baseResourceClass.getMethod(
+		Method baseResourceMethod = baseResourceClass.getMethod(
 			implMethod.getName(), implMethod.getParameterTypes());
 
-		return interfaceMethod.getParameters();
+		return baseResourceMethod.getParameters();
 	}
 
 	private <T> Object _getContext(Class<T> contextClass, Message message) {
@@ -414,13 +444,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 			Method method = _getAnnotatedMethod(resourceClass, fieldName);
 
-			if (method == null) {
-				continue;
-			}
-
-			if (!Objects.equals(
-					nestedFieldsContext.getResourceVersion(),
-					_getResourceVersion(resourceClass.getSuperclass()))) {
+			if (!_checkNestedFieldsMethod(
+					item, method, nestedFieldsContext, resourceClass)) {
 
 				continue;
 			}

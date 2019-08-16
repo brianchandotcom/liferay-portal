@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
 import java.io.CharArrayWriter;
@@ -314,8 +315,18 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				);
 			}
 
-			_jspRuntimeContext.saveBytecode(
-				bytecodeFileClassName, outputFileName);
+			try (FileOutputStream fileOutputStream = new FileOutputStream(
+					outputFileName)) {
+
+				StreamUtil.transfer(
+					bytecodeJavaFileObject.openInputStream(), fileOutputStream);
+			}
+			catch (IOException ioe) {
+				ServletContext servletContext =
+					_jspCompilationContext.getServletContext();
+
+				servletContext.log("Unable to save class file", ioe);
+			}
 		}
 	}
 

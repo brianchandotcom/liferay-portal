@@ -14,6 +14,9 @@
 
 package com.liferay.segments.asah.connector.internal.client;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import java.util.List;
@@ -128,7 +131,15 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 	protected void activate() {
 		_client = _clientBuilder.build();
 
-		_client.register(JacksonJsonProvider.class);
+		JacksonJsonProvider jacksonJsonProvider = new JacksonJaxbJsonProvider();
+
+		jacksonJsonProvider.configure(
+			DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+		jacksonJsonProvider.configure(
+			SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+		_client.register(jacksonJsonProvider);
 	}
 
 	private void _validateResponse(Response response) {

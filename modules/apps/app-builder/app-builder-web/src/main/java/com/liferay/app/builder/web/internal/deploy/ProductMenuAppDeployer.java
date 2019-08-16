@@ -26,7 +26,6 @@ import com.liferay.app.builder.web.internal.portlet.ProductMenuAppPortlet;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -118,12 +117,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	private void _deployAppPanelApp(long appId) {
-		com.liferay.portal.kernel.model.Portlet portlet =
-			_portletLocalService.getPortletById(_getPortletName(appId));
-
-		ProductMenuAppPanelApp productMenuAppPanelApp =
-			new ProductMenuAppPanelApp(portlet);
-
 		Dictionary properties = new HashMapDictionary() {
 			{
 				put("panel.app.order:Integer", 100);
@@ -134,7 +127,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_addServiceRegistration(
 			appId,
 			_bundleContext.registerService(
-				PanelApp.class, productMenuAppPanelApp, properties));
+				PanelApp.class,
+				new ProductMenuAppPanelApp(_getPortletName(appId)),
+				properties));
 	}
 
 	private void _deployAppPanelCategory(long appId, String appName) {
@@ -195,10 +190,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
 	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
 		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 

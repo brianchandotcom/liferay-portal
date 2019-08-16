@@ -6,22 +6,18 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -44,10 +40,6 @@ public class CompilerWrapper extends Compiler {
 		JSPClassInfo jspClassInfo = _jspClassInfos.get(className);
 
 		if (jspClassInfo != null) {
-			JspRuntimeContext jspRuntimeContext = ctxt.getRuntimeContext();
-
-			jspRuntimeContext.setBytecode(className, jspClassInfo.getBytes());
-
 			return;
 		}
 
@@ -75,26 +67,13 @@ public class CompilerWrapper extends Compiler {
 				return false;
 			}
 
-			URLConnection urlConnection = url.openConnection();
+			String protocol = url.getProtocol();
 
-			try (InputStream inputStream = urlConnection.getInputStream();
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream()) {
+			_jspClassInfos.put(
+				className,
+				new JSPClassInfo(protocol.equals("file"), lastModified));
 
-				StreamUtil.transfer(
-					inputStream, unsyncByteArrayOutputStream, false);
-
-				byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
-
-				String protocol = url.getProtocol();
-
-				_jspClassInfos.put(
-					className,
-					new JSPClassInfo(
-						bytes, protocol.equals("file"), lastModified));
-
-				return true;
-			}
+			return true;
 		}
 		catch (IOException ioException) {
 			_log.error(
@@ -183,10 +162,6 @@ public class CompilerWrapper extends Compiler {
 
 	private class JSPClassInfo {
 
-		public byte[] getBytes() {
-			return _bytes;
-		}
-
 		public long getLastModified() {
 			return _lastModified;
 		}
@@ -195,15 +170,11 @@ public class CompilerWrapper extends Compiler {
 			return _override;
 		}
 
-		private JSPClassInfo(
-			byte[] bytes, boolean override, long lastModified) {
-
-			_bytes = bytes;
+		private JSPClassInfo(boolean override, long lastModified) {
 			_override = override;
 			_lastModified = lastModified;
 		}
 
-		private final byte[] _bytes;
 		private final long _lastModified;
 		private final boolean _override;
 

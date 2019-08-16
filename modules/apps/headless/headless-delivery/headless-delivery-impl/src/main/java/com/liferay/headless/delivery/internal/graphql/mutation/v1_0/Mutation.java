@@ -52,12 +52,18 @@ import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -1568,6 +1574,10 @@ public class Mutation {
 
 		blogPostingResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingResource.setContextCompany(_company);
+		blogPostingResource.setContextHttpServletRequest(_httpServletRequest);
+		blogPostingResource.setContextHttpServletResponse(_httpServletResponse);
+		blogPostingResource.setContextUriInfo(_uriInfo);
+		blogPostingResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1576,6 +1586,12 @@ public class Mutation {
 
 		blogPostingImageResource.setContextAcceptLanguage(_acceptLanguage);
 		blogPostingImageResource.setContextCompany(_company);
+		blogPostingImageResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		blogPostingImageResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		blogPostingImageResource.setContextUriInfo(_uriInfo);
+		blogPostingImageResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(CommentResource commentResource)
@@ -1583,6 +1599,10 @@ public class Mutation {
 
 		commentResource.setContextAcceptLanguage(_acceptLanguage);
 		commentResource.setContextCompany(_company);
+		commentResource.setContextHttpServletRequest(_httpServletRequest);
+		commentResource.setContextHttpServletResponse(_httpServletResponse);
+		commentResource.setContextUriInfo(_uriInfo);
+		commentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(DocumentResource documentResource)
@@ -1590,6 +1610,10 @@ public class Mutation {
 
 		documentResource.setContextAcceptLanguage(_acceptLanguage);
 		documentResource.setContextCompany(_company);
+		documentResource.setContextHttpServletRequest(_httpServletRequest);
+		documentResource.setContextHttpServletResponse(_httpServletResponse);
+		documentResource.setContextUriInfo(_uriInfo);
+		documentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1598,6 +1622,12 @@ public class Mutation {
 
 		documentFolderResource.setContextAcceptLanguage(_acceptLanguage);
 		documentFolderResource.setContextCompany(_company);
+		documentFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		documentFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		documentFolderResource.setContextUriInfo(_uriInfo);
+		documentFolderResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1606,6 +1636,12 @@ public class Mutation {
 
 		knowledgeBaseArticleResource.setContextAcceptLanguage(_acceptLanguage);
 		knowledgeBaseArticleResource.setContextCompany(_company);
+		knowledgeBaseArticleResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseArticleResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		knowledgeBaseArticleResource.setContextUriInfo(_uriInfo);
+		knowledgeBaseArticleResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1615,6 +1651,12 @@ public class Mutation {
 		knowledgeBaseAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		knowledgeBaseAttachmentResource.setContextCompany(_company);
+		knowledgeBaseAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		knowledgeBaseAttachmentResource.setContextUriInfo(_uriInfo);
+		knowledgeBaseAttachmentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1623,6 +1665,12 @@ public class Mutation {
 
 		knowledgeBaseFolderResource.setContextAcceptLanguage(_acceptLanguage);
 		knowledgeBaseFolderResource.setContextCompany(_company);
+		knowledgeBaseFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		knowledgeBaseFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		knowledgeBaseFolderResource.setContextUriInfo(_uriInfo);
+		knowledgeBaseFolderResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1632,6 +1680,12 @@ public class Mutation {
 		messageBoardAttachmentResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		messageBoardAttachmentResource.setContextCompany(_company);
+		messageBoardAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		messageBoardAttachmentResource.setContextUriInfo(_uriInfo);
+		messageBoardAttachmentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1640,6 +1694,12 @@ public class Mutation {
 
 		messageBoardMessageResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardMessageResource.setContextCompany(_company);
+		messageBoardMessageResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardMessageResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		messageBoardMessageResource.setContextUriInfo(_uriInfo);
+		messageBoardMessageResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1648,6 +1708,12 @@ public class Mutation {
 
 		messageBoardSectionResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardSectionResource.setContextCompany(_company);
+		messageBoardSectionResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardSectionResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		messageBoardSectionResource.setContextUriInfo(_uriInfo);
+		messageBoardSectionResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1656,6 +1722,12 @@ public class Mutation {
 
 		messageBoardThreadResource.setContextAcceptLanguage(_acceptLanguage);
 		messageBoardThreadResource.setContextCompany(_company);
+		messageBoardThreadResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		messageBoardThreadResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		messageBoardThreadResource.setContextUriInfo(_uriInfo);
+		messageBoardThreadResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1664,6 +1736,12 @@ public class Mutation {
 
 		structuredContentResource.setContextAcceptLanguage(_acceptLanguage);
 		structuredContentResource.setContextCompany(_company);
+		structuredContentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		structuredContentResource.setContextUriInfo(_uriInfo);
+		structuredContentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1673,6 +1751,12 @@ public class Mutation {
 		structuredContentFolderResource.setContextAcceptLanguage(
 			_acceptLanguage);
 		structuredContentFolderResource.setContextCompany(_company);
+		structuredContentFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		structuredContentFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		structuredContentFolderResource.setContextUriInfo(_uriInfo);
+		structuredContentFolderResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(WikiNodeResource wikiNodeResource)
@@ -1680,6 +1764,10 @@ public class Mutation {
 
 		wikiNodeResource.setContextAcceptLanguage(_acceptLanguage);
 		wikiNodeResource.setContextCompany(_company);
+		wikiNodeResource.setContextHttpServletRequest(_httpServletRequest);
+		wikiNodeResource.setContextHttpServletResponse(_httpServletResponse);
+		wikiNodeResource.setContextUriInfo(_uriInfo);
+		wikiNodeResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(WikiPageResource wikiPageResource)
@@ -1687,6 +1775,10 @@ public class Mutation {
 
 		wikiPageResource.setContextAcceptLanguage(_acceptLanguage);
 		wikiPageResource.setContextCompany(_company);
+		wikiPageResource.setContextHttpServletRequest(_httpServletRequest);
+		wikiPageResource.setContextHttpServletResponse(_httpServletResponse);
+		wikiPageResource.setContextUriInfo(_uriInfo);
+		wikiPageResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -1695,6 +1787,12 @@ public class Mutation {
 
 		wikiPageAttachmentResource.setContextAcceptLanguage(_acceptLanguage);
 		wikiPageAttachmentResource.setContextCompany(_company);
+		wikiPageAttachmentResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		wikiPageAttachmentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		wikiPageAttachmentResource.setContextUriInfo(_uriInfo);
+		wikiPageAttachmentResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<BlogPostingResource>
@@ -1734,5 +1832,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
+	private User _user;
 
 }

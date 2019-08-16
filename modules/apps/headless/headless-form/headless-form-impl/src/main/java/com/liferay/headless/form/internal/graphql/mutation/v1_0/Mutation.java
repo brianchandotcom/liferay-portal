@@ -23,12 +23,18 @@ import com.liferay.headless.form.resource.v1_0.FormResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -173,6 +179,10 @@ public class Mutation {
 
 		formResource.setContextAcceptLanguage(_acceptLanguage);
 		formResource.setContextCompany(_company);
+		formResource.setContextHttpServletRequest(_httpServletRequest);
+		formResource.setContextHttpServletResponse(_httpServletResponse);
+		formResource.setContextUriInfo(_uriInfo);
+		formResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -181,6 +191,11 @@ public class Mutation {
 
 		formDocumentResource.setContextAcceptLanguage(_acceptLanguage);
 		formDocumentResource.setContextCompany(_company);
+		formDocumentResource.setContextHttpServletRequest(_httpServletRequest);
+		formDocumentResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		formDocumentResource.setContextUriInfo(_uriInfo);
+		formDocumentResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(FormRecordResource formRecordResource)
@@ -188,6 +203,10 @@ public class Mutation {
 
 		formRecordResource.setContextAcceptLanguage(_acceptLanguage);
 		formRecordResource.setContextCompany(_company);
+		formRecordResource.setContextHttpServletRequest(_httpServletRequest);
+		formRecordResource.setContextHttpServletResponse(_httpServletResponse);
+		formRecordResource.setContextUriInfo(_uriInfo);
+		formRecordResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<FormResource>
@@ -199,5 +218,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
+	private User _user;
 
 }

@@ -23,11 +23,17 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResou
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 
 import javax.annotation.Generated;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.ComponentServiceObjects;
 
@@ -274,6 +280,10 @@ public class Mutation {
 
 		keywordResource.setContextAcceptLanguage(_acceptLanguage);
 		keywordResource.setContextCompany(_company);
+		keywordResource.setContextHttpServletRequest(_httpServletRequest);
+		keywordResource.setContextHttpServletResponse(_httpServletResponse);
+		keywordResource.setContextUriInfo(_uriInfo);
+		keywordResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -282,6 +292,12 @@ public class Mutation {
 
 		taxonomyCategoryResource.setContextAcceptLanguage(_acceptLanguage);
 		taxonomyCategoryResource.setContextCompany(_company);
+		taxonomyCategoryResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		taxonomyCategoryResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		taxonomyCategoryResource.setContextUriInfo(_uriInfo);
+		taxonomyCategoryResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(
@@ -290,6 +306,12 @@ public class Mutation {
 
 		taxonomyVocabularyResource.setContextAcceptLanguage(_acceptLanguage);
 		taxonomyVocabularyResource.setContextCompany(_company);
+		taxonomyVocabularyResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		taxonomyVocabularyResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		taxonomyVocabularyResource.setContextUriInfo(_uriInfo);
+		taxonomyVocabularyResource.setContextUser(_user);
 	}
 
 	private static ComponentServiceObjects<KeywordResource>
@@ -301,5 +323,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private UriInfo _uriInfo;
+	private User _user;
 
 }

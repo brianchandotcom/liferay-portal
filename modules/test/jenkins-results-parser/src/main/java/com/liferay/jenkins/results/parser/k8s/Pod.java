@@ -30,6 +30,12 @@ import java.io.InputStream;
  */
 public class Pod {
 
+	public void copyFileToPod(
+		String sourceFilePath, String sourceHostname, String destFilePath) {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void exec(String... commands) {
 		Process process = null;
 

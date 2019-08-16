@@ -236,7 +236,10 @@ public class ResourceConfigurationFactory {
 
 		v1Pod.setSpec(v1PodSpec);
 
-		return new Pod(v1Pod);
+		LiferayK8sConnection liferayK8sConnection =
+			LiferayK8sConnection.getInstance();
+
+		return liferayK8sConnection.newPod(v1Pod);
 	}
 
 	private static Pod _newDB2ConfigurationPod(

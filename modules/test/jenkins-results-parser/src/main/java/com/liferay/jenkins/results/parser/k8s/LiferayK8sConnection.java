@@ -26,6 +26,7 @@ import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.V1DeleteOptions;
+import io.kubernetes.client.models.V1ObjectMeta;
 import io.kubernetes.client.models.V1Pod;
 import io.kubernetes.client.models.V1PodList;
 import io.kubernetes.client.util.Config;
@@ -263,12 +264,24 @@ public class LiferayK8sConnection {
 		return running;
 	}
 
+	protected Pod newPod(V1Pod v1Pod) {
+		V1ObjectMeta v1ObjectMeta = v1Pod.getMetadata();
+
+		String podName = v1ObjectMeta.getName();
+
+		if (podName.contains("oracle")) {
+			return new OraclePod(v1Pod);
+		}
+
+		return new Pod(v1Pod);
+	}
+
 	private LiferayK8sConnection() {
 	}
 
 	private Boolean _assertPodNotFound(Pod pod, String namespace) {
 		try {
-			new Pod(
+			newPod(
 				_coreV1Api.readNamespacedPod(
 					pod.getName(), namespace, null, true, false));
 		}
@@ -289,7 +302,7 @@ public class LiferayK8sConnection {
 		Pod pod = null;
 
 		try {
-			pod = new Pod(
+			pod = newPod(
 				_coreV1Api.createNamespacedPod(
 					namespace, configurationPod.getV1Pod(), null));
 		}
@@ -369,7 +382,7 @@ public class LiferayK8sConnection {
 
 	private Pod _getPod(Pod pod, String namespace) {
 		try {
-			return new Pod(
+			return newPod(
 				_coreV1Api.readNamespacedPod(
 					pod.getName(), namespace, null, true, false));
 		}
@@ -401,7 +414,7 @@ public class LiferayK8sConnection {
 		List<Pod> pods = new ArrayList<>(v1Pods.size());
 
 		for (V1Pod v1Pod : v1Pods) {
-			pods.add(new Pod(v1Pod));
+			pods.add(newPod(v1Pod));
 		}
 
 		return pods;
@@ -424,7 +437,7 @@ public class LiferayK8sConnection {
 		List<Pod> pods = new ArrayList<>(v1Pods.size());
 
 		for (V1Pod v1Pod : v1Pods) {
-			pods.add(new Pod(v1Pod));
+			pods.add(newPod(v1Pod));
 		}
 
 		return pods;

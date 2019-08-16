@@ -15077,14 +15077,26 @@ react-dev-utils@^9.0.0:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-dnd-html5-backend@^7.7.0:
+react-dnd-html5-backend@7.7.0, react-dnd-html5-backend@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-7.7.0.tgz#e2b8ea61a1bc34ba743b89cafcda6213b006c06a"
   integrity sha512-JgKmWOxqorFyfGPeWV+SAPhVGFe6+LrOR24jETE9rrYZU5hCppzwK9ujjS508kWibeDvbfEgi9j5qC2wB1/MoQ==
   dependencies:
     dnd-core "^7.7.0"
 
-react-dnd@^7.7.0:
+react-dnd-test-backend@7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-backend/-/react-dnd-test-backend-7.7.0.tgz#c823f4d05b6e4b208eac73ec7e4c1c53fb814290"
+  integrity sha512-ELX2b6mBcgpVUuS9K74h+ldlHdsb1ZEVhJUm5vv7ZL+9l+xmpz+6IikiSdh7MmEGGrGLb2FCdXReeMPOblaCnQ==
+  dependencies:
+    dnd-core "^7.7.0"
+
+react-dnd-test-utils@7.7.0:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-test-utils/-/react-dnd-test-utils-7.7.0.tgz#627dbc7f35bfe9db73148bf8c1f438bbd7b2bdae"
+  integrity sha512-OZAMws/26P6Jo5lVomxU3RZ9BEKyshG4szrkBK0ibF6SrfJ1ysEp4HOPtpeE0hVFdy3RG0eCsVDHXQSMY+6EBg==
+
+react-dnd@7.7.0, react-dnd@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-7.7.0.tgz#9d983331ecf87ba33d058d861e6ca9adb8253a2e"
   integrity sha512-anpJDKMgdXE6kXvtBFmIAe1fuaexpVy7meUyNjiTfCnjQ1mRvnttGTVvcW9fMKijsUQYadiyvzd3BRxteFuVXg==

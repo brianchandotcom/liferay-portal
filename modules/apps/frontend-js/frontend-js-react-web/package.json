@@ -4,8 +4,8 @@
 		"formik": "1.4.3",
 		"prop-types": "15.7.2",
 		"react": "16.8.6",
-		"react-dnd": "^7.7.0",
-		"react-dnd-html5-backend": "^7.7.0",
+		"react-dnd": "7.7.0",
+		"react-dnd-html5-backend": "7.7.0",
 		"react-dom": "16.8.6"
 	},
 	"name": "frontend-js-react-web",
@@ -14,5 +14,9 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.0"
+	"version": "2.0.0",
+	"devDependencies": {
+		"react-dnd-test-backend": "7.7.0",
+		"react-dnd-test-utils": "7.7.0"
+	}
 }

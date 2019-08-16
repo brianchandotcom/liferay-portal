@@ -390,6 +390,25 @@ public class AddSegmentsExperienceMVCActionCommand
 				while (editableKeysIterator.hasNext()) {
 					String editableKey = editableKeysIterator.next();
 
+					if (editableKey.startsWith(
+							SegmentsExperienceConstants.ID_PREFIX)) {
+
+						JSONObject baseExperienceValueJSONObject =
+							editableProcessorJSONObject.getJSONObject(
+								SegmentsExperienceConstants.ID_PREFIX +
+									baseSegmentsExperienceId);
+
+						editableProcessorJSONObject.put(
+							SegmentsExperienceConstants.ID_PREFIX +
+								segmentsExperienceId,
+							baseExperienceValueJSONObject);
+
+						editableValuesJSONObject.put(
+							editableProcessorKey, editableProcessorJSONObject);
+
+						break;
+					}
+
 					JSONObject editableJSONObject =
 						editableProcessorJSONObject.getJSONObject(editableKey);
 

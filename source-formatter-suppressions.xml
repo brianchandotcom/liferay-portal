@@ -120,5 +120,9 @@
 		<!-- Temporary suppressions for frontend build setup (Chema) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/analytics/analytics-client-js/package\.json" />
+
+		<!-- Temporary suppressions for frontend React setup (LPS-99901, wincent) -->
+
+		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-react-web/package\.json" />
 	</source-check>
 </suppressions>

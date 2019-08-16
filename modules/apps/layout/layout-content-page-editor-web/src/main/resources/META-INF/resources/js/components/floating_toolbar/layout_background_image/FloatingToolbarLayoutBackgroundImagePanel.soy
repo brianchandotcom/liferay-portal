@@ -6,9 +6,7 @@
 {template .render}
 	{@param item: [
 		config: [
-			backgroundImage: string,
-			fieldId: string,
-			mappedField: string,
+			backgroundImage: ?,
 			title: string
 		]
 	]}
@@ -90,11 +88,17 @@
 				</div>
 			{/if}
 
+  			{let $mappedFieldId kind="text"}
+                {if $item.config.backgroundImage}
+                    {$item.config.backgroundImage.mappedField or $item.config.backgroundImage.fieldId}
+                {/if}
+            {/let}
+
 			<div class="form-group">
 				{call .fieldSelect}
 					{param fields: $_fields /}
 					{param handleFieldOptionChange: $_handleFieldOptionChange /}
-					{param mappedFieldId: $item.config.mappedField or $item.config.fieldId /}
+					{param mappedFieldId: $mappedFieldId /}
 				{/call}
 			</div>
 		{/if}
@@ -184,7 +188,7 @@
 	{@param? handleSelectButtonClick: any}
 	{@param item: [
 		config: [
-			backgroundImage: string
+			backgroundImage: ?
 		]
 	]}
 

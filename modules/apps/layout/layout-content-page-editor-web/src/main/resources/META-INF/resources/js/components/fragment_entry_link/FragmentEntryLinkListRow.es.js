@@ -64,7 +64,7 @@ class FragmentEntryLinkListRow extends Component {
 			...FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage
 		};
 
-		if (config.mappedField || config.fieldId) {
+		if (config.backgroundImage && (config.backgroundImage.mappedField || config.backgroundImage.fieldId)) {
 			layouttBackgroundImageButton.cssClass =
 				'fragments-editor__floating-toolbar--mapped-field';
 		}
@@ -318,9 +318,15 @@ class FragmentEntryLinkListRow extends Component {
 	 * @private
 	 */
 	_getBackgroundImageValue() {
-		return this._mappedBackgroundFieldValue
-			? this._mappedBackgroundFieldValue
-			: this.row.config.backgroundImage;
+		if (this._mappedBackgroundFieldValue) {
+			return this._mappedBackgroundFieldValue;
+		}
+
+		if (typeof this.row.config.backgroundImage == 'string') {
+			return this.row.config.backgroundImage;
+		}
+
+		return ''
 	}
 
 	/**
@@ -502,12 +508,13 @@ class FragmentEntryLinkListRow extends Component {
 	_updateMappedBackgroundFieldValue() {
 		if (
 			this.getAssetFieldValueURL &&
-			editableIsMappedToAssetEntry(this.row.config)
+			this.row.config.backgroundImage &&
+			editableIsMappedToAssetEntry(this.row.config.backgroundImage)
 		) {
 			getAssetFieldValue(
-				this.row.config.classNameId,
-				this.row.config.classPK,
-				this.row.config.fieldId
+				this.row.config.backgroundImage.classNameId,
+				this.row.config.backgroundImage.classPK,
+				this.row.config.backgroundImage.fieldId
 			).then(response => {
 				const {fieldValue} = response;
 

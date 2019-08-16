@@ -60,12 +60,15 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	static emptyMappingValues(config) {
-		return (
-			!config.classNameId &&
-			!config.classPK &&
-			!config.fieldId &&
-			!config.mappedField
-		);
+		if (config.backgroundImage) {
+			return
+			(!config.backgroundImage.classNameId &&
+			!config.backgroundImage.classPK &&
+			!config.backgroundImage.fieldId &&
+			!config.backgroundImage.mappedField)
+		}
+
+		return true;
 	}
 
 	/**
@@ -138,14 +141,16 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 
 		if (
 			nextState.mappedAssetEntries &&
-			nextState.item.config.classNameId &&
-			nextState.item.config.classPK
+			nextState.item.config.backgroundImage &&
+			nextState.item.config.backgroundImage.classNameId &&
+			nextState.item.config.backgroundImage.classPK
 		) {
 			const mappedAssetEntry = nextState.mappedAssetEntries.find(
 				assetEntry =>
-					nextState.item.config.classNameId ===
+					nextState.item.config.backgroundImage.classNameId ===
 						assetEntry.classNameId &&
-					nextState.item.config.classPK === assetEntry.classPK
+					nextState.item.config.backgroundImage.classPK ===
+						assetEntry.classPK
 			);
 
 			if (mappedAssetEntry) {
@@ -167,14 +172,22 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	rendered(firstRender) {
 		if (firstRender) {
-			this._selectedImageSourceTypeId =
-				this.item.config.classNameId || this.item.config.mappedField
-					? IMAGE_SOURCE_TYPE_IDS.content
-					: IMAGE_SOURCE_TYPE_IDS.selection;
+			if (this.item.config.backgroundImage) {
+				const {backgroundImage} = this.item.config;
 
-			this._selectedMappingSourceTypeId = this.item.config.mappedField
-				? MAPPING_SOURCE_TYPE_IDS.structure
-				: MAPPING_SOURCE_TYPE_IDS.content;
+				this._selectedImageSourceTypeId =
+					backgroundImage.classNameId || backgroundImage.mappedField
+						? IMAGE_SOURCE_TYPE_IDS.content
+						: IMAGE_SOURCE_TYPE_IDS.selection;
+				this._selectedMappingSourceTypeId = backgroundImage.mappedField
+					? MAPPING_SOURCE_TYPE_IDS.structure
+					: MAPPING_SOURCE_TYPE_IDS.content;
+			} else {
+				this._selectedImageSourceTypeId =
+					IMAGE_SOURCE_TYPE_IDS.selection;
+				this._selectedMappingSourceTypeId =
+					MAPPING_SOURCE_TYPE_IDS.content;
+			}
 		}
 	}
 
@@ -186,9 +199,13 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	syncItem(newItem, oldItem) {
 		if (
-			!oldItem ||
-			newItem.config.classNameId !== oldItem.config.classNameId ||
-			newItem.config.mappedField !== oldItem.config.mappedField
+			!oldItem || !oldItem.config.backgroundImage ||
+			(newItem.config.backgroundImage &&
+				oldItem.config.backgroundImage &&
+				(newItem.config.backgroundImage.classNameId !==
+					oldItem.config.backgroundImage.classNameId ||
+					newItem.config.backgroundImage.mappedField !==
+						oldItem.config.backgroundImage.mappedField))
 		) {
 			this._loadFields();
 		}
@@ -347,12 +364,13 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 		} else if (
 			this._selectedMappingSourceTypeId ===
 				MAPPING_SOURCE_TYPE_IDS.content &&
-			this.item.config.classNameId &&
-			this.item.config.classPK
+			this.item.config.backgroundImage &&
+			this.item.config.backgroundImage.classNameId &&
+			this.item.config.backgroundImage.classPK
 		) {
 			promise = getAssetMappingFields(
-				this.item.config.classNameId,
-				this.item.config.classPK
+				this.item.config.backgroundImage.classNameId,
+				this.item.config.backgroundImage.classPK
 			);
 		}
 
@@ -380,8 +398,10 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			.dispatch(enableSavingChangesStatusAction())
 			.dispatch({
 				config: {
-					classNameId: assetEntry.classNameId,
-					classPK: assetEntry.classPK
+					backgroundImage: {
+						classNameId: assetEntry.classNameId,
+						classPK: assetEntry.classPK
+					}
 				},
 				rowId: this.itemId,
 				type: UPDATE_ROW_CONFIG
@@ -396,16 +416,23 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	_selectField(fieldId) {
-		const config =
+		const fieldData =
 			this._selectedMappingSourceTypeId ===
 			MAPPING_SOURCE_TYPE_IDS.content
-				? {fieldId}
+				? {fieldId,
+					classNameId: this.item.config.backgroundImage.classNameId,
+					classPK: this.item.config.backgroundImage.classPK
+				}
 				: {mappedField: fieldId};
 
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
 			.dispatch({
-				config,
+				config: {
+					backgroundImage: {
+						...fieldData
+					}
+				},
 				rowId: this.itemId,
 				type: UPDATE_ROW_CONFIG
 			})

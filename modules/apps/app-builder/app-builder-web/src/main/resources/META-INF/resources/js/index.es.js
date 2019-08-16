@@ -16,12 +16,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.es';
 
-export default id => {
+export default (id, constants) => {
 	const container = document.getElementById(id);
 
 	ReactDOM.render(
 		<div className="app-builder-root">
-			<App />
+			<App {...constants} />
 		</div>,
 		container
 	);

@@ -18,9 +18,9 @@ import {AppContextProvider} from './AppContext.es';
 import ListCustomObjects from './pages/custom-object/ListCustomObjects.es';
 import ViewCustomObject from './pages/custom-object/ViewCustomObject.es';
 
-export default () => {
+export default ({basePortletURL}) => {
 	return (
-		<AppContextProvider>
+		<AppContextProvider basePortletURL={basePortletURL}>
 			<Router>
 				<Switch>
 					<Route component={ListCustomObjects} exact path="/" />

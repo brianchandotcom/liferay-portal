@@ -23,6 +23,10 @@ String appBuilderRootElementId = renderResponse.getNamespace() + "-app-builder-r
 <div id="<%= appBuilderRootElementId %>">
 </div>
 
+<portlet:renderURL var="basePortletURL" />
+
 <aui:script require='<%= npmResolvedPackageName + "/js/index.es as AppBuilder" %>'>
-	AppBuilder.default('<%= appBuilderRootElementId %>');
+	AppBuilder.default('<%= appBuilderRootElementId %>', {
+		basePortletURL: '<%= basePortletURL %>'
+	});
 </aui:script>

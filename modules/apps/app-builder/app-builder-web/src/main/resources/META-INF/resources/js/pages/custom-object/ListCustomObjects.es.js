@@ -75,7 +75,7 @@ const FORMATTER = items =>
 	}));
 
 export default withRouter(({history}) => {
-	const {siteId} = useContext(AppContext);
+	const {basePortletURL, siteId} = useContext(AppContext);
 	const addButtonRef = useRef();
 	const emptyStateButtonRef = useRef();
 	const popoverRef = useRef();
@@ -104,9 +104,15 @@ export default withRouter(({history}) => {
 				value: name
 			}
 		}).then(({id}) => {
-			history.push(
-				`/custom-object/${id}/form-views/${isAddFormView ? 'add' : ''}`
-			);
+			if (isAddFormView) {
+				Liferay.Util.navigate(
+					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+						mvcRenderCommandName: '/edit_form_view'
+					})
+				);
+			} else {
+				history.push(`/custom-object/${id}/form-views/`);
+			}
 		});
 	};
 

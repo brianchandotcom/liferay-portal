@@ -24,7 +24,14 @@ import ListTableViews from '../table-view/ListTableViews.es';
 export default ({match: {path}}) => {
 	return (
 		<Switch>
-			<Route component={EditFormView} path={`${path}/form-views/add`} />
+			<Route
+				component={EditFormView}
+				path={[
+					`${path}/form-views/add`,
+					`${path}/form-views/:dataLayoutId(\\d+)`
+				]}
+			/>
+
 			<Route
 				component={EditTableView}
 				path={[

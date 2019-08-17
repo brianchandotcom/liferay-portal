@@ -511,6 +511,9 @@ public class JournalArticleFinderTest {
 
 			JournalArticle article = _articles.get(i);
 
+			article = JournalArticleLocalServiceUtil.getArticle(
+				article.getId());
+
 			article.setCreateDate(calendar.getTime());
 			article.setModifiedDate(calendar.getTime());
 			article.setArticleId("a" + i);
@@ -518,7 +521,10 @@ public class JournalArticleFinderTest {
 			article.setDisplayDate(calendar.getTime());
 			article.setReviewDate(calendar.getTime());
 
-			JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			article = JournalArticleLocalServiceUtil.updateJournalArticle(
+				article);
+
+			_articles.set(i, article);
 		}
 	}
 

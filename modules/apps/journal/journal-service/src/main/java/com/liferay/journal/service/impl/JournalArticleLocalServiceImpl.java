@@ -132,7 +132,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -191,7 +190,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -464,7 +462,7 @@ public class JournalArticleLocalServiceImpl
 		article.setStatusDate(serviceContext.getModifiedDate(now));
 		article.setExpandoBridgeAttributes(serviceContext);
 
-		journalArticlePersistence.update(article);
+		article = journalArticlePersistence.update(article);
 
 		// Friendly URLs
 
@@ -526,7 +524,7 @@ public class JournalArticleLocalServiceImpl
 
 		startWorkflowInstance(userId, article, serviceContext);
 
-		return journalArticlePersistence.findByPrimaryKey(article.getId());
+		return article;
 	}
 
 	/**
@@ -4157,7 +4155,7 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if (article.isInTrashExplicitly()) {
-			restoreArticleFromTrash(userId, article);
+			article = restoreArticleFromTrash(userId, article);
 		}
 		else {
 
@@ -4172,7 +4170,7 @@ public class JournalArticleLocalServiceImpl
 				status = trashVersion.getStatus();
 			}
 
-			updateStatus(
+			article = updateStatus(
 				userId, article, status, null, serviceContext, new HashMap<>());
 
 			// Attachments
@@ -4443,12 +4441,16 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle articleVersion : articleVersions) {
 			articleVersion.setArticleId(trashArticleId);
 
-			journalArticlePersistence.update(articleVersion);
+			articleVersion = journalArticlePersistence.update(articleVersion);
+
+			if (article.equals(articleVersion)) {
+				article = articleVersion;
+			}
 		}
 
 		article.setArticleId(trashArticleId);
 
-		journalArticlePersistence.update(article);
+		article = journalArticlePersistence.update(article);
 
 		JournalArticleResource articleResource =
 			journalArticleResourcePersistence.fetchByPrimaryKey(
@@ -4465,7 +4467,7 @@ public class JournalArticleLocalServiceImpl
 
 		serviceContext.setScopeGroupId(article.getGroupId());
 
-		updateStatus(
+		article = updateStatus(
 			userId, article, trashEntry.getStatus(), null, serviceContext,
 			new HashMap<>());
 
@@ -5932,7 +5934,7 @@ public class JournalArticleLocalServiceImpl
 			latestArticle.getExpandoBridge(), article.getExpandoBridge(),
 			serviceContext);
 
-		journalArticlePersistence.update(article);
+		article = journalArticlePersistence.update(article);
 
 		// Friendly URLs
 
@@ -5963,7 +5965,7 @@ public class JournalArticleLocalServiceImpl
 		// Email and workflow
 
 		if (expired && imported) {
-			updateStatus(
+			article = updateStatus(
 				userId, article, article.getStatus(), articleURL,
 				serviceContext, new HashMap<>());
 		}
@@ -5981,7 +5983,7 @@ public class JournalArticleLocalServiceImpl
 			startWorkflowInstance(userId, article, serviceContext);
 		}
 
-		return journalArticlePersistence.findByPrimaryKey(article.getId());
+		return article;
 	}
 
 	/**
@@ -6803,10 +6805,10 @@ public class JournalArticleLocalServiceImpl
 		article.setStatusByUserName(user.getFullName());
 		article.setStatusDate(modifiedDate);
 
-		journalArticlePersistence.update(article);
+		article = journalArticlePersistence.update(article);
 
 		if (isExpireAllArticleVersions(article.getCompanyId())) {
-			setArticlesExpirationDate(article);
+			article = setArticlesExpirationDate(article);
 		}
 
 		if (hasModifiedLatestApprovedVersion(
@@ -8597,37 +8599,32 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.flushNotificationsAsync();
 	}
 
-	protected void setArticlesExpirationDate(JournalArticle article) {
+	protected JournalArticle setArticlesExpirationDate(JournalArticle article) {
 		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
+			return article;
 		}
 
 		if (!article.isApproved() || (article.getExpirationDate() == null)) {
-			return;
+			return article;
 		}
 
-		final List<JournalArticle> articles =
-			journalArticlePersistence.findByG_A(
-				article.getGroupId(), article.getArticleId());
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+			article.getGroupId(), article.getArticleId());
 
-		final Date expirationDate = article.getExpirationDate();
+		Date expirationDate = article.getExpirationDate();
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+		for (JournalArticle curArticle : articles) {
+			curArticle.setExpirationDate(expirationDate);
 
-				@Override
-				public Void call() throws Exception {
-					for (JournalArticle curArticle : articles) {
-						curArticle.setExpirationDate(expirationDate);
+			curArticle = journalArticleLocalService.updateJournalArticle(
+				curArticle);
 
-						journalArticleLocalService.updateJournalArticle(
-							curArticle);
-					}
+			if (article.equals(curArticle)) {
+				article = curArticle;
+			}
+		}
 
-					return null;
-				}
-
-			});
+		return article;
 	}
 
 	protected void startWorkflowInstance(

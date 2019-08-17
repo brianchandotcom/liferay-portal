@@ -120,9 +120,11 @@ class ItemDropdown extends Component {
 								small
 							>
 								<div className="dropdown-item-indicator">
-									<ClayIcon
-										symbol={pinned ? 'unpin' : 'pin'}
-									/>
+									{pinned ? (
+										<ClayIcon key="UNPIN" symbol="unpin" />
+									) : (
+										<ClayIcon key="PIN" symbol="pin" />
+									)}
 								</div>
 
 								{pinned

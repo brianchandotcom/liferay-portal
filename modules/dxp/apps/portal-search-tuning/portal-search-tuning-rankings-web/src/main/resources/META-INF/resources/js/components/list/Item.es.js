@@ -538,7 +538,11 @@ class Item extends PureComponent {
 										: Liferay.Language.get('pin-result')
 								}
 							>
-								<ClayIcon symbol={pinned ? 'unpin' : 'pin'} />
+								{pinned ? (
+									<ClayIcon key="UNPIN" symbol="unpin" />
+								) : (
+									<ClayIcon key="PIN" symbol="pin" />
+								)}
 							</ClayButton>
 						)}
 					</div>

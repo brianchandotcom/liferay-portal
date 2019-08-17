@@ -57,7 +57,9 @@ import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,6 +70,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {IdentifiableOSGiService.class, JournalContent.class})
 public class JournalContentImpl
 	implements IdentifiableOSGiService, JournalContent {
+
+	@Activate
+	public void activate() {
+		_portalCache =
+			(PortalCache<JournalContentKey, JournalArticleDisplay>)
+				_multiVMPool.getPortalCache(CACHE_NAME);
+
+		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentArticleKeyIndexEncoder(), _portalCache);
+		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
+			new JournalContentTemplateKeyIndexEncoder(), _portalCache);
+	}
 
 	@Override
 	public void clearCache() {
@@ -112,6 +126,11 @@ public class JournalContentImpl
 				ReflectionUtil.throwException(t);
 			}
 		}
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_multiVMPool.removePortalCache(CACHE_NAME);
 	}
 
 	@Override
@@ -432,25 +451,6 @@ public class JournalContentImpl
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
-		_portalCache =
-			(PortalCache<JournalContentKey, JournalArticleDisplay>)
-				multiVMPool.getPortalCache(CACHE_NAME);
-
-		_journalArticlePortalCacheIndexer = new PortalCacheIndexer<>(
-			new JournalContentArticleKeyIndexEncoder(), _portalCache);
-		_journalTemplatePortalCacheIndexer = new PortalCacheIndexer<>(
-			new JournalContentTemplateKeyIndexEncoder(), _portalCache);
-	}
-
 	protected static final String CACHE_NAME = JournalContent.class.getName();
 
 	private ThemeDisplay _getDefaultThemeDisplay() {
@@ -491,6 +491,7 @@ public class JournalContentImpl
 		}
 	}
 
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference(
@@ -498,6 +499,9 @@ public class JournalContentImpl
 	)
 	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
+
+	@Reference
+	private MultiVMPool _multiVMPool;
 
 	private static class JournalContentArticleKeyIndexEncoder
 		implements IndexEncoder<String, JournalContentKey> {

@@ -323,6 +323,37 @@ public class NestedFieldsWriterInterceptorTest {
 	}
 
 	@Test
+	public void testGetNestedFieldsWithResourceVersioning() throws Exception {
+		Product product = _toProduct(1L, null);
+
+		Mockito.when(
+			_writerInterceptorContext.getEntity()
+		).thenReturn(
+			product
+		);
+
+		Mockito.doReturn(
+			new NestedFieldsHttpServletRequestWrapperTest.
+				MockHttpServletRequest()
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getHttpServletRequest(
+			Mockito.any(Message.class)
+		);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				Collections.singletonList("skus"), new MessageImpl(),
+				_getPathParameters(), "v2.0", new MultivaluedHashMap<>()));
+
+		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
+
+		Sku[] skus = product.getSkus();
+
+		Assert.assertEquals(Arrays.toString(skus), 6, skus.length);
+	}
+
+	@Test
 	public void testInjectResourceContexts() throws Exception {
 		Product product = _toProduct(1L, null);
 
@@ -351,37 +382,6 @@ public class NestedFieldsWriterInterceptorTest {
 		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
 
 		Assert.assertNotNull(_productResource_v1_0_Impl.themeDisplay);
-	}
-
-	@Test
-	public void testNestedFieldsResourceVersioning() throws Exception {
-		Product product = _toProduct(1L, null);
-
-		Mockito.when(
-			_writerInterceptorContext.getEntity()
-		).thenReturn(
-			product
-		);
-
-		Mockito.doReturn(
-			new NestedFieldsHttpServletRequestWrapperTest.
-				MockHttpServletRequest()
-		).when(
-			_nestedFieldsWriterInterceptor
-		).getHttpServletRequest(
-			Mockito.any(Message.class)
-		);
-
-		NestedFieldsContextThreadLocal.setNestedFieldsContext(
-			new NestedFieldsContext(
-				Collections.singletonList("skus"), new MessageImpl(),
-				_getPathParameters(), "v2.0", new MultivaluedHashMap<>()));
-
-		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
-
-		Sku[] skus = product.getSkus();
-
-		Assert.assertEquals(Arrays.toString(skus), 6, skus.length);
 	}
 
 	private static Category _toCategory(long id) {

@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.internal.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.internal.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.internal.fields.servlet.NestedFieldsHttpServletRequestWrapper;
@@ -29,7 +30,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
 
 import java.math.BigDecimal;
@@ -126,8 +126,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private boolean _checkNestedFieldsMethod(
-		Object item, Method method, NestedFieldsContext nestedFieldsContext,
-		Class<?> resourceClass) {
+		Object item, Class<?> resourceClass, Method method,
+		NestedFieldsContext nestedFieldsContext) {
 
 		if (method == null) {
 			return false;
@@ -223,16 +223,20 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return null;
 	}
 
-	private Parameter[] _getBaseResourceClassMethodParameters(
-			Class<?> clazz, Method implMethod)
-		throws NoSuchMethodException {
+	private Parameter[] _getClassMethodParameters(
+		Class<?> clazz, Method method) {
 
-		Class<?> baseResourceClass = clazz.getSuperclass();
+		Method classMethod = null;
 
-		Method baseResourceMethod = baseResourceClass.getMethod(
-			implMethod.getName(), implMethod.getParameterTypes());
+		try {
+			classMethod = clazz.getDeclaredMethod(
+				method.getName(), method.getParameterTypes());
+		}
+		catch (NoSuchMethodException nsme) {
+			return null;
+		}
 
-		return baseResourceMethod.getParameters();
+		return classMethod.getParameters();
 	}
 
 	private <T> Object _getContext(Class<T> contextClass, Message message) {
@@ -325,27 +329,33 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Object[] _getMethodArgs(
-			String fieldName, Object item,
-			NestedFieldsContext nestedFieldsContext, Parameter[] parameters)
+			String fieldName, Object item, Class resourceClass, Method method,
+			NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
-		Object[] args = new Object[parameters.length];
+		Object[] args = new Object[method.getParameterCount()];
 
 		MultivaluedMap<String, String> pathParameters =
 			nestedFieldsContext.getPathParameters();
+		Parameter[] resourceBaseClassParameters = _getClassMethodParameters(
+			resourceClass.getSuperclass(), method);
+		Parameter[] resourceClassParameters = _getClassMethodParameters(
+			resourceClass, method);
 		MultivaluedMap<String, String> queryParameters =
 			nestedFieldsContext.getQueryParameters();
 
-		for (int i = 0; i < parameters.length; i++) {
-			Parameter parameter = parameters[i];
+		for (int i = 0; i < method.getParameterCount(); i++) {
+			Parameter resourceBaseClassParameter = _getParameter(
+				resourceBaseClassParameters, i);
 
 			args[i] = _getMethodArgValueFromRequest(
-				fieldName, nestedFieldsContext, pathParameters, queryParameters,
-				parameter);
+				fieldName, resourceBaseClassParameter, pathParameters,
+				queryParameters, nestedFieldsContext);
 
 			if (args[i] == null) {
 				args[i] = _getMethodArgValueFromItem(
-					parameter.getAnnotations(), item);
+					item, resourceBaseClassParameter,
+					resourceClassParameters[i]);
 			}
 		}
 
@@ -353,32 +363,52 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Object _getMethodArgValueFromItem(
-			Annotation[] annotations, Object item)
+			Object item, Parameter resourceBaseClassParameter,
+			Parameter resourceClassParameter)
 		throws Exception {
+
+		Annotation[] annotations = resourceClassParameter.getAnnotations();
+
+		if (annotations.length > 0) {
+			for (Annotation annotation : annotations) {
+				if (annotation instanceof NestedFieldId) {
+					NestedFieldId nestedFieldId = (NestedFieldId)annotation;
+
+					return _getFieldValue(nestedFieldId.value(), item);
+				}
+			}
+		}
+
+		if (resourceBaseClassParameter == null) {
+			return null;
+		}
+
+		annotations = resourceBaseClassParameter.getAnnotations();
 
 		if (annotations.length == 0) {
 			return null;
 		}
 
-		Object fieldValue = null;
-
 		for (Annotation annotation : annotations) {
 			if (annotation instanceof PathParam) {
 				PathParam pathParam = (PathParam)annotation;
 
-				fieldValue = _getFieldValue(pathParam.value(), item);
-
-				break;
+				return _getFieldValue(pathParam.value(), item);
 			}
 		}
 
-		return fieldValue;
+		return null;
 	}
 
 	private Object _getMethodArgValueFromRequest(
-		String fieldName, NestedFieldsContext nestedFieldsContext,
+		String fieldName, Parameter parameter,
 		MultivaluedMap<String, String> pathParameters,
-		MultivaluedMap<String, String> queryParameters, Parameter parameter) {
+		MultivaluedMap<String, String> queryParameters,
+		NestedFieldsContext nestedFieldsContext) {
+
+		if (parameter == null) {
+			return null;
+		}
 
 		Annotation[] annotations = parameter.getAnnotations();
 
@@ -445,29 +475,32 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			Method method = _getAnnotatedMethod(resourceClass, fieldName);
 
 			if (!_checkNestedFieldsMethod(
-					item, method, nestedFieldsContext, resourceClass)) {
+					item, resourceClass, method, nestedFieldsContext)) {
 
 				continue;
 			}
 
 			_setResourceContexts(resource, nestedFieldsContext.getMessage());
 
-			if (!Modifier.isPublic(method.getModifiers())) {
-				throw new IllegalAccessException(
-					"Method with the NestedField annotation must be defined " +
-						"in an abstract class");
-			}
-
-			Parameter[] parameters = _getBaseResourceClassMethodParameters(
-				resource.getClass(), method);
-
 			Object[] args = _getMethodArgs(
-				fieldName, item, nestedFieldsContext, parameters);
+				fieldName, item, resourceClass, method, nestedFieldsContext);
 
 			return method.invoke(resource, args);
 		}
 
 		return null;
+	}
+
+	private Parameter _getParameter(
+		Parameter[] resourceBaseClassParameters, int index) {
+
+		Parameter parameter = null;
+
+		if (resourceBaseClassParameters != null) {
+			parameter = resourceBaseClassParameters[index];
+		}
+
+		return parameter;
 	}
 
 	private String _getResourceVersion(Class resourceBaseClass) {

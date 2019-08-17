@@ -15,6 +15,7 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.property.DirectPropertyAccessor;
@@ -31,6 +32,12 @@ public class PrivatePropertyAccessor extends DirectPropertyAccessor {
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
+		Class<?> superClass = null;
+
+		while ((superClass = clazz.getSuperclass()) != BaseModelImpl.class) {
+			clazz = superClass;
+		}
+
 		propertyName = StringPool.UNDERLINE.concat(propertyName);
 
 		return super.getGetter(clazz, propertyName);
@@ -39,6 +46,12 @@ public class PrivatePropertyAccessor extends DirectPropertyAccessor {
 	@Override
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
+
+		Class<?> superClass = null;
+
+		while ((superClass = clazz.getSuperclass()) != BaseModelImpl.class) {
+			clazz = superClass;
+		}
 
 		propertyName = StringPool.UNDERLINE.concat(propertyName);
 

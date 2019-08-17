@@ -19,12 +19,16 @@ import com.liferay.portal.vulcan.internal.fields.NestedFieldsContextThreadLocal;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.PathSegment;
 import javax.ws.rs.core.UriInfo;
+
+import org.apache.cxf.jaxrs.impl.PathSegmentImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -50,6 +54,17 @@ public class NestedFieldsContainerRequestFilterTest {
 			containerRequestContext.getUriInfo()
 		).thenReturn(
 			uriInfo
+		);
+
+		List<PathSegment> pathSegments = new ArrayList<>();
+
+		pathSegments.add(new PathSegmentImpl("v1.0"));
+		pathSegments.add(new PathSegmentImpl("products"));
+
+		Mockito.when(
+			uriInfo.getPathSegments()
+		).thenReturn(
+			pathSegments
 		);
 
 		MultivaluedMap<String, String> queryParameters =

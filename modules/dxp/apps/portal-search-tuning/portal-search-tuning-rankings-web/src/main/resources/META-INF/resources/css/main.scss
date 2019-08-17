@@ -11,3 +11,8 @@
 	@import 'page_toolbar';
 	@import 'results_ranking_form';
 }
+
+body.open .results-rankings-root .page-toolbar-root.upper-tbar {
+	left: 320px;
+	width: calc(100% - 320px);
+}

@@ -704,7 +704,7 @@ class ResultsRankingForm extends Component {
 					onPublish={this._handlePublish}
 				/>
 
-				<div className="container-fluid container-fluid-max-xl container-form-lg">
+				<div className="container-fluid container-fluid-max-xl container-form-lg results-rankings-container">
 					<div className="sheet sheet-lg form-section-header">
 						<label>{Liferay.Language.get('query')}</label>
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>

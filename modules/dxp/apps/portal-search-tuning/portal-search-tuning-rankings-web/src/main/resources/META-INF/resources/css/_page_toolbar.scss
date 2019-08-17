@@ -5,6 +5,9 @@
 		border-style: solid;
 		border-width: 0 0 1px;
 		height: 4rem;
+		position: fixed;
+		width: 100%;
+		z-index: 971;
 	}
 
 	&.upper-tbar .tbar-item {

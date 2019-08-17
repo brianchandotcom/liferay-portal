@@ -30,9 +30,9 @@ definition {
 
 	test AssertSynonymBulkActions {
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Search Tuning",
 			panel = "Control Panel",
-			portlet = "Search Tuning");
+			portlet = "Synonyms");
 
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 
@@ -202,9 +202,9 @@ definition {
 		}
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Search Tuning",
 			panel = "Control Panel",
-			portlet = "Search Tuning");
+			portlet = "Synonyms");
 
 		SearchAdministration.addSynonymSet(synonyms = "banana,red apple,blue.berry!,&quot;xigua&quot;,fruit,sweet");
 
@@ -229,9 +229,9 @@ definition {
 		}
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Search Tuning",
 			panel = "Control Panel",
-			portlet = "Search Tuning");
+			portlet = "Synonyms");
 
 		SearchAdministration.editSynonymSet(
 			addSynonyms = "pear",
@@ -271,9 +271,9 @@ definition {
 			searchTerm = "red apple");
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Search Tuning",
 			panel = "Control Panel",
-			portlet = "Search Tuning");
+			portlet = "Synonyms");
 
 		SearchAdministration.addSynonymSet(synonyms = "red apple,citrus-orange");
 
@@ -296,9 +296,9 @@ definition {
 			searchTerm = "citrus-orange");
 
 		ProductMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Search Tuning",
 			panel = "Control Panel",
-			portlet = "Search Tuning");
+			portlet = "Synonyms");
 
 		SearchAdministration.deleteSynonymSet(synonymSet = "red apple, blue.berry!, &quot;xigua&quot;, fruit, sweet, pear");
 

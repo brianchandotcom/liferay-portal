@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_BACK</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLAPSED</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar') and contains(@class,'collapsed')]</td>
 	<td></td>
@@ -57,6 +62,21 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
 	<td>//p[contains(@class,'text-secondary') and contains(.,'${key_fragmentComment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING</td>
+	<td>//strong[contains(@class,'text-dark') and contains(.,'${key_fragmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT</td>
+	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_commentCount}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE</td>
+	<td>//h1[contains(@class,'fragments-editor-sidebar-section__title') and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>

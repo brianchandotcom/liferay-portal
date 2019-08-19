@@ -39,7 +39,7 @@
 					</label>
 
 					<select
-						class="form-control"
+						class="form-control form-control-sm"
 						data-onchange="{$_handleMappingTypeSelectChange}"
 						id="selectMappingType"
 						ref="selectMappingType"
@@ -66,7 +66,7 @@
 					</label>
 
 					<select
-						class="form-control"
+						class="form-control form-control-sm"
 						data-onchange="{$_handleMappingSubtypeSelectChange}"
 						id="selectMappingSubtype"
 						ref="selectMappingSubtype"
@@ -86,19 +86,7 @@
 				<div class="loading-animation"></div>
 			{/if}
 
-			<div class="btn-group d-flex justify-content-end">
-				{if (not $selectedMappingTypes) or (not $selectedMappingTypes.type)}
-					<div class="btn-group-item">
-						<button
-							class="btn btn-secondary"
-							data-onclick="{$_handleCancelButtonClick}"
-							type="button"
-						>
-							{msg desc=""}cancel{/msg}
-						</button>
-					</div>
-				{/if}
-
+			<div class="btn-group d-flex justify-content-start">
 				<div class="btn-group-item">
 					{let $submitButtonDisabled kind="attributes"}
 						{if
@@ -114,7 +102,7 @@
 					{/let}
 
 					<button
-						class="btn btn-primary"
+						class="btn btn-secondary btn-sm"
 						data-onclick="{$_handleSubmitButtonClick}"
 						type="button"
 						{$submitButtonDisabled}
@@ -132,6 +120,18 @@
 						{/if}
 					</button>
 				</div>
+
+				{if (not $selectedMappingTypes) or (not $selectedMappingTypes.type)}
+					<div class="btn-group-item">
+						<button
+							class="btn btn-outline-borderless btn-secondary btn-sm"
+							data-onclick="{$_handleCancelButtonClick}"
+							type="button"
+						>
+							{msg desc=""}cancel{/msg}
+						</button>
+					</div>
+				{/if}
 			</div>
 		</fieldset>
 	</form>

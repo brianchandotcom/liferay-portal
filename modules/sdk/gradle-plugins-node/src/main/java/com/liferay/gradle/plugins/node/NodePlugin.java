@@ -79,15 +79,15 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
 
-	public static final String PACKAGE_LINKS_TASK_NAME = "packageLinks";
-
 	public static final String NPM_PACKAGE_LOCK_TASK_NAME = "npmPackageLock";
+
+	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
+
+	public static final String PACKAGE_LINKS_TASK_NAME = "packageLinks";
 
 	public static final String PACKAGE_RUN_BUILD_TASK_NAME = "packageRunBuild";
 
 	public static final String PACKAGE_RUN_TEST_TASK_NAME = "packageRunTest";
-
-	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -228,6 +228,32 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
+	private Task _addTaskNpmPackageLock(
+		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
+
+		Task task = project.task(NPM_PACKAGE_LOCK_TASK_NAME);
+
+		task.dependsOn(cleanNpmTask, npmInstallTask);
+		task.setDescription(
+			"Deletes NPM files and installs Node packages from package.json.");
+
+		return task;
+	}
+
+	private NpmShrinkwrapTask _addTaskNpmShrinkwrap(
+		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
+
+		NpmShrinkwrapTask npmShrinkwrapTask = GradleUtil.addTask(
+			project, NPM_SHRINKWRAP_TASK_NAME, NpmShrinkwrapTask.class);
+
+		npmShrinkwrapTask.dependsOn(cleanNpmTask, npmInstallTask);
+		npmShrinkwrapTask.setDescription(
+			"Locks down the versions of a package's dependencies in order to " +
+				"control which versions of each dependency will be used.");
+
+		return npmShrinkwrapTask;
+	}
+
 	private ExecutePackageManagerTask _addTaskPackageLink(
 		String dependencyName, NpmInstallTask npmInstallTask) {
 
@@ -280,18 +306,6 @@ public class NodePlugin implements Plugin<Project> {
 
 			task.dependsOn(taskName);
 		}
-
-		return task;
-	}
-
-	private Task _addTaskNpmPackageLock(
-		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
-
-		Task task = project.task(NPM_PACKAGE_LOCK_TASK_NAME);
-
-		task.dependsOn(cleanNpmTask, npmInstallTask);
-		task.setDescription(
-			"Deletes NPM files and installs Node packages from package.json.");
 
 		return task;
 	}
@@ -368,38 +382,6 @@ public class NodePlugin implements Plugin<Project> {
 		return packageRunTask;
 	}
 
-	private NpmShrinkwrapTask _addTaskNpmShrinkwrap(
-		Project project, Delete cleanNpmTask, NpmInstallTask npmInstallTask) {
-
-		NpmShrinkwrapTask npmShrinkwrapTask = GradleUtil.addTask(
-			project, NPM_SHRINKWRAP_TASK_NAME, NpmShrinkwrapTask.class);
-
-		npmShrinkwrapTask.dependsOn(cleanNpmTask, npmInstallTask);
-		npmShrinkwrapTask.setDescription(
-			"Locks down the versions of a package's dependencies in order to " +
-				"control which versions of each dependency will be used.");
-
-		return npmShrinkwrapTask;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void _addTasksPackageRun(
-		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
-
-		if (packageJsonMap == null) {
-			return;
-		}
-
-		Map<String, String> scriptsJsonMap =
-			(Map<String, String>)packageJsonMap.get("scripts");
-
-		if (scriptsJsonMap != null) {
-			for (String scriptName : scriptsJsonMap.keySet()) {
-				_addTaskPackageRun(scriptName, npmInstallTask);
-			}
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	private void _addTasksPackageLink(
 		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
@@ -419,6 +401,24 @@ public class NodePlugin implements Plugin<Project> {
 			}
 
 			_addTaskPackageLinks(dependencyNames, npmInstallTask.getProject());
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _addTasksPackageRun(
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
+
+		if (packageJsonMap == null) {
+			return;
+		}
+
+		Map<String, String> scriptsJsonMap =
+			(Map<String, String>)packageJsonMap.get("scripts");
+
+		if (scriptsJsonMap != null) {
+			for (String scriptName : scriptsJsonMap.keySet()) {
+				_addTaskPackageRun(scriptName, npmInstallTask);
+			}
 		}
 	}
 

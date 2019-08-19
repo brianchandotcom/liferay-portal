@@ -1492,57 +1492,6 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-integration-test">
-		<attribute name="database.type" />
-		<attribute default="${database.@{database.type}.version}" name="database.version" />
-
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
-						<test-action>
-							<print-test-class-group test.class.group.index="${axis.variable}" />
-
-							<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
-
-							<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
-
-							<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
-
-							<ant dir="portal-impl" inheritAll="false" target="test-class-group">
-								<property name="database.type" value="@{database.type}" />
-								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
-								<property name="junit.jvm.override" value="${java.jdk.home}/bin/java" />
-								<property name="junit.jvm.override.version" value="${java.jdk.bundle.version}" />
-								<property name="test.class.group.index" value="${axis.variable}" />
-								<property name="test.type" value="integration" />
-							</ant>
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<setup-test-environment />
-
-					<antcall inheritAll="false" target="record-test-class-file-names">
-						<param name="test.class.groups.size" value="${test.batch.size}" />
-					</antcall>
-
-					<if>
-						<isset property="env.CI_TEST_SUITE" />
-						<then>
-							<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-						</then>
-					</if>
-				</test-set-up>
-
-				<test-tear-down>
-					<stop-suite-search-engine />
-				</test-tear-down>
-			</run-batch-test>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="run-legacy-database-dump">
 		<attribute name="database.type" />
 		<attribute default="" name="database.version" />
@@ -3947,66 +3896,6 @@ log.sanitizer.enabled=false</echo>
 				</for>
 			</test-action>
 		</run-batch-test>
-	</target>
-
-	<target name="integration-db2111-jdk8">
-		<run-integration-test database.type="db2" />
-	</target>
-
-	<target name="integration-db2111-jdk11_open">
-		<run-integration-test database.type="db2" />
-	</target>
-
-	<target name="integration-hypersonic20-jdk8">
-		<run-integration-test database.type="hypersonic" />
-	</target>
-
-	<target name="integration-hypersonic20-jdk11_open">
-		<run-integration-test database.type="hypersonic" />
-	</target>
-
-	<target name="integration-mariadb102-jdk8">
-		<run-integration-test database.type="mariadb" />
-	</target>
-
-	<target name="integration-mariadb102-jdk11_open">
-		<run-integration-test database.type="mariadb" />
-	</target>
-
-	<target name="integration-mysql56-jdk8">
-		<run-integration-test database.type="mysql" />
-	</target>
-
-	<target name="integration-mysql57-jdk8">
-		<run-integration-test database.type="mysql" database.version="5.7" />
-	</target>
-
-	<target name="integration-mysql57-jdk11_open">
-		<run-integration-test database.type="mysql" database.version="5.7" />
-	</target>
-
-	<target name="integration-oracle122-jdk8">
-		<run-integration-test database.type="oracle" />
-	</target>
-
-	<target name="integration-oracle122-jdk11_open">
-		<run-integration-test database.type="oracle" />
-	</target>
-
-	<target name="integration-postgresql10-jdk8">
-		<run-integration-test database.type="postgresql" />
-	</target>
-
-	<target name="integration-postgresql10-jdk11_open">
-		<run-integration-test database.type="postgresql" />
-	</target>
-
-	<target name="integration-sybase160-jdk8">
-		<run-integration-test database.type="sybase" />
-	</target>
-
-	<target name="integration-sybase160-jdk11_open">
-		<run-integration-test database.type="sybase" />
 	</target>
 
 	<target name="javadoc-jdk8">

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.tags.internal.security.permission;
+package com.liferay.asset.tags.internal.service.permission;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;

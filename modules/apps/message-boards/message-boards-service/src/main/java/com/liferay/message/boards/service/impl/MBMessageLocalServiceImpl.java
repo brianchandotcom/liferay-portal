@@ -94,6 +94,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -2177,12 +2178,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Map<Locale, String> localizedBodyMap = LocalizationUtil.getMap(
 			commentGroupServiceConfiguration.discussionEmailBody());
 
+		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
+			commentGroupServiceConfiguration.discussionEmailSubject());
+
+		if (!DateUtil.equals(
+				message.getCreateDate(), message.getModifiedDate())) {
+
+			localizedBodyMap = LocalizationUtil.getMap(
+				commentGroupServiceConfiguration.discussionEmailUpdatedBody());
+
+			localizedSubjectMap = LocalizationUtil.getMap(
+				commentGroupServiceConfiguration.
+					discussionEmailUpdatedSubject());
+		}
+
 		if (localizedBodyMap != null) {
 			subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
 		}
-
-		Map<Locale, String> localizedSubjectMap = LocalizationUtil.getMap(
-			commentGroupServiceConfiguration.discussionEmailSubject());
 
 		if (localizedSubjectMap != null) {
 			subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);

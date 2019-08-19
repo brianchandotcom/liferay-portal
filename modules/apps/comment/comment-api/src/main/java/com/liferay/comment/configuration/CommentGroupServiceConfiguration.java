@@ -51,15 +51,27 @@ public interface CommentGroupServiceConfiguration {
 	public boolean discussionEmailCommentsAddedEnabled();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_body.tmpl}",
+		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_added_body.tmpl}",
 		name = "email-discussion-comment-added-body", required = false
 	)
 	public LocalizedValuesMap discussionEmailBody();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_subject.tmpl}",
+		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_added_subject.tmpl}",
 		name = "email-discussion-comment-added-subject", required = false
 	)
 	public LocalizedValuesMap discussionEmailSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_updated_body.tmpl}",
+		name = "email-discussion-comment-updated-body", required = false
+	)
+	public LocalizedValuesMap discussionEmailUpdatedBody();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/comment/configuration/dependencies/discussion_email_updated_subject.tmpl}",
+		name = "email-discussion-comment-updated-subject", required = false
+	)
+	public LocalizedValuesMap discussionEmailUpdatedSubject();
 
 }

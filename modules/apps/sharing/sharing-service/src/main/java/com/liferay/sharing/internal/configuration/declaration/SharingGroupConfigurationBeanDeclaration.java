@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.sharing.internal.settings.definition;
+package com.liferay.sharing.internal.configuration.declaration;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.sharing.internal.configuration.SharingCompanyConfiguration;
+import com.liferay.sharing.internal.configuration.SharingGroupConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class SharingCompanyConfigurationBeanDeclaration
+public class SharingGroupConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SharingCompanyConfiguration.class;
+		return SharingGroupConfiguration.class;
 	}
 
 }

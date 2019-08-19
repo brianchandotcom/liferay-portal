@@ -243,6 +243,14 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
 	}
 
+	macro gotoCommentList {
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE",
+			value1 = "Comments");
+	}
+
 	macro gotoEditableFieldEdit {
 		PageEditor.clickEditableField(
 			fragmentName = "${fragmentName}",
@@ -355,6 +363,24 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "Rich Text",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME");
+		}
+	}
+
+	macro viewCommentList {
+		AssertTextEquals(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING",
+			value1 = "${fragmentName}");
+
+		AssertTextEquals(
+			key_commentCount = "${commentCount}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT",
+			value1 = "${commentCount}");
+
+		if (isSet(openComment)) {
+			Click(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING");
 		}
 	}
 

@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PackageLinkTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
@@ -117,7 +118,7 @@ public class NodePlugin implements Plugin<Project> {
 		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
 		_addTasksPackageLink(npmInstallTask, packageJsonMap);
-		_addTasksPackageRun(npmInstallTask, packageJsonMap);
+		_addTasksPackageRun(npmInstallTask, packageJsonMap, nodeExtension);
 
 		_configureTasksDownloadNodeModule(
 			project, npmInstallTask, packageJsonMap);
@@ -138,7 +139,7 @@ public class NodePlugin implements Plugin<Project> {
 					_configureTasksExecutePackageManagerArgs(
 						project, nodeExtension);
 					_configureTasksNpmInstall(project, nodeExtension);
-					_configureTasksPackageRun(project, nodeExtension);
+					_configureTasksPackageRun(project);
 				}
 
 			});
@@ -310,7 +311,7 @@ public class NodePlugin implements Plugin<Project> {
 		return task;
 	}
 
-	private ExecutePackageManagerTask _addTaskPackageRun(
+	private PackageRunTask _addTaskPackageRun(
 		String scriptName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
@@ -328,40 +329,7 @@ public class NodePlugin implements Plugin<Project> {
 		packageRunTask.setGroup(BasePlugin.BUILD_GROUP);
 		packageRunTask.setScriptName(scriptName);
 
-		packageRunTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					PackageRunTask packageRunTask = (PackageRunTask)task;
-
-					String result = packageRunTask.getResult();
-
-					if (result.contains("errors during Soy compilation")) {
-						project.delete(packageRunTask.getSourceDigestFile());
-
-						throw new GradleException("Soy compile error");
-					}
-				}
-
-			});
-
-		if (taskName.equals(PACKAGE_RUN_BUILD_TASK_NAME)) {
-			PluginContainer pluginContainer = project.getPlugins();
-
-			pluginContainer.withType(
-				JavaPlugin.class,
-				new Action<JavaPlugin>() {
-
-					@Override
-					public void execute(JavaPlugin javaPlugin) {
-						_configureTaskPackageRunBuildForJavaPlugin(
-							packageRunTask);
-					}
-
-				});
-		}
-		else if (taskName.equals(PACKAGE_RUN_TEST_TASK_NAME)) {
+		if (taskName.equals(PACKAGE_RUN_TEST_TASK_NAME)) {
 			PluginContainer pluginContainer = project.getPlugins();
 
 			pluginContainer.withType(
@@ -380,6 +348,56 @@ public class NodePlugin implements Plugin<Project> {
 		}
 
 		return packageRunTask;
+	}
+
+	private PackageRunBuildTask _addTaskPackageRunBuild(
+		NpmInstallTask npmInstallTask, NodeExtension nodeExtension) {
+
+		Project project = npmInstallTask.getProject();
+
+		final PackageRunBuildTask packageRunBuildTask = GradleUtil.addTask(
+			project, PACKAGE_RUN_BUILD_TASK_NAME, PackageRunBuildTask.class);
+
+		packageRunBuildTask.dependsOn(npmInstallTask);
+		packageRunBuildTask.setDescription(
+			"Runs the \"build\" package.json script.");
+		packageRunBuildTask.setGroup(BasePlugin.BUILD_GROUP);
+		packageRunBuildTask.setNodeVersion(nodeExtension.getNodeVersion());
+
+		packageRunBuildTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					PackageRunBuildTask packageRunBuildTask =
+						(PackageRunBuildTask)task;
+
+					String result = packageRunBuildTask.getResult();
+
+					if (result.contains("errors during Soy compilation")) {
+						project.delete(packageRunBuildTask.getDigestFile());
+
+						throw new GradleException("Soy compile error");
+					}
+				}
+
+			});
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					_configureTaskPackageRunBuildForJavaPlugin(
+						packageRunBuildTask);
+				}
+
+			});
+
+		return packageRunBuildTask;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -406,7 +424,8 @@ public class NodePlugin implements Plugin<Project> {
 
 	@SuppressWarnings("unchecked")
 	private void _addTasksPackageRun(
-		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap,
+		NodeExtension nodeExtension) {
 
 		if (packageJsonMap == null) {
 			return;
@@ -417,7 +436,12 @@ public class NodePlugin implements Plugin<Project> {
 
 		if (scriptsJsonMap != null) {
 			for (String scriptName : scriptsJsonMap.keySet()) {
-				_addTaskPackageRun(scriptName, npmInstallTask);
+				if (Objects.equals(scriptName, "build")) {
+					_addTaskPackageRunBuild(npmInstallTask, nodeExtension);
+				}
+				else {
+					_addTaskPackageRun(scriptName, npmInstallTask);
+				}
 			}
 		}
 	}
@@ -612,12 +636,7 @@ public class NodePlugin implements Plugin<Project> {
 		npmInstallTask.setNpmVersion(nodeExtension.getNpmVersion());
 	}
 
-	private void _configureTaskPackageRun(
-		PackageRunTask packageRunTask, NodeExtension nodeExtension) {
-
-		packageRunTask.setNodeVersion(nodeExtension.getNodeVersion());
-		packageRunTask.setNpmVersion(nodeExtension.getNpmVersion());
-
+	private void _configureTaskPackageRun(PackageRunTask packageRunTask) {
 		Project project = packageRunTask.getProject();
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -645,19 +664,20 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskPackageRunBuildForJavaPlugin(
-		PackageRunTask packageRunTask) {
+		PackageRunBuildTask packageRunBuildTask) {
 
-		packageRunTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		packageRunBuildTask.mustRunAfter(
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
 		Task classesTask = GradleUtil.getTask(
-			packageRunTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
+			packageRunBuildTask.getProject(), JavaPlugin.CLASSES_TASK_NAME);
 
-		classesTask.dependsOn(packageRunTask);
+		classesTask.dependsOn(packageRunBuildTask);
 
-		final File sourceDigestFile = packageRunTask.getSourceDigestFile();
+		final File digestFile = packageRunBuildTask.getDigestFile();
 
-		if (!_isStale(sourceDigestFile, packageRunTask.getSourceFiles())) {
-			Project project = packageRunTask.getProject();
+		if (!_isStale(digestFile, packageRunBuildTask.getSourceFiles())) {
+			Project project = packageRunBuildTask.getProject();
 
 			ProcessResources processResourcesTask =
 				(ProcessResources)GradleUtil.getTask(
@@ -675,7 +695,7 @@ public class NodePlugin implements Plugin<Project> {
 							processResourcesTask.getDestinationDir();
 
 						final File outputsDir = new File(
-							sourceDigestFile.getParentFile(), "outputs");
+							digestFile.getParentFile(), "outputs");
 
 						project.delete(outputsDir);
 
@@ -709,7 +729,7 @@ public class NodePlugin implements Plugin<Project> {
 							processResourcesTask.getDestinationDir();
 
 						final File outputsDir = new File(
-							sourceDigestFile.getParentFile(), "outputs");
+							digestFile.getParentFile(), "outputs");
 
 						project.copy(
 							new Action<CopySpec>() {
@@ -881,9 +901,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksPackageRun(
-		Project project, final NodeExtension nodeExtension) {
-
+	private void _configureTasksPackageRun(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -892,7 +910,7 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(PackageRunTask packageRunTask) {
-					_configureTaskPackageRun(packageRunTask, nodeExtension);
+					_configureTaskPackageRun(packageRunTask);
 				}
 
 			});

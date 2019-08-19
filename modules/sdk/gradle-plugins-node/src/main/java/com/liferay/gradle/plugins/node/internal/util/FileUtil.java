@@ -186,6 +186,16 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 	}
 
+	public static void write(File file, byte[] bytes) throws Exception {
+		File dir = file.getParentFile();
+
+		if (dir != null) {
+			Files.createDirectories(dir.toPath());
+		}
+
+		Files.write(file.toPath(), bytes);
+	}
+
 	private static void _createBinDirLinks(
 			Logger logger, File nodeModulesBinDir)
 		throws IOException {

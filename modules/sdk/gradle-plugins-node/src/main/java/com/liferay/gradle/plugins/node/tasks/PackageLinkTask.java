@@ -18,25 +18,11 @@ import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
 import java.util.List;
 
-import org.gradle.api.Project;
-import org.gradle.api.tasks.Input;
-
 /**
  * @author Peter Shin
  */
-public class PackageLinkTask extends ExecutePackageManagerDigestTask {
+public class PackageLinkTask extends ExecutePackageManagerTask {
 
-	public PackageLinkTask() {
-		exclude(_EXCLUDE_DIR_NAMES);
-		include(_INCLUDES);
-		setNpmCommand(_NPM_COMMAND);
-
-		Project project = getProject();
-
-		setSourceDir(project.getProjectDir());
-	}
-
-	@Input
 	public String getDependencyName() {
 		return GradleUtil.toString(_dependencyName);
 	}
@@ -49,22 +35,12 @@ public class PackageLinkTask extends ExecutePackageManagerDigestTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		completeArgs.add(getNpmCommand());
+		completeArgs.add("link");
+
 		completeArgs.add(getDependencyName());
 
 		return completeArgs;
 	}
-
-	private static final String[] _EXCLUDE_DIR_NAMES = {
-		"bin", "build", "classes", "node_modules", "node_modules_cache",
-		"test-classes", "tmp"
-	};
-
-	private static final String[] _INCLUDES = {
-		"**/*.*rc", "**/*.css", "**/*.js", "**/*.json", "**/*.jsx", "**/*.soy"
-	};
-
-	private static final String _NPM_COMMAND = "link";
 
 	private Object _dependencyName;
 

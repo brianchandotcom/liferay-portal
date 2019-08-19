@@ -45,6 +45,9 @@ import org.gradle.api.tasks.util.PatternFilterable;
  */
 public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
+	public static final String COMPILE_JSP_INCLUDE_PROPERTY_NAME =
+		"compile.jsp.include";
+
 	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
 	@Override
@@ -117,7 +120,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	private void _configureTaskJar(final Project project) {
 		boolean compileJspInclude = GradleUtil.getProperty(
-			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+			project, COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
 
 		if (!compileJspInclude) {
 			return;

@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.defaults;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
@@ -3076,7 +3077,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, Jar jarJSPsTask, LiferayExtension liferayExtension) {
 
 		boolean compileJspInclude = GradleUtil.getProperty(
-			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+			project, JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
+			false);
 
 		if (!compileJspInclude) {
 			return;
@@ -3248,7 +3250,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		boolean compileJspInclude = GradleUtil.getProperty(
-			project, JspCPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME, false);
+			project, JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
+			false);
 
 		if (!compileJspInclude) {
 			return;

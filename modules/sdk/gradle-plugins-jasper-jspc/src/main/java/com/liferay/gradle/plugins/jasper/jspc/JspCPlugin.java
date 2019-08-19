@@ -43,9 +43,6 @@ import org.gradle.api.tasks.compile.JavaCompile;
  */
 public class JspCPlugin implements Plugin<Project> {
 
-	public static final String COMPILE_JSP_INCLUDE_PROPERTY_NAME =
-		"compile.jsp.include";
-
 	public static final String COMPILE_JSP_TASK_NAME = "compileJSP";
 
 	public static final String CONFIGURATION_NAME = "jspC";

@@ -406,9 +406,12 @@ class FloatingToolbarLinkPanel extends PortletBase {
 		const config = {
 			classNameId: assetEntry.classNameId,
 			classPK: assetEntry.classPK,
+			fieldId: '',
 			href: '',
 			mappedField: ''
 		};
+
+		this._clearFields();
 
 		this._updateRowConfig(config);
 	}

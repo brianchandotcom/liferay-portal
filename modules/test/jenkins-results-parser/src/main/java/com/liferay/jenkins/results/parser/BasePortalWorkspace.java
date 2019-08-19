@@ -184,7 +184,6 @@ public abstract class BasePortalWorkspace
 		Properties portalBuildProperties = new Properties();
 
 		portalBuildProperties.put("jsp.precompile", "off");
-		portalBuildProperties.put("jsp.precompile.parallel", "off");
 		portalBuildProperties.put(
 			"liferay.home",
 			_primaryPortalWorkspaceGitRepository.getDirectory() + "/bundles");

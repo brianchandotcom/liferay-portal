@@ -1,16 +1,1 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>net.oauth.core</groupId>
-    <artifactId>oauth-core-parent</artifactId>
-    <version>20090531</version>
-  </parent>
-  <artifactId>oauth</artifactId>
-  <version>20100527</version>
-  <packaging>jar</packaging>
-  <name>OAuth Core</name>
-
-  <dependencies>
-  </dependencies>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/net.oauth.core/oauth/20100527/bd6e73b1df07e629d289e7b2c68a6dc6e1546999/oauth-20100527.pom

@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.liferay</groupId>
-  <artifactId>net.fortuna.ical4j</artifactId>
-  <version>1.0</version>
-  <description>POM was created by Sonatype Nexus</description>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/com.liferay/net.fortuna.ical4j/1.0/ec55433dd9348cd5be27c1ded9b2ec2705cb43b/net.fortuna.ical4j-1.0.pom

@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.sun.net.httpserver</groupId>
-  <artifactId>http</artifactId>
-  <version>20070405</version>
-  <distributionManagement>
-    <status>deployed</status>
-  </distributionManagement>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/com.sun.net.httpserver/http/20070405/a54ba374cf6841199891a1eae203da55a1675e07/http-20070405.pom

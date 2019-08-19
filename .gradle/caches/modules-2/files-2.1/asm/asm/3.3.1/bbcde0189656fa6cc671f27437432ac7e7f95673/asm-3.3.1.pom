@@ -1,14 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-
-  <parent>
-    <artifactId>asm-parent</artifactId>
-    <groupId>asm</groupId>
-    <version>3.3.1</version>
-  </parent>
-
-  <name>ASM Core</name>
-  <artifactId>asm</artifactId>
-  <packaging>jar</packaging>
-  
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/asm/asm/3.3.1/bbcde0189656fa6cc671f27437432ac7e7f95673/asm-3.3.1.pom

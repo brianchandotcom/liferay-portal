@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.liferay</groupId>
-  <artifactId>org.portletbridge.core</artifactId>
-  <version>1.1.2</version>
-  <description>POM was created by Sonatype Nexus</description>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/com.liferay/org.portletbridge.core/1.1.2/b13a4f08481127f61a8aefd9b1bcdfa784294d66/org.portletbridge.core-1.1.2.pom

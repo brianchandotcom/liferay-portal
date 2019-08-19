@@ -1,14 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>javax.servlet</groupId>
-  <artifactId>jstl</artifactId>
-  <version>1.1.0</version>
-  <dependencies>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.0</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/javax.servlet/jstl/1.1.0/4fde0e960fe39a1196d93e49671ba98a3c8b4975/jstl-1.1.0.pom

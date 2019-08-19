@@ -1,17 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.codehaus.plexus</groupId>
-    <artifactId>plexus</artifactId>
-    <version>1.0.4</version>
-  </parent>
-  <groupId>org.codehaus.plexus</groupId>
-  <artifactId>plexus-containers</artifactId>
-  <packaging>pom</packaging>
-  <name>Parent Plexus Container POM</name>
-  <version>1.0.3</version>
-  <modules>
-    <module>plexus-container-artifact</module>
-    <module>plexus-container-default</module>
-  </modules>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-containers/1.0.3/e16f1c9b83cdeb142fc038dd0262c61121d58c4b/plexus-containers-1.0.3.pom

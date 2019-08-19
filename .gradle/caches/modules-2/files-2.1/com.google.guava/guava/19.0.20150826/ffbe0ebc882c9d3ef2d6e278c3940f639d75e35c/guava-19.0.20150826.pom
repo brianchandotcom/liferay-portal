@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.google.guava</groupId>
-  <artifactId>guava</artifactId>
-  <version>19.0.20150826</version>
-  <description>POM was created by Sonatype Nexus</description>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0.20150826/ffbe0ebc882c9d3ef2d6e278c3940f639d75e35c/guava-19.0.20150826.pom

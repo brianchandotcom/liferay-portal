@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.liferay</groupId>
-  <artifactId>aQute.bnd</artifactId>
-  <version>2.3.0</version>
-  <description>POM was created by Sonatype Nexus</description>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/com.liferay/aQute.bnd/2.3.0/2d0a5af10adc99e803b6a2a22a3643598ed2f7b2/aQute.bnd-2.3.0.pom

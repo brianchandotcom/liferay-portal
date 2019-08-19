@@ -1,9 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>antlr</groupId>
-  <artifactId>antlr</artifactId>
-  <version>2.7.6</version>
-  <packaging>jar</packaging>
-  <name>AntLR</name>
-  <url>http://www.antlr.org/</url>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/antlr/antlr/2.7.6/1ef68a00c22016097c813d1aae66fdd486e34c74/antlr-2.7.6.pom

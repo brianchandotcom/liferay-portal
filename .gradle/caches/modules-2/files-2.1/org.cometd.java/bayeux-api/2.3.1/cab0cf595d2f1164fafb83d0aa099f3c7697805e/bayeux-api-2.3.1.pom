@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.cometd.java</groupId>
-        <artifactId>cometd-java</artifactId>
-        <version>2.3.1</version>
-    </parent>
-
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>bayeux-api</artifactId>
-    <name>CometD :: Bayeux API</name>
-
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/org.cometd.java/bayeux-api/2.3.1/cab0cf595d2f1164fafb83d0aa099f3c7697805e/bayeux-api-2.3.1.pom

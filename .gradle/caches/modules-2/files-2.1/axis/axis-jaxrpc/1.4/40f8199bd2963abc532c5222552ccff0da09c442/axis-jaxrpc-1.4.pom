@@ -1,13 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>axis</groupId>
-  <artifactId>axis-jaxrpc</artifactId>
-  <version>1.4</version>
-
-  <distributionManagement>
-    <relocation>
-      <groupId>org.apache.axis</groupId>
-    </relocation>
-  </distributionManagement>
-
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/axis/axis-jaxrpc/1.4/40f8199bd2963abc532c5222552ccff0da09c442/axis-jaxrpc-1.4.pom

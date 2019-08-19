@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.axis</groupId>
-  <artifactId>axis-ant</artifactId>
-  <version>1.4</version>
-  <description>POM was created from deploy:deploy-file</description>
-  <distributionManagement>
-    <status>deployed</status>
-  </distributionManagement>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/org.apache.axis/axis-ant/1.4/83f2ea2f0985d8cf1dc448a69ad0c745b5b90b75/axis-ant-1.4.pom

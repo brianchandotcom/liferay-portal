@@ -1,13 +1,1 @@
-<project>
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>axis</groupId>
-  <artifactId>axis-saaj</artifactId>
-  <version>1.4</version>
-
-  <distributionManagement>
-    <relocation>
-      <groupId>org.apache.axis</groupId>
-    </relocation>
-  </distributionManagement>
-
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/axis/axis-saaj/1.4/1d5cdfaa249e6ff87f9432edb6177a544548df85/axis-saaj-1.4.pom

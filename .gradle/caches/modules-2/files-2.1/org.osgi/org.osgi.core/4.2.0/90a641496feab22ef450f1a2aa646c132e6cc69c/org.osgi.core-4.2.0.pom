@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.osgi</groupId>
-  <artifactId>org.osgi.core</artifactId>
-  <version>4.2.0</version>
-  <description>POM was created by Sonatype Nexus</description>
-</project>
+/Users/sandrochinea/Projects/community-portal/liferay-binaries-cache-2017/.gradle/caches/modules-2/files-2.1/org.osgi/org.osgi.core/4.2.0/90a641496feab22ef450f1a2aa646c132e6cc69c/org.osgi.core-4.2.0.pom

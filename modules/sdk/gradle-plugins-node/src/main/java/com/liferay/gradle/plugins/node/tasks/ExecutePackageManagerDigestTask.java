@@ -42,11 +42,11 @@ import org.gradle.api.tasks.util.PatternSet;
  * @author David Truong
  * @author Peter Shin
  */
-public abstract class BaseNpmCommandTask
+public abstract class ExecutePackageManagerDigestTask
 	extends ExecutePackageManagerTask implements PatternFilterable {
 
 	@Override
-	public BaseNpmCommandTask exclude(
+	public ExecutePackageManagerDigestTask exclude(
 		@SuppressWarnings("rawtypes") Closure excludeSpec) {
 
 		_patternFilterable.exclude(excludeSpec);
@@ -55,21 +55,23 @@ public abstract class BaseNpmCommandTask
 	}
 
 	@Override
-	public BaseNpmCommandTask exclude(Iterable<String> excludes) {
+	public ExecutePackageManagerDigestTask exclude(Iterable<String> excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask exclude(Spec<FileTreeElement> excludeSpec) {
+	public ExecutePackageManagerDigestTask exclude(
+		Spec<FileTreeElement> excludeSpec) {
+
 		_patternFilterable.exclude(excludeSpec);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask exclude(String... excludes) {
+	public ExecutePackageManagerDigestTask exclude(String... excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
@@ -149,7 +151,7 @@ public abstract class BaseNpmCommandTask
 	}
 
 	@Override
-	public BaseNpmCommandTask include(
+	public ExecutePackageManagerDigestTask include(
 		@SuppressWarnings("rawtypes") Closure includeSpec) {
 
 		_patternFilterable.include(includeSpec);
@@ -158,35 +160,41 @@ public abstract class BaseNpmCommandTask
 	}
 
 	@Override
-	public BaseNpmCommandTask include(Iterable<String> includes) {
+	public ExecutePackageManagerDigestTask include(Iterable<String> includes) {
 		_patternFilterable.include(includes);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask include(Spec<FileTreeElement> includeSpec) {
+	public ExecutePackageManagerDigestTask include(
+		Spec<FileTreeElement> includeSpec) {
+
 		_patternFilterable.include(includeSpec);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask include(String... includes) {
+	public ExecutePackageManagerDigestTask include(String... includes) {
 		_patternFilterable.include(includes);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask setExcludes(Iterable<String> excludes) {
+	public ExecutePackageManagerDigestTask setExcludes(
+		Iterable<String> excludes) {
+
 		_patternFilterable.setExcludes(excludes);
 
 		return this;
 	}
 
 	@Override
-	public BaseNpmCommandTask setIncludes(Iterable<String> includes) {
+	public ExecutePackageManagerDigestTask setIncludes(
+		Iterable<String> includes) {
+
 		_patternFilterable.setIncludes(includes);
 
 		return this;

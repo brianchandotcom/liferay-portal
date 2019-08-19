@@ -16,7 +16,7 @@ import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 
-import {PortletBase} from 'frontend-js-web';
+import {createPortletURL, PortletBase} from 'frontend-js-web';
 
 /**
  * Handles actions to display user name field for a given locale.
@@ -131,7 +131,7 @@ class UserNameFields extends PortletBase {
 	 */
 	_getURL(languageId) {
 		return new Promise(resolve => {
-			const url = Liferay.Util.PortletURL.createURL(this.baseURL, {
+			const url = createPortletURL(this.baseURL, {
 				languageId
 			});
 

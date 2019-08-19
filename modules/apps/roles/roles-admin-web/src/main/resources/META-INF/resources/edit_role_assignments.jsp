@@ -119,10 +119,15 @@ renderResponse.setTitle(role.getTitle(locale));
 						var selectedItem = event.newVal;
 
 						if (selectedItem) {
-							var assignmentsRedirect = Liferay.Util.PortletURL.createURL('<%= portletURL.toString() %>', {'tabs2': selectedItem.type});
+							var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
+								'<%= portletURL.toString() %>',
+								{
+									'tabs2': selectedItem.type
+								}
+							);
 
 							var data = {
-								redirect: assignmentsRedirect
+								redirect: assignmentsRedirect.toString()
 							};
 
 							if (selectedItem.type === 'users') {

@@ -258,7 +258,12 @@ else {
 				<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
 			</portlet:renderURL>
 
-			var selectUsersURL = Liferay.Util.PortletURL.createURL('<%= selectUsersURL.toString() %>', {'organizationId': organizationId});
+			var selectUsersURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= selectUsersURL.toString() %>',
+				{
+					'organizationId': organizationId
+				}
+			);
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
@@ -268,23 +273,31 @@ else {
 							var data = event.newVal;
 
 							if (data) {
-								var assignmentsRedirectURL = Liferay.Util.PortletURL.createURL(
-									'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/view" /><portlet:param name="toolbarItem" value="view-all-organizations" /><portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" /></portlet:renderURL>',
-									{'organizationId': organizationId}
+								<portlet:renderURL var="assignmentsURL">
+									<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+									<portlet:param name="toolbarItem" value="view-all-organizations" />
+									<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+								</portlet:renderURL>
+
+								var assignmentsRedirectURL = Liferay.Util.PortletURL.createPortletURL(
+									'<%= assignmentsURL.toString() %>',
+									{
+										'organizationId': organizationId
+									}
 								);
 
-								var parameters = {
+								var editAssignmentParameters = {
 									'addUserIds': data.value,
-									'assignmentsRedirect': assignmentsRedirectURL,
+									'assignmentsRedirect': assignmentsRedirectURL.toString(),
 									'organizationId': organizationId
 								}
 
-								var editAssignmentURL = Liferay.Util.PortletURL.createURL(
+								var editAssignmentURL = Liferay.Util.PortletURL.createPortletURL(
 									'<portlet:actionURL name="/users_admin/edit_organization_assignments" />',
-									parameters
+									editAssignmentParameters
 								);
 
-								submitForm(document.<portlet:namespace />fm, editAssignmentURL);
+								submitForm(document.<portlet:namespace />fm, editAssignmentURL.toString());
 							}
 						}
 					},

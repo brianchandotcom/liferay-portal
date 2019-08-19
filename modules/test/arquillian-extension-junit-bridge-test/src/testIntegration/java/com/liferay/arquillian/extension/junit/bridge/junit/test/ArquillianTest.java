@@ -20,6 +20,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfter
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.BeforeAfterTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ClassRuleTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.ExpectedExceptionTestItem;
+import com.liferay.arquillian.extension.junit.bridge.junit.test.item.FailTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.IgnoreTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NoExpectedExceptionTestItem;
 import com.liferay.arquillian.extension.junit.bridge.junit.test.item.NotSerializableExceptionTestItem;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -116,6 +118,24 @@ public class ArquillianTest {
 			ExpectedExceptionTestItem.class);
 
 		assertResult(result, ExpectedExceptionTestItem.class);
+	}
+
+	@Test
+	public void testFail() {
+		AtomicBoolean atomicBoolean = new AtomicBoolean();
+
+		BridgeJUnitTestRunner.runBridgeTests(
+			new BridgeJUnitTestRunner.BridgeRunListener(ArquillianTest.class) {
+
+				@Override
+				public void testFailure(Failure failure) {
+					atomicBoolean.set(true);
+				}
+
+			},
+			FailTestItem.class);
+
+		Assert.assertTrue(atomicBoolean.get());
 	}
 
 	@Test

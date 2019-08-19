@@ -199,13 +199,22 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 * @review
 	 */
 	syncItem(newItem, oldItem) {
-		if (
-			!oldItem ||
-			(newItem.config.backgroundImage &&
-				!oldItem.config.backgroundImage) ||
+		const changedBackgroundImage =
+			newItem.config &&
+			oldItem &&
+			oldItem.config &&
+			(newItem.config.backgroundImage && !oldItem.config.backgroundImage);
+
+		const changedMappedAsset =
+			newItem.config &&
+			newItem.config.backgroundImage &&
+			oldItem &&
+			oldItem.config &&
+			oldItem.config.backgroundImage &&
 			newItem.config.backgroundImage.classNameId !==
-				oldItem.config.backgroundImage.classNameId
-		) {
+				oldItem.config.backgroundImage.classNameId;
+
+		if (!oldItem || changedBackgroundImage || changedMappedAsset) {
 			this._loadFields();
 		}
 	}

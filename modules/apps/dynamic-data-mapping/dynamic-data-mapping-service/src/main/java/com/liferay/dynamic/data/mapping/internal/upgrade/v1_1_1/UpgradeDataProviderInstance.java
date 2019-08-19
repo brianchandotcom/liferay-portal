@@ -50,11 +50,12 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 	public UpgradeDataProviderInstance(
 		ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
-			serviceTrackerMap,
+			ddmDataProviderSettingsProviderServiceTracker,
 		DDMFormValuesDeserializer ddmFormValuesDeserializer,
 		DDMFormValuesSerializer ddmFormValuesSerializer) {
 
-		_serviceTrackerMap = serviceTrackerMap;
+		_ddmDataProviderSettingsProviderServiceTracker =
+			ddmDataProviderSettingsProviderServiceTracker;
 		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
 		_ddmFormValuesSerializer = ddmFormValuesSerializer;
 	}
@@ -253,7 +254,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		String dataProviderInstanceDefinition, String type) {
 
 		DDMDataProviderSettingsProvider ddmDataProviderSettingsProvider =
-			_serviceTrackerMap.getService(type);
+			_ddmDataProviderSettingsProviderServiceTracker.getService(type);
 
 		DDMFormValues ddmFormValues = deserialize(
 			dataProviderInstanceDefinition,
@@ -277,9 +278,9 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 	private static final String _DEFAULT_OUTPUT_PARAMETER_NAME =
 		"Default-Output";
 
+	private final ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
+		_ddmDataProviderSettingsProviderServiceTracker;
 	private final DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 	private final DDMFormValuesSerializer _ddmFormValuesSerializer;
-	private final ServiceTrackerMap<String, DDMDataProviderSettingsProvider>
-		_serviceTrackerMap;
 
 }

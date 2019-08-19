@@ -173,12 +173,10 @@ public abstract class BaseFragmentCollectionContributor
 						fragmentEntry.getConfiguration());
 				}
 				catch (FragmentEntryConfigurationException fece) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Fragment entry " + url +
-								" has an invalid configuration",
-							fece);
-					}
+					_log.error(
+						"Fragment entry " + url +
+							" has an invalid configuration",
+						fece);
 
 					continue;
 				}
@@ -189,10 +187,8 @@ public abstract class BaseFragmentCollectionContributor
 						fragmentEntry.getConfiguration());
 				}
 				catch (PortalException pe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Fragment entry " + url + " has invalid HTML", pe);
-					}
+					_log.error(
+						"Fragment entry " + url + " has invalid HTML", pe);
 
 					continue;
 				}

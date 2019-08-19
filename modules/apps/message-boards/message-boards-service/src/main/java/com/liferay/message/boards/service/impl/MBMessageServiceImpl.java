@@ -28,6 +28,7 @@ import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,10 +47,9 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
@@ -70,11 +69,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  * @author Shuyang Zhou
  */
+@Component(
+	property = {
+		"json.web.service.context.name=mb",
+		"json.web.service.context.path=MBMessage"
+	},
+	service = AopService.class
+)
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
@@ -929,7 +938,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			if (!message.isAnonymous()) {
-				String author = PortalUtil.getUserName(message);
+				String author = _portal.getUserName(message);
 
 				syndEntry.setAuthor(author);
 			}
@@ -994,21 +1003,24 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return _rssExporter.export(syndFeed);
 	}
 
-	private static volatile ModelResourcePermission<MBCategory>
-		_categoryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MBCategoryServiceImpl.class, "_categoryModelResourcePermission",
-				MBCategory.class);
-	private static volatile ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MBMessageServiceImpl.class, "_messageModelResourcePermission",
-				MBMessage.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
-	@ServiceReference(type = RSSExporter.class)
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
 	private RSSExporter _rssExporter;
 
-	@ServiceReference(type = SyndModelFactory.class)
+	@Reference
 	private SyndModelFactory _syndModelFactory;
 
 }

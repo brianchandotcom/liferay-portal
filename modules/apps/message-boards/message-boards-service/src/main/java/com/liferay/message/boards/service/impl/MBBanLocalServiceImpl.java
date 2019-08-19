@@ -19,6 +19,7 @@ import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,15 +30,21 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.message.boards.model.MBBan",
+	service = AopService.class
+)
 public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 	@Override
@@ -176,7 +183,7 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBBanLocalServiceImpl.class);
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

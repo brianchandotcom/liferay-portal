@@ -17,21 +17,30 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBBan;
 import com.liferay.message.boards.service.base.MBBanServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = {
+		"json.web.service.context.name=mb",
+		"json.web.service.context.path=MBBan"
+	},
+	service = AopService.class
+)
 public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 
 	@Override
@@ -72,16 +81,13 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 		mbBanLocalService.deleteBan(banUserId, serviceContext);
 	}
 
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				MBBanServiceImpl.class, "_portletResourcePermission",
-				MBConstants.RESOURCE_NAME);
-
-	@ServiceReference(type = Portal.class)
+	@Reference
 	private Portal _portal;
 
-	@ServiceReference(type = UserLocalService.class)
+	@Reference(target = "(resource.name=" + MBConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

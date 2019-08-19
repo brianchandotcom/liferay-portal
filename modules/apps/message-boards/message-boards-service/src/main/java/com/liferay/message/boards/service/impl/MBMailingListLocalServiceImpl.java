@@ -45,7 +45,9 @@ import java.io.IOException;
 
 import java.util.Calendar;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -57,6 +59,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MBMailingListLocalServiceImpl
 	extends MBMailingListLocalServiceBaseImpl {
+
+	@Activate
+	public void activate() {
+		_unregister = _liferayJSONDeserializationWhitelist.register(
+			MailingListRequest.class.getName());
+	}
 
 	@Override
 	public MBMailingList addMailingList(
@@ -117,12 +125,14 @@ public class MBMailingListLocalServiceImpl
 		return mailingList;
 	}
 
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		_unregister = _liferayJSONDeserializationWhitelist.register(
-			MailingListRequest.class.getName());
+	@Deactivate
+	public void deactivate() {
+		try {
+			_unregister.close();
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -150,18 +160,6 @@ public class MBMailingListLocalServiceImpl
 		unscheduleMailingList(mailingList);
 
 		mbMailingListPersistence.remove(mailingList);
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		try {
-			_unregister.close();
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
 	}
 
 	@Override

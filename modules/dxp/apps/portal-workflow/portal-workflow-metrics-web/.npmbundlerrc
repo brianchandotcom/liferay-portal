@@ -18,7 +18,8 @@
 			"rollup.*.js",
 			"src/**",
 			"test/**"
-		],	
+		],
+
 		"commander": true,
 		"fbjs": [
 			"flow/**"

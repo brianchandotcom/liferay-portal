@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.recent.bloggers.web.internal.exportimport.portlet.preferences.processor.test;
+package com.liferay.blogs.recent.bloggers.internal.exportimport.portlet.preferences.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;

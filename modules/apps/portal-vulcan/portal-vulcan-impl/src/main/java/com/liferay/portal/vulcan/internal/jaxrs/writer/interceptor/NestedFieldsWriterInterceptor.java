@@ -142,9 +142,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		NestedField nestedField = method.getAnnotation(NestedField.class);
 
-		Class<?> parentReturnType = nestedField.parentReturnType();
+		Class<?> parentReturnType = nestedField.parentType();
 
-		if (nestedField.parentReturnType() != Void.class) {
+		if (nestedField.parentType() != Void.class) {
 			if (item.getClass() == parentReturnType) {
 				return true;
 			}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.settings.definition;
+package com.liferay.bookmarks.internal.configuration.definition;
 
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

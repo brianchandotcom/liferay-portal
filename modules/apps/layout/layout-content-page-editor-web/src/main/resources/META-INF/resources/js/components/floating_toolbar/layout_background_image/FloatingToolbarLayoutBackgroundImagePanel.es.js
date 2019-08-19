@@ -238,10 +238,7 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 			.dispatch(enableSavingChangesStatusAction())
 			.dispatch({
 				config: {
-					classNameId: '',
-					classPK: '',
-					fieldId: '',
-					mappedField: ''
+					backgroundImage: ''
 				},
 				rowId: this.itemId,
 				type: UPDATE_ROW_CONFIG

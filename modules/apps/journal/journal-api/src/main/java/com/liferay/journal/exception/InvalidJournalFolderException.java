@@ -11,31 +11,76 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.journal.exception;
+
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Jonathan McCann
  */
 @ProviderType
 public class InvalidJournalFolderException extends PortalException {
 
-	public InvalidJournalFolderException() {
+	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 1;
+
+	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
+
+	public InvalidJournalFolderException(int type, long folderId) {
+		_type = type;
+		_folderId = folderId;
 	}
 
-	public InvalidJournalFolderException(String msg) {
-		super(msg);
+	public long getFolderId() {
+		return _folderId;
 	}
 
-	public InvalidJournalFolderException(String msg, Throwable cause) {
-		super(msg, cause);
+	public String getMessageArgument(Locale locale) {
+		try {
+			if (_folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return LanguageUtil.get(locale, "home");
+			}
+
+			JournalFolder folder = JournalFolderServiceUtil.getFolder(
+				_folderId);
+
+			return folder.getName();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
+			return StringPool.BLANK;
+		}
 	}
 
-	public InvalidJournalFolderException(Throwable cause) {
-		super(cause);
+	public String getMessageKey() {
+		if (_type == CANNOT_MOVE_INTO_CHILD_FOLDER) {
+			return "unable-to-move-folder-x-into-one-of-its-children";
+		}
+		else if (_type == CANNOT_MOVE_INTO_ITSELF) {
+			return "unable-to-move-folder-x-into-itself";
+		}
+
+		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InvalidJournalFolderException.class);
+
+	private final long _folderId;
+	private final int _type;
 
 }

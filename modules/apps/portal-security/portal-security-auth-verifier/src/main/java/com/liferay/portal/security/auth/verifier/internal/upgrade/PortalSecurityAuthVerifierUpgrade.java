@@ -15,12 +15,12 @@
 package com.liferay.portal.security.auth.verifier.internal.upgrade;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
-import com.liferay.portal.security.auth.verifier.internal.basic.auth.header.configuration.BasicAuthHeaderAuthVerifierConfiguration;
-import com.liferay.portal.security.auth.verifier.internal.configuration.BaseAuthVerifierConfiguration;
-import com.liferay.portal.security.auth.verifier.internal.digest.authentication.configuration.DigestAuthenticationAuthVerifierConfiguration;
-import com.liferay.portal.security.auth.verifier.internal.portal.session.configuration.PortalSessionAuthVerifierConfiguration;
-import com.liferay.portal.security.auth.verifier.internal.request.parameter.configuration.RequestParameterAuthVerifierConfiguration;
-import com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.basic.auth.header.module.configuration.BasicAuthHeaderAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.module.configuration.BaseAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.tunnel.module.configuration.TunnelAuthVerifierConfiguration;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

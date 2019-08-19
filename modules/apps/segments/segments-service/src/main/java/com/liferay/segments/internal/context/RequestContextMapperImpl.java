@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -55,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
@@ -74,7 +76,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Eduardo García
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(immediate = true, service = RequestContextMapper.class)
 public class RequestContextMapperImpl implements RequestContextMapper {
 
 	public Context map(HttpServletRequest httpServletRequest) {
@@ -151,6 +153,9 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			GetterUtil.getString(
 				httpServletRequest.getHeader(HttpHeaders.REFERER)));
 		context.put(
+			Context.REQUEST_PARAMETER,
+			_getRequestParameters(httpServletRequest));
+		context.put(
 			Context.URL, _portal.getCurrentCompleteURL(httpServletRequest));
 
 		String userAgent = GetterUtil.getString(
@@ -201,6 +206,27 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			cookies
 		).map(
 			c -> c.getName() + "=" + c.getValue()
+		).toArray(
+			String[]::new
+		);
+	}
+
+	private String[] _getRequestParameters(
+		HttpServletRequest httpServletRequest) {
+
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
+
+		if (parameterMap.isEmpty()) {
+			return new String[0];
+		}
+
+		Set<Map.Entry<String, String[]>> entrySet = parameterMap.entrySet();
+
+		Stream<Map.Entry<String, String[]>> stream = entrySet.stream();
+
+		return stream.map(
+			e -> e.getKey() + "=" + StringUtil.merge(e.getValue())
 		).toArray(
 			String[]::new
 		);

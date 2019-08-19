@@ -10,12 +10,12 @@
 			{
 				"operands": [
 					{
-						"type": "list",
-						"value": "Role1, Role2"
-					},
-					{
 						"type": "user",
 						"value": "User"
+					},
+					{
+						"type": "list",
+						"value": "Role1, Role2"
 					}
 				],
 				"operator": "belongs-to"

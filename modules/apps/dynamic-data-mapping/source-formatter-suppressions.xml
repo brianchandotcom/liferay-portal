@@ -4,5 +4,6 @@
 	<source-check>
 		<suppress checks="JavaForLoopCheck" files="modules/apps/dynamic-data-mapping/dynamic-data-mapping-form-values-query/src/main/java/com/liferay/dynamic/data/mapping/form/values/query/internal/model/DDMFormValuesFilterImpl\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="src/main/java/com/liferay/dynamic/data/mapping/internal/upgrade/DDMServiceUpgrade.java" />
+		<suppress checks="JSONPropertyOrderCheck" files="src/test/resources/com/liferay/dynamic/data/mapping/form/builder/internal/converter/dependencies/ddm-form-rules-belongs-to-condition\.json" />
 	</source-check>
 </suppressions>

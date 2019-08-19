@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.settings.definition;
+package com.liferay.layout.content.page.editor.web.internal.configuration.definition;
 
 import com.liferay.layout.content.page.editor.web.internal.configuration.ContentPageEditorConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

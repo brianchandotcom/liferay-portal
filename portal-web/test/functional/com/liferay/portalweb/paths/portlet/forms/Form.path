@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PAGE_TITLE_FIELD</td>
-	<td>//textarea[contains(@class,'form-builder-page-header-title')]</td>
+	<td>//input[contains(@class,'form-builder-page-header-title')]</td>
 	<td></td>
 </tr>
 <tr>

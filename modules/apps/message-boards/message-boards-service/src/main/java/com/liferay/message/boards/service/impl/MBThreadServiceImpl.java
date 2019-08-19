@@ -19,10 +19,11 @@ import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
-import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -374,10 +376,16 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
+		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
+			getClass().getClassLoader(), "service");
+
 		return LockManagerUtil.lock(
 			getUserId(), MBThread.class.getName(), threadId,
 			String.valueOf(threadId), false,
-			MBThreadModelImpl.LOCK_EXPIRATION_TIME);
+			GetterUtil.getLong(
+				configuration.get(
+					"lock.expiration.time.com.liferay.message.boards.model." +
+						"MBThread")));
 	}
 
 	@Override

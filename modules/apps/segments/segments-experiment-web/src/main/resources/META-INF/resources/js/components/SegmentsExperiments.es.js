@@ -15,17 +15,20 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClaySelect from '@clayui/select';
-import ClayDropDown from '@clayui/drop-down';
 import Variants from './Variants/Variants.es';
 import {
 	InitialSegmentsVariantType,
+	SegmentsExperimentGoal,
 	SegmentsExperienceType,
 	SegmentsExperimentType
 } from '../types.es';
+import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 
 function SegmentsExperiments({
+	initialGoals,
 	onCreateSegmentsExperiment,
 	onEditSegmentsExperiment,
 	onSelectSegmentsExperienceChange,
@@ -101,6 +104,11 @@ function SegmentsExperiments({
 						</ClayDropDown>
 					</div>
 
+					<SegmentsExperimentsDetails
+						initialGoals={initialGoals}
+						segmentsExperiment={segmentsExperiment}
+					/>
+
 					<Variants
 						onVariantCreation={onVariantCreation}
 						onVariantDeletion={onVariantDeletion}
@@ -152,6 +160,7 @@ function SegmentsExperiments({
 }
 
 SegmentsExperiments.propTypes = {
+	initialGoals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,

@@ -16,8 +16,6 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadService;
-import com.liferay.message.boards.service.persistence.MBCategoryFinder;
-import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
@@ -125,12 +123,6 @@ public abstract class MBThreadServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected MBCategoryPersistence mbCategoryPersistence;
-
-	@Reference
-	protected MBCategoryFinder mbCategoryFinder;
 
 	@Reference
 	protected MBMessagePersistence mbMessagePersistence;

@@ -18,10 +18,6 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
-import com.liferay.message.boards.service.persistence.MBMessageFinder;
-import com.liferay.message.boards.service.persistence.MBMessagePersistence;
-import com.liferay.message.boards.service.persistence.MBThreadFinder;
-import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -156,17 +152,5 @@ public abstract class MBCategoryServiceBaseImpl
 	@Reference
 	protected com.liferay.trash.kernel.service.TrashVersionLocalService
 		trashVersionLocalService;
-
-	@Reference
-	protected MBMessagePersistence mbMessagePersistence;
-
-	@Reference
-	protected MBMessageFinder mbMessageFinder;
-
-	@Reference
-	protected MBThreadPersistence mbThreadPersistence;
-
-	@Reference
-	protected MBThreadFinder mbThreadFinder;
 
 }

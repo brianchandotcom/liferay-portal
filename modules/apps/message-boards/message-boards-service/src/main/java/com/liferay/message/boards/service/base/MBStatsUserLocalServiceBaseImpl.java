@@ -16,11 +16,7 @@ package com.liferay.message.boards.service.base;
 
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
-import com.liferay.message.boards.service.persistence.MBMessageFinder;
-import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBStatsUserPersistence;
-import com.liferay.message.boards.service.persistence.MBThreadFinder;
-import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -395,23 +391,11 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		counterLocalService;
 
 	@Reference
-	protected MBMessagePersistence mbMessagePersistence;
-
-	@Reference
-	protected MBMessageFinder mbMessageFinder;
-
-	@Reference
 	protected com.liferay.portal.kernel.service.GroupLocalService
 		groupLocalService;
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@Reference
-	protected MBThreadPersistence mbThreadPersistence;
-
-	@Reference
-	protected MBThreadFinder mbThreadFinder;
 
 }

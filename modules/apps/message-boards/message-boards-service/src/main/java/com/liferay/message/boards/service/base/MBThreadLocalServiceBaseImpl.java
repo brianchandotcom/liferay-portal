@@ -23,8 +23,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.service.persistence.MBCategoryFinder;
-import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.MBMessageFinder;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadFinder;
@@ -595,12 +593,6 @@ public abstract class MBThreadLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected MBCategoryPersistence mbCategoryPersistence;
-
-	@Reference
-	protected MBCategoryFinder mbCategoryFinder;
 
 	@Reference
 	protected MBMessagePersistence mbMessagePersistence;

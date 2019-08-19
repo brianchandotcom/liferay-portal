@@ -430,10 +430,10 @@ public class SegmentsExperimentLocalServiceTest {
 		SegmentsExperiment updatedSegmentsExperiment =
 			_segmentsExperimentLocalService.updateSegmentsExperiment(
 				segmentsExperiment.getSegmentsExperimentKey(),
-				SegmentsExperimentConstants.STATUS_CANCELLED);
+				SegmentsExperimentConstants.STATUS_TERMINATED);
 
 		Assert.assertEquals(
-			SegmentsExperimentConstants.STATUS_CANCELLED,
+			SegmentsExperimentConstants.STATUS_TERMINATED,
 			updatedSegmentsExperiment.getStatus());
 	}
 

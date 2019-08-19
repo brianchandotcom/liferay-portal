@@ -265,7 +265,7 @@ public class SegmentsExperimentServiceTest {
 
 			_segmentsExperimentService.updateSegmentsExperiment(
 				segmentsExperiment.getSegmentsExperimentKey(),
-				SegmentsExperimentConstants.STATUS_CANCELLED);
+				SegmentsExperimentConstants.STATUS_TERMINATED);
 		}
 	}
 
@@ -286,7 +286,7 @@ public class SegmentsExperimentServiceTest {
 
 			_segmentsExperimentService.updateSegmentsExperiment(
 				segmentsExperiment.getSegmentsExperimentKey(),
-				SegmentsExperimentConstants.STATUS_CANCELLED);
+				SegmentsExperimentConstants.STATUS_TERMINATED);
 		}
 	}
 

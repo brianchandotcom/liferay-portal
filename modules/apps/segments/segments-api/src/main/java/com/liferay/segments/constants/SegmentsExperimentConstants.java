@@ -20,19 +20,21 @@ package com.liferay.segments.constants;
  */
 public class SegmentsExperimentConstants {
 
-	public static final int STATUS_CANCELLED = 5;
-
 	public static final int STATUS_COMPLETED = 2;
 
 	public static final int STATUS_DRAFT = 0;
 
-	public static final int STATUS_FINISHED = 3;
+	public static final int STATUS_FINISHED_NO_WINNER = 4;
 
-	public static final int STATUS_PAUSED = 4;
+	public static final int STATUS_FINISHED_WINNER = 3;
+
+	public static final int STATUS_PAUSED = 5;
 
 	public static final int STATUS_RUNNING = 1;
 
-	public static final int STATUS_SCHEDULED = 6;
+	public static final int STATUS_SCHEDULED = 7;
+
+	public static final int STATUS_TERMINATED = 6;
 
 	public enum Goal {
 
@@ -63,13 +65,16 @@ public class SegmentsExperimentConstants {
 
 	public enum Status {
 
-		CANCELLED(STATUS_CANCELLED, "CANCELLED", "cancelled"),
 		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed"),
 		DRAFT(STATUS_DRAFT, "DRAFT", "draft"),
-		FINISHED(STATUS_FINISHED, "FINISHED", "finished"),
+		FINISHED_NO_WINNER(
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner"),
+		FINISHED_WINNER_DECLARED(
+			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner"),
 		PAUSED(STATUS_PAUSED, "PAUSED", "paused"),
 		RUNNING(STATUS_RUNNING, "RUNNING", "running"),
-		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled");
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled"),
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated");
 
 		public static Status parse(int value) {
 			for (Status status : values()) {

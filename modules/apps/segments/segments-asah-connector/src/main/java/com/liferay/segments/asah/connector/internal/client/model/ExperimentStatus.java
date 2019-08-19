@@ -21,6 +21,7 @@ package com.liferay.segments.asah.connector.internal.client.model;
  */
 public enum ExperimentStatus {
 
-	CANCELLED, COMPLETED, DRAFT, FINISHED, PAUSED, RUNNING, SCHEDULED
+	COMPLETED, DRAFT, FINISHED_NO_WINNER, FINISHED_WINNER, PAUSED, RUNNING,
+	SCHEDULED, TERMINATED
 
 }

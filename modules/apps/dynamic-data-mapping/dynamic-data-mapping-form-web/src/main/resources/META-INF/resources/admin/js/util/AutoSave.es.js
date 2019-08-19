@@ -153,9 +153,12 @@ class AutoSave extends Component {
 
 		const state = this.getCurrentState();
 
-		formData.set(`${namespace}name`, JSON.stringify(state.name));
-		formData.set(`${namespace}published`, JSON.stringify(this.published));
-		formData.set(`${namespace}saveAsDraft`, saveAsDraft);
+		formData.append(`${namespace}name`, JSON.stringify(state.name));
+		formData.append(
+			`${namespace}published`,
+			JSON.stringify(this.published)
+		);
+		formData.append(`${namespace}saveAsDraft`, saveAsDraft);
 
 		return convertToFormData(formData);
 	}

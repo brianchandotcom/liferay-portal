@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.module.settings.definition;
+package com.liferay.portal.security.auto.login.request.parameter.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
+import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Tomas Polesovsky
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class OpenIdCompanyServiceConfigurationBeanDeclaration
+public class RequestParameterAutoLoginCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConfiguration.class;
+		return RequestParameterAutoLoginConfiguration.class;
 	}
 
 }

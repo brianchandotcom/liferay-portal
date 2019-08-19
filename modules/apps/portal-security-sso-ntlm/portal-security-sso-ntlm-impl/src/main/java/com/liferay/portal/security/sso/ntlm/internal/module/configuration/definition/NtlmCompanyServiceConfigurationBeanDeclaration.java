@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.request.parameter.module.settings.definition;
+package com.liferay.portal.security.sso.ntlm.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
+import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tomas Polesovsky
+ * @author Mika Koivisto
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class RequestParameterAutoLoginCompanyServiceConfigurationBeanDeclaration
+public class NtlmCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return RequestParameterAutoLoginConfiguration.class;
+		return NtlmConfiguration.class;
 	}
 
 }

@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.internal.module.settings.definition;
+package com.liferay.portal.security.sso.openid.connect.internal.module.configuration.declaration;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
+import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Michael C. Han
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class CASCompanyServiceConfigurationBeanDeclaration
+@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
+public class OpenIdConnectCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return CASConfiguration.class;
+		return OpenIdConnectConfiguration.class;
 	}
 
 }

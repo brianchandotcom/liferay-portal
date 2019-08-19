@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.basic.auth.header.module.settings.definition;
+package com.liferay.portal.security.service.access.policy.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration;
+import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tomas Polesovsky
+ * @author Mika Koivisto
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class BasicAuthHeaderAutoLoginCompanyServiceConfigurationBeanDeclaration
+public class SAPCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BasicAuthHeaderAutoLoginConfiguration.class;
+		return SAPConfiguration.class;
 	}
 
 }

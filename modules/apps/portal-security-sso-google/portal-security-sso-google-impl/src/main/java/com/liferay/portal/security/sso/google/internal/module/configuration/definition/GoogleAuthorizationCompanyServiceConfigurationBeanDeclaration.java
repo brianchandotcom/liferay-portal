@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.module.settings.definition;
+package com.liferay.portal.security.sso.google.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
+import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Stian Sigvartsen
  */
-@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
-public class OpenIdConnectCompanyServiceConfigurationBeanDeclaration
+@Component(service = ConfigurationBeanDeclaration.class)
+public class GoogleAuthorizationCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConnectConfiguration.class;
+		return GoogleAuthorizationConfiguration.class;
 	}
 
 }

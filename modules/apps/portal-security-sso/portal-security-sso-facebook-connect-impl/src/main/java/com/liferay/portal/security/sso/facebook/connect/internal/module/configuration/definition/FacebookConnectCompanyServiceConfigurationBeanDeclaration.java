@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.module.settings.definition;
+package com.liferay.portal.security.sso.facebook.connect.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class TokenCompanyServiceConfigurationBeanDeclaration
+public class FacebookConnectCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return TokenConfiguration.class;
+		return FacebookConnectConfiguration.class;
 	}
 
 }

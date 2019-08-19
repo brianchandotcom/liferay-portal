@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.internal.settings.definition;
+package com.liferay.portal.security.sso.token.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
+import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class SAPCompanyServiceConfigurationBeanDeclaration
+public class TokenCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SAPConfiguration.class;
+		return TokenConfiguration.class;
 	}
 
 }

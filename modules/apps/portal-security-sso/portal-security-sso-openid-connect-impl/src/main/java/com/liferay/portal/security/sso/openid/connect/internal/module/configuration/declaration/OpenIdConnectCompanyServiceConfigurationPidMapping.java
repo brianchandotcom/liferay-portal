@@ -12,23 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.internal.module.settings.definition;
+package com.liferay.portal.security.sso.openid.connect.internal.module.configuration.declaration;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
+import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Michael C. Han
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class OpenSSOCompanyServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+@Component(immediate = true, service = ConfigurationPidMapping.class)
+public class OpenIdConnectCompanyServiceConfigurationPidMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenSSOConfiguration.class;
+		return OpenIdConnectConfiguration.class;
+	}
+
+	@Override
+	public String getConfigurationPid() {
+		return OpenIdConnectConstants.SERVICE_NAME;
 	}
 
 }

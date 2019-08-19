@@ -12,29 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.internal.module.configuration.definition;
+package com.liferay.portal.security.auto.login.request.header.module.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration;
-import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Mika Koivisto
  */
-@Component(immediate = true, service = ConfigurationPidMapping.class)
-public class OpenIdConnectCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class RequestHeaderAutoLoginCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConnectConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return OpenIdConnectConstants.SERVICE_NAME;
+		return RequestHeaderAutoLoginConfiguration.class;
 	}
 
 }

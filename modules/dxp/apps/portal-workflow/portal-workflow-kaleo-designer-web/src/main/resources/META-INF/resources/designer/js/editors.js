@@ -2990,7 +2990,7 @@ AUI.add(
 
 						var timerAction = [];
 
-						if (
+						if (reassignments[i] &&
 							reassignments[i].assignmentType &&
 							reassignments[i].assignmentType[0] &&
 							reassignments[i].assignmentType[0] !== ''
@@ -3009,7 +3009,10 @@ AUI.add(
 							timerAction = timerAction.concat(splitTimerActions);
 						}
 
-						if (notifications[i].notificationTypes) {
+						if (
+							notifications[i] &&
+							notifications[i].notificationTypes
+						) {
 							splitTimerActions = instance._splitTimerActions(
 								notifications[i]
 							);
@@ -3024,7 +3027,7 @@ AUI.add(
 							timerAction = timerAction.concat(splitTimerActions);
 						}
 
-						if (actions[i].name) {
+						if (actions[i] && actions[i].name) {
 							splitTimerActions = instance._splitTimerActions(
 								actions[i]
 							);

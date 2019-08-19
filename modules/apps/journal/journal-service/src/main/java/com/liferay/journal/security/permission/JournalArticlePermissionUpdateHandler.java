@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.internal.security.permission;
+package com.liferay.journal.security.permission;
 
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,33 +28,33 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = "model.class.name=com.liferay.journal.model.JournalFolder",
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
 	service = PermissionUpdateHandler.class
 )
-public class JournalFolderPermissionUpdateHandler
+public class JournalArticlePermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		JournalFolder folder = _journalFolderLocalService.fetchJournalFolder(
+		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
 			GetterUtil.getLong(primKey));
 
-		if (folder == null) {
+		if (article == null) {
 			return;
 		}
 
-		folder.setModifiedDate(new Date());
+		article.setModifiedDate(new Date());
 
-		_journalFolderLocalService.updateJournalFolder(folder);
+		_journalArticleLocalService.updateJournalArticle(article);
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
 
-		_journalFolderLocalService = journalFolderLocalService;
+		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	private JournalFolderLocalService _journalFolderLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

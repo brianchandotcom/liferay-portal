@@ -34,7 +34,7 @@ class TextField extends Component {
 
 		this.emit('fieldValueChanged', {
 			name: this.field.name,
-			value: `${targetElement.value}`
+			value: Liferay.Util.escapeHTML(`${targetElement.value}`)
 		});
 	}
 }

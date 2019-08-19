@@ -249,6 +249,10 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static long[] getAssetCategoryPrimaryKeys(long assetEntryId) {
+		return getService().getAssetCategoryPrimaryKeys(assetEntryId);
+	}
+
 	/**
 	 * Returns the asset entry asset category rel with the primary key.
 	 *
@@ -293,10 +297,52 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel>
+			getAssetEntryAssetCategoryRelsByAssetCategoryId(
+				long assetCategoryId, int start, int end) {
+
+		return getService().getAssetEntryAssetCategoryRelsByAssetCategoryId(
+			assetCategoryId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel>
+			getAssetEntryAssetCategoryRelsByAssetCategoryId(
+				long assetCategoryId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.entry.rel.model.
+						AssetEntryAssetCategoryRel> orderByComparator) {
+
+		return getService().getAssetEntryAssetCategoryRelsByAssetCategoryId(
+			assetCategoryId, start, end, orderByComparator);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel>
 			getAssetEntryAssetCategoryRelsByAssetEntryId(long assetEntryId) {
 
 		return getService().getAssetEntryAssetCategoryRelsByAssetEntryId(
 			assetEntryId);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel>
+			getAssetEntryAssetCategoryRelsByAssetEntryId(
+				long assetEntryId, int start, int end) {
+
+		return getService().getAssetEntryAssetCategoryRelsByAssetEntryId(
+			assetEntryId, start, end);
+	}
+
+	public static java.util.List
+		<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel>
+			getAssetEntryAssetCategoryRelsByAssetEntryId(
+				long assetEntryId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.asset.entry.rel.model.
+						AssetEntryAssetCategoryRel> orderByComparator) {
+
+		return getService().getAssetEntryAssetCategoryRelsByAssetEntryId(
+			assetEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -310,6 +356,10 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 
 	public static int getAssetEntryAssetCategoryRelsCount(long assetEntryId) {
 		return getService().getAssetEntryAssetCategoryRelsCount(assetEntryId);
+	}
+
+	public static long[] getAssetEntryPrimaryKeys(long assetCategoryId) {
+		return getService().getAssetEntryPrimaryKeys(assetCategoryId);
 	}
 
 	public static

@@ -202,6 +202,9 @@ public interface AssetEntryAssetCategoryRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getAssetCategoryPrimaryKeys(long assetEntryId);
+
 	/**
 	 * Returns the asset entry asset category rel with the primary key.
 	 *
@@ -235,7 +238,29 @@ public interface AssetEntryAssetCategoryRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetEntryAssetCategoryRel>
+		getAssetEntryAssetCategoryRelsByAssetCategoryId(
+			long assetCategoryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel>
+		getAssetEntryAssetCategoryRelsByAssetCategoryId(
+			long assetCategoryId, int start, int end,
+			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel>
 		getAssetEntryAssetCategoryRelsByAssetEntryId(long assetEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel>
+		getAssetEntryAssetCategoryRelsByAssetEntryId(
+			long assetEntryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel>
+		getAssetEntryAssetCategoryRelsByAssetEntryId(
+			long assetEntryId, int start, int end,
+			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
 	 * Returns the number of asset entry asset category rels.
@@ -247,6 +272,9 @@ public interface AssetEntryAssetCategoryRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAssetEntryAssetCategoryRelsCount(long assetEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getAssetEntryPrimaryKeys(long assetCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

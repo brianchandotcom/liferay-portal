@@ -75,7 +75,6 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 
 		LocalDateTime endLocalDateTime = LocalDateTime.ofInstant(
 			dateEnd.toInstant(), ZoneId.of(_user.getTimeZoneId()));
-
 		LocalDateTime startLocalDateTime = LocalDateTime.ofInstant(
 			dateStart.toInstant(), ZoneId.of(_user.getTimeZoneId()));
 

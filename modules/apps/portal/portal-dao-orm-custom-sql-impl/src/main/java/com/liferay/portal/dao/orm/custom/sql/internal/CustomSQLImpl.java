@@ -58,12 +58,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,6 +98,8 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Activate
 	public void activate(BundleContext bundleContext) throws SQLException {
+		_bundleContext = bundleContext;
+
 		_portal.initCustomSQL();
 
 		Connection con = DataAccess.getConnection();
@@ -207,47 +209,7 @@ public class CustomSQLImpl implements CustomSQL {
 			DataAccess.cleanUp(con);
 		}
 
-		_bundleTracker = new BundleTracker<ClassLoader>(
-			bundleContext, Bundle.ACTIVE, null) {
-
-			@Override
-			public ClassLoader addingBundle(
-				Bundle bundle, BundleEvent bundleEvent) {
-
-				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-				ClassLoader classLoader = bundleWiring.getClassLoader();
-
-				URL sourceURL = classLoader.getResource(
-					"custom-sql/default.xml");
-
-				if (sourceURL == null) {
-					sourceURL = classLoader.getResource(
-						"META-INF/custom-sql/default.xml");
-				}
-
-				if (sourceURL == null) {
-					return null;
-				}
-
-				_customSQLContainerPool.put(
-					classLoader,
-					new CustomSQLContainer(classLoader, sourceURL));
-
-				return classLoader;
-			}
-
-			@Override
-			public void removedBundle(
-				Bundle bundle, BundleEvent bundleEvent,
-				ClassLoader classLoader) {
-
-				_customSQLContainerPool.remove(classLoader);
-			}
-
-		};
-
-		_bundleTracker.open();
+		_bundleContext.addBundleListener(_synchronousBundleListener);
 	}
 
 	@Override
@@ -293,13 +255,14 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Deactivate
 	public void deactive() {
-		_bundleTracker.close();
+		_bundleContext.removeBundleListener(_synchronousBundleListener);
 	}
 
 	@Override
 	public String get(Class<?> clazz, String id) {
-		CustomSQLContainer customSQLContainer = _customSQLContainerPool.get(
-			clazz.getClassLoader());
+		CustomSQLContainer customSQLContainer =
+			_customSQLContainerPool.computeIfAbsent(
+				clazz.getClassLoader(), this::_getCustomSQLContainer);
 
 		if (customSQLContainer != null) {
 			return customSQLContainer.get(id);
@@ -920,6 +883,21 @@ public class CustomSQLImpl implements CustomSQL {
 		return sb.toString();
 	}
 
+	private CustomSQLContainer _getCustomSQLContainer(ClassLoader classLoader) {
+		URL sourceURL = classLoader.getResource("custom-sql/default.xml");
+
+		if (sourceURL == null) {
+			sourceURL = classLoader.getResource(
+				"META-INF/custom-sql/default.xml");
+		}
+
+		if (sourceURL == null) {
+			return null;
+		}
+
+		return new CustomSQLContainer(classLoader, sourceURL);
+	}
+
 	private void _read(
 			ClassLoader classLoader, URL sourceURL, Map<String, String> sqls)
 		throws Exception {
@@ -980,7 +958,7 @@ public class CustomSQLImpl implements CustomSQL {
 
 	private static final Log _log = LogFactoryUtil.getLog(CustomSQLImpl.class);
 
-	private BundleTracker<ClassLoader> _bundleTracker;
+	private BundleContext _bundleContext;
 	private final Map<ClassLoader, CustomSQLContainer> _customSQLContainerPool =
 		new ConcurrentHashMap<>();
 	private String _functionIsNotNull;
@@ -991,6 +969,17 @@ public class CustomSQLImpl implements CustomSQL {
 
 	@Reference
 	private Portal _portal;
+
+	private final SynchronousBundleListener _synchronousBundleListener =
+		bundleEvent -> {
+			if (bundleEvent.getType() == BundleEvent.STOPPING) {
+				Bundle bundle = bundleEvent.getBundle();
+
+				BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+				_customSQLContainerPool.remove(bundleWiring.getClassLoader());
+			}
+		};
 
 	private boolean _vendorDB2;
 	private boolean _vendorHSQL;

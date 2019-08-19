@@ -86,7 +86,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
-		// Map.Entry
+		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -215,7 +215,7 @@ public class AnnouncementsEntryLocalServiceImpl
 	@Override
 	public void deleteEntry(AnnouncementsEntry entry) throws PortalException {
 
-		// Map.Entry
+		// Entry
 
 		announcementsEntryPersistence.remove(entry);
 
@@ -430,7 +430,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			int expirationDateHour, int expirationDateMinute, int priority)
 		throws PortalException {
 
-		// Map.Entry
+		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
 

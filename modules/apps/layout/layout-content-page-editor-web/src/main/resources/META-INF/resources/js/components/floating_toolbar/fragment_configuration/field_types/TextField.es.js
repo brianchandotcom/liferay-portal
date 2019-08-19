@@ -24,6 +24,28 @@ import templates from './TextField.soy';
  */
 class TextField extends Component {
 	/**
+	 * @inheritdoc
+	 * @review
+	 */
+	prepareStateForRender(state) {
+		let nextState = state;
+
+		const value = state.configurationValues[this.field.name];
+
+		if (value) {
+			nextState = {
+				...state,
+				configurationValues: {
+					...state.configurationValues,
+					[this.field.name]: Liferay.Util.unescapeHTML(value)
+				}
+			};
+		}
+
+		return nextState;
+	}
+
+	/**
 	 * Handle Text Value Change
 	 * @param {Event} event
 	 * @private

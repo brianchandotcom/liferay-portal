@@ -48,9 +48,6 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
-	public static final String JSP_PRECOMPILE_ENABLED_PROPERTY_NAME =
-		"jsp.precompile.enabled";
-
 	@Override
 	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
 		_configureTaskGenerateJSPJava(project);

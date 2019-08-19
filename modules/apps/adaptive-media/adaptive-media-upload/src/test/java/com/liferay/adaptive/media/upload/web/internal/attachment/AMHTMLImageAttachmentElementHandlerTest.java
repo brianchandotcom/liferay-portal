@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.upload.internal.web.attachment;
+package com.liferay.adaptive.media.upload.web.internal.attachment;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.image.internal.convert.document.library;
+package com.liferay.adaptive.media.image.service.internal.convert.document.library;
 
 import com.liferay.adaptive.media.image.internal.storage.AMStoreUtil;
 import com.liferay.adaptive.media.image.model.AMImageEntry;

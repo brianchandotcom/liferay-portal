@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.upload.internal.web.attachment;
+package com.liferay.adaptive.media.upload.web.internal.attachment;
 
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -75,7 +75,7 @@ public class AMHTMLImageAttachmentElementReplacer
 	}
 
 	@Reference(
-		target = "(&(format=html)(html.tag.name=img)(!(component.name=com.liferay.adaptive.media.upload.internal.web.attachment.AMHTMLImageAttachmentElementReplacer)))"
+		target = "(&(format=html)(html.tag.name=img)(!(component.name=com.liferay.adaptive.media.upload.web.internal.attachment.AMHTMLImageAttachmentElementReplacer)))"
 	)
 	private AttachmentElementReplacer _defaultAttachmentElementReplacer;
 

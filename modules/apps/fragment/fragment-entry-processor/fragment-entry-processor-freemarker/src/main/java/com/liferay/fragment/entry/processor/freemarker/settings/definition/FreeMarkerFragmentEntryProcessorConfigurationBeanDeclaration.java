@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.freemarker.internal.settings.definition;
+package com.liferay.fragment.entry.processor.freemarker.settings.definition;
 
-import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
+import com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

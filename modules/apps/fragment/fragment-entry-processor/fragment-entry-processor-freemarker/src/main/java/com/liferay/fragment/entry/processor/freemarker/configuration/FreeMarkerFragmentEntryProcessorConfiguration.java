@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.freemarker.internal.configuration;
+package com.liferay.fragment.entry.processor.freemarker.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration",
+	id = "com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration",
 	localization = "content/Language",
 	name = "freemarker-fragment-entry-processor-configuration-name"
 )

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.settings.definition;
+package com.liferay.blogs.web.internal.configuration.definition;
 
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

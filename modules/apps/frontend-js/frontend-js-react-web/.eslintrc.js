@@ -12,18 +12,6 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
-import React from 'react';
-import SegmentEdit from './components/segment_edit/SegmentEdit.es';
-import ThemeContext from './ThemeContext.es';
-
-export default function(id, props, context) {
-	render(
-		<ThemeContext.Provider value={context}>
-			<div className="segments-root">
-				<SegmentEdit {...props} />
-			</div>
-		</ThemeContext.Provider>,
-		document.getElementById(id)
-	);
-}
+module.exports = {
+	extends: ['liferay/react']
+};

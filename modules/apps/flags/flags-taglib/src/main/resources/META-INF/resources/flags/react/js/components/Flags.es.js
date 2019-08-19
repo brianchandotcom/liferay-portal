@@ -141,7 +141,6 @@ class Flags extends React.PureComponent {
 			signedIn
 		} = this.props;
 		const {isSending, reportDialogOpen, status} = this.state;
-		const {spritemap} = this.context;
 
 		return (
 			<>
@@ -163,7 +162,7 @@ class Flags extends React.PureComponent {
 								: undefined
 						}
 					>
-						<ClayIcon spritemap={spritemap} symbol="flag-empty" />
+						<ClayIcon symbol="flag-empty" />
 					</span>
 					<span className={onlyIcon ? 'sr-only' : undefined}>
 						{message}

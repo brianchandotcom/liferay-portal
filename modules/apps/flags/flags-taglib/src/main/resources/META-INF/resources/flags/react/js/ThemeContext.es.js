@@ -16,14 +16,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const ThemeContext = React.createContext({
-	namespace: '',
-	spritemap: ''
+	namespace: ''
 });
 
 ThemeContext.Provider.propTypes = {
 	value: PropTypes.shape({
-		namespace: PropTypes.string,
-		spritemap: PropTypes.string
+		namespace: PropTypes.string
 	})
 };
 

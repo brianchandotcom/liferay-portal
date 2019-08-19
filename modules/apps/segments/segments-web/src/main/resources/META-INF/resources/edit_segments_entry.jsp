@@ -117,8 +117,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 			{
 				assetsPath: '<%= PortalUtil.getPathContext(request) + "/assets" %>',
 				namespace: '<portlet:namespace />',
-				requestFieldValueNameURL: '<%= getSegmentsFieldValueNameURL %>',
-				spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+				requestFieldValueNameURL: '<%= getSegmentsFieldValueNameURL %>'
 			}
 		);
 	</aui:script>

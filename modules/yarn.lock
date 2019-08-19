@@ -11655,10 +11655,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.12.0:
     read-json-sync "^2.0.0"
     semver "^5.5.0"
 
-liferay-npm-bundler-preset-liferay-dev@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.6.0.tgz#1d80e2f6c5a8e7a2fbf9e282c605c19a00e58cfa"
-  integrity sha512-2Ezh53sdaULtLCvtfe/8Wht5rtGPTEc+PO1bjYSueUwtB1Cu4o2XCaCInFONQnUTcWpBcfqMLPGCuaVWZErWfg==
+liferay-npm-bundler-preset-liferay-dev@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-1.7.0.tgz#0c9f5038a2086ec5534e0bcffee9313769c783a5"
+  integrity sha512-UNnMurKUEI3Z5WZJjCxWhWyB2ic+E2zKWIOyXBLEN5BgYABefWgk7dlBEpOsLe986/l9nVppnd5s8JUGVt8k5A==
   dependencies:
     babel-preset-liferay-standard "2.12.0"
     liferay-npm-bundler-plugin-exclude-imports "2.12.0"
@@ -11703,10 +11703,10 @@ liferay-npm-bundler@2.12.0:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-7.1.0.tgz#d449bd093fa840d858e5a4067796f9ed00e15997"
-  integrity sha512-1HwD9zZ4Uf0qpeIy9Ew+F50z5RuLOVMTC4swC/yRKa8dOxlp7T0LHjKSjQjrtHeYiZ5ShYwWkw3q+eMl+AN7Iw==
+liferay-npm-scripts@7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-7.2.0.tgz#2ed6e2857c1ad8565bd2b1daf1c757105c4d6dc8"
+  integrity sha512-lx/SIhMR65+pjcKpoThV6E1ZtA4lGTw6QP8OZUB4Y5XgyJp6K3+QLlt7coHBzcnJCIOjNqwO9Ecj3Co0RebHkQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11738,7 +11738,7 @@ liferay-npm-scripts@7.1.0:
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.12.0"
     liferay-npm-bundler "2.12.0"
-    liferay-npm-bundler-preset-liferay-dev "1.6.0"
+    liferay-npm-bundler-preset-liferay-dev "1.7.0"
     liferay-theme-tasks "9.4.0"
     metal-tools-soy "4.3.2"
     minimist "^1.2.0"
@@ -15120,7 +15120,7 @@ react-docgen@^4.1.0:
     node-dir "^0.1.10"
     recast "^0.17.3"
 
-react-dom@16.8.6, react-dom@^16.8.3, react-dom@^16.8.6:
+react-dom@16.8.6, react-dom@^16.8.3:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
   integrity sha512-1nL7PIq9LTL3fthPqwkvr2zY7phIPjYrT0jp4HjyEQrEROnw4dG41VVwi/wfoCneoleqrNX7iAD+pXebJZwrwA==

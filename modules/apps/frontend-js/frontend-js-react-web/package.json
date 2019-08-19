@@ -13,6 +13,7 @@
 		"react-dnd-test-utils": "7.7.0"
 	},
 	"name": "frontend-js-react-web",
+	"main": "js/index.es.js",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",

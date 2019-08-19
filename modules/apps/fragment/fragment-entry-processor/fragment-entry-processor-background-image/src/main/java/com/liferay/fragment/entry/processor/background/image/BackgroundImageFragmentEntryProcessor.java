@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -92,7 +93,22 @@ public class BackgroundImageFragmentEntryProcessor
 			if (_fragmentEntryProcessorUtil.isAssetDisplayPage(
 					fragmentEntryProcessorContext.getMode())) {
 
-				value = editableValueJSONObject.getString("mappedField");
+				String mappedField = editableValueJSONObject.getString(
+					"mappedField");
+
+				Optional<Map<String, Object>> fieldValuesOptional =
+					fragmentEntryProcessorContext.getFieldValuesOptional();
+
+				Map<String, Object> fieldValues = fieldValuesOptional.orElse(
+					new HashMap<>());
+
+				Object fieldValue = fieldValues.get(mappedField);
+
+				if (fieldValue instanceof JSONObject) {
+					JSONObject fieldValueJSONObject = (JSONObject)fieldValue;
+
+					value = fieldValueJSONObject.getString("url");
+				}
 			}
 
 			if (_fragmentEntryProcessorUtil.isMapped(editableValueJSONObject)) {

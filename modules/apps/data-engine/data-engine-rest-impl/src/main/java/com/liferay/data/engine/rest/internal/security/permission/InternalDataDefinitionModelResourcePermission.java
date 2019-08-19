@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.security.permission.resource;
+package com.liferay.data.engine.rest.internal.security.permission;
 
-import com.liferay.data.engine.rest.internal.constants.DataLayoutConstants;
-import com.liferay.data.engine.rest.internal.model.InternalDataLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
+import com.liferay.data.engine.rest.internal.constants.DataDefinitionConstants;
+import com.liferay.data.engine.rest.internal.model.InternalDataDefinition;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -32,22 +32,22 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + DataLayoutConstants.RESOURCE_NAME,
+	property = "model.class.name=" + DataDefinitionConstants.RESOURCE_NAME,
 	service = ModelResourcePermission.class
 )
-public class InternalDataLayoutModelResourcePermission
-	implements ModelResourcePermission<InternalDataLayout> {
+public class InternalDataDefinitionModelResourcePermission
+	implements ModelResourcePermission<InternalDataDefinition> {
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker,
-			InternalDataLayout internalDataLayout, String actionId)
+			InternalDataDefinition internalDataDefinition, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, internalDataLayout, actionId)) {
+		if (!contains(permissionChecker, internalDataDefinition, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DataLayoutConstants.RESOURCE_NAME,
-				(long)internalDataLayout.getPrimaryKeyObj(), actionId);
+				permissionChecker, DataDefinitionConstants.RESOURCE_NAME,
+				(long)internalDataDefinition.getPrimaryKeyObj(), actionId);
 		}
 	}
 
@@ -57,35 +57,35 @@ public class InternalDataLayoutModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		InternalDataLayout internalDataLayout = new InternalDataLayout();
+		InternalDataDefinition internalDataDefinition =
+			new InternalDataDefinition();
 
-		internalDataLayout.setPrimaryKeyObj(primaryKey);
+		internalDataDefinition.setPrimaryKeyObj(primaryKey);
 
-		check(permissionChecker, internalDataLayout, actionId);
+		check(permissionChecker, internalDataDefinition, actionId);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker,
-			InternalDataLayout internalDataLayout, String actionId)
+			InternalDataDefinition internalDataDefinition, String actionId)
 		throws PortalException {
 
-		DDMStructureLayout ddmStructureLayout =
-			ddmStructureLayoutLocalService.getStructureLayout(
-				(long)internalDataLayout.getPrimaryKeyObj());
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			(long)internalDataDefinition.getPrimaryKeyObj());
 
 		if (permissionChecker.hasOwnerPermission(
-				ddmStructureLayout.getCompanyId(),
-				InternalDataLayout.class.getName(),
-				(long)internalDataLayout.getPrimaryKeyObj(),
-				ddmStructureLayout.getUserId(), actionId)) {
+				ddmStructure.getCompanyId(),
+				InternalDataDefinition.class.getName(),
+				(long)internalDataDefinition.getPrimaryKeyObj(),
+				ddmStructure.getUserId(), actionId)) {
 
 			return true;
 		}
 
 		return permissionChecker.hasPermission(
-			ddmStructureLayout.getGroupId(), InternalDataLayout.class.getName(),
-			(long)internalDataLayout.getPrimaryKeyObj(), actionId);
+			ddmStructure.getGroupId(), InternalDataDefinition.class.getName(),
+			(long)internalDataDefinition.getPrimaryKeyObj(), actionId);
 	}
 
 	@Override
@@ -94,16 +94,17 @@ public class InternalDataLayoutModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		InternalDataLayout internalDataLayout = new InternalDataLayout();
+		InternalDataDefinition internalDataDefinition =
+			new InternalDataDefinition();
 
-		internalDataLayout.setPrimaryKeyObj(primaryKey);
+		internalDataDefinition.setPrimaryKeyObj(primaryKey);
 
-		return contains(permissionChecker, internalDataLayout, actionId);
+		return contains(permissionChecker, internalDataDefinition, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return InternalDataLayout.class.getName();
+		return InternalDataDefinition.class.getName();
 	}
 
 	@Override
@@ -112,6 +113,6 @@ public class InternalDataLayoutModelResourcePermission
 	}
 
 	@Reference
-	protected DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
+	protected DDMStructureLocalService ddmStructureLocalService;
 
 }

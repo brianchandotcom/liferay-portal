@@ -39,7 +39,6 @@ import com.liferay.gradle.plugins.internal.FindBugsDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JSModuleConfigGeneratorDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.RESTBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.ServiceBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.TLDFormatterDefaultsPlugin;

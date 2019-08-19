@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.security.permission;
+package com.liferay.message.boards.internal.service.permission;
 
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.portal.kernel.exception.PortalException;

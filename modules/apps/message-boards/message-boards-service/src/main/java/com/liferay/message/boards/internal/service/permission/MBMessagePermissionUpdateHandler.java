@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.security.permission;
+package com.liferay.message.boards.internal.service.permission;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;

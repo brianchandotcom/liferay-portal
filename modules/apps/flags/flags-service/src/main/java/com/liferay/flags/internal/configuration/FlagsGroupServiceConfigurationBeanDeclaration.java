@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.flags.internal.settings.definition;
+package com.liferay.flags.internal.configuration;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

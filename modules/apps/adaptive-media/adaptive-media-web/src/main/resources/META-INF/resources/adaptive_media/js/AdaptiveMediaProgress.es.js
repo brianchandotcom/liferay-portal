@@ -31,9 +31,9 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @inheritDoc
 	 */
 	created() {
-		this.id_ = this.namespace + 'AdaptRemaining' + this.uuid + 'Progress';
+		this._id = this.namespace + 'AdaptRemaining' + this.uuid + 'Progress';
 
-		this.updateProgressBar_(this.adaptedImages, this.totalImages);
+		this._updateProgressBar(this.adaptedImages, this.totalImages);
 
 		if (this.autoStartProgress) {
 			this.startProgress();
@@ -60,9 +60,9 @@ class AdaptiveMediaProgress extends PortletBase {
 			fetch(backgroundTaskUrl);
 		}
 
-		this.clearInterval_();
+		this._clearInterval();
 
-		this.intervalId_ = setInterval(
+		this._intervalId = setInterval(
 			this._getAdaptedImagesPercentage.bind(this),
 			this.intervalSpeed
 		);
@@ -77,9 +77,9 @@ class AdaptiveMediaProgress extends PortletBase {
 	 *
 	 * @protected
 	 */
-	clearInterval_() {
-		if (this.intervalId_) {
-			clearInterval(this.intervalId_);
+	_clearInterval() {
+		if (this._intervalId) {
+			clearInterval(this._intervalId);
 		}
 	}
 
@@ -93,14 +93,14 @@ class AdaptiveMediaProgress extends PortletBase {
 		fetch(this.percentageUrl)
 			.then(res => res.json())
 			.then(json => {
-				this.updateProgressBar_(json.adaptedImages, json.totalImages);
+				this._updateProgressBar(json.adaptedImages, json.totalImages);
 
 				if (this._percentage >= 100) {
-					this.onProgressBarComplete_();
+					this._onProgressBarComplete();
 				}
 			})
 			.catch(() => {
-				clearInterval(this.intervalId_);
+				clearInterval(this._intervalId);
 			});
 	}
 
@@ -109,8 +109,8 @@ class AdaptiveMediaProgress extends PortletBase {
 	 *
 	 * @protected
 	 */
-	onProgressBarComplete_() {
-		this.clearInterval_();
+	_onProgressBarComplete() {
+		this._clearInterval();
 		this._showLoadingIndicator = false;
 
 		this.emit('finish', {uuid: this.uuid});
@@ -122,7 +122,7 @@ class AdaptiveMediaProgress extends PortletBase {
 	 * @param  {Number} progress progressbar value
 	 * @protected
 	 */
-	updateProgressBar_(adaptedImages, totalImages) {
+	_updateProgressBar(adaptedImages, totalImages) {
 		this._percentage = Math.round((adaptedImages / totalImages) * 100) || 0;
 		this._progressBarTooltip = this.tooltip
 			? this.tooltip

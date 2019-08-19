@@ -7,11 +7,11 @@
  * @param _percentage
  * @param _progressBarTooltip
  * @param spritemap
- * @param? id_
+ * @param? _id
  * @param _showLoadingIndicator
  */
 {template .render}
-	<div id="{$id_}">
+	<div id="{$_id}">
 		<div class="progress-container {$disabled ? 'disabled' : ''}" data-title="{$_progressBarTooltip}">
 			{call ClayProgressBar.render}
 				{param spritemap: $spritemap /}

@@ -12,8 +12,4 @@
  * details.
  */
 
-module.exports = {
-	check: [],
-	fix: [],
-	preset: 'liferay-npm-scripts/src/presets/standard'
-};
+export {default as render} from './render.es';

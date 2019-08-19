@@ -78,8 +78,7 @@ if (Validator.isNull(message)) {
 			uri: '<%= uri %>'
 		},
 		{
-			namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>',
-			spritemap: Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
+			namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>'
 		}
 	);
 </aui:script>

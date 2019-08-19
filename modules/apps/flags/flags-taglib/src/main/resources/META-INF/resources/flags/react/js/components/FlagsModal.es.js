@@ -203,10 +203,8 @@ const FlagsModal = ({
 	signedIn,
 	status
 }) => {
-	const {spritemap} = useContext(ThemeContext);
-
 	return (
-		<ClayModal onClose={handleClose} size="md" spritemap={spritemap}>
+		<ClayModal onClose={handleClose} size="md">
 			{onClose => (
 				<>
 					<ClayModal.Header>

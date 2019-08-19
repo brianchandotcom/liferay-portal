@@ -49,8 +49,7 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 				classPK: '<%= themeDisplay.getPlid() %>',
 				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
 				type: '<%= layout.getType() %>'
-			},
-			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+			}
 		}
 	);
 </aui:script>

@@ -12,9 +12,8 @@
  * details.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import SegmentsExperimentsUtil from './util/index.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
@@ -32,7 +31,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 		editSegmentsVariantURL
 	} = endpoints;
 
-	ReactDOM.render(
+	render(
 		<SegmentsExperimentsContext.Provider
 			value={{
 				editVariantLayoutURL: editSegmentsVariantLayoutURL,
@@ -51,22 +50,16 @@ export default function segmentsExperimentsApp(id, props, context) {
 				})
 			}}
 		>
-			<ClayIconSpriteContext.Provider value={context.spritemap}>
-				<SegmentsExperimentsSidebar
-					initialGoals={props.segmentsExperimentGoals}
-					initialSegmentsExperiences={props.segmentsExperiences}
-					initialSegmentsExperiment={props.segmentsExperiment}
-					initialSegmentsVariants={props.initialSegmentsVariants}
-					initialSelectedSegmentsExperienceId={
-						props.selectedSegmentsExperienceId
-					}
-				/>
-			</ClayIconSpriteContext.Provider>
+			<SegmentsExperimentsSidebar
+				initialGoals={props.segmentsExperimentGoals}
+				initialSegmentsExperiences={props.segmentsExperiences}
+				initialSegmentsExperiment={props.segmentsExperiment}
+				initialSegmentsVariants={props.initialSegmentsVariants}
+				initialSelectedSegmentsExperienceId={
+					props.selectedSegmentsExperienceId
+				}
+			/>
 		</SegmentsExperimentsContext.Provider>,
 		rootElement
-	);
-
-	Liferay.once('destroyPortlet', () =>
-		ReactDOM.unmountComponentAtNode(rootElement)
 	);
 }

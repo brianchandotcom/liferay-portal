@@ -12,21 +12,15 @@
  * details.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App.es';
 
 export default (id, constants) => {
-	const container = document.getElementById(id);
-
-	ReactDOM.render(
+	render(
 		<div className="app-builder-root">
 			<App {...constants} />
 		</div>,
-		container
-	);
-
-	Liferay.once('destroyPortlet', () =>
-		ReactDOM.unmountComponentAtNode(container)
+		document.getElementById(id)
 	);
 };

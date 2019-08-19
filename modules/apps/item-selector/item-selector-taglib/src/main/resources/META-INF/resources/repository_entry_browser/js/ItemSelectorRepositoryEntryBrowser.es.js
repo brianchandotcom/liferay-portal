@@ -267,6 +267,13 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 						),
 						[Liferay.Util.formatStorage(maxUploadRequestSize)]
 					);
+
+					break;
+				}
+				default: {
+					message = Liferay.Language.get(
+						'an-unexpected-error-occurred-while-uploading-your-file'
+					);
 				}
 			}
 		}
@@ -374,12 +381,12 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			{
 				closeable: true,
 				destroyOnHide: true,
-				message: message,
+				message,
 				spritemap:
 					Liferay.ThemeDisplay.getPathThemeImages() +
 					'/lexicon/icons.svg',
-				title: '',
 				style: 'danger',
+				title: '',
 				visible: true
 			},
 			this.one('.message-container')

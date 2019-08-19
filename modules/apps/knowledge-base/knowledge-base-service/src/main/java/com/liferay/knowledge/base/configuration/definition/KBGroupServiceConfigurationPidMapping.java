@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.configuration.definition;
+package com.liferay.knowledge.base.configuration.definition;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBConstants;

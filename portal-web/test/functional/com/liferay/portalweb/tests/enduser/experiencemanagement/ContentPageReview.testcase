@@ -249,6 +249,64 @@ definition {
 			key_fragmentName = "Rich Text");
 	}
 
+	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
+	@priority = "4"
+	test ViewCommentList {
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Title fragment comment",
+			fragmentName = "Title",
+			position = "1");
+
+		PageEditor.gotoCommentList();
+
+		PageEditor.viewCommentList(
+			commentCount = "1 Comment",
+			fragmentName = "Title",
+			openComment = "true");
+
+		PageEditor.viewComment(fragmentComment = "Title fragment comment");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Content");
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
+			fragmentClass = "body",
+			fragmentComment = "Content fragment comment",
+			fragmentName = "Content",
+			position = "2");
+
+		PageEditor.gotoCommentList();
+
+		PageEditor.viewCommentList(
+			commentCount = "1 Comment",
+			fragmentName = "Title");
+
+		PageEditor.viewCommentList(
+			commentCount = "1 Comment",
+			fragmentName = "Content",
+			openComment = "true");
+
+		PageEditor.viewComment(fragmentComment = "Content fragment comment");
+	}
+
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = "4"
 	test ViewEditedComment {

@@ -418,10 +418,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 		const fieldData =
 			this._selectedMappingSourceTypeId ===
 			MAPPING_SOURCE_TYPE_IDS.content
-				? {fieldId,
-					classNameId: this.item.config.backgroundImage.classNameId,
-					classPK: this.item.config.backgroundImage.classPK
-				}
+				? {
+						classNameId: this.item.config.backgroundImage
+							.classNameId,
+						classPK: this.item.config.backgroundImage.classPK,
+						fieldId
+				  }
 				: {mappedField: fieldId};
 
 		this.store
@@ -468,22 +470,6 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
  */
 FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
-	 * @review
-	 * @type {!string}
-	 */
-	itemId: Config.string().required(),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
-	 * @review
-	 * @type {object}
-	 */
-	item: Config.required(),
-
-	/**
 	 * @default []
 	 * @memberOf FloatingToolbarLayoutBackgroundImagePanel
 	 * @private
@@ -512,7 +498,23 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	 */
 	_selectedMappingSourceTypeId: Config.oneOf(
 		Object.values(MAPPING_SOURCE_TYPE_IDS)
-	).internal()
+	).internal(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {object}
+	 */
+	item: Config.required(),
+
+	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {!string}
+	 */
+	itemId: Config.string().required()
 };
 
 const ConnectedFloatingToolbarLayoutBackgroundImagePanel = getConnectedComponent(

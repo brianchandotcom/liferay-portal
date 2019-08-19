@@ -61,11 +61,12 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	static emptyMappingValues(config) {
 		if (config.backgroundImage) {
-			return
-			(!config.backgroundImage.classNameId &&
-			!config.backgroundImage.classPK &&
-			!config.backgroundImage.fieldId &&
-			!config.backgroundImage.mappedField)
+			return (
+				!config.backgroundImage.classNameId &&
+				!config.backgroundImage.classPK &&
+				!config.backgroundImage.fieldId &&
+				!config.backgroundImage.mappedField
+			);
 		}
 
 		return true;
@@ -199,13 +200,11 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	syncItem(newItem, oldItem) {
 		if (
-			!oldItem || !oldItem.config.backgroundImage ||
+			!oldItem ||
 			(newItem.config.backgroundImage &&
-				oldItem.config.backgroundImage &&
-				(newItem.config.backgroundImage.classNameId !==
-					oldItem.config.backgroundImage.classNameId ||
-					newItem.config.backgroundImage.mappedField !==
-						oldItem.config.backgroundImage.mappedField))
+				!oldItem.config.backgroundImage) ||
+			newItem.config.backgroundImage.classNameId !==
+				oldItem.config.backgroundImage.classNameId
 		) {
 			this._loadFields();
 		}

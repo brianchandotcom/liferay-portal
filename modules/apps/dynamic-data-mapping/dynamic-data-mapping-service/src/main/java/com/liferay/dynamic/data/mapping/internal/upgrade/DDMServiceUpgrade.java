@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -249,6 +250,25 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"3.1.1", "3.1.2",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_2.
 				UpgradeDDMFormFieldValidation(_jsonFactory));
+
+		registry.register(
+			"3.1.2", "3.2.0",
+			new UpgradeMVCCVersion() {
+
+				@Override
+				protected String[] getModuleTableNames() {
+					return new String[] {
+						"DDMContent", "DDMDataProviderInstance",
+						"DDMDataProviderInstanceLink", "DDMFormInstance",
+						"DDMFormInstanceRecord", "DDMFormInstanceRecordVersion",
+						"DDMFormInstanceVersion", "DDMStorageLink",
+						"DDMStructure", "DDMStructureLayout",
+						"DDMStructureLink", "DDMStructureVersion",
+						"DDMTemplate", "DDMTemplateLink", "DDMTemplateVersion"
+					};
+				}
+
+			});
 	}
 
 	protected DDMFormDeserializer getDDMFormJSONDeserializer() {

@@ -583,33 +583,25 @@ public class AnnouncementsEntryLocalServiceImpl
 			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
+			(start, end) -> {
+				List<User> users = null;
 
-				@Override
-				public Void performIntervalAction(int start, int end)
-					throws PortalException {
-
-					List<User> users = null;
-
-					if (teamId > 0) {
-						users = userLocalService.getTeamUsers(
-							teamId, start, end);
-					}
-					else {
-						users = userLocalService.search(
-							company.getCompanyId(), null,
-							WorkflowConstants.STATUS_APPROVED, params, start,
-							end, (OrderByComparator<User>)null);
-					}
-
-					notifyUsers(
-						users, entry, company.getLocale(), toAddress, toName);
-
-					intervalActionProcessor.incrementStart(users.size());
-
-					return null;
+				if (teamId > 0) {
+					users = userLocalService.getTeamUsers(teamId, start, end);
+				}
+				else {
+					users = userLocalService.search(
+						company.getCompanyId(), null,
+						WorkflowConstants.STATUS_APPROVED, params, start, end,
+						(OrderByComparator<User>)null);
 				}
 
+				notifyUsers(
+					users, entry, company.getLocale(), toAddress, toName);
+
+				intervalActionProcessor.incrementStart(users.size());
+
+				return null;
 			});
 
 		intervalActionProcessor.performIntervalActions();

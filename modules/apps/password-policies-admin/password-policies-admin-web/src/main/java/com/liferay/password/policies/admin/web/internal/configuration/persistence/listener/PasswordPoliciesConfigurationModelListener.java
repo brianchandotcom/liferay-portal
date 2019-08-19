@@ -14,7 +14,6 @@
 
 package com.liferay.password.policies.admin.web.internal.configuration.persistence.listener;
 
-import com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;

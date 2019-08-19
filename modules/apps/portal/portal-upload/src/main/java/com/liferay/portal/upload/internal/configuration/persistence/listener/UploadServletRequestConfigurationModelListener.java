@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upload.UploadServletRequestImpl;
-import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
 
 import java.io.File;
 

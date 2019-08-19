@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfiguration;
-import com.liferay.user.associated.data.web.internal.configuration.AnonymousUserConfigurationRetriever;
 
 import java.util.Dictionary;
 import java.util.Optional;

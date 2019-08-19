@@ -14,7 +14,6 @@
 
 package com.liferay.organizations.service.internal.configuration.persistence.listener;
 
-import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;

@@ -126,8 +126,8 @@
 	}
 
 	.fragments-editor__floating-toolbar-buttons {
-		.fragments-editor__floating-toolbar--linked-field {
-			.active,
+		& .fragments-editor__floating-toolbar--linked-field {
+			&.active,
 			&:hover {
 				background-color: $fragmentEditableFieldGridLinkedColorFaded;
 			}
@@ -137,8 +137,8 @@
 			}
 		}
 
-		.fragments-editor__floating-toolbar--mapped-field {
-			.active,
+		& .fragments-editor__floating-toolbar--mapped-field {
+			&.active,
 			&:hover {
 				background-color: $fragmentEditableFieldGridMappedColorFaded;
 			}

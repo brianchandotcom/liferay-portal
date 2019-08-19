@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.security.permission;
+package com.liferay.journal.service.permission;
 
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;

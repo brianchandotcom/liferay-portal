@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface NestedField {
 
-	public Class parentReturnType() default Void.class;
+	public Class parentType() default Void.class;
 
 	public String value();
 

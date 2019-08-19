@@ -3009,7 +3009,7 @@ AUI.add(
 							timerAction = timerAction.concat(splitTimerActions);
 						}
 
-						if (notifications[i].notificationType) {
+						if (notifications[i].notificationTypes) {
 							splitTimerActions = instance._splitTimerActions(
 								notifications[i]
 							);

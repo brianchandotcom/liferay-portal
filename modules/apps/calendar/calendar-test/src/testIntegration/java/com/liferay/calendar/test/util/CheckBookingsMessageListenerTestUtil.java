@@ -16,6 +16,7 @@ package com.liferay.calendar.test.util;
 
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.test.CalendarBookingLocalServiceTest;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -36,7 +37,7 @@ public class CheckBookingsMessageListenerTestUtil {
 
 	public static void setUp() {
 		Bundle bundle = FrameworkUtil.getBundle(
-			CheckBookingsMessageListenerTestUtil.class);
+			CalendarBookingLocalServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

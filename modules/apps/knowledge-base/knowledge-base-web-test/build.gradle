@@ -1,5 +1,0 @@
-dependencies {
-	testIntegrationCompile project(":apps:export-import:export-import-test-util")
-	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}

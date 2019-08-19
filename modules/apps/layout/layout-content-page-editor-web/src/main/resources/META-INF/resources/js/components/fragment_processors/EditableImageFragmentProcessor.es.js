@@ -53,10 +53,6 @@ function destroy() {}
 function getFloatingToolbarButtons(editableValues) {
 	const buttons = [];
 
-	if (!editableValues.mappedField && !editableValues.fieldId) {
-		buttons.push(FLOATING_TOOLBAR_BUTTONS.imageProperties);
-	}
-
 	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
 
 	if (
@@ -70,6 +66,10 @@ function getFloatingToolbarButtons(editableValues) {
 	}
 
 	buttons.push(linkButton);
+
+	if (!editableValues.mappedField && !editableValues.fieldId) {
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.imageProperties);
+	}
 
 	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
 

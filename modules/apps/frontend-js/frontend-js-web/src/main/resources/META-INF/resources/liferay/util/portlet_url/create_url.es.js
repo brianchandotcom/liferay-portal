@@ -21,10 +21,10 @@ function isAbsolute_(urlString) {
 }
 
 /**
- * Returns a portlet URL in form of a string
+ * Returns a portlet URL in form of a URL Object
  * @param {!string} basePortletURL The base portlet URL to be modified in this utility
  * @param {object} parameters Search parameters to be added or changed in the base URL
- * @return {string} Portlet URL
+ * @return {URL} Portlet URL Object
  * @review
  */
 export default function createURL(basePortletURL, parameters = {}) {

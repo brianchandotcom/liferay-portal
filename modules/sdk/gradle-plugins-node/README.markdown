@@ -83,9 +83,9 @@ Name | Depends On | Type | Description
 `cleanNPM` | \- | [`Delete`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Delete.html) | Deletes the `node_modules` directory, the `npm-shrinkwrap.json` and the `package-lock.json` files from the project, if present.
 <a name="downloadnode"></a>`downloadNode` | \- | [`DownloadNodeTask`](#downloadnodetask) | Downloads and unpacks the local Node.js distribution for the project. If `node.download` is `false`, this task is disabled.
 `npmInstall` | `downloadNode` | [`NpmInstallTask`](#npminstalltask) | Runs `npm install` to install the dependencies declared in the project's `package.json` file, if present. By default, the task is [configured](#npminstallretries) to run `npm install` two more times if it fails.
-[`npmRun${script}`](#npmrunscript-task) | `npmInstall` | [`ExecutePackageManagerTask`](#executepackagemanagertask) | Runs the `${script}` in the project's `package.json` file.
 `npmPackageLock` | `cleanNPM`, `npmInstall` | [`DefaultTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/DefaultTask.html) | Deletes the NPM files and runs `npm install` to install the dependencies declared in the project's `package.json` file, if present.
 `npmShrinkwrap` | `cleanNPM`, `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which dependency versions are used.
+[`packageRun${script}`](#packagerunscript-task) | `npmInstall` | [`ExecutePackageManagerTask`](#executepackagemanagertask) | Runs the `${script}` in the project's `package.json` file.
 
 ### DownloadNodeTask
 
@@ -293,10 +293,10 @@ Method | Description
 `PublishNodeModuleTask overriddenPackageJsonKeys(Iterable<String> overriddenPackageJsonKeys)` | Adds field values to override in the generated `package.json` file.
 `PublishNodeModuleTask overriddenPackageJsonKeys(String... overriddenPackageJsonKeys)` | Adds field values to override in the generated `package.json` file.
 
-### npmRun${script} Task
+### packageRun${script} Task
 
 For each [script](https://docs.npmjs.com/misc/scripts) declared in the
-`package.json` file of the project, one task `npmRun${script}` of type
+`package.json` file of the project, one task `packageRun${script}` of type
 [`ExecutePackageManagerTask`](#executepackagemanagertask) is added. Each of these tasks is
 automatically configured with sensible defaults:
 

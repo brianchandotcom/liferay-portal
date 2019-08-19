@@ -328,6 +328,16 @@ class FloatingToolbarLayoutBackgroundImagePanel extends Component {
 	 */
 	_handleImageSourceTypeSelect(event) {
 		this._selectedImageSourceTypeId = event.delegateTarget.value;
+
+		if (
+			FloatingToolbarLayoutBackgroundImagePanel.emptyMappingValues(
+				this.item.config
+			)
+		) {
+			this._loadFields();
+		} else {
+			this._clearMappingValues();
+		}
 	}
 
 	/**

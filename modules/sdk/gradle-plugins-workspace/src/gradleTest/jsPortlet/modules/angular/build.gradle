@@ -12,6 +12,6 @@ jar {
 	enabled = false
 }
 
-npmRunBuild {
+packageRunBuild {
 	enabled = false
 }

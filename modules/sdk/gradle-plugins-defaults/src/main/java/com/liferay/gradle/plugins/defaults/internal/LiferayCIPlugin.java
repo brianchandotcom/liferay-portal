@@ -17,11 +17,11 @@ package com.liferay.gradle.plugins.defaults.internal;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.CIUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
@@ -31,7 +31,6 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -58,7 +57,8 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
-		_configureTasksExecuteNpm(project);
+		_configureTasksExecutePackageManager(project);
+		_configureTasksPackageRunBuild(project);
 		_configureTasksNpmInstall(project);
 
 		GradleUtil.withPlugin(
@@ -141,20 +141,23 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		executeNodeTask.setArgs(args);
 	}
 
-	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+	private void _configureTaskExecutePackageManager(
+		ExecutePackageManagerTask executePackageManagerTask) {
+
 		String ciNodeEnv = GradleUtil.getProperty(
-			executeNpmTask.getProject(), "nodejs.ci.node.env", (String)null);
+			executePackageManagerTask.getProject(), "nodejs.ci.node.env",
+			(String)null);
 
 		if (Validator.isNotNull(ciNodeEnv)) {
-			executeNpmTask.environment("NODE_ENV", ciNodeEnv);
+			executePackageManagerTask.environment("NODE_ENV", ciNodeEnv);
 		}
 
 		String ciRegistry = GradleUtil.getProperty(
-			executeNpmTask.getProject(), "nodejs.npm.ci.registry",
+			executePackageManagerTask.getProject(), "nodejs.npm.ci.registry",
 			(String)null);
 
 		if (Validator.isNotNull(ciRegistry)) {
-			executeNpmTask.setRegistry(ciRegistry);
+			executePackageManagerTask.setRegistry(ciRegistry);
 		}
 	}
 
@@ -167,12 +170,14 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
 	}
 
-	private void _configureTaskNpmRunBuild(ExecuteNpmTask executeNpmTask) {
+	private void _configureTaskPackageRunBuild(
+		PackageRunBuildTask packageRunBuildTask) {
+
 		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
 			return;
 		}
 
-		TaskOutputs taskOutputs = executeNpmTask.getOutputs();
+		TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
 
 		taskOutputs.upToDateWhen(
 			new Spec<Task>() {
@@ -215,24 +220,19 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksExecuteNpm(Project project) {
+	private void _configureTasksExecutePackageManager(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
+			ExecutePackageManagerTask.class,
+			new Action<ExecutePackageManagerTask>() {
 
 				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask);
+				public void execute(
+					ExecutePackageManagerTask executePackageManagerTask) {
 
-					String taskName = executeNpmTask.getName();
-
-					if (Objects.equals(
-							taskName, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
-
-						_configureTaskNpmRunBuild(executeNpmTask);
-					}
+					_configureTaskExecutePackageManager(
+						executePackageManagerTask);
 				}
 
 			});
@@ -273,6 +273,21 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						npmInstallTask,
 						Collections.singletonMap(
 							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
+				}
+
+			});
+	}
+
+	private void _configureTasksPackageRunBuild(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			PackageRunBuildTask.class,
+			new Action<PackageRunBuildTask>() {
+
+				@Override
+				public void execute(PackageRunBuildTask packageRunBuildTask) {
+					_configureTaskPackageRunBuild(packageRunBuildTask);
 				}
 
 			});

@@ -198,10 +198,10 @@ public class LiferayThemePlugin implements Plugin<Project> {
 						project, _GULP_BUILD_TASK_NAME);
 
 					if (GradleUtil.hasTask(
-							project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+							project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
 
 						gulpBuildTask.finalizedBy(
-							NodePlugin.NPM_RUN_BUILD_TASK_NAME);
+							NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
 					}
 
 					configurablePublishArtifact.builtBy(gulpBuildTask);

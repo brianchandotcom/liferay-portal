@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.js.transpiler;
 import com.liferay.gradle.plugins.js.transpiler.internal.util.JSTranspilerPluginUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -180,7 +179,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 	private void _configureTasksTranspileJS(
 		Project project, final DownloadNodeModuleTask downloadMetalCliTask,
-		final ExecuteNpmTask npmInstallTask) {
+		final NpmInstallTask npmInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -200,7 +199,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	private void _configureTaskTranspileJS(
 		TranspileJSTask transpileJSTask,
 		final DownloadNodeModuleTask downloadMetalCliTask,
-		final ExecuteNpmTask npmInstallTask) {
+		final NpmInstallTask npmInstallTask) {
 
 		FileCollection fileCollection = transpileJSTask.getSourceFiles();
 

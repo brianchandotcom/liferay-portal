@@ -105,10 +105,10 @@ public class FrontendPlugin implements Plugin<Project> {
 						project, LifecycleBasePlugin.BUILD_TASK_NAME);
 
 					if (GradleUtil.hasTask(
-							project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+							project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
 
 						buildTask.finalizedBy(
-							NodePlugin.NPM_RUN_BUILD_TASK_NAME);
+							NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME);
 					}
 				}
 

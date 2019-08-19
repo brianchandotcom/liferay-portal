@@ -53,10 +53,10 @@ public class SourceFormatterDefaultsPlugin
 					_configureTaskForNodePlugin(
 						project,
 						SourceFormatterPlugin.CHECK_SOURCE_FORMATTING_TASK_NAME,
-						"npmRunCheckFormat");
+						"packageRunCheckFormat");
 					_configureTaskForNodePlugin(
 						project, SourceFormatterPlugin.FORMAT_SOURCE_TASK_NAME,
-						"npmRunFormat");
+						"packageRunFormat");
 				}
 
 			});
@@ -87,10 +87,10 @@ public class SourceFormatterDefaultsPlugin
 		if (nodeTask != null) {
 			Task task = GradleUtil.getTask(project, taskName);
 
-			if (!Boolean.parseBoolean(
-					GradleUtil.getTaskPrefixedProperty(
-						task, "skip.node.task"))) {
+			String skipNodeTask = GradleUtil.getTaskPrefixedProperty(
+				task, "skip.node.task");
 
+			if (!Boolean.parseBoolean(skipNodeTask)) {
 				task.dependsOn(nodeTask);
 			}
 		}

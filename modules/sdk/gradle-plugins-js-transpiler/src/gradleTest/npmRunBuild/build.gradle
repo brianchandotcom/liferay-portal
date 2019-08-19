@@ -10,7 +10,7 @@ dependencies {
 	jsCompile group: "com.liferay", name: "com.liferay.frontend.js.web", version: "1.0.20"
 }
 
-npmRunBuild {
+packageRunBuild {
 	doFirst {
 		File expectedFile = file("node_modules/com.liferay.frontend.js.web/package.json")
 

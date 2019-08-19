@@ -95,11 +95,11 @@ Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 `expandJSCompileDependencies` | \- | [`DefaultTask`](https://docs.gradle.org/current/javadoc/org/gradle/api/DefaultTask.html) | Expands the additional configured JavaScript dependencies. The task itself does not do any work, but depends on a series of [Copy](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) tasks called `expandJSCompileDependency${file}`, which expand each dependency declared in the `jsCompile` configuration into the `node_modules` directory.
 
-All the tasks of type `ExecuteNpmTask` whose name starts with `"npmRun"` are
-configured to depend on `expandJSCompileDependencies`. This means that, before
-running any [script](https://docs.npmjs.com/misc/scripts) declared in the
-`package.json` file of the project, all the `jsCompile` dependencies will be
-expanded into the `node_modules` directory.
+All the tasks of type `PackageRunTask` are configured to depend on
+`expandJSCompileDependencies`. This means that, before running any
+[script](https://docs.npmjs.com/misc/scripts) declared in the `package.json`
+file of the project, all the `jsCompile` dependencies will be expanded into the
+`node_modules` directory.
 
 ## Tasks
 

@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
@@ -35,7 +35,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
 		_configureNode(project);
-		_configureTasksExecuteNpm(project);
+		_configureTasksExecutePackageManager(project);
 		_configureTasksNpmInstall(project);
 		_configureTasksPublishNodeModule(project);
 	}
@@ -61,19 +61,23 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		}
 	}
 
-	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+	private void _configureTaskExecutePackageManager(
+		ExecutePackageManagerTask executePackageManagerTask) {
+
 		String nodeEnv = GradleUtil.getProperty(
-			executeNpmTask.getProject(), "nodejs.node.env", (String)null);
+			executePackageManagerTask.getProject(), "nodejs.node.env",
+			(String)null);
 
 		if (Validator.isNotNull(nodeEnv)) {
-			executeNpmTask.environment("NODE_ENV", nodeEnv);
+			executePackageManagerTask.environment("NODE_ENV", nodeEnv);
 		}
 
 		String registry = GradleUtil.getProperty(
-			executeNpmTask.getProject(), "nodejs.npm.registry", (String)null);
+			executePackageManagerTask.getProject(), "nodejs.npm.registry",
+			(String)null);
 
 		if (Validator.isNotNull(registry)) {
-			executeNpmTask.setRegistry(registry);
+			executePackageManagerTask.setRegistry(registry);
 		}
 	}
 
@@ -143,16 +147,19 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		}
 	}
 
-	private void _configureTasksExecuteNpm(Project project) {
+	private void _configureTasksExecutePackageManager(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
+			ExecutePackageManagerTask.class,
+			new Action<ExecutePackageManagerTask>() {
 
 				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					_configureTaskExecuteNpm(executeNpmTask);
+				public void execute(
+					ExecutePackageManagerTask executePackageManagerTask) {
+
+					_configureTaskExecutePackageManager(
+						executePackageManagerTask);
 				}
 
 			});

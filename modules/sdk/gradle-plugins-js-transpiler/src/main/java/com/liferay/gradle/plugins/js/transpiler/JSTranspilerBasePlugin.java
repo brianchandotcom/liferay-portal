@@ -16,8 +16,8 @@ package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.js.transpiler.internal.util.JSTranspilerPluginUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
+import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
@@ -56,7 +56,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 		final Task expandJSCompileDependenciesTask =
 			_addTaskExpandJSCompileDependencies(project);
 
-		_configureTasksNpmRun(expandJSCompileDependenciesTask);
+		_configureTasksPackageRun(expandJSCompileDependenciesTask);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -115,7 +115,7 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTasksNpmRun(
+	private void _configureTasksPackageRun(
 		final Task expandJSCompileDependenciesTask) {
 
 		Project project = expandJSCompileDependenciesTask.getProject();
@@ -123,17 +123,12 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
-			ExecuteNpmTask.class,
-			new Action<ExecuteNpmTask>() {
+			PackageRunTask.class,
+			new Action<PackageRunTask>() {
 
 				@Override
-				public void execute(ExecuteNpmTask executeNpmTask) {
-					String name = executeNpmTask.getName();
-
-					if (name.startsWith("npmRun")) {
-						executeNpmTask.dependsOn(
-							expandJSCompileDependenciesTask);
-					}
+				public void execute(PackageRunTask packageRunTask) {
+					packageRunTask.dependsOn(expandJSCompileDependenciesTask);
 				}
 
 			});

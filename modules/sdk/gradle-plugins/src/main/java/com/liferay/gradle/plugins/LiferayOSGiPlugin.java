@@ -826,7 +826,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		if (GradleUtil.hasTask(project, NodePlugin.NPM_RUN_BUILD_TASK_NAME)) {
+		if (GradleUtil.hasTask(
+				project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
+
 			GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
 		}
 		else {

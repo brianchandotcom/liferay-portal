@@ -4,21 +4,21 @@
  * It renders a progressbar and a loading icon.
  *
  * @param disabled
- * @param percentage_
- * @param progressBarTooltip_
+ * @param _percentage
+ * @param _progressBarTooltip
  * @param spritemap
  * @param? id_
- * @param showLoadingIndicator_
+ * @param _showLoadingIndicator
  */
 {template .render}
 	<div id="{$id_}">
-		<div class="progress-container {$disabled ? 'disabled' : ''}" data-title="{$progressBarTooltip_}">
+		<div class="progress-container {$disabled ? 'disabled' : ''}" data-title="{$_progressBarTooltip}">
 			{call ClayProgressBar.render}
 				{param spritemap: $spritemap /}
-				{param value: $percentage_ /}
+				{param value: $_percentage /}
 			{/call}
 		</div>
 
-		<span class="{$showLoadingIndicator_ ? '' : 'hide '}loading-animation loading-animation-sm"></span>
+		<span class="{$_showLoadingIndicator ? '' : 'hide '}loading-animation loading-animation-sm"></span>
 	</div>
 {/template}

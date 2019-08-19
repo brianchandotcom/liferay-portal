@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.captcha.internal.configuration.persistence.listener;
+package com.liferay.captcha.internal.configuration;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.recaptcha.ReCaptchaImpl;

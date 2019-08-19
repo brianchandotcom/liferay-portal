@@ -12,10 +12,14 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.internal.configuration.persistence.listener;
+package com.liferay.dynamic.data.mapping.form.web.internal.configuration.listener;
 
+import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -25,54 +29,51 @@ import java.util.ResourceBundle;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jonathan McCann
+ * @author Drew Brokke
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration",
+	property = "model.class.name=com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class PasswordPoliciesConfigurationModelListener
+public class DDMFormWebConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
+		DDMFormWebConfiguration ddmFormWebConfiguration =
+			ConfigurableUtil.createConfigurable(
+				DDMFormWebConfiguration.class, new HashMapDictionary<>());
+
 		try {
-			_validateDurations(
-				(Long[])properties.get("expirationWarningTimeDurations"));
-			_validateDurations((Long[])properties.get("lockoutDurations"));
-			_validateDurations((Long[])properties.get("maximumAgeDurations"));
-			_validateDurations((Long[])properties.get("minimumAgeDurations"));
-			_validateDurations((Long[])properties.get("resetFailureDurations"));
-			_validateDurations(
-				(Long[])properties.get("resetTicketMaxAgeDurations"));
+			int autosaveInterval = GetterUtil.getInteger(
+				properties.get("autosaveInterval"),
+				ddmFormWebConfiguration.autosaveInterval());
+
+			_validateAutosaveInterval(autosaveInterval);
 		}
 		catch (Exception e) {
 			throw new ConfigurationModelListenerException(
-				e.getMessage(), PasswordPoliciesConfiguration.class, getClass(),
+				e.getMessage(), DDMFormWebConfiguration.class, getClass(),
 				properties);
 		}
 	}
 
-	private ResourceBundle _getResourceBundle() {
-		return ResourceBundleUtil.getBundle(
-			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
-			getClass());
-	}
+	private void _validateAutosaveInterval(int autosaveInterval)
+		throws Exception {
 
-	private void _validateDurations(Long[] durations) throws Exception {
-		for (long duration : durations) {
-			if (duration < 0) {
-				ResourceBundle resourceBundle = _getResourceBundle();
+		if (autosaveInterval < 0) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+				getClass());
 
-				String message = ResourceBundleUtil.getString(
-					resourceBundle,
-					"the-duration-must-be-greater-than-or-equal-to-0");
+			String message = ResourceBundleUtil.getString(
+				resourceBundle,
+				"the-autosave-interval-must-be-greater-than-or-equal-to-0");
 
-				throw new Exception(message);
-			}
+			throw new Exception(message);
 		}
 	}
 

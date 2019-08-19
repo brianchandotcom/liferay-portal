@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.internal.configuration.persistence.listener;
+package com.liferay.organizations.service.internal.configuration;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;

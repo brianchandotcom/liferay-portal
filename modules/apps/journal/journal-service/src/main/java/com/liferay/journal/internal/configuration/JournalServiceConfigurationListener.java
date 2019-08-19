@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.configuration.persistence.listener;
+package com.liferay.journal.internal.configuration;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;

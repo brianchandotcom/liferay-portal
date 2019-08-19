@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.configuration.persistence.listener;
+package com.liferay.dynamic.data.mapping.form.web.internal.configuration.listener;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.HashMapDictionary;

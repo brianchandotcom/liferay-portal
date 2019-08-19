@@ -93,9 +93,7 @@ AUI.add(
 			},
 
 			normalizeToAssignments: function(data) {
-				var assignments = {
-					assignmentType: [STR_BLANK]
-				};
+				var assignments = {};
 
 				if (data && data.length) {
 					COL_TYPES_ASSIGNMENT.forEach(function(

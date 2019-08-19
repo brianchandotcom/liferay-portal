@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.security.permission;
+package com.liferay.knowledge.base.internal.service.permission;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;

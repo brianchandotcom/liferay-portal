@@ -41,7 +41,7 @@ import {
 	removeItem,
 	setIn
 } from '../../utils/FragmentsEditorUpdateUtils.es';
-import {OPEN_ASSET_TYPE_DIALOG, REMOVE_ROW} from '../../actions/actions.es';
+import {OPEN_ASSET_TYPE_DIALOG} from '../../actions/actions.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import templates from './FragmentEntryLinkListRow.soy';
 import {updateRowColumnsAction} from '../../actions/updateRowColumns.es';
@@ -64,7 +64,11 @@ class FragmentEntryLinkListRow extends Component {
 			...FLOATING_TOOLBAR_BUTTONS.layoutBackgroundImage
 		};
 
-		if (config.backgroundImage && (config.backgroundImage.mappedField || config.backgroundImage.fieldId)) {
+		if (
+			config.backgroundImage &&
+			(config.backgroundImage.mappedField ||
+				config.backgroundImage.fieldId)
+		) {
 			layouttBackgroundImageButton.cssClass =
 				'fragments-editor__floating-toolbar--mapped-field';
 		}
@@ -326,7 +330,7 @@ class FragmentEntryLinkListRow extends Component {
 			return this.row.config.backgroundImage;
 		}
 
-		return ''
+		return '';
 	}
 
 	/**
@@ -556,6 +560,16 @@ FragmentEntryLinkListRow.STATE = {
 	_floatingToolbar: Config.internal().value(null),
 
 	/**
+	 * Mapped background field value
+	 * @instance
+	 * @memberOf FragmentEntryLinkListRow
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_mappedBackgroundFieldValue: Config.internal().string(),
+
+	/**
 	 * Index of the column being resized.
 	 * @default 0
 	 * @instance
@@ -630,17 +644,7 @@ FragmentEntryLinkListRow.STATE = {
 	 * @memberof FragmentEntryLinkListRow
 	 * @type {string}
 	 */
-	rowId: Config.string().required(),
-
-	/**
-	 * Mapped background field value
-	 * @instance
-	 * @memberOf FragmentEntryLinkListRow
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-	_mappedBackgroundFieldValue: Config.internal().string()
+	rowId: Config.string().required()
 };
 
 const ConnectedFragmentEntryLinkListRow = getConnectedComponent(

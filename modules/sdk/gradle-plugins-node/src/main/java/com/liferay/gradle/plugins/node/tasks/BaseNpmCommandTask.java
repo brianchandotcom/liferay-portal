@@ -43,7 +43,7 @@ import org.gradle.api.tasks.util.PatternSet;
  * @author Peter Shin
  */
 public abstract class BaseNpmCommandTask
-	extends ExecuteNpmTask implements PatternFilterable {
+	extends ExecutePackageManagerTask implements PatternFilterable {
 
 	@Override
 	public BaseNpmCommandTask exclude(

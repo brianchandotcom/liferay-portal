@@ -30,9 +30,9 @@ import org.gradle.api.logging.Logger;
 /**
  * @author Andrea Di Giorgi
  */
-public class ExecuteNpmTask extends ExecuteNodeScriptTask {
+public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 
-	public ExecuteNpmTask() {
+	public ExecutePackageManagerTask() {
 		setCommand(
 			new Callable<String>() {
 
@@ -108,7 +108,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			super.executeNode();
 		}
 		else {
-			synchronized (ExecuteNpmTask.class) {
+			synchronized (ExecutePackageManagerTask.class) {
 				super.executeNode();
 			}
 		}

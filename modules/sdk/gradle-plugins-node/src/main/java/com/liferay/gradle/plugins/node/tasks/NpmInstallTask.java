@@ -49,7 +49,7 @@ import org.gradle.api.tasks.OutputDirectory;
 /**
  * @author Andrea Di Giorgi
  */
-public class NpmInstallTask extends ExecuteNpmTask {
+public class NpmInstallTask extends ExecutePackageManagerTask {
 
 	public NpmInstallTask() {
 		Project project = getProject();

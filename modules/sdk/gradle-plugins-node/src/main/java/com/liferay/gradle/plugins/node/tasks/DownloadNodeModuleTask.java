@@ -32,7 +32,7 @@ import org.gradle.api.tasks.OutputDirectory;
 /**
  * @author Andrea Di Giorgi
  */
-public class DownloadNodeModuleTask extends ExecuteNpmTask {
+public class DownloadNodeModuleTask extends ExecutePackageManagerTask {
 
 	public DownloadNodeModuleTask() {
 		onlyIf(

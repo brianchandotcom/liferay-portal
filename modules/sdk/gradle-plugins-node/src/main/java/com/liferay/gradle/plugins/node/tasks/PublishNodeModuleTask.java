@@ -52,7 +52,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class PublishNodeModuleTask extends ExecuteNpmTask {
+public class PublishNodeModuleTask extends ExecutePackageManagerTask {
 
 	@Override
 	public void executeNode() throws Exception {

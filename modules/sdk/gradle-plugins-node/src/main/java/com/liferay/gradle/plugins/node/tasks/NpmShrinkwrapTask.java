@@ -38,7 +38,7 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class NpmShrinkwrapTask extends ExecuteNpmTask {
+public class NpmShrinkwrapTask extends ExecutePackageManagerTask {
 
 	public NpmShrinkwrapTask() {
 		onlyIf(

@@ -71,8 +71,8 @@ public class ExecuteNodeTask extends DefaultTask {
 			getProject(), NodePlugin.NPM_INSTALL_TASK_NAME,
 			NpmInstallTask.class);
 
-		if ((this instanceof ExecuteNpmTask) || (npmInstallRetries <= 0) ||
-			(npmInstallTask == null)) {
+		if ((this instanceof ExecutePackageManagerTask) ||
+			(npmInstallRetries <= 0) || (npmInstallTask == null)) {
 
 			_result = _nodeExecutor.execute();
 

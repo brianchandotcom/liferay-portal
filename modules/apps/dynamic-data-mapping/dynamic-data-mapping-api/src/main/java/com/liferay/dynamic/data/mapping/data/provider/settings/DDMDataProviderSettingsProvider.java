@@ -14,9 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.data.provider.settings;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Jonathan McCann
  */
+@ProviderType
 public interface DDMDataProviderSettingsProvider {
 
 	public Class<?> getSettings();

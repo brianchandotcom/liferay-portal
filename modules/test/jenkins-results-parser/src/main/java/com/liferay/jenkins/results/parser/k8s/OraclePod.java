@@ -18,8 +18,6 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import io.kubernetes.client.models.V1Pod;
 
-import java.io.File;
-
 /**
  * @author Kenji Heigel
  * @author Michael Hashimoto
@@ -42,12 +40,10 @@ public class OraclePod extends Pod {
 				"cp /mnt/ssh-secret-volume/* /home/oracle/.ssh/ ; ",
 				"chmod 600 /home/oracle/.ssh/* ; fi"));
 
-		File destFile = new File(destFilePath);
-
 		exec(
 			"/bin/bash", "-c",
 			JenkinsResultsParserUtil.combine(
-				"mkdir -p ", destFile.getParent(),
+				"mkdir -p ", destFilePath.replaceAll("(.*)/[^/]+", "$1"),
 				" ; scp -o StrictHostKeyChecking=no ", sourceHostname, ":",
 				sourceFilePath, " ", destFilePath));
 	}

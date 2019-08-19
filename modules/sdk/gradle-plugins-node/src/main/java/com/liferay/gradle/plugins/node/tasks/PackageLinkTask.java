@@ -24,9 +24,9 @@ import org.gradle.api.tasks.Input;
 /**
  * @author Peter Shin
  */
-public class NpmLinkTask extends ExecutePackageManagerDigestTask {
+public class PackageLinkTask extends ExecutePackageManagerDigestTask {
 
-	public NpmLinkTask() {
+	public PackageLinkTask() {
 		exclude(_EXCLUDE_DIR_NAMES);
 		include(_INCLUDES);
 		setNpmCommand(_NPM_COMMAND);

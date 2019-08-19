@@ -23,9 +23,9 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
-import com.liferay.gradle.plugins.node.tasks.NpmLinkTask;
 import com.liferay.gradle.plugins.node.tasks.NpmRunTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
+import com.liferay.gradle.plugins.node.tasks.PackageLinkTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
 
@@ -79,7 +79,7 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_INSTALL_TASK_NAME = "npmInstall";
 
-	public static final String NPM_LINKS_TASK_NAME = "npmLinks";
+	public static final String PACKAGE_LINKS_TASK_NAME = "packageLinks";
 
 	public static final String NPM_PACKAGE_LOCK_TASK_NAME = "npmPackageLock";
 
@@ -116,6 +116,7 @@ public class NodePlugin implements Plugin<Project> {
 		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
 		_addTasksNpmRun(npmInstallTask, packageJsonMap);
+		_addTasksPackageLink(npmInstallTask, packageJsonMap);
 
 		_configureTasksDownloadNodeModule(
 			project, npmInstallTask, packageJsonMap);
@@ -226,31 +227,32 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
-	private ExecutePackageManagerTask _addTaskNpmLink(
+	private ExecutePackageManagerTask _addTaskPackageLink(
 		String dependencyName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
 
 		String suffix = StringUtil.camelCase(dependencyName, true);
 
-		final NpmLinkTask npmLinkTask = GradleUtil.addTask(
-			project, "npmLink" + suffix, NpmLinkTask.class);
+		final PackageLinkTask packageLinkTask = GradleUtil.addTask(
+			project, _PACKAGE_LINK_TASK_NAME_PREFIX + suffix,
+			PackageLinkTask.class);
 
-		npmLinkTask.dependsOn(npmInstallTask);
-		npmLinkTask.setDescription(
-			"Links the \"" + dependencyName + "\" NPM dependency.");
-		npmLinkTask.setGroup(BasePlugin.BUILD_GROUP);
-		npmLinkTask.setDependencyName(dependencyName);
+		packageLinkTask.dependsOn(npmInstallTask);
+		packageLinkTask.setDescription(
+			"Links the \"" + dependencyName + "\" package.json dependency.");
+		packageLinkTask.setDependencyName(dependencyName);
+		packageLinkTask.setGroup(BasePlugin.BUILD_GROUP);
 
-		return npmLinkTask;
+		return packageLinkTask;
 	}
 
-	private Task _addTaskNpmLinks(
+	private Task _addTaskPackageLinks(
 		Set<String> dependencyNames, Project project) {
 
-		Task task = project.task(NPM_LINKS_TASK_NAME);
+		Task task = project.task(PACKAGE_LINKS_TASK_NAME);
 
-		task.setDescription("Links all the NPM dependencies.");
+		task.setDescription("Links all the package.json dependencies.");
 		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		Pattern pattern = null;
@@ -265,7 +267,7 @@ public class NodePlugin implements Plugin<Project> {
 		for (String dependencyName : dependencyNames) {
 			String suffix = StringUtil.camelCase(dependencyName, true);
 
-			String taskName = "npmLink" + suffix;
+			String taskName = _PACKAGE_LINK_TASK_NAME_PREFIX + suffix;
 
 			if (pattern != null) {
 				Matcher matcher = pattern.matcher(taskName);
@@ -383,19 +385,6 @@ public class NodePlugin implements Plugin<Project> {
 			return;
 		}
 
-		Map<String, String> dependenciesJsonMap =
-			(Map<String, String>)packageJsonMap.get("dependencies");
-
-		if (dependenciesJsonMap != null) {
-			Set<String> dependencyNames = dependenciesJsonMap.keySet();
-
-			for (String dependencyName : dependencyNames) {
-				_addTaskNpmLink(dependencyName, npmInstallTask);
-			}
-
-			_addTaskNpmLinks(dependencyNames, npmInstallTask.getProject());
-		}
-
 		Map<String, String> scriptsJsonMap =
 			(Map<String, String>)packageJsonMap.get("scripts");
 
@@ -403,6 +392,28 @@ public class NodePlugin implements Plugin<Project> {
 			for (String scriptName : scriptsJsonMap.keySet()) {
 				_addTaskNpmRun(scriptName, npmInstallTask);
 			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void _addTasksPackageLink(
+		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
+
+		if (packageJsonMap == null) {
+			return;
+		}
+
+		Map<String, String> dependenciesJsonMap =
+			(Map<String, String>)packageJsonMap.get("dependencies");
+
+		if (dependenciesJsonMap != null) {
+			Set<String> dependencyNames = dependenciesJsonMap.keySet();
+
+			for (String dependencyName : dependencyNames) {
+				_addTaskPackageLink(dependencyName, npmInstallTask);
+			}
+
+			_addTaskPackageLinks(dependencyNames, npmInstallTask.getProject());
 		}
 	}
 
@@ -921,6 +932,8 @@ public class NodePlugin implements Plugin<Project> {
 
 		return false;
 	}
+
+	private static final String _PACKAGE_LINK_TASK_NAME_PREFIX = "packageLink";
 
 	private static final VersionNumber _node8VersionNumber =
 		VersionNumber.version(8);

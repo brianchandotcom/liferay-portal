@@ -50,6 +50,8 @@ definition {
 	@description = "This case ensures that the user can add a comment to a fragment of a content page."
 	@priority = "5"
 	test AddComment {
+		property test.name.skip.portal.instance = "ContentPageReview#AddComment";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -71,6 +73,8 @@ definition {
 	@description = "This case ensures that the user can add a comment with escape characters to a fragment of a content page."
 	@priority = "4"
 	test AddCommentWithEscapeCharacters {
+		property test.name.skip.portal.instance = "ContentPageReview#AddCommentWithEscapeCharacters";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -92,6 +96,8 @@ definition {
 	@description = "This case ensures a user can delete a fragment comment after publishing a content page."
 	@priority = "5"
 	test DeleteComment {
+		property test.name.skip.portal.instance = "ContentPageReview#DeleteComment";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -170,6 +176,8 @@ definition {
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
 	test ResolveComment {
+		property test.name.skip.portal.instance = "ContentPageReview#ResolveComment";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -201,6 +209,8 @@ definition {
 	@description = "This test ensures that once the proper configuration file is added, Portal starts up with Content Page comments loaded."
 	@priority = "5"
 	test Smoke {
+		property test.name.skip.portal.instance = "ContentPageReview#Smoke";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -252,6 +262,8 @@ definition {
 	@description = "This case ensures that the user can see an edited fragment comment after publishing a content page."
 	@priority = "4"
 	test ViewEditedComment {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewEditedComment";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

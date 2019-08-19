@@ -87,17 +87,9 @@ public class ExpandoInfoDisplayContributorField
 
 		int attributeType = _expandoBridge.getAttributeType(_attributeName);
 
-		if ((attributeType == ExpandoColumnConstants.BOOLEAN_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.DOUBLE_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.FLOAT_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.INTEGER_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.LONG_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.NUMBER_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.SHORT_ARRAY) ||
-			(attributeType == ExpandoColumnConstants.STRING_ARRAY)) {
-
+		if (attributeType == ExpandoColumnConstants.BOOLEAN_ARRAY) {
 			return StringUtil.merge(
-				ArrayUtil.toStringArray((Object[])attributeValue),
+				ArrayUtil.toStringArray((boolean[])attributeValue),
 				StringPool.COMMA_AND_SPACE);
 		}
 		else if (attributeType == ExpandoColumnConstants.DATE) {
@@ -105,6 +97,16 @@ public class ExpandoInfoDisplayContributorField
 				DateFormat.FULL, DateFormat.FULL, locale);
 
 			return dateFormat.format((Date)attributeValue);
+		}
+		else if (attributeType == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((double[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (attributeType == ExpandoColumnConstants.FLOAT_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((float[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
 		}
 		else if (attributeType == ExpandoColumnConstants.GEOLOCATION) {
 			try {
@@ -122,6 +124,31 @@ public class ExpandoInfoDisplayContributorField
 			catch (JSONException jsone) {
 				_log.error("Unable to parse geolocation JSON", jsone);
 			}
+		}
+		else if (attributeType == ExpandoColumnConstants.INTEGER_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((int[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (attributeType == ExpandoColumnConstants.LONG_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((long[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (attributeType == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((double[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (attributeType == ExpandoColumnConstants.SHORT_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((short[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
+		}
+		else if (attributeType == ExpandoColumnConstants.STRING_ARRAY) {
+			return StringUtil.merge(
+				ArrayUtil.toStringArray((String[])attributeValue),
+				StringPool.COMMA_AND_SPACE);
 		}
 		else if (attributeType ==
 					ExpandoColumnConstants.STRING_ARRAY_LOCALIZED) {

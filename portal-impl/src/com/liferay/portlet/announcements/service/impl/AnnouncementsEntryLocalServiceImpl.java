@@ -530,8 +530,7 @@ public class AnnouncementsEntryLocalServiceImpl
 					teamId = role.getClassPK();
 				}
 				else {
-					params.put(
-						"userGroupRole", new Long[] {Long.valueOf(0), classPK});
+					params.put("userGroupRole", new Long[] {0L, classPK});
 				}
 			}
 			else if (className.equals(UserGroup.class.getName())) {

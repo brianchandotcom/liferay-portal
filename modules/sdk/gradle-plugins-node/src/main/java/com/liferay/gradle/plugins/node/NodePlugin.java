@@ -90,6 +90,7 @@ public class NodePlugin implements Plugin<Project> {
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void apply(Project project) {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
@@ -381,6 +382,7 @@ public class NodePlugin implements Plugin<Project> {
 		return npmShrinkwrapTask;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void _addTasksPackageRun(
 		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
 
@@ -478,6 +480,7 @@ public class NodePlugin implements Plugin<Project> {
 			new Spec<Task>() {
 
 				@Override
+				@SuppressWarnings("unchecked")
 				public boolean isSatisfiedBy(Task task) {
 					DownloadNodeModuleTask downloadNodeModuleTask =
 						(DownloadNodeModuleTask)task;

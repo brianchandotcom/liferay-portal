@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.inactive.request.handler.settings.definition;
+package com.liferay.portal.upload.configuration.definition;
 
-import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Drew Brokke
+ * @author Pei-Jung Lan
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class InactiveRequestHandlerConfigurationBeanDeclaration
+public class UploadServletRequestConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return InactiveRequestHandlerConfiguration.class;
+		return UploadServletRequestConfiguration.class;
 	}
 
 }

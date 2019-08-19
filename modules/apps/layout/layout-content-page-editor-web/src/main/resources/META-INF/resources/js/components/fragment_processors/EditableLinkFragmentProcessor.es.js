@@ -19,8 +19,6 @@ import {destroy, init} from './EditableRichTextFragmentProcessor.es';
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	const buttons = [FLOATING_TOOLBAR_BUTTONS.edit];
-
 	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
 
 	if (
@@ -33,9 +31,7 @@ function getFloatingToolbarButtons(editableValues) {
 			'fragments-editor__floating-toolbar--linked-field';
 	}
 
-	buttons.push(linkButton);
-
-	return buttons;
+	return [linkButton, FLOATING_TOOLBAR_BUTTONS.edit];
 }
 
 /**

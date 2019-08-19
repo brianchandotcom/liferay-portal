@@ -1006,7 +1006,12 @@ public class JournalDisplayContext {
 				sort = new Sort(null, Sort.SCORE_TYPE, false);
 			}
 			else if (Objects.equals(getOrderByCol(), "title")) {
-				sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
+				sort = new Sort(
+					Field.getSortableFieldName(
+						"localized_title_".concat(
+							LocaleUtil.toLanguageId(
+								_themeDisplay.getLocale()))),
+					!orderByAsc);
 			}
 
 			Indexer indexer = null;

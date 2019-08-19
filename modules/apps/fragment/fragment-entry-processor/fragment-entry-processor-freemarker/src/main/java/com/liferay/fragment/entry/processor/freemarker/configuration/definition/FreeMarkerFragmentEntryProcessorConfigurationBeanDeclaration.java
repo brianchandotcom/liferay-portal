@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.fragment.internal.settings.definition;
+package com.liferay.fragment.entry.processor.freemarker.configuration.definition;
 
-import com.liferay.fragment.configuration.FragmentServiceConfiguration;
+import com.liferay.fragment.entry.processor.freemarker.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class FragmentServiceConfigurationBeanDeclaration
+public class FreeMarkerFragmentEntryProcessorConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return FragmentServiceConfiguration.class;
+		return FreeMarkerFragmentEntryProcessorConfiguration.class;
 	}
 
 }

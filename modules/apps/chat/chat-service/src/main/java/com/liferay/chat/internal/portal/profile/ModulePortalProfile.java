@@ -14,13 +14,13 @@
 
 package com.liferay.chat.internal.portal.profile;
 
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfigurationBeanDeclaration;
 import com.liferay.chat.internal.events.LoginPostAction;
 import com.liferay.chat.internal.events.SessionDestroyAction;
 import com.liferay.chat.internal.jabber.JabberImpl;
 import com.liferay.chat.internal.jabber.JabberUtil;
 import com.liferay.chat.internal.model.listener.UserModelListener;
 import com.liferay.chat.internal.poller.ChatPollerProcessor;
-import com.liferay.chat.internal.settings.definition.ChatGroupServiceConfigurationBeanDeclaration;
 import com.liferay.chat.internal.util.DefaultBuddyFinderImpl;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;

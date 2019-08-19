@@ -15,7 +15,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import '../../mapping_type/SelectMappingTypeForm.es';
+import '../../mapping_type/SidebarSelectMappingTypeForm.es';
 import templates from './SidebarMappingPanel.soy';
 
 /**

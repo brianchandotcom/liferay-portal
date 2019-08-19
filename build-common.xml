@@ -1905,7 +1905,7 @@ rerun your task.
 
 			<delete file="${gradle.properties.file}" />
 
-			<condition else="false" property="jsp.precompile.enabled">
+			<condition else="false" property="compile.jsp.include">
 				<istrue value="${jsp.precompile.modules}" />
 			</condition>
 
@@ -1919,11 +1919,11 @@ rerun your task.
 					<propertyref name="baseline.jar.report.level" />
 					<propertyref name="baseline.jar.report.only.dirty.packages" />
 					<propertyref name="build.binaries.cache.dir" />
+					<propertyref name="compile.jsp.include" />
 					<propertyref name="git.working.branch.name" />
 					<propertyref name="jacoco.agent.configuration" />
 					<propertyref name="jacoco.agent.jar" />
 					<propertyref name="jira.project.keys" />
-					<propertyref name="jsp.precompile.enabled" />
 					<propertyref name="jsp.precompile.from.source" />
 					<propertyref name="junit.code.coverage" />
 					<propertyref name="junit.java.integration.gc" />

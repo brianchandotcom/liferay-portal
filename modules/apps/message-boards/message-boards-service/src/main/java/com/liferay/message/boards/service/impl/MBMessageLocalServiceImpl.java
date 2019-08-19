@@ -39,8 +39,10 @@ import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
@@ -361,14 +363,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread thread = null;
 
 		if (threadId > 0) {
-			thread = mbThreadLocalService.fetchThread(threadId);
+			thread = _mbThreadLocalService.fetchThread(threadId);
 		}
 
 		if (thread == null) {
 			if (parentMessageId ==
 					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
-				thread = mbThreadLocalService.addThread(
+				thread = _mbThreadLocalService.addThread(
 					categoryId, message, serviceContext);
 			}
 			else {
@@ -381,7 +383,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
-			mbThreadLocalService.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
 		}
@@ -630,7 +632,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			SocialActivityManagerUtil.deleteActivities(message);
 
-			mbThreadLocalService.deleteThread(message.getThreadId());
+			_mbThreadLocalService.deleteThread(message.getThreadId());
 		}
 
 		_mbDiscussionLocalService.deleteMBDiscussion(discussion);
@@ -683,10 +685,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
-			mbThreadLocalService.deleteMBThread(thread);
+			_mbThreadLocalService.deleteMBThread(thread);
 
 			// Category
 
@@ -706,7 +708,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			indexer.delete(thread);
 		}
 		else {
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
 			// Message is a root message
@@ -743,7 +745,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					thread.setRootMessageId(childMessage.getMessageId());
 					thread.setRootMessageUserId(childMessage.getUserId());
 
-					mbThreadLocalService.updateMBThread(thread);
+					_mbThreadLocalService.updateMBThread(thread);
 				}
 			}
 			else {
@@ -786,7 +788,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						thread.setLastPostDate(
 							prevAndNextMessages[0].getModifiedDate());
 
-						mbThreadLocalService.updateMBThread(thread);
+						_mbThreadLocalService.updateMBThread(thread);
 					}
 				}
 			}
@@ -1274,7 +1276,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category = mbCategoryLocalService.getCategory(
+			category = _mbCategoryLocalService.getCategory(
 				message.getCategoryId());
 		}
 		else {
@@ -1291,10 +1293,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getParentMessageId());
 		}
 
-		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
+		MBThread thread = _mbThreadLocalService.getThread(
+			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
-			mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
+			_mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
 
 			SocialActivityManagerUtil.addActivity(
 				userId, thread, SocialActivityConstants.TYPE_VIEW,
@@ -1859,7 +1862,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Thread
 
-		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
+		MBThread thread = _mbThreadLocalService.getThread(
+			message.getThreadId());
 
 		updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
 
@@ -2537,7 +2541,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(thread.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category = mbCategoryLocalService.getCategory(
+			category = _mbCategoryLocalService.getCategory(
 				thread.getCategoryId());
 		}
 
@@ -2562,7 +2566,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (category != null) {
 				category.setLastPostDate(modifiedDate);
 
-				category = mbCategoryLocalService.updateMBCategory(category);
+				category = _mbCategoryLocalService.updateMBCategory(category);
 			}
 		}
 
@@ -2595,7 +2599,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		indexer.reindex(thread);
 
-		mbThreadLocalService.updateMBThread(thread);
+		_mbThreadLocalService.updateMBThread(thread);
 	}
 
 	protected void validate(String subject, String body)
@@ -2730,7 +2734,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setPriority(priority);
 		}
 
-		MBThread thread = mbThreadLocalService.getThread(message.getThreadId());
+		MBThread thread = _mbThreadLocalService.getThread(
+			message.getThreadId());
 
 		if ((serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_SAVE_DRAFT) &&
@@ -2781,7 +2786,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			thread.setPriority(priority);
 
-			mbThreadLocalService.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 
 			updatePriorities(thread.getThreadId(), priority);
 		}
@@ -2791,7 +2796,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				thread.setTitle(subject);
 			}
 
-			mbThreadLocalService.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 		}
 
 		// Asset
@@ -2886,6 +2891,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@Reference
+	private MBStatsUserLocalService _mbStatsUserLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -16,6 +16,8 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -38,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -115,7 +118,7 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public Date getLastPostDateByUserId(long groupId, long userId) {
-		DynamicQuery dynamicQuery = mbThreadLocalService.dynamicQuery();
+		DynamicQuery dynamicQuery = _mbThreadLocalService.dynamicQuery();
 
 		Projection projection = ProjectionFactoryUtil.max("lastPostDate");
 
@@ -132,7 +135,7 @@ public class MBStatsUserLocalServiceImpl
 		QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		List<MBThread> threads = mbThreadLocalService.getGroupThreads(
+		List<MBThread> threads = _mbThreadLocalService.getGroupThreads(
 			groupId, queryDefinition);
 
 		for (MBThread thread : threads) {
@@ -141,7 +144,7 @@ public class MBStatsUserLocalServiceImpl
 
 		dynamicQuery.add(disjunction);
 
-		List<Date> results = mbThreadLocalService.dynamicQuery(dynamicQuery);
+		List<Date> results = _mbThreadLocalService.dynamicQuery(dynamicQuery);
 
 		return results.get(0);
 	}
@@ -242,7 +245,7 @@ public class MBStatsUserLocalServiceImpl
 	public MBStatsUser updateStatsUser(
 		long groupId, long userId, Date lastPostDate) {
 
-		int messageCount = mbMessageLocalService.getGroupMessagesCount(
+		int messageCount = _mbMessageLocalService.getGroupMessagesCount(
 			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 
 		return updateStatsUser(groupId, userId, messageCount, lastPostDate);
@@ -267,5 +270,11 @@ public class MBStatsUserLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBStatsUserLocalServiceImpl.class);
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

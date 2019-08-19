@@ -19,6 +19,8 @@ import com.liferay.message.boards.exception.LockedThreadException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryService;
+import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -74,7 +76,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
@@ -105,7 +107,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				groupId, userId, modifiedDate, false, queryDefinition);
 		}
 
-		long[] categoryIds = mbCategoryService.getCategoryIds(
+		long[] categoryIds = _mbCategoryService.getCategoryIds(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		if (categoryIds.length == 0) {
@@ -157,7 +159,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				end);
 		}
 
-		long[] categoryIds = mbCategoryService.getCategoryIds(
+		long[] categoryIds = _mbCategoryService.getCategoryIds(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		if (categoryIds.length == 0) {
@@ -236,7 +238,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				groupId, userId, modifiedDate, false, queryDefinition);
 		}
 
-		long[] categoryIds = mbCategoryService.getCategoryIds(
+		long[] categoryIds = _mbCategoryService.getCategoryIds(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		if (categoryIds.length == 0) {
@@ -282,7 +284,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				groupId, userId, status, subscribed, includeAnonymous);
 		}
 
-		long[] categoryIds = mbCategoryService.getCategoryIds(
+		long[] categoryIds = _mbCategoryService.getCategoryIds(
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		if (categoryIds.length == 0) {
@@ -445,7 +447,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			throw new LockedThreadException(sb.toString());
 		}
 
-		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
@@ -459,7 +461,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public void restoreThreadFromTrash(long threadId) throws PortalException {
-		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY, null);
 
 		for (MBMessage message : messages) {
@@ -498,7 +500,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		MBMessage message = mbMessageLocalService.getMessage(messageId);
+		MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
 		ModelResourcePermissionHelper.check(
 			_categoryModelResourcePermission, getPermissionChecker(),
@@ -582,6 +584,12 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
+
+	@Reference
+	private MBCategoryService _mbCategoryService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"

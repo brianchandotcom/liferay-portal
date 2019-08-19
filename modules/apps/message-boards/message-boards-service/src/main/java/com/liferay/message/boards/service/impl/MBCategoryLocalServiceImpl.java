@@ -22,6 +22,8 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.service.MBMailingListLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -245,7 +247,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Threads
 
-		mbThreadLocalService.deleteThreads(
+		_mbThreadLocalService.deleteThreads(
 			category.getGroupId(), category.getCategoryId(),
 			includeTrashedEntries);
 
@@ -841,7 +843,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
+		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -859,13 +861,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
+		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		mbCategory.setMessageCount(messageCount);
 
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
+		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -904,7 +906,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
+		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -983,7 +985,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			mergeCategories(category, toCategoryId);
 		}
 
-		List<MBThread> threads = mbThreadLocalService.getThreads(
+		List<MBThread> threads = _mbThreadLocalService.getThreads(
 			fromCategory.getGroupId(), fromCategory.getCategoryId(),
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -993,9 +995,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			thread.setCategoryId(toCategoryId);
 
-			mbThreadLocalService.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 
-			List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 				thread.getThreadId(), WorkflowConstants.STATUS_ANY, null);
 
 			for (MBMessage message : messages) {
@@ -1004,7 +1006,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				message.setCategoryId(toCategoryId);
 
-				mbMessageLocalService.updateMBMessage(message);
+				_mbMessageLocalService.updateMBMessage(message);
 
 				// Indexer
 
@@ -1047,7 +1049,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				mbThreadLocalService.updateMBThread(thread);
+				_mbThreadLocalService.updateMBThread(thread);
 
 				// Trash
 
@@ -1059,7 +1061,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				// Threads
 
-				mbThreadLocalService.moveDependentsToTrash(
+				_mbThreadLocalService.moveDependentsToTrash(
 					thread.getGroupId(), thread.getThreadId(), trashEntryId);
 
 				// Indexer
@@ -1131,11 +1133,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(oldStatus);
 
-				mbThreadLocalService.updateMBThread(thread);
+				_mbThreadLocalService.updateMBThread(thread);
 
 				// Threads
 
-				mbThreadLocalService.restoreDependentsFromTrash(
+				_mbThreadLocalService.restoreDependentsFromTrash(
 					thread.getGroupId(), thread.getThreadId());
 
 				// Trash
@@ -1217,6 +1219,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@BeanReference(type = MBMailingListLocalService.class)
 	private MBMailingListLocalService _mbMailingListLocalService;
+
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

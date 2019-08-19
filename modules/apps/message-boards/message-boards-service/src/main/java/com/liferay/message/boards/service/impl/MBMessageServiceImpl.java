@@ -23,6 +23,8 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
@@ -167,7 +169,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryLocalService.getCategory(categoryId);
+		MBCategory category = _mbCategoryLocalService.getCategory(categoryId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -379,7 +381,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = StringPool.BLANK;
 		String description = StringPool.BLANK;
 
-		MBCategory category = mbCategoryLocalService.fetchMBCategory(
+		MBCategory category = _mbCategoryLocalService.fetchMBCategory(
 			categoryId);
 
 		if (category == null) {
@@ -655,7 +657,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		List<MBMessage> messages = new ArrayList<>();
 
-		MBThread thread = mbThreadLocalService.getThread(threadId);
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
 		if (_messageModelResourcePermission.contains(
 				getPermissionChecker(), thread.getRootMessageId(),
@@ -813,7 +815,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
 
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
 			priority = thread.getPriority();
@@ -880,7 +882,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
 
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
 			priority = thread.getPriority();
@@ -1008,6 +1010,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"

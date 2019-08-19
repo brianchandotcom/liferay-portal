@@ -255,7 +255,7 @@ public class NodePlugin implements Plugin<Project> {
 		return npmShrinkwrapTask;
 	}
 
-	private ExecutePackageManagerTask _addTaskPackageLink(
+	private PackageLinkTask _addTaskPackageLink(
 		String dependencyName, NpmInstallTask npmInstallTask) {
 
 		Project project = npmInstallTask.getProject();
@@ -270,7 +270,6 @@ public class NodePlugin implements Plugin<Project> {
 		packageLinkTask.setDescription(
 			"Links the \"" + dependencyName + "\" package.json dependency.");
 		packageLinkTask.setDependencyName(dependencyName);
-		packageLinkTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		return packageLinkTask;
 	}
@@ -281,7 +280,6 @@ public class NodePlugin implements Plugin<Project> {
 		Task task = project.task(PACKAGE_LINKS_TASK_NAME);
 
 		task.setDescription("Links all the package.json dependencies.");
-		task.setGroup(BasePlugin.BUILD_GROUP);
 
 		Pattern pattern = null;
 

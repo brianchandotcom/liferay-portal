@@ -7830,8 +7830,6 @@ public class JournalArticleLocalServiceImpl
 
 		tokens.put("structure_id", article.getDDMStructureKey());
 
-		String defaultDDMTemplateKey = article.getDDMTemplateKey();
-
 		Document document = article.getDocument();
 
 		document = document.clone();
@@ -7913,12 +7911,12 @@ public class JournalArticleLocalServiceImpl
 				ddmTemplateKey, true);
 
 			if ((ddmTemplate == null) &&
-				!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
+				!Objects.equals(article.getDDMTemplateKey(), ddmTemplateKey)) {
 
 				ddmTemplate = ddmTemplateLocalService.fetchTemplate(
 					_portal.getSiteGroupId(article.getGroupId()),
 					classNameLocalService.getClassNameId(DDMStructure.class),
-					defaultDDMTemplateKey, true);
+					article.getDDMTemplateKey(), true);
 			}
 
 			if (ddmTemplate != null) {

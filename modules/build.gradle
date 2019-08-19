@@ -1,5 +1,4 @@
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
-import com.liferay.gradle.plugins.node.tasks.NpmRunTask
+import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
@@ -226,12 +225,8 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.node") {
 			if (npmInstall.packageLockJsonFile == null) {
 				afterEvaluate {
-					tasks.withType(ExecuteNpmTask) {
+					tasks.withType(ExecutePackageManagerTask) {
 						scriptFile = new File(rootDir, "yarn-1.13.0.js")
-					}
-
-					tasks.withType(NpmRunTask) {
-						npmCommand = "run"
 					}
 				}
 

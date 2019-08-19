@@ -1,5 +1,5 @@
 assemble {
-	dependsOn npmRunBuild
+	dependsOn packageRunBuild
 }
 
 gulpBuild {

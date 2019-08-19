@@ -2,7 +2,7 @@ import aQute.bnd.osgi.Constants
 
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
 import com.liferay.gradle.plugins.node.internal.util.FileUtil
-import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
+import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.OSDetector
@@ -361,7 +361,7 @@ private void _createYarnTasks() {
 		File packageJSONFile ->
 
 		if (packageJSONFile.text.contains("\"workspaces\":")) {
-			Task yarnTask = tasks.create(name: "setUpYarn" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+			Task yarnTask = tasks.create(name: "setUpYarn" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
 				args "install"
 				args "--frozen-lockfile"
 
@@ -386,7 +386,7 @@ private void _createYarnTasks() {
 			appendHotfixQualifier.mustRunAfter yarnTask
 			setUpYarn.finalizedBy yarnTask
 
-			yarnTask = tasks.create(name: "yarnCheckFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+			yarnTask = tasks.create(name: "yarnCheckFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
 				args "checkFormat"
 
 				group = "formatting"
@@ -396,7 +396,7 @@ private void _createYarnTasks() {
 
 			yarnCheckFormat.finalizedBy yarnTask
 
-			yarnTask = tasks.create(name: "yarnFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+			yarnTask = tasks.create(name: "yarnFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
 				args "format"
 
 				group = "formatting"
@@ -406,7 +406,7 @@ private void _createYarnTasks() {
 
 			yarnFormat.finalizedBy yarnTask
 
-			yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecuteNpmTask) {
+			yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
 				args "install"
 
 				scriptFile = new File(rootDir, "yarn-1.13.0.js")

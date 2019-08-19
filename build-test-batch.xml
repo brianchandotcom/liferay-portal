@@ -4018,7 +4018,7 @@ log.sanitizer.enabled=false</echo>
 	<target name="js-unit-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="npmRunTest">
+				<gradle-execute dir="modules" task="packageRunTest">
 					<arg value="--continue" />
 					<arg value="--parallel" />
 				</gradle-execute>
@@ -4705,7 +4705,7 @@ ${output.content}</echo>
 	<target name="portal-frontend-js-lint-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="npmRunLint" />
+				<gradle-execute dir="modules" task="packageRunLint" />
 			</test-action>
 
 			<test-set-up>

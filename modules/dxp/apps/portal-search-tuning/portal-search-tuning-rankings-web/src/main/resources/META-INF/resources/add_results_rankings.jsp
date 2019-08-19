@@ -58,14 +58,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 		<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
 
 		<aui:input label="search-query" name="keywords" required="<%= true %>" showRequiredLabel="<%= true %>" />
-
-		<aui:field-wrapper cssClass="form-group">
-			<aui:input label="index-name" name="index-name" />
-
-			<div class="form-text">
-				<liferay-ui:message key="leave-this-blank-to-use-the-standard-Liferay-index" />
-			</div>
-		</aui:field-wrapper>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

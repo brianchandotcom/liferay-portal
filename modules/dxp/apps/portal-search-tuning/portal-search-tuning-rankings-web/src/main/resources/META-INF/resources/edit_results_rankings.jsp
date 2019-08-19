@@ -55,6 +55,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 String companyId = ParamUtil.getString(request, "companyId");
 String[] aliases = StringUtil.split(ParamUtil.getString(request, "aliases"), StringPool.COMMA_AND_SPACE);
 
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
 renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 %>
 

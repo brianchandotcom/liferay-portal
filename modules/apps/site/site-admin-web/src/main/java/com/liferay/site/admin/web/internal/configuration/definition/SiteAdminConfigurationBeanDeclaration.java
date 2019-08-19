@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.settings.definition;
+package com.liferay.site.admin.web.internal.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.site.admin.web.internal.configuration.SiteAdminConfiguration;

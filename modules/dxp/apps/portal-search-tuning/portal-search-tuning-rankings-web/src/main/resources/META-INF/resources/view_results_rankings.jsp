@@ -41,15 +41,11 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	componentId="resultsRankingEntriesManagementToolbar"
 	creationMenu="<%= rankingPortletDisplayContext.getCreationMenu() %>"
 	disabled="<%= rankingPortletDisplayContext.isDisabledManagementBar() %>"
-	filterDropdownItems="<%= rankingPortletDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= rankingPortletDisplayContext.getTotalItems() %>"
-	searchActionURL="<%= rankingPortletDisplayContext.getSearchActionURL() %>"
 	searchContainerId="resultsRankingEntries"
-	searchFormName="searchFm"
 	selectable="<%= true %>"
 	showCreationMenu="<%= rankingPortletDisplayContext.isShowCreationMenu() %>"
-	sortingOrder="<%= rankingPortletDisplayContext.getOrderByType() %>"
-	sortingURL="<%= rankingPortletDisplayContext.getSortingURL() %>"
+	showSearch="<%= false %>"
 />
 
 <portlet:actionURL name="/results_ranking/edit" var="deleteResultsRankingEntryURL">

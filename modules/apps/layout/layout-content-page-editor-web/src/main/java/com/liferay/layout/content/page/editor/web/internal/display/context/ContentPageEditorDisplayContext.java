@@ -1326,13 +1326,18 @@ public class ContentPageEditorDisplayContext {
 					"config");
 
 				if (configJSONObject != null) {
-					SoyContext mappedAssetEntrySoyContext =
-						_getMappedAssetEntrySoyContexts(
-							configJSONObject, mappedClassPKs);
+					JSONObject backgroundImageJSONObject =
+						configJSONObject.getJSONObject("backgroundImage");
 
-					if (mappedAssetEntrySoyContext != null) {
-						mappedAssetEntriesSoyContexts.add(
-							mappedAssetEntrySoyContext);
+					if (backgroundImageJSONObject != null) {
+						SoyContext mappedAssetEntrySoyContext =
+							_getMappedAssetEntrySoyContexts(
+								backgroundImageJSONObject, mappedClassPKs);
+
+						if (mappedAssetEntrySoyContext != null) {
+							mappedAssetEntriesSoyContexts.add(
+								mappedAssetEntrySoyContext);
+						}
 					}
 				}
 			});

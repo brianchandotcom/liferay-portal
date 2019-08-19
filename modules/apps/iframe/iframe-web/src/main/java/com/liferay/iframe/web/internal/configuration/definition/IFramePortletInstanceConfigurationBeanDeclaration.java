@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.iframe.web.internal.settings.definition;
+package com.liferay.iframe.web.internal.configuration.definition;
 
 import com.liferay.iframe.web.internal.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

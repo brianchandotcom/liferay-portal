@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.internal.search;
+package com.liferay.organizations.service.internal.search;
 
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Field;

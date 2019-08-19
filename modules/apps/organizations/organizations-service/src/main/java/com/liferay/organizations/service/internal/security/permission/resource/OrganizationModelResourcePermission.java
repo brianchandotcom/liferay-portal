@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.internal.security.permission.resource;
+package com.liferay.organizations.service.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;

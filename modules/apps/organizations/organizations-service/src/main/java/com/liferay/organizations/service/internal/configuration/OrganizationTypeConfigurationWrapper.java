@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.internal.configuration;
+package com.liferay.organizations.service.internal.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration",
+	configurationPid = "com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
 	immediate = true, service = OrganizationTypeConfigurationWrapper.class
 )
 public class OrganizationTypeConfigurationWrapper {

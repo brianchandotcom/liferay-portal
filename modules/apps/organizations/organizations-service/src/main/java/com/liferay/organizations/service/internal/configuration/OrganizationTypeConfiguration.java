@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.internal.configuration;
+package com.liferay.organizations.service.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration",
+	id = "com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
 	localization = "content/Language",
 	name = "organization-type-configuration-name"
 )

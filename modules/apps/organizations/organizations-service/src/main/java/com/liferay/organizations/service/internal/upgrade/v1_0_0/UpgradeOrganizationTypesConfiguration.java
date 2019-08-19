@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.organizations.internal.upgrade.v1_0_0;
+package com.liferay.organizations.service.internal.upgrade.v1_0_0;
 
-import com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration;
-import com.liferay.organizations.internal.constants.LegacyOrganizationTypesKeys;
+import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
+import com.liferay.organizations.service.internal.constants.LegacyOrganizationTypesKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

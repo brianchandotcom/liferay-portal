@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.organizations.internal.settings;
+package com.liferay.organizations.service.internal.settings;
 
-import com.liferay.organizations.internal.configuration.OrganizationTypeConfigurationWrapper;
+import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfigurationWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;

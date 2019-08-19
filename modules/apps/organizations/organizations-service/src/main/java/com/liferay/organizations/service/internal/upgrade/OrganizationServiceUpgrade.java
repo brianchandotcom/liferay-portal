@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.organizations.internal.upgrade;
+package com.liferay.organizations.service.internal.upgrade;
 
-import com.liferay.organizations.internal.upgrade.v1_0_0.UpgradeOrganizationTypesConfiguration;
+import com.liferay.organizations.service.internal.upgrade.v1_0_0.UpgradeOrganizationTypesConfiguration;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

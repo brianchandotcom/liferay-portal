@@ -12,37 +12,34 @@
  * details.
  */
 
-package com.liferay.organizations.internal.search;
+package com.liferay.organizations.service.internal.search.contributor.sort;
 
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.search.BaseSearcher;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.contributor.ContributorConstants;
+import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Igor Fabiano Nazar
- * @author Luan Maoski
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.portal.kernel.model.Organization",
-	service = BaseSearcher.class
+	property = ContributorConstants.ENTRY_CLASS_NAME_PROPERTY_KEY + "=com.liferay.portal.kernel.model.Organization",
+	service = SortFieldNameTranslator.class
 )
-public class OrganizationSearcher extends BaseSearcher {
-
-	public static final String CLASS_NAME = Organization.class.getName();
-
-	public OrganizationSearcher() {
-		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID);
-		setPermissionAware(true);
-		setStagingAware(false);
-	}
+public class OrganizationSortFieldNameTranslator
+	implements SortFieldNameTranslator {
 
 	@Override
-	public String getClassName() {
-		return CLASS_NAME;
+	public String getSortFieldName(String orderByCol) {
+		if (orderByCol.equals("name")) {
+			return "name";
+		}
+		else if (orderByCol.equals("type")) {
+			return "type";
+		}
+
+		return orderByCol;
 	}
 
 }

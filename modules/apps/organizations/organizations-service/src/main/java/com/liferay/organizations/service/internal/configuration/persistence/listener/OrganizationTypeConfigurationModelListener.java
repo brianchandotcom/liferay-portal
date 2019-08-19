@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.organizations.internal.configuration.persistence.listener;
+package com.liferay.organizations.service.internal.configuration.persistence.listener;
 
-import com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration;
+import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration",
+	property = "model.class.name=com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
 	service = ConfigurationModelListener.class
 )
 public class OrganizationTypeConfigurationModelListener

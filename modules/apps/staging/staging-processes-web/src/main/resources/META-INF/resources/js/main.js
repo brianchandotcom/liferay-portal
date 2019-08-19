@@ -909,44 +909,41 @@ AUI.add(
 					var processesNode = instance.get('processesNode');
 
 					if (processesNode && instance._processesResourceURL) {
-						A.io.request(instance._processesResourceURL, {
-							method: 'GET',
-							on: {
-								failure: function() {
-									new Liferay.Notice({
-										closeText: false,
-										content:
-											Liferay.Language.get(
-												'your-request-failed-to-complete'
-											) +
-											'<button type="button" class="close">&times;</button>',
-										noticeClass: 'hide',
-										timeout: FAILURE_TIMEOUT,
-										toggleText: false,
-										type: 'warning',
-										useAnimation: true
-									}).show();
-								},
-								success: function(event, id, obj) {
-									processesNode.empty();
+						Liferay.Util.fetch(instance._processesResourceURL)
+							.then(function(response) {
+								return response.text();
+							})
+							.then(function(response) {
+								processesNode.empty();
 
-									processesNode.plug(A.Plugin.ParseContent);
+								processesNode.plug(A.Plugin.ParseContent);
 
-									processesNode.setContent(
-										this.get('responseData')
-									);
+								processesNode.setContent(response);
 
-									instance._updateincompleteProcessMessage(
-										instance._isBackgroundTaskInProgress(),
-										processesNode.one(
-											'.incomplete-process-message'
-										)
-									);
+								instance._updateincompleteProcessMessage(
+									instance._isBackgroundTaskInProgress(),
+									processesNode.one(
+										'.incomplete-process-message'
+									)
+								);
 
-									instance._scheduleRenderProcess();
-								}
-							}
-						});
+								instance._scheduleRenderProcess();
+							})
+							.catch(function() {
+								new Liferay.Notice({
+									closeText: false,
+									content:
+										Liferay.Language.get(
+											'your-request-failed-to-complete'
+										) +
+										'<button type="button" class="close">&times;</button>',
+									noticeClass: 'hide',
+									timeout: FAILURE_TIMEOUT,
+									toggleText: false,
+									type: 'warning',
+									useAnimation: true
+								}).show();
+							});
 					}
 				},
 
@@ -1219,7 +1216,6 @@ AUI.add(
 		requires: [
 			'aui-datatype',
 			'aui-dialog-iframe-deprecated',
-			'aui-io-request',
 			'aui-modal',
 			'aui-parse-content',
 			'aui-toggler',

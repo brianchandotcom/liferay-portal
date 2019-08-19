@@ -112,61 +112,52 @@ AUI.add(
 				if (layoutRevisionDetails) {
 					eventHandles.push(
 						Liferay.after('updatedLayout', function(event) {
-							A.io.request(
-								instance.markAsReadyForPublicationURL,
-								{
-									on: {
-										failure: function(event, id, obj) {
-											layoutRevisionDetails.setContent(
-												Liferay.Language.get(
-													'there-was-an-unexpected-error.-please-refresh-the-current-page'
-												)
-											);
-										},
-										success: function(event, id, obj) {
-											var response = this.get(
-												'responseData'
-											);
+							Liferay.Util.fetch(
+								instance.markAsReadyForPublicationURL
+							)
+								.then(function(response) {
+									return response.text();
+								})
+								.then(function(response) {
+									layoutRevisionDetails.plug(
+										A.Plugin.ParseContent
+									);
 
-											layoutRevisionDetails.plug(
-												A.Plugin.ParseContent
-											);
+									layoutRevisionDetails.setContent(response);
 
-											layoutRevisionDetails.setContent(
-												response
-											);
-
-											Liferay.fire('updatedStatus');
-										}
-									}
-								}
-							);
+									Liferay.fire('updatedStatus');
+								})
+								.catch(function() {
+									layoutRevisionDetails.setContent(
+										Liferay.Language.get(
+											'there-was-an-unexpected-error.-please-refresh-the-current-page'
+										)
+									);
+								});
 						})
 					);
 				}
 
 				if (layoutRevisionStatus) {
 					Liferay.after('updatedStatus', function(event) {
-						A.io.request(instance.layoutRevisionStatusURL, {
-							on: {
-								failure: function(event, id, obj) {
-									layoutRevisionStatus.setContent(
-										Liferay.Language.get(
-											'there-was-an-unexpected-error.-please-refresh-the-current-page'
-										)
-									);
-								},
-								success: function(event, id, obj) {
-									var response = this.get('responseData');
+						Liferay.Util.fetch(instance.layoutRevisionStatusURL)
+							.then(function(response) {
+								return response.text();
+							})
+							.then(function(response) {
+								layoutRevisionStatus.plug(
+									A.Plugin.ParseContent
+								);
 
-									layoutRevisionStatus.plug(
-										A.Plugin.ParseContent
-									);
-
-									layoutRevisionStatus.setContent(response);
-								}
-							}
-						});
+								layoutRevisionStatus.setContent(response);
+							})
+							.catch(function() {
+								layoutRevisionStatus.setContent(
+									Liferay.Language.get(
+										'there-was-an-unexpected-error.-please-refresh-the-current-page'
+									)
+								);
+							});
 					});
 				}
 
@@ -210,28 +201,23 @@ AUI.add(
 					submitLink.html(Liferay.Language.get('loading') + '...');
 				}
 
-				A.io.request(event.publishURL, {
-					after: {
-						failure: function() {
-							layoutRevisionDetails.addClass(
-								'alert alert-danger'
-							);
-
-							layoutRevisionDetails.setContent(
-								Liferay.Language.get(
-									'there-was-an-unexpected-error.-please-refresh-the-current-page'
-								)
-							);
-						},
-						success: function() {
-							if (event.incomplete) {
-								location.href = event.currentURL;
-							} else {
-								Liferay.fire('updatedLayout');
-							}
+				Liferay.Util.fetch(event.publishURL)
+					.then(function() {
+						if (event.incomplete) {
+							location.href = event.currentURL;
+						} else {
+							Liferay.fire('updatedLayout');
 						}
-					}
-				});
+					})
+					.catch(function() {
+						layoutRevisionDetails.addClass('alert alert-danger');
+
+						layoutRevisionDetails.setContent(
+							Liferay.Language.get(
+								'there-was-an-unexpected-error.-please-refresh-the-current-page'
+							)
+						);
+					});
 			},
 
 			_onViewHistory: function(event) {
@@ -256,28 +242,29 @@ AUI.add(
 			) {
 				var instance = this;
 
-				A.io.request(
+				var updateLayoutData = {
+					cmd: cmd,
+					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+					layoutRevisionId: layoutRevisionId,
+					layoutSetBranchId: layoutSetBranchId,
+					p_auth: Liferay.authToken,
+					p_l_id: themeDisplay.getPlid(),
+					p_v_l_s_g_id: themeDisplay.getSiteGroupId()
+				};
+
+				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/update_layout',
 					{
-						data: {
-							cmd: cmd,
-							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-							layoutRevisionId: layoutRevisionId,
-							layoutSetBranchId: layoutSetBranchId,
-							p_auth: Liferay.authToken,
-							p_l_id: themeDisplay.getPlid(),
-							p_v_l_s_g_id: themeDisplay.getSiteGroupId()
-						},
-						on: {
-							failure: function() {
-								instance._getNotification().show();
-							},
-							success: function(event, id, obj) {
-								window.location.reload();
-							}
-						}
+						body: Liferay.Util.objectToFormData(updateLayoutData),
+						method: 'POST'
 					}
-				);
+				)
+					.then(function() {
+						window.location.reload();
+					})
+					.catch(function() {
+						instance._getNotification().show();
+					});
 			}
 		});
 

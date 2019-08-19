@@ -476,6 +476,14 @@ FloatingToolbarLayoutBackgroundImagePanel.STATE = {
 	itemId: Config.string().required(),
 
 	/**
+	 * @default undefined
+	 * @memberof FloatingToolbarLayoutBackgroundImagePanel
+	 * @review
+	 * @type {object}
+	 */
+	item: Config.required(),
+
+	/**
 	 * @default []
 	 * @memberOf FloatingToolbarLayoutBackgroundImagePanel
 	 * @private

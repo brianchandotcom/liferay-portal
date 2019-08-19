@@ -83,10 +83,12 @@ import java.io.File;
 
 import java.nio.charset.StandardCharsets;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -104,6 +106,8 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.file.RelativePath;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -150,6 +154,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	public static final String DEPLOY_DEPENDENCIES_TASK_NAME =
 		"deployDependencies";
 
+	public static final String DEPLOY_FAST_CSS_TASK_NAME = "deployFastCSS";
+
+	public static final String DEPLOY_FAST_JSP_TASK_NAME = "deployFastJSP";
+
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
@@ -173,6 +181,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		_addTaskAutoUpdateXml(project);
 		_addTasksBuildWSDDJar(project, liferayExtension);
+		Copy deployFastCSSTask = _addTaskDeployFastCSS(project);
+		Copy deployFastJSPTask = _addTaskDeployFastJSP(project);
 
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
@@ -183,7 +193,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		_configureTaskDeployFast(project, liferayExtension);
+		DeployFastTask deployFastTask = _configureTaskDeployFast(
+			project, liferayExtension);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
@@ -215,6 +226,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					_configureBundleExtensionDefaults(
 						project, liferayOSGiExtension,
 						compileIncludeConfiguration);
+					_configureTaskDeployFastCSS(
+						deployFastTask, deployFastCSSTask);
+					_configureTaskDeployFastJSP(
+						deployFastTask, deployFastJSPTask);
 				}
 
 			});
@@ -796,6 +811,26 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	private Copy _addTaskDeployFastCSS(Project project) {
+		Copy deployFastCSSTask = GradleUtil.addTask(
+			project, DEPLOY_FAST_CSS_TASK_NAME, Copy.class);
+
+		deployFastCSSTask.setDescription(
+			"Deploy compiled CSS files into Liferay work directory.");
+
+		return deployFastCSSTask;
+	}
+
+	private Copy _addTaskDeployFastJSP(Project project) {
+		Copy deployFastJSPTask = GradleUtil.addTask(
+			project, DEPLOY_FAST_JSP_TASK_NAME, Copy.class);
+
+		deployFastJSPTask.setDescription(
+			"Deploy compiled JSP classes into Liferay work directory.");
+
+		return deployFastJSPTask;
+	}
+
 	private void _addTasksBuildWSDDJar(
 		Project project, final LiferayExtension liferayExtension) {
 
@@ -1133,7 +1168,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		deployTask.finalizedBy(deployDepenciesTask);
 	}
 
-	private void _configureTaskDeployFast(
+	private DeployFastTask _configureTaskDeployFast(
 		Project project, LiferayExtension liferayExtension) {
 
 		final BundleExtension bundleExtension = GradleUtil.getExtension(
@@ -1157,6 +1192,67 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		return deployFastTask;
+	}
+
+	private void _configureTaskDeployFastCSS(
+		DeployFastTask deployFastTask, Copy deployFastCSSTask) {
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			deployFastTask.getProject(),
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		CopySpec copySpec = deployFastCSSTask.from(copy);
+		copySpec.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					RelativePath relativePath =
+						fileCopyDetails.getRelativePath();
+
+					String[] segments = relativePath.getSegments();
+
+					if ((segments.length > 2) &&
+						segments[0].equals("META-INF") &&
+						segments[1].equals("resources")) {
+
+						List<String> newSegments = new ArrayList<>();
+
+						for (int i = 2; i < segments.length; i++) {
+							if (!segments[i].equals(".sass-cache")) {
+								newSegments.add(segments[i]);
+							}
+						}
+
+						segments = newSegments.toArray(new String[0]);
+					}
+
+					fileCopyDetails.setRelativePath(
+						new RelativePath(true, segments));
+				}
+
+			});
+		copySpec.include("**/*.css");
+		copySpec.setIncludeEmptyDirs(false);
+
+		deployFastCSSTask.into(deployFastTask.getDestinationDir());
+
+		deployFastTask.dependsOn(deployFastCSSTask);
+	}
+
+	private void _configureTaskDeployFastJSP(
+		DeployFastTask deployFastTask, Copy deployFastJSPTask) {
+
+		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
+			deployFastTask.getProject(), JspCPlugin.COMPILE_JSP_TASK_NAME);
+
+		deployFastJSPTask.from(compileJSPTask);
+
+		deployFastJSPTask.into(deployFastTask.getDestinationDir());
+
+		deployFastTask.dependsOn(deployFastJSPTask);
 	}
 
 	private void _configureTaskJar(final Project project) {

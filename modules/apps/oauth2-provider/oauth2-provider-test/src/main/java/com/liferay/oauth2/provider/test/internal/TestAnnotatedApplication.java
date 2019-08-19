@@ -12,30 +12,47 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.internal.test;
+package com.liferay.oauth2.provider.test.internal;
+
+import com.liferay.oauth2.provider.scope.RequiresNoScope;
+import com.liferay.oauth2.provider.scope.RequiresScope;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import java.util.Collections;
 import java.util.Set;
 
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class TestInterfaceAnnotatedApplication
-	extends Application implements TestAnnotatedInterface {
+public class TestAnnotatedApplication extends Application {
 
 	@Override
 	public Set<Object> getSingletons() {
 		return Collections.<Object>singleton(this);
 	}
 
+	@GET
+	@RequestScopeRead
 	public String getString() {
 		return "everything.read";
 	}
 
+	@GET
+	@Path("/no-scope")
+	@RequiresNoScope
 	public String getStringNoScope() {
 		return "no-scope";
+	}
+
+	@RequiresScope("everything.read")
+	@Retention(RetentionPolicy.RUNTIME)
+	public static @interface RequestScopeRead {
 	}
 
 }

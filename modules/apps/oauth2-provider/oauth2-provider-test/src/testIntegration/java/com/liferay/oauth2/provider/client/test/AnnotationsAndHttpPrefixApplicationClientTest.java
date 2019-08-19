@@ -15,8 +15,8 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.oauth2.provider.internal.test.TestAnnotatedApplication;
-import com.liferay.oauth2.provider.internal.test.TestApplication;
+import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -135,8 +135,8 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 			bundlePrefixProperties.put(
 				"osgi.jaxrs.name",
 				new String[] {
-					"com.liferay.oauth2.provider.internal.test.TestApplication",
-					"com.liferay.oauth2.provider.internal.test." +
+					"com.liferay.oauth2.provider.test.internal.TestApplication",
+					"com.liferay.oauth2.provider.test.internal." +
 						"TestAnnotatedApplication"
 				});
 

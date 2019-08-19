@@ -12,33 +12,30 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.internal.test;
+package com.liferay.oauth2.provider.test.internal;
 
 import java.util.Collections;
 import java.util.Set;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.core.Application;
 
 /**
  * @author Carlos Sierra Andrés
  */
-public class TestApplication extends Application {
+public class TestInterfaceAnnotatedApplication
+	extends Application implements TestAnnotatedInterface {
 
 	@Override
 	public Set<Object> getSingletons() {
 		return Collections.<Object>singleton(this);
 	}
 
-	@GET
 	public String getString() {
-		return "get";
+		return "everything.read";
 	}
 
-	@POST
-	public String post(String post) {
-		return "post";
+	public String getStringNoScope() {
+		return "no-scope";
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.oauth2.provider.internal.test;
+package com.liferay.oauth2.provider.test.internal;
 
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.oauth2.provider.scope.RequiresScope;

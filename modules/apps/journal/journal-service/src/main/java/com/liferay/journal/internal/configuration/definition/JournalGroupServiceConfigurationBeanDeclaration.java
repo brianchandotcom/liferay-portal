@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.settings.definition;
+package com.liferay.journal.internal.configuration.definition;
 
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

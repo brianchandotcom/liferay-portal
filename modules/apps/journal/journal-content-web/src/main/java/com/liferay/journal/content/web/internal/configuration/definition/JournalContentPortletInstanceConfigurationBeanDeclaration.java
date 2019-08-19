@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.internal.settings.definition;
+package com.liferay.journal.content.web.internal.configuration.definition;
 
-import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class JournalServiceConfigurationBeanDeclaration
+public class JournalContentPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return JournalServiceConfiguration.class;
+		return JournalContentPortletInstanceConfiguration.class;
 	}
 
 }

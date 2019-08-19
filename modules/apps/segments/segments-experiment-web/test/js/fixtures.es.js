@@ -17,8 +17,13 @@ export const segmentsExperiment = {
 	goal: 'time-on-page',
 	goalTarget: '',
 	name: 'Experiment 1',
+	segmentsEntryName: 'Segment name',
 	segmentsExperienceId: '0',
-	segmentsExperimentId: '0'
+	segmentsExperimentId: '0',
+	status: {
+		label: 'Draft',
+		value: 0
+	}
 };
 
 export const segmentsExperiences = [

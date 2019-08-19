@@ -19,8 +19,10 @@ const SegmentsExperimentType = PropTypes.shape({
 	goal: PropTypes.string.isRequired,
 	goalTarget: PropTypes.string,
 	name: PropTypes.string.isRequired,
+	segmentsEntryName: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string,
-	segmentsExperimentId: PropTypes.string.isRequired
+	segmentsExperimentId: PropTypes.string.isRequired,
+	status: SegmentsExperimentStatus
 });
 
 const SegmentsExperienceType = PropTypes.shape({
@@ -50,10 +52,16 @@ const SegmentsExperimentGoal = PropTypes.shape({
 	value: PropTypes.string.isRequired
 });
 
+const SegmentsExperimentStatus = PropTypes.shape({
+	label: PropTypes.string.isRequired,
+	value: PropTypes.string.isRequired
+});
+
 export {
 	InitialSegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentGoal,
+	SegmentsExperimentStatus,
 	SegmentsExperimentType,
 	SegmentsVariantType
 };

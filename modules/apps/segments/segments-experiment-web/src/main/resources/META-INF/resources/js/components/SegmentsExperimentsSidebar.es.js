@@ -54,6 +54,7 @@ function SegmentsExperimentsSidebar({
 	return page.type === 'content' ? (
 		<div className="p-3">
 			<SegmentsExperiments
+				initialGoals={initialGoals}
 				onCreateSegmentsExperiment={_handleCreateSegmentsExperiment}
 				onEditSegmentsExperiment={_handleEditSegmentsExperiment}
 				onSelectSegmentsExperienceChange={
@@ -151,10 +152,12 @@ function SegmentsExperimentsSidebar({
 					goal: segmentsExperiment.goal,
 					goalTarget: segmentsExperiment.goalTarget,
 					name: segmentsExperiment.name,
+					segmentsEntryName: segmentsExperiment.segmentsEntryName,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId
+						segmentsExperiment.segmentsExperimentId,
+					status: segmentsExperiment.status
 				});
 			})
 			.catch(function _errorCallback() {
@@ -163,6 +166,7 @@ function SegmentsExperimentsSidebar({
 					description: segmentsExperiment.description,
 					error: Liferay.Language.get('create-test-error'),
 					name: segmentsExperiment.name,
+					segmentsEntryName: segmentsExperiment.segmentsEntryName,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId
 				});
@@ -176,8 +180,10 @@ function SegmentsExperimentsSidebar({
 			goal: segmentsExperiment.goal,
 			goalTarget: '',
 			name: segmentsExperiment.name,
+			segmentsEntryName: segmentsExperiment.segmentsEntryName,
 			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: segmentsExperiment.status
 		});
 	}
 
@@ -203,10 +209,12 @@ function SegmentsExperimentsSidebar({
 					description: segmentsExperiment.description,
 					goal: segmentsExperiment.goal,
 					name: segmentsExperiment.name,
+					segmentsEntryName: segmentsExperiment.segmentsEntryName,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId
+						segmentsExperiment.segmentsExperimentId,
+					status: segmentsExperiment.status
 				});
 			})
 			.catch(function _errorCallback() {
@@ -215,10 +223,12 @@ function SegmentsExperimentsSidebar({
 					description: segmentsExperiment.description,
 					error: Liferay.Language.get('edit-test-error'),
 					name: segmentsExperiment.name,
+					segmentsEntryName: segmentsExperiment.segmentsEntryName,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId,
 					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId
+						segmentsExperiment.segmentsExperimentId,
+					status: segmentsExperiment.status
 				});
 			});
 	}

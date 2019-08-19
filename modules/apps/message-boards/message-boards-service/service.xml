@@ -126,8 +126,6 @@
 
 		<!-- References -->
 
-		<reference entity="MBMessage" package-path="com.liferay.message.boards" />
-		<reference entity="MBThread" package-path="com.liferay.message.boards" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
@@ -393,7 +391,6 @@
 
 		<!-- References -->
 
-		<reference entity="MBCategory" package-path="com.liferay.message.boards" />
 		<reference entity="MBThread" package-path="com.liferay.message.boards" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />
@@ -452,8 +449,6 @@
 
 		<!-- References -->
 
-		<reference entity="MBMessage" package-path="com.liferay.message.boards" />
-		<reference entity="MBThread" package-path="com.liferay.message.boards" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -556,7 +551,6 @@
 
 		<!-- References -->
 
-		<reference entity="MBCategory" package-path="com.liferay.message.boards" />
 		<reference entity="MBMessage" package-path="com.liferay.message.boards" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />

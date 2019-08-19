@@ -6,7 +6,3 @@ dependencies {
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:registry-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/test")
-}

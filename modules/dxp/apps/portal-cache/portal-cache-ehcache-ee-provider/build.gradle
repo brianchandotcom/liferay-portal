@@ -1,4 +1,0 @@
-dependencies {
-	compileOnly group: "net.sf.ehcache", name: "ehcache-ee", version: "2.10.2.2.15"
-	compileOnly group: "org.terracotta", name: "terracotta-toolkit-runtime-ee", version: "4.3.2.2.15"
-}

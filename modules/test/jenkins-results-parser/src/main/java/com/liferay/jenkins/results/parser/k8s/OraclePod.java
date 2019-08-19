@@ -28,9 +28,9 @@ public class OraclePod extends Pod {
 	public void copyFileToPod(
 		String sourceFilePath, String sourceHostname, String destFilePath) {
 
+		System.out.println("destFilePath=" + destFilePath);
 		System.out.println("sourceFilePath=" + sourceFilePath);
 		System.out.println("sourceHostname=" + sourceHostname);
-		System.out.println("destFilePath=" + destFilePath);
 
 		exec(
 			"/bin/bash", "-c",

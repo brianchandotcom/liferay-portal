@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.document.conversion.internal.settings.definition;
+package com.liferay.document.library.file.rank.internal.configuration.definition;
 
-import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
+import com.liferay.document.library.file.rank.internal.configuration.DLFileRankServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Alejandro Tardín
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class OpenOfficeConfigurationBeanDeclaration
+public class DLFileRankServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenOfficeConfiguration.class;
+		return DLFileRankServiceConfiguration.class;
 	}
 
 }

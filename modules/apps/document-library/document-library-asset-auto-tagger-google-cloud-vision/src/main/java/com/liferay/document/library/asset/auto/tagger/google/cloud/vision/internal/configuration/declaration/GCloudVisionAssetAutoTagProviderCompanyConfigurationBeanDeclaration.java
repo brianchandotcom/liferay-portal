@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.settings.definition;
+package com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.declaration;
 
 import com.liferay.document.library.asset.auto.tagger.google.cloud.vision.internal.configuration.GCloudVisionAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

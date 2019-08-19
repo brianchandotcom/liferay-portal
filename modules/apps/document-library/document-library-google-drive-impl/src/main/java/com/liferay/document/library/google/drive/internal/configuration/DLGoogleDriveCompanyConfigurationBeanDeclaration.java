@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.internal.settings.definition;
+package com.liferay.document.library.google.drive.internal.configuration;
 
-import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Drew Brokke
+ * @author Stian Sigvartsen
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class DLFileEntryConfigurationBeanDeclaration
+public class DLGoogleDriveCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return DLFileEntryConfiguration.class;
+		return DLGoogleDriveCompanyConfiguration.class;
 	}
 
 }

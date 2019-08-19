@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.settings.definition;
+package com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.declaration;
 
 import com.liferay.document.library.asset.auto.tagger.microsoft.cognitive.services.internal.configuration.MSCognitiveServicesAssetAutoTagProviderCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.internal.settings.definition;
+package com.liferay.document.library.document.conversion.internal.configuration.definition;
 
-import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.document.conversion.internal.configuration.OpenOfficeConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Drew Brokke
+ * @author Pei-Jung Lan
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-public class DLConfigurationBeanDeclaration
+public class OpenOfficeConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return DLConfiguration.class;
+		return OpenOfficeConfiguration.class;
 	}
 
 }

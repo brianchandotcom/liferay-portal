@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.internal.parser;
+package com.liferay.fragment.entry.processor.editable.parser.internal;
 
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 

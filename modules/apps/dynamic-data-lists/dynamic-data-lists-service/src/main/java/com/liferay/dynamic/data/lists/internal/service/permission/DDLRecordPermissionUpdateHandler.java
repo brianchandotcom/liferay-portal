@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.security.permission;
+package com.liferay.dynamic.data.lists.internal.service.permission;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;

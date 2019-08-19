@@ -59,7 +59,8 @@ public class AccountRoleManagerTest {
 
 	@Test
 	public void testAddAccountRole() throws Exception {
-		List<AccountRole> accountRoles = _getAccountRoles();
+		List<AccountRole> accountRoles = _accountRoleManager.getAccountRoles(
+			TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(accountRoles.toString(), 0, accountRoles.size());
 
@@ -67,7 +68,8 @@ public class AccountRoleManagerTest {
 
 		_addAccountRole(name);
 
-		accountRoles = _getAccountRoles();
+		accountRoles = _accountRoleManager.getAccountRoles(
+			TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(accountRoles.toString(), 1, accountRoles.size());
 
@@ -102,11 +104,6 @@ public class AccountRoleManagerTest {
 		_names.add(accountRole.getName());
 
 		return accountRole;
-	}
-
-	private List<AccountRole> _getAccountRoles() throws Exception {
-		return _accountRoleManager.getAccountRoles(
-			TestPropsValues.getCompanyId());
 	}
 
 	@Inject

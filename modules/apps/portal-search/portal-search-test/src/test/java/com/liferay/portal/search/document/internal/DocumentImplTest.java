@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.document;
+package com.liferay.portal.search.document.internal;
 
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;

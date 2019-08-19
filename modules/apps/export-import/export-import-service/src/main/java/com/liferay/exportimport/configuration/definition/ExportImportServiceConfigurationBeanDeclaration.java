@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.settings.definition;
+package com.liferay.exportimport.configuration.definition;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

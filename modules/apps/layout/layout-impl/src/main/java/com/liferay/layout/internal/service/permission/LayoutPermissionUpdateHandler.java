@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.security.permission;
+package com.liferay.layout.internal.service.permission;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;

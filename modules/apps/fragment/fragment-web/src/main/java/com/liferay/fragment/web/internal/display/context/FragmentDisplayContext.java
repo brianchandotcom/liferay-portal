@@ -225,28 +225,9 @@ public class FragmentDisplayContext {
 			return _fragmentCollectionId;
 		}
 
-		long defaultFragmentCollectionId = 0;
-
-		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionLocalServiceUtil.getFragmentCollections(
-				_themeDisplay.getScopeGroupId(), 0, 1);
-
-		if (ListUtil.isEmpty(fragmentCollections)) {
-			fragmentCollections =
-				FragmentCollectionLocalServiceUtil.getFragmentCollections(
-					_themeDisplay.getCompanyGroupId(), 0, 1);
-		}
-
-		if (ListUtil.isNotEmpty(fragmentCollections)) {
-			FragmentCollection fragmentCollection = fragmentCollections.get(0);
-
-			defaultFragmentCollectionId =
-				fragmentCollection.getFragmentCollectionId();
-		}
-
 		_fragmentCollectionId = ParamUtil.getLong(
 			_httpServletRequest, "fragmentCollectionId",
-			defaultFragmentCollectionId);
+			_getDefaultFragmentCollectionId());
 
 		return _fragmentCollectionId;
 	}
@@ -589,6 +570,30 @@ public class FragmentDisplayContext {
 		}
 
 		return false;
+	}
+
+	private long _getDefaultFragmentCollectionId() {
+		List<FragmentCollection> fragmentCollections =
+			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+				_themeDisplay.getScopeGroupId(), 0, 1);
+
+		if (ListUtil.isNotEmpty(fragmentCollections)) {
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+			return fragmentCollection.getFragmentCollectionId();
+		}
+
+		fragmentCollections =
+			FragmentCollectionLocalServiceUtil.getFragmentCollections(
+				_themeDisplay.getCompanyGroupId(), 0, 1);
+
+		if (ListUtil.isNotEmpty(fragmentCollections)) {
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+			return fragmentCollection.getFragmentCollectionId();
+		}
+
+		return 0;
 	}
 
 	private String _getKeywords() {

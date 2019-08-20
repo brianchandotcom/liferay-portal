@@ -160,7 +160,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 						<c:choose>
 							<c:when test="<%= fragmentDisplayContext.isSelectedFragmentCollectionContributor() %>">
-								<liferay-util:include page="/view_contriguted_fragment_entries.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/view_contributed_fragment_entries.jsp" servletContext="<%= application %>" />
 							</c:when>
 							<c:otherwise>
 								<c:choose>

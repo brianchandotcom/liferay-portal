@@ -96,7 +96,7 @@ class WorkloadByStepCard extends React.Component {
 			<Panel className="container-fluid-1280 mt-4">
 				<Panel.Header elementClasses={'dashboard-panel-header'}>
 					<div>
-						<span className={'mr-3'}>
+						<span className={'mr-2'}>
 							{Liferay.Language.get('workload-by-step')}
 						</span>
 						<Tooltip

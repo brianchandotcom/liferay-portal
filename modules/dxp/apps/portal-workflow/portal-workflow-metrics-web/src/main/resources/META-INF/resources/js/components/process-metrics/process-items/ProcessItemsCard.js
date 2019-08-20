@@ -106,7 +106,7 @@ export default class ProcessItemsCard extends React.Component {
 				>
 					<div className="autofit-row">
 						<div className="autofit-col autofit-col-expand flex-row">
-							<span className="mr-3">{title}</span>
+							<span className="mr-2">{title}</span>
 
 							<Tooltip
 								message={description}

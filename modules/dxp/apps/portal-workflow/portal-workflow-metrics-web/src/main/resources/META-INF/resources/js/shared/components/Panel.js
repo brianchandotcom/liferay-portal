@@ -44,7 +44,7 @@ const HeaderWithOptions = props => {
 		<Header elementClasses={elementClasses}>
 			<div className="autofit-row">
 				<div className="autofit-col autofit-col-expand flex-row">
-					<span className="mr-3">{title}</span>
+					<span className="mr-2">{title}</span>
 
 					<Tooltip message={description} position="right" width="288">
 						<Icon iconName={'question-circle-full'} />

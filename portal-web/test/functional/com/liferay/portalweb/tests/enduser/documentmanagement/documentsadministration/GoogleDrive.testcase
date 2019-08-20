@@ -62,7 +62,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = "5"
 	test CancelGoogleDocCreation {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleDocCreation";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleDocCreation";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -81,7 +81,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Doc."
 	@priority = "5"
 	test CancelGoogleDocEdit {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleDocEdit";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleDocEdit";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -115,7 +115,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = "5"
 	test CancelGoogleSheetCreation {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleSheetCreation";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSheetCreation";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -134,7 +134,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Sheet."
 	@priority = "5"
 	test CancelGoogleSheetEdit {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleSheetEdit";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSheetEdit";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -168,7 +168,7 @@ definition {
 	@description = "This test ensures no document is generated if a user cancels creating a Google Doc."
 	@priority = "5"
 	test CancelGoogleSlideCreation {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleSlideCreation";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSlideCreation";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -187,7 +187,7 @@ definition {
 	@description = "This test ensures the title of a document is not changed if a user cancels editing a Google Slide."
 	@priority = "5"
 	test CancelGoogleSlideEdit {
-		property test.name.skip.portal.instance = "DMOnlineEditing#CancelGoogleSlideEdit";
+		property test.name.skip.portal.instance = "GoogleDrive#CancelGoogleSlideEdit";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -221,7 +221,7 @@ definition {
 	@description = "This test ensures a Google Doc title can be changed through the editor"
 	@priority = "4"
 	test EditGoogleDoc {
-		property test.name.skip.portal.instance = "DMOnlineEditing#EditGoogleDoc";
+		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDoc";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -255,7 +255,7 @@ definition {
 	@description = "This test ensures that special characters  can be saved through the Google Doc editor"
 	@priority = "4"
 	test EditGoogleDocWithSpecialCharacters {
-		property test.name.skip.portal.instance = "DMOnlineEditing#EditGoogleDocWithSpecialCharacters";
+		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleDocWithSpecialCharacters";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -293,7 +293,7 @@ definition {
 	@description = "This test ensures a Google Sheet title can be changed through the editor"
 	@priority = "4"
 	test EditGoogleSheet {
-		property test.name.skip.portal.instance = "DMOnlineEditing#EditGoogleSheet";
+		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleSheet";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -327,7 +327,7 @@ definition {
 	@description = "This test ensures a Google Slide title can be changed through the editor"
 	@priority = "4"
 	test EditGoogleSlide {
-		property test.name.skip.portal.instance = "DMOnlineEditing#EditGoogleSlide";
+		property test.name.skip.portal.instance = "GoogleDrive#EditGoogleSlide";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -361,7 +361,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Doc editor is being used"
 	@priority = "5"
 	test GoogleDocSmoke {
-		property test.name.skip.portal.instance = "DMOnlineEditing#GoogleDocSmoke";
+		property test.name.skip.portal.instance = "GoogleDrive#GoogleDocSmoke";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -384,7 +384,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Sheet editor is being used"
 	@priority = "5"
 	test GoogleSheetSmoke {
-		property test.name.skip.portal.instance = "DMOnlineEditing#GoogleSheetSmoke";
+		property test.name.skip.portal.instance = "GoogleDrive#GoogleSheetSmoke";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -407,7 +407,7 @@ definition {
 	@description = "This test ensures that a document is checked out when the Google Slide editor is being used"
 	@priority = "5"
 	test GoogleSlideSmoke {
-		property test.name.skip.portal.instance = "DMOnlineEditing#GoogleSlideSmoke";
+		property test.name.skip.portal.instance = "GoogleDrive#GoogleSlideSmoke";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

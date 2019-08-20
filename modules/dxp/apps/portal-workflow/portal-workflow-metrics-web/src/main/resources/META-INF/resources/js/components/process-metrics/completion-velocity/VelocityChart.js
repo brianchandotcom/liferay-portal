@@ -11,11 +11,8 @@ import {VelocityUnitContext} from './store/VelocityUnitStore';
 import {TimeRangeContext} from './store/TimeRangeStore';
 import moment from '../../../shared/util/moment';
 import React, {useContext} from 'react';
-import ReactDOMServer from 'react-dom/server';
 import TooltipChart from '../../../shared/components/chart/TooltipChart';
 import {HOURS, MONTHS, WEEKS} from '../../../shared/util/chart-constants';
-
-export const CHART_DATA_ID_1 = 'data_1';
 
 const VelocityChart = () => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
@@ -32,6 +29,8 @@ const VelocityChart = () => {
 	const dataValues = [[...histograms.map(item => item.value)]];
 
 	const {maxValue, intervals} = getAxisMeasuresFromData(dataValues);
+
+	const CHART_DATA_ID_1 = 'data_1';
 
 	const data = {
 		x: 'x',
@@ -181,9 +180,7 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 		}
 	].filter(Boolean);
 
-	return ReactDOMServer.renderToString(
-		<TooltipChart header={header} rows={rows} />
-	);
+	return TooltipChart({header, rows});
 };
 
 VelocityChart.Tooltip = Tooltip;

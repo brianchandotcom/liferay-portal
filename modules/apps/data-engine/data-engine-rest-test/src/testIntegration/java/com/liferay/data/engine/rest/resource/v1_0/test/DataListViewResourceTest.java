@@ -68,6 +68,14 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 			_ddmStructure.getStructureId(), randomDataListView());
 	}
 
+	@Override
+	protected DataListView testPutDataListView_addDataListView()
+		throws Exception {
+
+		return dataListViewResource.postDataDefinitionDataListView(
+			_ddmStructure.getStructureId(), randomDataListView());
+	}
+
 	private DDMStructure _ddmStructure;
 	private DDMStructure _irrelevantDDMStructure;
 

@@ -51,32 +51,37 @@ const ReplyCommentForm = props => {
 			});
 	};
 
-	return showForm ? (
-		<CommentForm
-			autoFocus
-			id={`pageEditorCommentReplyEditor_${props.parentCommentId}`}
-			loading={addingComment}
-			onCancelButtonClick={() => {
-				setShowForm(false);
-				setTextareaContent('');
-			}}
-			onSubmitButtonClick={handleReplyButtonClick}
-			onTextareaChange={content => content && setTextareaContent(content)}
-			showButtons={true}
-			submitButtonLabel={Liferay.Language.get('reply')}
-			textareaContent={textareaContent}
-		/>
-	) : (
-		<ClayButton
-			borderless
-			className="mb-2"
-			disabled={props.disabled}
-			displayType="secondary"
-			onClick={() => setShowForm(true)}
-			small
-		>
-			{Liferay.Language.get('reply')}
-		</ClayButton>
+	return (
+		<div className="mb-2 mr-3">
+			{showForm ? (
+				<CommentForm
+					autoFocus
+					id={`pageEditorCommentReplyEditor_${props.parentCommentId}`}
+					loading={addingComment}
+					onCancelButtonClick={() => {
+						setShowForm(false);
+						setTextareaContent('');
+					}}
+					onSubmitButtonClick={handleReplyButtonClick}
+					onTextareaChange={content =>
+						content && setTextareaContent(content)
+					}
+					showButtons={true}
+					submitButtonLabel={Liferay.Language.get('reply')}
+					textareaContent={textareaContent}
+				/>
+			) : (
+				<ClayButton
+					borderless
+					disabled={props.disabled}
+					displayType="secondary"
+					onClick={() => setShowForm(true)}
+					small
+				>
+					{Liferay.Language.get('reply')}
+				</ClayButton>
+			)}
+		</div>
 	);
 };
 

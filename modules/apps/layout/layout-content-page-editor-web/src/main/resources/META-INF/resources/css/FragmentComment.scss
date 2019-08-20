@@ -25,6 +25,7 @@
 
 .fragments-editor__fragment-comment {
 	min-height: 4.5rem;
+	padding-left: 1rem;
 	padding-top: 1rem;
 	position: relative;
 	transition: min-height ease 0.3s;
@@ -41,7 +42,12 @@
 		}
 	}
 
+	&--highlighted {
+		background-color: #f0f5ff;
+	}
+
 	&--reply {
+		padding-left: 1rem;
 		padding-top: 0.5rem;
 	}
 
@@ -83,7 +89,6 @@
 	&-replies {
 		border-left: solid 2px #e7e7ed;
 		margin-left: 0.35rem;
-		padding-left: 1rem;
 	}
 
 	& + &:not(&--reply) {

@@ -70,7 +70,6 @@ const FragmentComment = props => {
 		'fragments-editor__fragment-comment--resolved': resolved,
 		'fragments-editor__fragment-comment--with-delete-mask': showDeleteMask,
 		'fragments-editor__fragment-comment--with-resolve-mask': showResolveMask,
-		'px-3': !isReply,
 		small: true
 	});
 
@@ -98,7 +97,7 @@ const FragmentComment = props => {
 
 	return (
 		<article className={commentClassname}>
-			<div className="d-flex mb-2">
+			<div className="d-flex mb-2 pr-3">
 				<UserIcon {...props.comment.author} />
 
 				<div className="flex-grow-1 overflow-hidden pl-2">
@@ -192,15 +191,16 @@ const FragmentComment = props => {
 					onEdit={props.onEdit}
 				/>
 			) : (
-				<p
-					className="content text-secondary"
+				<div
+					className="content pb-2 text-secondary"
 					dangerouslySetInnerHTML={{__html: props.comment.body}}
 				/>
 			)}
 
-			{!isReply && (
-				<>
-					<footer className="fragments-editor__fragment-comment-replies">
+			{!isReply &&
+				props.comment.children &&
+				Boolean(props.comment.children.length) && (
+					<footer className="fragments-editor__fragment-comment-replies mb-2">
 						{props.comment.children &&
 							props.comment.children.map(childComment => (
 								<FragmentComment
@@ -218,13 +218,14 @@ const FragmentComment = props => {
 								/>
 							))}
 					</footer>
+				)}
 
-					<ReplyCommentForm
-						disabled={editing || resolved}
-						fragmentEntryLinkId={props.fragmentEntryLinkId}
-						parentCommentId={props.comment.commentId}
-					/>
-				</>
+			{!isReply && (
+				<ReplyCommentForm
+					disabled={editing || resolved}
+					fragmentEntryLinkId={props.fragmentEntryLinkId}
+					parentCommentId={props.comment.commentId}
+				/>
 			)}
 
 			{showDeleteMask && (

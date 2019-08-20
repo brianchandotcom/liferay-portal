@@ -33,6 +33,7 @@
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
 		<column name="status" type="int" />
+		<column name="version" type="String" />
 
 		<!-- Order -->
 

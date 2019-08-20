@@ -67,16 +67,16 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		task ("Assert the section fragment is present") {
-			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-				displayPageName = "Display Page Name",
-				item = "Edit");
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Edit");
 
-			AssertVisible(
-				key_content = "Bold Words",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
+		task ("Assert body text is hidden") {
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
+		}
+
+		task ("Assert text is bolded") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
 		}
 	}
 
@@ -115,12 +115,16 @@ definition {
 
 		PageEditor.clickPublish();
 
-		task ("Assert the section fragment is present") {
-			AssertVisible(
-				key_content = "Bold Words",
-				key_fragmentClass = "configuration",
-				key_position = "1",
-				locator1 = "Fragment#FRAGMENT");
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		task ("Assert body text is hidden") {
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
+		}
+
+		task ("Assert text is bolded") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
 		}
 	}
 }

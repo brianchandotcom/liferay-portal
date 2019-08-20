@@ -40,6 +40,7 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.segments.context.Context;
+import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.context.contributor.RequestContextContributor;
 import com.liferay.segments.internal.odata.entity.ContextEntityModel;
 
@@ -73,8 +74,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Eduardo García
  * @author Raymond Augé
  */
-@Component(immediate = true, service = RequestContextMapper.class)
-public class RequestContextMapper {
+@Component(immediate = true)
+public class RequestContextMapperImpl implements RequestContextMapper {
 
 	public Context map(HttpServletRequest httpServletRequest) {
 		Context context = new Context();
@@ -206,7 +207,7 @@ public class RequestContextMapper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RequestContextMapper.class);
+		RequestContextMapperImpl.class);
 
 	@Reference
 	private BrowserSniffer _browserSniffer;

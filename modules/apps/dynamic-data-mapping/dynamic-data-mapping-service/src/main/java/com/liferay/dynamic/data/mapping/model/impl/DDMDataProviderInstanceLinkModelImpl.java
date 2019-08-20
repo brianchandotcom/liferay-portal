@@ -67,6 +67,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	public static final String TABLE_NAME = "DDMDataProviderInstanceLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"dataProviderInstanceLinkId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"dataProviderInstanceId", Types.BIGINT},
 		{"structureId", Types.BIGINT}
@@ -76,6 +77,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceId", Types.BIGINT);
@@ -83,7 +85,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstanceLink (dataProviderInstanceLinkId LONG not null primary key,companyId LONG,dataProviderInstanceId LONG,structureId LONG)";
+		"create table DDMDataProviderInstanceLink (mvccVersion LONG default 0 not null,dataProviderInstanceLinkId LONG not null primary key,companyId LONG,dataProviderInstanceId LONG,structureId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstanceLink";
@@ -259,6 +261,12 @@ public class DDMDataProviderInstanceLinkModelImpl
 					<String, BiConsumer<DDMDataProviderInstanceLink, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMDataProviderInstanceLink::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMDataProviderInstanceLink, Long>)
+				DDMDataProviderInstanceLink::setMvccVersion);
+		attributeGetterFunctions.put(
 			"dataProviderInstanceLinkId",
 			DDMDataProviderInstanceLink::getDataProviderInstanceLinkId);
 		attributeSetterBiConsumers.put(
@@ -289,6 +297,16 @@ public class DDMDataProviderInstanceLinkModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -393,6 +411,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl =
 			new DDMDataProviderInstanceLinkImpl();
 
+		ddmDataProviderInstanceLinkImpl.setMvccVersion(getMvccVersion());
 		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
 			getDataProviderInstanceLinkId());
 		ddmDataProviderInstanceLinkImpl.setCompanyId(getCompanyId());
@@ -485,6 +504,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 			ddmDataProviderInstanceLinkCacheModel =
 				new DDMDataProviderInstanceLinkCacheModel();
 
+		ddmDataProviderInstanceLinkCacheModel.mvccVersion = getMvccVersion();
+
 		ddmDataProviderInstanceLinkCacheModel.dataProviderInstanceLinkId =
 			getDataProviderInstanceLinkId();
 
@@ -574,6 +595,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;
 	private long _dataProviderInstanceId;

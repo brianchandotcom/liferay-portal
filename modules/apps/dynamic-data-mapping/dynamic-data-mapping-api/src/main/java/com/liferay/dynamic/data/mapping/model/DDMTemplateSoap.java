@@ -34,6 +34,7 @@ public class DDMTemplateSoap implements Serializable {
 	public static DDMTemplateSoap toSoapModel(DDMTemplate model) {
 		DDMTemplateSoap soapModel = new DDMTemplateSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setTemplateId(model.getTemplateId());
 		soapModel.setGroupId(model.getGroupId());
@@ -111,6 +112,14 @@ public class DDMTemplateSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setTemplateId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -329,6 +338,7 @@ public class DDMTemplateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _templateId;
 	private long _groupId;

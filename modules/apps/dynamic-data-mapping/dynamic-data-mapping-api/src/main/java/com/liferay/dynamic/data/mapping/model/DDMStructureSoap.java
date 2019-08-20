@@ -34,6 +34,7 @@ public class DDMStructureSoap implements Serializable {
 	public static DDMStructureSoap toSoapModel(DDMStructure model) {
 		DDMStructureSoap soapModel = new DDMStructureSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setStructureId(model.getStructureId());
 		soapModel.setGroupId(model.getGroupId());
@@ -105,6 +106,14 @@ public class DDMStructureSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setStructureId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -267,6 +276,7 @@ public class DDMStructureSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _structureId;
 	private long _groupId;

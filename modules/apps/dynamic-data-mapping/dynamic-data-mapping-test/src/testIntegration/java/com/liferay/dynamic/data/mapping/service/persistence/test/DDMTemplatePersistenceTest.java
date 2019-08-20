@@ -125,6 +125,8 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate newDDMTemplate = _persistence.create(pk);
 
+		newDDMTemplate.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMTemplate.setUuid(RandomTestUtil.randomString());
 
 		newDDMTemplate.setGroupId(RandomTestUtil.nextLong());
@@ -180,6 +182,9 @@ public class DDMTemplatePersistenceTest {
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(
 			newDDMTemplate.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMTemplate.getMvccVersion(),
+			newDDMTemplate.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMTemplate.getUuid(), newDDMTemplate.getUuid());
 		Assert.assertEquals(
@@ -433,14 +438,14 @@ public class DDMTemplatePersistenceTest {
 
 	protected OrderByComparator<DDMTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplate", "uuid", true, "templateId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true,
-			"versionUserId", true, "versionUserName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"resourceClassNameId", true, "templateKey", true, "version", true,
-			"type", true, "mode", true, "language", true, "cacheable", true,
-			"smallImage", true, "smallImageId", true, "smallImageURL", true,
-			"lastPublishDate", true);
+			"DDMTemplate", "mvccVersion", true, "uuid", true, "templateId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "versionUserId", true, "versionUserName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "resourceClassNameId", true, "templateKey", true,
+			"version", true, "type", true, "mode", true, "language", true,
+			"cacheable", true, "smallImage", true, "smallImageId", true,
+			"smallImageURL", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -698,6 +703,8 @@ public class DDMTemplatePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMTemplate ddmTemplate = _persistence.create(pk);
+
+		ddmTemplate.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmTemplate.setUuid(RandomTestUtil.randomString());
 

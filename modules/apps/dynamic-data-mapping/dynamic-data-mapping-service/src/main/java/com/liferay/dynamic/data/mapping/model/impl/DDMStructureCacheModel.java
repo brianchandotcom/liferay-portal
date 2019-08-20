@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMStructureCacheModel
-	implements CacheModel<DDMStructure>, Externalizable {
+	implements CacheModel<DDMStructure>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class DDMStructureCacheModel
 		DDMStructureCacheModel ddmStructureCacheModel =
 			(DDMStructureCacheModel)obj;
 
-		if (structureId == ddmStructureCacheModel.structureId) {
+		if ((structureId == ddmStructureCacheModel.structureId) &&
+			(mvccVersion == ddmStructureCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class DDMStructureCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, structureId);
+		int hashCode = HashUtil.hash(0, structureId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", structureId=");
 		sb.append(structureId);
@@ -115,6 +132,8 @@ public class DDMStructureCacheModel
 	@Override
 	public DDMStructure toEntityModel() {
 		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
+
+		ddmStructureImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			ddmStructureImpl.setUuid("");
@@ -225,6 +244,7 @@ public class DDMStructureCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		structureId = objectInput.readLong();
@@ -262,6 +282,8 @@ public class DDMStructureCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -349,6 +371,7 @@ public class DDMStructureCacheModel
 		objectOutput.writeObject(_ddmForm);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long structureId;
 	public long groupId;

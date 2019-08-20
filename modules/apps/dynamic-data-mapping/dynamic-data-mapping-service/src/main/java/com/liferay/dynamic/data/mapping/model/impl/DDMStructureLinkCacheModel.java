@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMStructureLinkCacheModel
-	implements CacheModel<DDMStructureLink>, Externalizable {
+	implements CacheModel<DDMStructureLink>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,7 +50,9 @@ public class DDMStructureLinkCacheModel
 		DDMStructureLinkCacheModel ddmStructureLinkCacheModel =
 			(DDMStructureLinkCacheModel)obj;
 
-		if (structureLinkId == ddmStructureLinkCacheModel.structureLinkId) {
+		if ((structureLinkId == ddmStructureLinkCacheModel.structureLinkId) &&
+			(mvccVersion == ddmStructureLinkCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -58,14 +61,28 @@ public class DDMStructureLinkCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, structureLinkId);
+		int hashCode = HashUtil.hash(0, structureLinkId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
-		sb.append("{structureLinkId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", structureLinkId=");
 		sb.append(structureLinkId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -84,6 +101,7 @@ public class DDMStructureLinkCacheModel
 	public DDMStructureLink toEntityModel() {
 		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
 
+		ddmStructureLinkImpl.setMvccVersion(mvccVersion);
 		ddmStructureLinkImpl.setStructureLinkId(structureLinkId);
 		ddmStructureLinkImpl.setCompanyId(companyId);
 		ddmStructureLinkImpl.setClassNameId(classNameId);
@@ -97,6 +115,8 @@ public class DDMStructureLinkCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		structureLinkId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -110,6 +130,8 @@ public class DDMStructureLinkCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(structureLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -121,6 +143,7 @@ public class DDMStructureLinkCacheModel
 		objectOutput.writeLong(structureId);
 	}
 
+	public long mvccVersion;
 	public long structureLinkId;
 	public long companyId;
 	public long classNameId;

@@ -85,18 +85,20 @@ public class DDMDataProviderInstanceModelImpl
 	public static final String TABLE_NAME = "DDMDataProviderInstance";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"dataProviderInstanceId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"description", Types.CLOB},
-		{"definition", Types.CLOB}, {"type_", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"dataProviderInstanceId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"description", Types.CLOB}, {"definition", Types.CLOB},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dataProviderInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -112,7 +114,7 @@ public class DDMDataProviderInstanceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMDataProviderInstance (uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null)";
+		"create table DDMDataProviderInstance (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,dataProviderInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description TEXT null,definition TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstance";
@@ -167,6 +169,7 @@ public class DDMDataProviderInstanceModelImpl
 
 		DDMDataProviderInstance model = new DDMDataProviderInstanceImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setDataProviderInstanceId(soapModel.getDataProviderInstanceId());
 		model.setGroupId(soapModel.getGroupId());
@@ -341,6 +344,12 @@ public class DDMDataProviderInstanceModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<DDMDataProviderInstance, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", DDMDataProviderInstance::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMDataProviderInstance, Long>)
+				DDMDataProviderInstance::setMvccVersion);
 		attributeGetterFunctions.put("uuid", DDMDataProviderInstance::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -416,6 +425,17 @@ public class DDMDataProviderInstanceModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -947,6 +967,7 @@ public class DDMDataProviderInstanceModelImpl
 		DDMDataProviderInstanceImpl ddmDataProviderInstanceImpl =
 			new DDMDataProviderInstanceImpl();
 
+		ddmDataProviderInstanceImpl.setMvccVersion(getMvccVersion());
 		ddmDataProviderInstanceImpl.setUuid(getUuid());
 		ddmDataProviderInstanceImpl.setDataProviderInstanceId(
 			getDataProviderInstanceId());
@@ -1046,6 +1067,8 @@ public class DDMDataProviderInstanceModelImpl
 	public CacheModel<DDMDataProviderInstance> toCacheModel() {
 		DDMDataProviderInstanceCacheModel ddmDataProviderInstanceCacheModel =
 			new DDMDataProviderInstanceCacheModel();
+
+		ddmDataProviderInstanceCacheModel.mvccVersion = getMvccVersion();
 
 		ddmDataProviderInstanceCacheModel.uuid = getUuid();
 
@@ -1200,6 +1223,7 @@ public class DDMDataProviderInstanceModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _dataProviderInstanceId;

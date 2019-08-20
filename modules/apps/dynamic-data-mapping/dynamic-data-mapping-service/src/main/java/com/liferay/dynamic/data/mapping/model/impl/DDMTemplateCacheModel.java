@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMTemplateCacheModel
-	implements CacheModel<DDMTemplate>, Externalizable {
+	implements CacheModel<DDMTemplate>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,7 +52,9 @@ public class DDMTemplateCacheModel
 		DDMTemplateCacheModel ddmTemplateCacheModel =
 			(DDMTemplateCacheModel)obj;
 
-		if (templateId == ddmTemplateCacheModel.templateId) {
+		if ((templateId == ddmTemplateCacheModel.templateId) &&
+			(mvccVersion == ddmTemplateCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -60,14 +63,28 @@ public class DDMTemplateCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, templateId);
+		int hashCode = HashUtil.hash(0, templateId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", templateId=");
 		sb.append(templateId);
@@ -127,6 +144,8 @@ public class DDMTemplateCacheModel
 	@Override
 	public DDMTemplate toEntityModel() {
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl();
+
+		ddmTemplateImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			ddmTemplateImpl.setUuid("");
@@ -259,6 +278,7 @@ public class DDMTemplateCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		templateId = objectInput.readLong();
@@ -302,6 +322,8 @@ public class DDMTemplateCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -416,6 +438,7 @@ public class DDMTemplateCacheModel
 		objectOutput.writeObject(_resourceClassName);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long templateId;
 	public long groupId;

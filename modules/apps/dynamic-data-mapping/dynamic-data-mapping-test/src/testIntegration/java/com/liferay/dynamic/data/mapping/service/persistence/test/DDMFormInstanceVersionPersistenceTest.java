@@ -129,6 +129,8 @@ public class DDMFormInstanceVersionPersistenceTest {
 		DDMFormInstanceVersion newDDMFormInstanceVersion = _persistence.create(
 			pk);
 
+		newDDMFormInstanceVersion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMFormInstanceVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMFormInstanceVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -168,6 +170,9 @@ public class DDMFormInstanceVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMFormInstanceVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMFormInstanceVersion.getMvccVersion(),
+			newDDMFormInstanceVersion.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMFormInstanceVersion.getFormInstanceVersionId(),
 			newDDMFormInstanceVersion.getFormInstanceVersionId());
@@ -272,12 +277,13 @@ public class DDMFormInstanceVersionPersistenceTest {
 
 	protected OrderByComparator<DDMFormInstanceVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceVersion", "formInstanceVersionId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "formInstanceId", true, "structureVersionId",
-			true, "name", true, "description", true, "version", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"DDMFormInstanceVersion", "mvccVersion", true,
+			"formInstanceVersionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"formInstanceId", true, "structureVersionId", true, "name", true,
+			"description", true, "version", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -546,6 +552,8 @@ public class DDMFormInstanceVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMFormInstanceVersion ddmFormInstanceVersion = _persistence.create(pk);
+
+		ddmFormInstanceVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmFormInstanceVersion.setGroupId(RandomTestUtil.nextLong());
 

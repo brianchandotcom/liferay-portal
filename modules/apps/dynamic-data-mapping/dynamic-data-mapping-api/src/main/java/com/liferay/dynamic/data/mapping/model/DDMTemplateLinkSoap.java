@@ -33,6 +33,7 @@ public class DDMTemplateLinkSoap implements Serializable {
 	public static DDMTemplateLinkSoap toSoapModel(DDMTemplateLink model) {
 		DDMTemplateLinkSoap soapModel = new DDMTemplateLinkSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setTemplateLinkId(model.getTemplateLinkId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
@@ -97,6 +98,14 @@ public class DDMTemplateLinkSoap implements Serializable {
 		setTemplateLinkId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getTemplateLinkId() {
 		return _templateLinkId;
 	}
@@ -137,6 +146,7 @@ public class DDMTemplateLinkSoap implements Serializable {
 		_templateId = templateId;
 	}
 
+	private long _mvccVersion;
 	private long _templateLinkId;
 	private long _companyId;
 	private long _classNameId;

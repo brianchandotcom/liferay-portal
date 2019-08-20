@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceRecordModel
-	extends BaseModel<DDMFormInstanceRecord>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<DDMFormInstanceRecord>, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface DDMFormInstanceRecordModel
 	 * @param primaryKey the primary key of this ddm form instance record
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm form instance record.
+	 *
+	 * @return the mvcc version of this ddm form instance record
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm form instance record.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm form instance record
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ddm form instance record.

@@ -129,6 +129,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 		DDMFormInstanceRecord newDDMFormInstanceRecord = _persistence.create(
 			pk);
 
+		newDDMFormInstanceRecord.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMFormInstanceRecord.setUuid(RandomTestUtil.randomString());
 
 		newDDMFormInstanceRecord.setGroupId(RandomTestUtil.nextLong());
@@ -166,6 +168,9 @@ public class DDMFormInstanceRecordPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMFormInstanceRecord.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMFormInstanceRecord.getMvccVersion(),
+			newDDMFormInstanceRecord.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMFormInstanceRecord.getUuid(),
 			newDDMFormInstanceRecord.getUuid());
@@ -303,12 +308,12 @@ public class DDMFormInstanceRecordPersistenceTest {
 
 	protected OrderByComparator<DDMFormInstanceRecord> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceRecord", "uuid", true, "formInstanceRecordId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "versionUserId", true, "versionUserName", true, "createDate",
-			true, "modifiedDate", true, "formInstanceId", true,
-			"formInstanceVersion", true, "storageId", true, "version", true,
-			"lastPublishDate", true);
+			"DDMFormInstanceRecord", "mvccVersion", true, "uuid", true,
+			"formInstanceRecordId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"formInstanceId", true, "formInstanceVersion", true, "storageId",
+			true, "version", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -577,6 +582,8 @@ public class DDMFormInstanceRecordPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMFormInstanceRecord ddmFormInstanceRecord = _persistence.create(pk);
+
+		ddmFormInstanceRecord.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmFormInstanceRecord.setUuid(RandomTestUtil.randomString());
 

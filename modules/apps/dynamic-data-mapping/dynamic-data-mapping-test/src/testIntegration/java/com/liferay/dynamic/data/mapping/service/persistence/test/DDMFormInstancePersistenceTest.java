@@ -125,6 +125,8 @@ public class DDMFormInstancePersistenceTest {
 
 		DDMFormInstance newDDMFormInstance = _persistence.create(pk);
 
+		newDDMFormInstance.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMFormInstance.setUuid(RandomTestUtil.randomString());
 
 		newDDMFormInstance.setGroupId(RandomTestUtil.nextLong());
@@ -160,6 +162,9 @@ public class DDMFormInstancePersistenceTest {
 		DDMFormInstance existingDDMFormInstance = _persistence.findByPrimaryKey(
 			newDDMFormInstance.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMFormInstance.getMvccVersion(),
+			newDDMFormInstance.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMFormInstance.getUuid(), newDDMFormInstance.getUuid());
 		Assert.assertEquals(
@@ -279,11 +284,12 @@ public class DDMFormInstancePersistenceTest {
 
 	protected OrderByComparator<DDMFormInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstance", "uuid", true, "formInstanceId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"versionUserId", true, "versionUserName", true, "createDate", true,
-			"modifiedDate", true, "structureId", true, "version", true, "name",
-			true, "description", true, "lastPublishDate", true);
+			"DDMFormInstance", "mvccVersion", true, "uuid", true,
+			"formInstanceId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"structureId", true, "version", true, "name", true, "description",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -526,6 +532,8 @@ public class DDMFormInstancePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMFormInstance ddmFormInstance = _persistence.create(pk);
+
+		ddmFormInstance.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmFormInstance.setUuid(RandomTestUtil.randomString());
 

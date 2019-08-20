@@ -123,6 +123,8 @@ public class DDMStorageLinkPersistenceTest {
 
 		DDMStorageLink newDDMStorageLink = _persistence.create(pk);
 
+		newDDMStorageLink.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMStorageLink.setUuid(RandomTestUtil.randomString());
 
 		newDDMStorageLink.setCompanyId(RandomTestUtil.nextLong());
@@ -140,6 +142,9 @@ public class DDMStorageLinkPersistenceTest {
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(
 			newDDMStorageLink.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMStorageLink.getMvccVersion(),
+			newDDMStorageLink.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMStorageLink.getUuid(), newDDMStorageLink.getUuid());
 		Assert.assertEquals(
@@ -232,9 +237,9 @@ public class DDMStorageLinkPersistenceTest {
 
 	protected OrderByComparator<DDMStorageLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMStorageLink", "uuid", true, "storageLinkId", true, "companyId",
-			true, "classNameId", true, "classPK", true, "structureId", true,
-			"structureVersionId", true);
+			"DDMStorageLink", "mvccVersion", true, "uuid", true,
+			"storageLinkId", true, "companyId", true, "classNameId", true,
+			"classPK", true, "structureId", true, "structureVersionId", true);
 	}
 
 	@Test
@@ -470,6 +475,8 @@ public class DDMStorageLinkPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMStorageLink ddmStorageLink = _persistence.create(pk);
+
+		ddmStorageLink.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmStorageLink.setUuid(RandomTestUtil.randomString());
 

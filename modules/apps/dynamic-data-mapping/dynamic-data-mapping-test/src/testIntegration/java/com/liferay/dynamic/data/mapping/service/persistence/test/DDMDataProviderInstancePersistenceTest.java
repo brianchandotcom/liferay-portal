@@ -130,6 +130,8 @@ public class DDMDataProviderInstancePersistenceTest {
 		DDMDataProviderInstance newDDMDataProviderInstance =
 			_persistence.create(pk);
 
+		newDDMDataProviderInstance.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMDataProviderInstance.setUuid(RandomTestUtil.randomString());
 
 		newDDMDataProviderInstance.setGroupId(RandomTestUtil.nextLong());
@@ -160,6 +162,9 @@ public class DDMDataProviderInstancePersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMDataProviderInstance.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMDataProviderInstance.getMvccVersion(),
+			newDDMDataProviderInstance.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMDataProviderInstance.getUuid(),
 			newDDMDataProviderInstance.getUuid());
@@ -283,10 +288,10 @@ public class DDMDataProviderInstancePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"DDMDataProviderInstance", "uuid", true, "dataProviderInstanceId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "type", true);
+			"DDMDataProviderInstance", "mvccVersion", true, "uuid", true,
+			"dataProviderInstanceId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -556,6 +561,8 @@ public class DDMDataProviderInstancePersistenceTest {
 
 		DDMDataProviderInstance ddmDataProviderInstance = _persistence.create(
 			pk);
+
+		ddmDataProviderInstance.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmDataProviderInstance.setUuid(RandomTestUtil.randomString());
 

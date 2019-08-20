@@ -77,6 +77,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 	public static final String TABLE_NAME = "DDMFormInstanceRecordVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
+		{"mvccVersion", Types.BIGINT},
 		{"formInstanceRecordVersionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -92,6 +93,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("formInstanceRecordVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -110,7 +112,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceRecordVersion (formInstanceRecordVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,formInstanceRecordId LONG,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,storageId LONG)";
+		"create table DDMFormInstanceRecordVersion (mvccVersion LONG default 0 not null,formInstanceRecordVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,formInstanceVersion VARCHAR(75) null,formInstanceRecordId LONG,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,storageId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceRecordVersion";
@@ -172,6 +174,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 		DDMFormInstanceRecordVersion model =
 			new DDMFormInstanceRecordVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setFormInstanceRecordVersionId(
 			soapModel.getFormInstanceRecordVersionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -353,6 +356,12 @@ public class DDMFormInstanceRecordVersionModelImpl
 					<String, BiConsumer<DDMFormInstanceRecordVersion, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMFormInstanceRecordVersion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMFormInstanceRecordVersion, Long>)
+				DDMFormInstanceRecordVersion::setMvccVersion);
+		attributeGetterFunctions.put(
 			"formInstanceRecordVersionId",
 			DDMFormInstanceRecordVersion::getFormInstanceRecordVersionId);
 		attributeSetterBiConsumers.put(
@@ -451,6 +460,17 @@ public class DDMFormInstanceRecordVersionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -858,6 +878,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 		DDMFormInstanceRecordVersionImpl ddmFormInstanceRecordVersionImpl =
 			new DDMFormInstanceRecordVersionImpl();
 
+		ddmFormInstanceRecordVersionImpl.setMvccVersion(getMvccVersion());
 		ddmFormInstanceRecordVersionImpl.setFormInstanceRecordVersionId(
 			getFormInstanceRecordVersionId());
 		ddmFormInstanceRecordVersionImpl.setGroupId(getGroupId());
@@ -979,6 +1000,8 @@ public class DDMFormInstanceRecordVersionModelImpl
 		DDMFormInstanceRecordVersionCacheModel
 			ddmFormInstanceRecordVersionCacheModel =
 				new DDMFormInstanceRecordVersionCacheModel();
+
+		ddmFormInstanceRecordVersionCacheModel.mvccVersion = getMvccVersion();
 
 		ddmFormInstanceRecordVersionCacheModel.formInstanceRecordVersionId =
 			getFormInstanceRecordVersionId();
@@ -1139,6 +1162,7 @@ public class DDMFormInstanceRecordVersionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _formInstanceRecordVersionId;
 	private long _groupId;
 	private long _companyId;

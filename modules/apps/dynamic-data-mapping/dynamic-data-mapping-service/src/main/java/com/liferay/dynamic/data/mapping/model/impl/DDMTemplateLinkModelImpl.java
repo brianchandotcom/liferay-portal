@@ -68,15 +68,16 @@ public class DDMTemplateLinkModelImpl
 	public static final String TABLE_NAME = "DDMTemplateLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"templateLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"templateId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"templateLinkId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"templateId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -85,7 +86,7 @@ public class DDMTemplateLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateLink (templateLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,templateId LONG)";
+		"create table DDMTemplateLink (mvccVersion LONG default 0 not null,templateLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,templateId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 
@@ -255,6 +256,11 @@ public class DDMTemplateLinkModelImpl
 			new LinkedHashMap<String, BiConsumer<DDMTemplateLink, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMTemplateLink::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMTemplateLink, Long>)DDMTemplateLink::setMvccVersion);
+		attributeGetterFunctions.put(
 			"templateLinkId", DDMTemplateLink::getTemplateLinkId);
 		attributeSetterBiConsumers.put(
 			"templateLinkId",
@@ -284,6 +290,16 @@ public class DDMTemplateLinkModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -428,6 +444,7 @@ public class DDMTemplateLinkModelImpl
 	public Object clone() {
 		DDMTemplateLinkImpl ddmTemplateLinkImpl = new DDMTemplateLinkImpl();
 
+		ddmTemplateLinkImpl.setMvccVersion(getMvccVersion());
 		ddmTemplateLinkImpl.setTemplateLinkId(getTemplateLinkId());
 		ddmTemplateLinkImpl.setCompanyId(getCompanyId());
 		ddmTemplateLinkImpl.setClassNameId(getClassNameId());
@@ -518,6 +535,8 @@ public class DDMTemplateLinkModelImpl
 		DDMTemplateLinkCacheModel ddmTemplateLinkCacheModel =
 			new DDMTemplateLinkCacheModel();
 
+		ddmTemplateLinkCacheModel.mvccVersion = getMvccVersion();
+
 		ddmTemplateLinkCacheModel.templateLinkId = getTemplateLinkId();
 
 		ddmTemplateLinkCacheModel.companyId = getCompanyId();
@@ -601,6 +620,7 @@ public class DDMTemplateLinkModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _templateLinkId;
 	private long _companyId;
 	private long _classNameId;

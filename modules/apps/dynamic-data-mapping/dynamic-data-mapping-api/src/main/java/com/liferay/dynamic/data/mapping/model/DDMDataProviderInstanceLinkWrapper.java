@@ -47,6 +47,7 @@ public class DDMDataProviderInstanceLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"dataProviderInstanceLinkId", getDataProviderInstanceLinkId());
 		attributes.put("companyId", getCompanyId());
@@ -58,6 +59,12 @@ public class DDMDataProviderInstanceLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long dataProviderInstanceLinkId = (Long)attributes.get(
 			"dataProviderInstanceLinkId");
 
@@ -116,6 +123,16 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this ddm data provider instance link.
+	 *
+	 * @return the mvcc version of this ddm data provider instance link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this ddm data provider instance link.
 	 *
 	 * @return the primary key of this ddm data provider instance link
@@ -168,6 +185,16 @@ public class DDMDataProviderInstanceLinkWrapper
 	@Override
 	public void setDataProviderInstanceLinkId(long dataProviderInstanceLinkId) {
 		model.setDataProviderInstanceLinkId(dataProviderInstanceLinkId);
+	}
+
+	/**
+	 * Sets the mvcc version of this ddm data provider instance link.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm data provider instance link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

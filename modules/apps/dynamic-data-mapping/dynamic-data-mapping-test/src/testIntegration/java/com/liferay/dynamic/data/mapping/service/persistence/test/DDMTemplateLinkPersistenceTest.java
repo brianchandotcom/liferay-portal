@@ -123,6 +123,8 @@ public class DDMTemplateLinkPersistenceTest {
 
 		DDMTemplateLink newDDMTemplateLink = _persistence.create(pk);
 
+		newDDMTemplateLink.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMTemplateLink.setCompanyId(RandomTestUtil.nextLong());
 
 		newDDMTemplateLink.setClassNameId(RandomTestUtil.nextLong());
@@ -136,6 +138,9 @@ public class DDMTemplateLinkPersistenceTest {
 		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(
 			newDDMTemplateLink.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMTemplateLink.getMvccVersion(),
+			newDDMTemplateLink.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMTemplateLink.getTemplateLinkId(),
 			newDDMTemplateLink.getTemplateLinkId());
@@ -200,8 +205,9 @@ public class DDMTemplateLinkPersistenceTest {
 
 	protected OrderByComparator<DDMTemplateLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplateLink", "templateLinkId", true, "companyId", true,
-			"classNameId", true, "classPK", true, "templateId", true);
+			"DDMTemplateLink", "mvccVersion", true, "templateLinkId", true,
+			"companyId", true, "classNameId", true, "classPK", true,
+			"templateId", true);
 	}
 
 	@Test
@@ -443,6 +449,8 @@ public class DDMTemplateLinkPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMTemplateLink ddmTemplateLink = _persistence.create(pk);
+
+		ddmTemplateLink.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmTemplateLink.setCompanyId(RandomTestUtil.nextLong());
 

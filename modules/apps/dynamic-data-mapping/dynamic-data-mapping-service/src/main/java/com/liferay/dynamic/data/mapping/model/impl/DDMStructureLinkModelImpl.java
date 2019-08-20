@@ -68,15 +68,16 @@ public class DDMStructureLinkModelImpl
 	public static final String TABLE_NAME = "DDMStructureLink";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"structureLinkId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"structureId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"structureLinkId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"structureId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("structureLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
@@ -85,7 +86,7 @@ public class DDMStructureLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMStructureLink (structureLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG)";
+		"create table DDMStructureLink (mvccVersion LONG default 0 not null,structureLinkId LONG not null primary key,companyId LONG,classNameId LONG,classPK LONG,structureId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLink";
 
@@ -256,6 +257,12 @@ public class DDMStructureLinkModelImpl
 				new LinkedHashMap<String, BiConsumer<DDMStructureLink, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMStructureLink::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMStructureLink, Long>)
+				DDMStructureLink::setMvccVersion);
+		attributeGetterFunctions.put(
 			"structureLinkId", DDMStructureLink::getStructureLinkId);
 		attributeSetterBiConsumers.put(
 			"structureLinkId",
@@ -287,6 +294,16 @@ public class DDMStructureLinkModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -431,6 +448,7 @@ public class DDMStructureLinkModelImpl
 	public Object clone() {
 		DDMStructureLinkImpl ddmStructureLinkImpl = new DDMStructureLinkImpl();
 
+		ddmStructureLinkImpl.setMvccVersion(getMvccVersion());
 		ddmStructureLinkImpl.setStructureLinkId(getStructureLinkId());
 		ddmStructureLinkImpl.setCompanyId(getCompanyId());
 		ddmStructureLinkImpl.setClassNameId(getClassNameId());
@@ -521,6 +539,8 @@ public class DDMStructureLinkModelImpl
 		DDMStructureLinkCacheModel ddmStructureLinkCacheModel =
 			new DDMStructureLinkCacheModel();
 
+		ddmStructureLinkCacheModel.mvccVersion = getMvccVersion();
+
 		ddmStructureLinkCacheModel.structureLinkId = getStructureLinkId();
 
 		ddmStructureLinkCacheModel.companyId = getCompanyId();
@@ -604,6 +624,7 @@ public class DDMStructureLinkModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _structureLinkId;
 	private long _companyId;
 	private long _classNameId;

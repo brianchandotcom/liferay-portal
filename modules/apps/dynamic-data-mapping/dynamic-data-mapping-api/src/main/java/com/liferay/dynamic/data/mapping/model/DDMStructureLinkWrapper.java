@@ -44,6 +44,7 @@ public class DDMStructureLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("structureLinkId", getStructureLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -55,6 +56,12 @@ public class DDMStructureLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long structureLinkId = (Long)attributes.get("structureLinkId");
 
 		if (structureLinkId != null) {
@@ -124,6 +131,16 @@ public class DDMStructureLinkWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the mvcc version of this ddm structure link.
+	 *
+	 * @return the mvcc version of this ddm structure link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -201,6 +218,16 @@ public class DDMStructureLinkWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the mvcc version of this ddm structure link.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm structure link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

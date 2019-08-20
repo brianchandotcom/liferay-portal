@@ -130,6 +130,9 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 		DDMFormInstanceRecordVersion newDDMFormInstanceRecordVersion =
 			_persistence.create(pk);
 
+		newDDMFormInstanceRecordVersion.setMvccVersion(
+			RandomTestUtil.nextLong());
+
 		newDDMFormInstanceRecordVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMFormInstanceRecordVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -174,6 +177,9 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMFormInstanceRecordVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMFormInstanceRecordVersion.getMvccVersion(),
+			newDDMFormInstanceRecordVersion.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMFormInstanceRecordVersion.
 				getFormInstanceRecordVersionId(),
@@ -301,12 +307,13 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"DDMFormInstanceRecordVersion", "formInstanceRecordVersionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "formInstanceId", true,
-			"formInstanceVersion", true, "formInstanceRecordId", true,
-			"version", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true, "storageId", true);
+			"DDMFormInstanceRecordVersion", "mvccVersion", true,
+			"formInstanceRecordVersionId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"formInstanceId", true, "formInstanceVersion", true,
+			"formInstanceRecordId", true, "version", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "storageId", true);
 	}
 
 	@Test
@@ -588,6 +595,8 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_persistence.create(pk);
+
+		ddmFormInstanceRecordVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmFormInstanceRecordVersion.setGroupId(RandomTestUtil.nextLong());
 

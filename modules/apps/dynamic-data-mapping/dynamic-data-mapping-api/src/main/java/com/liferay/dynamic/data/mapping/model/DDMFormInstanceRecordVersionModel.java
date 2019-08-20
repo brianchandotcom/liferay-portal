@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMFormInstanceRecordVersionModel
-	extends BaseModel<DDMFormInstanceRecordVersion>, ShardedModel,
+	extends BaseModel<DDMFormInstanceRecordVersion>, MVCCModel, ShardedModel,
 			WorkflowedModel {
 
 	/*
@@ -58,6 +59,22 @@ public interface DDMFormInstanceRecordVersionModel
 	 * @param primaryKey the primary key of this ddm form instance record version
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm form instance record version.
+	 *
+	 * @return the mvcc version of this ddm form instance record version
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm form instance record version.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm form instance record version
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the form instance record version ID of this ddm form instance record version.

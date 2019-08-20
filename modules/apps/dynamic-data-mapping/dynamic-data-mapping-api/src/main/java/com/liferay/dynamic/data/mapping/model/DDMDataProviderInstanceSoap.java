@@ -37,6 +37,7 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 		DDMDataProviderInstanceSoap soapModel =
 			new DDMDataProviderInstanceSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setDataProviderInstanceId(model.getDataProviderInstanceId());
 		soapModel.setGroupId(model.getGroupId());
@@ -110,6 +111,14 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setDataProviderInstanceId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -208,6 +217,7 @@ public class DDMDataProviderInstanceSoap implements Serializable {
 		_type = type;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _dataProviderInstanceId;
 	private long _groupId;

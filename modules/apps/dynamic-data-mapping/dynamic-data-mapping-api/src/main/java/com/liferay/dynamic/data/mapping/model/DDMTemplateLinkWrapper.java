@@ -44,6 +44,7 @@ public class DDMTemplateLinkWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("templateLinkId", getTemplateLinkId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
@@ -55,6 +56,12 @@ public class DDMTemplateLinkWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		Long templateLinkId = (Long)attributes.get("templateLinkId");
 
 		if (templateLinkId != null) {
@@ -124,6 +131,16 @@ public class DDMTemplateLinkWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the mvcc version of this ddm template link.
+	 *
+	 * @return the mvcc version of this ddm template link
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
 	}
 
 	/**
@@ -201,6 +218,16 @@ public class DDMTemplateLinkWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the mvcc version of this ddm template link.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm template link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

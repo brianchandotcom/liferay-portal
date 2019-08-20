@@ -127,6 +127,8 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion newDDMStructureVersion = _persistence.create(pk);
 
+		newDDMStructureVersion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMStructureVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMStructureVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -168,6 +170,9 @@ public class DDMStructureVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMStructureVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMStructureVersion.getMvccVersion(),
+			newDDMStructureVersion.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMStructureVersion.getStructureVersionId(),
 			newDDMStructureVersion.getStructureVersionId());
@@ -275,12 +280,12 @@ public class DDMStructureVersionPersistenceTest {
 
 	protected OrderByComparator<DDMStructureVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMStructureVersion", "structureVersionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "structureId", true, "version", true, "parentStructureId",
-			true, "name", true, "storageType", true, "type", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"DDMStructureVersion", "mvccVersion", true, "structureVersionId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "structureId", true,
+			"version", true, "parentStructureId", true, "name", true,
+			"storageType", true, "type", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -533,6 +538,8 @@ public class DDMStructureVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMStructureVersion ddmStructureVersion = _persistence.create(pk);
+
+		ddmStructureVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setGroupId(RandomTestUtil.nextLong());
 

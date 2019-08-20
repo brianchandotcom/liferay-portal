@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMDataProviderInstanceCacheModel
-	implements CacheModel<DDMDataProviderInstance>, Externalizable {
+	implements CacheModel<DDMDataProviderInstance>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,8 +52,9 @@ public class DDMDataProviderInstanceCacheModel
 		DDMDataProviderInstanceCacheModel ddmDataProviderInstanceCacheModel =
 			(DDMDataProviderInstanceCacheModel)obj;
 
-		if (dataProviderInstanceId ==
-				ddmDataProviderInstanceCacheModel.dataProviderInstanceId) {
+		if ((dataProviderInstanceId ==
+				ddmDataProviderInstanceCacheModel.dataProviderInstanceId) &&
+			(mvccVersion == ddmDataProviderInstanceCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -62,14 +64,28 @@ public class DDMDataProviderInstanceCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, dataProviderInstanceId);
+		int hashCode = HashUtil.hash(0, dataProviderInstanceId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", dataProviderInstanceId=");
 		sb.append(dataProviderInstanceId);
@@ -102,6 +118,8 @@ public class DDMDataProviderInstanceCacheModel
 	public DDMDataProviderInstance toEntityModel() {
 		DDMDataProviderInstanceImpl ddmDataProviderInstanceImpl =
 			new DDMDataProviderInstanceImpl();
+
+		ddmDataProviderInstanceImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			ddmDataProviderInstanceImpl.setUuid("");
@@ -172,6 +190,7 @@ public class DDMDataProviderInstanceCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		dataProviderInstanceId = objectInput.readLong();
@@ -192,6 +211,8 @@ public class DDMDataProviderInstanceCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -246,6 +267,7 @@ public class DDMDataProviderInstanceCacheModel
 		}
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long dataProviderInstanceId;
 	public long groupId;

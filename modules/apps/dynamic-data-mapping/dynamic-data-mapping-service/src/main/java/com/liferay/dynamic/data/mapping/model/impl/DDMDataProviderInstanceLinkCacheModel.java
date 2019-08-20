@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMDataProviderInstanceLinkCacheModel
-	implements CacheModel<DDMDataProviderInstanceLink>, Externalizable {
+	implements CacheModel<DDMDataProviderInstanceLink>, Externalizable,
+			   MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -50,9 +52,11 @@ public class DDMDataProviderInstanceLinkCacheModel
 			ddmDataProviderInstanceLinkCacheModel =
 				(DDMDataProviderInstanceLinkCacheModel)obj;
 
-		if (dataProviderInstanceLinkId ==
+		if ((dataProviderInstanceLinkId ==
 				ddmDataProviderInstanceLinkCacheModel.
-					dataProviderInstanceLinkId) {
+					dataProviderInstanceLinkId) &&
+			(mvccVersion ==
+				ddmDataProviderInstanceLinkCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -62,14 +66,28 @@ public class DDMDataProviderInstanceLinkCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, dataProviderInstanceLinkId);
+		int hashCode = HashUtil.hash(0, dataProviderInstanceLinkId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
-		sb.append("{dataProviderInstanceLinkId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", dataProviderInstanceLinkId=");
 		sb.append(dataProviderInstanceLinkId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -87,6 +105,7 @@ public class DDMDataProviderInstanceLinkCacheModel
 		DDMDataProviderInstanceLinkImpl ddmDataProviderInstanceLinkImpl =
 			new DDMDataProviderInstanceLinkImpl();
 
+		ddmDataProviderInstanceLinkImpl.setMvccVersion(mvccVersion);
 		ddmDataProviderInstanceLinkImpl.setDataProviderInstanceLinkId(
 			dataProviderInstanceLinkId);
 		ddmDataProviderInstanceLinkImpl.setCompanyId(companyId);
@@ -101,6 +120,8 @@ public class DDMDataProviderInstanceLinkCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		dataProviderInstanceLinkId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -112,6 +133,8 @@ public class DDMDataProviderInstanceLinkCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(dataProviderInstanceLinkId);
 
 		objectOutput.writeLong(companyId);
@@ -121,6 +144,7 @@ public class DDMDataProviderInstanceLinkCacheModel
 		objectOutput.writeLong(structureId);
 	}
 
+	public long mvccVersion;
 	public long dataProviderInstanceLinkId;
 	public long companyId;
 	public long dataProviderInstanceId;

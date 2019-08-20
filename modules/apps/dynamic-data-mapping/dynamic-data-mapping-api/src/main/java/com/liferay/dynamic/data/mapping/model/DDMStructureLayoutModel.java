@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.TypedModel;
@@ -43,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DDMStructureLayoutModel
 	extends BaseModel<DDMStructureLayout>, GroupedModel, LocalizedModel,
-			ShardedModel, StagedAuditedModel, TypedModel {
+			MVCCModel, ShardedModel, StagedAuditedModel, TypedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -64,6 +65,22 @@ public interface DDMStructureLayoutModel
 	 * @param primaryKey the primary key of this ddm structure layout
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm structure layout.
+	 *
+	 * @return the mvcc version of this ddm structure layout
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm structure layout.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm structure layout
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ddm structure layout.

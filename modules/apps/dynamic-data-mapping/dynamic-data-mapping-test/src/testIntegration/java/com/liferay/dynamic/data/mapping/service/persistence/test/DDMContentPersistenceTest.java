@@ -125,6 +125,8 @@ public class DDMContentPersistenceTest {
 
 		DDMContent newDDMContent = _persistence.create(pk);
 
+		newDDMContent.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMContent.setUuid(RandomTestUtil.randomString());
 
 		newDDMContent.setGroupId(RandomTestUtil.nextLong());
@@ -150,6 +152,9 @@ public class DDMContentPersistenceTest {
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(
 			newDDMContent.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMContent.getMvccVersion(),
+			newDDMContent.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMContent.getUuid(), newDDMContent.getUuid());
 		Assert.assertEquals(
@@ -243,9 +248,10 @@ public class DDMContentPersistenceTest {
 
 	protected OrderByComparator<DDMContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMContent", "uuid", true, "contentId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true);
+			"DDMContent", "mvccVersion", true, "uuid", true, "contentId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"description", true);
 	}
 
 	@Test
@@ -478,6 +484,8 @@ public class DDMContentPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMContent ddmContent = _persistence.create(pk);
+
+		ddmContent.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmContent.setUuid(RandomTestUtil.randomString());
 

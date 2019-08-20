@@ -84,20 +84,22 @@ public class DDMFormInstanceVersionModelImpl
 	public static final String TABLE_NAME = "DDMFormInstanceVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"formInstanceVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"formInstanceId", Types.BIGINT}, {"structureVersionId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"settings_", Types.CLOB}, {"version", Types.VARCHAR},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"formInstanceVersionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"formInstanceId", Types.BIGINT},
+		{"structureVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"settings_", Types.CLOB},
+		{"version", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("formInstanceVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -117,7 +119,7 @@ public class DDMFormInstanceVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMFormInstanceVersion (formInstanceVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,structureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DDMFormInstanceVersion (mvccVersion LONG default 0 not null,formInstanceVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,formInstanceId LONG,structureVersionId LONG,name STRING null,description STRING null,settings_ TEXT null,version VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceVersion";
@@ -172,6 +174,7 @@ public class DDMFormInstanceVersionModelImpl
 
 		DDMFormInstanceVersion model = new DDMFormInstanceVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setFormInstanceVersionId(soapModel.getFormInstanceVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -350,6 +353,12 @@ public class DDMFormInstanceVersionModelImpl
 					<String, BiConsumer<DDMFormInstanceVersion, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMFormInstanceVersion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMFormInstanceVersion, Long>)
+				DDMFormInstanceVersion::setMvccVersion);
+		attributeGetterFunctions.put(
 			"formInstanceVersionId",
 			DDMFormInstanceVersion::getFormInstanceVersionId);
 		attributeSetterBiConsumers.put(
@@ -451,6 +460,17 @@ public class DDMFormInstanceVersionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1110,6 +1130,7 @@ public class DDMFormInstanceVersionModelImpl
 		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl =
 			new DDMFormInstanceVersionImpl();
 
+		ddmFormInstanceVersionImpl.setMvccVersion(getMvccVersion());
 		ddmFormInstanceVersionImpl.setFormInstanceVersionId(
 			getFormInstanceVersionId());
 		ddmFormInstanceVersionImpl.setGroupId(getGroupId());
@@ -1211,6 +1232,8 @@ public class DDMFormInstanceVersionModelImpl
 	public CacheModel<DDMFormInstanceVersion> toCacheModel() {
 		DDMFormInstanceVersionCacheModel ddmFormInstanceVersionCacheModel =
 			new DDMFormInstanceVersionCacheModel();
+
+		ddmFormInstanceVersionCacheModel.mvccVersion = getMvccVersion();
 
 		ddmFormInstanceVersionCacheModel.formInstanceVersionId =
 			getFormInstanceVersionId();
@@ -1373,6 +1396,7 @@ public class DDMFormInstanceVersionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _formInstanceVersionId;
 	private long _groupId;
 	private long _companyId;

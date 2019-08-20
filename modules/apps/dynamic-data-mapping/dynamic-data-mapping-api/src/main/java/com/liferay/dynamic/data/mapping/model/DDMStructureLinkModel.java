@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMStructureLinkModel
-	extends AttachedModel, BaseModel<DDMStructureLink>, ShardedModel {
+	extends AttachedModel, BaseModel<DDMStructureLink>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +56,22 @@ public interface DDMStructureLinkModel
 	 * @param primaryKey the primary key of this ddm structure link
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm structure link.
+	 *
+	 * @return the mvcc version of this ddm structure link
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm structure link.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm structure link
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the structure link ID of this ddm structure link.

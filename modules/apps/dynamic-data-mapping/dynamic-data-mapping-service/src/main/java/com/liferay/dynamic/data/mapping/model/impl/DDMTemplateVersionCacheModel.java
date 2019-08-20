@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMTemplateVersionCacheModel
-	implements CacheModel<DDMTemplateVersion>, Externalizable {
+	implements CacheModel<DDMTemplateVersion>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,8 +52,9 @@ public class DDMTemplateVersionCacheModel
 		DDMTemplateVersionCacheModel ddmTemplateVersionCacheModel =
 			(DDMTemplateVersionCacheModel)obj;
 
-		if (templateVersionId ==
-				ddmTemplateVersionCacheModel.templateVersionId) {
+		if ((templateVersionId ==
+				ddmTemplateVersionCacheModel.templateVersionId) &&
+			(mvccVersion == ddmTemplateVersionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -62,14 +64,28 @@ public class DDMTemplateVersionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, templateVersionId);
+		int hashCode = HashUtil.hash(0, templateVersionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{templateVersionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", templateVersionId=");
 		sb.append(templateVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -115,6 +131,7 @@ public class DDMTemplateVersionCacheModel
 		DDMTemplateVersionImpl ddmTemplateVersionImpl =
 			new DDMTemplateVersionImpl();
 
+		ddmTemplateVersionImpl.setMvccVersion(mvccVersion);
 		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
 		ddmTemplateVersionImpl.setGroupId(groupId);
 		ddmTemplateVersionImpl.setCompanyId(companyId);
@@ -197,6 +214,8 @@ public class DDMTemplateVersionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		templateVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -227,6 +246,8 @@ public class DDMTemplateVersionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(templateVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -299,6 +320,7 @@ public class DDMTemplateVersionCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public long templateVersionId;
 	public long groupId;
 	public long companyId;

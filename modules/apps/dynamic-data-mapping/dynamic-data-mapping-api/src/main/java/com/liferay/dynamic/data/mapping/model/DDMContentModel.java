@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMContentModel
-	extends BaseModel<DDMContent>, GroupedModel, LocalizedModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<DDMContent>, GroupedModel, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface DDMContentModel
 	 * @param primaryKey the primary key of this ddm content
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm content.
+	 *
+	 * @return the mvcc version of this ddm content
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm content.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm content
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ddm content.

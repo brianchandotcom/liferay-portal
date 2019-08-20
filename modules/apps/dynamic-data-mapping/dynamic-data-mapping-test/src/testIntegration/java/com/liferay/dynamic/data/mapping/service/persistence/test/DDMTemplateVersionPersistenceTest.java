@@ -126,6 +126,8 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion newDDMTemplateVersion = _persistence.create(pk);
 
+		newDDMTemplateVersion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newDDMTemplateVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newDDMTemplateVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -167,6 +169,9 @@ public class DDMTemplateVersionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newDDMTemplateVersion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingDDMTemplateVersion.getMvccVersion(),
+			newDDMTemplateVersion.getMvccVersion());
 		Assert.assertEquals(
 			existingDDMTemplateVersion.getTemplateVersionId(),
 			newDDMTemplateVersion.getTemplateVersionId());
@@ -273,11 +278,12 @@ public class DDMTemplateVersionPersistenceTest {
 
 	protected OrderByComparator<DDMTemplateVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"DDMTemplateVersion", "templateVersionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "templateId", true,
-			"version", true, "language", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"DDMTemplateVersion", "mvccVersion", true, "templateVersionId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "classNameId", true,
+			"classPK", true, "templateId", true, "version", true, "language",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -527,6 +533,8 @@ public class DDMTemplateVersionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		DDMTemplateVersion ddmTemplateVersion = _persistence.create(pk);
+
+		ddmTemplateVersion.setMvccVersion(RandomTestUtil.nextLong());
 
 		ddmTemplateVersion.setGroupId(RandomTestUtil.nextLong());
 

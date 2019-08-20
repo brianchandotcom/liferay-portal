@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public class DDMFormInstanceVersionCacheModel
-	implements CacheModel<DDMFormInstanceVersion>, Externalizable {
+	implements CacheModel<DDMFormInstanceVersion>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object obj) {
@@ -51,8 +52,9 @@ public class DDMFormInstanceVersionCacheModel
 		DDMFormInstanceVersionCacheModel ddmFormInstanceVersionCacheModel =
 			(DDMFormInstanceVersionCacheModel)obj;
 
-		if (formInstanceVersionId ==
-				ddmFormInstanceVersionCacheModel.formInstanceVersionId) {
+		if ((formInstanceVersionId ==
+				ddmFormInstanceVersionCacheModel.formInstanceVersionId) &&
+			(mvccVersion == ddmFormInstanceVersionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -62,14 +64,28 @@ public class DDMFormInstanceVersionCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, formInstanceVersionId);
+		int hashCode = HashUtil.hash(0, formInstanceVersionId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
-		sb.append("{formInstanceVersionId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", formInstanceVersionId=");
 		sb.append(formInstanceVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -111,6 +127,7 @@ public class DDMFormInstanceVersionCacheModel
 		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl =
 			new DDMFormInstanceVersionImpl();
 
+		ddmFormInstanceVersionImpl.setMvccVersion(mvccVersion);
 		ddmFormInstanceVersionImpl.setFormInstanceVersionId(
 			formInstanceVersionId);
 		ddmFormInstanceVersionImpl.setGroupId(groupId);
@@ -186,6 +203,8 @@ public class DDMFormInstanceVersionCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
 		formInstanceVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -213,6 +232,8 @@ public class DDMFormInstanceVersionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		objectOutput.writeLong(formInstanceVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -276,6 +297,7 @@ public class DDMFormInstanceVersionCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
+	public long mvccVersion;
 	public long formInstanceVersionId;
 	public long groupId;
 	public long companyId;

@@ -85,21 +85,23 @@ public class DDMTemplateVersionModelImpl
 	public static final String TABLE_NAME = "DDMTemplateVersion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"templateVersionId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"templateId", Types.BIGINT}, {"version", Types.VARCHAR},
-		{"name", Types.CLOB}, {"description", Types.CLOB},
-		{"language", Types.VARCHAR}, {"script", Types.CLOB},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"templateVersionId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"templateId", Types.BIGINT},
+		{"version", Types.VARCHAR}, {"name", Types.CLOB},
+		{"description", Types.CLOB}, {"language", Types.VARCHAR},
+		{"script", Types.CLOB}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -121,7 +123,7 @@ public class DDMTemplateVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DDMTemplateVersion (templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table DDMTemplateVersion (mvccVersion LONG default 0 not null,templateVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,templateId LONG,version VARCHAR(75) null,name TEXT null,description TEXT null,language VARCHAR(75) null,script TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 
@@ -173,6 +175,7 @@ public class DDMTemplateVersionModelImpl
 
 		DDMTemplateVersion model = new DDMTemplateVersionImpl();
 
+		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setTemplateVersionId(soapModel.getTemplateVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -351,6 +354,12 @@ public class DDMTemplateVersionModelImpl
 				new LinkedHashMap<String, BiConsumer<DDMTemplateVersion, ?>>();
 
 		attributeGetterFunctions.put(
+			"mvccVersion", DDMTemplateVersion::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<DDMTemplateVersion, Long>)
+				DDMTemplateVersion::setMvccVersion);
+		attributeGetterFunctions.put(
 			"templateVersionId", DDMTemplateVersion::getTemplateVersionId);
 		attributeSetterBiConsumers.put(
 			"templateVersionId",
@@ -456,6 +465,17 @@ public class DDMTemplateVersionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@JSON
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1162,6 +1182,7 @@ public class DDMTemplateVersionModelImpl
 		DDMTemplateVersionImpl ddmTemplateVersionImpl =
 			new DDMTemplateVersionImpl();
 
+		ddmTemplateVersionImpl.setMvccVersion(getMvccVersion());
 		ddmTemplateVersionImpl.setTemplateVersionId(getTemplateVersionId());
 		ddmTemplateVersionImpl.setGroupId(getGroupId());
 		ddmTemplateVersionImpl.setCompanyId(getCompanyId());
@@ -1262,6 +1283,8 @@ public class DDMTemplateVersionModelImpl
 	public CacheModel<DDMTemplateVersion> toCacheModel() {
 		DDMTemplateVersionCacheModel ddmTemplateVersionCacheModel =
 			new DDMTemplateVersionCacheModel();
+
+		ddmTemplateVersionCacheModel.mvccVersion = getMvccVersion();
 
 		ddmTemplateVersionCacheModel.templateVersionId = getTemplateVersionId();
 
@@ -1428,6 +1451,7 @@ public class DDMTemplateVersionModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private long _templateVersionId;
 	private long _groupId;
 	private long _companyId;

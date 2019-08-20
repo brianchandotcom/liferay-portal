@@ -36,6 +36,7 @@ public class DDMDataProviderInstanceLinkSoap implements Serializable {
 		DDMDataProviderInstanceLinkSoap soapModel =
 			new DDMDataProviderInstanceLinkSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setDataProviderInstanceLinkId(
 			model.getDataProviderInstanceLinkId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -103,6 +104,14 @@ public class DDMDataProviderInstanceLinkSoap implements Serializable {
 		setDataProviderInstanceLinkId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
 	public long getDataProviderInstanceLinkId() {
 		return _dataProviderInstanceLinkId;
 	}
@@ -135,6 +144,7 @@ public class DDMDataProviderInstanceLinkSoap implements Serializable {
 		_structureId = structureId;
 	}
 
+	private long _mvccVersion;
 	private long _dataProviderInstanceLinkId;
 	private long _companyId;
 	private long _dataProviderInstanceId;

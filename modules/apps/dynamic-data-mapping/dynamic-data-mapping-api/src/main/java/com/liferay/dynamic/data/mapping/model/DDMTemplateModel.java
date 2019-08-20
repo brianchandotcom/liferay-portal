@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DDMTemplateModel
-	extends AttachedModel, BaseModel<DDMTemplate>, LocalizedModel, ShardedModel,
-			StagedGroupedModel {
+	extends AttachedModel, BaseModel<DDMTemplate>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -63,6 +64,22 @@ public interface DDMTemplateModel
 	 * @param primaryKey the primary key of this ddm template
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this ddm template.
+	 *
+	 * @return the mvcc version of this ddm template
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this ddm template.
+	 *
+	 * @param mvccVersion the mvcc version of this ddm template
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this ddm template.

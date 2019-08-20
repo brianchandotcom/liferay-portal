@@ -30,6 +30,7 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +142,59 @@ public abstract class BaseDataLayoutGraphQLTestCase {
 
 		Assert.assertTrue(
 			equals(dataLayout, dataJSONObject.getJSONObject("dataLayout")));
+	}
+
+	@Test
+	public void testGetSiteDataLayoutsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"dataLayouts",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject dataLayoutsJSONObject = dataJSONObject.getJSONObject(
+			"dataLayouts");
+
+		Assert.assertEquals(0, dataLayoutsJSONObject.get("totalCount"));
+
+		DataLayout dataLayout1 = testDataLayout_addDataLayout();
+		DataLayout dataLayout2 = testDataLayout_addDataLayout();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		dataLayoutsJSONObject = dataJSONObject.getJSONObject("dataLayouts");
+
+		Assert.assertEquals(2, dataLayoutsJSONObject.get("totalCount"));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(dataLayout1, dataLayout2),
+			dataLayoutsJSONObject.getJSONArray("items"));
 	}
 
 	@Test

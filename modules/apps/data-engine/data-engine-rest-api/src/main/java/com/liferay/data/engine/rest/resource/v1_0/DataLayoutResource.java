@@ -53,11 +53,6 @@ public interface DataLayoutResource {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception;
 
-	public void postDataLayoutDataLayoutPermission(
-			Long dataLayoutId, String operation,
-			DataLayoutPermission dataLayoutPermission)
-		throws Exception;
-
 	public void deleteDataLayout(Long dataLayoutId) throws Exception;
 
 	public DataLayout getDataLayout(Long dataLayoutId) throws Exception;
@@ -65,13 +60,18 @@ public interface DataLayoutResource {
 	public DataLayout putDataLayout(Long dataLayoutId, DataLayout dataLayout)
 		throws Exception;
 
-	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
+	public void postDataLayoutDataLayoutPermission(
+			Long dataLayoutId, String operation,
+			DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
 	public void postSiteDataLayoutPermission(
 			Long siteId, String operation,
 			DataLayoutPermission dataLayoutPermission)
+		throws Exception;
+
+	public Page<DataLayout> getSiteDataLayoutsPage(
+			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)

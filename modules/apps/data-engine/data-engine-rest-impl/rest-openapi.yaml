@@ -1203,7 +1203,7 @@ paths:
             tags: ["DataLayout"]
     "/sites/{siteId}/data-layouts":
         get:
-            operationId: getSiteDataLayoutPage
+            operationId: getSiteDataLayoutsPage
             parameters:
                 - in: path
                   name: siteId

@@ -438,11 +438,6 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testPostDataLayoutDataLayoutPermission() throws Exception {
-		Assert.assertTrue(false);
-	}
-
-	@Test
 	public void testDeleteDataLayout() throws Exception {
 		DataLayout dataLayout = testDeleteDataLayout_addDataLayout();
 
@@ -505,22 +500,33 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayoutPage() throws Exception {
-		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutPage(
-			testGetSiteDataLayoutPage_getSiteId(),
+	public void testPostDataLayoutDataLayoutPermission() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testPostSiteDataLayoutPermission() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteDataLayoutsPage() throws Exception {
+		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutsPage(
+			testGetSiteDataLayoutsPage_getSiteId(),
 			RandomTestUtil.randomString(), Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		Long siteId = testGetSiteDataLayoutPage_getSiteId();
-		Long irrelevantSiteId = testGetSiteDataLayoutPage_getIrrelevantSiteId();
+		Long siteId = testGetSiteDataLayoutsPage_getSiteId();
+		Long irrelevantSiteId =
+			testGetSiteDataLayoutsPage_getIrrelevantSiteId();
 
 		if ((irrelevantSiteId != null)) {
 			DataLayout irrelevantDataLayout =
-				testGetSiteDataLayoutPage_addDataLayout(
+				testGetSiteDataLayoutsPage_addDataLayout(
 					irrelevantSiteId, randomIrrelevantDataLayout());
 
-			page = dataLayoutResource.getSiteDataLayoutPage(
+			page = dataLayoutResource.getSiteDataLayoutsPage(
 				irrelevantSiteId, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -531,13 +537,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 			assertValid(page);
 		}
 
-		DataLayout dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout1 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		DataLayout dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout2 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		page = dataLayoutResource.getSiteDataLayoutPage(
+		page = dataLayoutResource.getSiteDataLayoutsPage(
 			siteId, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
@@ -553,26 +559,26 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayoutPageWithPagination() throws Exception {
-		Long siteId = testGetSiteDataLayoutPage_getSiteId();
+	public void testGetSiteDataLayoutsPageWithPagination() throws Exception {
+		Long siteId = testGetSiteDataLayoutsPage_getSiteId();
 
-		DataLayout dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout1 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		DataLayout dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout2 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		DataLayout dataLayout3 = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout3 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, randomDataLayout());
 
-		Page<DataLayout> page1 = dataLayoutResource.getSiteDataLayoutPage(
+		Page<DataLayout> page1 = dataLayoutResource.getSiteDataLayoutsPage(
 			siteId, null, Pagination.of(1, 2), null);
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
 		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
 
-		Page<DataLayout> page2 = dataLayoutResource.getSiteDataLayoutPage(
+		Page<DataLayout> page2 = dataLayoutResource.getSiteDataLayoutsPage(
 			siteId, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
@@ -581,7 +587,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Assert.assertEquals(dataLayouts2.toString(), 1, dataLayouts2.size());
 
-		Page<DataLayout> page3 = dataLayoutResource.getSiteDataLayoutPage(
+		Page<DataLayout> page3 = dataLayoutResource.getSiteDataLayoutsPage(
 			siteId, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
@@ -590,8 +596,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayoutPageWithSortDateTime() throws Exception {
-		testGetSiteDataLayoutPageWithSort(
+	public void testGetSiteDataLayoutsPageWithSortDateTime() throws Exception {
+		testGetSiteDataLayoutsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, dataLayout1, dataLayout2) -> {
 				BeanUtils.setProperty(
@@ -601,8 +607,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayoutPageWithSortInteger() throws Exception {
-		testGetSiteDataLayoutPageWithSort(
+	public void testGetSiteDataLayoutsPageWithSortInteger() throws Exception {
+		testGetSiteDataLayoutsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, dataLayout1, dataLayout2) -> {
 				BeanUtils.setProperty(dataLayout1, entityField.getName(), 0);
@@ -611,8 +617,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteDataLayoutPageWithSortString() throws Exception {
-		testGetSiteDataLayoutPageWithSort(
+	public void testGetSiteDataLayoutsPageWithSortString() throws Exception {
+		testGetSiteDataLayoutsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, dataLayout1, dataLayout2) -> {
 				Class clazz = dataLayout1.getClass();
@@ -640,7 +646,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			});
 	}
 
-	protected void testGetSiteDataLayoutPageWithSort(
+	protected void testGetSiteDataLayoutsPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, DataLayout, DataLayout, Exception>
 				unsafeTriConsumer)
@@ -652,7 +658,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 			return;
 		}
 
-		Long siteId = testGetSiteDataLayoutPage_getSiteId();
+		Long siteId = testGetSiteDataLayoutsPage_getSiteId();
 
 		DataLayout dataLayout1 = randomDataLayout();
 		DataLayout dataLayout2 = randomDataLayout();
@@ -661,23 +667,24 @@ public abstract class BaseDataLayoutResourceTestCase {
 			unsafeTriConsumer.accept(entityField, dataLayout1, dataLayout2);
 		}
 
-		dataLayout1 = testGetSiteDataLayoutPage_addDataLayout(
+		dataLayout1 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, dataLayout1);
 
-		dataLayout2 = testGetSiteDataLayoutPage_addDataLayout(
+		dataLayout2 = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, dataLayout2);
 
 		for (EntityField entityField : entityFields) {
-			Page<DataLayout> ascPage = dataLayoutResource.getSiteDataLayoutPage(
-				siteId, null, Pagination.of(1, 2),
-				entityField.getName() + ":asc");
+			Page<DataLayout> ascPage =
+				dataLayoutResource.getSiteDataLayoutsPage(
+					siteId, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(dataLayout1, dataLayout2),
 				(List<DataLayout>)ascPage.getItems());
 
 			Page<DataLayout> descPage =
-				dataLayoutResource.getSiteDataLayoutPage(
+				dataLayoutResource.getSiteDataLayoutsPage(
 					siteId, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -687,7 +694,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 		}
 	}
 
-	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(
+	protected DataLayout testGetSiteDataLayoutsPage_addDataLayout(
 			Long siteId, DataLayout dataLayout)
 		throws Exception {
 
@@ -695,19 +702,14 @@ public abstract class BaseDataLayoutResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetSiteDataLayoutPage_getSiteId() throws Exception {
+	protected Long testGetSiteDataLayoutsPage_getSiteId() throws Exception {
 		return testGroup.getGroupId();
 	}
 
-	protected Long testGetSiteDataLayoutPage_getIrrelevantSiteId()
+	protected Long testGetSiteDataLayoutsPage_getIrrelevantSiteId()
 		throws Exception {
 
 		return irrelevantGroup.getGroupId();
-	}
-
-	@Test
-	public void testPostSiteDataLayoutPermission() throws Exception {
-		Assert.assertTrue(false);
 	}
 
 	@Test

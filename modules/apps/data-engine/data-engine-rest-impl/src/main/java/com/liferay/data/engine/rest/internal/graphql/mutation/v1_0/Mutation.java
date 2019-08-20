@@ -184,24 +184,6 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public boolean createDataLayoutDataLayoutPermission(
-			@GraphQLName("dataLayoutId") Long dataLayoutId,
-			@GraphQLName("operation") String operation,
-			@GraphQLName("dataLayoutPermission") DataLayoutPermission
-				dataLayoutPermission)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_dataLayoutResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataLayoutResource ->
-				dataLayoutResource.postDataLayoutDataLayoutPermission(
-					dataLayoutId, operation, dataLayoutPermission));
-
-		return true;
-	}
-
-	@GraphQLField
 	public boolean deleteDataLayout(
 			@GraphQLName("dataLayoutId") Long dataLayoutId)
 		throws Exception {
@@ -226,6 +208,24 @@ public class Mutation {
 			this::_populateResourceContext,
 			dataLayoutResource -> dataLayoutResource.putDataLayout(
 				dataLayoutId, dataLayout));
+	}
+
+	@GraphQLField
+	public boolean createDataLayoutDataLayoutPermission(
+			@GraphQLName("dataLayoutId") Long dataLayoutId,
+			@GraphQLName("operation") String operation,
+			@GraphQLName("dataLayoutPermission") DataLayoutPermission
+				dataLayoutPermission)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_dataLayoutResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataLayoutResource ->
+				dataLayoutResource.postDataLayoutDataLayoutPermission(
+					dataLayoutId, operation, dataLayoutPermission));
+
+		return true;
 	}
 
 	@GraphQLField

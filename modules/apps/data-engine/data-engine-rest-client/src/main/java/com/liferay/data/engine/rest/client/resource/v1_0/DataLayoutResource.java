@@ -58,19 +58,6 @@ public interface DataLayoutResource {
 			Long dataDefinitionId, DataLayout dataLayout)
 		throws Exception;
 
-	public void postDataLayoutDataLayoutPermission(
-			Long dataLayoutId, String operation,
-			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
-				dataLayoutPermission)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			postDataLayoutDataLayoutPermissionHttpResponse(
-				Long dataLayoutId, String operation,
-				com.liferay.data.engine.rest.client.dto.v1_0.
-					DataLayoutPermission dataLayoutPermission)
-		throws Exception;
-
 	public void deleteDataLayout(Long dataLayoutId) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteDataLayoutHttpResponse(
@@ -89,14 +76,17 @@ public interface DataLayoutResource {
 			Long dataLayoutId, DataLayout dataLayout)
 		throws Exception;
 
-	public Page<DataLayout> getSiteDataLayoutPage(
-			Long siteId, String keywords, Pagination pagination,
-			String sortString)
+	public void postDataLayoutDataLayoutPermission(
+			Long dataLayoutId, String operation,
+			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
+				dataLayoutPermission)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
-			Long siteId, String keywords, Pagination pagination,
-			String sortString)
+	public HttpInvoker.HttpResponse
+			postDataLayoutDataLayoutPermissionHttpResponse(
+				Long dataLayoutId, String operation,
+				com.liferay.data.engine.rest.client.dto.v1_0.
+					DataLayoutPermission dataLayoutPermission)
 		throws Exception;
 
 	public void postSiteDataLayoutPermission(
@@ -109,6 +99,16 @@ public interface DataLayoutResource {
 			Long siteId, String operation,
 			com.liferay.data.engine.rest.client.dto.v1_0.DataLayoutPermission
 				dataLayoutPermission)
+		throws Exception;
+
+	public Page<DataLayout> getSiteDataLayoutsPage(
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse getSiteDataLayoutsPageHttpResponse(
+			Long siteId, String keywords, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public DataLayout getSiteDataLayout(Long siteId, String dataLayoutKey)
@@ -315,72 +315,6 @@ public interface DataLayoutResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postDataLayoutDataLayoutPermission(
-				Long dataLayoutId, String operation,
-				com.liferay.data.engine.rest.client.dto.v1_0.
-					DataLayoutPermission dataLayoutPermission)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				postDataLayoutDataLayoutPermissionHttpResponse(
-					dataLayoutId, operation, dataLayoutPermission);
-
-			String content = httpResponse.getContent();
-
-			_logger.fine("HTTP response content: " + content);
-
-			_logger.fine("HTTP response message: " + httpResponse.getMessage());
-			_logger.fine(
-				"HTTP response status code: " + httpResponse.getStatusCode());
-		}
-
-		public HttpInvoker.HttpResponse
-				postDataLayoutDataLayoutPermissionHttpResponse(
-					Long dataLayoutId, String operation,
-					com.liferay.data.engine.rest.client.dto.v1_0.
-						DataLayoutPermission dataLayoutPermission)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(
-				dataLayoutPermission.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-
-			if (operation != null) {
-				httpInvoker.parameter("operation", String.valueOf(operation));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/data-engine/v1.0/data-layout/{dataLayoutId}/data-layout-permissions",
-				dataLayoutId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public void deleteDataLayout(Long dataLayoutId) throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
 				deleteDataLayoutHttpResponse(dataLayoutId);
@@ -558,14 +492,15 @@ public interface DataLayoutResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<DataLayout> getSiteDataLayoutPage(
-				Long siteId, String keywords, Pagination pagination,
-				String sortString)
+		public void postDataLayoutDataLayoutPermission(
+				Long dataLayoutId, String operation,
+				com.liferay.data.engine.rest.client.dto.v1_0.
+					DataLayoutPermission dataLayoutPermission)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteDataLayoutPageHttpResponse(
-					siteId, keywords, pagination, sortString);
+				postDataLayoutDataLayoutPermissionHttpResponse(
+					dataLayoutId, operation, dataLayoutPermission);
 
 			String content = httpResponse.getContent();
 
@@ -574,16 +509,19 @@ public interface DataLayoutResource {
 			_logger.fine("HTTP response message: " + httpResponse.getMessage());
 			_logger.fine(
 				"HTTP response status code: " + httpResponse.getStatusCode());
-
-			return Page.of(content, DataLayoutSerDes::toDTO);
 		}
 
-		public HttpInvoker.HttpResponse getSiteDataLayoutPageHttpResponse(
-				Long siteId, String keywords, Pagination pagination,
-				String sortString)
+		public HttpInvoker.HttpResponse
+				postDataLayoutDataLayoutPermissionHttpResponse(
+					Long dataLayoutId, String operation,
+					com.liferay.data.engine.rest.client.dto.v1_0.
+						DataLayoutPermission dataLayoutPermission)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				dataLayoutPermission.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -602,28 +540,17 @@ public interface DataLayoutResource {
 				httpInvoker.parameter(entry.getKey(), entry.getValue());
 			}
 
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			if (keywords != null) {
-				httpInvoker.parameter("keywords", String.valueOf(keywords));
-			}
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
-
-			if (sortString != null) {
-				httpInvoker.parameter("sort", sortString);
+			if (operation != null) {
+				httpInvoker.parameter("operation", String.valueOf(operation));
 			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/data-engine/v1.0/sites/{siteId}/data-layout",
-				siteId);
+						"/o/data-engine/v1.0/data-layouts/{dataLayoutId}/data-layout-permissions",
+				dataLayoutId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -689,6 +616,79 @@ public interface DataLayoutResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/data-engine/v1.0/sites/{siteId}/data-layout-permissions",
+				siteId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<DataLayout> getSiteDataLayoutsPage(
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getSiteDataLayoutsPageHttpResponse(
+					siteId, keywords, pagination, sortString);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			return Page.of(content, DataLayoutSerDes::toDTO);
+		}
+
+		public HttpInvoker.HttpResponse getSiteDataLayoutsPageHttpResponse(
+				Long siteId, String keywords, Pagination pagination,
+				String sortString)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (keywords != null) {
+				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (pagination != null) {
+				httpInvoker.parameter(
+					"page", String.valueOf(pagination.getPage()));
+				httpInvoker.parameter(
+					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/data-engine/v1.0/sites/{siteId}/data-layouts",
 				siteId);
 
 			httpInvoker.userNameAndPassword(

@@ -29,10 +29,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
@@ -67,11 +64,10 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
-			key -> Collections.unmodifiableList(
-				Arrays.asList(
-					_deployAppPanelApp(key),
-					_deployAppPanelCategory(key, appName),
-					_deployAppPortlet(key, appName))));
+			key -> new ServiceRegistration[] {
+				_deployAppPanelApp(key), _deployAppPanelCategory(key, appName),
+				_deployAppPortlet(key, appName)
+			});
 
 		appBuilderApp.setStatus(
 			AppBuilderAppConstants.Status.DEPLOYED.getValue());
@@ -81,7 +77,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void undeploy(long appId) throws Exception {
-		List<ServiceRegistration> serviceRegistrations =
+		ServiceRegistration[] serviceRegistrations =
 			_serviceRegistrationsMap.remove(appId);
 
 		if (serviceRegistrations == null) {
@@ -174,7 +170,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
-	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
+	private final ConcurrentHashMap<Long, ServiceRegistration[]>
 		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

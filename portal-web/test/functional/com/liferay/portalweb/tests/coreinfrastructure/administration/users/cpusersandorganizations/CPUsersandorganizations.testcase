@@ -1974,6 +1974,7 @@ definition {
 			userId = "${userId}",
 			userLastName = "test1",
 			userPrefixId = "0",
+			userRoleTitles = "Administrator,Power User",
 			userScreenName = "test1",
 			userSuffixId = "0");
 

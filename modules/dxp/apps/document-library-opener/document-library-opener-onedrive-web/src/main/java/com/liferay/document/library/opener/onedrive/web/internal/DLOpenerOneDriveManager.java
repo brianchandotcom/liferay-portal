@@ -75,24 +75,7 @@ public class DLOpenerOneDriveManager {
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			OneDriveBackgroundTaskConstants.CMD,
-			OneDriveBackgroundTaskConstants.CHECKOUT);
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(
-			OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-			fileEntry.getFileEntryId());
-		taskContextMap.put(OneDriveBackgroundTaskConstants.USER_ID, userId);
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.addBackgroundTask(
-				userId, CompanyConstants.SYSTEM,
-				"oneDriveFileEntry-" + fileEntry.getFileEntryId(),
-				UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
-				taskContextMap, new ServiceContext());
+		BackgroundTask backgroundTask = _addBackgroundTask(fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -284,6 +267,32 @@ public class DLOpenerOneDriveManager {
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry));
+	}
+
+	private BackgroundTask _addBackgroundTask(FileEntry fileEntry, long userId)
+		throws PortalException {
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>() {
+				{
+					put(
+						OneDriveBackgroundTaskConstants.CMD,
+						OneDriveBackgroundTaskConstants.CHECKOUT);
+					put(
+						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
+						true);
+					put(
+						OneDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+						fileEntry.getFileEntryId());
+					put(OneDriveBackgroundTaskConstants.USER_ID, userId);
+				}
+			};
+
+		return _backgroundTaskManager.addBackgroundTask(
+			userId, CompanyConstants.SYSTEM,
+			"oneDriveFileEntry-" + fileEntry.getFileEntryId(),
+			UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
+			taskContextMap, new ServiceContext());
 	}
 
 	private AccessToken _getAccessToken(long companyId, long userId)

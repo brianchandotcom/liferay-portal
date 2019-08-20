@@ -16,16 +16,13 @@ package com.liferay.app.builder.web.internal.deploy;
 
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.deploy.AppDeployerTracker;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jeyvison Nascimento
@@ -35,33 +32,20 @@ public class AppDeployerTrackerImpl implements AppDeployerTracker {
 
 	@Override
 	public AppDeployer getAppDeployer(String deploymentType) {
-		return _appDeployersMap.get(deploymentType);
+		return _serviceTrackerMap.getService(deploymentType);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addAppDeployer(
-		AppDeployer appDeployer, Map<String, Object> properties) {
-
-		_appDeployersMap.put(
-			(String)properties.get("com.app.builder.deploy.type"), appDeployer);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, AppDeployer.class, "com.app.builder.deploy.type");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_appDeployersMap.clear();
+		_serviceTrackerMap.close();
 	}
 
-	protected void removeAppDeployer(
-		AppDeployer appDeployer, Map<String, Object> properties) {
-
-		_appDeployersMap.remove(properties.get("com.app.builder.deploy.type"));
-	}
-
-	private final Map<String, AppDeployer> _appDeployersMap =
-		new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, AppDeployer> _serviceTrackerMap;
 
 }

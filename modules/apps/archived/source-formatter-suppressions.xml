@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="BNDDirectoryNameCheck" files="modules/apps/archived/.*" />
+		<suppress checks="JavaInternalPackageCheck" files="modules/apps/archived/.*" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/archived/.*" />
+	</source-check>
+</suppressions>

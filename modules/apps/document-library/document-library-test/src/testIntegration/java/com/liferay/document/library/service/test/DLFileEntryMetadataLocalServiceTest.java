@@ -153,7 +153,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 			_ddmStructure.setCompanyId(_company.getCompanyId());
 
-			DDMStructureLocalServiceUtil.updateDDMStructure(_ddmStructure);
+			_ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+				_ddmStructure);
 
 			List<DLFileEntryMetadata> dlFileEntryMetadatas =
 				DLFileEntryMetadataLocalServiceUtil.
@@ -169,7 +170,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 			if (_ddmStructure != null) {
 				_ddmStructure.setCompanyId(_dlFileEntry.getCompanyId());
 
-				DDMStructureLocalServiceUtil.updateDDMStructure(_ddmStructure);
+				_ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+					_ddmStructure);
 			}
 		}
 	}

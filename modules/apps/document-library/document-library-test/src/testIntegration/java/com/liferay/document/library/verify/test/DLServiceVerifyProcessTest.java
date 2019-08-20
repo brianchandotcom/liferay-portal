@@ -128,7 +128,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		modelDDMStructure.setCompanyId(_company.getCompanyId());
 
 		try {
-			DDMStructureLocalServiceUtil.updateDDMStructure(modelDDMStructure);
+			modelDDMStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
+				modelDDMStructure);
 
 			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 

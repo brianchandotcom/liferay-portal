@@ -286,7 +286,7 @@ public class SegmentsExperimentServiceTest {
 
 			_segmentsExperimentService.updateSegmentsExperiment(
 				segmentsExperiment.getSegmentsExperimentKey(),
-				SegmentsExperimentConstants.STATUS_TERMINATED);
+				SegmentsExperimentConstants.STATUS_RUNNING);
 		}
 	}
 

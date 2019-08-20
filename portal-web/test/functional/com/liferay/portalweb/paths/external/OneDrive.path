@@ -18,7 +18,6 @@
 	<td>title=Untitled.${key_documentType}</td>
 	<td></td>
 </tr>
-<!--ONEDRIVE_DOCS-->
 <tr>
 	<td>CONTENT</td>
 	<td>//div[@id='WACDocumentPanelContent']</td>

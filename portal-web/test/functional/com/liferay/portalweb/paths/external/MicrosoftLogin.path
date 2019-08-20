@@ -10,16 +10,6 @@
 <tbody>
 <!--LOGIN-->
 <tr>
-	<td>LOGIN_PAGE_TITLE</td>
-	<td>title=Sign in to your account</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LOGIN_STAY_SIGNED_IN_CONFIRM</td>
-	<td>//div[@role='heading' and contains(.,'Stay signed in?')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LOGIN_EMAIL_FIELD</td>
 	<td>//input[contains(@type,'email')]</td>
 	<td></td>
@@ -27,6 +17,11 @@
 <tr>
 	<td>LOGIN_NEXT_BUTTON</td>
 	<td>//div[contains(@class,'inline-block')]/input[contains(@value,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PAGE_TITLE</td>
+	<td>title=Sign in to your account</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,13 +35,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOGIN_YES_BUTTON</td>
-	<td>//div[contains(@class,'inline-block')]/input[contains(@value,'Yes')]</td>
+	<td>LOGIN_STAY_SIGNED_IN_CONFIRMATION</td>
+	<td>//div[@role='heading' and contains(.,'Stay signed in?')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGIN_USER_CHOOSER</td>
 	<td>//td/div[contains(@class,'windows_tile_text') and contains(.,'${key_userEmail}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_YES_BUTTON</td>
+	<td>//div[contains(@class,'inline-block')]/input[contains(@value,'Yes')]</td>
 	<td></td>
 </tr>
 <tr>

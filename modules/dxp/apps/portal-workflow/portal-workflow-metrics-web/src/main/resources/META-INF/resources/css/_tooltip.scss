@@ -1,8 +1,11 @@
 $c: '.workflow-tooltip';
 
 #{$c} {
-	height: 21px;
 	position: relative;
+
+	.panel-header & {
+		height: 21px;
+	}
 
 	.tooltip-inner {
 		max-width: 300px;

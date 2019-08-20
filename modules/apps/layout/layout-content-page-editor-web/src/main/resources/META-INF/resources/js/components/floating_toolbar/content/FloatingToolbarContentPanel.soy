@@ -1,0 +1,22 @@
+{namespace com.liferay.layout.content.page.editor.web.FloatingToolbarContentPanel}
+
+/**
+ * FloatingToolbarSpacingPanel
+ */
+{template .render}
+	{@param? _handleCreateContentClick: any}
+	{@param? _selectedItemsCount: number}
+
+	<div class="floating-toolbar-content-panel p-3">
+		<button
+			class="btn btn-block btn-secondary btn-sm"
+			data-onclick="{$_handleCreateContentClick}"
+		>
+			{msg desc=""}create-new-content{/msg}
+			&nbsp;
+			<span class="badge badge-primary">
+				{$_selectedItemsCount}
+			</span>
+		</button>
+	</div>
+{/template}

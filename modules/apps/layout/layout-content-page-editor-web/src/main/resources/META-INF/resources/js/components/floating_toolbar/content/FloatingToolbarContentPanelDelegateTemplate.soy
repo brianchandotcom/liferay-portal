@@ -1,0 +1,18 @@
+{namespace com.liferay.layout.content.page.editor.web.FloatingToolbarContentPanelDelegateTemplate}
+
+/**
+ * FloatingToolbarPanel content creation
+ */
+{deltemplate com.liferay.layout.content.page.editor.web.FloatingToolbarPanel variant="'content'"}
+	{@param item: ?}
+	{@param itemId: string}
+	{@param itemType: string}
+	{@param? store: ?}
+
+	{call com.liferay.layout.content.page.editor.web.FloatingToolbarContentPanel.render}
+		{param item: $item /}
+		{param itemId: $itemId /}
+		{param itemType: $itemType /}
+		{param store: $store /}
+	{/call}
+{/deltemplate}

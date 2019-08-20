@@ -16,13 +16,14 @@ package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentService;
+
+import java.util.Optional;
 
 import javax.ws.rs.ClientErrorException;
 
@@ -55,27 +56,23 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
+		Optional<SegmentsExperimentConstants.Status> optionalStatus =
+			SegmentsExperimentConstants.Status.parse(status.getStatus());
+
 		return _toExperiment(
 			_segmentsExperimentService.updateSegmentsExperiment(
 				String.valueOf(segmentsExperimentKey),
-				_parseStatus(status.getStatus())));
-	}
-
-	private int _parseStatus(String status) {
-		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
-			SegmentsExperimentConstants.Status.parse(
-				StringUtil.upperCase(status));
-
-		if (segmentsExperimentConstantsStatus == null) {
-			throw new ClientErrorException("Experiment status is invalid", 422);
-		}
-
-		return segmentsExperimentConstantsStatus.getValue();
+				optionalStatus.map(
+					SegmentsExperimentConstants.Status::getValue
+				).orElseThrow(
+					() -> new ClientErrorException(
+						"Experiment status is invalid", 422)
+				)));
 	}
 
 	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {
 		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
-			SegmentsExperimentConstants.Status.parse(
+			SegmentsExperimentConstants.Status.valueOf(
 				segmentsExperiment.getStatus());
 
 		return new Experiment() {

@@ -8,15 +8,39 @@ Import-Package:\
 	\
 	!com.google.errorprone.annotations.concurrent.*,\
 	\
+	!com.graphbuilder.*,\
+	\
+	!com.microsoft.schemas.office.powerpoint.*,\
+	!com.microsoft.schemas.office.word.*,\
+	\
+	!com.sun.javadoc.*,\
+	!com.sun.tools.javadoc.*,\
+	\
 	!javax.annotation.meta.*,\
 	\
+	!junit.framework,\
+	\
+	!net.sf.saxon.*,\
+	\
 	!org.apache.http.*,\
+	!org.apache.jcp.xml.dsig.internal.dom.*,\
+	!org.apache.poi.hsmf.*,\
+	!org.apache.poi.hwpf.extractor.*,\
+	\
+	!org.bouncycastle.*,\
 	\
 	!org.conscrypt.*,\
+	\
+	!org.etsi.uri.x01903.v14.*,\
 	\
 	!org.joda.time.*,\
 	\
 	!org.json.simple.*,\
+	\
+	!org.junit.*,\
+	\
+	!org.openxmlformats.schemas.officeDocument.x2006.*,\
+	!org.openxmlformats.schemas.schemaLibrary.x2006.*,\
 	\
 	*
 Web-ContextPath: /document-library-opener-one-drive-web

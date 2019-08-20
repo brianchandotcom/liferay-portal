@@ -29,6 +29,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.util.DLOpenerTi
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -44,15 +45,24 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,8 +113,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private DLOpenerOneDriveFileReference _addDLOpenerOneDriveFileReference(
-			long userId, long repositoryId, long folderId, String mimeType,
-			ServiceContext serviceContext)
+			Locale locale, long userId, long repositoryId, long folderId,
+			String mimeType, ServiceContext serviceContext)
 		throws PortalException {
 
 		String title = _uniqueFileEntryTitleProvider.provide(
@@ -115,9 +125,30 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(mimeType);
 
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		if (Objects.equals(DLOpenerMimeTypes.APPLICATION_VND_XLSX, mimeType)) {
+			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(locale);
+
+			xssfWorkbook.createSheet(
+				_language.get(resourceBundle, "onedrive-excel-sheet"));
+
+			try {
+				xssfWorkbook.write(byteArrayOutputStream);
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
+		}
+
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, sourceFileName, mimeType, title,
-			StringPool.BLANK, StringPool.BLANK, new byte[0], serviceContext);
+			StringPool.BLANK, StringPool.BLANK,
+			byteArrayOutputStream.toByteArray(), serviceContext);
 
 		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);
@@ -169,6 +200,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> _addDLOpenerOneDriveFileReference(
+							_portal.getLocale(actionRequest),
 							_portal.getUserId(actionRequest), repositoryId,
 							folderId, contentType, serviceContext)));
 
@@ -269,6 +301,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private OAuth2Manager _oAuth2Manager;
 
 	@Reference
@@ -276,6 +311,11 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

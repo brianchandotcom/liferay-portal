@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * @author David Arques
  */
-public class StatusTest {
+public class SegmentsExperimentConstantsStatusTest {
 
 	@Test
 	public void testValidateTransitionFromCompletedToCompleted()

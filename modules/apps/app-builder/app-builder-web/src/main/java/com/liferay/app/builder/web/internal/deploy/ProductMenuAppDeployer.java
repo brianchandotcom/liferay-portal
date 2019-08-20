@@ -88,8 +88,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			serviceRegistration.unregister();
 		}
 
-		_serviceRegistrationsMap.remove(appId);
-
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
 

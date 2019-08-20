@@ -12,6 +12,12 @@
 		<suppress checks="ConstantNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="ConstantNameCheck" files="portal-test/src/com/liferay/portal/kernel/test/rule/CodeCoverageAssertor\.java" />
 		<suppress checks="EnumConstantOrderCheck" files="portal-kernel/src/com/liferay/portal/kernel/process/ProcessLog\.java" />
+		<suppress checks="FactoryCheck" files="modules/apps/data-engine/data-engine-rest-impl/src/main/java/com/liferay/data/engine/rest/internal/resource/v1_0/util/DataEnginePermissionUtil\.java" />
+		<suppress checks="FactoryCheck" files="modules/apps/portal-search/portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
+		<suppress checks="FactoryCheck" files="modules/apps/portal-search/portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
+		<suppress checks="FactoryCheck" files="modules/apps/sync/sync-service/src/main/java/com/liferay/sync/internal/util/SyncHelperImpl\.java" />
+		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContext\.java" />
+		<suppress checks="FactoryCheck" files="portal-kernel/src/com/liferay/portal/kernel/service/ServiceContextFactory\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/DayAndPosition\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Duration\.java" />
 		<suppress checks="JavadocCheck" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />

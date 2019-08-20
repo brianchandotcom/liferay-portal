@@ -40,6 +40,8 @@ public interface ComplexQueryPart {
 
 	public String getValue();
 
+	public boolean isAdditive();
+
 	public boolean isDisabled();
 
 }

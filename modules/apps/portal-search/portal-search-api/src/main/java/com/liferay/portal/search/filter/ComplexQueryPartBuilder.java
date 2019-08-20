@@ -24,6 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ComplexQueryPartBuilder {
 
+	public ComplexQueryPartBuilder additive(boolean additive);
+
 	public ComplexQueryPartBuilder boost(Float boost);
 
 	public ComplexQueryPart build();

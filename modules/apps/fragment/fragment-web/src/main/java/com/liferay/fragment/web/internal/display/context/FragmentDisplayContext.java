@@ -159,8 +159,7 @@ public class FragmentDisplayContext {
 		List<FragmentEntry> fragmentEntries = null;
 
 		FragmentCollectionContributor fragmentCollectionContributor =
-			_fragmentCollectionContributorTracker.
-				getFragmentCollectionContributor(getFragmentCollectionKey());
+			_getFragmentCollectionContributor();
 
 		if (isNavigationComponents() || isNavigationSections()) {
 			int type = FragmentConstants.TYPE_SECTION;
@@ -245,6 +244,14 @@ public class FragmentDisplayContext {
 	}
 
 	public String getFragmentCollectionName() throws PortalException {
+		if (isSelectedFragmentCollectionContributor()) {
+			FragmentCollectionContributor fragmentCollectionContributor =
+				_getFragmentCollectionContributor();
+
+			return fragmentCollectionContributor.getName(
+				_themeDisplay.getLocale());
+		}
+
 		FragmentCollection fragmentCollection = getFragmentCollection();
 
 		if (fragmentCollection == null) {
@@ -614,6 +621,11 @@ public class FragmentDisplayContext {
 			fragmentCollectionContributors.get(0);
 
 		return fragmentCollectionContributor.getFragmentCollectionKey();
+	}
+
+	private FragmentCollectionContributor _getFragmentCollectionContributor() {
+		return _fragmentCollectionContributorTracker.
+			getFragmentCollectionContributor(getFragmentCollectionKey());
 	}
 
 	private String _getKeywords() {

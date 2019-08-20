@@ -287,12 +287,7 @@ definition {
 	@description = "This is a use case for LPS-95441."
 	@priority = "3"
 	test ExportWebContentWithEditedStructure {
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 

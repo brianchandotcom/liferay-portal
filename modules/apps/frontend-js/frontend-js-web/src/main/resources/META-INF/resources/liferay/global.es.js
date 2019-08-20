@@ -21,7 +21,7 @@ import {
 	getComponentCache,
 	initComponentCache
 } from './component.es';
-import createURL from './util/portlet_url/create_url.es';
+import createURL from './util/portlet_url/create_portlet_url.es';
 import createActionURL from './util/portlet_url/create_action_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';

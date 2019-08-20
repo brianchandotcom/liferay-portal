@@ -12,7 +12,7 @@
  * details.
  */
 
-import getPortletNamespace from './../get_portlet_namespace.es';
+import getPortletNamespace from '../get_portlet_namespace.es';
 
 const SCHEME_REGEXP = /^[a-z][a-z0-9+.-]*:/i;
 
@@ -27,7 +27,7 @@ function isAbsolute_(urlString) {
  * @return {URL} Portlet URL Object
  * @review
  */
-export default function createURL(basePortletURL, parameters = {}) {
+export default function createPortletURL(basePortletURL, parameters = {}) {
 	if (typeof basePortletURL !== 'string') {
 		throw new TypeError('basePortletURL parameter must be a string');
 	}

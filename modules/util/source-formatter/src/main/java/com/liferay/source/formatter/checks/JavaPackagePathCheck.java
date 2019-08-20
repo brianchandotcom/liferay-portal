@@ -98,12 +98,19 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		bundleSymbolicName = bundleSymbolicName.replaceAll(
 			"\\.(api|service|test)$", StringPool.BLANK);
 
-		if (packageName.contains(bundleSymbolicName)) {
-			return;
-		}
+		if (bundleSymbolicName.endsWith(".impl")) {
+			if (packageName.contains(bundleSymbolicName)) {
+				addMessage(
+					fileName,
+					"Use 'internal' instead of 'impl' in package '" +
+						packageName + "'");
 
-		bundleSymbolicName = bundleSymbolicName.replaceAll(
-			"\\.impl$", ".internal");
+				return;
+			}
+
+			bundleSymbolicName = StringUtil.replaceLast(
+				bundleSymbolicName, "impl", "internal");
+		}
 
 		if (!packageName.contains(bundleSymbolicName)) {
 			addMessage(

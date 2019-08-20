@@ -191,50 +191,10 @@ public class FragmentEntryLocalServiceImpl
 			int type, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Fragment entry
-
-		User user = userLocalService.getUser(userId);
-
-		validate(name);
-
-		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = generateFragmentEntryKey(groupId, name);
-		}
-
-		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
-
-		validateFragmentEntryKey(groupId, fragmentEntryKey);
-
-		long fragmentEntryId = counterLocalService.increment();
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
-			fragmentEntryId);
-
-		fragmentEntry.setUuid(serviceContext.getUuid());
-		fragmentEntry.setGroupId(groupId);
-		fragmentEntry.setCompanyId(user.getCompanyId());
-		fragmentEntry.setUserId(user.getUserId());
-		fragmentEntry.setUserName(user.getFullName());
-		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		fragmentEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
-		fragmentEntry.setName(name);
-		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntry.setType(type);
-		fragmentEntry.setStatus(status);
-		fragmentEntry.setStatusByUserId(userId);
-		fragmentEntry.setStatusByUserName(user.getFullName());
-		fragmentEntry.setStatusDate(new Date());
-
-		fragmentEntryPersistence.update(fragmentEntry);
-
-		// Resources
-
-		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
-
-		return fragmentEntry;
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, previewFileEntryId, type, status, serviceContext);
 	}
 
 	/**

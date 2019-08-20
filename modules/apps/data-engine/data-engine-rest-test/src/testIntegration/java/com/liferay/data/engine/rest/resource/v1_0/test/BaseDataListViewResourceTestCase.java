@@ -485,6 +485,32 @@ public abstract class BaseDataListViewResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testPutDataListView() throws Exception {
+		DataListView postDataListView = testPutDataListView_addDataListView();
+
+		DataListView randomDataListView = randomDataListView();
+
+		DataListView putDataListView = dataListViewResource.putDataListView(
+			postDataListView.getId(), randomDataListView);
+
+		assertEquals(randomDataListView, putDataListView);
+		assertValid(putDataListView);
+
+		DataListView getDataListView = dataListViewResource.getDataListView(
+			putDataListView.getId());
+
+		assertEquals(randomDataListView, getDataListView);
+		assertValid(getDataListView);
+	}
+
+	protected DataListView testPutDataListView_addDataListView()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {

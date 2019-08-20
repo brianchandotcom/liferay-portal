@@ -275,6 +275,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public DataListView updateDataListView(
+			@GraphQLName("dataListViewId") Long dataListViewId,
+			@GraphQLName("dataListView") DataListView dataListView)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataListViewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataListViewResource -> dataListViewResource.putDataListView(
+				dataListViewId, dataListView));
+	}
+
+	@GraphQLField
 	public DataRecord createDataDefinitionDataRecord(
 			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
 			@GraphQLName("dataRecord") DataRecord dataRecord)

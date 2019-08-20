@@ -170,6 +170,20 @@ public class DataListViewResourceImpl
 		return dataListView;
 	}
 
+	@Override
+	public DataListView putDataListView(
+			Long dataListViewId, DataListView dataListView)
+		throws Exception {
+
+		return _toDataListView(
+			_deDataListViewLocalService.updateDEDataListView(
+				dataListViewId,
+				MapUtil.toString(dataListView.getAppliedFilters()),
+				Arrays.toString(dataListView.getFieldNames()),
+				LocalizedValueUtil.toLocaleStringMap(dataListView.getName()),
+				dataListView.getSortField()));
+	}
+
 	private DataListView _toDataListView(DEDataListView deDataListView)
 		throws Exception {
 

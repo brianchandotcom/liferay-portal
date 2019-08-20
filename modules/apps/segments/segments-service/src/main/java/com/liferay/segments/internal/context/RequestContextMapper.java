@@ -17,6 +17,8 @@ package com.liferay.segments.internal.context;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
@@ -25,11 +27,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
@@ -70,6 +71,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Eduardo García
+ * @author Raymond Augé
  */
 @Component(immediate = true, service = RequestContextMapper.class)
 public class RequestContextMapper {
@@ -80,10 +82,6 @@ public class RequestContextMapper {
 		context.put(
 			Context.BROWSER, _browserSniffer.getBrowserId(httpServletRequest));
 		context.put(Context.COOKIES, _getCookies(httpServletRequest));
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		Device device = DeviceDetectionUtil.detectDevice(httpServletRequest);
 
@@ -112,30 +110,45 @@ public class RequestContextMapper {
 			(double)screenResolution.getWidth());
 
 		context.put(Context.HOSTNAME, httpServletRequest.getServerName());
-		context.put(Context.LANGUAGE_ID, themeDisplay.getLanguageId());
 
-		User user = themeDisplay.getUser();
+		User user = null;
 
-		if ((user != null) && (user.getLastLoginDate() != null)) {
-			Date lastLoginDate = user.getLastLoginDate();
-
-			context.put(
-				Context.LAST_SIGN_IN_DATE_TIME,
-				ZonedDateTime.ofInstant(
-					lastLoginDate.toInstant(), ZoneOffset.UTC));
+		try {
+			user = _portal.initUser(httpServletRequest);
 		}
-		else {
-			context.put(
-				Context.LAST_SIGN_IN_DATE_TIME,
-				ZonedDateTime.of(LocalDateTime.MIN, ZoneOffset.UTC));
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
+
+		if (user != null) {
+			if (user.getLastLoginDate() != null) {
+				Date lastLoginDate = user.getLastLoginDate();
+
+				context.put(
+					Context.LAST_SIGN_IN_DATE_TIME,
+					ZonedDateTime.ofInstant(
+						lastLoginDate.toInstant(), ZoneOffset.UTC));
+			}
+			else {
+				context.put(
+					Context.LAST_SIGN_IN_DATE_TIME,
+					ZonedDateTime.of(LocalDateTime.MIN, ZoneOffset.UTC));
+			}
+
+			context.put(Context.SIGNED_IN, !user.isDefaultUser());
+		}
+
+		context.put(
+			Context.LANGUAGE_ID,
+			LocaleUtil.toLanguageId(_portal.getLocale(httpServletRequest)));
 
 		context.put(Context.LOCAL_DATE, LocalDate.from(ZonedDateTime.now()));
 		context.put(
 			Context.REFERRER_URL,
 			GetterUtil.getString(
 				httpServletRequest.getHeader(HttpHeaders.REFERER)));
-		context.put(Context.SIGNED_IN, themeDisplay.isSignedIn());
 		context.put(
 			Context.URL, _portal.getCurrentCompleteURL(httpServletRequest));
 
@@ -191,6 +204,9 @@ public class RequestContextMapper {
 			String[]::new
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequestContextMapper.class);
 
 	@Reference
 	private BrowserSniffer _browserSniffer;

@@ -4,6 +4,10 @@ definition {
 		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
 		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
+		if (isSet(windowTitle)) {
+			SelectWindow(locator1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
+		}
+
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER",
@@ -37,6 +41,16 @@ definition {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_SIGN_IN_BUTTON",
 				value1 = "Sign in");
+		}
+	}
+
+	macro confirmMicrosoftApp {
+		Pause(locator1 = "3000");
+
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRM")) {
+			AssertClick(
+				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
+				value1 = "Yes");
 		}
 	}
 

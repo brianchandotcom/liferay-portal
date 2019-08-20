@@ -10,6 +10,14 @@ definition {
 		MenuItem.click(menuItem = "${dmDocumentTypeName}");
 	}
 
+	macro gotoAddDocumentTypePG {
+		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
+
+		var key_dmDocumentTypeName = "${dmDocumentTypeName}";
+
+		MenuItem.click(menuItem = "${dmDocumentTypeName}");
+	}
+
 	macro gotoAddRepositoryCP {
 		AssertVisible(locator1 = "Button#PLUS");
 

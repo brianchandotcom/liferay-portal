@@ -36,12 +36,32 @@ class CreateContentForm extends PortletBase {
 				.then(response => response.json())
 				.then(response => {
 					this._structures = response;
+
+					if (this._structures.length > 0) {
+						this.emit('structureChanged', {
+							ddmStructure: {
+								id: this._structures[0].id,
+								label: this._structures[0].label
+							}
+						});
+					}
 				});
 		}
 	}
 
 	_handleContentNameChange() {
 		this._validateForm();
+	}
+
+	_handleStructureChange(event) {
+		const targetElement = event.delegateTarget;
+
+		this.emit('structureChanged', {
+			ddmStructure: {
+				id: targetElement.options[targetElement.selectedIndex].value,
+				label: targetElement.options[targetElement.selectedIndex].text
+			}
+		});
 	}
 
 	_validateForm() {

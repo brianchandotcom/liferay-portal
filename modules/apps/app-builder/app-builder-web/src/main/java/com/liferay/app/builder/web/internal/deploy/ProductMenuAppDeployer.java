@@ -66,7 +66,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
-			key -> new ServiceRegistration[] {
+			key -> new ServiceRegistration<?>[] {
 				_deployAppPanelApp(portletName, panelCategoryKey),
 				_deployAppPanelCategory(appName, panelCategoryKey),
 				_deployAppPortlet(appName, portletName)
@@ -80,7 +80,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void undeploy(AppBuilderApp appBuilderApp) {
-		ServiceRegistration[] serviceRegistrations =
+		ServiceRegistration<?>[] serviceRegistrations =
 			_serviceRegistrationsMap.remove(appBuilderApp.getAppBuilderAppId());
 
 		if (serviceRegistrations == null) {
@@ -97,7 +97,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	private ServiceRegistration _deployAppPanelApp(
+	private ServiceRegistration<?> _deployAppPanelApp(
 		String portletName, String panelCategoryKey) {
 
 		Dictionary<String, Object> properties =
@@ -113,7 +113,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			properties);
 	}
 
-	private ServiceRegistration _deployAppPanelCategory(
+	private ServiceRegistration<?> _deployAppPanelCategory(
 		String appName, String panelCategoryKey) {
 
 		Dictionary<String, Object> properties =
@@ -131,7 +131,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			properties);
 	}
 
-	private ServiceRegistration _deployAppPortlet(
+	private ServiceRegistration<?> _deployAppPortlet(
 		String appName, String portletName) {
 
 		Dictionary<String, Object> properties =
@@ -172,7 +172,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
-	private final ConcurrentHashMap<Long, ServiceRegistration[]>
+	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
 		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

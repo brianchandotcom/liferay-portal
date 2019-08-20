@@ -2957,7 +2957,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 						we);
 				}
 
-				return;
+				continue;
 			}
 
 			if ((workflowDefinition != null) &&

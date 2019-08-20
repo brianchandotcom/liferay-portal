@@ -19,7 +19,6 @@
 			"src/**",
 			"test/**"
 		],
-
 		"commander": true,
 		"fbjs": [
 			"flow/**"

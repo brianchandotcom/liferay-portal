@@ -190,7 +190,7 @@ SegmentsExperimentsModal.propTypes = {
 	active: PropTypes.bool.isRequired,
 	description: PropTypes.string,
 	error: PropTypes.string,
-	goal: PropTypes.string,
+	goal: SegmentsExperimentGoal,
 	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	name: PropTypes.string,
 	onClose: PropTypes.func.isRequired,

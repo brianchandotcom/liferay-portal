@@ -93,7 +93,7 @@ const weeksUnit = {
 
 const yearsUnit = {
 	key: 'Years',
-	name: Liferay.Language.get('inst-years')
+	name: Liferay.Language.get('inst-year')
 };
 
 const velocityUnitsMap = {

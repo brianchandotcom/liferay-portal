@@ -22,6 +22,8 @@ Import-Package:\
 	\
 	!net.jcip.*,\
 	\
+	!net.sf.ehcache,\
+	\
 	!net.shibboleth.utilities.java.support.annotation.*,\
 	\
 	!net.spy.memcached.*,\

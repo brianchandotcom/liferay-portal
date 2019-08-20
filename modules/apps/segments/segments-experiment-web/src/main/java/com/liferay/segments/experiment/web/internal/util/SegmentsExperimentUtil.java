@@ -27,6 +27,7 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -111,12 +112,14 @@ public class SegmentsExperimentUtil {
 	public static JSONObject toStatusJSONObject(
 		Locale locale, int statusValue) {
 
-		SegmentsExperimentConstants.Status status =
+		Optional<SegmentsExperimentConstants.Status> statusOptional =
 			SegmentsExperimentConstants.Status.parse(statusValue);
 
-		if (status == null) {
+		if (!statusOptional.isPresent()) {
 			return null;
 		}
+
+		SegmentsExperimentConstants.Status status = statusOptional.get();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, SegmentsExperimentUtil.class);

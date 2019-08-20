@@ -24,47 +24,6 @@ package com.liferay.document.library.opener.onedrive.web.internal.constants;
 public class OneDriveBackgroundTaskConstants {
 
 	/**
-	 * Defines the {@link #CMD} attribute's value. This tells the background
-	 * task that it should perform a checkout, copying the Documents and Media
-	 * file's contents to a new OneDrive file.
-	 *
-	 * @review
-	 */
-	public static final String CHECKOUT = "checkout";
-
-	/**
-	 * Indicates to the background task which operation is being performed by
-	 * Documents and Media. Possible values are
-	 *
-	 * <ul>
-	 * <li>
-	 * {@link #CHECKOUT}
-	 * </li>
-	 * <li>
-	 * {@link #CREATE}
-	 * </li>
-	 * </ul>
-	 *
-	 * @review
-	 */
-	public static final String CMD = "cmd";
-
-	/**
-	 * Provides the company ID of the file to upload.
-	 *
-	 * @review
-	 */
-	public static final String COMPANY_ID = "companyId";
-
-	/**
-	 * Defines the {@link #CMD} attribute's value. This tells the background
-	 * task that it should create a new empty OneDrive file.
-	 *
-	 * @review
-	 */
-	public static final String CREATE = "create";
-
-	/**
 	 * Provides the ID of the file entry to link to the OneDrive file.
 	 *
 	 * @review

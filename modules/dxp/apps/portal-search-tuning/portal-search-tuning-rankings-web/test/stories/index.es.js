@@ -68,16 +68,6 @@ storiesOf('Main|ResultsRankingForm', module)
 	.add('default', () => (
 		<ResultsRankingForm
 			cancelUrl=""
-			fetchDocumentsHiddenUrl=""
-			fetchDocumentsUrl=""
-			formName="testFm"
-			saveActionUrl="#"
-			searchQuery={text('Search Term', 'example')}
-		/>
-	))
-	.add('with mock api', () => (
-		<ResultsRankingForm
-			cancelUrl=""
 			fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
 			fetchDocumentsUrl="http://www.mocky.io/v2/5cca1d49310000bf0312ce66"
 			formName="testFm"

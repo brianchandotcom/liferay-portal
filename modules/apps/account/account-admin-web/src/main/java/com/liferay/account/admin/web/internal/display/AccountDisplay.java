@@ -52,6 +52,10 @@ public class AccountDisplay {
 		return _statusLabel;
 	}
 
+	public String getStatusLabelStyle() {
+		return _statusLabelStyle;
+	}
+
 	public String getWebsite() {
 		return _website;
 	}
@@ -62,6 +66,7 @@ public class AccountDisplay {
 		_name = accountEntry.getName();
 		_parentAccountName = _getParentAccountName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
+		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
 		_website = _getWebsite(accountEntry);
 	}
 
@@ -97,10 +102,24 @@ public class AccountDisplay {
 		return StringPool.BLANK;
 	}
 
+	private String _getStatusLabelStyle(AccountEntry accountEntry) {
+		int status = accountEntry.getStatus();
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "success";
+		}
+
+		if (status == WorkflowConstants.STATUS_INACTIVE) {
+			return "secondary";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getWebsite(AccountEntry accountEntry) {
 		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
-			accountEntry.getCompanyId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId());
+				accountEntry.getCompanyId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId());
 
 		if (websites.isEmpty()) {
 			return StringPool.BLANK;
@@ -116,6 +135,7 @@ public class AccountDisplay {
 	private final String _name;
 	private final String _parentAccountName;
 	private final String _statusLabel;
+	private final String _statusLabelStyle;
 	private final String _website;
 
 }

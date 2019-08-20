@@ -63,7 +63,7 @@ SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerFac
 			>
 				<clay:label
 					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
-					style="success"
+					style="<%= accountDisplay.getStatusLabelStyle() %>"
 				/>
 			</liferay-ui:search-container-column-text>
 

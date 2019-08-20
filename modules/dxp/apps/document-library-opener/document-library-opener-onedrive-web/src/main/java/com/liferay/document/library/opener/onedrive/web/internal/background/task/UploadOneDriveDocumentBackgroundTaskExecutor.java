@@ -200,10 +200,10 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 
 		JsonObject jsonObject = new JsonObject();
 
-		jsonObject.add("file", new JsonObject());
-		jsonObject.add("name", new JsonPrimitive(fileEntry.getFileName()));
 		jsonObject.add(
 			"@microsoft.graph.conflictBehavior", new JsonPrimitive("rename"));
+		jsonObject.add("file", new JsonObject());
+		jsonObject.add("name", new JsonPrimitive(fileEntry.getFileName()));
 
 		JsonObject responseJSONObject = customRequest.post(jsonObject);
 

@@ -348,7 +348,7 @@ definition {
 			dmDocumentTitle = "DM Folder Name",
 			dmFolderName = "DM Folder Name");
 
-		DMNavigator.gotoAddDocumentType();
+		DMNavigator.gotoAddDocumentTypeCP();
 
 		DMDocument.editDocument(
 			dmDocumentDescription = "DM Document Description",

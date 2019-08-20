@@ -2,7 +2,7 @@ definition {
 
 	var dmDocumentTypeName = "File Upload";
 
-	macro gotoAddDocumentType {
+	macro gotoAddDocumentTypeCP {
 		LexiconEntry.gotoAdd();
 
 		var key_dmDocumentTypeName = "${dmDocumentTypeName}";

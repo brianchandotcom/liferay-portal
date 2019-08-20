@@ -187,6 +187,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			return;
 		}
 
+		long lastInstanceId = 0;
+		long searchHitsTotal = 0;
+		int searchRequestSize = 50;
+		SearchSearchResponse searchSearchResponse = null;
+
 		Stream<WorkflowMetricsSLADefinition> stream =
 			workflowMetricsSLADefinitions.stream();
 
@@ -202,11 +207,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		processIds.forEach(
 			processId -> startNodeIdsMap.put(
 				processId, _getStartNodeId(processId)));
-
-		SearchSearchResponse searchSearchResponse = null;
-		long lastInstanceId = 0;
-		long searchHitsTotal = 0;
-		int searchRequestSize = 50;
 
 		while (true) {
 			searchSearchResponse = searchEngineAdapter.execute(

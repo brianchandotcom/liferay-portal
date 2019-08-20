@@ -44,6 +44,7 @@ patch {
 	fileNames "org/hibernate/engine/jdbc/SerializableBlobProxy.java"
 	fileNames "org/hibernate/engine/jdbc/SerializableClobProxy.java"
 	fileNames "org/hibernate/intercept/FieldInterceptionHelper.java"
+	fileNames "org/hibernate/util/ReflectHelper.java"
 
 	originalLibModuleName = "hibernate-core"
 }

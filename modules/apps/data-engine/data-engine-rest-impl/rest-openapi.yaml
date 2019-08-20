@@ -802,6 +802,34 @@ paths:
                                 $ref: "#/components/schemas/DataListView"
                     description: ""
             tags: ["DataListView"]
+        put:
+            operationId: putDataListView
+            parameters:
+                - in: path
+                  name: dataListViewId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DataListView"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DataListView"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DataListView"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DataListView"
+                    description: ""
+            tags: ["DataListView"]
     "/data-record-collections/{dataRecordCollectionId}":
         delete:
             operationId: deleteDataRecordCollection

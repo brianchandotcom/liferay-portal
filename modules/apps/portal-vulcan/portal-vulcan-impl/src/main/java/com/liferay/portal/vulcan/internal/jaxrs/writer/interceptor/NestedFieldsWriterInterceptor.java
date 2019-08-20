@@ -142,10 +142,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		NestedField nestedField = method.getAnnotation(NestedField.class);
 
-		Class<?> parentReturnType = nestedField.parentType();
+		Class<?> parentClass = nestedField.parentClass();
 
-		if (nestedField.parentType() != Void.class) {
-			if (item.getClass() == parentReturnType) {
+		if (nestedField.parentClass() != Void.class) {
+			if (item.getClass() == parentClass) {
 				return true;
 			}
 
@@ -290,7 +290,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		itemClasses.add(itemClass.getSuperclass());
 
-		for (Class curItemClass : itemClasses) {
+		for (Class<?> curItemClass : itemClasses) {
 			try {
 				Field itemField = curItemClass.getDeclaredField(fieldName);
 
@@ -329,8 +329,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private Object[] _getMethodArgs(
-			String fieldName, Object item, Class resourceClass, Method method,
-			NestedFieldsContext nestedFieldsContext)
+			String fieldName, Object item, Class<?> resourceClass,
+			Method method, NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
 		Object[] args = new Object[method.getParameterCount()];
@@ -503,7 +503,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		return parameter;
 	}
 
-	private String _getResourceVersion(Class resourceBaseClass) {
+	private String _getResourceVersion(Class<?> resourceBaseClass) {
 		Annotation[] annotations = resourceBaseClass.getAnnotations();
 
 		for (Annotation annotation : annotations) {

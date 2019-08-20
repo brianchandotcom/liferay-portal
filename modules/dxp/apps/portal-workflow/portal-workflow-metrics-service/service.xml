@@ -67,6 +67,55 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="WorkflowMetricsSLADefinitionVersion" remote-service="false" table="WMSLADefinitionVersion" uuid="true">
+
+		<!-- PK fields -->
+
+		<column db-name="slaDefinitionVersionId" name="workflowMetricsSLADefinitionVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column db-name="slaDefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
+		<column name="version" type="String" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="duration" type="long" />
+		<column name="calendarKey" type="String" />
+		<column name="processId" type="long" />
+		<column name="processVersion" type="String" />
+		<column name="pauseNodeKeys" type="String" />
+		<column name="startNodeKeys" type="String" />
+		<column name="stopNodeKeys" type="String" />
+		<column name="status" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="WorkflowMetricsSLADefinitionId" return-type="Collection">
+			<finder-column name="workflowMetricsSLADefinitionId" />
+		</finder>
+		<finder name="WMSLAD_V" return-type="WorkflowMetricsSLADefinitionVersion">
+			<finder-column name="workflowMetricsSLADefinitionId" />
+			<finder-column name="version" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>WorkflowMetricsSLADefinitionDuplicateName</exception>
 		<exception>WorkflowMetricsSLADefinitionDuration</exception>

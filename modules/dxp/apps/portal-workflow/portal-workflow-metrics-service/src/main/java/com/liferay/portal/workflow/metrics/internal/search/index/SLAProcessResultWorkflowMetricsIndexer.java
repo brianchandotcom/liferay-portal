@@ -208,7 +208,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		long searchHitsTotal = 0;
 		int searchRequestSize = 50;
 
-		do {
+		while (true) {
 			searchSearchResponse = searchEngineAdapter.execute(
 				_createSearchSearchRequest(
 					companyId, lastInstanceId, searchRequestSize,
@@ -234,8 +234,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				searchHit.getDocument();
 
 			lastInstanceId = document.getLong("instanceId");
+
+			if (searchHitsTotal != searchRequestSize) { 
+				break;
+			}
 		}
-		while (searchHitsTotal == searchRequestSize);
 	}
 
 	@Reference

@@ -235,7 +235,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 
 			lastInstanceId = document.getLong("instanceId");
 
-			if (searchHitsTotal != searchRequestSize) { 
+			if (searchHitsTotal != searchRequestSize) {
 				break;
 			}
 		}

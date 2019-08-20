@@ -126,10 +126,10 @@ public class NestedFieldsWriterInterceptorTest {
 
 		Assert.assertEquals(Arrays.toString(skus), 4, skus.length);
 
-		ProductOption[] productOptionsDTOs = product1.getProductOptions();
+		ProductOption[] productOptions = product1.getProductOptions();
 
 		Assert.assertEquals(
-			Arrays.toString(productOptionsDTOs), 3, productOptionsDTOs.length);
+			Arrays.toString(productOptions), 3, productOptions.length);
 	}
 
 	@Test
@@ -166,6 +166,60 @@ public class NestedFieldsWriterInterceptorTest {
 
 		Assert.assertEquals(
 			Arrays.toString(productOptions), 3, productOptions.length);
+	}
+
+	@Test
+	public void testGetNestedFieldsWithDeeplyNestedFields() throws Exception {
+		Product product1 = _toProduct(1L, null);
+		Product product2 = _toProduct(2L, null);
+
+		Mockito.when(
+			_writerInterceptorContext.getEntity()
+		).thenReturn(
+			Arrays.asList(product1, product2)
+		);
+
+		Mockito.doReturn(
+			new NestedFieldsHttpServletRequestWrapperTest.
+				MockHttpServletRequest()
+		).when(
+			_nestedFieldsWriterInterceptor
+		).getHttpServletRequest(
+			Mockito.any(Message.class)
+		);
+
+		NestedFieldsContextThreadLocal.setNestedFieldsContext(
+			new NestedFieldsContext(
+				Arrays.asList(
+					"productOptions", "productOptions.productOptionValues"),
+				new MessageImpl(), new MultivaluedHashMap<>(), "v1.0",
+				new MultivaluedHashMap<>()));
+
+		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
+
+		ProductOption[] productOptions = product1.getProductOptions();
+
+		Assert.assertEquals(
+			Arrays.toString(productOptions), 3, productOptions.length);
+
+		ProductOptionValue[] productOptionValues =
+			productOptions[0].getProductOptionValues();
+
+		Assert.assertEquals(
+			Arrays.toString(productOptionValues), 3,
+			productOptionValues.length);
+
+		productOptionValues = productOptions[1].getProductOptionValues();
+
+		Assert.assertEquals(
+			Arrays.toString(productOptionValues), 2,
+			productOptionValues.length);
+
+		productOptionValues = productOptions[2].getProductOptionValues();
+
+		Assert.assertEquals(
+			Arrays.toString(productOptionValues), 0,
+			productOptionValues.length);
 	}
 
 	@Test
@@ -401,6 +455,23 @@ public class NestedFieldsWriterInterceptorTest {
 		return product;
 	}
 
+	private static ProductOption _toProductOption(long id, String name) {
+		ProductOption productOption = new ProductOption();
+
+		productOption.setId(id);
+		productOption.setName(name);
+
+		return productOption;
+	}
+
+	private static ProductOptionValue _toProductOptionValue(long id) {
+		ProductOptionValue productOptionValue = new ProductOptionValue();
+
+		productOptionValue.setId(id);
+
+		return productOptionValue;
+	}
+
 	private static Sku _toSku(long id) {
 		Sku sku = new Sku();
 
@@ -432,6 +503,15 @@ public class NestedFieldsWriterInterceptorTest {
 		public List<ProductOption> getProductOptions(
 			@NotNull @PathParam("id") Long id,
 			@QueryParam("name") String name) {
+
+			return Collections.emptyList();
+		}
+
+		@GET
+		@Path("/productOptions/{id}/productOptionValues")
+		@Produces("application/*")
+		public List<ProductOptionValue> getProductOptionValues(
+			@NotNull @PathParam("id") Long id) {
 
 			return Collections.emptyList();
 		}
@@ -605,23 +685,48 @@ public class NestedFieldsWriterInterceptorTest {
 	private static class ProductOption {
 
 		public Long getId() {
-			return _id;
+			return id;
 		}
 
 		public String getName() {
-			return _name;
+			return name;
+		}
+
+		public ProductOptionValue[] getProductOptionValues() {
+			return productOptionValues;
 		}
 
 		public void setId(Long id) {
-			_id = id;
+			this.id = id;
 		}
 
 		public void setName(String name) {
-			_name = name;
+			this.name = name;
 		}
 
-		private Long _id;
-		private String _name;
+		public void setProductOptionValues(
+			ProductOptionValue[] productOptionValues) {
+
+			this.productOptionValues = productOptionValues;
+		}
+
+		protected Long id;
+		protected String name;
+		protected ProductOptionValue[] productOptionValues;
+
+	}
+
+	private static class ProductOptionValue {
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		protected Long id;
 
 	}
 
@@ -640,18 +745,34 @@ public class NestedFieldsWriterInterceptorTest {
 				_toProductOption(3L, "test3"));
 
 			if (name != null) {
-				Stream<ProductOption> productOptionDTOStream =
+				Stream<ProductOption> productOptionStream =
 					productOptions.stream();
 
-				productOptions = productOptionDTOStream.filter(
-					productOptionDTO -> Objects.equals(
-						productOptionDTO.getName(), name)
+				productOptions = productOptionStream.filter(
+					productOption -> Objects.equals(
+						productOption.getName(), name)
 				).collect(
 					Collectors.toList()
 				);
 			}
 
 			return productOptions;
+		}
+
+		@NestedField("productOptionValues")
+		public List<ProductOptionValue> getProductOptionValues(Long id) {
+			if (id == 1) {
+				return Arrays.asList(
+					_toProductOptionValue(1L), _toProductOptionValue(2L),
+					_toProductOptionValue(3L));
+			}
+			else if (id == 2) {
+				return Arrays.asList(
+					_toProductOptionValue(4L), _toProductOptionValue(5L));
+			}
+			else {
+				return Collections.emptyList();
+			}
 		}
 
 		@GET
@@ -693,15 +814,6 @@ public class NestedFieldsWriterInterceptorTest {
 				_toCategory(1L), _toCategory(2L), _toCategory(3L));
 		}
 
-		private ProductOption _toProductOption(long id, String name) {
-			ProductOption productOption = new ProductOption();
-
-			productOption.setId(id);
-			productOption.setName(name);
-
-			return productOption;
-		}
-
 	}
 
 	private static class ProductResource_v2_0_Impl
@@ -730,12 +842,12 @@ public class NestedFieldsWriterInterceptorTest {
 				_toProductOption(3L, "test3"));
 
 			if (name != null) {
-				Stream<ProductOption> productOptionDTOStream =
+				Stream<ProductOption> productOptionStream =
 					productOptions.stream();
 
-				productOptions = productOptionDTOStream.filter(
-					productOptionDTO -> Objects.equals(
-						productOptionDTO.getName(), name)
+				productOptions = productOptionStream.filter(
+					productOption -> Objects.equals(
+						productOption.getName(), name)
 				).collect(
 					Collectors.toList()
 				);
@@ -786,14 +898,14 @@ public class NestedFieldsWriterInterceptorTest {
 	private static class Sku {
 
 		public Long getId() {
-			return _id;
+			return id;
 		}
 
 		public void setId(Long id) {
-			_id = id;
+			this.id = id;
 		}
 
-		private Long _id;
+		protected Long id;
 
 	}
 
@@ -810,6 +922,8 @@ public class NestedFieldsWriterInterceptorTest {
 	private interface ProductResource_v1_0 {
 
 		public List<ProductOption> getProductOptions(Long id, String name);
+
+		public List<ProductOptionValue> getProductOptionValues(Long id);
 
 		public List<Product> getProducts();
 

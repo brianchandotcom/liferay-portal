@@ -4,8 +4,13 @@
  * CreateContentDialog
  */
 {template .render}
+	{@param? _ddmStructure: [
+		id: string,
+		label: string
+	]}
 	{@param? _handleCancelButtonClick: any}
 	{@param? _handleFormValidated: any}
+	{@param? _handleStructureChange: any }
 	{@param? _handleSubmitButtonClick: any}
 	{@param? _handleVisibleChanged: any}
 	{@param? _step: number}
@@ -20,7 +25,16 @@
 		{param body kind="html"}
 			{if $_step == 1}
 				{call com.liferay.layout.content.page.editor.web.CreateContentForm.render}
-					{param events: ['formValidated': $_handleFormValidated] /}
+					{param events: [
+							'formValidated': $_handleFormValidated,
+							'structureChanged': $_handleStructureChange
+					] /}
+					{param spritemap: $spritemap /}
+					{param store: $store /}
+				{/call}
+			{else}
+				{call com.liferay.layout.content.page.editor.web.MapContentForm.render}
+					{param ddmStructure: $_ddmStructure /}
 					{param spritemap: $spritemap /}
 					{param store: $store /}
 				{/call}
@@ -61,6 +75,8 @@
 							</span>
 
 							{msg desc=""}saving-changes{/msg}
+						{elseif $_step == 1}
+							{msg desc=""}next{/msg}
 						{else}
 							{msg desc=""}save{/msg}
 						{/if}

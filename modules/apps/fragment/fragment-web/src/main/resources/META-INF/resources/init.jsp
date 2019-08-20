@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
+page import="com.liferay.fragment.contributor.FragmentCollectionContributor" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" %><%@

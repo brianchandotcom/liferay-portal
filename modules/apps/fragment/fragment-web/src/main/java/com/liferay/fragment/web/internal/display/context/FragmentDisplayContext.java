@@ -16,12 +16,15 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributor;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -72,6 +75,10 @@ public class FragmentDisplayContext {
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
 
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)
+				_httpServletRequest.getAttribute(
+					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -148,6 +155,13 @@ public class FragmentDisplayContext {
 		return _fragmentCollection;
 	}
 
+	public List<FragmentCollectionContributor>
+		getFragmentCollectionContributors() {
+
+		return _fragmentCollectionContributorTracker.
+			getFragmentCollectionContributors();
+	}
+
 	public long getFragmentCollectionId() {
 		if (Validator.isNotNull(_fragmentCollectionId)) {
 			return _fragmentCollectionId;
@@ -177,6 +191,17 @@ public class FragmentDisplayContext {
 			defaultFragmentCollectionId);
 
 		return _fragmentCollectionId;
+	}
+
+	public String getFragmentCollectionKey() {
+		if (_fragmentCollectionKey != null) {
+			return _fragmentCollectionKey;
+		}
+
+		_fragmentCollectionKey = ParamUtil.getString(
+			_httpServletRequest, "fragmentCollectionKey");
+
+		return _fragmentCollectionKey;
 	}
 
 	public String getFragmentCollectionName() throws PortalException {
@@ -564,7 +589,10 @@ public class FragmentDisplayContext {
 	}
 
 	private FragmentCollection _fragmentCollection;
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 	private Long _fragmentCollectionId;
+	private String _fragmentCollectionKey;
 	private SearchContainer _fragmentEntriesSearchContainer;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;

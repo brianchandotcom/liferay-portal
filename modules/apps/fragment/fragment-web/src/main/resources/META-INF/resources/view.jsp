@@ -18,6 +18,8 @@
 
 <%
 List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request.getAttribute(FragmentWebKeys.FRAGMENT_COLLECTIONS);
+
+List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDisplayContext.getFragmentCollectionContributors();
 %>
 
 <div class="container-fluid container-fluid-max-xl container-view">
@@ -32,7 +34,7 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 						</portlet:renderURL>
 
 						<c:choose>
-							<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
+							<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) || ListUtil.isNotEmpty(fragmentCollectionContributors) %>">
 								<div class="autofit-row autofit-row-center">
 									<div class="autofit-col autofit-col-expand">
 										<strong class="text-uppercase">
@@ -86,6 +88,26 @@ List<FragmentCollection> fragmentCollections = (List<FragmentCollection>)request
 														markupView="lexicon"
 													/>
 												</c:if>
+											</a>
+										</li>
+
+									<%
+									}
+
+									for (FragmentCollectionContributor fragmentCollectionContributor : fragmentCollectionContributors) {
+									%>
+
+										<li class="nav-item">
+
+											<%
+											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+
+											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+											fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
+											%>
+
+											<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
 											</a>
 										</li>
 

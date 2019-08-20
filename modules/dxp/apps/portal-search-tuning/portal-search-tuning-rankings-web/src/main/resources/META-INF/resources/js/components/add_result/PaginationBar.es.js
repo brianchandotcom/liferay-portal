@@ -16,7 +16,7 @@ import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {sub} from '../../utils/language.es';
 
-const deltaValues = [5, 10, 20, 30, 50];
+const DELTAS = [5, 10, 20, 30, 50];
 
 class DeltaItem extends React.Component {
 	static propTypes = {
@@ -50,8 +50,8 @@ class DeltaItem extends React.Component {
 
 class PaginationBar extends Component {
 	static defaultProps = {
-		deltas: deltaValues,
-		selectedDelta: deltaValues[2],
+		deltas: DELTAS,
+		selectedDelta: DELTAS[4],
 		showDeltaDropdown: false
 	};
 

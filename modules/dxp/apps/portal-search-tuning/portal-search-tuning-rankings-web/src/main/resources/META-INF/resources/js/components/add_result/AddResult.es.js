@@ -26,7 +26,7 @@ import {resultsDataToMap} from '../../utils/util.es';
 import {sub} from '../../utils/language.es';
 import {toggleListItem} from '../../utils/util.es';
 
-const DELTAS = [5, 10, 20, 40, 50];
+const DELTAS = [5, 10, 20, 30, 50];
 
 class AddResult extends Component {
 	static contextType = ThemeContext;
@@ -45,7 +45,7 @@ class AddResult extends Component {
 		displayInitialMessage: true,
 		page: 1,
 		results: {},
-		selectedDelta: 10,
+		selectedDelta: DELTAS[4],
 		showModal: false
 	};
 

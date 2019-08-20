@@ -32,7 +32,7 @@ import {
 } from '../utils/util.es';
 import {PropTypes} from 'prop-types';
 
-const DELTA = 10;
+const DELTA = 50;
 
 class ErrorBoundary extends Component {
 	state = {

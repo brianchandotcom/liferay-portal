@@ -94,19 +94,10 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 
 		long fileEntryId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.FILE_ENTRY_ID));
-
-		String cmd = (String)taskContextMap.get(
-			OneDriveBackgroundTaskConstants.CMD);
 		long userId = GetterUtil.getLong(
 			taskContextMap.get(OneDriveBackgroundTaskConstants.USER_ID));
 
-		if (cmd.equals(OneDriveBackgroundTaskConstants.CHECKOUT)) {
-			_uploadFile(userId, _dlAppLocalService.getFileEntry(fileEntryId));
-		}
-		else {
-			_dlOpenerOneDriveManager.createFile(
-				userId, _dlAppLocalService.getFileEntry(fileEntryId));
-		}
+		_uploadFile(userId, _dlAppLocalService.getFileEntry(fileEntryId));
 
 		return BackgroundTaskResult.SUCCESS;
 	}

@@ -14,9 +14,6 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.background.task.UploadOneDriveDocumentBackgroundTaskExecutor;
@@ -41,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.microsoft.graph.core.DefaultClientConfig;
-import com.microsoft.graph.http.CustomRequest;
 import com.microsoft.graph.models.extensions.DriveItem;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.models.extensions.Permission;
@@ -94,45 +90,19 @@ public class DLOpenerOneDriveManager {
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		AccessToken accessToken = _getAccessToken(
-			fileEntry.getCompanyId(), userId);
-
-		IGraphServiceClient iGraphServiceClientBuilder =
-			GraphServiceClient.fromConfig(
-				DefaultClientConfig.createWithAuthenticationProvider(
-					new IAuthenticationProviderImpl(accessToken)));
-
-		CustomRequest<JsonObject> customRequest =
-			iGraphServiceClientBuilder.customRequest(
-				"/me/drive/root/children"
-			).buildRequest();
-
-		JsonObject jsonObject = new JsonObject();
-
-		jsonObject.add("file", new JsonObject());
-		jsonObject.add("name", new JsonPrimitive(fileEntry.getFileName()));
-		jsonObject.add(
-			"@microsoft.graph.conflictBehavior", new JsonPrimitive("rename"));
-
-		JsonObject responseJSONObject = customRequest.post(jsonObject);
+		BackgroundTask backgroundTask = _addBackgroundTask(fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
 				userId, fileEntry,
 				DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
-		JsonPrimitive jsonPrimitive = responseJSONObject.getAsJsonPrimitive(
-			"id");
-
-		_dlOpenerFileEntryReferenceLocalService.
-			updateDLOpenerFileEntryReference(
-				jsonPrimitive.getAsString(), fileEntry);
-
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
 			new CachingSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
-			() -> _getContentFile(userId, fileEntry));
+			() -> _getContentFile(userId, fileEntry),
+			backgroundTask.getBackgroundTaskId());
 	}
 
 	public void deleteFile(long userId, FileEntry fileEntry)
@@ -275,9 +245,6 @@ public class DLOpenerOneDriveManager {
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>() {
 				{
-					put(
-						OneDriveBackgroundTaskConstants.CMD,
-						OneDriveBackgroundTaskConstants.CHECKOUT);
 					put(
 						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
 						true);

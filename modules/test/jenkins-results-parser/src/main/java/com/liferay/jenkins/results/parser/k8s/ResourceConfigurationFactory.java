@@ -79,7 +79,7 @@ public class ResourceConfigurationFactory {
 
 		hostname = hostname.toLowerCase();
 
-		return hostname.replaceAll("([^\\.]+)(\\..*|)", "$1-");
+		return hostname.replaceAll("([^\\.]+)(\\..*|)", "$1");
 	}
 
 	private static String _getDatabaseConfigurationName(
@@ -240,7 +240,7 @@ public class ResourceConfigurationFactory {
 
 		V1Pod v1Pod = new V1Pod();
 
-		String hostname = getPodPrefix() + dockerBaseImageName;
+		String hostname = getPodPrefix() + "-" + dockerBaseImageName;
 
 		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
 

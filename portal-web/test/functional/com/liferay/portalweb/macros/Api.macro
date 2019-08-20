@@ -68,6 +68,18 @@ definition {
 			locator1 = "JSONWSUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD",
 			value1 = "${userBirthdayYear}");
 
+		for (var userRoleTitle : list "${userRoleTitles}") {
+			var roleId = JSONRole.getRoleIdByName(roleTitle = "${userRoleTitle}");
+
+			Type.sendKeys(
+				locator1 = "JSONWSUser#API_EXECUTE_ROLE_IDS_FIELD",
+				value1 = "${roleId},");
+		}
+
+		KeyPress(
+			locator1 = "JSONWSUser#API_EXECUTE_ROLE_IDS_FIELD",
+			value1 = "\BACK_SPACE");
+
 		AssertClick(
 			locator1 = "Button#INVOKE",
 			value1 = "Invoke");

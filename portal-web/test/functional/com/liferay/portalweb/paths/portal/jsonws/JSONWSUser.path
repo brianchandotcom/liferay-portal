@@ -84,6 +84,11 @@
 	<td>//textarea[@name='birthdayYear']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>API_EXECUTE_ROLE_IDS_FIELD</td>
+	<td>//textarea[@name='roleIds']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

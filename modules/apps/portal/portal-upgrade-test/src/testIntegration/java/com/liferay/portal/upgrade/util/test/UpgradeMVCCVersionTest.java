@@ -19,17 +19,18 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.util.DBAssertionUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
-
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+
+import java.io.InputStream;
+
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.InputStream;
-import java.util.List;
 
 /**
  * @author Alicia García

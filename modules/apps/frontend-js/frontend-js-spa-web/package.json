@@ -3,7 +3,7 @@
 		"frontend-js-web": "^4.0.0",
 		"metal": "2.16.8",
 		"metal-dom": "2.16.8",
-		"senna": "2.7.7"
+		"senna": "2.7.8"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {

@@ -197,6 +197,7 @@ AUI.add(
 						strings: {
 							asc: Liferay.Language.get('ascending'),
 							desc: Liferay.Language.get('descending'),
+							propertyName: Liferay.Language.get('property-name'),
 							reverseSortBy: Lang.sub(
 								Liferay.Language.get('reverse-sort-by-x'),
 								['{column}']
@@ -204,7 +205,8 @@ AUI.add(
 							sortBy: Lang.sub(
 								Liferay.Language.get('sort-by-x'),
 								['{column}']
-							)
+							),
+							value: Liferay.Language.get('value')
 						}
 					}
 				},
@@ -214,6 +216,7 @@ AUI.add(
 						addNode: Liferay.Language.get('add-field'),
 						button: Liferay.Language.get('button'),
 						buttonType: Liferay.Language.get('button-type'),
+						cancel: Liferay.Language.get('cancel'),
 						deleteFieldsMessage: Liferay.Language.get(
 							'are-you-sure-you-want-to-delete-the-selected-entries'
 						),

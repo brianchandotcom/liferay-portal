@@ -14,12 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,10 +29,8 @@ import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskFormInstanceLocal
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -86,22 +80,9 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 			kaleoTaskFormInstance.setFormValues(formValues);
 		}
 		else {
-			FormValueProcessor formValueProcessor = getFormValueProcessor();
-
-			if (formValueProcessor != null) {
-				kaleoTaskFormInstance = formValueProcessor.processFormValues(
-					kaleoTaskForm, kaleoTaskFormInstance, formValues,
-					serviceContext);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"No form value processor defined to for form: ",
-							kaleoTaskForm.getKaleoTaskFormId(), " and values: ",
-							formValues));
-				}
-			}
+			kaleoTaskFormInstance = _formValueProcessor.processFormValues(
+				kaleoTaskForm, kaleoTaskFormInstance, formValues,
+				serviceContext);
 		}
 
 		kaleoTaskFormInstancePersistence.update(kaleoTaskFormInstance);
@@ -159,18 +140,8 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 		return kaleoTaskFormInstancePersistence.findByKaleoTaskId(kaleoTaskId);
 	}
 
-	protected FormValueProcessor getFormValueProcessor() {
-		return _serviceTracker.getService();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		KaleoTaskFormInstanceLocalServiceImpl.class);
-
-	private static final ServiceTracker<FormValueProcessor, FormValueProcessor>
-		_serviceTracker = ServiceTrackerFactory.open(
-			FrameworkUtil.getBundle(
-				KaleoTaskFormInstanceLocalServiceImpl.class),
-			FormValueProcessor.class);
+	@Reference
+	private FormValueProcessor _formValueProcessor;
 
 	@Reference
 	private KaleoTaskFormLocalService _kaleoTaskFormLocalService;

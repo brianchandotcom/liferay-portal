@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Theme Font Awesome Web
+Bundle-SymbolicName: com.liferay.frontend.theme.font.awesome.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-theme-font-awesome-web

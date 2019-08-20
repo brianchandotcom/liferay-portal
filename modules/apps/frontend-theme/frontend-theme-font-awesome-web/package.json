@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"liferay-font-awesome": "3.4.0"
+	},
+	"name": "frontend-theme-font-awesome-web",
+	"version": "1.0.0"
+}

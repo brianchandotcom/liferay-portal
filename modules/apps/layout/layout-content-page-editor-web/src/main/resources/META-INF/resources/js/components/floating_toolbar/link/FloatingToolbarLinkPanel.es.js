@@ -372,7 +372,10 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		this._clearFields();
 
-		if (this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure) {
+		if (
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure &&
+			this.selectedMappingTypes.type
+		) {
 			const data = {
 				classNameId: this.selectedMappingTypes.type.id
 			};

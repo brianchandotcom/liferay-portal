@@ -581,6 +581,10 @@ public class FragmentDisplayContext {
 	}
 
 	private long _getDefaultFragmentCollectionId() {
+		if (Validator.isNotNull(_getSelectedFragmentCollectionKey())) {
+			return 0;
+		}
+
 		List<FragmentCollection> fragmentCollections =
 			FragmentCollectionLocalServiceUtil.getFragmentCollections(
 				_themeDisplay.getScopeGroupId(), 0, 1);
@@ -605,7 +609,9 @@ public class FragmentDisplayContext {
 	}
 
 	private String _getDefaultFragmentCollectionKey() {
-		if (getFragmentCollectionId() > 0) {
+		if ((_getSelectedFragmentCollectionId() > 0) ||
+			(_getDefaultFragmentCollectionId() > 0)) {
+
 			return StringPool.BLANK;
 		}
 
@@ -687,6 +693,15 @@ public class FragmentDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	private long _getSelectedFragmentCollectionId() {
+		return ParamUtil.getLong(_httpServletRequest, "fragmentCollectionId");
+	}
+
+	private String _getSelectedFragmentCollectionKey() {
+		return ParamUtil.getString(
+			_httpServletRequest, "fragmentCollectionKey");
 	}
 
 	private String _getTabs1() {

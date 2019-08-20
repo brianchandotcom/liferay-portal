@@ -40,9 +40,16 @@ function Variant({
 						displayType="unstyled"
 						onClick={_handleVariantNavigation}
 					>
-						{control
-							? Liferay.Language.get('variant-control')
-							: name}
+						{control ? (
+							<>
+								<span className="mr-2">
+									{Liferay.Language.get('variant-control')}
+								</span>
+								<ClayIcon symbol="lock" />
+							</>
+						) : (
+							name
+						)}
 					</ClayButton>
 				</ClayList.ItemTitle>
 			</ClayList.ItemField>

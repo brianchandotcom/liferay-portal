@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClaySelect from '@clayui/select';
 import Variants from './Variants/Variants.es';
 import {
@@ -102,6 +103,14 @@ function SegmentsExperiments({
 						</ClayDropDown>
 					</div>
 
+					<ClayLabel
+						displayType={_statusToType(
+							segmentsExperiment.status.value
+						)}
+					>
+						{segmentsExperiment.status.label}
+					</ClayLabel>
+
 					<SegmentsExperimentsDetails
 						segmentsExperiment={segmentsExperiment}
 					/>
@@ -116,22 +125,23 @@ function SegmentsExperiments({
 						variants={variants}
 					/>
 
-					<ClayButton className="w-100 mt-2" disabled>
+					<ClayButton className="w-100" disabled>
 						{Liferay.Language.get('review-and-run-test')}
 					</ClayButton>
 				</>
 			)}
 			{!segmentsExperiment && (
-				<>
+				<div className="text-center">
 					<h4 className="text-dark">
 						{Liferay.Language.get(
 							'no-active-tests-were-found-for-the-selected-experience'
 						)}
 					</h4>
-					<p>{Liferay.Language.get('create-test-help-message')}</p>
+					<p className="small">
+						{Liferay.Language.get('create-test-help-message')}
+					</p>
 					<ClayButton
-						className="w-100"
-						displayType="primary"
+						displayType="secondary"
 						onClick={() =>
 							onCreateSegmentsExperiment(
 								selectedSegmentsExperienceId
@@ -140,7 +150,7 @@ function SegmentsExperiments({
 					>
 						{Liferay.Language.get('create-test')}
 					</ClayButton>
-				</>
+				</div>
 			)}
 		</>
 	);

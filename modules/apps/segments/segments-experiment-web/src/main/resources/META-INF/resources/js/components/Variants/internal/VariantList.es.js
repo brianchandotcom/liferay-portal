@@ -25,41 +25,25 @@ function VariantList({
 	variants
 }) {
 	return (
-		<>
-			<ClayList>
-				{variants.map(variant => {
-					return (
-						<Variant
-							active={
-								variant.segmentsExperienceId ===
-								selectedSegmentsExperienceId
-							}
-							control={variant.control}
-							key={variant.segmentsExperimentRelId}
-							name={variant.name}
-							onVariantDeletion={onVariantDeletion}
-							onVariantEdition={onVariantEdition}
-							segmentsExperienceId={variant.segmentsExperienceId}
-							variantId={variant.segmentsExperimentRelId}
-						/>
-					);
-				})}
-			</ClayList>
-
-			{variants.length === 1 ? (
-				<>
-					<h4>
-						{Liferay.Language.get(
-							'no-variants-have-been-created-for-this-test'
-						)}
-					</h4>
-
-					<p className="text-secondary small">
-						{Liferay.Language.get('variants-help')}
-					</p>
-				</>
-			) : null}
-		</>
+		<ClayList>
+			{variants.map(variant => {
+				return (
+					<Variant
+						active={
+							variant.segmentsExperienceId ===
+							selectedSegmentsExperienceId
+						}
+						control={variant.control}
+						key={variant.segmentsExperimentRelId}
+						name={variant.name}
+						onVariantDeletion={onVariantDeletion}
+						onVariantEdition={onVariantEdition}
+						segmentsExperienceId={variant.segmentsExperienceId}
+						variantId={variant.segmentsExperimentRelId}
+					/>
+				);
+			})}
+		</ClayList>
 	);
 }
 

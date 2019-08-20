@@ -31,13 +31,13 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jonathan McCann
  */
 @ProviderType
-public class InvalidJournalFolderException extends PortalException {
+public class InvalidFolderException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 1;
 
 	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
 
-	public InvalidJournalFolderException(int type, long folderId) {
+	public InvalidFolderException(int type, long folderId) {
 		_type = type;
 		_folderId = folderId;
 	}
@@ -78,7 +78,7 @@ public class InvalidJournalFolderException extends PortalException {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		InvalidJournalFolderException.class);
+		InvalidFolderException.class);
 
 	private final long _folderId;
 	private final int _type;

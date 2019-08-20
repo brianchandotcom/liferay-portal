@@ -532,6 +532,6 @@
 		<exception>FeedTargetPortletId</exception>
 		<exception>FolderName</exception>
 		<exception>InvalidDDMStructure</exception>
-		<exception>InvalidJournalFolder</exception>
+		<exception>InvalidFolder</exception>
 	</exceptions>
 </service-builder>

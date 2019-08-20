@@ -47,7 +47,7 @@ import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.exception.FeedTargetPortletIdException;
 import com.liferay.journal.exception.FolderNameException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
-import com.liferay.journal.exception.InvalidJournalFolderException;
+import com.liferay.journal.exception.InvalidFolderException;
 import com.liferay.journal.exception.MaxAddMenuFavItemsException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchFeedException;
@@ -272,7 +272,7 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof FileSizeException ||
 			cause instanceof FolderNameException ||
 			cause instanceof InvalidDDMStructureException ||
-			cause instanceof InvalidJournalFolderException ||
+			cause instanceof InvalidFolderException ||
 			cause instanceof LiferayFileItemException ||
 			cause instanceof LocaleException ||
 			cause instanceof MaxAddMenuFavItemsException ||

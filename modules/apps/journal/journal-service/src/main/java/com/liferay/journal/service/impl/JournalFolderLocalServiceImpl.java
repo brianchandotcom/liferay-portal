@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.journal.exception.InvalidJournalFolderException;
+import com.liferay.journal.exception.InvalidFolderException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.internal.util.JournalTreePathUtil;
 import com.liferay.journal.internal.validation.JournalFolderModelValidator;
@@ -1127,15 +1127,15 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	protected long getParentFolderId(JournalFolder folder, long parentFolderId)
-		throws InvalidJournalFolderException {
+		throws InvalidFolderException {
 
 		if (parentFolderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
 
 		if (folder.getFolderId() == parentFolderId) {
-			throw new InvalidJournalFolderException(
-				InvalidJournalFolderException.CANNOT_MOVE_INTO_ITSELF,
+			throw new InvalidFolderException(
+				InvalidFolderException.CANNOT_MOVE_INTO_ITSELF,
 				folder.getFolderId());
 		}
 
@@ -1154,8 +1154,8 @@ public class JournalFolderLocalServiceImpl
 			subfolderIds, folder.getGroupId(), folder.getFolderId());
 
 		if (subfolderIds.contains(parentFolderId)) {
-			throw new InvalidJournalFolderException(
-				InvalidJournalFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER,
+			throw new InvalidFolderException(
+				InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER,
 				folder.getFolderId());
 		}
 

@@ -32,6 +32,16 @@ public class InvalidFolderException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
 
+	public static final int INVALID_GROUP = 3;
+
+	public static final int PARENT_FOLDER_DOES_NOT_EXIST = 4;
+
+	public InvalidFolderException(int type) {
+		_type = type;
+
+		_folder = null;
+	}
+
 	public InvalidFolderException(JournalFolder folder, int type) {
 		_folder = folder;
 		_type = type;
@@ -55,6 +65,12 @@ public class InvalidFolderException extends PortalException {
 		}
 		else if (_type == CANNOT_MOVE_INTO_ITSELF) {
 			return "unable-to-move-folder-x-into-itself";
+		}
+		else if (_type == INVALID_GROUP) {
+			return "folder-cannot-be-moved-to-another-site";
+		}
+		else if (_type == PARENT_FOLDER_DOES_NOT_EXIST) {
+			return "parent-folder-does-not-exist";
 		}
 
 		return null;

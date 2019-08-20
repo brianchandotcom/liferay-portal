@@ -222,10 +222,14 @@ public class JournalFolderModelValidator
 		JournalFolder parentFolder =
 			_journalFolderPersistence.fetchByPrimaryKey(parentFolderId);
 
-		if ((parentFolder == null) ||
-			(folder.getGroupId() != parentFolder.getGroupId())) {
+		if (parentFolder == null) {
+			throw new InvalidFolderException(
+				InvalidFolderException.PARENT_FOLDER_DOES_NOT_EXIST);
+		}
 
-			return;
+		if (folder.getGroupId() != parentFolder.getGroupId()) {
+			throw new InvalidFolderException(
+				InvalidFolderException.INVALID_GROUP);
 		}
 
 		List<Long> subfolderIds = new ArrayList<>();

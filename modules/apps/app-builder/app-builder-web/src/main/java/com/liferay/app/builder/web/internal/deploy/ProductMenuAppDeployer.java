@@ -62,11 +62,15 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		String appName = appBuilderApp.getName(
 			LocaleThreadLocal.getDefaultLocale());
 
+		String portletName = _getPortletName(appId);
+		String panelCategoryKey = _getPanelCategoryKey(appId);
+
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
 			key -> new ServiceRegistration[] {
-				_deployAppPanelApp(key), _deployAppPanelCategory(key, appName),
-				_deployAppPortlet(key, appName)
+				_deployAppPanelApp(portletName, panelCategoryKey),
+				_deployAppPanelCategory(appName, panelCategoryKey),
+				_deployAppPortlet(appName, portletName)
 			});
 
 		appBuilderApp.setStatus(
@@ -97,27 +101,29 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	private ServiceRegistration _deployAppPanelApp(long appId) {
+	private ServiceRegistration _deployAppPanelApp(
+		String portletName, String panelCategoryKey) {
+
 		Dictionary<String, Object> properties =
 			new HashMapDictionary<String, Object>() {
 				{
 					put("panel.app.order:Integer", 100);
-					put("panel.category.key", _getPanelCategoryKey(appId));
+					put("panel.category.key", panelCategoryKey);
 				}
 			};
 
 		return _bundleContext.registerService(
-			PanelApp.class, new ProductMenuAppPanelApp(_getPortletName(appId)),
+			PanelApp.class, new ProductMenuAppPanelApp(portletName),
 			properties);
 	}
 
 	private ServiceRegistration _deployAppPanelCategory(
-		long appId, String appName) {
+		String appName, String panelCategoryKey) {
 
 		Dictionary<String, Object> properties =
 			new HashMapDictionary<String, Object>() {
 				{
-					put("key", _getPanelCategoryKey(appId));
+					put("key", panelCategoryKey);
 					put("label", appName);
 					put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
 					put("panel.category.order:Integer", 600);
@@ -129,7 +135,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			properties);
 	}
 
-	private ServiceRegistration _deployAppPortlet(long appId, String appName) {
+	private ServiceRegistration _deployAppPortlet(
+		String appName, String portletName) {
+
 		Dictionary<String, Object> properties =
 			new HashMapDictionary<String, Object>() {
 				{
@@ -139,7 +147,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 						"category.hidden");
 					put("com.liferay.portlet.use-default-template", "true");
 					put("javax.portlet.display-name", appName);
-					put("javax.portlet.name", _getPortletName(appId));
+					put("javax.portlet.name", portletName);
 					put(
 						"javax.portlet.init-param.template-path",
 						"/META-INF/resources/");

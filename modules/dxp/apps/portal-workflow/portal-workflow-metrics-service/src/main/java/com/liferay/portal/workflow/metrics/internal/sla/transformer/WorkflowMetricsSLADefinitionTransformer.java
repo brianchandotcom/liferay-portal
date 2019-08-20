@@ -19,8 +19,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
@@ -193,50 +194,46 @@ public class WorkflowMetricsSLADefinitionTransformer {
 			WorkflowMetricsSLADefinition workflowMetricsSLADefinition)
 		throws PortalException {
 
-		String currentProcessVersion =
-			workflowMetricsSLADefinition.getProcessVersion();
-
-		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
-
 		Map<String, String> nodeIdMap = _getNodeIdMap(
-			currentProcessVersion, latestProcessVersion,
-			workflowMetricsSLADefinition);
+			workflowMetricsSLADefinition.getProcessVersion(),
+			latestProcessVersion, workflowMetricsSLADefinition);
 
-		workflowMetricsSLADefinition.setPauseNodeKeys(
-			StringUtil.merge(
-				_transformNodeKeys(
-					nodeIdMap,
-					StringUtil.split(
-						workflowMetricsSLADefinition.getPauseNodeKeys())),
-				StringPool.COMMA));
-		workflowMetricsSLADefinition.setStartNodeKeys(
-			StringUtil.merge(
-				_transformNodeKeys(
-					nodeIdMap,
-					StringUtil.split(
-						workflowMetricsSLADefinition.getStartNodeKeys())),
-				StringPool.COMMA));
-		workflowMetricsSLADefinition.setStopNodeKeys(
-			StringUtil.merge(
-				_transformNodeKeys(
-					nodeIdMap,
-					StringUtil.split(
-						workflowMetricsSLADefinition.getStopNodeKeys())),
-				StringPool.COMMA));
+		String[] pauseNodeKeys = _transformNodeKeys(
+			nodeIdMap,
+			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeKeys()));
+		String[] startNodeKeys = _transformNodeKeys(
+			nodeIdMap,
+			StringUtil.split(workflowMetricsSLADefinition.getStartNodeKeys()));
+		String[] stopNodeKeys = _transformNodeKeys(
+			nodeIdMap,
+			StringUtil.split(workflowMetricsSLADefinition.getStopNodeKeys()));
 
-		if (Validator.isNull(workflowMetricsSLADefinition.getStartNodeKeys()) ||
-			Validator.isNull(workflowMetricsSLADefinition.getStopNodeKeys())) {
+		int status = WorkflowConstants.STATUS_APPROVED;
 
-			workflowMetricsSLADefinition.setStatus(
-				WorkflowConstants.STATUS_DRAFT);
-		}
-		else {
-			workflowMetricsSLADefinition.setStatus(
-				WorkflowConstants.STATUS_APPROVED);
+		if (ArrayUtil.isEmpty(startNodeKeys) ||
+			ArrayUtil.isEmpty(stopNodeKeys)) {
+
+			status = WorkflowConstants.STATUS_DRAFT;
 		}
 
 		_workflowMetricsSLADefinitionLocalService.
-			updateWorkflowMetricsSLADefinition(workflowMetricsSLADefinition);
+			updateWorkflowMetricsSLADefinition(
+				workflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId(),
+				workflowMetricsSLADefinition.getCalendarKey(),
+				workflowMetricsSLADefinition.getDescription(),
+				workflowMetricsSLADefinition.getDuration(),
+				workflowMetricsSLADefinition.getName(), pauseNodeKeys,
+				startNodeKeys, stopNodeKeys, status,
+				new ServiceContext() {
+					{
+						setCompanyId(
+							workflowMetricsSLADefinition.getCompanyId());
+						setScopeGroupId(
+							workflowMetricsSLADefinition.getGroupId());
+						setUserId(workflowMetricsSLADefinition.getUserId());
+					}
+				});
 
 		_slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
 			workflowMetricsSLADefinition.getCompanyId(),

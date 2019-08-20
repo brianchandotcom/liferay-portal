@@ -45,7 +45,9 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.sql.Timestamp;
@@ -54,7 +56,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -199,23 +200,13 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				Collectors.groupingBy(
 					WorkflowMetricsSLADefinition::getProcessId));
 
-		Map<Long, Long> startNodeIdsMap = new HashMap<>();
-
-		Set<Long> processIds = workflowMetricsSLADefinitionsMap.keySet();
-
-		processIds.forEach(
-			processId -> startNodeIdsMap.put(
-				processId, _getStartNodeId(processId)));
-
 		while (true) {
 			searchSearchResponse = searchEngineAdapter.execute(
 				_createSearchSearchRequest(
 					companyId, lastInstanceId, searchRequestSize,
 					workflowMetricsSLADefinitionsMap));
 
-			_reindexSLAProcessResults(
-				searchSearchResponse, startNodeIdsMap,
-				workflowMetricsSLADefinitionsMap);
+			_reindexSLAProcessResults(companyId, searchSearchResponse);
 
 			SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -256,6 +247,14 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	)
 	protected volatile WorkflowMetricsSLADefinitionLocalService
 		workflowMetricsSLADefinitionLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile WorkflowMetricsSLADefinitionVersionLocalService
+		workflowMetricsSLADefinitionVersionLocalService;
 
 	@Reference
 	protected WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor;
@@ -319,20 +318,19 @@ public class SLAProcessResultWorkflowMetricsIndexer
 				queries.term("status", WorkfowMetricsSLAStatus.STOPPED)));
 	}
 
-	private long _getStartNodeId(long processId) {
+	private long _getStartNodeId(long processId, String version) {
 		try {
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionLocalService.getKaleoDefinition(processId);
 
-			KaleoDefinitionVersion latestKaleoDefinitionVersion =
-				kaleoDefinitionVersionLocalService.
-					getLatestKaleoDefinitionVersion(
-						kaleoDefinition.getCompanyId(),
-						kaleoDefinition.getName());
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+					version);
 
 			List<KaleoNode> kaleoNodes =
 				kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
-					latestKaleoDefinitionVersion.getKaleoDefinitionVersionId());
+					kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 			Stream<KaleoNode> stream = kaleoNodes.stream();
 
@@ -355,10 +353,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	}
 
 	private void _reindexSLAProcessResults(
-		SearchSearchResponse searchSearchResponse,
-		Map<Long, Long> startNodeIdsMap,
-		Map<Long, List<WorkflowMetricsSLADefinition>>
-			workflowMetricsSLADefinitionsMap) {
+		long companyId, SearchSearchResponse searchSearchResponse) {
 
 		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
 
@@ -372,24 +367,30 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			SearchHit::getDocument
 		).forEach(
 			document -> {
-				List<WorkflowMetricsSLADefinition>
-					workflowMetricsSLADefinitionsList =
-						workflowMetricsSLADefinitionsMap.get(
-							document.getLong("processId"));
+				LocalDateTime createLocalDateTime = LocalDateTime.parse(
+					document.getString("createDate"), _dateTimeFormatter);
 
-				workflowMetricsSLADefinitionsList.forEach(
-					workflowMetricsSLADefinition -> {
+				List<WorkflowMetricsSLADefinitionVersion>
+					workflowMetricsSLADefinitionVersions =
+						workflowMetricsSLADefinitionVersionLocalService.
+							getWorkflowMetricsSLADefinitionVersions(
+								companyId,
+								Timestamp.valueOf(createLocalDateTime),
+								WorkflowConstants.STATUS_APPROVED);
+
+				workflowMetricsSLADefinitionVersions.forEach(
+					workflowMetricsSLADefinitionVersion -> {
 						Optional<WorkflowMetricsSLAProcessResult> optional =
 							workflowMetricsSLAProcessor.process(
-								workflowMetricsSLADefinition.getCompanyId(),
-								LocalDateTime.parse(
-									document.getString("createDate"),
-									_dateTimeFormatter),
+								workflowMetricsSLADefinitionVersion.
+									getCompanyId(),
+								createLocalDateTime,
 								document.getLong("instanceId"),
 								LocalDateTime.now(),
-								startNodeIdsMap.get(
-									document.getLong("processId")),
-								workflowMetricsSLADefinition);
+								_getStartNodeId(
+									document.getLong("processId"),
+									document.getString("version")),
+								workflowMetricsSLADefinitionVersion);
 
 						optional.ifPresent(
 							workflowMetricsSLAProcessResult -> {

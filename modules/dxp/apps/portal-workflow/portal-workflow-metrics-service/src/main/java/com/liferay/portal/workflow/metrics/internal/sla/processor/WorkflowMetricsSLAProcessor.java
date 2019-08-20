@@ -39,7 +39,7 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
@@ -71,11 +71,12 @@ public class WorkflowMetricsSLAProcessor {
 	public Optional<WorkflowMetricsSLAProcessResult> process(
 		long companyId, LocalDateTime createLocalDateTime, long instanceId,
 		LocalDateTime nowLocalDateTime, long startNodeId,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion) {
 
 		WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult =
 			fetchLastWorkflowMetricsSLAProcessResult(
-				workflowMetricsSLADefinition, instanceId);
+				workflowMetricsSLADefinitionVersion, instanceId);
 
 		long elapsedTime = 0;
 		LocalDateTime lastCheckLocalDateTime = null;
@@ -103,11 +104,11 @@ public class WorkflowMetricsSLAProcessor {
 			companyId, instanceId, lastCheckLocalDateTime);
 		WorkflowMetricsSLACalendar workflowMetricsSLACalendar =
 			_workflowMetricsSLACalendarTracker.getWorkflowMetricsSLACalendar(
-				workflowMetricsSLADefinition.getCalendarKey());
+				workflowMetricsSLADefinitionVersion.getCalendarKey());
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			_createWorkflowMetricsSLAStopwatch(
 				documents, createLocalDateTime, lastCheckLocalDateTime,
-				startNodeId, workflowMetricsSLADefinition,
+				startNodeId, workflowMetricsSLADefinitionVersion,
 				workfowMetricsSLAStatus);
 
 		if (!workflowMetricsSLAStopwatch.isEmpty()) {
@@ -127,13 +128,14 @@ public class WorkflowMetricsSLAProcessor {
 
 		return _createOptionalWorkflowMetricsSLAProcessResult(
 			companyId, elapsedTime, instanceId, nowLocalDateTime,
-			workflowMetricsSLACalendar, workflowMetricsSLADefinition,
+			workflowMetricsSLACalendar, workflowMetricsSLADefinitionVersion,
 			workfowMetricsSLAStatus);
 	}
 
 	protected WorkflowMetricsSLAProcessResult
 		fetchLastWorkflowMetricsSLAProcessResult(
-			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+			WorkflowMetricsSLADefinitionVersion
+				workflowMetricsSLADefinitionVersion,
 			long instanceId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -148,13 +150,13 @@ public class WorkflowMetricsSLAProcessor {
 							{
 								addRequiredTerm(
 									"companyId",
-									workflowMetricsSLADefinition.
+									workflowMetricsSLADefinitionVersion.
 										getCompanyId());
 								addRequiredTerm("deleted", false);
 								addRequiredTerm("instanceId", instanceId);
 								addRequiredTerm(
 									"slaDefinitionId",
-									workflowMetricsSLADefinition.
+									workflowMetricsSLADefinitionVersion.
 										getWorkflowMetricsSLADefinitionId());
 							}
 						});
@@ -175,7 +177,8 @@ public class WorkflowMetricsSLAProcessor {
 		).map(
 			document -> new WorkflowMetricsSLAProcessResult() {
 				{
-					setCompanyId(workflowMetricsSLADefinition.getCompanyId());
+					setCompanyId(
+						workflowMetricsSLADefinitionVersion.getCompanyId());
 					setElapsedTime(document.getLong("elapsedTime"));
 					setInstanceId(instanceId);
 					setLastCheckLocalDateTime(
@@ -188,10 +191,11 @@ public class WorkflowMetricsSLAProcessor {
 						LocalDateTime.parse(
 							document.getString("overdueDate"),
 							_dateTimeFormatter));
-					setProcessId(workflowMetricsSLADefinition.getProcessId());
+					setProcessId(
+						workflowMetricsSLADefinitionVersion.getProcessId());
 					setRemainingTime(document.getLong("remainingTime"));
 					setSLADefinitionId(
-						workflowMetricsSLADefinition.
+						workflowMetricsSLADefinitionVersion.
 							getWorkflowMetricsSLADefinitionId());
 					setWorkfowMetricsSLAStatus(
 						WorkfowMetricsSLAStatus.valueOf(
@@ -332,7 +336,8 @@ public class WorkflowMetricsSLAProcessor {
 			long companyId, long elapsedTime, long instanceId,
 			LocalDateTime nowLocalDateTime,
 			WorkflowMetricsSLACalendar workflowMetricsSLACalendar,
-			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+			WorkflowMetricsSLADefinitionVersion
+				workflowMetricsSLADefinitionVersion,
 			WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
 
 		return Optional.of(
@@ -344,10 +349,10 @@ public class WorkflowMetricsSLAProcessor {
 					setLastCheckLocalDateTime(nowLocalDateTime);
 					setOnTime(
 						elapsedTime <=
-							workflowMetricsSLADefinition.getDuration());
+							workflowMetricsSLADefinitionVersion.getDuration());
 
 					long remainingTime =
-						workflowMetricsSLADefinition.getDuration() -
+						workflowMetricsSLADefinitionVersion.getDuration() -
 							elapsedTime;
 
 					setOverdueLocalDateTime(
@@ -355,10 +360,11 @@ public class WorkflowMetricsSLAProcessor {
 							nowLocalDateTime,
 							Duration.ofMillis(remainingTime)));
 
-					setProcessId(workflowMetricsSLADefinition.getProcessId());
+					setProcessId(
+						workflowMetricsSLADefinitionVersion.getProcessId());
 					setRemainingTime(remainingTime);
 					setSLADefinitionId(
-						workflowMetricsSLADefinition.
+						workflowMetricsSLADefinitionVersion.
 							getWorkflowMetricsSLADefinitionId());
 					setWorkfowMetricsSLAStatus(workfowMetricsSLAStatus);
 				}
@@ -368,14 +374,15 @@ public class WorkflowMetricsSLAProcessor {
 	private WorkflowMetricsSLAStopwatch _createWorkflowMetricsSLAStopwatch(
 		List<Document> documents, LocalDateTime createDateLocalDateTime,
 		LocalDateTime lastCheckLocalDateTime, long startNodeId,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+		WorkflowMetricsSLADefinitionVersion workflowMetricsSLADefinitionVersion,
 		WorkfowMetricsSLAStatus workfowMetricsSLAStatus) {
 
 		WorkflowMetricsSLAStopwatch workflowMetricsSLAStopwatch =
 			new WorkflowMetricsSLAStopwatch(workfowMetricsSLAStatus);
 
 		Map<Long, String> startTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getStartNodeKeys()));
+			StringUtil.split(
+				workflowMetricsSLADefinitionVersion.getStartNodeKeys()));
 
 		if (Objects.equals(
 				workfowMetricsSLAStatus, WorkfowMetricsSLAStatus.RUNNING)) {
@@ -390,9 +397,11 @@ public class WorkflowMetricsSLAProcessor {
 		}
 
 		Map<Long, String> pauseTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getPauseNodeKeys()));
+			StringUtil.split(
+				workflowMetricsSLADefinitionVersion.getPauseNodeKeys()));
 		Map<Long, String> stopTimeMarkers = _getTimeMarkers(
-			StringUtil.split(workflowMetricsSLADefinition.getStopNodeKeys()));
+			StringUtil.split(
+				workflowMetricsSLADefinitionVersion.getStopNodeKeys()));
 
 		Iterator<Document> iterator = documents.iterator();
 

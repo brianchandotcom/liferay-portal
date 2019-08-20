@@ -21,7 +21,7 @@ import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.workflow.metrics.internal.sla.calendar.DefaultWorkflowMetricsSLACalendar;
 import com.liferay.portal.workflow.metrics.internal.sla.calendar.WorkflowMetricsSLACalendarTrackerImpl;
-import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalendarTracker;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
@@ -113,18 +113,19 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
 			5, ChronoUnit.SECONDS);
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = mock(
+				WorkflowMetricsSLADefinitionVersion.class);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStartNodeKeys()
 		).thenReturn(
 			"1:leave"
 		);
 
 		_test(
 			createDateLocalDateTime, 0, null, localDateTime, true, 0, 0,
-			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.NEW,
+			workflowMetricsSLADefinitionVersion, WorkfowMetricsSLAStatus.NEW,
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
@@ -141,30 +142,31 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
 			10, ChronoUnit.SECONDS);
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = mock(
+				WorkflowMetricsSLADefinitionVersion.class);
 
 		when(
-			workflowMetricsSLADefinition.getDuration()
+			workflowMetricsSLADefinitionVersion.getDuration()
 		).thenReturn(
 			5000L
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStartNodeKeys()
 		).thenReturn(
 			"1:enter"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getPauseNodeKeys()
+			workflowMetricsSLADefinitionVersion.getPauseNodeKeys()
 		).thenReturn(
 			"2:enter"
 		);
 
 		_test(
 			createDateLocalDateTime, 5000, null, localDateTime, true, 0, 1,
-			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.PAUSED,
+			workflowMetricsSLADefinitionVersion, WorkfowMetricsSLAStatus.PAUSED,
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
@@ -195,36 +197,38 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
 			10, ChronoUnit.SECONDS);
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = mock(
+				WorkflowMetricsSLADefinitionVersion.class);
 
 		when(
-			workflowMetricsSLADefinition.getDuration()
+			workflowMetricsSLADefinitionVersion.getDuration()
 		).thenReturn(
 			10000L
 		);
 
 		when(
-			workflowMetricsSLADefinition.getPauseNodeKeys()
+			workflowMetricsSLADefinitionVersion.getPauseNodeKeys()
 		).thenReturn(
 			"2"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStartNodeKeys()
 		).thenReturn(
 			"1:enter"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStopNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStopNodeKeys()
 		).thenReturn(
 			"2:leave"
 		);
 
 		_test(
 			createDateLocalDateTime, 10000, null, localDateTime, true, 0, 1,
-			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.STOPPED,
+			workflowMetricsSLADefinitionVersion,
+			WorkfowMetricsSLAStatus.STOPPED,
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
@@ -256,30 +260,32 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		LocalDateTime createDateLocalDateTime = localDateTime.minus(
 			10, ChronoUnit.SECONDS);
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = mock(
+				WorkflowMetricsSLADefinitionVersion.class);
 
 		when(
-			workflowMetricsSLADefinition.getDuration()
+			workflowMetricsSLADefinitionVersion.getDuration()
 		).thenReturn(
 			10000L
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStartNodeKeys()
 		).thenReturn(
 			"1:enter"
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStopNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStopNodeKeys()
 		).thenReturn(
 			"1:leave"
 		);
 
 		_test(
 			createDateLocalDateTime, 5000, null, localDateTime, true, 5000, 1,
-			workflowMetricsSLADefinition, WorkfowMetricsSLAStatus.STOPPED,
+			workflowMetricsSLADefinitionVersion,
+			WorkfowMetricsSLAStatus.STOPPED,
 			_createDocument(
 				new HashMap<String, Object>() {
 					{
@@ -387,24 +393,25 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			Document... documents)
 		throws Exception {
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition = mock(
-			WorkflowMetricsSLADefinition.class);
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion = mock(
+				WorkflowMetricsSLADefinitionVersion.class);
 
 		when(
-			workflowMetricsSLADefinition.getDuration()
+			workflowMetricsSLADefinitionVersion.getDuration()
 		).thenReturn(
 			duration
 		);
 
 		when(
-			workflowMetricsSLADefinition.getStartNodeKeys()
+			workflowMetricsSLADefinitionVersion.getStartNodeKeys()
 		).thenReturn(
 			"0"
 		);
 
 		_test(
 			createDateLocalDateTime, elapsedTime, null, localDateTime, onTime,
-			remainingTime, 0, workflowMetricsSLADefinition,
+			remainingTime, 0, workflowMetricsSLADefinitionVersion,
 			workfowMetricsSLAStatus, documents);
 	}
 
@@ -413,7 +420,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			WorkflowMetricsSLAProcessResult lastWorkflowMetricsSLAProcessResult,
 			LocalDateTime localDateTime, boolean onTime, long remainingTime,
 			long startNodeId,
-			WorkflowMetricsSLADefinition workflowMetricsSLADefinition,
+			WorkflowMetricsSLADefinitionVersion
+				workflowMetricsSLADefinitionVersion,
 			WorkfowMetricsSLAStatus workfowMetricsSLAStatus,
 			Document... documents)
 		throws Exception {
@@ -424,8 +432,8 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 				@Override
 				protected WorkflowMetricsSLAProcessResult
 					fetchLastWorkflowMetricsSLAProcessResult(
-						WorkflowMetricsSLADefinition
-							workflowMetricsSLADefinition,
+						WorkflowMetricsSLADefinitionVersion
+							workflowMetricsSLADefinitionVersion,
 						long instanceId) {
 
 					return lastWorkflowMetricsSLAProcessResult;
@@ -451,7 +459,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 		Optional<WorkflowMetricsSLAProcessResult> optional =
 			workflowMetricsSLAProcessor.process(
 				0, createDateLocalDateTime, 0, localDateTime, startNodeId,
-				workflowMetricsSLADefinition);
+				workflowMetricsSLADefinitionVersion);
 
 		WorkflowMetricsSLAProcessResult workflowMetricsSLAProcessResult =
 			optional.get();

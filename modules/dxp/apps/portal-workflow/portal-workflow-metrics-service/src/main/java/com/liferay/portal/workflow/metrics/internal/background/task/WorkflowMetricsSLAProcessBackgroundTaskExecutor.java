@@ -37,7 +37,9 @@ import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWo
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
+import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalService;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkfowMetricsSLAStatus;
 
 import java.time.LocalDateTime;
@@ -90,6 +92,13 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				fetchWorkflowMetricsSLADefinition(
 					workflowMetricsSLADefinitionId);
 
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion =
+				_workflowMetricsSLADefinitionVersionLocalService.
+					getWorkflowMetricsSLADefinitionVersion(
+						workflowMetricsSLADefinitionId,
+						workflowMetricsSLADefinition.getVersion());
+
 		long startNodeId = _getStartNodeId(
 			workflowMetricsSLADefinition.getCompanyId(),
 			workflowMetricsSLADefinition.getProcessId(),
@@ -101,11 +110,12 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 				workflowMetricsSLADefinition.getProcessId());
 
 		_processRunningInstances(
-			createLocalDateTimes, startNodeId, workflowMetricsSLADefinition);
+			createLocalDateTimes, startNodeId,
+			workflowMetricsSLADefinitionVersion);
 
 		_processCompletedInstances(
 			createLocalDateTimes.keySet(), startNodeId,
-			workflowMetricsSLADefinition);
+			workflowMetricsSLADefinitionVersion);
 
 		return BackgroundTaskResult.SUCCESS;
 	}
@@ -312,7 +322,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	private void _processCompletedInstances(
 		Set<Long> instanceIds, long startNodeId,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
@@ -320,9 +331,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			"workflow-metrics-sla-process-results");
 		searchSearchRequest.setQuery(
 			_createSLAProcessResultsBooleanQuery(
-				workflowMetricsSLADefinition.getCompanyId(), instanceIds,
-				workflowMetricsSLADefinition.getProcessId(),
-				workflowMetricsSLADefinition.
+				workflowMetricsSLADefinitionVersion.getCompanyId(), instanceIds,
+				workflowMetricsSLADefinitionVersion.getProcessId(),
+				workflowMetricsSLADefinitionVersion.
 					getWorkflowMetricsSLADefinitionId()));
 		searchSearchRequest.setSize(10000);
 
@@ -338,9 +349,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			SearchHit::getDocument
 		).map(
 			document -> _workflowMetricsSLAProcessor.process(
-				workflowMetricsSLADefinition.getCompanyId(), null,
+				workflowMetricsSLADefinitionVersion.getCompanyId(), null,
 				document.getLong("instanceId"), LocalDateTime.now(),
-				startNodeId, workflowMetricsSLADefinition)
+				startNodeId, workflowMetricsSLADefinitionVersion)
 		).map(
 			optional -> {
 				WorkflowMetricsSLAProcessResult
@@ -367,7 +378,8 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	private void _processRunningInstances(
 		Map<Long, LocalDateTime> createLocalDateTimes, long startNodeId,
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion) {
 
 		Set<Map.Entry<Long, LocalDateTime>> entrySet =
 			createLocalDateTimes.entrySet();
@@ -377,9 +389,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		stream.map(
 			entry -> _workflowMetricsSLAProcessor.process(
-				workflowMetricsSLADefinition.getCompanyId(), entry.getValue(),
-				entry.getKey(), LocalDateTime.now(), startNodeId,
-				workflowMetricsSLADefinition)
+				workflowMetricsSLADefinitionVersion.getCompanyId(),
+				entry.getValue(), entry.getKey(), LocalDateTime.now(),
+				startNodeId, workflowMetricsSLADefinitionVersion)
 		).filter(
 			Optional::isPresent
 		).map(
@@ -421,6 +433,10 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService
 		_workflowMetricsSLADefinitionLocalService;
+
+	@Reference
+	private WorkflowMetricsSLADefinitionVersionLocalService
+		_workflowMetricsSLADefinitionVersionLocalService;
 
 	@Reference
 	private WorkflowMetricsSLAProcessor _workflowMetricsSLAProcessor;

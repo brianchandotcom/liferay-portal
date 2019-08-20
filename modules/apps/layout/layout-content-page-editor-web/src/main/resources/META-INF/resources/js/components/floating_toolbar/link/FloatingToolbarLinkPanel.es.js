@@ -72,9 +72,9 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		const structureMappingSet =
 			this._selectedSourceTypeId == null ||
-			(this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure &&
+			(this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure &&
 				this.selectedMappingTypes.type != null) ||
-			this._selectedSourceTypeId === SOURCE_TYPE_IDS.content;
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content;
 
 		nextState = setIn(
 			nextState,
@@ -297,7 +297,7 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		if (
 			!fieldId ||
-			this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.structure
 		) {
 			this._mappedFieldValue = '';
 		} else {

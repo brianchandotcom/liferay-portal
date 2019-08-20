@@ -117,19 +117,15 @@ public class UserBagFactoryTest {
 
 	@Test
 	public void testGetInheritedRoles() throws Exception {
-		Role regularRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		Role inheritedRole = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_groupLocalService.addRoleGroup(regularRole.getRoleId(), _childGroup);
+		_groupLocalService.addRoleGroup(inheritedRole.getRoleId(), _childGroup);
 
 		_userLocalService.addGroupUser(_childGroup.getGroupId(), _user);
 
 		UserBag userBag = getUserBag();
 
-		List<Role> roles = new ArrayList<>(userBag.getRoles());
-
-		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
-
-		Assert.assertTrue(ArrayUtil.contains(roleIds, regularRole.getRoleId()));
+		Assert.assertTrue(userBag.hasRole(inheritedRole));
 	}
 
 	@Test

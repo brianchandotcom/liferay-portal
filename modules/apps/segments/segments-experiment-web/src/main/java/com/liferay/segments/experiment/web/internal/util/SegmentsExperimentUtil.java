@@ -48,6 +48,23 @@ public class SegmentsExperimentUtil {
 		return true;
 	}
 
+	public static JSONObject toGoalJSONObject(
+		Locale locale, UnicodeProperties typeSettingsProperties) {
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, SegmentsExperimentUtil.class);
+
+		String goal = typeSettingsProperties.getProperty("goal");
+
+		return JSONUtil.put(
+			"label", LanguageUtil.get(resourceBundle, goal)
+		).put(
+			"target", typeSettingsProperties.getProperty("goalTarget")
+		).put(
+			"value", goal
+		);
+	}
+
 	public static JSONObject toSegmentsExperimentJSONObject(
 		SegmentsExperiment segmentsExperiment) {
 
@@ -55,15 +72,12 @@ public class SegmentsExperimentUtil {
 			return null;
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			segmentsExperiment.getTypeSettingsProperties();
-
 		return JSONUtil.put(
 			"description", segmentsExperiment.getDescription()
 		).put(
-			"goal", typeSettingsProperties.getProperty("goal")
-		).put(
-			"goalTarget", typeSettingsProperties.getProperty("goalTarget")
+			"goal",
+			toGoalJSONObject(
+				locale, segmentsExperiment.getTypeSettingsProperties())
 		).put(
 			"name", segmentsExperiment.getName()
 		).put(

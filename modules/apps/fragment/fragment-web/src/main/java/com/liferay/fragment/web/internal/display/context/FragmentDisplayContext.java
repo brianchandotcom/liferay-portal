@@ -155,6 +155,11 @@ public class FragmentDisplayContext {
 		return _fragmentCollection;
 	}
 
+	public FragmentCollectionContributor getFragmentCollectionContributor() {
+		return _fragmentCollectionContributorTracker.
+			getFragmentCollectionContributor(getFragmentCollectionKey());
+	}
+
 	public List<FragmentCollectionContributor>
 		getFragmentCollectionContributors() {
 

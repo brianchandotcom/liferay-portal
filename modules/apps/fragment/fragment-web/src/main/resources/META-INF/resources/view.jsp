@@ -137,7 +137,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 		</div>
 
 		<div class="col-lg-9">
-			<c:if test="<%= fragmentDisplayContext.getFragmentCollection() != null %>">
+			<c:if test="<%= (fragmentDisplayContext.getFragmentCollection() != null) || (fragmentDisplayContext.getFragmentCollectionContributor() != null) %>">
 				<div class="sheet">
 					<h2 class="sheet-title">
 						<div class="autofit-row autofit-row-center">

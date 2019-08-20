@@ -31,10 +31,35 @@ function Variants({
 	const [editingVariant, setEditingVariant] = useState({active: false});
 
 	return (
-		<div className="mt-3">
-			<h4 className="sheet-subtitle">
+		<>
+			<h4 className="mb-3 mt-4 sheet-subtitle">
 				{Liferay.Language.get('variants')}
 			</h4>
+
+			{variants.length === 1 ? (
+				<>
+					<p className="mb-2 small">
+						<b>
+							{Liferay.Language.get(
+								'no-variants-have-been-created-for-this-test'
+							)}
+						</b>
+					</p>
+
+					<p className="mb-2 text-secondary small">
+						{Liferay.Language.get('variants-help')}
+					</p>
+				</>
+			) : null}
+
+			<ClayButton
+				className="mb-3"
+				displayType="secondary"
+				onClick={() => setCreatingVariant(!creatingVariant)}
+				small
+			>
+				{Liferay.Language.get('create-variant')}
+			</ClayButton>
 
 			<VariantList
 				onVariantDeletion={_handleVariantDeletion}
@@ -77,16 +102,7 @@ function Variants({
 					)}
 				</ClayModal>
 			)}
-
-			<ClayButton
-				className="my-2"
-				displayType="secondary"
-				onClick={() => setCreatingVariant(!creatingVariant)}
-				small
-			>
-				{Liferay.Language.get('create-variant')}
-			</ClayButton>
-		</div>
+		</>
 	);
 
 	function _handleVariantDeletion(variantId) {

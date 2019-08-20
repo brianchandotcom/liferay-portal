@@ -91,7 +91,8 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 		try {
 			_setFieldValue(
-				writerInterceptorContext.getEntity(), nestedFieldsContext);
+				writerInterceptorContext.getEntity(),
+				nestedFieldsContext.getFieldNames(), nestedFieldsContext);
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage(), e);
@@ -123,6 +124,31 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 		}
 
 		return resources;
+	}
+
+	private Object _adaptToFieldType(Class<?> fieldType, Object value) {
+		if (value instanceof Page) {
+			Page page = (Page)value;
+
+			value = page.getItems();
+		}
+
+		if (fieldType.isArray() && (value instanceof Collection)) {
+			Collection collection = (Collection)value;
+
+			value = Array.newInstance(
+				fieldType.getComponentType(), collection.size());
+
+			Iterator iterator = collection.iterator();
+
+			int i = 0;
+
+			while (iterator.hasNext()) {
+				Array.set(value, i++, iterator.next());
+			}
+		}
+
+		return value;
 	}
 
 	private boolean _checkNestedFieldsMethod(
@@ -320,6 +346,9 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			Page page = (Page)entity;
 
 			items.addAll(page.getItems());
+		}
+		else if (_isArray(entity)) {
+			Collections.addAll(items, (Object[])entity);
 		}
 		else {
 			items.add(entity);
@@ -520,29 +549,10 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 			"No defined version for resource " + resourceBaseClass);
 	}
 
-	private Object _getReturnObject(Class<?> fieldType, Object result) {
-		if (result instanceof Page) {
-			Page page = (Page)result;
+	private boolean _isArray(Object object) {
+		Class<?> objectClass = object.getClass();
 
-			result = page.getItems();
-		}
-
-		if (fieldType.isArray() && (result instanceof Collection)) {
-			Collection collection = (Collection)result;
-
-			result = Array.newInstance(
-				fieldType.getComponentType(), collection.size());
-
-			Iterator iterator = collection.iterator();
-
-			int i = 0;
-
-			while (iterator.hasNext()) {
-				Array.set(result, i++, iterator.next());
-			}
-		}
-
-		return result;
+		return objectClass.isArray();
 	}
 
 	private void _resetNestedAwareMessage(Message message) {
@@ -556,12 +566,23 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 	}
 
 	private void _setFieldValue(
-			Object entity, NestedFieldsContext nestedFieldsContext)
+			Object entity, List<String> fieldNames,
+			NestedFieldsContext nestedFieldsContext)
 		throws Exception {
 
 		List<Object> items = _getItems(entity);
 
-		for (String fieldName : nestedFieldsContext.getFieldNames()) {
+		for (String fieldName : fieldNames) {
+			String nestedField = null;
+
+			int pointIndex = fieldName.indexOf(".");
+
+			if (pointIndex != -1) {
+				nestedField = fieldName.substring(pointIndex + 1);
+
+				fieldName = fieldName.substring(0, pointIndex);
+			}
+
 			for (Object item : items) {
 				Field field = _getField(item.getClass(), fieldName);
 
@@ -571,12 +592,17 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 
 				field.setAccessible(true);
 
-				field.set(
-					item,
-					_getReturnObject(
-						field.getType(),
-						_getNestedFieldValue(
-							fieldName, item, nestedFieldsContext)));
+				Object value = _adaptToFieldType(
+					field.getType(),
+					_getNestedFieldValue(fieldName, item, nestedFieldsContext));
+
+				field.set(item, value);
+
+				if (nestedField != null) {
+					_setFieldValue(
+						value, Collections.singletonList(nestedField),
+						nestedFieldsContext);
+				}
 			}
 		}
 	}

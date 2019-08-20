@@ -19,29 +19,31 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-import ReplyCommentForm from './ReplyCommentForm.es';
 import {
 	deleteFragmentEntryLinkComment,
 	editFragmentEntryLinkComment
 } from '../../../utils/FragmentsEditorFetchUtils.es';
 import EditCommentForm from './EditCommentForm.es';
+import {HIGHLIGHTED_COMMENT_ID_KEY} from '../../edit_mode/EditModeWrapper.es';
 import InlineConfirm from '../../common/InlineConfirm.es';
-import UserIcon from '../../common/UserIcon.es';
+import ReplyCommentForm from './ReplyCommentForm.es';
 import ResolveButton from './ResolveButton.es';
+import UserIcon from '../../common/UserIcon.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
 	const resolved = props.comment.resolved;
 
+	const [changingResolved, setChangingResolved] = useState(false);
 	const [dropDownActive, setDropDownActive] = useState(false);
 	const [editing, setEditing] = useState(false);
 	const [hidden, setHidden] = useState(false);
+	const [highlighted, setHighlighted] = useState(false);
 	const [showDeleteMask, setShowDeleteMash] = useState(false);
 	const [showResolveMask, setShowResolveMask] = useState(false);
-	const [changingResolved, setChangingResolved] = useState(false);
 
 	const showResolvedComments = useSelector(
 		state => state.showResolvedComments
@@ -63,6 +65,7 @@ const FragmentComment = props => {
 	const commentClassname = classNames({
 		'fragments-editor__fragment-comment': true,
 		'fragments-editor__fragment-comment--hidden': hidden,
+		'fragments-editor__fragment-comment--highlighted': highlighted,
 		'fragments-editor__fragment-comment--reply': isReply,
 		'fragments-editor__fragment-comment--resolved': resolved,
 		'fragments-editor__fragment-comment--with-delete-mask': showDeleteMask,
@@ -80,6 +83,18 @@ const FragmentComment = props => {
 			onHide();
 		}, 1000);
 	};
+
+	useEffect(() => {
+		const highlightMessageId = window.sessionStorage.getItem(
+			HIGHLIGHTED_COMMENT_ID_KEY
+		);
+
+		if (highlightMessageId === props.comment.commentId) {
+			window.sessionStorage.removeItem(HIGHLIGHTED_COMMENT_ID_KEY);
+
+			setHighlighted(true);
+		}
+	}, [props.comment.commentId]);
 
 	return (
 		<article className={commentClassname}>

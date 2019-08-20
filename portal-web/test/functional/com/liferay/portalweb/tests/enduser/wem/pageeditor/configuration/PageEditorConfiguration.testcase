@@ -30,6 +30,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a content page template."
+	@priority = "4"
+	test AddCheckboxConfigurationFragmentToContentPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Checkbox Fragment Example");
+		}
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Checkbox Fragment Example");
+
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Hide Body",
+			fragmentName = "Checkbox Fragment Example");
+
+		PageEditorConfiguration.checkConfigCheckbox(
+			checkboxName = "Make Bold",
+			fragmentName = "Checkbox Fragment Example");
+
+		PageEditor.clickPublish();
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		task ("Assert body text is hidden") {
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
+		}
+
+		task ("Assert text is bolded") {
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
+		}
+	}
+
 	@description = "This is a test for LPS-99377. User can add a checkbox configuration fragment to a display page template."
 	@priority = "4"
 	test AddCheckboxConfigurationFragmentToDisplayPageTemplate {
@@ -82,7 +136,7 @@ definition {
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
 	@priority = "4"
-	test AddTypeCheckboxConfiguration {
+	test AddCheckboxConfigurationFragmentToContentPage {
 		property portal.acceptance = "true";
 
 		task ("Add a section fragment to the fragment collection via JSON") {
@@ -127,4 +181,5 @@ definition {
 			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
 		}
 	}
+
 }

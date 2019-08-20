@@ -262,7 +262,7 @@ public class SLAProcessResultWorkflowMetricsIndexer
 	protected WorkflowMetricsSLAProcessor workflowMetricsSLAProcessor;
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		long companyId, Set<Long> processIds, long lastInstanceId) {
+		long companyId, long lastInstanceId, Set<Long> processIds) {
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
@@ -298,8 +298,8 @@ public class SLAProcessResultWorkflowMetricsIndexer
 		searchSearchRequest.setIndexNames("workflow-metrics-instances");
 		searchSearchRequest.setQuery(
 			_createInstancesBooleanQuery(
-				companyId, workflowMetricsSLADefinitionsMap.keySet(),
-				lastInstanceId));
+				companyId, lastInstanceId,
+				workflowMetricsSLADefinitionsMap.keySet()));
 		searchSearchRequest.setSize(searchRequestSize);
 		searchSearchRequest.setSorts(
 			Collections.singleton(sorts.field("instanceId", SortOrder.ASC)));

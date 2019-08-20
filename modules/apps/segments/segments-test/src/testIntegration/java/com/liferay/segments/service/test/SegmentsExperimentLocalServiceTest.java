@@ -349,6 +349,84 @@ public class SegmentsExperimentLocalServiceTest {
 				SegmentsExperimentConstants.STATUS_DRAFT));
 	}
 
+	@Test(expected = SegmentsExperimentStatusException.class)
+	public void testUpdateSegmentsExperimentStatusToPausedWithExistingExperimentInPaused()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_PAUSED);
+
+		SegmentsExperiment newSegmentsExperiment =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			newSegmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			newSegmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_PAUSED);
+	}
+
+	@Test(expected = SegmentsExperimentStatusException.class)
+	public void testUpdateSegmentsExperimentStatusToRunningWithExistingExperimentInRunning()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		SegmentsExperiment newSegmentsExperiment =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			newSegmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+	}
+
 	@Test(expected = SegmentsExperimentGoalException.class)
 	public void testUpdateSegmentsExperimentWithInvalidGoal() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
@@ -382,6 +460,17 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperiment.getSegmentsExperimentKey(), Integer.MIN_VALUE);
+	}
+
+	@Test(expected = SegmentsExperimentStatusException.class)
+	public void testUpdateSegmentsExperimentWithInvalidStatusTransition()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_TERMINATED);
 	}
 
 	@Test

@@ -6,7 +6,7 @@
 		"metal-path-parser": "1.0.4",
 		"metal-router": "3.6.3",
 		"metal-state": "2.16.8",
-		"senna": "3.0.0-milestone.4"
+		"senna": "2.7.7"
 	},
 	"name": "portal-portlet-bridge-soy-impl",
 	"scripts": {

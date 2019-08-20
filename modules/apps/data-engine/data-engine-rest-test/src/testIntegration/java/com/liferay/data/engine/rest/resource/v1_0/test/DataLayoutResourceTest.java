@@ -72,11 +72,11 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteDataLayoutPage() throws Exception {
-		super.testGetSiteDataLayoutPage();
+	public void testGetSiteDataLayoutsPage() throws Exception {
+		super.testGetSiteDataLayoutsPage();
 
-		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutPage(
-			testGetSiteDataLayoutPage_getSiteId(), "form layout",
+		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutsPage(
+			testGetSiteDataLayoutsPage_getSiteId(), "form layout",
 			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
@@ -173,7 +173,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	@Override
-	protected DataLayout testGetSiteDataLayoutPage_addDataLayout(
+	protected DataLayout testGetSiteDataLayoutsPage_addDataLayout(
 			Long siteId, DataLayout dataLayout)
 		throws Exception {
 
@@ -237,12 +237,12 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	private void _testGetSiteDataLayoutPage(String keywords, String name)
 		throws Exception {
 
-		Long siteId = testGetSiteDataLayoutPage_getSiteId();
+		Long siteId = testGetSiteDataLayoutsPage_getSiteId();
 
-		DataLayout dataLayout = testGetSiteDataLayoutPage_addDataLayout(
+		DataLayout dataLayout = testGetSiteDataLayoutsPage_addDataLayout(
 			siteId, _createDataLayout(name));
 
-		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutPage(
+		Page<DataLayout> page = dataLayoutResource.getSiteDataLayoutsPage(
 			siteId, keywords, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(1, page.getTotalCount());

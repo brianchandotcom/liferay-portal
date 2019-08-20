@@ -5,9 +5,11 @@
  */
 {template .render}
 	{@param? _handleContentNameChange: any}
+	{@param? _handleStructureChange: any}
 	{@param? _structures: list<[
 		id: string,
-		label: string
+		label: string,
+		countLabel: string
 	]>}
 	{@param? _structureTypes: list<[
 		id: string,
@@ -54,6 +56,7 @@
 
 					<select
 						class="form-control"
+						data-onchange="{$_handleStructureChange}"
 						id="selectStructureType"
 						ref="structureType"
 					>
@@ -76,7 +79,7 @@
 						ref="structure"
 					>
 						{foreach $structure in $_structures}
-							<option value="{$structure.id}" selected>{$structure.label}</option>
+							<option value="{$structure.id}" selected>{$structure.label} ({$structure.countLabel})</option>
 						{/foreach}
 					</select>
 				</div>

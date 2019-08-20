@@ -61,7 +61,7 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 					jsonArray.getString(i));
 
 				if (appDeployer != null) {
-					appDeployer.deploy(appBuilderApp.getAppBuilderAppId());
+					appDeployer.deploy(appBuilderApp);
 				}
 			}
 		}

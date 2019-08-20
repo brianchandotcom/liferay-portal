@@ -14,6 +14,8 @@
 
 package com.liferay.app.builder.deploy;
 
+import com.liferay.app.builder.model.AppBuilderApp;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -22,8 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AppDeployer {
 
-	public void deploy(long appId) throws Exception;
+	public void deploy(AppBuilderApp appBuilderApp) throws Exception;
 
-	public void undeploy(long appId) throws Exception;
+	public void undeploy(AppBuilderApp appBuilderApp) throws Exception;
 
 }

@@ -55,9 +55,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	@Override
-	public void deploy(long appId) throws Exception {
-		AppBuilderApp appBuilderApp =
-			_appBuilderAppLocalService.getAppBuilderApp(appId);
+	public void deploy(AppBuilderApp appBuilderApp) {
+		long appId = appBuilderApp.getAppBuilderAppId();
 
 		String appName = appBuilderApp.getName(
 			LocaleThreadLocal.getDefaultLocale());
@@ -80,9 +79,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	@Override
-	public void undeploy(long appId) throws Exception {
+	public void undeploy(AppBuilderApp appBuilderApp) {
 		ServiceRegistration[] serviceRegistrations =
-			_serviceRegistrationsMap.remove(appId);
+			_serviceRegistrationsMap.remove(appBuilderApp.getAppBuilderAppId());
 
 		if (serviceRegistrations == null) {
 			return;
@@ -91,9 +90,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
 			serviceRegistration.unregister();
 		}
-
-		AppBuilderApp appBuilderApp =
-			_appBuilderAppLocalService.getAppBuilderApp(appId);
 
 		appBuilderApp.setStatus(
 			AppBuilderAppConstants.Status.UNDEPLOYED.getValue());

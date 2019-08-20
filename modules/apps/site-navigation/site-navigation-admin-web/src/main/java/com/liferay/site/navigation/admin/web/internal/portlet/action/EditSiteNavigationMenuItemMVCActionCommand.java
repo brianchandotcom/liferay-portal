@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
-import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
 import com.liferay.site.navigation.menu.item.util.SiteNavigationMenuItemUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
@@ -66,8 +66,10 @@ public class EditSiteNavigationMenuItemMVCActionCommand
 				siteNavigationMenuItemId, typeSettingsProperties.toString(),
 				serviceContext);
 		}
-		catch (SiteNavigationMenuItemNameException snmine) {
-			SessionErrors.add(actionRequest, snmine.getClass(), snmine);
+		catch (PortalException pe) {
+			hideDefaultErrorMessage(actionRequest);
+
+			SessionErrors.add(actionRequest, pe.getClass(), pe);
 
 			sendRedirect(actionRequest, actionResponse);
 		}

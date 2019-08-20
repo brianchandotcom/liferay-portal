@@ -13,6 +13,7 @@
  */
 
 import EditableBackgroundImageFragmentProcessor from './EditableBackgroundImageProcessor.es';
+import EditableHTMLFragmentProcessor from './EditableHTMLFragmentProcessor.es';
 import EditableImageFragmentProcessor from './EditableImageFragmentProcessor.es';
 import EditableLinkFragmentProcessor from './EditableLinkFragmentProcessor.es';
 import EditableRichTextFragmentProcessor from './EditableRichTextFragmentProcessor.es';
@@ -33,6 +34,13 @@ const FragmentProcessors = {
 			EditableRichTextFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableRichTextFragmentProcessor.init,
 		render: EditableRichTextFragmentProcessor.render
+	},
+
+	html: {
+		destroy: EditableHTMLFragmentProcessor.destroy,
+		getFloatingToolbarButtons: () => [],
+		init: EditableHTMLFragmentProcessor.init,
+		render: EditableHTMLFragmentProcessor.render
 	},
 
 	image: {

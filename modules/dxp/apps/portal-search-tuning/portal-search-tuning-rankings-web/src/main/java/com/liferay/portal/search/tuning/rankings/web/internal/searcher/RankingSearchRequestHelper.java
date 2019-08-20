@@ -19,13 +19,12 @@ import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,10 +39,11 @@ public class RankingSearchRequestHelper {
 	public void contribute(
 		SearchRequestBuilder searchRequestBuilder, Ranking ranking) {
 
-		searchRequestBuilder.addComplexQueryPart(
-			getBlockIdsQueryPart(ranking)
-		).addComplexQueryPart(
-			getPinIdsQueryPart(ranking)
+		Stream.concat(
+			getPinIdsQueryParts(ranking),
+			Stream.of(getBlockIdsQueryPart(ranking))
+		).forEach(
+			searchRequestBuilder::addComplexQueryPart
 		);
 	}
 
@@ -55,6 +55,8 @@ public class RankingSearchRequestHelper {
 		}
 
 		return complexQueryPartBuilderFactory.builder(
+		).additive(
+			true
 		).query(
 			_getIdsQuery(ids)
 		).occur(
@@ -62,21 +64,37 @@ public class RankingSearchRequestHelper {
 		).build();
 	}
 
-	protected ComplexQueryPart getPinIdsQueryPart(Ranking ranking) {
-		Set<String> ids = _getPinIds(ranking);
+	protected IdsQuery getIdsQuery(Ranking.Pin pin, int size) {
+		IdsQuery idsQuery = queries.ids();
 
-		if (ids.isEmpty()) {
-			return null;
-		}
+		idsQuery.addIds(pin.getId());
 
+		idsQuery.setBoost((size - pin.getPosition()) * 10000F);
+
+		return idsQuery;
+	}
+
+	protected ComplexQueryPart getPinIdsQueryPart(Query query) {
 		return complexQueryPartBuilderFactory.builder(
-		).boost(
-			10000F
+		).additive(
+			true
 		).query(
-			_getIdsQuery(ids)
+			query
 		).occur(
 			"should"
 		).build();
+	}
+
+	protected Stream<ComplexQueryPart> getPinIdsQueryParts(Ranking ranking) {
+		List<Ranking.Pin> pins = ranking.getPins();
+
+		Stream<Ranking.Pin> stream = pins.stream();
+
+		return stream.map(
+			pin -> getIdsQuery(pin, pins.size())
+		).map(
+			this::getPinIdsQueryPart
+		);
 	}
 
 	@Reference
@@ -95,18 +113,6 @@ public class RankingSearchRequestHelper {
 		idsQuery.addIds(ArrayUtil.toStringArray(ids));
 
 		return idsQuery;
-	}
-
-	private Set<String> _getPinIds(Ranking ranking) {
-		List<Ranking.Pin> pins = ranking.getPins();
-
-		Stream<Ranking.Pin> stream = pins.stream();
-
-		return stream.map(
-			Ranking.Pin::getId
-		).collect(
-			Collectors.toSet()
-		);
 	}
 
 }

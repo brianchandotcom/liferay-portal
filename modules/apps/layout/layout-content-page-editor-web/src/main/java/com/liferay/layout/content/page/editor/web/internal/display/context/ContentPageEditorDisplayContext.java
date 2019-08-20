@@ -276,6 +276,12 @@ public class ContentPageEditorDisplayContext {
 		getContentStructuresURL.setResourceID(
 			"/content_layout/get_content_structures");
 
+		ResourceURL getContentStructureMappingFieldsURL =
+			_renderResponse.createResourceURL();
+
+		getContentStructureMappingFieldsURL.setResourceID(
+			"/content_layout/get_content_structure_mapping_fields");
+
 		ResourceURL getExperienceUsedPortletsURL =
 			_renderResponse.createResourceURL();
 
@@ -289,6 +295,9 @@ public class ContentPageEditorDisplayContext {
 
 		soyContext.put(
 			"getAssetMappingFieldsURL", getAssetMappingFieldsURL.toString()
+		).put(
+			"getContentStructureMappingFieldsURL",
+			getContentStructureMappingFieldsURL.toString()
 		).put(
 			"getContentStructuresURL", getContentStructuresURL.toString()
 		).put(

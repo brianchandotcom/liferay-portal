@@ -3,11 +3,11 @@
 
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.workflow.metrics">
 	<namespace>WorkflowMetrics</namespace>
-	<entity local-service="true" name="WorkflowMetricsSLADefinition" remote-service="false" uuid="true">
+	<entity local-service="true" name="WorkflowMetricsSLADefinition" remote-service="false" table="WMSLADefinition" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="workflowMetricsSLADefinitionId" primary="true" type="long" />
+		<column db-name="slaDefinitionId" name="workflowMetricsSLADefinitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

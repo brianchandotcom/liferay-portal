@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
@@ -45,10 +44,6 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 		List<AppBuilderApp> appBuilderApps =
 			_appBuilderAppLocalService.getAppBuilderApps(
 				company.getCompanyId(), AppBuilderAppConstants.STATUS_DEPLOYED);
-
-		if (ListUtil.isEmpty(appBuilderApps)) {
-			return;
-		}
 
 		for (AppBuilderApp appBuilderApp : appBuilderApps) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(

@@ -50,14 +50,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 	</nav>
 </c:if>
 
-<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
-
-<liferay-ui:error exception="<%= SiteNavigationMenuItemNameException.class %>">
-	<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
 <div class="container-fluid-1280 contextual-sidebar-content site-navigation-content">
 	<div class="lfr-search-container-wrapper site-navigation-menu-container">
+		<liferay-ui:error embed="<%= false %>" key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
+
+		<liferay-ui:error embed="<%= false %>" exception="<%= SiteNavigationMenuItemNameException.class %>">
+			<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
+		</liferay-ui:error>
 
 		<%
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);

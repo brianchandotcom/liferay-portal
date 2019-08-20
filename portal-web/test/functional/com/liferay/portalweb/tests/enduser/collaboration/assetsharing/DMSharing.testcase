@@ -70,6 +70,7 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title 1");
 
 		DMDocument.sharePG(
+			noAutocomplete = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -768,6 +769,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		DMDocument.sharePG(
+			noAutocomplete = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -816,6 +818,7 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
+			noAutocomplete = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 

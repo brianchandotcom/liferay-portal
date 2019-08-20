@@ -110,6 +110,7 @@ definition {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(
+			noAutocomplete = "true",
 			sharingPermissions = "Update",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
@@ -233,6 +234,7 @@ definition {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(
+			noAutocomplete = "true",
 			sharingPermissions = "Update",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
@@ -267,6 +269,7 @@ definition {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(
+			noAutocomplete = "true",
 			sharingPermissions = "Update",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");

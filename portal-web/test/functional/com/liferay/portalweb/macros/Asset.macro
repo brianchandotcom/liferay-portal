@@ -37,15 +37,22 @@ definition {
 	macro share {
 		IFrame.selectModalFrame();
 
-		Type.sendKeys(
-			locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-			value1 = "${userEmailAddress}");
+		if (isSet(noAutocomplete)) {
+			Type.sendKeys(
+				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+				value1 = "${userEmailAddress}");
+		}
+		else {
+			Type.sendKeys(
+				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+				value1 = "${userEmailAddress}");
 
-		Click(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
+			Click(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
 
-		var key_userName = "${userName}";
+			var key_userName = "${userName}";
 
-		AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
+			AssertElementPresent(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_TAG");
+		}
 
 		if (isSet(shareable)) {
 			FormFields.enableCheckbox(fieldName = "shareable");

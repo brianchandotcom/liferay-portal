@@ -216,8 +216,7 @@ public class JournalFolderModelValidator
 
 		if (folder.getFolderId() == parentFolderId) {
 			throw new InvalidFolderException(
-				InvalidFolderException.CANNOT_MOVE_INTO_ITSELF,
-				folder.getFolderId());
+				folder, InvalidFolderException.CANNOT_MOVE_INTO_ITSELF);
 		}
 
 		JournalFolder parentFolder =
@@ -236,8 +235,7 @@ public class JournalFolderModelValidator
 
 		if (subfolderIds.contains(parentFolderId)) {
 			throw new InvalidFolderException(
-				InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER,
-				folder.getFolderId());
+				folder, InvalidFolderException.CANNOT_MOVE_INTO_CHILD_FOLDER);
 		}
 	}
 

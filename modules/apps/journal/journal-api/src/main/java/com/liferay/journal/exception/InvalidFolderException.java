@@ -15,13 +15,8 @@
 package com.liferay.journal.exception;
 
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalFolderServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Locale;
 
@@ -37,33 +32,21 @@ public class InvalidFolderException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_ITSELF = 2;
 
-	public InvalidFolderException(int type, long folderId) {
+	public InvalidFolderException(JournalFolder folder, int type) {
+		_folder = folder;
 		_type = type;
-		_folderId = folderId;
 	}
 
-	public long getFolderId() {
-		return _folderId;
+	public JournalFolder getFolder() {
+		return _folder;
 	}
 
 	public String getMessageArgument(Locale locale) {
-		try {
-			if (_folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				return LanguageUtil.get(locale, "home");
-			}
-
-			JournalFolder folder = JournalFolderServiceUtil.getFolder(
-				_folderId);
-
-			return folder.getName();
+		if (_folder == null) {
+			return LanguageUtil.get(locale, "home");
 		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(pe, pe);
-			}
 
-			return StringPool.BLANK;
-		}
+		return _folder.getName();
 	}
 
 	public String getMessageKey() {
@@ -77,10 +60,7 @@ public class InvalidFolderException extends PortalException {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		InvalidFolderException.class);
-
-	private final long _folderId;
+	private final JournalFolder _folder;
 	private final int _type;
 
 }

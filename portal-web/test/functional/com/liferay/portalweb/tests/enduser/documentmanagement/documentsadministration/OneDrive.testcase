@@ -1,0 +1,186 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Online Editing";
+	var pageName = "Documents and Media Page";
+	var portletName = "Documents and Media";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "OneDrive",
+			configurationScope = "Virtual Instance Scope");
+
+		var oneDriveClientID = PropsUtil.get("onedrive.client.id");
+
+		Type(
+			key_text = "clientId",
+			locator1 = "TextArea#ANY",
+			value1 = "${oneDriveClientID}");
+
+		var oneDriveClientSecret = PropsUtil.get("onedrive.client.secret");
+
+		Type(
+			key_text = "clientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = "${oneDriveClientSecret}");
+
+		var oneDriveTenant = PropsUtil.get("onedrive.tenant");
+
+		Type(
+			key_text = "tenant",
+			locator1 = "TextArea#ANY",
+			value1 = "${oneDriveTenant}");
+
+		ScrollWebElementIntoView(locator1 = "Button#CANCEL");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
+	@description = "This test ensures that a excel docuemnt can be added via OneDrive editor"
+	@priority = "5"
+	test AddExcelDocument {
+		property test.name.skip.portal.instance = "OneDrive#AddExcelDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Excel");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitleInOneDrive(
+			dmDocumentTitle = "Excel Doc Title",
+			key_documentType = "xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Untitled",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Excel Doc Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Excel Doc Title");
+	}
+
+	@description = "This test ensures that a powerpoint docuemnt can be added via OneDrive editor"
+	@priority = "5"
+	test AddPowerPointDocument {
+		property test.name.skip.portal.instance = "OneDrive#AddPowerPointDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "PowerPoint");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitleInOneDrive(
+			dmDocumentTitle = "PowerPoint Doc Title",
+			key_documentType = "pptx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Untitled",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "PowerPoint Doc Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "PowerPoint Doc Title");
+	}
+
+	@description = "This test ensures that a word document can be added via OneDrive editor. "
+	@priority = "5"
+	test AddWordDocument {
+		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Word");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitleInOneDrive(
+			dmDocumentTitle = "Word Doc Title",
+			key_documentType = "docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Untitled",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Untitled");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		AssertTextEquals(
+			key_dmDocumentTitle = "Word Doc Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
+			value1 = "Word Doc Title");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			DMDocumentType.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+}

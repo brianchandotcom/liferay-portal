@@ -164,16 +164,13 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(actionRequest);
 
-				DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference =
+				_saveDLOpenerOneDriveFileReference(
+					actionRequest,
 					TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> _addDLOpenerOneDriveFileReference(
 							_portal.getUserId(actionRequest), repositoryId,
-							folderId, contentType, serviceContext));
-
-				actionRequest.setAttribute(
-					DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
-					dlOpenerOneDriveFileReference);
+							folderId, contentType, serviceContext)));
 
 				hideDefaultSuccessMessage(actionRequest);
 

@@ -26,6 +26,8 @@ const WRAPPER_CLASSES = {
 	padded: 'fragment-entry-link-list-wrapper--padded'
 };
 
+const HIGHLIGHTED_COMMENT_ID_KEY = 'FRAGMENTS_EDITOR_HIGHLIGHTED_COMMENT_ID';
+
 /**
  * EditModeWrapper
  * @review
@@ -116,6 +118,7 @@ class EditModeWrapper extends Component {
 
 			if (fragmentEntryLink) {
 				this._url.searchParams.delete('messageId');
+
 				this._url.searchParams.set('sidebarPanelId', 'comments');
 
 				this._url.searchParams.set(
@@ -126,6 +129,11 @@ class EditModeWrapper extends Component {
 				this._url.searchParams.set(
 					'activeItemType',
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+				);
+
+				window.sessionStorage.setItem(
+					HIGHLIGHTED_COMMENT_ID_KEY,
+					messageId
 				);
 			}
 		}
@@ -241,5 +249,5 @@ const ConnectedEditModeWrapper = getConnectedComponent(EditModeWrapper, [
 	'sidebarPanels'
 ]);
 
-export {ConnectedEditModeWrapper, EditModeWrapper};
+export {ConnectedEditModeWrapper, EditModeWrapper, HIGHLIGHTED_COMMENT_ID_KEY};
 export default ConnectedEditModeWrapper;

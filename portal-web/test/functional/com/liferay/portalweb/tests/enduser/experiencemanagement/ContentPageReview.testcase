@@ -311,7 +311,7 @@ definition {
 	}
 
 	@description = "This case ensures that users can view created comments when no fragment is selected and navigate to them."
-	@priority = "4"
+	@priority = "5"
 	test ViewCommentList {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

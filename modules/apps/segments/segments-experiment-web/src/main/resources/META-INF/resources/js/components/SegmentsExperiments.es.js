@@ -21,14 +21,12 @@ import ClaySelect from '@clayui/select';
 import Variants from './Variants/Variants.es';
 import {
 	InitialSegmentsVariantType,
-	SegmentsExperimentGoal,
 	SegmentsExperienceType,
 	SegmentsExperimentType
 } from '../types.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 
 function SegmentsExperiments({
-	initialGoals,
 	onCreateSegmentsExperiment,
 	onEditSegmentsExperiment,
 	onSelectSegmentsExperienceChange,
@@ -105,7 +103,6 @@ function SegmentsExperiments({
 					</div>
 
 					<SegmentsExperimentsDetails
-						initialGoals={initialGoals}
 						segmentsExperiment={segmentsExperiment}
 					/>
 
@@ -159,8 +156,20 @@ function SegmentsExperiments({
 	}
 }
 
+const _statusToType = status => STATUS_TO_TYPE[status];
+
+const STATUS_TO_TYPE = {
+	0: 'secondary',
+	1: 'primary',
+	2: 'success',
+	3: 'success',
+	4: 'danger',
+	5: 'danger',
+	6: 'danger',
+	7: 'warning'
+};
+
 SegmentsExperiments.propTypes = {
-	initialGoals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,

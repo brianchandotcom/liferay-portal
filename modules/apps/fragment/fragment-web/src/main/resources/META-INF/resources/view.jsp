@@ -145,9 +145,11 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								<%= fragmentDisplayContext.getFragmentCollectionName() %>
 							</div>
 
-							<div class="autofit-col autofit-col-end inline-item-after">
-								<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
-							</div>
+							<c:if test="<%= fragmentDisplayContext.showFragmentCollectionActions() %>">
+								<div class="autofit-col autofit-col-end inline-item-after">
+									<liferay-util:include page="/fragment_collection_action.jsp" servletContext="<%= application %>" />
+								</div>
+							</c:if>
 						</div>
 					</h2>
 

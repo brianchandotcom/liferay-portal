@@ -514,8 +514,24 @@ public class FragmentDisplayContext {
 		return false;
 	}
 
+	public boolean isSelectedFragmentCollectionContributor() {
+		if (Validator.isNotNull(getFragmentCollectionKey())) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isViewResources() {
 		if (Objects.equals(_getTabs1(), "resources") && _isScopeGroup()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean showFragmentCollectionActions() {
+		if (!isSelectedFragmentCollectionContributor()) {
 			return true;
 		}
 

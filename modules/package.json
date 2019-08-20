@@ -23,7 +23,7 @@
 	},
 	"private": true,
 	"resolutions": {
-		"senna": "3.0.0-milestone.4"
+		"senna": "3.0.0-milestone.5"
 	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts check",

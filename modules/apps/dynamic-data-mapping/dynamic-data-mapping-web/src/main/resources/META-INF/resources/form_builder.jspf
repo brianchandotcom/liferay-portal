@@ -284,6 +284,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
 			Liferay.detach('showTab', afterShowTab);
 			Liferay.detach('destroyPortlet', onDestroyPortlet);
+			Liferay.detach('<portlet:namespace />saveTemplate');
 
 			var propertyList = formBuilder.propertyList;
 

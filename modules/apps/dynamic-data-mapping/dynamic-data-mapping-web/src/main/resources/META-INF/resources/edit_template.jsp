@@ -465,6 +465,13 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
+
+			var onDestroyPortlet = function(event) {
+				Liferay.detach('destroyPortlet', onDestroyPortlet);
+				Liferay.detach('<portlet:namespace />saveTemplate');
+			}
+
+			Liferay.on('destroyPortlet', onDestroyPortlet);
 		</aui:script>
 
 		<%

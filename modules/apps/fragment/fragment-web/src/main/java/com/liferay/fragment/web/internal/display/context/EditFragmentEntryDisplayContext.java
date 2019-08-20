@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -61,6 +62,8 @@ public class EditFragmentEntryDisplayContext {
 				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_setViewAttributes();
 	}
 
 	public long getFragmentCollectionId() {
@@ -355,6 +358,33 @@ public class EditFragmentEntryDisplayContext {
 		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
 
 		return _readOnly;
+	}
+
+	private void _setViewAttributes() {
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(getRedirect());
+
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		if (WorkflowConstants.STATUS_DRAFT != fragmentEntry.getStatus()) {
+			_renderResponse.setTitle(getFragmentEntryTitle());
+
+			return;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(getFragmentEntryTitle());
+		sb.append(" (");
+		sb.append(
+			LanguageUtil.get(
+				_httpServletRequest,
+				WorkflowConstants.getStatusLabel(fragmentEntry.getStatus())));
+		sb.append(")");
+
+		_renderResponse.setTitle(sb.toString());
 	}
 
 	private String _configurationContent;

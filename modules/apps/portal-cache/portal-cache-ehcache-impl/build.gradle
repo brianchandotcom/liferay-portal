@@ -6,7 +6,6 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:portal-cache:portal-cache-api")
 	compileOnly project(":apps:portal-cache:portal-cache-ehcache-provider")
-	compileOnly project(":apps:portal-cache:portal-cache-ehcache-spi")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal:portal-profile-api")
 	compileOnly project(":core:petra:petra-reflect")

@@ -62,7 +62,7 @@
 		</execute>
 		<if>
 			<not>
-				<available file="${db.upgrade.client.home}/log_file.txt" />
+				<available file="${db.upgrade.client.home}/logs/log_file.txt" />
 			</not>
 			<then>
 				<fail message="The upgrade client custom log file was not created successfully." />
@@ -73,7 +73,7 @@
 
 		<loadfile
 			property="custom.log.file.output"
-			srcfile="${db.upgrade.client.home}/log_file.txt"
+			srcfile="${db.upgrade.client.home}/logs/log_file.txt"
 		/>
 
 		<if>
@@ -87,7 +87,7 @@
 
 		<echo message="The upgrade client custom log file was created successfully." />
 
-		<delete file="${db.upgrade.client.home}/log_file.txt" />
+		<delete file="${db.upgrade.client.home}/logs/log_file.txt" />
 
 		<clean-database-upgrade-client />
 	</target>

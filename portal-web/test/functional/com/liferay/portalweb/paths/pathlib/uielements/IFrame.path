@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_APPLICATION</td>
+	<td>//iframe[contains(@id,'WebApplicationFrame')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>XPACK_MONITORING</td>
 	<td>//iframe[contains(@id,'XPackMonitoringPortlet')]</td>
 	<td></td>

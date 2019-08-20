@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>OneDrive</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OneDrive</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TITLE</td>
+	<td>title=Untitled.${key_documentType}</td>
+	<td></td>
+</tr>
+<!--ONEDRIVE_DOCS-->
+<tr>
+	<td>CONTENT</td>
+	<td>//div[@id='WACDocumentPanelContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_STATUS</td>
+	<td>//span[@id='BreadcrumbSaveStatus']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE</td>
+	<td>//div[@id='BreadcrumbTitle']</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

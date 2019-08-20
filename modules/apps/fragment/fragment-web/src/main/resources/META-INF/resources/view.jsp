@@ -159,11 +159,18 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 						/>
 
 						<c:choose>
-							<c:when test="<%= fragmentDisplayContext.isViewResources() %>">
-								<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
+							<c:when test="<%= fragmentDisplayContext.isSelectedFragmentCollectionContributor() %>">
+								<liferay-util:include page="/view_contriguted_fragment_entries.jsp" servletContext="<%= application %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+								<c:choose>
+									<c:when test="<%= fragmentDisplayContext.isViewResources() %>">
+										<liferay-util:include page="/view_resources.jsp" servletContext="<%= application %>" />
+									</c:when>
+									<c:otherwise>
+										<liferay-util:include page="/view_fragment_entries.jsp" servletContext="<%= application %>" />
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
 						</c:choose>
 					</div>

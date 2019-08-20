@@ -143,6 +143,59 @@ public class FragmentDisplayContext {
 		};
 	}
 
+	public SearchContainer getContributedFragmentEntriesSearchContainer() {
+		if (_contributedFragmentEntriesSearchContainer != null) {
+			return _contributedFragmentEntriesSearchContainer;
+		}
+
+		SearchContainer contributedFragmentEntriesSearchContainer =
+			new SearchContainer(
+				_renderRequest, _getPortletURL(), null,
+				"there-are-no-fragments");
+
+		contributedFragmentEntriesSearchContainer.setId(
+			"fragmentEntries" + getFragmentCollectionKey());
+
+		List<FragmentEntry> fragmentEntries = null;
+
+		FragmentCollectionContributor fragmentCollectionContributor =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributor(getFragmentCollectionKey());
+
+		if (isNavigationComponents() || isNavigationSections()) {
+			int type = FragmentConstants.TYPE_SECTION;
+
+			if (isNavigationComponents()) {
+				type = FragmentConstants.TYPE_COMPONENT;
+			}
+
+			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
+				type, _themeDisplay.getLocale());
+		}
+		else {
+			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
+				FragmentConstants.TYPE_SECTION, _themeDisplay.getLocale());
+
+			fragmentEntries.addAll(
+				fragmentCollectionContributor.getFragmentEntries(
+					FragmentConstants.TYPE_COMPONENT,
+					_themeDisplay.getLocale()));
+		}
+
+		contributedFragmentEntriesSearchContainer.setResults(
+			ListUtil.subList(
+				fragmentEntries,
+				contributedFragmentEntriesSearchContainer.getStart(),
+				contributedFragmentEntriesSearchContainer.getEnd()));
+		contributedFragmentEntriesSearchContainer.setTotal(
+			fragmentEntries.size());
+
+		_contributedFragmentEntriesSearchContainer =
+			contributedFragmentEntriesSearchContainer;
+
+		return _contributedFragmentEntriesSearchContainer;
+	}
+
 	public FragmentCollection getFragmentCollection() {
 		if (_fragmentCollection != null) {
 			return _fragmentCollection;
@@ -563,8 +616,20 @@ public class FragmentDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "/fragment/view");
-		portletURL.setParameter(
-			"fragmentCollectionId", String.valueOf(getFragmentCollectionId()));
+
+		long fragmentCollectionId = getFragmentCollectionId();
+
+		if (fragmentCollectionId > 0) {
+			portletURL.setParameter(
+				"fragmentCollectionId", String.valueOf(fragmentCollectionId));
+		}
+
+		String fragmentCollectionKey = getFragmentCollectionKey();
+
+		if (Validator.isNotNull(fragmentCollectionKey)) {
+			portletURL.setParameter(
+				"fragmentCollectionKey", fragmentCollectionKey);
+		}
 
 		String keywords = _getKeywords();
 
@@ -621,6 +686,7 @@ public class FragmentDisplayContext {
 		return true;
 	}
 
+	private SearchContainer _contributedFragmentEntriesSearchContainer;
 	private FragmentCollection _fragmentCollection;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

@@ -295,7 +295,10 @@ class FloatingToolbarLinkPanel extends PortletBase {
 
 		this._updateRowConfig(config);
 
-		if (!fieldId) {
+		if (
+			!fieldId ||
+			this._selectedSourceTypeId === SOURCE_TYPE_IDS.structure
+		) {
 			this._mappedFieldValue = '';
 		} else {
 			this._getMappedValue(fieldId).then(fieldValue => {

@@ -424,7 +424,7 @@ public class FragmentDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "fragments"));
 					});
 
-				if (_isScopeGroup()) {
+				if (_isShowResourcesTab()) {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
@@ -607,6 +607,18 @@ public class FragmentDisplayContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isShowResourcesTab() {
+		if (isSelectedFragmentCollectionContributor()) {
+			return false;
+		}
+
+		if (!_isScopeGroup()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private FragmentCollection _fragmentCollection;

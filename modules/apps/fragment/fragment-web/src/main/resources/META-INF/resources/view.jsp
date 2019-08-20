@@ -108,6 +108,11 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 											<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 												<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
+
+												<liferay-ui:icon
+													icon="lock"
+													markupView="lexicon"
+												/>
 											</a>
 										</li>
 

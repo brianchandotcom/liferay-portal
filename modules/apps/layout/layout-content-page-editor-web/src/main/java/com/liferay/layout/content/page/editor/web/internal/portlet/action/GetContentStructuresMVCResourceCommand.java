@@ -19,7 +19,6 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -75,16 +73,15 @@ public class GetContentStructuresMVCResourceCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getLocale());
 
 			for (ClassType classType : classTypes) {
-				String label = StringUtil.appendParentheticalSuffix(
-					classType.getName() + StringPool.SPACE,
+				JSONObject jsonObject = JSONUtil.put(
+					"countLabel",
 					LanguageUtil.format(
 						_portal.getHttpServletRequest(resourceRequest),
-						"x-fields", classType.getClassTypeFieldsCount()));
-
-				JSONObject jsonObject = JSONUtil.put(
+						"x-fields", classType.getClassTypeFieldsCount())
+				).put(
 					"id", String.valueOf(classType.getClassTypeId())
 				).put(
-					"label", label
+					"label", classType.getName()
 				);
 
 				jsonArray.put(jsonObject);

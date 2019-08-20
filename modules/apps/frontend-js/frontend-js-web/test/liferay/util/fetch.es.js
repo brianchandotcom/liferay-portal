@@ -14,33 +14,26 @@
 
 'use strict';
 
-import fetch from '../../../src/main/resources/META-INF/resources/liferay/util/fetch.es';
+import fetchWrapper from '../../../src/main/resources/META-INF/resources/liferay/util/fetch.es';
 
 describe('Liferay.Util.fetch', () => {
-	let globalFetch;
 	const sampleUrl = 'http://sampleurl.com';
 
-	afterEach(() => {
-		jest.resetAllMocks();
-	});
-
 	beforeEach(() => {
-		Liferay.authToken = 'abcd';
-
-		globalFetch = jest.spyOn(global, 'fetch');
+		fetch.mockResponse('');
 	});
 
 	it('applies default settings if none are given', () => {
-		fetch(sampleUrl);
+		fetchWrapper(sampleUrl);
 
 		const init = {
 			credentials: 'include',
 			headers: new Headers({
-				'x-csrf-token': 'abcd'
+				'x-csrf-token': 'default-mocked-auth-token'
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, init);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, init);
 	});
 
 	it('overrides default settings with given settings', () => {
@@ -51,7 +44,7 @@ describe('Liferay.Util.fetch', () => {
 			}
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'omit',
@@ -60,7 +53,7 @@ describe('Liferay.Util.fetch', () => {
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('merges default settings with given different settings', () => {
@@ -71,18 +64,18 @@ describe('Liferay.Util.fetch', () => {
 			method: 'GET'
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'include',
 			headers: new Headers({
 				'content-type': 'application/json',
-				'x-csrf-token': 'abcd'
+				'x-csrf-token': 'default-mocked-auth-token'
 			}),
 			method: 'GET'
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('sets given headers to lower-case before merging with defaults', () => {
@@ -93,7 +86,7 @@ describe('Liferay.Util.fetch', () => {
 			}
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'include',
@@ -103,7 +96,7 @@ describe('Liferay.Util.fetch', () => {
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('merges given multiple headers, setting name to lower-case', () => {
@@ -114,17 +107,17 @@ describe('Liferay.Util.fetch', () => {
 			}
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'include',
 			headers: new Headers({
-				'content-type': 'application/json,multipart/form-data',
-				'x-csrf-token': 'abcd'
+				'content-type': 'application/json, multipart/form-data',
+				'x-csrf-token': 'default-mocked-auth-token'
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('allows given headers to be an array of arrays', () => {
@@ -135,7 +128,7 @@ describe('Liferay.Util.fetch', () => {
 			]
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'include',
@@ -145,7 +138,7 @@ describe('Liferay.Util.fetch', () => {
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 
 	it('allows given headers to be a Headers object', () => {
@@ -156,7 +149,7 @@ describe('Liferay.Util.fetch', () => {
 			})
 		};
 
-		fetch(sampleUrl, init);
+		fetchWrapper(sampleUrl, init);
 
 		const mergedInit = {
 			credentials: 'include',
@@ -166,6 +159,6 @@ describe('Liferay.Util.fetch', () => {
 			})
 		};
 
-		expect(globalFetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
+		expect(fetch).toHaveBeenCalledWith(sampleUrl, mergedInit);
 	});
 });

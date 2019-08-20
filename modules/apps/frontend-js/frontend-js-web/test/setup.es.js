@@ -12,17 +12,14 @@
  * details.
  */
 
-import Headers from './headers.es';
+afterEach(() => {
+	global.fetch.mockRestore();
+});
 
-global.Headers = Headers;
-
-global.Liferay = {
-	ThemeDisplay: {
-		getDoAsUserIdEncoded: () => 'default-mocked-do-as-user-id',
-		getPathMain: () => '/c',
-		getPortalURL: () => 'http://localhost:8080'
-	},
-	authToken: 'default-mocked-auth-token'
-};
-
-global.fetch = require('jest-fetch-mock');
+beforeEach(() => {
+	jest.spyOn(global, 'fetch').mockImplementation((...args) => {
+		throw new Error(
+			`global.fetch was not mocked for this call: ${JSON.stringify(args)}`
+		);
+	});
+});

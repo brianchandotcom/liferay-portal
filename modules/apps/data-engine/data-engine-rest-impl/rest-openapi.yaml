@@ -672,7 +672,7 @@ paths:
                                 $ref: "#/components/schemas/DataRecord"
                     description: ""
             tags: ["DataRecord"]
-    "/data-layout/{dataLayoutId}/data-layout-permissions":
+    "/data-layouts/{dataLayoutId}/data-layout-permissions":
         post:
             operationId: postDataLayoutDataLayoutPermission
             parameters:
@@ -1172,7 +1172,7 @@ paths:
                                 $ref: "#/components/schemas/DataDefinition"
                     description: ""
             tags: ["DataDefinition"]
-    "/sites/{siteId}/data-layout":
+    "/sites/{siteId}/data-layouts":
         get:
             operationId: getSiteDataLayoutPage
             parameters:

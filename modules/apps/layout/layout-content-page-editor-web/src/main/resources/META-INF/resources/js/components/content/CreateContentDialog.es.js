@@ -20,6 +20,7 @@ import Soy from 'metal-soy';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
 import templates from './CreateContentDialog.soy';
 import './CreateContentForm.es';
+import './MapContentForm.es';
 import {setIn} from '../../utils/FragmentsEditorUpdateUtils.es';
 
 /**
@@ -58,6 +59,8 @@ class CreateContentDialog extends Component {
 	 * @review
 	 */
 	_handleCancelButtonClick() {
+		this.dispose();
+
 		this.onCancelButtonClick();
 	}
 
@@ -67,6 +70,10 @@ class CreateContentDialog extends Component {
 	 * @review
 	 */
 	_handleSubmitButtonClick() {
+		if (this._step === 1) {
+			this._step = 2;
+		}
+
 		this.onSubmitButtonClick();
 	}
 
@@ -79,12 +86,20 @@ class CreateContentDialog extends Component {
 		this._valid = event.valid;
 	}
 
+	_handleStructureChange(event) {
+		this._ddmStructure = event.ddmStructure;
+	}
+
 	/**
 	 * Change asset type selection dialog visibility.
 	 * @private
 	 * @review
 	 */
 	_handleVisibleChanged() {
+		if (!this.visible) {
+			this.dispose();
+		}
+
 		this.onVisibilityChange();
 	}
 }
@@ -96,6 +111,23 @@ class CreateContentDialog extends Component {
  * @type {!Object}
  */
 CreateContentDialog.STATE = {
+	/**
+	 * Selected DDM structure
+	 * @default 1
+	 * @instance
+	 * @memberOf CreateContentDialog
+	 * @private
+	 * @review
+	 * @type {
+	 * 	id: string,
+	 * 	label: string
+	 * }
+	 */
+	_ddmStructure: Config.shapeOf({
+		id: Config.string().required(),
+		label: Config.string().required()
+	}),
+
 	/**
 	 * Current dialog step
 	 * @default 1

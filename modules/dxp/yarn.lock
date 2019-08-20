@@ -933,7 +933,18 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@clayui/button@^3.0.0-milestone.1":
+"@clayui/autocomplete@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/autocomplete/-/autocomplete-3.0.0-milestone.2.tgz#3017c1b172aeb77f6836145d8d6059b8091d228b"
+  integrity sha512-tbStNRFNQVr3pUyL25YGGMj9PDKW5LLvZwk32GnZ+SxNv8JyBp+zYlfH1YunxR/pgB9o9Urr5kQ/KvlJ8xBs3Q==
+  dependencies:
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/form" "^3.0.0-milestone.2"
+    "@clayui/loading-indicator" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+    fuzzy "^0.1.3"
+
+"@clayui/button@^3.0.0-milestone.2":
   version "3.0.0-milestone.2"
   resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.0.0-milestone.2.tgz#7808ea8a7cfdb0fb7933a3da3c449d1d24a2b8b6"
   integrity sha512-yxaHJUFzEMf0RV5uzfk/LlwdkxlSd7b9MQ2elxIaCQNy2iHxdLDMBJQU8SvGPQYlXcs3JwLZ8+H3IfkKgPozqw==
@@ -950,14 +961,30 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/checkbox@^3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/checkbox/-/checkbox-3.0.0-milestone.1.tgz#feb4bc6f631fbe95feaf25ef854b8b69ad1f9f3c"
-  integrity sha512-wI1/EWjaBdQOYa2j4QJ14nTzNKinj1cDKJG2osK2RXeF+so3Xs4LMxrhIuUjjnrXkGKBGSrKMhrdxUd3WCuvWw==
+"@clayui/drop-down@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.0.0-milestone.2.tgz#8f858ba24c1fd32845a1eb194c910f7f77c3419f"
+  integrity sha512-mkiI9wQMVDT+Cd2IvyLQg+jCuKhwaD/Je5kbBb+FSspiZOyP5gzXnezw+msXU3x1xmg0H0SW+pzs9SZBoc3KdQ==
   dependencies:
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+    metal-position "^2.1.2"
+
+"@clayui/form@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.0.0-milestone.2.tgz#cd01fbfc1efdf88cce5ee4a5594ee1fef16ce606"
+  integrity sha512-Wjld3b0j/133y28ZrguvzWEb91oYOLnqwXGPPt2mJsemBIEfNu17N1jOkwgBBflQTcM913CjHzvvQ2B2i58XmA==
+  dependencies:
+    "@clayui/autocomplete" "^3.0.0-milestone.2"
+    "@clayui/drop-down" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/label" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
     classnames "^2.2.6"
 
-"@clayui/icon@^3.0.0-milestone.1", "@clayui/icon@^3.0.0-milestone.2":
+"@clayui/icon@^3.0.0-milestone.2":
   version "3.0.0-milestone.2"
   resolved "https://registry.yarnpkg.com/@clayui/icon/-/icon-3.0.0-milestone.2.tgz#c222849a43e5bb3c122e1991c4c06daf55687e48"
   integrity sha512-TlLHjRUxoD/4O3AWBPZ1eXFR59oSeFySRMQG7JUDcvRjVffdOZhco54IsAxdOqiJHX6t0hUoKPaqqWmBScsCUw==
@@ -965,10 +992,42 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/loading-indicator@^3.0.0-milestone.1":
+"@clayui/label@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.0.0-milestone.2.tgz#85a0731120f2437b198fc36b616c60f8a8e6acb5"
+  integrity sha512-3rBVoKqMKNzv+9tp94K7a0vj7Felysz+5XM8kwPuIoNbDuiArvKl7v6qjINyXr5c9J7zFJ2r2redyb9iWyazqw==
+  dependencies:
+    "@clayui/icon" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+
+"@clayui/link@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/link/-/link-3.0.0-milestone.2.tgz#f429e8be998cfbc5352b89064c005e6053b42c31"
+  integrity sha512-rOucTFUShI7elM60Hjnm3PtaoZz0Pv4Llvu/1jtcE/KNHwiuDdukEjbFufDYb1EZPtgLKsR+PqdzpiMPeRf2Jw==
+  dependencies:
+    classnames "^2.2.6"
+
+"@clayui/loading-indicator@^3.0.0-milestone.2":
   version "3.0.0-milestone.2"
   resolved "https://registry.yarnpkg.com/@clayui/loading-indicator/-/loading-indicator-3.0.0-milestone.2.tgz#cc69cea3e3568dee013002b3a352137bc90d9546"
   integrity sha512-Lfkh31fkhOVBkhDnzP5B0Hf0i+em4qGoxrtNTolHxVgxyLNIhlKKIehrOncxYPZM8C85lUmUoxFDWy/iDNAv4A==
+  dependencies:
+    classnames "^2.2.6"
+
+"@clayui/modal@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.0.0-milestone.2.tgz#0775194a1d923aff5e0b3de9daf65700d2e633c0"
+  integrity sha512-mGEqeiR1VDUlVNWOCQ7d3e4H3dhlqgtDor1pW4XrcORGls5+dZUSxHIr2zAZEi0x4nEMosA9+hsufaQMlT+Nkw==
+  dependencies:
+    "@clayui/button" "^3.0.0-milestone.2"
+    "@clayui/icon" "^3.0.0-milestone.2"
+    "@clayui/shared" "^3.0.0-milestone.2"
+    classnames "^2.2.6"
+
+"@clayui/shared@^3.0.0-milestone.2":
+  version "3.0.0-milestone.2"
+  resolved "https://registry.yarnpkg.com/@clayui/shared/-/shared-3.0.0-milestone.2.tgz#36da3b27e2ed9327b59052879090c1bf76e43c10"
+  integrity sha512-0sz65vxEkKEOhRalmCJ3tqkfjFM6dFMej1MYcK7PNROkYiMVQlOR/V86NoSVEbNqZIUcoNr3GkNaFMjWAop6hQ==
   dependencies:
     classnames "^2.2.6"
 
@@ -2539,7 +2598,7 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-autoprefixer@^9.1.5:
+autoprefixer@^9.1.5, autoprefixer@^9.4.9:
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.6.1.tgz#51967a02d2d2300bb01866c1611ec8348d355a47"
   integrity sha512-aVo5WxR3VyvyJxcJC3h4FKfwCQvQWb1tSI5VHNibddCVWrcD1NvlxEweg3TSgiPztMnWfjpy2FURKA2kvDE+Tw==
@@ -6078,11 +6137,6 @@ execa@^1.0.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
-exenv@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
-  integrity sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=
-
 exit-hook@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/exit-hook/-/exit-hook-1.1.1.tgz#f05ca233b48c05d54fff07765df8507e95c02ff8"
@@ -6753,6 +6807,11 @@ fuse.js@^3.4.4:
   version "3.4.5"
   resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-3.4.5.tgz#8954fb43f9729bd5dbcb8c08f251db552595a7a6"
   integrity sha512-s9PGTaQIkT69HaeoTVjwGsLfb8V8ScJLx5XGFcKHg0MqLUH/UZ4EKOtqtXX9k7AFqCGxD1aJmYb8Q5VYDibVRQ==
+
+fuzzy@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/fuzzy/-/fuzzy-0.1.3.tgz#4c76ec2ff0ac1a36a9dccf9a00df8623078d4ed8"
+  integrity sha1-THbsL/CsGjap3M+aAN+GIweNTtg=
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -10230,6 +10289,29 @@ merge@^1.2.0, merge@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/merge/-/merge-1.2.1.tgz#38bebf80c3220a8a487b6fcfb3941bb11720c145"
 
+metal-dom@^2.16.6:
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/metal-dom/-/metal-dom-2.16.8.tgz#e3bdfd341ca2f6aae5daba39952cf1ba5a8861a6"
+  integrity sha512-wmLcuaJ63W/LMT/GgZhqpUefFOVDXlQLI+NJvHJUduIc1XSQOEpSH3OTlzxFsNeMxWEzeC2VAZuKJlrIjNQvDA==
+  dependencies:
+    metal "^2.16.8"
+    metal-events "^2.16.8"
+
+metal-events@^2.16.8:
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/metal-events/-/metal-events-2.16.8.tgz#14894c9e3a41dbe527684ff90c1511760cc9e533"
+  integrity sha512-Aa9ozlChOuJT0rLMSSpV7V+0RAk+TGhoe8Khlqh9iaJUPWlofptpgTTlagoqNxTm13iFNm6b2+mZauWM65iBlQ==
+  dependencies:
+    metal "^2.16.8"
+
+metal-position@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/metal-position/-/metal-position-2.1.2.tgz#3643a7f83a6b5a39061841858b058935390bd13c"
+  integrity sha512-XvE1AQoySYFGG0sc3unZWfK97UKOvHvg/asq2k1Oh+vs1NGD9PhhGBQKiD0/Rix85ICHEeLUVzS0WGQr5wdapQ==
+  dependencies:
+    metal "^2.16.6"
+    metal-dom "^2.16.6"
+
 metal-tools-soy@4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/metal-tools-soy/-/metal-tools-soy-4.3.2.tgz#4ca9ba24f09d73990f47176ecec5a5621b158b5d"
@@ -10248,7 +10330,7 @@ metal-tools-soy@4.3.2:
     vinyl-fs "^2.2.1"
     yargs "^8.0.2"
 
-metal@^2.16.6:
+metal@^2.16.6, metal@^2.16.8:
   version "2.16.8"
   resolved "https://registry.yarnpkg.com/metal/-/metal-2.16.8.tgz#7121b2ee18f5165f637d69212ce41ef6e6bcb63c"
 
@@ -12225,20 +12307,10 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
 
-react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
+react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
-
-react-modal@^3.8.1:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.9.1.tgz#82ce53d110eea0d8f028f3315ef336d0baffa9b9"
-  integrity sha512-k+TUkhGWpIVHLsEyjNmlyOYL0Uz03fNZvlkhCImd1h+6fhNgTi6H6jexVXPVhD2LMMDzJyfugxMN+APN/em+eQ==
-  dependencies:
-    exenv "^1.2.0"
-    prop-types "^15.5.10"
-    react-lifecycles-compat "^3.0.0"
-    warning "^4.0.3"
 
 react-parm@^2.3.0:
   version "2.7.0"

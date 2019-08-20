@@ -1,0 +1,79 @@
+{namespace com.liferay.layout.content.page.editor.web.MapContentForm}
+
+/**
+ * MapContentForm
+ */
+{template .render}
+	{@param? selectedItems: list<[
+		editableId: string,
+		fragmentEntryLinkId: string,
+		itemId: string,
+		itemType: string,
+		itemValue: string
+	]>}
+	{@param? _handleFieldChange: any}
+	{@param? _structureLabel: string}
+	{@param? _fields: list<[
+		editableId: string,
+		key: string,
+		label: string,
+		type: string
+	]>}
+
+	<div>
+		<div class="alert alert-dismissible alert-fluid alert-info map-content-form-header">
+			{$_structureLabel}
+		</div>
+
+		<div class="mt-2">
+			<div class="row">
+				<div class="col">
+					<h3 class="sheet-subtitle">{msg desc=""}content-value{/msg}</h3>
+				</div>
+
+				<div class="col">
+					<h3 class="sheet-subtitle">{msg desc=""}structure-field{/msg}</h3>
+				</div>
+			</div>
+
+			<div class="inline-scroller map-content-form-fields">
+				{if $selectedItems and length($selectedItems) > 0}
+					{foreach $selectedItem in $selectedItems}
+						<div class="row mb-3">
+							<div class="col">
+								<input
+										class="form-control form-control-sm"
+										id="{$selectedItem.itemId}"
+										readonly
+										value="{$selectedItem.itemValue}"
+								>
+							</div>
+
+							<div class="col">
+								<select
+										class="form-control form-control-sm"
+										data-item-editable-id="{$selectedItem.editableId}"
+										data-item-fragment-entry-link-id="{$selectedItem.fragmentEntryLinkId}"
+										data-onchange="{$_handleFieldChange}"
+								>
+									{if $_fields}
+										{foreach $field in $_fields}
+											<option
+													value="{$field.key}"
+													{if $field.editableId and $field.editableId != $selectedItem.editableId}
+														disabled
+													{/if}
+											>
+												{$field.label}
+											</option>
+										{/foreach}
+									{/if}
+								</select>
+							</div>
+						</div>
+					{/foreach}
+				{/if}
+			</div>
+		</div>
+	</div>
+{/template}

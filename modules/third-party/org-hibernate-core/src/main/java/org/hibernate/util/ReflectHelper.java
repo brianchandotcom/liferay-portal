@@ -159,6 +159,10 @@ public final class ReflectHelper {
 	 * @throws ClassNotFoundException From {@link Class#forName(String, boolean, ClassLoader)}.
 	 */
 	public static Class classForName(String name, Class caller) throws ClassNotFoundException {
+		if (name.startsWith("org.hibernate.")) {
+			return Class.forName( name );
+		}
+
 		try {
 			ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 			if ( contextClassLoader != null ) {
@@ -181,6 +185,10 @@ public final class ReflectHelper {
 	 * @throws ClassNotFoundException From {@link Class#forName(String)}.
 	 */
 	public static Class classForName(String name) throws ClassNotFoundException {
+		if (name.startsWith("org.hibernate.")) {
+			return Class.forName( name );
+		}
+
 		try {
 			ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 			if ( contextClassLoader != null ) {
@@ -370,3 +378,4 @@ public final class ReflectHelper {
 	}
 
 }
+/* @generated */

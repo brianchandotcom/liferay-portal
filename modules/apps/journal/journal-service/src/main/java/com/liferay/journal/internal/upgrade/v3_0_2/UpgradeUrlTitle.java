@@ -14,8 +14,11 @@
 
 package com.liferay.journal.internal.upgrade.v3_0_2;
 
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -29,18 +32,40 @@ import java.sql.ResultSet;
  */
 public class UpgradeUrlTitle extends UpgradeProcess {
 
+	public UpgradeUrlTitle(
+		ClassNameLocalService classNameLocalService,
+		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateFriendlyURLEntryLocalization();
 		updateUrlTitle();
 	}
 
+	protected String getNormalizedURLTitle(
+		String urlTitle, long groupId, long resourcePrimKey) {
+
+		String normalizedURLTitle =
+			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
+
+		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			groupId,
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			resourcePrimKey, normalizedURLTitle);
+	}
+
 	protected void updateFriendlyURLEntryLocalization() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select friendlyURLEntryLocalizationId, urlTitle from " +
-					"FriendlyURLEntryLocalization where classNameId = ? and " +
-						"(urlTitle like ? or urlTitle like ?)")) {
+				StringBundler.concat(
+					"select friendlyURLEntryLocalizationId, urlTitle, ",
+					"groupId, classPK from FriendlyURLEntryLocalization where ",
+					"classNameId = ? and (urlTitle like ? or urlTitle like ",
+					"?)"))) {
 
 			ps1.setLong(1, PortalUtil.getClassNameId(JournalArticle.class));
 			ps1.setString(2, "%/%");
@@ -51,6 +76,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			while (rs.next()) {
 				long friendlyURLEntryLocalizationId = rs.getLong(1);
 				String urlTitle = rs.getString(2);
+				long groupId = rs.getLong(3);
+				long classPK = rs.getLong(4);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -60,9 +87,7 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 									"friendlyURLEntryLocalizationId = ?")) {
 
 					ps2.setString(
-						1,
-						FriendlyURLNormalizerUtil.
-							normalizeWithPeriodsAndSlashes(urlTitle));
+						1, getNormalizedURLTitle(urlTitle, groupId, classPK));
 					ps2.setLong(2, friendlyURLEntryLocalizationId);
 
 					ps2.executeUpdate();
@@ -74,8 +99,9 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 	protected void updateUrlTitle() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, urlTitle from JournalArticle where urlTitle " +
-					"like ? or urlTitle like ?")) {
+				"select id_, resourcePrimKey, urlTitle, groupId from " +
+					"JournalArticle where urlTitle like ? or urlTitle like " +
+						"?")) {
 
 			ps1.setString(1, "%/%");
 			ps1.setString(2, "%.%");
@@ -84,7 +110,9 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 
 			while (rs.next()) {
 				long id = rs.getLong(1);
-				String urlTitle = rs.getString(2);
+				long resourcePrimKey = rs.getLong(2);
+				String urlTitle = rs.getString(3);
+				long groupId = rs.getLong(4);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -94,8 +122,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 
 					ps2.setString(
 						1,
-						FriendlyURLNormalizerUtil.
-							normalizeWithPeriodsAndSlashes(urlTitle));
+						getNormalizedURLTitle(
+							urlTitle, groupId, resourcePrimKey));
 					ps2.setLong(2, id);
 
 					ps2.executeUpdate();
@@ -103,5 +131,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			}
 		}
 	}
+
+	private final ClassNameLocalService _classNameLocalService;
+	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

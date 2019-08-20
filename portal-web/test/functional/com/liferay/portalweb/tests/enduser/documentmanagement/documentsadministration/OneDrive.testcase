@@ -52,7 +52,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that a excel docuemnt can be added via OneDrive editor"
+	@description = "This test ensures that an Excel document can be added via the OneDrive editor."
 	@priority = "5"
 	test AddExcelDocument {
 		property test.name.skip.portal.instance = "OneDrive#AddExcelDocument";
@@ -68,7 +68,7 @@ definition {
 
 		MicrosoftLogin.confirmMicrosoftApp();
 
-		OneDrive.editTitleInOneDrive(
+		OneDrive.editTitle(
 			dmDocumentTitle = "Excel Doc Title",
 			key_documentType = "xlsx");
 
@@ -90,7 +90,7 @@ definition {
 			value1 = "Excel Doc Title");
 	}
 
-	@description = "This test ensures that a powerpoint docuemnt can be added via OneDrive editor"
+	@description = "This test ensures that a Powerpoint document can be added via the OneDrive editor."
 	@priority = "5"
 	test AddPowerPointDocument {
 		property test.name.skip.portal.instance = "OneDrive#AddPowerPointDocument";
@@ -106,7 +106,7 @@ definition {
 
 		MicrosoftLogin.confirmMicrosoftApp();
 
-		OneDrive.editTitleInOneDrive(
+		OneDrive.editTitle(
 			dmDocumentTitle = "PowerPoint Doc Title",
 			key_documentType = "pptx");
 
@@ -128,7 +128,7 @@ definition {
 			value1 = "PowerPoint Doc Title");
 	}
 
-	@description = "This test ensures that a word document can be added via OneDrive editor. "
+	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
 	@priority = "5"
 	test AddWordDocument {
 		property test.name.skip.portal.instance = "OneDrive#AddWordDocument";
@@ -144,7 +144,7 @@ definition {
 
 		MicrosoftLogin.confirmMicrosoftApp();
 
-		OneDrive.editTitleInOneDrive(
+		OneDrive.editTitle(
 			dmDocumentTitle = "Word Doc Title",
 			key_documentType = "docx");
 

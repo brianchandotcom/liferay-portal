@@ -175,14 +175,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addGoogleApp {
-		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
-
-		var key_menuItem = "${dmGoogleApp}";
-
-		MenuItem.click(menuItem = "${dmGoogleApp}");
-	}
-
 	macro addMultipleCP {
 		DMNavigator.gotoAddDocumentType(dmDocumentTypeName = "Multiple Files Upload");
 

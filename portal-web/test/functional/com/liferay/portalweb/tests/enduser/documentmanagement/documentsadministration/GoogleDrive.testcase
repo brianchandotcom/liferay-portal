@@ -66,7 +66,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -85,7 +85,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -98,7 +98,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Docs");
+			dmDocumentTypeName = "Google Docs");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "This title should not be saved");
 
@@ -119,7 +119,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Sheet");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -138,7 +138,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Sheet");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -151,7 +151,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Sheets");
+			dmDocumentTypeName = "Google Sheets");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "This title should not be saved");
 
@@ -172,7 +172,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Slide");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -191,7 +191,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Slide");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -204,7 +204,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Slides");
+			dmDocumentTypeName = "Google Slides");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "This title should not be saved");
 
@@ -225,7 +225,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -238,7 +238,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Docs");
+			dmDocumentTypeName = "Google Docs");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Document");
 
@@ -259,7 +259,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -272,7 +272,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Docs");
+			dmDocumentTypeName = "Google Docs");
 
 		var dmDocumentTitle = '''Special Characters Title 12345`~!@#$%^&*(){}[],.<>/?|''';
 
@@ -297,7 +297,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Sheet");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -310,7 +310,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Sheets");
+			dmDocumentTypeName = "Google Sheets");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Sheet");
 
@@ -331,7 +331,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Slide");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -344,7 +344,7 @@ definition {
 
 		GoogleDoc.gotoEdit(
 			dmDocumentTitle = "Untitled",
-			dmGoogleApp = "Google Slides");
+			dmDocumentTypeName = "Google Slides");
 
 		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "Edited Google Slide");
 
@@ -365,7 +365,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Doc");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -388,7 +388,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Sheet");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),
@@ -411,7 +411,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.addGoogleApp(dmGoogleApp = "Google Slide");
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
 			userEmailAddress = PropsUtil.get("email.address.3"),

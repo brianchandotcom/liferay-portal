@@ -27,7 +27,7 @@ definition {
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Edit in ${dmGoogleApp}");
+		MenuItem.click(menuItem = "Edit in ${dmDocumentTypeName}");
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

@@ -69,7 +69,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		_validate(
 			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
-			name, goal, status);
+			name, goal, status, status);
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.create(segmentsExperimentId);
@@ -283,7 +283,8 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperiment.getSegmentsExperimentId(),
 			segmentsExperiment.getSegmentsExperienceId(),
 			segmentsExperiment.getClassNameId(),
-			segmentsExperiment.getClassPK(), status);
+			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+			status);
 
 		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setStatus(status);
@@ -311,14 +312,14 @@ public class SegmentsExperimentLocalServiceImpl
 	private void _validate(
 			long segmentsExperimentId, long segmentsExperienceId,
 			long classNameId, long classPK, String name, String goal,
-			int status)
+			int currentStatus, int newStatus)
 		throws PortalException {
 
 		_validateGoal(goal);
 		_validateName(name);
 		_validateStatus(
 			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
-			status);
+			currentStatus, newStatus);
 	}
 
 	private void _validateGoal(String goal) throws PortalException {
@@ -335,27 +336,29 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validateStatus(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, int status)
+			long classNameId, long classPK, int statusValue, int newStatusValue)
 		throws SegmentsExperimentStatusException {
 
-		if (SegmentsExperimentConstants.Status.parse(status) == null) {
-			throw new SegmentsExperimentStatusException();
-		}
+		SegmentsExperimentConstants.Status.validateTransition(
+			statusValue, newStatusValue);
 
-		if (SegmentsExperimentConstants.STATUS_DRAFT != status) {
-			return;
-		}
+		SegmentsExperimentConstants.Status newStatus =
+			SegmentsExperimentConstants.Status.valueOf(newStatusValue);
 
-		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentPersistence.fetchByS_C_C_S_First(
-				segmentsExperienceId, classNameId, classPK,
-				SegmentsExperimentConstants.STATUS_DRAFT, null);
+		if (newStatus.isExclusive()) {
+			SegmentsExperiment segmentsExperiment =
+				segmentsExperimentPersistence.fetchByS_C_C_S_First(
+					segmentsExperienceId, classNameId, classPK,
+					newStatus.getValue(), null);
 
-		if ((segmentsExperiment != null) &&
-			(segmentsExperiment.getSegmentsExperimentId() !=
-				segmentsExperimentId)) {
+			if ((segmentsExperiment != null) &&
+				(segmentsExperiment.getSegmentsExperimentId() !=
+					segmentsExperimentId)) {
 
-			throw new SegmentsExperimentStatusException();
+				throw new SegmentsExperimentStatusException(
+					"A segments experiment with status " + newStatus.name() +
+						" already exists");
+			}
 		}
 	}
 

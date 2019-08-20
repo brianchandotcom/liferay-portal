@@ -14,25 +14,36 @@
 
 package com.liferay.segments.constants;
 
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.segments.exception.SegmentsExperimentStatusException;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * @author Eduardo García
  * @author Sarai Díaz
  */
 public class SegmentsExperimentConstants {
 
-	public static final int STATUS_CANCELLED = 5;
-
 	public static final int STATUS_COMPLETED = 2;
 
 	public static final int STATUS_DRAFT = 0;
 
-	public static final int STATUS_FINISHED = 3;
+	public static final int STATUS_FINISHED_NO_WINNER = 4;
 
-	public static final int STATUS_PAUSED = 4;
+	public static final int STATUS_FINISHED_WINNER = 3;
+
+	public static final int STATUS_PAUSED = 5;
 
 	public static final int STATUS_RUNNING = 1;
 
-	public static final int STATUS_SCHEDULED = 6;
+	public static final int STATUS_SCHEDULED = 7;
+
+	public static final int STATUS_TERMINATED = 6;
 
 	public enum Goal {
 
@@ -63,32 +74,123 @@ public class SegmentsExperimentConstants {
 
 	public enum Status {
 
-		CANCELLED(STATUS_CANCELLED, "CANCELLED", "cancelled"),
-		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed"),
-		DRAFT(STATUS_DRAFT, "DRAFT", "draft"),
-		FINISHED(STATUS_FINISHED, "FINISHED", "finished"),
-		PAUSED(STATUS_PAUSED, "PAUSED", "paused"),
-		RUNNING(STATUS_RUNNING, "RUNNING", "running"),
-		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled");
+		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", true),
+		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true) {
 
-		public static Status parse(int value) {
+			@Override
+			public Set<Status> validTransitions() {
+				return SetUtil.fromCollection(
+					Arrays.asList(Status.RUNNING, Status.SCHEDULED));
+			}
+
+		},
+		FINISHED_NO_WINNER(
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner",
+			true) {
+
+			@Override
+			public Set<Status> validTransitions() {
+				return Collections.singleton(Status.COMPLETED);
+			}
+
+		},
+		FINISHED_WINNER_DECLARED(
+			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", true) {
+
+			@Override
+			public Set<Status> validTransitions() {
+				return Collections.singleton(Status.COMPLETED);
+			}
+
+		},
+		PAUSED(STATUS_PAUSED, "PAUSED", "paused", true) {
+
+			@Override
+			public Set<Status> validTransitions() {
+				return Collections.singleton(Status.RUNNING);
+			}
+
+		},
+		RUNNING(STATUS_RUNNING, "RUNNING", "running", true) {
+
+			@Override
+			public Set<Status> validTransitions() {
+				return SetUtil.fromCollection(
+					Arrays.asList(
+						Status.FINISHED_NO_WINNER,
+						Status.FINISHED_WINNER_DECLARED, Status.PAUSED,
+						Status.TERMINATED));
+			}
+
+		},
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", true) {
+
+			@Override
+			public Set<Status> validTransitions() {
+				return Collections.singleton(Status.RUNNING);
+			}
+
+		},
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true);
+
+		public static Optional<Status> parse(int value) {
+			for (Status status : values()) {
+				if (status.getValue() == value) {
+					return Optional.of(status);
+				}
+			}
+
+			return Optional.empty();
+		}
+
+		public static Optional<Status> parse(String stringValue) {
+			for (Status status : values()) {
+				if (stringValue.equals(status.toString())) {
+					return Optional.of(status);
+				}
+			}
+
+			return Optional.empty();
+		}
+
+		public static void validateTransition(
+				final int fromStatusValue, final int toStatusValue)
+			throws SegmentsExperimentStatusException {
+
+			Optional<Status> fromStatusOptional = Status.parse(fromStatusValue);
+
+			Status fromStatus = fromStatusOptional.orElseThrow(
+				() -> new SegmentsExperimentStatusException(
+					"Invalid initial status value " + fromStatusValue));
+
+			Optional<Status> toStatusOptional = Status.parse(toStatusValue);
+
+			Status toStatus = toStatusOptional.orElseThrow(
+				() -> new SegmentsExperimentStatusException(
+					"Invalid final status value " + toStatusValue));
+
+			if (Objects.equals(fromStatus, toStatus)) {
+				return;
+			}
+
+			Set<Status> validTransitions = fromStatus.validTransitions();
+
+			if (!validTransitions.contains(toStatus)) {
+				throw new SegmentsExperimentStatusException(
+					String.format(
+						"Invalid status transition: from %s to %s",
+						fromStatus.name(), toStatus.name()));
+			}
+		}
+
+		public static Status valueOf(int value) {
 			for (Status status : values()) {
 				if (status.getValue() == value) {
 					return status;
 				}
 			}
 
-			return null;
-		}
-
-		public static Status parse(String stringValue) {
-			for (Status status : values()) {
-				if (stringValue.equals(status.toString())) {
-					return status;
-				}
-			}
-
-			return null;
+			throw new IllegalArgumentException("Invalid status value " + value);
 		}
 
 		public String getLabel() {
@@ -99,17 +201,29 @@ public class SegmentsExperimentConstants {
 			return _value;
 		}
 
+		public boolean isExclusive() {
+			return _exclusive;
+		}
+
 		@Override
 		public String toString() {
 			return _stringValue;
 		}
 
-		private Status(int value, String stringValue, String label) {
+		public Set<Status> validTransitions() {
+			return Collections.emptySet();
+		}
+
+		private Status(
+			int value, String stringValue, String label, boolean exclusive) {
+
 			_value = value;
 			_stringValue = stringValue;
 			_label = label;
+			_exclusive = exclusive;
 		}
 
+		private final boolean _exclusive;
 		private final String _label;
 		private final String _stringValue;
 		private final int _value;

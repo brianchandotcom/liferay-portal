@@ -14,7 +14,7 @@ import PageToolbar from '../../../src/main/resources/META-INF/resources/js/compo
 import {render} from '@testing-library/react';
 
 describe('PageToolbar', () => {
-	it('disables the publish button', () => {
+	it('disables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
 				onCancel={'cancel'}
@@ -23,10 +23,10 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('Publish')).toHaveAttribute('disabled');
+		expect(getByText('Save')).toHaveAttribute('disabled');
 	});
 
-	it('enables the publish button', () => {
+	it('enables the save button', () => {
 		const {getByText} = render(
 			<PageToolbar
 				onCancel={'cancel'}
@@ -35,6 +35,6 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('Publish')).not.toHaveAttribute('disabled');
+		expect(getByText('Save')).not.toHaveAttribute('disabled');
 	});
 });

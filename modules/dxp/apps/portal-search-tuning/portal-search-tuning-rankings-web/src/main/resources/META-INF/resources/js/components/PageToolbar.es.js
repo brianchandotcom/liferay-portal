@@ -65,7 +65,7 @@ class PageToolbar extends Component {
 									small
 									type="submit"
 								>
-									{Liferay.Language.get('publish')}
+									{Liferay.Language.get('save')}
 								</ClayButton>
 							</li>
 						)}

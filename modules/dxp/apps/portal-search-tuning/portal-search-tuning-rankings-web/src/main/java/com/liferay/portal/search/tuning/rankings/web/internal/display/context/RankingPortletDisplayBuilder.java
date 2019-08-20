@@ -283,7 +283,7 @@ public class RankingPortletDisplayBuilder {
 							portletURL, "orderByCol", "keywords");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
-								_httpServletRequest, "search-term"));
+								_httpServletRequest, "search-query"));
 					});
 				add(
 					dropdownItem -> {

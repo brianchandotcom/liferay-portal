@@ -84,7 +84,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand"
-				name="search-term"
+				name="search-query"
 			>
 				<div class="list-group-title">
 					<a href="<%= rowURL %>">

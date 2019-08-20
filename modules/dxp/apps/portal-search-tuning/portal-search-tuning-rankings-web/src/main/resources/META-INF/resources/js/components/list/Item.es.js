@@ -237,7 +237,7 @@ class Item extends PureComponent {
 		onSelect: PropTypes.func,
 		pinned: PropTypes.bool,
 		reorder: PropTypes.bool,
-		searchTerm: PropTypes.string,
+		searchQuery: PropTypes.string,
 		selected: PropTypes.bool,
 		title: PropTypes.string,
 		type: PropTypes.string,

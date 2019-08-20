@@ -39,7 +39,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('Add a Result')).not.toBeNull();
+		expect(queryByText('Add Result')).not.toBeNull();
 	});
 
 	it('does not have an add result button when onAddResultSubmit is not defined', () => {
@@ -57,7 +57,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('Add a Result')).toBeNull();
+		expect(queryByText('Add Result')).toBeNull();
 	});
 
 	it('shows what is selected using selectedIds', () => {
@@ -76,7 +76,7 @@ describe('SearchBar', () => {
 		);
 
 		expect(queryByText('2 of 3 Items Selected')).not.toBeNull();
-		expect(queryByText('Add a Result')).toBeNull();
+		expect(queryByText('Add Result')).toBeNull();
 	});
 
 	it('shows the dropdown when clicked on', () => {
@@ -115,6 +115,6 @@ describe('SearchBar', () => {
 		);
 
 		expect(queryByText('Items Selected')).toBeNull();
-		expect(queryByText('Add a Result')).not.toBeNull();
+		expect(queryByText('Add Result')).not.toBeNull();
 	});
 });

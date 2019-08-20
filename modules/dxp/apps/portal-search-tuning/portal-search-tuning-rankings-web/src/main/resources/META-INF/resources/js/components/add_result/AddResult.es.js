@@ -37,7 +37,7 @@ class AddResult extends Component {
 	};
 
 	state = {
-		addResultSearchTerm: '',
+		addResultSearchQuery: '',
 		addResultSelectedIds: [],
 		dataLoading: false,
 		dataMap: {},
@@ -51,7 +51,7 @@ class AddResult extends Component {
 
 	_clearResultSearch = () => {
 		this.setState({
-			addResultSearchTerm: '',
+			addResultSearchQuery: '',
 			results: {}
 		});
 	};
@@ -61,7 +61,7 @@ class AddResult extends Component {
 	};
 
 	_fetchSearchResults = () => {
-		const {addResultSearchTerm, page, selectedDelta} = this.state;
+		const {addResultSearchQuery, page, selectedDelta} = this.state;
 
 		const {companyId, namespace} = this.context;
 
@@ -73,7 +73,7 @@ class AddResult extends Component {
 		fetchDocuments(this.props.fetchDocumentsUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: page * selectedDelta - selectedDelta,
-			[`${namespace}keywords`]: addResultSearchTerm,
+			[`${namespace}keywords`]: addResultSearchQuery,
 			[`${namespace}size`]: selectedDelta
 		})
 			.then(({items, total}) => {
@@ -177,7 +177,7 @@ class AddResult extends Component {
 	_handleSearchChange = event => {
 		event.preventDefault();
 
-		this.setState({addResultSearchTerm: event.target.value});
+		this.setState({addResultSearchQuery: event.target.value});
 	};
 
 	_handleSearchEnter = () => {
@@ -261,7 +261,7 @@ class AddResult extends Component {
 
 	render() {
 		const {
-			addResultSearchTerm,
+			addResultSearchQuery,
 			addResultSelectedIds,
 			dataLoading,
 			page,
@@ -287,7 +287,7 @@ class AddResult extends Component {
 					key="ADD_RESULT_BUTTON"
 					onClick={this._handleAddResult}
 				>
-					{Liferay.Language.get('add-a-result')}
+					{Liferay.Language.get('add-result')}
 				</ClayButton>
 
 				<ReactModal
@@ -304,7 +304,7 @@ class AddResult extends Component {
 					>
 						<div className="modal-header">
 							<div className="modal-title">
-								{Liferay.Language.get('add-a-result')}
+								{Liferay.Language.get('add-result')}
 							</div>
 
 							<ClayButton
@@ -338,7 +338,7 @@ class AddResult extends Component {
 														'search-the-engine'
 													)}
 													type="text"
-													value={addResultSearchTerm}
+													value={addResultSearchQuery}
 												/>
 
 												<div className="input-group-inset-item input-group-inset-item-after">

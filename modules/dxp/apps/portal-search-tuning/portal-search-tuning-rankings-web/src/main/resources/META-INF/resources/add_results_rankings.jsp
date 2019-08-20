@@ -46,7 +46,7 @@ portletDisplay.setURLBack(redirect);
 >
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">
-			<liferay-ui:message key="enter-a-search-term" />
+			<liferay-ui:message key="enter-a-search-query" />
 		</h2>
 
 		<div class="sheet-text">
@@ -57,7 +57,7 @@ portletDisplay.setURLBack(redirect);
 		<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
 		<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
 
-		<aui:input label="<%= StringPool.BLANK %>" name="keywords" placeholder="search-term" />
+		<aui:input label="<%= StringPool.BLANK %>" name="keywords" placeholder="search-query" />
 		<aui:input label="<%= StringPool.BLANK %>" name="index-name" placeholder="index-name" />
 	</liferay-frontend:edit-form-body>
 

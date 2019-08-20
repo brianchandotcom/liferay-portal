@@ -40,7 +40,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		expect(queryByTestId(MODAL_ID)).not.toBeNull();
 	});
@@ -53,7 +53,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		fireEvent.click(getByText('Cancel'));
 
@@ -68,7 +68,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -88,7 +88,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -116,7 +116,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -142,7 +142,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -173,7 +173,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 
@@ -207,7 +207,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add a Result'));
+		fireEvent.click(getByText('Add Result'));
 
 		const modal = getByTestId(MODAL_ID);
 

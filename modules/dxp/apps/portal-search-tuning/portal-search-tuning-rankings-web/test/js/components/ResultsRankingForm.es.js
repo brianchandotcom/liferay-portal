@@ -44,7 +44,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm="example"
+				searchQuery="example"
 			/>
 		);
 
@@ -60,7 +60,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -76,7 +76,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -95,7 +95,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -114,7 +114,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -136,7 +136,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -154,7 +154,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -174,7 +174,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -192,7 +192,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -212,7 +212,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -234,7 +234,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -262,7 +262,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -286,7 +286,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -316,7 +316,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -354,7 +354,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 
@@ -379,7 +379,7 @@ describe('ResultsRankingForm', () => {
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
 				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
-				searchTerm=""
+				searchQuery=""
 			/>
 		);
 

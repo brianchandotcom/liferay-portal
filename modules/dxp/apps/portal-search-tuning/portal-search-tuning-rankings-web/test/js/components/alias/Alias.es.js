@@ -27,7 +27,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -44,7 +44,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -57,7 +57,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -72,7 +72,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -89,7 +89,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -106,7 +106,7 @@ describe('Alias', () => {
 				keywords={['one', 'two', 'three']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 
@@ -125,7 +125,7 @@ describe('Alias', () => {
 				keywords={['', ' ']}
 				onClickDelete={jest.fn()}
 				onClickSubmit={jest.fn()}
-				searchTerm={'example'}
+				searchQuery={'example'}
 			/>
 		);
 

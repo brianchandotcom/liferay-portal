@@ -76,7 +76,7 @@ class ResultsRankingForm extends Component {
 		fetchDocumentsUrl: PropTypes.string.isRequired,
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
-		searchTerm: PropTypes.string.isRequired
+		searchQuery: PropTypes.string.isRequired
 	};
 
 	static defaultProps = {
@@ -298,7 +298,7 @@ class ResultsRankingForm extends Component {
 	};
 
 	/**
-	 * Retrieves results data from a search term. This will also handle loading
+	 * Retrieves results data from a search query. This will also handle loading
 	 * more data to the results list.
 	 */
 	_handleFetchResultsData = () => {
@@ -312,7 +312,7 @@ class ResultsRankingForm extends Component {
 		return fetchDocuments(this.props.fetchDocumentsUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: DELTA * this.state.visibleCur,
-			[`${namespace}keywords`]: this.props.searchTerm,
+			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA
 		})
 			.then(({items, total}) => {
@@ -417,7 +417,7 @@ class ResultsRankingForm extends Component {
 		return fetchDocuments(this.props.fetchDocumentsHiddenUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: DELTA * this.state.hiddenCur,
-			[`${namespace}keywords`]: this.props.searchTerm,
+			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA
 		})
 			.then(({items, total}) => {
@@ -660,7 +660,7 @@ class ResultsRankingForm extends Component {
 	render() {
 		const {namespace} = this.context;
 
-		const {cancelUrl, fetchDocumentsUrl, searchTerm} = this.props;
+		const {cancelUrl, fetchDocumentsUrl, searchQuery} = this.props;
 
 		const {
 			aliases,
@@ -720,13 +720,13 @@ class ResultsRankingForm extends Component {
 
 				<div className="container-fluid container-fluid-max-xl container-form-lg">
 					<div className="sheet sheet-lg form-section-header">
-						<h2 className="sheet-title">{`"${searchTerm}"`}</h2>
+						<h2 className="sheet-title">{`${searchQuery}`}</h2>
 
 						<Alias
 							keywords={aliases}
 							onClickDelete={this._handleRemoveAlias}
 							onClickSubmit={this._handleUpdateAlias}
-							searchTerm={searchTerm}
+							searchQuery={searchQuery}
 						/>
 					</div>
 

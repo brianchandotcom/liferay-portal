@@ -72,7 +72,7 @@ storiesOf('Main|ResultsRankingForm', module)
 			fetchDocumentsUrl=""
 			formName="testFm"
 			saveActionUrl="#"
-			searchTerm={text('Search Term', 'example')}
+			searchQuery={text('Search Term', 'example')}
 		/>
 	))
 	.add('with mock api', () => (
@@ -83,7 +83,7 @@ storiesOf('Main|ResultsRankingForm', module)
 			formName="testFm"
 			initialAliases={['one', 'two', 'three']}
 			saveActionUrl="#"
-			searchTerm={text('Search Term', 'example')}
+			searchQuery={text('Search Term', 'example')}
 		/>
 	));
 

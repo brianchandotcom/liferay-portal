@@ -91,7 +91,7 @@ String[] aliases = StringUtil.split(ParamUtil.getString(request, "aliases"), Str
 			fetchDocumentsUrl: '<%= resultsRankingResourceURL %>',
 			formName: '<portlet:namespace />editResultsRankingsFm',
 			initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
-			searchTerm: '<%= HtmlUtil.escape(keywords) %>'
+			searchQuery: '<%= HtmlUtil.escape(keywords) %>'
 		},
 		{
 			companyId: '<%= themeDisplay.getCompanyId() %>',

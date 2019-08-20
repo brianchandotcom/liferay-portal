@@ -12,98 +12,126 @@
  * details.
  */
 
-import {EventHandler} from 'metal-events';
-import dom from 'metal-dom';
-
+let _changedCallback = null;
+let _destroyedCallback = null;
+let _dialog;
 let _editableElement;
 let _editor;
-let _editorEventHandler;
 
 /**
- * Destroys, if any, an existing instance of AlloyEditor.
+ * Destroys, if any, an existing instance of LiferayFullScreenSourceEditor.
  */
 
 function destroy() {
-	if (
-		_editor &&
-		!dom.hasClass(_editableElement, 'lfr-source-editor-focused')
-	) {
-		_editorEventHandler.dispose();
-
-		const editorData = _editor.getEditor().getValue();
-
+	if (_dialog) {
 		_editableElement.removeAttribute('style');
 
-		dom.removeClasses(
-			_editableElement,
-			'yui3-widget ace-editor lfr-source-editor lfr-source-editor-content'
-		);
+		_dialog.destroy();
+		_editor.destroy();
 
-		_editableElement.innerHTML = '';
-
-		_editableElement.innerHTML = editorData;
-
-		_editor.getEditor().destroy();
-
+		_dialog = null;
 		_editableElement = null;
 		_editor = null;
-		_editorEventHandler = null;
+
+		_destroyedCallback();
+		_destroyedCallback = null;
+
+		_changedCallback = null;
 	}
 }
 
 /**
- * Creates an instance of AlloyEditor and destroys the existing one if any.
+ * Creates an instance of LiferayFullScreenSourceEditor and destroys the existing one if any.
  * @param {HTMLElement} editableElement
  * @param {string} fragmentEntryLinkId
  * @param {string} portletNamespace
  * @param {Object} options
- * @param {function} callback
+ * @param {function} changedCallback
+ * @param {function} destroyedCallback
  */
-
 function init(
 	editableElement,
 	fragmentEntryLinkId,
 	portletNamespace,
 	options,
-	callback
+	changedCallback,
+	destroyedCallback
 ) {
-	if (_editor && dom.hasClass(editableElement, 'lfr-source-editor-focused')) {
-		return;
-	}
-
-	const editableContent = editableElement.innerHTML;
-
-	editableElement.innerHTML = '';
+	const _destroy = destroy;
 
 	_editableElement = editableElement;
-	_editorEventHandler = new EventHandler();
 
-	const A = new AUI();
+	_changedCallback = changedCallback;
+	_destroyedCallback = destroyedCallback;
 
-	A.use('liferay-source-editor', A => {
-		var sourceEditor = new A.LiferaySourceEditor({
-			boundingBox: editableElement,
-			mode: 'html',
-			value: editableContent
-		}).render();
+	Liferay.Util.openWindow(
+		{
+			dialog: {
+				after: {
+					destroy() {
+						_destroy();
+					}
+				},
+				constrain: true,
+				cssClass:
+					'lfr-fulscreen-source-editor-dialog modal-full-screen',
+				destroyOnHide: true,
+				modal: true,
+				'toolbars.footer': [
+					{
+						label: Liferay.Language.get('cancel'),
+						on: {
+							click() {
+								_dialog.hide();
+							}
+						}
+					},
+					{
+						cssClass: 'btn-primary',
+						label: Liferay.Language.get('save'),
+						on: {
+							click() {
+								_dialog.hide();
 
-		_editor = sourceEditor;
+								_changedCallback(_editor.get('value'));
+							}
+						}
+					}
+				]
+			},
 
-		const nativeEditor = _editor.getEditor();
+			title: Liferay.Language.get('edit-content')
+		},
+		function(dialog) {
+			_dialog = dialog;
 
-		_editorEventHandler.add(nativeEditor.on('blur', () => destroy()));
-
-		_editorEventHandler.add(
-			nativeEditor.on('change', () => callback(nativeEditor.getValue()))
-		);
-
-		nativeEditor.focus();
-	});
+			Liferay.Util.getTop()
+				.AUI()
+				.use('liferay-fullscreen-source-editor', function(A) {
+					_editor = new A.LiferayFullScreenSourceEditor({
+						boundingBox: dialog
+							.getStdModNode(A.WidgetStdMod.BODY)
+							.appendChild('<div></div>'),
+						previewCssClass:
+							'alloy-editor alloy-editor-placeholder',
+						value: editableElement.innerHTML
+					}).render();
+				});
+		}
+	);
 }
 
-export {destroy, init};
+/**
+ * @param {string} content editableField's original HTML
+ * @param {string} value Translated/segmented value
+ * @return {string} Transformed content
+ */
+function render(content, value) {
+	return value;
+}
 
 export default {
 	destroy,
-	init
+	init,
+	render
 };

@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-definition-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-metrics-sla-api")
 	compileOnly project(":apps:portal:portal-spring-extender-api")
+	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":core:petra:petra-concurrent")

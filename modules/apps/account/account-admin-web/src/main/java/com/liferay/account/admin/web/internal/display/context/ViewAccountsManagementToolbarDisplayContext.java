@@ -14,16 +14,26 @@
 
 package com.liferay.account.admin.web.internal.display.context;
 
+import com.liferay.account.admin.web.internal.display.AccountDisplay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +55,80 @@ public class ViewAccountsManagementToolbarDisplayContext
 			searchContainer);
 	}
 
+	public List<DropdownItem> getActionDropdownItems() {
+		return new DropdownItemList() {
+			{
+				if (!Objects.equals(getNavigation(), "inactive")) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "deactivateAccounts");
+
+							PortletURL deactivateAccountsURL =
+								liferayPortletResponse.createActionURL();
+
+							deactivateAccountsURL.setParameter(
+								ActionRequest.ACTION_NAME,
+								"/account_admin/update_account_status");
+							deactivateAccountsURL.setParameter(
+								Constants.CMD, Constants.DEACTIVATE);
+							deactivateAccountsURL.setParameter(
+								"navigation", getNavigation());
+
+							dropdownItem.putData(
+								"deactivateAccountsURL",
+								deactivateAccountsURL.toString());
+
+							dropdownItem.setIcon("hidden");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "deactivate"));
+							dropdownItem.setQuickAction(true);
+						});
+				}
+
+				if (!Objects.equals(getNavigation(), "active")) {
+					add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "activateAccounts");
+
+							PortletURL activateAccountsURL =
+								liferayPortletResponse.createActionURL();
+
+							activateAccountsURL.setParameter(
+								ActionRequest.ACTION_NAME,
+								"/account_admin/update_account_status");
+							activateAccountsURL.setParameter(
+								Constants.CMD, Constants.RESTORE);
+							activateAccountsURL.setParameter(
+								"navigation", getNavigation());
+
+							dropdownItem.putData(
+								"activateAccountsURL",
+								activateAccountsURL.toString());
+
+							dropdownItem.setIcon("undo");
+							dropdownItem.setLabel(
+								LanguageUtil.get(request, "activate"));
+							dropdownItem.setQuickAction(true);
+						});
+				}
+			}
+		};
+	}
+
+	public List<String> getAvailableActions(AccountDisplay accountDisplay) {
+		List<String> availableActions = new ArrayList<>();
+
+		if (accountDisplay.isActive()) {
+			availableActions.add("deactivateAccounts");
+		}
+		else {
+			availableActions.add("activateAccounts");
+		}
+
+		return availableActions;
+	}
+
 	@Override
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
@@ -53,6 +137,16 @@ public class ViewAccountsManagementToolbarDisplayContext
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	@Override
+	public String getComponentId() {
+		return "accountsManagementToolbar";
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "ACCOUNTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

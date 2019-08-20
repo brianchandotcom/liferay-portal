@@ -18,62 +18,82 @@
 
 <%
 SearchContainer accountDisplaySearchContainer = AccountDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse);
+
+ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplayContext = new ViewAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer);
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new ViewAccountsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, accountDisplaySearchContainer) %>"
+	displayContext="<%= viewAccountsManagementToolbarDisplayContext %>"
 />
 
 <div class="container-fluid container-fluid-max-xl">
-	<liferay-ui:search-container
-		searchContainer="<%= accountDisplaySearchContainer %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.account.admin.web.internal.display.AccountDisplay"
-			keyProperty="accountId"
-			modelVar="accountDisplay"
+	<aui:form method="post" name="fm">
+		<aui:input name="accountEntryIds" type="hidden" />
+
+		<liferay-ui:search-container
+			searchContainer="<%= accountDisplaySearchContainer %>"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-title"
-				name="name"
-				property="name"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="parent-account"
-				property="parentAccountName"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="website"
-				property="website"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="account-owner"
-				value=""
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="status"
+			<liferay-ui:search-container-row
+				className="com.liferay.account.admin.web.internal.display.AccountDisplay"
+				keyProperty="accountId"
+				modelVar="accountDisplay"
 			>
-				<clay:label
-					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
-					style="<%= accountDisplay.getStatusLabelStyle() %>"
+
+				<%
+				Map<String, Object> rowData = new HashMap<>();
+
+				rowData.put("actions", StringUtil.merge(viewAccountsManagementToolbarDisplayContext.getAvailableActions(accountDisplay)));
+
+				row.setData(rowData);
+				%>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand table-title"
+					name="name"
+					property="name"
 				/>
-			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				path="/account_action.jsp"
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="parent-account"
+					property="parentAccountName"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="website"
+					property="website"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="account-owner"
+					value=""
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="status"
+				>
+					<clay:label
+						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountDisplay.getStatusLabel()), locale) %>"
+						style="<%= accountDisplay.getStatusLabelStyle() %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					path="/account_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				markupView="lexicon"
 			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
+		</liferay-ui:search-container>
+	</aui:form>
 </div>
+
+<liferay-frontend:component
+	componentId="<%= viewAccountsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/AccountsManagementToolbarDefaultEventHandler.es"
+/>

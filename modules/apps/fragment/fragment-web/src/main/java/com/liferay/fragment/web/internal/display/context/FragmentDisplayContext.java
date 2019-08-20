@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -454,6 +455,10 @@ public class FragmentDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
+		if (!_isShowResourcesTab()) {
+			return Collections.emptyList();
+		}
+
 		return new NavigationItemList() {
 			{
 				add(
@@ -466,18 +471,15 @@ public class FragmentDisplayContext {
 							LanguageUtil.get(_httpServletRequest, "fragments"));
 					});
 
-				if (_isShowResourcesTab()) {
-					add(
-						navigationItem -> {
-							navigationItem.setActive(
-								Objects.equals(_getTabs1(), "resources"));
-							navigationItem.setHref(
-								_getPortletURL(), "tabs1", "resources");
-							navigationItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest, "resources"));
-						});
-				}
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							Objects.equals(_getTabs1(), "resources"));
+						navigationItem.setHref(
+							_getPortletURL(), "tabs1", "resources");
+						navigationItem.setLabel(
+							LanguageUtil.get(_httpServletRequest, "resources"));
+					});
 			}
 		};
 	}

@@ -16,7 +16,6 @@ package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.cache.BasePortalCache;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener;
-import com.liferay.portal.cache.ehcache.spi.EhcacheWrapper;
 import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

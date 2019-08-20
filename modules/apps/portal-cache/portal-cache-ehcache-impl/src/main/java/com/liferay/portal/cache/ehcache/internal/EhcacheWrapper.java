@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.spi.event;
+package com.liferay.portal.cache.ehcache.internal;
+
+import net.sf.ehcache.Ehcache;
 
 /**
  * @author Tina Tian
  */
-public interface ConfigurableEhcachePortalCacheListener {
+public interface EhcacheWrapper {
+
+	public Ehcache getEhcache();
+
 }

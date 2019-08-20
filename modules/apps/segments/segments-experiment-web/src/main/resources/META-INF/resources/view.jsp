@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean isPanelStateOpen = GetterUtil.getBoolean(request.getAttribute("SEGMENTS_EXPERIMENT_PANEL_STATE_OPEN"));
+boolean isPanelStateOpen = GetterUtil.getBoolean(request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_PANEL_STATE_OPEN));
 %>
 
 <div class="lfr-segments-experiment-sidebar" id="segmentsExperimentSidebar">

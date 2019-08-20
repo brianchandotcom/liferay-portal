@@ -238,7 +238,8 @@ public class FragmentDisplayContext {
 		}
 
 		_fragmentCollectionKey = ParamUtil.getString(
-			_httpServletRequest, "fragmentCollectionKey");
+			_httpServletRequest, "fragmentCollectionKey",
+			_getDefaultFragmentCollectionKey());
 
 		return _fragmentCollectionKey;
 	}
@@ -594,6 +595,25 @@ public class FragmentDisplayContext {
 		}
 
 		return 0;
+	}
+
+	private String _getDefaultFragmentCollectionKey() {
+		if (getFragmentCollectionId() > 0) {
+			return StringPool.BLANK;
+		}
+
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributors();
+
+		if (ListUtil.isEmpty(fragmentCollectionContributors)) {
+			return StringPool.BLANK;
+		}
+
+		FragmentCollectionContributor fragmentCollectionContributor =
+			fragmentCollectionContributors.get(0);
+
+		return fragmentCollectionContributor.getFragmentCollectionKey();
 	}
 
 	private String _getKeywords() {

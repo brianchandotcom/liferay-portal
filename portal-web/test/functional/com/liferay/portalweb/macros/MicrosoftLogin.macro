@@ -47,7 +47,7 @@ definition {
 	macro confirmMicrosoftApp {
 		Pause(locator1 = "3000");
 
-		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRM")) {
+		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
 				value1 = "Yes");

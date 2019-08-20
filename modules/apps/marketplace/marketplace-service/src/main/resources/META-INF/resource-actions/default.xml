@@ -6,7 +6,7 @@
 		<model-name>com.liferay.marketplace</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_marketplace_app_manager_web_portlet_MarketplaceAppManagerPortlet</portlet-name>
-			<portlet-name>com_liferay_marketplace_store_web_portlet_MarketplacePuchasedPortlet</portlet-name>
+			<portlet-name>com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet</portlet-name>
 			<portlet-name>com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>

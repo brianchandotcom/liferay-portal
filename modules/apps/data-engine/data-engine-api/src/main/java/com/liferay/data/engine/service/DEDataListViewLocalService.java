@@ -309,4 +309,9 @@ public interface DEDataListViewLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DEDataListView updateDEDataListView(DEDataListView deDataListView);
 
+	public DEDataListView updateDEDataListView(
+			long deDataListViewId, String appliedFilters, String fieldNames,
+			Map<Locale, String> nameMap, String sortField)
+		throws Exception;
+
 }

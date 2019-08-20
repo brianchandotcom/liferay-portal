@@ -403,6 +403,16 @@ public class DEDataListViewLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.data.engine.model.DEDataListView updateDEDataListView(
+			long deDataListViewId, String appliedFilters, String fieldNames,
+			java.util.Map<java.util.Locale, String> nameMap, String sortField)
+		throws Exception {
+
+		return _deDataListViewLocalService.updateDEDataListView(
+			deDataListViewId, appliedFilters, fieldNames, nameMap, sortField);
+	}
+
+	@Override
 	public DEDataListViewLocalService getWrappedService() {
 		return _deDataListViewLocalService;
 	}

@@ -378,6 +378,17 @@ public class DEDataListViewLocalServiceUtil {
 		return getService().updateDEDataListView(deDataListView);
 	}
 
+	public static com.liferay.data.engine.model.DEDataListView
+			updateDEDataListView(
+				long deDataListViewId, String appliedFilters, String fieldNames,
+				java.util.Map<java.util.Locale, String> nameMap,
+				String sortField)
+		throws Exception {
+
+		return getService().updateDEDataListView(
+			deDataListViewId, appliedFilters, fieldNames, nameMap, sortField);
+	}
+
 	public static DEDataListViewLocalService getService() {
 		return _serviceTracker.getService();
 	}

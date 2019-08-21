@@ -27,6 +27,7 @@ import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -112,7 +113,7 @@ public class SegmentsExperimentUtil {
 		Locale locale, int statusValue) {
 
 		SegmentsExperimentConstants.Status status =
-			SegmentsExperimentConstants.Status.parse(statusValue);
+			SegmentsExperimentConstants.Status.parse(statusValue).orElse(null);
 
 		if (status == null) {
 			return null;

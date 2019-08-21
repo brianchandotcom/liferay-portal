@@ -1241,9 +1241,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
-	private MBStatsUserLocalService _mbStatsUserLocalService;
-
-	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

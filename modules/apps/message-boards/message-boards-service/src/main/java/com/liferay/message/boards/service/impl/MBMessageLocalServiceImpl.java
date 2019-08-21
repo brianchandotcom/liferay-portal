@@ -2626,12 +2626,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	@Reference
-	protected MBDiscussionLocalService mbDiscussionLocalService;
-
-	@Reference
-	protected MBStatsUserLocalService mbStatsUserLocalService;
-
 	private static String _getLocalizedRootCategoryName(
 		Group group, Locale locale) {
 

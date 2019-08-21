@@ -383,17 +383,13 @@ public class ChangeListsDisplayContext {
 		return ctPreferences.isConfirmationEnabled();
 	}
 
-	private JSONArray _getChangeListsDropdownMenuJSONArray() throws Exception {
+	private JSONArray _getChangeListsDropdownMenuJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		OrderByComparator<CTCollection> orderByComparator =
-			OrderByComparatorFactoryUtil.create(
-				"CTCollection", "modifiedDate", false);
 
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
-				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
-				0, 6, orderByComparator);
+				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT, 0,
+				6, _modifiedDateDescendingOrderByComparator);
 
 		long ctCollectionId = _getCTCollectionId();
 
@@ -671,6 +667,11 @@ public class ChangeListsDisplayContext {
 
 		return portletURL;
 	}
+
+	private static final OrderByComparator<CTCollection>
+		_modifiedDateDescendingOrderByComparator =
+			OrderByComparatorFactoryUtil.create(
+				"CTCollection", "modifiedDate", false);
 
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTEngineManager _ctEngineManager;

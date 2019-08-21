@@ -26,7 +26,7 @@ public class UpgradeDLOpenerFileEntryReference extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			DLOpenerFileEntryReferenceTable.class,
-			new AlterTableAddColumn("referenceType STRING null"));
+			new AlterTableAddColumn("referenceType VARCHAR(75) null"));
 
 		runSQL(
 			"update " + DLOpenerFileEntryReferenceTable.TABLE_NAME +

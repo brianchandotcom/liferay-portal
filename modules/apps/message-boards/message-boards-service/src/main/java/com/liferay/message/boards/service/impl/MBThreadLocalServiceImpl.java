@@ -23,6 +23,7 @@ import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.exception.SplitThreadException;
+import com.liferay.message.boards.internal.util.MBThreadUtil;
 import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
@@ -360,17 +361,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	public List<MBThread> getGroupThreads(
 		long groupId, QueryDefinition<MBThread> queryDefinition) {
 
-		if (queryDefinition.isExcludeStatus()) {
-			return mbThreadPersistence.findByG_NotC_NotS(
-				groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-				queryDefinition.getStatus(), queryDefinition.getStart(),
-				queryDefinition.getEnd());
-		}
-
-		return mbThreadPersistence.findByG_NotC_S(
-			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-			queryDefinition.getStatus(), queryDefinition.getStart(),
-			queryDefinition.getEnd());
+		return MBThreadUtil.getGroupThreads(
+			mbThreadPersistence, groupId, queryDefinition);
 	}
 
 	@Override

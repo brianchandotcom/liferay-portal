@@ -6,9 +6,14 @@ const VelocityFilters = () => {
 	return (
 		<div className="autofit-col m-0 management-bar management-bar-light navbar">
 			<ul className="navbar-nav">
-				<TimeRangeFilter filterKey="velocityTimeRange" />
+				<TimeRangeFilter
+					filterKey="velocityTimeRange"
+					hideControl={true}
+					position="right"
+					showFilterName={false}
+				/>
 
-				<VelocityUnitFilter />
+				<VelocityUnitFilter hideControl={true} position="right" />
 			</ul>
 		</div>
 	);

@@ -1,10 +1,14 @@
+import {getCustomTimeRangeName, TimeRangeContext} from './store/TimeRangeStore';
 import React, {useContext} from 'react';
 import {CustomTimeRangeForm} from './CustomTimeRangeForm';
 import Filter from '../../../shared/components/filter/Filter';
-import moment from '../../../shared/util/moment';
-import {TimeRangeContext} from './store/TimeRangeStore';
 
-const TimeRangeFilter = ({filterKey = 'timeRange', position = 'right'}) => {
+const TimeRangeFilter = ({
+	filterKey = 'timeRange',
+	hideControl = false,
+	position = 'left',
+	showFilterName = true
+}) => {
 	const {
 		defaultTimeRange,
 		getSelectedTimeRange,
@@ -41,10 +45,10 @@ const TimeRangeFilter = ({filterKey = 'timeRange', position = 'right'}) => {
 		<Filter
 			defaultItem={defaultTimeRange}
 			filterKey={filterKey}
-			hideControl={true}
+			hideControl={hideControl}
 			items={[...timeRanges]}
 			multiple={false}
-			name={getFilterName(selectedTimeRange)}
+			name={getFilterName(selectedTimeRange, showFilterName)}
 			onChangeFilter={onChangeFilter}
 			onClickFilter={onClickFilter}
 			position={position}
@@ -54,16 +58,17 @@ const TimeRangeFilter = ({filterKey = 'timeRange', position = 'right'}) => {
 	);
 };
 
-const getFilterName = selectedTimeRange => {
+const getFilterName = (selectedTimeRange, showFilterName) => {
+	if (showFilterName) {
+		return Liferay.Language.get('completion-period');
+	}
+
 	if (!selectedTimeRange) {
 		return '';
 	}
 
-	const {dateEnd, dateStart} = selectedTimeRange;
-	const formatDate = date => moment.utc(date).format('ll');
-
 	if (selectedTimeRange.key === 'custom') {
-		return `${formatDate(dateStart)} - ${formatDate(dateEnd)}`;
+		return getCustomTimeRangeName(selectedTimeRange);
 	}
 
 	return selectedTimeRange.name;

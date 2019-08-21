@@ -25,14 +25,19 @@ import {
 	COMPATIBLE_TYPES,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FRAGMENTS_EDITOR_ITEM_TYPES,
-	MAPPING_SOURCE_TYPE_IDS
+	MAPPING_SOURCE_TYPE_IDS,
+	DEFAULT_LANGUAGE_ID_KEY
 } from '../../../utils/constants';
 import {encodeAssetId} from '../../../utils/FragmentsEditorIdUtils.es';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
 import {getMappingSourceTypes} from '../../../utils/FragmentsEditorGetUtils.es';
 import {openAssetBrowser} from '../../../utils/FragmentsEditorDialogUtils';
+import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
 import {setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
-import {updateEditableValuesMappingAction} from '../../../actions/updateEditableValue.es';
+import {
+	updateEditableValueAction,
+	updateEditableValuesMappingAction
+} from '../../../actions/updateEditableValue.es';
 import templates from './FloatingToolbarMappingPanel.soy';
 
 /**
@@ -201,6 +206,26 @@ class FloatingToolbarMappingPanel extends PortletBase {
 	}
 
 	/**
+	 * @private
+	 * @review
+	 */
+	_clearFragmentBackgroundImage() {
+		this.store.dispatch(
+			updateEditableValueAction({
+				editableId: this.item.editableId,
+				editableValueContent: '',
+				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
+				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
+				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				segmentsExperienceId: prefixSegmentsExperienceId(
+					this.segmentsExperienceId ||
+						this.defaultSegmentsExperienceId
+				)
+			})
+		);
+	}
+
+	/**
 	 * Gets right processor depending on itemType
 	 * @private
 	 * @review
@@ -288,6 +313,15 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				this._getFragmentEntryProcessor()
 			)
 		);
+
+		if (
+			this.itemType ===
+			FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
+		) {
+			requestAnimationFrame(() => {
+				this._clearFragmentBackgroundImage();
+			});
+		}
 	}
 
 	/**
@@ -446,10 +480,13 @@ const ConnectedFloatingToolbarMappingPanel = getConnectedComponent(
 	FloatingToolbarMappingPanel,
 	[
 		'assetBrowserLinks',
+		'defaultSegmentsExperienceId',
 		'getAssetMappingFieldsURL',
+		'languageId',
 		'mappedAssetEntries',
 		'mappingFieldsURL',
 		'portletNamespace',
+		'segmentsExperienceId',
 		'selectedMappingTypes'
 	]
 );

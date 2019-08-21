@@ -21,7 +21,6 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
-import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.util.Validator;
@@ -41,10 +40,8 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -58,7 +55,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
 		_configureTasksExecutePackageManager(project);
-		_configureTasksPackageRunBuild(project);
 		_configureTasksNpmInstall(project);
 
 		GradleUtil.withPlugin(
@@ -162,32 +158,9 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
-		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-			npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
-		}
-
+		npmInstallTask.setNodeModulesCacheDir(_NODE_MODULES_CACHE_DIR);
 		npmInstallTask.setRemoveShrinkwrappedUrls(Boolean.TRUE);
 		npmInstallTask.setUseNpmCI(Boolean.FALSE);
-	}
-
-	private void _configureTaskPackageRunBuild(
-		PackageRunBuildTask packageRunBuildTask) {
-
-		if (Validator.isNull(System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-			return;
-		}
-
-		TaskOutputs taskOutputs = packageRunBuildTask.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
-				}
-
-			});
 	}
 
 	private void _configureTasksDownloadNode(Project project) {
@@ -273,21 +246,6 @@ public class LiferayCIPlugin implements Plugin<Project> {
 						npmInstallTask,
 						Collections.singletonMap(
 							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
-				}
-
-			});
-	}
-
-	private void _configureTasksPackageRunBuild(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			PackageRunBuildTask.class,
-			new Action<PackageRunBuildTask>() {
-
-				@Override
-				public void execute(PackageRunBuildTask packageRunBuildTask) {
-					_configureTaskPackageRunBuild(packageRunBuildTask);
 				}
 
 			});

@@ -46,6 +46,8 @@ definition {
 			MessageboardsThread.tearDownCP();
 
 			WikiPage.tearDownCP();
+
+			Site.tearDownCP();
 		}
 	}
 
@@ -299,6 +301,62 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
+	}
+
+	@priority = "4"
+	test DeleteEntryFromRegularSitesScope {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Site Page 1");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByScope(scope = "Regular Sites");
+
+		GDPR.filterByApplications(
+			applications = "All Applications",
+			itemsCount = "1");
+
+		GDPR.deleteEntryCP();
+
+		AssertElementPresent(
+			key_tab = "Auto Anonymize Data",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 	}
 
 	@priority = "4"

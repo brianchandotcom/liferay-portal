@@ -53,43 +53,98 @@ public interface FragmentEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryServiceUtil} to access the fragment entry remote service. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, long, int, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, int type,
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, long, int, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, long, int, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, int type, int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, long, int, int,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String fragmentEntryKey,
+			String name, long previewFileEntryId, int type, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, String, String,
+	 String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
+	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
 			String html, String js, int type, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, String, String,
+	 String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
 			String html, String js, int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, String, String,
+	 String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js, int type,
 			int status, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #addFragmentEntry(long, long, String, String, String, String,
+	 String, String, long, int, int, ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String fragmentEntryKey,
 			String name, String css, String html, String js, int status,

@@ -365,7 +365,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
 		Navigator.gotoStagedView();
 

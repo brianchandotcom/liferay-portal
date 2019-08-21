@@ -51,7 +51,6 @@ import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -2627,10 +2626,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = MBDiscussionLocalService.class)
+	@Reference
 	protected MBDiscussionLocalService mbDiscussionLocalService;
 
-	@BeanReference(type = MBStatsUserLocalService.class)
+	@Reference
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	private static String _getLocalizedRootCategoryName(

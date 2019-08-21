@@ -27,7 +27,6 @@ import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -727,10 +726,10 @@ public class MBCategoryFinderImpl
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@BeanReference(type = MBMessageLocalService.class)
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
-	@BeanReference(type = MBThreadLocalService.class)
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference

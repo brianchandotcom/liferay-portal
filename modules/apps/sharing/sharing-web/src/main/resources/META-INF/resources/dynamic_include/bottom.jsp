@@ -59,28 +59,38 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		Sharing,
 		'share',
 		function(classNameId, classPK, title, namespace, refreshOnClose) {
-			var sharingURL = new Liferay.PortletURL.createURL('<%= sharingURL.toString() %>');
+			var sharingParameters = {
+				classNameId: classNameId,
+				classPK: classPK
+			};
 
-			sharingURL.setParameter('classNameId', classNameId);
-			sharingURL.setParameter('classPK', classPK);
+			var sharingURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= sharingURL.toString() %>',
+				sharingParameters
+			);
 
-			showDialog(sharingURL, title, namespace, refreshOnClose);
+			showDialog(sharingURL.toString(), title, namespace, refreshOnClose);
 		},
-		['liferay-portlet-url', 'liferay-util-window']
+		['liferay-util-window']
 	);
 
 	Liferay.provide(
 		Sharing,
 		'manageCollaborators',
 		function(classNameId, classPK, namespace, refreshOnClose) {
-			var manageCollaboratorsURL = new Liferay.PortletURL.createURL('<%= manageCollaboratorsURL.toString() %>');
+			var manageCollaboratorsParameters = {
+				classNameId: classNameId,
+				classPK: classPK
+			};
 
-			manageCollaboratorsURL.setParameter('classNameId', classNameId);
-			manageCollaboratorsURL.setParameter('classPK', classPK);
+			var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= manageCollaboratorsURL.toString() %>',
+				manageCollaboratorsParameters
+			);
 
-			showDialog(manageCollaboratorsURL, '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>', namespace, refreshOnClose);
+			showDialog(manageCollaboratorsURL.toString(), '<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>', namespace, refreshOnClose);
 		},
-		['liferay-portlet-url', 'liferay-util-window']
+		['liferay-util-window']
 	);
 
 	Liferay.Sharing = Sharing;

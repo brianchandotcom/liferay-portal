@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 
 import java.util.Dictionary;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
@@ -58,16 +57,20 @@ public class ConfigurableUtil {
 
 		String snapshotClassName = interfaceClassName.concat("Snapshot");
 
-		snapshotClassName = snapshotClassName.concat(
-			String.valueOf(_counter.getAndIncrement()));
-
 		try {
-			byte[] snapshotClassData = _generateSnapshotClassData(
-				interfaceClass, snapshotClassName);
+			ClassLoader classLoader = interfaceClass.getClassLoader();
 
-			Class<T> snapshotClass = (Class<T>)_defineClassMethod.invoke(
-				interfaceClass.getClassLoader(), snapshotClassName,
-				snapshotClassData, 0, snapshotClassData.length);
+			Class<T> snapshotClass = (Class<T>)_findLoadedClassMethod.invoke(
+				classLoader, snapshotClassName);
+
+			if (snapshotClass == null) {
+				byte[] snapshotClassData = _generateSnapshotClassData(
+					interfaceClass, snapshotClassName);
+
+				snapshotClass = (Class<T>)_defineClassMethod.invoke(
+					classLoader, snapshotClassName, snapshotClassData, 0,
+					snapshotClassData.length);
+			}
 
 			Constructor<T> snapshotClassConstructor =
 				snapshotClass.getConstructor(interfaceClass);
@@ -189,14 +192,16 @@ public class ConfigurableUtil {
 		return className.replace(CharPool.PERIOD, CharPool.FORWARD_SLASH);
 	}
 
-	private static final AtomicLong _counter = new AtomicLong();
 	private static final Method _defineClassMethod;
+	private static final Method _findLoadedClassMethod;
 
 	static {
 		try {
 			_defineClassMethod = ReflectionUtil.getDeclaredMethod(
 				ClassLoader.class, "defineClass", String.class, byte[].class,
 				int.class, int.class);
+			_findLoadedClassMethod = ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "findLoadedClass", String.class);
 		}
 		catch (Throwable t) {
 			throw new ExceptionInInitializerError(t);

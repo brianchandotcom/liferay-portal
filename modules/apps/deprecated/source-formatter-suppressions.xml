@@ -4,5 +4,6 @@
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files="modules/apps/deprecated/.*" />
 		<suppress checks="JavaInternalPackageCheck" files="modules/apps/deprecated/.*" />
+		<suppress checks="JavaPackagePathCheck" files="modules/apps/deprecated/.*" />
 	</source-check>
 </suppressions>

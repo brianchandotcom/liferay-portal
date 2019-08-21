@@ -36,7 +36,7 @@ function Variants({
 				{Liferay.Language.get('variants')}
 			</h4>
 
-			{variants.length === 1 ? (
+			{variants.length === 1 && (
 				<>
 					<p className="mb-2 small">
 						<b>
@@ -50,7 +50,7 @@ function Variants({
 						{Liferay.Language.get('variants-help')}
 					</p>
 				</>
-			) : null}
+			)}
 
 			<ClayButton
 				className="mb-3"

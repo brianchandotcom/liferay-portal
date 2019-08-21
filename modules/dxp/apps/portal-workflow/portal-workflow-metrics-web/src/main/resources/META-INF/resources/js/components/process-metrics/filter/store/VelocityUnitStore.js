@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext, createContext} from 'react';
 import moment from 'moment';
 import {TimeRangeContext} from './TimeRangeStore';
 
-const useVelocityUnit = unitKeys => {
+const useVelocityUnit = velocityUnitKeys => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const [velocityUnits, setVelocityUnits] = useState([]);
 
@@ -21,7 +21,7 @@ const useVelocityUnit = unitKeys => {
 				.map(key => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
 		).map(unit => ({
 			...unit,
-			active: unitKeys.includes(unit.key)
+			active: velocityUnitKeys.includes(unit.key)
 		}));
 
 		setVelocityUnits(velocityUnits);

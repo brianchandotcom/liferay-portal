@@ -15,7 +15,7 @@ const CompletionVelocityCard = ({processId, query}) => {
 		<Request>
 			<VelocityFiltersProvider
 				timeRangeKeys={velocityTimeRange}
-				unitKeys={velocityUnit}
+				velocityUnitKeys={velocityUnit}
 			>
 				<VelocityDataProvider processId={processId}>
 					<Panel>

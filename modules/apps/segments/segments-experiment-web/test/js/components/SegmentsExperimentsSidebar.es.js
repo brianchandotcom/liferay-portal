@@ -214,7 +214,6 @@ describe('Variants ', () => {
 		const createVariantMock = jest.fn(
 			variant =>
 				new Promise(resolve => {
-					console.log(variant.name);
 					return resolve({
 						segmentsExperimentRel: {
 							name: variant.name,
@@ -254,6 +253,7 @@ describe('Variants ', () => {
 
 			userEvent.type(variantNameInput, 'Variant Name').then(() => {
 				const saveButton = getByText('save');
+
 				userEvent.click(saveButton);
 
 				waitForElementToBeRemoved(() => getByLabelText('name')).then(

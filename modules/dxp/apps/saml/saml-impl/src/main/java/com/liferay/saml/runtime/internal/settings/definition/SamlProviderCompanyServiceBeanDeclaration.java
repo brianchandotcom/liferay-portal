@@ -12,23 +12,23 @@
  *
  */
 
-package com.liferay.analytics.connector.web.internal.configuration.definition;
+package com.liferay.saml.runtime.internal.settings.definition;
 
-import com.liferay.analytics.connector.web.internal.configuration.AnalyticsConnectorConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shinn Lok
+ * @author Mika Koivisto
  */
-@Component(service = ConfigurationBeanDeclaration.class)
-public class AnalyticsConnectorCompanyConfigurationBeanDeclaration
+@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
+public class SamlProviderCompanyServiceBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
-		return AnalyticsConnectorConfiguration.class;
+	public Class<?> getConfigurationBeanClass() {
+		return SamlProviderConfiguration.class;
 	}
 
 }

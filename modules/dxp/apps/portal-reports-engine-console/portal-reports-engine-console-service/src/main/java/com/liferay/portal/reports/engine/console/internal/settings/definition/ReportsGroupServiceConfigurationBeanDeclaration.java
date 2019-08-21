@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.internal.configuration.definition;
+package com.liferay.portal.reports.engine.console.internal.settings.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.reports.engine.console.configuration.ReportsGroupServiceEmailConfiguration;

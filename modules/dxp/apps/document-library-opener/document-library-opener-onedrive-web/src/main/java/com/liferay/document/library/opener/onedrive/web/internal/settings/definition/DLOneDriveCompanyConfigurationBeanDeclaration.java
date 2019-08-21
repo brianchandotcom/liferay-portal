@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.configuration.definition;
+package com.liferay.document.library.opener.onedrive.web.internal.settings.definition;
 
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

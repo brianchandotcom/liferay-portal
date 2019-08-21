@@ -17,11 +17,8 @@ const useVelocityUnit = unitKeys => {
 
 		const velocityUnits = (
 			Object.keys(velocityUnitsMap)
-				.filter(key => daysDiff <= key)
-				.map(key => velocityUnitsMap[key])[0] || [
-				asDefault(monthsUnit),
-				yearsUnit
-			]
+				.filter(key => daysDiff < key)
+				.map(key => velocityUnitsMap[key])[0] || [asDefault(yearsUnit)]
 		).map(unit => ({
 			...unit,
 			active: unitKeys.includes(unit.key)
@@ -102,7 +99,8 @@ const velocityUnitsMap = {
 	30: [asDefault(daysUnit), weeksUnit],
 	90: [daysUnit, asDefault(weeksUnit), monthsUnit],
 	180: [weeksUnit, asDefault(monthsUnit)],
-	365: [weeksUnit, asDefault(monthsUnit)]
+	366: [weeksUnit, asDefault(monthsUnit)],
+	730: [asDefault(monthsUnit), yearsUnit]
 };
 
 const VelocityUnitContext = createContext(null);

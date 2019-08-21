@@ -260,7 +260,7 @@ public class DLOpenerOneDriveManager {
 			userId, CompanyConstants.SYSTEM,
 			StringBundler.concat(
 				DLOpenerOneDriveManager.class.getName(), StringPool.POUND,
-				"oneDrive", fileEntry.getFileEntryId()),
+				fileEntry.getFileEntryId()),
 			UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
 			taskContextMap, new ServiceContext());
 	}

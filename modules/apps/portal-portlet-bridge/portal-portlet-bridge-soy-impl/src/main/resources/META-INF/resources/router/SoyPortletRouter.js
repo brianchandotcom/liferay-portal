@@ -226,12 +226,12 @@ class SoyPortletRouter extends State {
 			);
 		}
 
-		uri.setParameterValue('p_p_lifecycle', '2');
-		uri.setParameterValue(`${this.portletNamespace}pjax`, true);
+		uri.searchParams.set('p_p_lifecycle', '2');
+		uri.searchParams.set(`${this.portletNamespace}pjax`, true);
 
-		if (!uri.hasParameter('p_p_id')) {
-			uri.setParameterValue('p_p_id', this.portletId);
-			uri.setParameterValue(`${this.portletNamespace}no_p_p_id`, true);
+		if (!uri.searchParams.has('p_p_id')) {
+			uri.searchParams.add('p_p_id', this.portletId);
+			uri.searchParams.add(`${this.portletNamespace}no_p_p_id`, true);
 		}
 
 		return uri.toString();

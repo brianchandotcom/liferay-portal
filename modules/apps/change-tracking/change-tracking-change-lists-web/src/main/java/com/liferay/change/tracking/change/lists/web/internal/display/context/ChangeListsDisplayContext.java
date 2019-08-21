@@ -386,22 +386,14 @@ public class ChangeListsDisplayContext {
 	private JSONArray _getChangeListsDropdownMenuJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		QueryDefinition<CTCollection> queryDefinition = new QueryDefinition<>();
-
-		queryDefinition.setEnd(5);
-		queryDefinition.setStart(0);
-
 		OrderByComparator<CTCollection> orderByComparator =
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", "modifiedDate", false);
 
-		queryDefinition.setOrderByComparator(orderByComparator);
-
-		queryDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
-				_themeDisplay.getCompanyId(), queryDefinition, false);
+				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
+				false, 0, 5, orderByComparator);
 
 		long ctCollectionId = _getCTCollectionId();
 

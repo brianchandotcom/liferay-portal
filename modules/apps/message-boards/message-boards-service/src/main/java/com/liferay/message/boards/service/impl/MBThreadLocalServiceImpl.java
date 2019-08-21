@@ -160,7 +160,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		type = SystemEventConstants.TYPE_DELETE
 	)
 	public void deleteThread(MBThread thread) throws PortalException {
-		MBMessage rootMessage = _mbMessageLocalService.getMessage(
+		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			thread.getRootMessageId());
 
 		// Indexer
@@ -184,8 +184,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Messages
 
-		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
-			thread.getThreadId(), WorkflowConstants.STATUS_ANY, null);
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			thread.getThreadId());
 
 		for (MBMessage message : messages) {
 
@@ -209,7 +209,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Message
 
-			_mbMessageLocalService.deleteMBMessage(message);
+			mbMessagePersistence.remove(message);
 
 			// Indexer
 
@@ -490,8 +490,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Override
 	public boolean hasAnswerMessage(long threadId) {
-		int count = _mbMessageLocalService.getThreadMessagesCount(
-			threadId, true);
+		int count = mbMessagePersistence.countByT_A(threadId, true);
 
 		if (count > 0) {
 			return true;
@@ -532,8 +531,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
-			threadId, WorkflowConstants.STATUS_ANY);
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			threadId);
 
 		for (MBMessage message : messages) {
 
@@ -547,7 +546,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-			_mbMessageLocalService.updateMBMessage(message);
+			mbMessagePersistence.update(message);
 
 			userIds.add(message.getUserId());
 
@@ -631,13 +630,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Messages
 
-		List<MBMessage> messages = _mbMessageLocalService.getCategoryMessages(
+		List<MBMessage> messages = mbMessagePersistence.findByG_C_T(
 			groupId, oldCategoryId, thread.getThreadId());
 
 		for (MBMessage message : messages) {
 			message.setCategoryId(categoryId);
 
-			_mbMessageLocalService.updateMBMessage(message);
+			mbMessagePersistence.update(message);
 
 			// Indexer
 
@@ -775,7 +774,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Social
 
-		MBMessage message = _mbMessageLocalService.getMBMessage(
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(
 			thread.getRootMessageId());
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
@@ -799,8 +798,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadLocalService.getThread(threadId);
 
-		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
-			threadId, WorkflowConstants.STATUS_ANY);
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			threadId);
 
 		for (MBMessage message : messages) {
 
@@ -821,7 +820,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			message.setStatus(oldStatus);
 
-			_mbMessageLocalService.updateMBMessage(message);
+			mbMessagePersistence.update(message);
 
 			userIds.add(message.getUserId());
 
@@ -897,7 +896,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Social
 
-		MBMessage message = _mbMessageLocalService.getMBMessage(
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(
 			thread.getRootMessageId());
 
 		JSONObject extraDataJSONObject = JSONUtil.put(
@@ -967,7 +966,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBMessage message = _mbMessageLocalService.getMessage(messageId);
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
 		if (message.isRoot()) {
 			throw new SplitThreadException(
@@ -979,7 +978,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread oldThread = message.getThread();
 
-		MBMessage rootMessage = _mbMessageLocalService.getMessage(
+		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
 			oldThread.getRootMessageId());
 
 		long oldAttachmentsFolderId = message.getAttachmentsFolderId();
@@ -1099,7 +1098,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return null;
 		}
 
-		int messageCount = _mbMessageLocalService.getThreadMessagesCount(
+		int messageCount = mbMessagePersistence.countByT_S(
 			threadId, WorkflowConstants.STATUS_APPROVED);
 
 		mbThread.setMessageCount(messageCount);
@@ -1122,7 +1121,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		mbThreadPersistence.update(thread);
 
 		if (!question) {
-			MBMessage message = _mbMessageLocalService.getMessage(
+			MBMessage message = mbMessagePersistence.findByPrimaryKey(
 				thread.getRootMessageId());
 
 			_mbMessageLocalService.updateAnswer(message, false, true);
@@ -1187,9 +1186,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				serviceContext);
 		}
 
-		List<MBMessage> childMessages =
-			_mbMessageLocalService.getThreadMessages(
-				oldThread.getThreadId(), message.getMessageId());
+		List<MBMessage> childMessages = mbMessagePersistence.findByT_P(
+			oldThread.getThreadId(), message.getMessageId());
 
 		for (MBMessage childMessage : childMessages) {
 			moveAttachmentsFolders(
@@ -1202,7 +1200,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBMessage parentMessage, MBCategory category, long oldThreadId)
 		throws PortalException {
 
-		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
+		List<MBMessage> messages = mbMessagePersistence.findByT_P(
 			oldThreadId, parentMessage.getMessageId());
 
 		for (MBMessage message : messages) {

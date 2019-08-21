@@ -363,7 +363,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		MBThread thread = null;
 
 		if (threadId > 0) {
-			thread = _mbThreadLocalService.fetchThread(threadId);
+			thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
 		}
 
 		if (thread == null) {
@@ -632,7 +632,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			SocialActivityManagerUtil.deleteActivities(message);
 
-			_mbThreadLocalService.deleteThread(message.getThreadId());
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(
+				message.getThreadId());
+
+			_mbThreadLocalService.deleteThread(thread);
 		}
 
 		_mbDiscussionLocalService.deleteMBDiscussion(discussion);
@@ -685,7 +688,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			MBThread thread = _mbThreadLocalService.getThread(
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(
 				message.getThreadId());
 
 			_mbThreadLocalService.deleteMBThread(thread);
@@ -708,7 +711,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			indexer.delete(thread);
 		}
 		else {
-			MBThread thread = _mbThreadLocalService.getThread(
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(
 				message.getThreadId());
 
 			// Message is a root message
@@ -1293,7 +1296,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getParentMessageId());
 		}
 
-		MBThread thread = _mbThreadLocalService.getThread(
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(
 			message.getThreadId());
 
 		if (message.isApproved() && !message.isDiscussion()) {
@@ -1862,7 +1865,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Thread
 
-		MBThread thread = _mbThreadLocalService.getThread(
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(
 			message.getThreadId());
 
 		updateThreadStatus(thread, message, user, oldStatus, modifiedDate);
@@ -2599,12 +2602,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		// Indexer
 
+		thread = mbThreadPersistence.update(thread);
+
 		Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBThread.class);
 
 		indexer.reindex(thread);
-
-		_mbThreadLocalService.updateMBThread(thread);
 	}
 
 	protected void validate(String subject, String body)
@@ -2733,7 +2736,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setPriority(priority);
 		}
 
-		MBThread thread = _mbThreadLocalService.getThread(
+		MBThread thread = mbThreadPersistence.findByPrimaryKey(
 			message.getThreadId());
 
 		if ((serviceContext.getWorkflowAction() ==

@@ -96,7 +96,7 @@ exports[`Should component receive props 1`] = `
                   <div>
                     <div>
                       <span
-                        className="mr-3"
+                        className="mr-2"
                       >
                         workload-by-step
                       </span>
@@ -264,7 +264,7 @@ exports[`Should component shows empty state when items is undefined 1`] = `
                   <div>
                     <div>
                       <span
-                        className="mr-3"
+                        className="mr-2"
                       >
                         workload-by-step
                       </span>
@@ -436,7 +436,7 @@ exports[`Should render component 1`] = `
                   <div>
                     <div>
                       <span
-                        className="mr-3"
+                        className="mr-2"
                       >
                         workload-by-step
                       </span>
@@ -525,7 +525,7 @@ exports[`Should render component with empty data 1`] = `
       <div>
         <div>
           <span
-            className="mr-3"
+            className="mr-2"
           >
             workload-by-step
           </span>
@@ -583,7 +583,7 @@ exports[`Should render component with error state 1`] = `
       <div>
         <div>
           <span
-            className="mr-3"
+            className="mr-2"
           >
             workload-by-step
           </span>

@@ -110,7 +110,7 @@ exports[`Should render component 1`] = `
                           className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="mr-3"
+                            className="mr-2"
                           >
                             completed-items
                           </span>
@@ -285,7 +285,7 @@ exports[`Should render component with failure state 1`] = `
                           className="autofit-col autofit-col-expand flex-row"
                         >
                           <span
-                            className="mr-3"
+                            className="mr-2"
                           >
                             completed-items
                           </span>

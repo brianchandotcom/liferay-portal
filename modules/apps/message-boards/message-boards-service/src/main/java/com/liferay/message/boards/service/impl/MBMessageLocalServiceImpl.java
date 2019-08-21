@@ -29,6 +29,7 @@ import com.liferay.message.boards.exception.NoSuchThreadException;
 import com.liferay.message.boards.exception.RequiredMessageException;
 import com.liferay.message.boards.internal.util.MBDiscussionSubcriptionSender;
 import com.liferay.message.boards.internal.util.MBMailUtil;
+import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBSubscriptionSender;
 import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.internal.util.MailingListThreadLocal;
@@ -52,7 +53,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1501,40 +1501,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		long userId, long threadId, int status, int start, int end,
 		Comparator<MBMessage> comparator) {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			OrderByComparator<MBMessage> orderByComparator = null;
-
-			if (comparator instanceof OrderByComparator) {
-				orderByComparator = (OrderByComparator<MBMessage>)comparator;
-			}
-
-			List<MBMessage> messages = mbMessagePersistence.findByT_notS(
-				threadId, WorkflowConstants.STATUS_IN_TRASH, start, end,
-				orderByComparator);
-
-			if (!(comparator instanceof OrderByComparator)) {
-				messages = ListUtil.sort(messages, comparator);
-			}
-
-			return messages;
-		}
-
-		QueryDefinition<MBMessage> queryDefinition = new QueryDefinition<>(
-			status, userId, true, start, end, null);
-
-		if (comparator instanceof OrderByComparator) {
-			queryDefinition.setOrderByComparator(
-				(OrderByComparator<MBMessage>)comparator);
-		}
-
-		List<MBMessage> messages = mbMessageFinder.findByThreadId(
-			threadId, queryDefinition);
-
-		if (!(comparator instanceof OrderByComparator)) {
-			messages = ListUtil.sort(messages, comparator);
-		}
-
-		return messages;
+		return MBMessageUtil.getThreadMessages(
+			mbMessagePersistence, mbMessageFinder, userId, threadId, status,
+			start, end, comparator);
 	}
 
 	@Override
@@ -1700,20 +1669,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public void updateAnswer(MBMessage message, boolean answer, boolean cascade)
 		throws PortalException {
 
-		if (message.isAnswer() != answer) {
-			message.setAnswer(answer);
-
-			mbMessagePersistence.update(message);
-		}
-
-		if (cascade) {
-			List<MBMessage> messages = mbMessagePersistence.findByT_P(
-				message.getThreadId(), message.getMessageId());
-
-			for (MBMessage curMessage : messages) {
-				updateAnswer(curMessage, answer, cascade);
-			}
-		}
+		MBMessageUtil.updateAnswer(
+			mbMessagePersistence, message, answer, cascade);
 	}
 
 	@Override

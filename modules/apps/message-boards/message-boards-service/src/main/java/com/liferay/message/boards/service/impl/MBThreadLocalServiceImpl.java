@@ -23,19 +23,21 @@ import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.exception.SplitThreadException;
+import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
 import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
-import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.model.impl.MBTreeWalkerImpl;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
+import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
@@ -51,6 +53,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -985,7 +988,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Message flags
 
-		_mbMessageLocalService.updateAnswer(message, false, true);
+		MBMessageUtil.updateAnswer(mbMessagePersistence, message, false, true);
 
 		// Create new thread
 
@@ -996,14 +999,17 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Update messages
 
+		Indexer<MBMessage> messageIndexer = _indexerRegistry.nullSafeGetIndexer(
+			MBMessage.class);
+
 		if (Validator.isNotNull(subject)) {
-			MBMessageDisplay messageDisplay =
-				_mbMessageLocalService.getMessageDisplay(
-					userId, messageId, WorkflowConstants.STATUS_ANY);
+			List<MBMessage> messages = MBMessageUtil.getThreadMessages(
+				mbMessagePersistence, mbMessageFinder, userId,
+				message.getThreadId(), WorkflowConstants.STATUS_ANY,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new MessageThreadComparator());
 
-			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-			List<MBMessage> messages = treeWalker.getMessages();
+			MBTreeWalker treeWalker = new MBTreeWalkerImpl(messages);
 
 			int[] range = treeWalker.getChildrenRange(message);
 
@@ -1026,7 +1032,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				curMessage.setSubject(curSubject);
 
-				_mbMessageLocalService.updateMBMessage(curMessage);
+				messageIndexer.reindex(mbMessagePersistence.update(curMessage));
 			}
 
 			message.setSubject(subject);
@@ -1040,7 +1046,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		message.setRootMessageId(thread.getRootMessageId());
 		message.setParentMessageId(0);
 
-		_mbMessageLocalService.updateMBMessage(message);
+		messageIndexer.reindex(mbMessagePersistence.update(message));
 
 		// Attachments
 
@@ -1050,10 +1056,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		// Indexer
 
 		if (!message.isDiscussion()) {
-			Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				MBMessage.class);
-
-			indexer.reindex(message);
+			messageIndexer.reindex(message);
 		}
 
 		// Update children
@@ -1080,12 +1083,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			MBThread.class);
+		Indexer<MBThread> threadIndexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(MBThread.class);
 
-		indexer.reindex(oldThread);
+		threadIndexer.reindex(oldThread);
 
-		indexer.reindex(message.getThread());
+		threadIndexer.reindex(message.getThread());
 
 		return thread;
 	}
@@ -1124,7 +1127,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBMessage message = mbMessagePersistence.findByPrimaryKey(
 				thread.getRootMessageId());
 
-			_mbMessageLocalService.updateAnswer(message, false, true);
+			MBMessageUtil.updateAnswer(
+				mbMessagePersistence, message, false, true);
 		}
 	}
 
@@ -1200,6 +1204,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBMessage parentMessage, MBCategory category, long oldThreadId)
 		throws PortalException {
 
+		Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBMessage.class);
+
 		List<MBMessage> messages = mbMessagePersistence.findByT_P(
 			oldThreadId, parentMessage.getMessageId());
 
@@ -1208,14 +1215,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			message.setThreadId(parentMessage.getThreadId());
 			message.setRootMessageId(parentMessage.getRootMessageId());
 
-			_mbMessageLocalService.updateMBMessage(message);
-
-			if (!message.isDiscussion()) {
-				Indexer<MBMessage> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(MBMessage.class);
-
-				indexer.reindex(message);
-			}
+			indexer.reindex(mbMessagePersistence.update(message));
 
 			moveChildrenMessages(message, category, oldThreadId);
 		}
@@ -1225,10 +1225,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	@Reference
-	private MBCategoryPersistence _mbCategoryPersistence;
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
+	private MBCategoryPersistence _mbCategoryPersistence;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

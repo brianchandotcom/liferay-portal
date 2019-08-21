@@ -14,18 +14,23 @@
 
 package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.LiferayYarnPlugin;
 import com.liferay.gradle.plugins.SourceFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 
 import java.io.File;
 
 import java.util.Map;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -33,7 +38,7 @@ import org.gradle.api.Project;
 public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		if (FileUtil.exists(project, "app.bnd")) {
 			GradleUtil.applyPlugin(project, LiferayAppDefaultsPlugin.class);
 		}
@@ -53,6 +58,68 @@ public class LiferayRootDefaultsPlugin implements Plugin<Project> {
 				GradleUtil.applyPlugin(subproject, LiferayDefaultsPlugin.class);
 			}
 		}
+
+		if ((portalRootDir == null) && _hasYarnScriptFile(project)) {
+			GradleUtil.applyPlugin(project, LiferayYarnPlugin.class);
+
+			for (Project subproject : project.getSubprojects()) {
+				_configureTasksNpmInstall(project, subproject);
+			}
+		}
+	}
+
+	private void _configureTaskNpmInstall(
+		Project rootProject, NpmInstallTask npmInstallTask) {
+
+		File scriptFile = npmInstallTask.getScriptFile();
+
+		if (scriptFile == null) {
+			return;
+		}
+
+		String fileName = scriptFile.getName();
+
+		if (!fileName.startsWith("yarn-") || !fileName.endsWith(".js")) {
+			return;
+		}
+
+		TaskContainer taskContainer = rootProject.getTasks();
+
+		Task yarnInstallTask = taskContainer.findByName(
+			LiferayYarnPlugin.YARN_INSTALL_TASK_NAME);
+
+		if (yarnInstallTask != null) {
+			npmInstallTask.finalizedBy(yarnInstallTask);
+		}
+	}
+
+	private void _configureTasksNpmInstall(
+		final Project rootProject, Project project) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskNpmInstall(rootProject, npmInstallTask);
+				}
+
+			});
+	}
+
+	private boolean _hasYarnScriptFile(Project project) {
+		File projectDir = project.getProjectDir();
+
+		File[] files = FileUtil.getFiles(projectDir, "yarn-", ".js");
+
+		if ((files != null) && (files.length > 0)) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

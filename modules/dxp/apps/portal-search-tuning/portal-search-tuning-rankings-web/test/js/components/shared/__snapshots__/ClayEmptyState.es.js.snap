@@ -6,19 +6,19 @@ exports[`ClayEmptyState renders 1`] = `
     class="empty-state-root"
   >
     <img
-      alt="Empty state image"
+      alt="Empty State Image"
       class="empty-state-image"
       src="/o/admin-theme/images/states/search_state.gif"
     />
     <div
       class="empty-state-title"
     >
-      No results found
+      No Results Found
     </div>
     <div
       class="empty-state-description"
     >
-      Sorry, there are no results found.
+      Sorry, no results were found.
     </div>
   </div>
 </DocumentFragment>

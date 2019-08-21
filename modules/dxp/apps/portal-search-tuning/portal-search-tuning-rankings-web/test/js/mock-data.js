@@ -57,7 +57,7 @@ export function getMockResultsData(
 
 	return {
 		documents: mockData,
-		total: 50
+		total: 100
 	};
 }
 

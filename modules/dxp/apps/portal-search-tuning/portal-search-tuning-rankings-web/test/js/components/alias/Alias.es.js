@@ -32,7 +32,7 @@ describe('Alias', () => {
 		);
 
 		expect(
-			queryByText('Type a comma or press enter to input an alias')
+			queryByText('Type a comma or press enter to input an alias.')
 		).not.toBeNull();
 	});
 

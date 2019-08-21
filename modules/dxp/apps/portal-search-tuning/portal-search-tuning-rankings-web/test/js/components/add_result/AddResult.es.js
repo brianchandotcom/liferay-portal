@@ -14,6 +14,7 @@ import React from 'react';
 import {FETCH_SEARCH_DOCUMENTS_URL} from '../../mock-data';
 import {
 	fireEvent,
+	getByPlaceholderText,
 	render,
 	wait,
 	waitForElement,
@@ -107,12 +108,12 @@ describe('AddResult', () => {
 		const modal = getByTestId(MODAL_ID);
 
 		expect(modal.querySelector('.empty-state-title')).toHaveTextContent(
-			'Search your engine'
+			'Search the engine'
 		);
 
 		expect(
 			modal.querySelector('.empty-state-description')
-		).toHaveTextContent('Search your engine to display results.');
+		).toHaveTextContent('Search the engine to display results.');
 	});
 
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
@@ -212,7 +213,7 @@ describe('AddResult', () => {
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = modal.querySelector('.form-control');
+		const input = getByPlaceholderText(modal, 'Search the engine.');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
@@ -222,14 +223,14 @@ describe('AddResult', () => {
 
 		fireEvent.click(modal.querySelector('.page-item-next a'));
 
-		await waitForElement(() => getByTestId('310'));
+		await waitForElement(() => getByTestId('350'));
 
 		expect(modal).not.toHaveTextContent('300 This is a Document Example');
 		expect(modal).not.toHaveTextContent(
-			'309 This is a Web Content Example'
+			'349 This is a Web Content Example'
 		);
-		expect(modal).toHaveTextContent('310 This is a Document Example');
-		expect(modal).toHaveTextContent('319 This is a Web Content Example');
+		expect(modal).toHaveTextContent('350 This is a Document Example');
+		expect(modal).toHaveTextContent('399 This is a Web Content Example');
 	});
 
 	it('updates results count in the modal after page delta is pressed', async () => {

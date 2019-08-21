@@ -41,7 +41,6 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
@@ -240,9 +239,6 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			}
 		}
 	}
-
-	@Reference
-	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
 
 	@Reference
 	protected KaleoNodeLocalService kaleoNodeLocalService;

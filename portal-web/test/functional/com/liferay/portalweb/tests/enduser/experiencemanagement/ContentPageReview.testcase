@@ -147,9 +147,12 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Title");
 
-		AssertElementPresent(
-			key_tabName = "Comments",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "This is a fragment comment.",
+			fragmentName = "Title",
+			position = "1");
 
 		PageEditor.clickPublish();
 
@@ -171,6 +174,10 @@ definition {
 		AssertElementNotPresent(
 			key_tabName = "Comments",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		AssertElementNotPresent(
+			key_fragmentComment = "This is a fragment comment.",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
 	@description = "This test ensures that users can enable and disable Content Page Comments at the system level."
@@ -208,9 +215,12 @@ definition {
 			collectionName = "Collection Name",
 			fragmentName = "Title");
 
-		AssertElementPresent(
-			key_tabName = "Comments",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "This is a fragment comment.",
+			fragmentName = "Title",
+			position = "1");
 
 		PageEditor.clickPublish();
 
@@ -232,6 +242,10 @@ definition {
 		AssertElementNotPresent(
 			key_tabName = "Comments",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
+
+		AssertElementNotPresent(
+			key_fragmentComment = "This is a fragment comment.",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."

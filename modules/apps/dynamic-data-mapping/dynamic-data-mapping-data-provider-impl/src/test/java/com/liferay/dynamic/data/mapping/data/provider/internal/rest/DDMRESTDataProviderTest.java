@@ -562,7 +562,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 			_createSettingsWithOutputParameter(
-				outputParameterId, "list output", "value;key", "list", false);
+				outputParameterId, "list output", false, "value;key", "list");
 
 		when(
 			documentContext.read(".value", List.class)
@@ -632,7 +632,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 			_createSettingsWithOutputParameter(
-				outputParameterId, "list output", "value;key", "list", true);
+				outputParameterId, "list output", true, "value;key", "list");
 
 		when(
 			documentContext.read(".value", List.class)
@@ -715,8 +715,8 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 			_createSettingsWithOutputParameter(
-				outputParameterId, "number output", "numberProp", "number",
-				false);
+				outputParameterId, "number output", false, "numberProp",
+				"number");
 
 		when(
 			documentContext.read(".numberProp", Number.class)
@@ -864,7 +864,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 
 		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 			_createSettingsWithOutputParameter(
-				outputParameterId, "text output", "textProp", "text", false);
+				outputParameterId, "text output", false, "textProp", "text");
 
 		when(
 			documentContext.read(".textProp", String.class)
@@ -962,7 +962,7 @@ public class DDMRESTDataProviderTest extends PowerMockito {
 	}
 
 	private DDMRESTDataProviderSettings _createSettingsWithOutputParameter(
-		String id, String name, String path, String type, boolean pagination) {
+		String id, String name, boolean pagination, String path, String type) {
 
 		DDMForm ddmForm = DDMFormFactory.create(
 			DDMRESTDataProviderSettings.class);

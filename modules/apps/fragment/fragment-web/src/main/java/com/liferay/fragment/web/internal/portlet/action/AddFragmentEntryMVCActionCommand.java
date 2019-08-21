@@ -72,7 +72,8 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.addFragmentEntry(
 					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					name, type, WorkflowConstants.STATUS_DRAFT, serviceContext);
+					null, name, 0, type, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL", getRedirectURL(actionResponse, fragmentEntry));

@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -273,15 +274,17 @@ public class LayoutPageTemplateEntryServiceTest {
 		FragmentEntry fragmentEntry1 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), 0,
+				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), 0,
+				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		long[] fragmentEntryIds = {
@@ -376,15 +379,17 @@ public class LayoutPageTemplateEntryServiceTest {
 		FragmentEntry fragmentEntry1 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), 0,
+				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(),
+				fragmentCollection.getFragmentCollectionId(), null,
+				RandomTestUtil.randomString(), 0,
+				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		long[] fragmentEntryIds = {

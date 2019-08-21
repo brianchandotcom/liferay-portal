@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
@@ -374,10 +375,12 @@ public class PorygonSiteInitializer implements SiteInitializer {
 				_fragmentEntryLocalService.addFragmentEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
-					fragmentCollection.getFragmentCollectionId(),
+					fragmentCollection.getFragmentCollectionId(), null,
 					fragmentEntryName, css, html, StringPool.BLANK,
+					StringPool.BLANK,
 					_getPreviewFileEntryId(
 						filePath, fragmentEntryId + ".jpg", serviceContext),
+					FragmentConstants.TYPE_SECTION,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			fragmentEntries.add(fragmentEntry);

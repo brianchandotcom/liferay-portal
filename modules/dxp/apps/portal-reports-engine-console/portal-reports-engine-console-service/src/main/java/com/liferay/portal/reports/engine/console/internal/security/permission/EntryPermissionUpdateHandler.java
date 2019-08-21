@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.portal.reports.engine.console.service.permission;
+package com.liferay.portal.reports.engine.console.internal.security.permission;
 
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.reports.engine.console.model.Source;
-import com.liferay.portal.reports.engine.console.service.SourceLocalService;
+import com.liferay.portal.reports.engine.console.model.Entry;
+import com.liferay.portal.reports.engine.console.service.EntryLocalService;
 
 import java.util.Date;
 
@@ -28,26 +28,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Prathima Shreenath
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Source",
+	property = "model.class.name=com.liferay.portal.reports.engine.console.model.Entry",
 	service = PermissionUpdateHandler.class
 )
-public class SourcePermissionUpdateHandler implements PermissionUpdateHandler {
+public class EntryPermissionUpdateHandler implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		Source source = _sourceLocalService.fetchSource(
+		Entry entry = _entryLocalService.fetchEntry(
 			GetterUtil.getLong(primKey));
 
-		if (source == null) {
+		if (entry == null) {
 			return;
 		}
 
-		source.setModifiedDate(new Date());
+		entry.setModifiedDate(new Date());
 
-		_sourceLocalService.updateSource(source);
+		_entryLocalService.updateEntry(entry);
 	}
 
 	@Reference
-	private SourceLocalService _sourceLocalService;
+	private EntryLocalService _entryLocalService;
 
 }

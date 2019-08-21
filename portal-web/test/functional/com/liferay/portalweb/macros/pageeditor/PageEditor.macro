@@ -1,13 +1,13 @@
 definition {
 
 	macro addComment {
+		PageEditor.gotoTab(tabName = "Comments");
+
 		Click(
 			key_content = "${content}",
 			key_fragmentClass = "${fragmentClass}",
 			key_position = "${position}",
 			locator1 = "Fragment#FRAGMENT");
-
-		PageEditor.gotoTab(tabName = "Comments");
 
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",

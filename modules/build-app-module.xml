@@ -17,7 +17,7 @@
 
 	<pathconvert property="subrepo.releng.module.dir">
 		<filtermapper>
-			<replaceregex pattern="(.+apps${file.separator}[^${file.separator}]+)${file.separator}(.+)" replace="\1${file.separator}.releng${file.separator}\2" />
+			<replaceregex pattern="(.+apps\${file.separator}[^\${file.separator}]+)\${file.separator}(.+)" replace="\1\${file.separator}.releng\${file.separator}\2" />
 		</filtermapper>
 
 		<path>

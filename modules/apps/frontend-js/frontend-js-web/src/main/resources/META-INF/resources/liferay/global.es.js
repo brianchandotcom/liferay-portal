@@ -21,8 +21,8 @@ import {
 	getComponentCache,
 	initComponentCache
 } from './component.es';
-import createURL from './util/portlet_url/create_portlet_url.es';
 import createActionURL from './util/portlet_url/create_action_url.es';
+import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';
 import escape from 'lodash.escape';
@@ -78,9 +78,9 @@ Liferay.Util.objectToURLSearchParams = objectToURLSearchParams;
 
 Liferay.Util.PortletURL = {
 	createActionURL,
+	createPortletURL,
 	createRenderURL,
-	createResourceURL,
-	createURL
+	createResourceURL
 };
 
 Liferay.Util.postForm = postForm;

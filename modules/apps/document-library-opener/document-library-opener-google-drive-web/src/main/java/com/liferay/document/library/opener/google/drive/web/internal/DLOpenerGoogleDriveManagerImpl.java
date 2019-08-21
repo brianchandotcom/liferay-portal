@@ -77,27 +77,8 @@ public class DLOpenerGoogleDriveManagerImpl
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.CMD,
-			GoogleDriveBackgroundTaskConstants.CHECKOUT);
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
-			fileEntry.getCompanyId());
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-			fileEntry.getFileEntryId());
-		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.addBackgroundTask(
-				userId, CompanyConstants.SYSTEM,
-				"googleDriveFileEntry-" + fileEntry.getFileEntryId(),
-				UploadGoogleDriveDocumentBackgroundTaskExecutor.class.getName(),
-				taskContextMap, new ServiceContext());
+		BackgroundTask backgroundTask = _addBackgroundTask(
+			GoogleDriveBackgroundTaskConstants.CHECKOUT, fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -118,27 +99,8 @@ public class DLOpenerGoogleDriveManagerImpl
 			long userId, FileEntry fileEntry)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.CMD,
-			GoogleDriveBackgroundTaskConstants.CREATE);
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
-			fileEntry.getCompanyId());
-		taskContextMap.put(
-			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
-		taskContextMap.put(
-			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-			fileEntry.getFileEntryId());
-		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
-
-		BackgroundTask backgroundTask =
-			_backgroundTaskManager.addBackgroundTask(
-				userId, CompanyConstants.SYSTEM,
-				"googleDriveFileEntry-" + fileEntry.getFileEntryId(),
-				UploadGoogleDriveDocumentBackgroundTaskExecutor.class.getName(),
-				taskContextMap, new ServiceContext());
+		BackgroundTask backgroundTask = _addBackgroundTask(
+			GoogleDriveBackgroundTaskConstants.CREATE, fileEntry, userId);
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
@@ -264,6 +226,34 @@ public class DLOpenerGoogleDriveManagerImpl
 	protected void activate() throws GeneralSecurityException, IOException {
 		_jsonFactory = JacksonFactory.getDefaultInstance();
 		_netHttpTransport = GoogleNetHttpTransport.newTrustedTransport();
+	}
+
+	private BackgroundTask _addBackgroundTask(
+			String cmd, FileEntry fileEntry, long userId)
+		throws PortalException {
+
+		Map<String, Serializable> taskContextMap =
+			new HashMap<String, Serializable>() {
+				{
+					put(GoogleDriveBackgroundTaskConstants.CMD, cmd);
+					put(
+						GoogleDriveBackgroundTaskConstants.COMPANY_ID,
+						fileEntry.getCompanyId());
+					put(
+						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
+						true);
+					put(
+						GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+						fileEntry.getFileEntryId());
+					put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
+				}
+			};
+
+		return _backgroundTaskManager.addBackgroundTask(
+			userId, CompanyConstants.SYSTEM,
+			"googleDriveFileEntry-" + fileEntry.getFileEntryId(),
+			UploadGoogleDriveDocumentBackgroundTaskExecutor.class.getName(),
+			taskContextMap, new ServiceContext());
 	}
 
 	private void _checkCredential(long companyId, long userId)

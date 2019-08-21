@@ -4,6 +4,9 @@ buildscript {
 		classpath(group: "com.liferay", name: "com.liferay.gradle.plugins.workspace", version: "2.1.4") {
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.bndlib"
+			exclude group: "biz.aQute.bnd", module: "biz.aQute.gradle"
+			exclude group: "biz.aQute.bnd", module: "biz.aQute.repository"
+			exclude group: "biz.aQute.bnd", module: "biz.aQute.resolve"
 		}
 	}
 

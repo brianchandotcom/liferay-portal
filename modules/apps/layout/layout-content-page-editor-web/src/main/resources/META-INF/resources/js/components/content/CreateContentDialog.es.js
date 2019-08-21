@@ -151,10 +151,7 @@ CreateContentDialog.STATE = {
 	 * @memberOf CreateContentDialog
 	 * @private
 	 * @review
-	 * @type {
-	 * 	id: string,
-	 * 	label: string
-	 * }
+	 * @type {{id: string, label: string}}
 	 */
 	_ddmStructure: Config.shapeOf({
 		id: Config.string().required(),

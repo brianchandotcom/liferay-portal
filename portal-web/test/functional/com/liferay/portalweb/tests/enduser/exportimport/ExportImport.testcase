@@ -615,6 +615,7 @@ definition {
 			siteURLKey = "global");
 
 		LAR.importSiteCP(
+			baseURL = "http://www.able.com:8080",
 			larFileName = "${larFileName}",
 			siteName = "Global");
 

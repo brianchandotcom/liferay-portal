@@ -123,20 +123,13 @@ public class CTCollectionLocalServiceImpl
 		long companyId, int status, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
-		DynamicQuery dynamicQuery = ctCollectionLocalService.dynamicQuery();
-
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			Property statusProperty = PropertyFactoryUtil.forName("status");
-
-			dynamicQuery.add(statusProperty.eq(status));
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return ctCollectionPersistence.findByCompanyId(
+				companyId, start, end, orderByComparator);
 		}
 
-		return ctCollectionLocalService.dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return ctCollectionPersistence.findByC_S(
+			companyId, status, start, end, orderByComparator);
 	}
 
 	@Override

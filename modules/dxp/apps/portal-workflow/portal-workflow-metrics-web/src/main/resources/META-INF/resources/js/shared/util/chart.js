@@ -271,6 +271,18 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 					padLeft: 0,
 					padRight: lengthKeys - 5
 				};
+			} else if (type === YEARS) {
+				const secondDate = moment.utc(keys[1]);
+
+				const diffMonths = parseInt(
+					moment.duration(secondDate.diff(startDate)).asMonths()
+				);
+
+				return {
+					index: lengthKeys > 12 ? parseInt(lengthKeys / 6) : 1,
+					padLeft: diffMonths < 7 ? 1 : 0,
+					padRight: lengthKeys
+				};
 			}
 			return {
 				index: parseInt(lengthKeys / 5),

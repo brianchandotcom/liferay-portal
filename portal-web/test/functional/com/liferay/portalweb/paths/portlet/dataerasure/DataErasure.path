@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVIEW_DATA_APPLICATIONS_SELECTED</td>
+	<td>//div[label[contains(.,'${key_applications}')]]//input[contains(@checked,'checked')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATIONS_COUNT</td>
 	<td>//div[label[contains(.,'${key_applications}')]]//span</td>
 	<td></td>

@@ -114,11 +114,6 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 				value="<%= rankingEntryDisplayContext.getHiddenResultsCount() %>"
 			/>
 
-			<liferay-ui:search-container-column-status
-				name="status"
-				status="<%= 0 %>"
-			/>
-
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
 				path="/view_results_rankings_entry_action.jsp"

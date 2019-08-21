@@ -218,6 +218,11 @@ public interface CTCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getCTCollections(
+		long companyId, int status, int start, int end,
+		OrderByComparator<CTCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTCollection> getCTCollections(
 		long companyId, QueryDefinition<CTCollection> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

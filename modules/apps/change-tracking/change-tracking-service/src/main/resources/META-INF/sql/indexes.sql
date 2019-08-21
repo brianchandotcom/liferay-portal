@@ -1,4 +1,5 @@
 create unique index IX_A0CFE092 on CTCollection (companyId, name[$COLUMN_LENGTH:75$]);
+create index IX_8D52E6F9 on CTCollection (companyId, status);
 
 create unique index IX_295C418C on CTEntry (ctCollectionId, modelClassNameId, modelClassPK);
 create index IX_CE8C7174 on CTEntry (ctCollectionId, modelClassNameId, status);

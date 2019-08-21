@@ -254,6 +254,17 @@ public class CTCollectionLocalServiceUtil {
 
 	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
 		getCTCollections(
+			long companyId, int status, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTCollection>
+					orderByComparator) {
+
+		return getService().getCTCollections(
+			companyId, status, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.change.tracking.model.CTCollection>
+		getCTCollections(
 			long companyId,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition
 				<com.liferay.change.tracking.model.CTCollection>

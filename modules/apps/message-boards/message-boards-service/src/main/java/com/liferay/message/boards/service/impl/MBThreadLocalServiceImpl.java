@@ -29,10 +29,10 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
-import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
+import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -236,7 +236,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
 			try {
-				MBCategory category = _mbCategoryLocalService.getCategory(
+				MBCategory category = _mbCategoryPersistence.findByPrimaryKey(
 					thread.getCategoryId());
 
 				MBUtil.updateCategoryStatistics(category.getCategoryId());
@@ -460,7 +460,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			threads.addAll(
 				0, mbThreadPersistence.findByC_P(categoryId, priority));
 
-			MBCategory category = _mbCategoryLocalService.getCategory(
+			MBCategory category = _mbCategoryPersistence.findByPrimaryKey(
 				categoryId);
 
 			categoryId = category.getParentCategoryId();
@@ -621,14 +621,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBCategory oldCategory = null;
 
 		if (oldCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			oldCategory = _mbCategoryLocalService.fetchMBCategory(
+			oldCategory = _mbCategoryPersistence.fetchByPrimaryKey(
 				oldCategoryId);
 		}
 
 		MBCategory category = null;
 
 		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			category = _mbCategoryLocalService.fetchMBCategory(categoryId);
+			category = _mbCategoryPersistence.fetchByPrimaryKey(categoryId);
 		}
 
 		// Thread
@@ -1161,7 +1161,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Category
 
-			MBCategory category = _mbCategoryLocalService.fetchMBCategory(
+			MBCategory category = _mbCategoryPersistence.fetchByPrimaryKey(
 				thread.getCategoryId());
 
 			if (category != null) {
@@ -1235,7 +1235,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBCategoryPersistence _mbCategoryPersistence;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

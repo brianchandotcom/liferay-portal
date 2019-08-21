@@ -39,11 +39,11 @@ import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
-import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
+import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.message.boards.social.MBActivityKeys;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -1275,7 +1276,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(message.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category = _mbCategoryLocalService.getCategory(
+			category = _mbCategoryPersistence.findByPrimaryKey(
 				message.getCategoryId());
 		}
 		else {
@@ -2540,7 +2541,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(thread.getCategoryId() !=
 				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
 
-			category = _mbCategoryLocalService.getCategory(
+			category = _mbCategoryPersistence.findByPrimaryKey(
 				thread.getCategoryId());
 		}
 
@@ -2565,7 +2566,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (category != null) {
 				category.setLastPostDate(modifiedDate);
 
-				category = _mbCategoryLocalService.updateMBCategory(category);
+				category = _mbCategoryPersistence.update(category);
+
+				Indexer<MBCategory> indexer =
+					_indexerRegistry.nullSafeGetIndexer(MBCategory.class);
+
+				indexer.reindex(category);
 			}
 		}
 
@@ -2886,7 +2892,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	private Http _http;
 
 	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private MBCategoryPersistence _mbCategoryPersistence;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;

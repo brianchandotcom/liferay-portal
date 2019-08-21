@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,17 +65,14 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		List<Object> nestedFields = getNestedFields(
 			nestedFieldsMap, nestedFieldNames);
 
-		Long nestedFieldsSize = countVisibleNestedFields(nestedFields);
-
 		parameters.put("nestedFields", nestedFields);
 
-		String orientation = GetterUtil.getString(
-			ddmFormField.getProperty("orientation"), "horizontal");
-
-		int columnSize = getColumnSize(
-			nestedFieldsSize.intValue(), orientation);
-
-		parameters.put("columnSize", columnSize);
+		parameters.put(
+			"columnSize",
+			getColumnSize(
+				countVisibleNestedFields(nestedFields),
+				GetterUtil.getString(
+					ddmFormField.getProperty("orientation"), "horizontal")));
 
 		LocalizedValue label = ddmFormField.getLabel();
 
@@ -89,16 +87,13 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		return parameters;
 	}
 
-	protected Long countVisibleNestedFields(List<Object> nestedFields) {
+	protected int countVisibleNestedFields(List<Object> nestedFields) {
 		Stream<Object> stream = nestedFields.stream();
 
-		return stream.filter(
-			o -> {
-				HashMap map = (HashMap)o;
-
-				return GetterUtil.get(map.get("visible"), true);
-			}
-		).count();
+		return GetterUtil.getInteger(
+			stream.filter(
+				this::_isNestedFieldVisible
+			).count());
 	}
 
 	protected int getColumnSize(int nestedFieldsSize, String orientation) {
@@ -133,6 +128,11 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		}
 
 		return nestedFields;
+	}
+
+	private boolean _isNestedFieldVisible(Object nestedFieldContext) {
+		return MapUtil.getBoolean(
+			(Map<String, ?>)nestedFieldContext, "visible");
 	}
 
 }

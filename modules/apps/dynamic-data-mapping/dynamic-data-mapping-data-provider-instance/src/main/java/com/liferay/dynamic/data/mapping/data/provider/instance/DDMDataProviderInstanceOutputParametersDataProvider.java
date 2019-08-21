@@ -90,15 +90,12 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 					ddmDataProviderOutputParametersSetting :
 						ddmDataProviderOutputParametersSettings) {
 
-				String outputParameterName =
-					ddmDataProviderOutputParametersSetting.
-						outputParameterName();
-
-				String outputParameterId =
-					ddmDataProviderOutputParametersSetting.outputParameterId();
-
 				keyValuePairs.add(
-					new KeyValuePair(outputParameterId, outputParameterName));
+					new KeyValuePair(
+						ddmDataProviderOutputParametersSetting.
+							outputParameterId(),
+						ddmDataProviderOutputParametersSetting.
+							outputParameterName()));
 			}
 		}
 		catch (Exception e) {

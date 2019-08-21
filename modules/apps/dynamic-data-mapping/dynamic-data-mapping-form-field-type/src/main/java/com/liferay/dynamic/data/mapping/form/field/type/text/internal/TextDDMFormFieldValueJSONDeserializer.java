@@ -19,13 +19,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,25 +41,22 @@ public class TextDDMFormFieldValueJSONDeserializer
 
 	public Object serialize(DDMFormField ddmFormField, Value value) {
 		if (value.isLocalized()) {
-			return toJSONObject(value);
+			return _toJSONObject(value);
 		}
-
-		Map<String, Object> properties = ddmFormField.getProperties();
-
-		Boolean randomValueIfEmpty = GetterUtil.get(
-			properties.get("randomValueIfEmptyAndUnlocalized"), false);
 
 		String valueString = value.getString(LocaleUtil.ROOT);
 
-		if (Validator.isNull(valueString) && randomValueIfEmpty) {
+		if (Validator.isNull(valueString) &&
+			MapUtil.getBoolean(ddmFormField.getProperties(), "random")) {
+
 			valueString = StringUtil.randomString();
 		}
 
 		return valueString;
 	}
 
-	protected JSONObject toJSONObject(Value value) {
-		JSONObject jsonObject = jsonFactory.createJSONObject();
+	private JSONObject _toJSONObject(Value value) {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		for (Locale availableLocale : value.getAvailableLocales()) {
 			jsonObject.put(
@@ -72,6 +68,6 @@ public class TextDDMFormFieldValueJSONDeserializer
 	}
 
 	@Reference
-	protected JSONFactory jsonFactory;
+	private JSONFactory _jsonFactory;
 
 }

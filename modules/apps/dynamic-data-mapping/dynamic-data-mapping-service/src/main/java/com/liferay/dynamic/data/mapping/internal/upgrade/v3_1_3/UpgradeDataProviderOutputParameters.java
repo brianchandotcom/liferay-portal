@@ -16,12 +16,15 @@ package com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_3;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -44,134 +47,195 @@ public class UpgradeDataProviderOutputParameters extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler(1);
+		StringBundler sb = new StringBundler(2);
 
-		sb1.append("select * from DDMDataProviderInstance");
-
-		StringBundler sb2 = new StringBundler(2);
-
-		sb2.append("update DDMDataProviderInstance set definition = ? where ");
-		sb2.append("dataProviderInstanceId = ?");
+		sb.append("update DDMDataProviderInstance set definition = ? where ");
+		sb.append("dataProviderInstanceId = ?");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(
-				sb1.toString());
+				"select * from DDMDataProviderInstance");
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection, sb2.toString());
+					connection, sb.toString());
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				String definition = rs.getString("definition");
+				ps2.setString(
+					1,
+					_updateDDMDataProviderInstance(
+						rs.getLong("dataProviderInstanceId"),
+						rs.getString("definition"), rs.getString("uuid_")));
 
-				long dataProviderInstanceId = rs.getLong(
-					"dataProviderInstanceId");
-
-				String uuid = rs.getString("uuid_");
-
-				definition = updateDataProviderDefinition(
-					uuid, dataProviderInstanceId, definition);
-
-				ps2.setString(1, definition);
-
-				ps2.setLong(2, dataProviderInstanceId);
+				ps2.setLong(2, rs.getLong("dataProviderInstanceId"));
 
 				ps2.addBatch();
 			}
 
 			ps2.executeBatch();
 
-			updateStructures();
+			_updateDDMStructures();
 		}
 	}
 
-	protected Long getJSONArrayFirstLongValue(String ddmDataProviderInstanceId)
-		throws JSONException {
+	private long _extractDDMDataProviderInstanceId(String json) {
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
-		JSONArray jsonArray2 = _jsonFactory.createJSONArray(
-			ddmDataProviderInstanceId);
+			return jsonArray.getLong(0);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 
-		return jsonArray2.getLong(0);
+			return 0;
+		}
 	}
 
-	protected String getJSONArrayFirstStringValue(
-			String ddmDataProviderInstanceOutput)
-		throws JSONException {
+	private String _extractDDMDataProviderInstanceOutputName(String json) {
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
-		JSONArray jsonArray2 = _jsonFactory.createJSONArray(
-			ddmDataProviderInstanceOutput);
+			return jsonArray.getString(0);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 
-		ddmDataProviderInstanceOutput = jsonArray2.getString(0);
-
-		return ddmDataProviderInstanceOutput;
+			return StringPool.BLANK;
+		}
 	}
 
-	protected String updateDataProviderDefinition(
-			String uuid, Long dataProviderInstanceId, String definition)
+	private String _updateDDMDataProviderInstance(
+			long ddmDataProviderInstanceId, String definition, String uuid)
 		throws JSONException {
 
-		JSONObject jsonObject1 = _jsonFactory.createJSONObject(definition);
+		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
+			definition);
 
-		JSONArray jsonArray1 = jsonObject1.getJSONArray("fieldValues");
+		JSONArray fieldValuesJSONArray = definitionJSONObject.getJSONArray(
+			"fieldValues");
 
-		String instanceId = StringUtil.randomString();
+		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+			JSONObject fieldValueJSONObject =
+				fieldValuesJSONArray.getJSONObject(i);
 
-		for (int i = 0; i < jsonArray1.length(); i++) {
-			JSONObject jsonObject2 = jsonArray1.getJSONObject(i);
+			if (StringUtil.equals(
+					fieldValueJSONObject.getString("name"),
+					"outputParameters")) {
 
-			String name1 = jsonObject2.getString("name");
-
-			if (name1.equals("outputParameters")) {
 				String outputParameterId = StringUtil.randomString();
 
-				JSONObject jsonObject3 = JSONUtil.put(
-					"instanceId", instanceId
-				).put(
-					"name", "outputParameterId"
-				).put(
-					"value", outputParameterId
-				);
+				JSONArray nestedFieldValuesJSONArray =
+					fieldValueJSONObject.getJSONArray("nestedFieldValues");
 
-				JSONArray jsonArray2 = jsonObject2.getJSONArray(
-					"nestedFieldValues");
+				_updateDDMDataProviderInstanceOutputParameters(
+					ddmDataProviderInstanceId, nestedFieldValuesJSONArray,
+					outputParameterId, uuid);
 
-				updateOutputParametersMaps(
-					uuid, dataProviderInstanceId, outputParameterId,
-					jsonArray2);
-
-				jsonArray2.put(jsonObject3);
+				nestedFieldValuesJSONArray.put(
+					JSONUtil.put(
+						"instanceId", StringUtil.randomString()
+					).put(
+						"name", "outputParameterId"
+					).put(
+						"value", outputParameterId
+					));
 			}
 		}
 
-		return jsonObject1.toString();
+		return definitionJSONObject.toString();
 	}
 
-	protected void updateOutputParametersMaps(
-		String uuid, Long dataProviderInstanceId, String outputParameterId,
-		JSONArray jsonArray) {
+	private void _updateDDMDataProviderInstanceOutputParameters(
+		long ddmDataProviderInstanceId, JSONArray fieldValuesJSONArray,
+		String outputParameterId, String uuid) {
 
-		Map<String, JSONObject> outputParameterMap = JSONUtil.toJSONObjectMap(
-			jsonArray, "name");
+		Map<String, String> ddmDataProviderInstanceOutputParameterValues =
+			_ddmDataProviderInstanceOutputParametersInstanceId.get(
+				ddmDataProviderInstanceId);
 
-		JSONObject jsonObject = outputParameterMap.get("outputParameterName");
+		if (ddmDataProviderInstanceOutputParameterValues == null) {
+			ddmDataProviderInstanceOutputParameterValues = new HashMap<>();
 
-		String value = jsonObject.getString("value");
+			_ddmDataProviderInstanceOutputParametersInstanceId.put(
+				ddmDataProviderInstanceId,
+				ddmDataProviderInstanceOutputParameterValues);
 
-		Map<String, String> dataProviderOutputParametersMap =
-			_instanceIdOutputParametersMap.get(dataProviderInstanceId);
-
-		if (dataProviderOutputParametersMap == null) {
-			dataProviderOutputParametersMap = new HashMap<>();
-
-			_instanceIdOutputParametersMap.put(
-				dataProviderInstanceId, dataProviderOutputParametersMap);
-
-			_uuidOutputParametersMap.put(uuid, dataProviderOutputParametersMap);
+			_ddmDataProviderInstanceOutputParametersUUID.put(
+				uuid, ddmDataProviderInstanceOutputParameterValues);
 		}
 
-		dataProviderOutputParametersMap.put(value, outputParameterId);
+		Map<String, JSONObject> outputParameters = JSONUtil.toJSONObjectMap(
+			fieldValuesJSONArray, "name");
+
+		JSONObject jsonObject = outputParameters.get("outputParameterName");
+
+		if (jsonObject != null) {
+			ddmDataProviderInstanceOutputParameterValues.put(
+				jsonObject.getString("value"), outputParameterId);
+		}
 	}
 
-	protected void updateStructures() throws Exception {
+	private boolean _updateDDMDataProviderRules(JSONArray rulesJSONArray) {
+		boolean updated = false;
+
+		for (int i = 0; i < rulesJSONArray.length(); i++) {
+			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
+
+			JSONArray newActionsJSONArray = _jsonFactory.createJSONArray();
+
+			List<String> actions = JSONUtil.toStringList(
+				ruleJSONObject.getJSONArray("actions"));
+
+			for (String action : actions) {
+				if (action.startsWith("call")) {
+					action = action.substring(6, action.length() - 2);
+
+					String[] arguments = StringUtil.split(action, "', '");
+
+					Map<String, String> ddmDataProviderOutputParameters =
+						_ddmDataProviderInstanceOutputParametersUUID.get(
+							arguments[0]);
+
+					String[] actionOutputs = StringUtil.split(
+						arguments[2], CharPool.SEMICOLON);
+
+					String newActionOutputs = "";
+
+					for (String actionOutput : actionOutputs) {
+						String[] actionOutputParts = StringUtil.split(
+							actionOutput, CharPool.EQUAL);
+
+						newActionOutputs = StringBundler.concat(
+							newActionOutputs, actionOutputParts[0],
+							CharPool.EQUAL,
+							ddmDataProviderOutputParameters.get(
+								actionOutputParts[1]),
+							CharPool.SEMICOLON);
+					}
+
+					newActionOutputs = newActionOutputs.substring(
+						0, newActionOutputs.length() - 1);
+
+					action = StringBundler.concat(
+						"call('", arguments[0], "', '", arguments[1], "', '",
+						newActionOutputs, "')");
+
+					updated = true;
+				}
+
+				newActionsJSONArray.put(action);
+			}
+
+			ruleJSONObject.put("actions", newActionsJSONArray);
+		}
+
+		return updated;
+	}
+
+	private void _updateDDMStructures() throws Exception {
 		StringBundler sb1 = new StringBundler(2);
 
 		sb1.append("update DDMStructure set definition = ? where structureId ");
@@ -208,51 +272,52 @@ public class UpgradeDataProviderOutputParameters extends UpgradeProcess {
 		ResultSet rs3 = ps3.executeQuery();
 
 		while (rs3.next()) {
-			String definition = rs3.getString("definition");
-			long structureId = rs3.getLong("structureId");
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				rs3.getString("definition"));
+
+			boolean rulesUpdated = false;
+
+			JSONArray rulesJSONArray = jsonObject.getJSONArray("rules");
+
+			if (rulesJSONArray != null) {
+				rulesUpdated = _updateDDMDataProviderRules(rulesJSONArray);
+			}
+
+			boolean fieldsUpdated = false;
+
+			JSONArray fieldsJSONArray = jsonObject.getJSONArray("fields");
+
+			if (fieldsJSONArray != null) {
+				fieldsUpdated = _updateFieldsWithDataProviderAssigned(
+					fieldsJSONArray);
+			}
+
 			long structureVersionId = rs3.getLong("structureVersionId");
-			boolean updateStructure = rs3.getBoolean("updateStructure");
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject(definition);
+			if ((rulesUpdated || fieldsUpdated) &&
+				!_updatedStructureVersionIds.contains(structureVersionId)) {
 
-			boolean updateStructureVersion = false;
-
-			JSONArray rules = jsonObject.getJSONArray("rules");
-
-			if (rules != null) {
-				updateStructureVersion = updateStructureVersionRules(rules);
-			}
-
-			JSONArray fields = jsonObject.getJSONArray("fields");
-
-			if (fields != null) {
-				updateStructureVersion =
-					updateStructureVersionFields(fields) ||
-					updateStructureVersion;
-			}
-
-			if (updateStructureVersion &&
-				!_updatedStructureVersions.contains(structureVersionId)) {
-
-				definition = jsonObject.toString();
-
-				ps2.setString(1, definition);
+				ps2.setString(1, jsonObject.toString());
 
 				ps2.setLong(2, structureVersionId);
 
 				ps2.addBatch();
 
-				_updatedStructureVersions.add(structureVersionId);
+				_updatedStructureVersionIds.add(structureVersionId);
 			}
 
-			if (updateStructure && !_updatedStructures.contains(structureId)) {
-				ps1.setString(1, definition);
+			long structureId = rs3.getLong("structureId");
+
+			if (rs3.getBoolean("updateStructure") &&
+				!_updatedStructureIds.contains(structureId)) {
+
+				ps1.setString(1, jsonObject.toString());
 
 				ps1.setLong(2, structureId);
 
 				ps1.addBatch();
 
-				_updatedStructures.add(structureId);
+				_updatedStructureIds.add(structureId);
 			}
 		}
 
@@ -260,113 +325,59 @@ public class UpgradeDataProviderOutputParameters extends UpgradeProcess {
 		ps1.executeBatch();
 	}
 
-	protected boolean updateStructureVersionFields(JSONArray jsonArray)
-		throws JSONException {
+	private boolean _updateFieldsWithDataProviderAssigned(
+		JSONArray fieldsJSONArray) {
 
-		boolean updateStructureVersion = false;
+		boolean updated = false;
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+		for (int i = 0; i < fieldsJSONArray.length(); i++) {
+			JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(i);
 
-			String dataSourceType = jsonObject.getString("dataSourceType");
+			if (!StringUtil.equals(
+					fieldJSONObject.getString("dataSourceType"),
+					"data-provider")) {
 
-			if (dataSourceType.equals("data-provider")) {
-				Long dataProviderInstanceId = getJSONArrayFirstLongValue(
-					jsonObject.getString("ddmDataProviderInstanceId"));
+				continue;
+			}
 
-				if (_instanceIdOutputParametersMap.containsKey(
-						dataProviderInstanceId)) {
+			long ddmDataProviderInstanceId = _extractDDMDataProviderInstanceId(
+				fieldJSONObject.getString("ddmDataProviderInstanceId"));
 
-					String ddmDataProviderInstanceOutput =
-						getJSONArrayFirstStringValue(
-							jsonObject.getString(
-								"ddmDataProviderInstanceOutput"));
+			if (_ddmDataProviderInstanceOutputParametersInstanceId.containsKey(
+					ddmDataProviderInstanceId)) {
 
-					Map<String, String> dataProviderOutputParametersMap =
-						_instanceIdOutputParametersMap.get(
-							dataProviderInstanceId);
+				String ddmDataProviderInstanceOutputName =
+					_extractDDMDataProviderInstanceOutputName(
+						fieldJSONObject.getString(
+							"ddmDataProviderInstanceOutput"));
 
-					String outputParameterId =
-						dataProviderOutputParametersMap.get(
-							ddmDataProviderInstanceOutput);
+				Map<String, String> ddmDataProviderOutputParameters =
+					_ddmDataProviderInstanceOutputParametersInstanceId.get(
+						ddmDataProviderInstanceId);
 
-					jsonObject.put(
-						"ddmDataProviderInstanceOutput",
-						"[\"" + outputParameterId + "\"]");
+				String outputParameterId = ddmDataProviderOutputParameters.get(
+					ddmDataProviderInstanceOutputName);
 
-					updateStructureVersion = true;
-				}
+				fieldJSONObject.put(
+					"ddmDataProviderInstanceOutput",
+					"[\"" + outputParameterId + "\"]");
+
+				updated = true;
 			}
 		}
 
-		return updateStructureVersion;
+		return updated;
 	}
 
-	protected boolean updateStructureVersionRules(JSONArray jsonArray) {
-		boolean updateStructureVersion = false;
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDataProviderOutputParameters.class);
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONArray actions = jsonObject.getJSONArray("actions");
-
-			JSONArray newActions = _jsonFactory.createJSONArray();
-
-			for (int j = 0; j < actions.length(); j++) {
-				String action = actions.getString(j);
-
-				if (action.startsWith("call")) {
-					action = action.substring(6, action.length() - 2);
-
-					String[] arguments = StringUtil.split(action, "', '");
-
-					Map<String, String> dataProviderOutputParametersMap =
-						_uuidOutputParametersMap.get(arguments[0]);
-
-					String[] actionOutputs = StringUtil.split(
-						arguments[2], CharPool.SEMICOLON);
-
-					String newActionOutputs = "";
-
-					for (String actionOutput : actionOutputs) {
-						String[] actionOutputParts = StringUtil.split(
-							actionOutput, CharPool.EQUAL);
-
-						String outputParameterId =
-							dataProviderOutputParametersMap.get(
-								actionOutputParts[1]);
-
-						newActionOutputs = StringBundler.concat(
-							newActionOutputs, actionOutputParts[0],
-							CharPool.EQUAL, outputParameterId,
-							CharPool.SEMICOLON);
-					}
-
-					newActionOutputs = newActionOutputs.substring(
-						0, newActionOutputs.length() - 1);
-
-					action = StringBundler.concat(
-						"call('", arguments[0], "', '", arguments[1], "', '",
-						newActionOutputs, "')");
-
-					updateStructureVersion = true;
-				}
-
-				newActions.put(action);
-			}
-
-			jsonObject.put("actions", newActions);
-		}
-
-		return updateStructureVersion;
-	}
-
-	private Map<Long, Map<String, String>> _instanceIdOutputParametersMap =
-		new HashMap<>();
+	private Map<Long, Map<String, String>>
+		_ddmDataProviderInstanceOutputParametersInstanceId = new HashMap<>();
+	private Map<String, Map<String, String>>
+		_ddmDataProviderInstanceOutputParametersUUID = new HashMap<>();
 	private final JSONFactory _jsonFactory;
-	private List<Long> _updatedStructures = new ArrayList<>();
-	private List<Long> _updatedStructureVersions = new ArrayList<>();
-	private Map<String, Map<String, String>> _uuidOutputParametersMap =
-		new HashMap<>();
+	private List<Long> _updatedStructureIds = new ArrayList<>();
+	private List<Long> _updatedStructureVersionIds = new ArrayList<>();
 
 }

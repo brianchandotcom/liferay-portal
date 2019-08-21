@@ -121,7 +121,9 @@ public class CTCollectionModelImpl
 
 	public static final long NAME_COLUMN_BITMASK = 2L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -478,7 +480,19 @@ public class CTCollectionModelImpl
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@Override
@@ -731,6 +745,10 @@ public class CTCollectionModelImpl
 
 		ctCollectionModelImpl._originalName = ctCollectionModelImpl._name;
 
+		ctCollectionModelImpl._originalStatus = ctCollectionModelImpl._status;
+
+		ctCollectionModelImpl._setOriginalStatus = false;
+
 		ctCollectionModelImpl._columnBitmask = 0;
 	}
 
@@ -900,6 +918,8 @@ public class CTCollectionModelImpl
 	private String _originalName;
 	private String _description;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

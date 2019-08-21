@@ -243,7 +243,8 @@ class FragmentEditableField extends PortletBase {
 		this._handleEditableChanged('');
 
 		this.store.dispatch({
-			type: CLEAR_FRAGMENT_EDITOR
+			type: CLEAR_FRAGMENT_EDITOR,
+			value: ''
 		});
 	}
 

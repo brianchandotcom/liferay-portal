@@ -19,7 +19,10 @@ import Soy, {Config} from 'metal-soy';
 import '../../common/AssetSelector.es';
 import '../common/FloatingToolbarDropdown.es';
 import './FloatingToolbarMappingPanelDelegateTemplate.soy';
-import {ADD_MAPPED_ASSET_ENTRY} from '../../../actions/actions.es';
+import {
+	ADD_MAPPED_ASSET_ENTRY,
+	CLEAR_FRAGMENT_EDITOR
+} from '../../../actions/actions.es';
 import {
 	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 	COMPATIBLE_TYPES,
@@ -320,6 +323,11 @@ class FloatingToolbarMappingPanel extends PortletBase {
 		) {
 			requestAnimationFrame(() => {
 				this._clearFragmentBackgroundImage();
+			});
+		} else if (this.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
+			this.store.dispatch({
+				type: CLEAR_FRAGMENT_EDITOR,
+				value: this.itemId
 			});
 		}
 	}

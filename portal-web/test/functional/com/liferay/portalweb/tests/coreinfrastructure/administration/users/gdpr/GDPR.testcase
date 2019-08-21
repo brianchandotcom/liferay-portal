@@ -233,6 +233,75 @@ definition {
 	}
 
 	@priority = "4"
+	test DeleteEntryFromPersonalSiteScope {
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry in My Profile");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Blogs");
+
+		Blogs.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry in My Dashboard");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsThread.addCP(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject in My Dashboard");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByScope(scope = "Personal Site");
+
+		GDPR.filterByApplications(
+			applications = "All Applications",
+			itemsCount = "4");
+
+		GDPR.deleteEntryCP();
+
+		AssertElementPresent(
+			key_tab = "Auto Anonymize Data",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
+	}
+
+	@priority = "4"
 	test EditEntryFromApplication {
 		User.logoutPG();
 

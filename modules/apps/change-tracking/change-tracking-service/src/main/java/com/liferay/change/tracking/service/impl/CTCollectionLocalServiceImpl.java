@@ -120,7 +120,7 @@ public class CTCollectionLocalServiceImpl
 
 	@Override
 	public List<CTCollection> getCTCollections(
-		long companyId, int status, boolean excludeStatus, int start, int end,
+		long companyId, int status, int start, int end,
 		OrderByComparator<CTCollection> orderByComparator) {
 
 		DynamicQuery dynamicQuery = ctCollectionLocalService.dynamicQuery();
@@ -132,12 +132,7 @@ public class CTCollectionLocalServiceImpl
 		if (status != WorkflowConstants.STATUS_ANY) {
 			Property statusProperty = PropertyFactoryUtil.forName("status");
 
-			if (excludeStatus) {
-				dynamicQuery.add(statusProperty.ne(status));
-			}
-			else {
-				dynamicQuery.add(statusProperty.eq(status));
-			}
+			dynamicQuery.add(statusProperty.eq(status));
 		}
 
 		return ctCollectionLocalService.dynamicQuery(

@@ -393,7 +393,7 @@ public class ChangeListsDisplayContext {
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
 				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
-				false, 0, 6, orderByComparator);
+				0, 6, orderByComparator);
 
 		long ctCollectionId = _getCTCollectionId();
 

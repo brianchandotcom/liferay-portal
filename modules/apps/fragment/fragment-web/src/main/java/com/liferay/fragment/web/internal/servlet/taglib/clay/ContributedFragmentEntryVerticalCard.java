@@ -68,6 +68,11 @@ public class ContributedFragmentEntryVerticalCard
 		return FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
+	@Override
+	public String getInputValue() {
+		return fragmentEntry.getFragmentEntryKey();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContributedFragmentEntryVerticalCard.class);
 

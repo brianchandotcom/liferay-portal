@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+ContributedFragmentManagementToolbarDisplayContext contributedFragmentManagementToolbarDisplayContext = new ContributedFragmentManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentDisplayContext);
+%>
+
 <clay:management-toolbar
-	displayContext="<%= new ContributedFragmentManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, fragmentDisplayContext) %>"
+	displayContext="<%= contributedFragmentManagementToolbarDisplayContext %>"
 />
 
 <aui:form name="fm">
@@ -26,7 +30,7 @@
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.fragment.model.FragmentEntry"
-			keyProperty="fragmentEntryId"
+			keyProperty="fragmentEntryKey"
 			modelVar="fragmentEntry"
 		>
 
@@ -58,4 +62,10 @@
 <liferay-frontend:component
 	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
 	module="js/FragmentEntryDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
+	componentId="<%= contributedFragmentManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	context="<%= contributedFragmentManagementToolbarDisplayContext.getComponentContext() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
 />

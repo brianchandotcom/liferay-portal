@@ -157,6 +157,9 @@ public class FragmentDisplayContext {
 		contributedFragmentEntriesSearchContainer.setId(
 			"fragmentEntries" + getFragmentCollectionKey());
 
+		contributedFragmentEntriesSearchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(_renderResponse));
+
 		List<FragmentEntry> fragmentEntries = null;
 
 		FragmentCollectionContributor fragmentCollectionContributor =

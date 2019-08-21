@@ -24,6 +24,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessTok
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -257,7 +258,9 @@ public class DLOpenerOneDriveManager {
 
 		return _backgroundTaskManager.addBackgroundTask(
 			userId, CompanyConstants.SYSTEM,
-			"oneDriveFileEntry-" + fileEntry.getFileEntryId(),
+			StringBundler.concat(
+				DLOpenerOneDriveManager.class.getName(), StringPool.POUND,
+				"oneDrive", fileEntry.getFileEntryId()),
 			UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
 			taskContextMap, new ServiceContext());
 	}

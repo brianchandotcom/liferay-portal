@@ -72,3 +72,57 @@ The remaining content of this document consists of the breaking changes listed
 in ascending chronological order.
 
 ## Breaking Changes List
+
+### Liferay FontAwesome Is No Longer Included by Default
+- **Date:** 2019-Aug-21
+- **JIRA Ticket:** [LPS-100021](https://issues.liferay.com/browse/LPS-100021)
+
+#### What changed?
+
+Previously, Liferay FontAwesome that included icon fonts for Font Awesome,
+Glyphicon and custom Liferay icons was included by default. These icon fonts are
+no longer included out of the box.
+
+#### Who is affected?
+
+This affects any content or code that relies on such icon fonts in pages or
+sites where a theme that does not include the fonts is applied.
+
+#### How should I update my code?
+
+Depending on how you're using icon fonts, you might need to take different
+approaches:
+
+##### For liferay-ui:icon usage
+
+Replace `<liferay-ui:icon iconCssClass="icon-user">` with
+`<liferay-ui:icon icon="user" markupView="lexicon" />`
+
+##### For JS generated icons
+
+Those manually generating fontawesome icon html, can use the
+`Liferay.Util.getLexiconIconTpl('user')` API. For example the previous call
+would return the html code for a user svg icon
+
+##### For direct html within jsps
+
+Developers directly using icons in jsps, can either use the `liferay-ui:icon`
+tag as explained above or the `clay:icon` one to generate svg-based icons
+instead.
+
+##### For non-controlled code
+
+People who don't have access to the content that uses icon fonts or if that
+don't want to update those occurrences can reintroduce the icon fonts in their
+themes.
+
+During the 7.2 upgrade process, the theme upgrade assistant prompted developers
+to keep fontawesome as part of the theme. Themes that already include the icon
+fonts won't be affected and will continue to work in 7.3.
+
+#### Why was this change made?
+
+This change was made to avoid serving unnecessary files saving bandwidth and
+increasing performance of your sites by default.
+
+---------------------------------------

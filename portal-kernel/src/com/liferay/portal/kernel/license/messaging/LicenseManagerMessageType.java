@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.license.messaging;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.messaging.Message;
 
 /**
@@ -31,10 +30,30 @@ public enum LicenseManagerMessageType {
 
 	public static String MESSAGE_BUS_DESTINATION_STATUS = "liferay/lcs_status";
 
+	/**
+	 * Gets message payload as json object.
+	 *
+	 * @param      message
+	 * @return     JSONObject if message payload is valid json string,
+	 *             <code>null</code> otherwise
+	 * @deprecated As of Mueller (7.2.x), will be removed in next version
+	 *             without replacement
+	 */
+	@Deprecated
 	public static JSONObject getMessagePayload(Message message) {
 		return getMessagePayload(message.getPayload());
 	}
 
+	/**
+	 * Gets message payload as json object.
+	 *
+	 * @param      object
+	 * @return     JSONObject if message payload is valid json string,
+	 *             <code>null</code> otherwise
+	 * @deprecated As of Mueller (7.2.x), will be removed in next version
+	 *             without replacement
+	 */
+	@Deprecated
 	public static JSONObject getMessagePayload(Object object) {
 		if (object instanceof String) {
 			return getMessagePayload((String)object);
@@ -43,6 +62,15 @@ public enum LicenseManagerMessageType {
 		return null;
 	}
 
+	/**
+	 * Gets message payload as json object.
+	 *
+	 * @param      json
+	 * @return     JSONObject is
+	 * @deprecated As of Mueller (7.2.x), will be removed in next version
+	 *             without replacement
+	 */
+	@Deprecated
 	public static JSONObject getMessagePayload(String json) {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
@@ -67,9 +95,8 @@ public enum LicenseManagerMessageType {
 
 		message.setDestinationName(getDestinationName());
 
-		JSONObject jsonObject = JSONUtil.put("type", name());
-
-		message.setPayload(jsonObject.toString());
+		message.setPayload(
+			String.format(_MESSAGE_PAYLOAD_BASE_JSON_PATTERN, name()));
 
 		return message;
 	}
@@ -79,13 +106,10 @@ public enum LicenseManagerMessageType {
 
 		message.setDestinationName(getDestinationName());
 
-		JSONObject jsonObject = JSONUtil.put(
-			"state", lcsPortletState.intValue()
-		).put(
-			"type", name()
-		);
-
-		message.setPayload(jsonObject.toString());
+		message.setPayload(
+			String.format(
+				_MESSAGE_PAYLOAD_JSON_PATTERN, lcsPortletState.intValue(),
+				name()));
 
 		return message;
 	}
@@ -100,5 +124,11 @@ public enum LicenseManagerMessageType {
 
 		return null;
 	}
+
+	private static final String _MESSAGE_PAYLOAD_BASE_JSON_PATTERN =
+		"{\"type\": \"%s\"}";
+
+	private static final String _MESSAGE_PAYLOAD_JSON_PATTERN =
+		"{\"state\": %d, \"type\": \"%s\"}";
 
 }

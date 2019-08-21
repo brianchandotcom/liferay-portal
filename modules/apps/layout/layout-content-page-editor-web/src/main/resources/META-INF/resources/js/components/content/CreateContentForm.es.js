@@ -58,12 +58,13 @@ class CreateContentForm extends PortletBase {
 	}
 
 	_handleStructureChange(event) {
-		const targetElement = event.delegateTarget;
+		const structure =
+			event.delegateTarget.options[event.delegateTarget.selectedIndex];
 
 		this.emit('structureChanged', {
 			ddmStructure: {
-				id: targetElement.options[targetElement.selectedIndex].value,
-				label: targetElement.options[targetElement.selectedIndex].text
+				id: structure.value,
+				label: structure.text
 			}
 		});
 	}

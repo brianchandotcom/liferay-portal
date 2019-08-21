@@ -15,7 +15,6 @@
 import {waitForElementToBeRemoved} from '@testing-library/dom';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
-import {disableActWarnings, restoreConsole} from '../../utils.es';
 import ListView from '../../../../src/main/resources/META-INF/resources/js/components/list-view/ListView.es';
 import lang from '../../../../src/main/resources/META-INF/resources/js/utils/lang.es';
 
@@ -29,16 +28,7 @@ import {
 } from '../../constants.es';
 
 const setup = () => {
-	let originalError;
 	let originalSub;
-
-	beforeAll(() => {
-		originalError = disableActWarnings();
-	});
-
-	afterAll(() => {
-		restoreConsole(originalError);
-	});
 
 	beforeEach(() => {
 		originalSub = lang.sub;

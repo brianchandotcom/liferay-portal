@@ -432,7 +432,7 @@
 					},
 					'liferay-poller': {
 						path: 'poller.js',
-						requires: ['aui-base', 'io', 'json']
+						requires: ['aui-base', 'json']
 					},
 					'liferay-portlet-base': {
 						path: 'portlet_base.js',

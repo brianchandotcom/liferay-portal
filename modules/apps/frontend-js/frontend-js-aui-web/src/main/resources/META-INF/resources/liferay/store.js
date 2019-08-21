@@ -82,32 +82,12 @@ AUI.add(
 				var instance = this;
 
 				var config = {
-					after: {
-						success: function(event) {
-							var responseData = this.get('responseData');
-
-							if (
-								Lang.isString(responseData) &&
-								responseData.indexOf(TOKEN_SERIALIZE) === 0
-							) {
-								try {
-									responseData = JSON.parse(
-										responseData.substring(
-											TOKEN_SERIALIZE.length
-										)
-									);
-								} catch (e) {}
-							}
-
-							callback(responseData);
-						}
-					},
+					callback,
 					data: {
-						cmd: cmd
+						cmd,
+						key
 					}
 				};
-
-				config.data.key = key;
 
 				if (cmd == 'getAll') {
 					config.dataType = 'json';
@@ -127,10 +107,50 @@ AUI.add(
 					config.data.doAsUserId = doAsUserIdEncoded;
 				}
 
-				A.io.request(
+				const data = new URLSearchParams();
+
+				Object.keys(config.data).forEach(key => {
+					data.append(key, config.data[key]);
+				});
+
+				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/session_click',
-					config
-				);
+					{
+						body: data,
+						headers: {
+							'Content-Type':
+								'application/x-www-form-urlencoded; charset=UTF-8'
+						},
+						method: 'POST'
+					}
+				)
+					.then(response => {
+						if (config.dataType === 'json') {
+							return response.json();
+						} else {
+							return response.text();
+						}
+					})
+					.then(data => {
+						if (config.dataType === 'json') {
+							if (
+								Lang.isString(responseData) &&
+								responseData.indexOf(TOKEN_SERIALIZE) === 0
+							) {
+								try {
+									responseData = JSON.parse(
+										responseData.substring(
+											TOKEN_SERIALIZE.length
+										)
+									);
+								} catch (e) {}
+							}
+						}
+
+						if (Liferay.Util.isFunction(config.callback)) {
+							config.callback(data);
+						}
+					});
 			},
 
 			_setValues: function(data) {

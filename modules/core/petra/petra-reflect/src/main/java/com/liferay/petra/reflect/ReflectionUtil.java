@@ -128,8 +128,8 @@ public class ReflectionUtil {
 	public static Field unfinalField(Field field) throws Exception {
 		int modifiers = field.getModifiers();
 
-		if ((modifiers & Modifier.FINAL) == Modifier.FINAL) {
-			_modifiersField.setInt(field, modifiers & ~Modifier.FINAL);
+		if ((modifiers & _STATIC_FINAL) == _STATIC_FINAL) {
+			_modifiersField.setInt(field, modifiers - Modifier.FINAL);
 		}
 
 		return field;
@@ -142,6 +142,8 @@ public class ReflectionUtil {
 
 		throw (E)throwable;
 	}
+
+	private static final int _STATIC_FINAL = Modifier.STATIC + Modifier.FINAL;
 
 	private static final Method _cloneMethod;
 	private static final Field _modifiersField;

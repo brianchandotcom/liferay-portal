@@ -123,12 +123,32 @@ public class ReflectionUtilTest {
 
 	@Test
 	public void testGetDeclaredField() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
+		Field staticField = ReflectionUtil.getDeclaredField(
 			TestClass.class, "_privateStaticFinalObject");
 
+		Assert.assertTrue(staticField.isAccessible());
+		Assert.assertFalse(Modifier.isFinal(staticField.getModifiers()));
+		Assert.assertSame(
+			TestClass._privateStaticFinalObject, staticField.get(null));
+
+		Object obj = new Object();
+
+		staticField.set(null, obj);
+
+		Assert.assertSame(obj, TestClass._privateStaticFinalObject);
+
+		TestClass testClass = new TestClass();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			TestClass.class, "_privateFinalObject");
+
 		Assert.assertTrue(field.isAccessible());
-		Assert.assertFalse(Modifier.isFinal(field.getModifiers()));
-		Assert.assertSame(TestClass._privateStaticFinalObject, field.get(null));
+		Assert.assertTrue(Modifier.isFinal(field.getModifiers()));
+		Assert.assertSame(testClass._privateFinalObject, field.get(testClass));
+
+		field.set(testClass, obj);
+
+		Assert.assertSame(obj, testClass._privateFinalObject);
 	}
 
 	@Test
@@ -137,7 +157,12 @@ public class ReflectionUtilTest {
 
 		for (Field field : fields) {
 			Assert.assertTrue(field.isAccessible());
-			Assert.assertFalse(Modifier.isFinal(field.getModifiers()));
+
+			int modifier = field.getModifiers();
+
+			if (Modifier.isStatic(modifier)) {
+				Assert.assertFalse(Modifier.isFinal(modifier));
+			}
 
 			String name = field.getName();
 
@@ -227,13 +252,25 @@ public class ReflectionUtilTest {
 			_privateStaticObject = privateStaticObject;
 		}
 
+		public void setPrivateObject(Object privateObject) {
+			_privateObject = privateObject;
+		}
+
 		@SuppressWarnings("unused")
 		private static Object _getPrivateStaticObject() {
 			return _privateStaticObject;
 		}
 
+		@SuppressWarnings("unused")
+		private Object _getPrivateObject() {
+			return _privateObject;
+		}
+
 		private static final Object _privateStaticFinalObject = new Object();
 		private static Object _privateStaticObject = new Object();
+
+		private final Object _privateFinalObject = new Object();
+		private Object _privateObject = new Object();
 
 	}
 

@@ -39,9 +39,9 @@ import java.util.Map;
 /**
  * @author Rodrigo Paulino
  */
-public class UpgradeDataProviderOutputParameters extends UpgradeProcess {
+public class UpgradeDDMDataProviderOutputParameters extends UpgradeProcess {
 
-	public UpgradeDataProviderOutputParameters(JSONFactory jsonFactory) {
+	public UpgradeDDMDataProviderOutputParameters(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
@@ -370,7 +370,7 @@ public class UpgradeDataProviderOutputParameters extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeDataProviderOutputParameters.class);
+		UpgradeDDMDataProviderOutputParameters.class);
 
 	private Map<Long, Map<String, String>>
 		_ddmDataProviderInstanceOutputParametersInstanceId = new HashMap<>();

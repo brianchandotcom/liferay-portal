@@ -12,6 +12,7 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -25,14 +26,22 @@ const EditCommentForm = props => {
 	const _handleCommentButtonClick = () => {
 		setEditingComment(true);
 
-		editFragmentEntryLinkComment(
-			props.comment.commentId,
-			textareaContent
-		).then(comment => {
+		editFragmentEntryLinkComment(props.comment.commentId, textareaContent)
+			.then(comment => {
 			setEditingComment(false);
 
 			props.onEdit(comment);
 			props.onCloseForm();
+			})
+			.catch(error => {
+				openToast({
+					// TODO: avoid hardcoded copy
+					message: 'the comment couldn’t be resolved.',
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+
+				setEditingComment(false);
 		});
 	};
 

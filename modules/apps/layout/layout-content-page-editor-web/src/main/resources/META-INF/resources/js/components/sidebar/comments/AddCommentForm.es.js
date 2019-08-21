@@ -12,6 +12,7 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -51,6 +52,16 @@ const AddCommentForm = props => {
 				setAddingComment(false);
 				setShowButtons(false);
 				setTextareaContent('');
+			})
+			.catch(error => {
+				openToast({
+					// TODO: avoid hardcoded copy
+					message: 'the comment couldn’t be saved.',
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+
+				setAddingComment(false);
 			});
 	};
 

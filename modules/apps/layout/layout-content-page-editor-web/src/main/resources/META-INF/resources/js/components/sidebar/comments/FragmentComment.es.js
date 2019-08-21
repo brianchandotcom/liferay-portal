@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayDropDown from '@clayui/drop-down';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -126,7 +127,8 @@ const FragmentComment = props => {
 								props.comment.commentId,
 								props.comment.body,
 								!resolved
-							).then(comment => {
+							)
+								.then(comment => {
 								setChangingResolved(false);
 
 								if (showResolvedComments) {
@@ -135,6 +137,18 @@ const FragmentComment = props => {
 									setShowResolveMask(true);
 									hideComment(() => props.onEdit(comment));
 								}
+								})
+								.catch(error => {
+									openToast({
+										// TODO: avoid hardcoded copy
+										message: resolved
+											? 'the comment couldn’t be unresolved.'
+											: 'the comment couldn’t be resolved.',
+										title: Liferay.Language.get('error'),
+										type: 'danger'
+									});
+
+									setChangingResolved(false);
 							});
 						}}
 						resolved={resolved}
@@ -237,9 +251,20 @@ const FragmentComment = props => {
 					)}
 					onCancelButtonClick={() => setShowDeleteMash(false)}
 					onConfirmButtonClick={() =>
-						deleteFragmentEntryLinkComment(
-							props.comment.commentId
-						).then(hideComment(() => props.onDelete(props.comment)))
+						deleteFragmentEntryLinkComment(props.comment.commentId)
+							.then(() =>
+								hideComment(() => props.onDelete(props.comment))
+							)
+							.catch(error => {
+								openToast({
+									// TODO: avoid hardcoded copy
+									message: 'the comment couldn’t be deleted.',
+									title: Liferay.Language.get('error'),
+									type: 'danger'
+								});
+
+								setAddingComment(false);
+							})
 					}
 				/>
 			)}

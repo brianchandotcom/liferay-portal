@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY</td>
-	<td>//p[contains(@class,'text-secondary') and contains(.,'${key_fragmentComment}')]</td>
+	<td>//div[contains(@class,'text-secondary')]/p[contains(.,'${key_fragmentComment}')]</td>
 	<td></td>
 </tr>
 <tr>

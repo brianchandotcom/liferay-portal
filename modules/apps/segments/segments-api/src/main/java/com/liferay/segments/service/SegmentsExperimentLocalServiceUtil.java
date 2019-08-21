@@ -226,6 +226,15 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment
+		fetchSegmentsExperiment(
+			long segmentsExperienceId, long classNameId, long classPK,
+			int[] status) {
+
+		return getService().fetchSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, status);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
 		fetchSegmentsExperiment(long groupId, String segmentsExperimentKey) {
 
 		return getService().fetchSegmentsExperiment(

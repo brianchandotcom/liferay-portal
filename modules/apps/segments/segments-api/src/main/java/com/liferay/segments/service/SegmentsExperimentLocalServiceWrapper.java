@@ -242,6 +242,16 @@ public class SegmentsExperimentLocalServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
+		fetchSegmentsExperiment(
+			long segmentsExperienceId, long classNameId, long classPK,
+			int[] status) {
+
+		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
+			segmentsExperienceId, classNameId, classPK, status);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
 		fetchSegmentsExperiment(long groupId, String segmentsExperimentKey) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(

@@ -52,7 +52,7 @@ public class SegmentsExperimentServiceWrapper
 	public com.liferay.segments.model.SegmentsExperiment
 			fetchSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
-				int status)
+				int[] status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentService.fetchSegmentsExperiment(

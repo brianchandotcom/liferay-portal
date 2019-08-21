@@ -126,6 +126,11 @@
 	}
 
 	.fragments-editor__floating-toolbar-buttons {
+		& .fragments-editor__floating-toolbar--disabled {
+			cursor: not-allowed;
+			pointer-events: none;
+		}
+
 		& .fragments-editor__floating-toolbar--linked-field {
 			&.active,
 			&:hover {

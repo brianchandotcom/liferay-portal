@@ -36,7 +36,7 @@ function getFloatingToolbarButtons(editableValues) {
 
 	if (editableValues.mappedField || editableValues.fieldId) {
 		backgroundImageButton.cssClass =
-			'disabled fragments-editor__floating-toolbar--mapped-field';
+			'disabled fragments-editor__floating-toolbar--disabled fragments-editor__floating-toolbar--mapped-field';
 		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';
 	}
 

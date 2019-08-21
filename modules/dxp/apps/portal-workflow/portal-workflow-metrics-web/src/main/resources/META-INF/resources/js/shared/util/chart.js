@@ -165,8 +165,8 @@ export const getAxisMeasuresFromData = data =>
 	);
 
 export const getRangeKey = timeRange => {
-	const startDate = moment.utc(timeRange.dateStart);
 	const endDate = moment.utc(timeRange.dateEnd);
+	const startDate = moment.utc(timeRange.dateStart);
 
 	const diff = parseInt(moment.duration(endDate.diff(startDate)).asDays());
 
@@ -189,66 +189,78 @@ export const getRangeKey = timeRange => {
 };
 
 export const getXAxisIntervals = (timeRange, keys, type) => {
+	const endDate = moment.utc(timeRange.dateEnd);
 	const lengthKeys = keys.length;
+	const startDate = moment.utc(timeRange.dateStart);
 
 	const diffMap = {
 		[TODAY]: () => {
 			return {
 				index: 4,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[YESTERDAY]: () => {
 			return {
 				index: 6,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[LAST_7_DAYS]: () => {
 			return {
 				index: 1,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[LAST_30_DAYS]: type => {
 			if (type === DAYS) {
 				return {
 					index: 6,
-					pad: lengthKeys
+					padLeft: 0,
+					padRight: lengthKeys
 				};
 			}
 			return {
 				index: 1,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[LAST_90_DAYS]: type => {
 			if (type === DAYS) {
 				return {
 					index: 11,
-					pad: lengthKeys - 3
+					padLeft: 0,
+					padRight: lengthKeys - 3
 				};
 			} else if (type === WEEKS) {
 				return {
 					index: 2,
-					pad: lengthKeys
+					padLeft: 0,
+					padRight: lengthKeys
 				};
 			}
 			return {
 				index: 1,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[LAST_180_DAYS]: type => {
 			if (type === WEEKS) {
 				return {
 					index: 4,
-					pad: lengthKeys - 3
+					padLeft: 0,
+					padRight: lengthKeys - 3
 				};
 			}
 			return {
 				index: 1,
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		},
 		[LAST_YEAR]: type => {
@@ -256,12 +268,14 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				const lengthWeek = lengthKeys === 52 ? 5 : 6;
 				return {
 					index: parseInt(lengthKeys / lengthWeek),
-					pad: lengthKeys - 5
+					padLeft: 0,
+					padRight: lengthKeys - 5
 				};
 			}
 			return {
 				index: parseInt(lengthKeys / 5),
-				pad: lengthKeys
+				padLeft: 0,
+				padRight: lengthKeys
 			};
 		}
 	};
@@ -273,6 +287,8 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 		(key, index) =>
 			index === 0 ||
 			index === lengthKeys - 1 ||
-			(index % diffIndex.index === 0 && index < diffIndex.pad)
+			(index % diffIndex.index === 0 &&
+				index > diffIndex.padLeft &&
+				index < diffIndex.padRight)
 	);
 };

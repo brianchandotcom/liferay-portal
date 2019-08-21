@@ -1,18 +1,8 @@
-import aQute.bnd.osgi.Constants
-
 import com.liferay.gradle.plugins.defaults.tasks.CopyIvyDependenciesTask
-import com.liferay.gradle.plugins.node.internal.util.FileUtil
-import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask
 import com.liferay.gradle.plugins.source.formatter.FormatSourceTask
 import com.liferay.gradle.plugins.util.PortalTools
-import com.liferay.gradle.util.OSDetector
+import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
-
-import groovy.io.FileType
-import groovy.io.FileVisitResult
-
-import java.nio.charset.StandardCharsets
-import java.nio.file.Files
 
 import java.util.regex.Matcher
 
@@ -22,27 +12,19 @@ buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
-apply plugin: "com.liferay.node"
-apply plugin: "com.liferay.node.defaults"
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
 
-buildDir = new File(rootDir.parentFile, "build")
-
-task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
-task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
-task setUpYarn
+task setUpYarnOfflineCache
+task updateYarnBinariesCache
 task wrapper(type: Wrapper)
 task wrapperSubrepo(type: Wrapper)
-task yarnCheckFormat
-task yarnFormat
-task yarnLock
 
 FileTree libDependenciesFileTree = fileTree(dir: "../lib", include: "*/dependencies.properties")
 
@@ -50,34 +32,6 @@ Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntrie
 	Properties properties = GUtil.loadProperties(it)
 
 	[it.parentFile, properties]
-}
-
-appendHotfixQualifier {
-	doLast {
-		String dirNamesString = System.getProperty("patcher.hotfix.dirs")
-		String qualifier = System.getProperty("patcher.hotfix.qualifier")
-
-		for (String dirName : dirNamesString.split(",")) {
-			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
-
-			if (bndBndFile.exists()) {
-				Properties properties = GUtil.loadProperties(bndBndFile)
-
-				String version = properties.getProperty(Constants.BUNDLE_VERSION)
-
-				if ((version != null) && (version.indexOf(qualifier) == -1)) {
-					String newLine = Constants.BUNDLE_VERSION + ": " + version + qualifier
-					String oldLine = bndBndFile.filterLine {
-						it =~ "^" + Constants.BUNDLE_VERSION + ".*"
-					}
-
-					bndBndFile.text = bndBndFile.text.replace(oldLine.trim(), newLine)
-
-					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
-				}
-			}
-		}
-	}
 }
 
 formatSourceCurrentBranch {
@@ -109,29 +63,6 @@ printDependencyPath {
 	}
 }
 
-removeHotfixQualifier {
-	doLast {
-		String dirNamesString = System.getProperty("patcher.hotfix.dirs")
-		String qualifier = System.getProperty("patcher.hotfix.qualifier")
-
-		for (String dirName : dirNamesString.split(",")) {
-			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
-
-			if (bndBndFile.exists()) {
-				Properties properties = GUtil.loadProperties(bndBndFile)
-
-				String version = properties.getProperty(Constants.BUNDLE_VERSION)
-
-				if ((version != null) && (version.indexOf(qualifier) != -1)) {
-					bndBndFile.text = bndBndFile.text.replace(version, version.minus(qualifier))
-
-					logger.lifecycle "Removed {}:{}", project.relativePath(bndBndFile), qualifier
-				}
-			}
-		}
-	}
-}
-
 repositories {
 	mavenLocal()
 
@@ -148,33 +79,15 @@ repositories {
 	}
 }
 
-setUpYarn {
-	String dirNamesString = System.getProperty("patcher.hotfix.dirs")
-	String qualifier = System.getProperty("patcher.hotfix.qualifier")
-
-	if (System.getenv("JENKINS_HOME") && dirNamesString?.trim() && qualifier?.trim()) {
-		dependsOn removeHotfixQualifier
-		finalizedBy appendHotfixQualifier
-	}
-
+setUpYarnOfflineCache {
 	doFirst {
-		String buildBinariesCacheDir = project.findProperty("build.binaries.cache.dir")
+		logger.lifecycle "Checking Yarn binaries cache directories"
+	}
+}
 
-		if (buildBinariesCacheDir) {
-			File cacheDir = new File(rootDir.parentFile, buildBinariesCacheDir)
-
-			if (cacheDir.exists()) {
-				File fromDir = new File(cacheDir, ".yarn/offline-cache")
-				File intoDir = new File(rootDir, "node_modules_cache")
-
-				logger.lifecycle "Copying {} into {}", fromDir, intoDir
-
-				copy {
-					from fromDir
-					into intoDir
-				}
-			}
-		}
+updateYarnBinariesCache {
+	doFirst {
+		logger.lifecycle "Updating Yarn binaries cache directories"
 	}
 }
 
@@ -355,65 +268,39 @@ private void _createSetUpPortalToolTasks() {
 }
 
 private void _createYarnTasks() {
-	FileTree packageJSONFileTree = fileTree(dir: rootDir, includes: ["package.json", "private/package.json", "apps/*/package.json", "private/apps/*/package.json"])
+	FileTree yarnLockFileTree = fileTree(dir: rootDir, includes: ["yarn.lock", "private/yarn.lock", "apps/*/yarn.lock", "private/apps/*/yarn.lock"])
 
-	packageJSONFileTree.each {
-		File packageJSONFile ->
+	yarnLockFileTree.each {
+		File yarnLockFile ->
 
-		if (packageJSONFile.text.contains("\"workspaces\":")) {
-			Task yarnTask = tasks.create(name: "setUpYarn" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
-				args "install"
-				args "--frozen-lockfile"
+		if (project.findProperty("build.binaries.cache.dir")) {
+			File cacheDir = new File(rootDir.parentFile, project.findProperty("build.binaries.cache.dir"))
+			String relativePath = FileUtil.relativize(yarnLockFile.parentFile, rootDir)
 
-				scriptFile = new File(rootDir, "yarn-1.13.0.js")
-				workingDir = packageJSONFile.parentFile
+			File nodeModulesCacheDir = new File(yarnLockFile.parentFile, "node_modules_cache")
+			File offlineCacheDir = new File(cacheDir, ".yarn/" + relativePath + "/offline-cache")
+
+			Task yarnTask = tasks.create(name: "setUpYarnOfflineCache" + _camelCase(yarnLockFile.parentFile.name), type: Copy) {
+				from offlineCacheDir
+				into nodeModulesCacheDir
 
 				doFirst {
-					String registry = project.findProperty("nodejs.npm.ci.registry")
-
-					if (registry) {
-						File yarnLockFile = new File(packageJSONFile.parentFile, "yarn.lock")
-
-						if (yarnLockFile.exists()) {
-							logger.lifecycle "Using registry {}", registry
-
-							yarnLockFile.text = yarnLockFile.text.replaceAll("https://registry.yarnpkg.com", registry)
-						}
-					}
+					logger.lifecycle "Copying {} into {}", offlineCacheDir, nodeModulesCacheDir
 				}
 			}
 
-			appendHotfixQualifier.mustRunAfter yarnTask
-			setUpYarn.finalizedBy yarnTask
+			setUpYarnOfflineCache.finalizedBy yarnTask
 
-			yarnTask = tasks.create(name: "yarnCheckFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
-				args "checkFormat"
+			yarnTask = tasks.create(name: "updateYarnBinariesCache" + _camelCase(yarnLockFile.parentFile.name), type: Copy) {
+				from nodeModulesCacheDir
+				into offlineCacheDir
 
-				group = "formatting"
-				scriptFile = new File(rootDir, "yarn-1.13.0.js")
-				workingDir = packageJSONFile.parentFile
+				doFirst {
+					logger.lifecycle "Copying {} into {}", nodeModulesCacheDir, offlineCacheDir
+				}
 			}
 
-			yarnCheckFormat.finalizedBy yarnTask
-
-			yarnTask = tasks.create(name: "yarnFormat" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
-				args "format"
-
-				group = "formatting"
-				scriptFile = new File(rootDir, "yarn-1.13.0.js")
-				workingDir = packageJSONFile.parentFile
-			}
-
-			yarnFormat.finalizedBy yarnTask
-
-			yarnTask = tasks.create(name: "yarnLock" + _camelCase(packageJSONFile.parentFile.name), type: ExecutePackageManagerTask) {
-				args "install"
-
-				scriptFile = new File(rootDir, "yarn-1.13.0.js")
-				workingDir = packageJSONFile.parentFile
-			}
-
-			yarnLock.finalizedBy yarnTask
+			updateYarnBinariesCache.finalizedBy yarnTask
 		}
 	}
 }

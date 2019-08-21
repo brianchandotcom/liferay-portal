@@ -1742,10 +1742,12 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					</and>
 				</not>
 				<then>
+					<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
+						<arg value="--build-file=${project.dir}/modules/util.gradle" />
+					</gradle-execute>
+
 					<retry retrycount="5" retrydelay="10000">
-						<gradle-execute dir="${project.dir}/modules" task="setUpYarn">
-							<arg value="--build-file=${project.dir}/modules/util.gradle" />
-						</gradle-execute>
+						<gradle-execute dir="${project.dir}/modules" task=":yarnInstall" />
 					</retry>
 				</then>
 			</if>

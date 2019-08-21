@@ -1560,7 +1560,7 @@ public class ModulesStructureTest {
 	private static final String[] _GIT_IGNORE_LINE_PREFIXES = {"/wedeploy/"};
 
 	private static final String[] _GIT_IGNORE_OPTIONAL_LINES = {
-		"gradle-ext.properties"
+		"gradle-ext.properties", "node_modules_cache/"
 	};
 
 	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";

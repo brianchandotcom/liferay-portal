@@ -28,10 +28,8 @@ try {
 
 config = {
 	...config,
-	...{
-		rules: {
-			'liferay-portal/no-global-fetch': 'off'
-		}
+	rules: {
+		'liferay-portal/no-global-fetch': 'off'
 	}
 };
 

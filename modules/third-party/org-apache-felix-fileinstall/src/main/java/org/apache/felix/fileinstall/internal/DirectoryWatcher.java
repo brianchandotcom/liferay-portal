@@ -820,7 +820,7 @@ public class DirectoryWatcher extends Thread implements BundleListener
             // /tmp/foo and /tmp//foo differently.
             String location = bundle.getLocation();
             String path = null;
-            if (location != null && !location.contains(watchedDirPath)) {
+            if (location != null && location.contains(watchedDirPath)) {
                 URI uri;
                 try {
                     uri = new URI(bundle.getLocation()).normalize();

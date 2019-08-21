@@ -32,7 +32,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -206,7 +206,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), parentMessageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), parentMessage.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -249,7 +249,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -789,7 +789,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), messageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -856,7 +856,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), messageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -1010,6 +1010,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	)
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

@@ -29,10 +29,10 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -66,7 +66,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public void deleteThread(long threadId) throws PortalException {
-		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
+		if (_lockManager.isLocked(MBThread.class.getName(), threadId)) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Thread is locked for class name ");
@@ -95,7 +95,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			boolean includeAnonymous, int status, int start, int end)
 		throws PortalException {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!_inlineSQLHelper.isEnabled(groupId)) {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				status, start, end, null);
 
@@ -154,7 +154,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			boolean includeAnonymous, int start, int end)
 		throws PortalException {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!_inlineSQLHelper.isEnabled(groupId)) {
 			return doGetGroupThreads(
 				groupId, userId, status, subscribed, includeAnonymous, start,
 				end);
@@ -226,7 +226,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		long groupId, long userId, Date modifiedDate, boolean includeAnonymous,
 		int status) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!_inlineSQLHelper.isEnabled(groupId)) {
 			QueryDefinition<MBThread> queryDefinition = new QueryDefinition<>(
 				status);
 
@@ -280,7 +280,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous) {
 
-		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+		if (!_inlineSQLHelper.isEnabled(groupId)) {
 			return doGetGroupThreadsCount(
 				groupId, userId, status, subscribed, includeAnonymous);
 		}
@@ -379,7 +379,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
-		return LockManagerUtil.lock(
+		return _lockManager.lock(
 			getUserId(), MBThread.class.getName(), threadId,
 			String.valueOf(threadId), false, _mbThreadLockExpirationTime);
 	}
@@ -388,7 +388,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public MBThread moveThread(long categoryId, long threadId)
 		throws PortalException {
 
-		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
+		if (_lockManager.isLocked(MBThread.class.getName(), threadId)) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Thread is locked for class name ");
@@ -430,7 +430,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public MBThread moveThreadToTrash(long threadId) throws PortalException {
-		if (LockManagerUtil.isLocked(MBThread.class.getName(), threadId)) {
+		if (_lockManager.isLocked(MBThread.class.getName(), threadId)) {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("Thread is locked for class name ");
@@ -517,7 +517,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
-		LockManagerUtil.unlock(MBThread.class.getName(), threadId);
+		_lockManager.unlock(MBThread.class.getName(), threadId);
 	}
 
 	@Activate
@@ -591,6 +591,12 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER
 	)
 	private Configuration _configuration;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
+
+	@Reference
+	private LockManager _lockManager;
 
 	@Reference
 	private MBCategoryService _mbCategoryService;

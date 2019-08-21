@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -115,6 +116,32 @@ public class CTCollectionLocalServiceImpl
 	@Override
 	public CTCollection fetchCTCollection(long companyId, String name) {
 		return ctCollectionPersistence.fetchByC_N(companyId, name);
+	}
+
+	@Override
+	public List<CTCollection> getCTCollections(
+		long companyId, int status, boolean excludeStatus, int start, int end,
+		OrderByComparator<CTCollection> orderByComparator) {
+
+		DynamicQuery dynamicQuery = ctCollectionLocalService.dynamicQuery();
+
+		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(companyIdProperty.eq(companyId));
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			Property statusProperty = PropertyFactoryUtil.forName("status");
+
+			if (excludeStatus) {
+				dynamicQuery.add(statusProperty.ne(status));
+			}
+			else {
+				dynamicQuery.add(statusProperty.eq(status));
+			}
+		}
+
+		return ctCollectionLocalService.dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	@Override

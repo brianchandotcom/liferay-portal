@@ -215,13 +215,17 @@ class SearchBar extends Component {
 															  )
 													}
 												>
-													<ClayIcon
-														symbol={
-															this._isAnyUnpinned()
-																? 'pin'
-																: 'unpin'
-														}
-													/>
+													{this._isAnyUnpinned() ? (
+														<ClayIcon
+															key="PIN"
+															symbol="pin"
+														/>
+													) : (
+														<ClayIcon
+															key="UNPIN"
+															symbol="unpin"
+														/>
+													)}
 												</ClayButton>
 											</div>
 										</li>

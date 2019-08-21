@@ -219,10 +219,11 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.deleteEntryFromApplicationCP(
+		GDPR.filterByApplications(
 			applications = "Blogs",
-			itemsCount = "1",
-			rowEntry = "Blogs Entry Title");
+			itemsCount = "1");
+
+		GDPR.deleteEntryCP(rowEntry = "Blogs Entry Title");
 
 		GDPR.viewNoEntryInApplicationCP(applications = "Blogs");
 
@@ -259,9 +260,12 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln");
 
-		GDPR.editEntryFromApplicationCP(
+		GDPR.filterByApplications(
 			applications = "Documents and Media",
-			itemsCount = "1",
+			itemsCount = "1");
+
+		GDPR.editEntryCP(
+			applications = "Documents and Media",
 			rowEntry = "DM Document Title");
 
 		DMDocument.editCmd(

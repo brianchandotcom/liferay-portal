@@ -30,7 +30,7 @@ index 334dc11..0f0f579 100644
              String path = null;
 -            if (location != null &&
 -                    !location.equals(Constants.SYSTEM_BUNDLE_LOCATION)) {
-+            if (location != null && !location.contains(watchedDirPath)) {
++            if (location != null && location.contains(watchedDirPath)) {
                  URI uri;
                  try {
                      uri = new URI(bundle.getLocation()).normalize();

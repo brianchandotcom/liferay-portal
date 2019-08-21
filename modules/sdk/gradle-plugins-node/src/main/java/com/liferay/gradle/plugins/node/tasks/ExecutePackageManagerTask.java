@@ -77,6 +77,24 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 
 			});
 
+		setNodeModulesDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File scriptFile = getScriptFile();
+
+					if (NodePluginUtil.isYarnScriptFile(scriptFile)) {
+						return new File(scriptFile.getParent(), "node_modules");
+					}
+
+					Project project = getProject();
+
+					return project.file("node_modules");
+				}
+
+			});
+
 		setScriptFile(
 			new Callable<File>() {
 
@@ -88,8 +106,19 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 						return null;
 					}
 
-					return new File(
-						NodePluginUtil.getNpmDir(nodeDir), "bin/npm-cli.js");
+					Project project = getProject();
+
+					if (!FileUtil.exists(project, "package-lock.json")) {
+						File dir = project.getProjectDir();
+
+						File scriptFile = NodePluginUtil.getYarnScriptFile(dir);
+
+						if (scriptFile != null) {
+							return scriptFile;
+						}
+					}
+
+					return NodePluginUtil.getNpmScriptFile(nodeDir);
 				}
 
 			});
@@ -122,6 +151,10 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_logLevel);
 	}
 
+	public File getNodeModulesDir() {
+		return GradleUtil.toFile(getProject(), _nodeModulesDir);
+	}
+
 	public String getRegistry() {
 		return GradleUtil.toString(_registry);
 	}
@@ -148,6 +181,10 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 
 	public void setLogLevel(Object logLevel) {
 		_logLevel = logLevel;
+	}
+
+	public void setNodeModulesDir(Object nodeModulesDir) {
+		_nodeModulesDir = nodeModulesDir;
 	}
 
 	public void setProduction(boolean production) {
@@ -203,6 +240,7 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 	private Object _cacheConcurrent;
 	private Object _cacheDir;
 	private Object _logLevel;
+	private Object _nodeModulesDir;
 	private boolean _production;
 	private boolean _progress = true;
 	private Object _registry;

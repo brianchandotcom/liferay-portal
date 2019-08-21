@@ -32,6 +32,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -393,7 +394,7 @@ public class ChangeListsDisplayContext {
 		List<CTCollection> ctCollections =
 			_ctCollectionLocalService.getCTCollections(
 				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT,
-				false, 0, 5, orderByComparator);
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
 		long ctCollectionId = _getCTCollectionId();
 
@@ -418,6 +419,10 @@ public class ChangeListsDisplayContext {
 					).put(
 						"label", ctCollection.getName()
 					));
+			}
+
+			if (jsonArray.length() == 5) {
+				break;
 			}
 		}
 

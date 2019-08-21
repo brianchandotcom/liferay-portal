@@ -64,22 +64,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editEntryFromApplicationCP {
-		Click.clickNoWaitForVisible(
-			key_applications = "${applications}",
-			locator1 = "DataErasure#REVIEW_DATA_APPLICATIONS_SELECT",
-			value1 = "${applications}");
-
-		AssertTextEquals.assertPartialText(
-			key_applications = "${applications}",
-			locator1 = "DataErasure#APPLICATIONS_COUNT",
-			value1 = "${applications} (${itemsCount})");
-
-		AssertTextEquals.assertPartialText(
-			key_itemsCount = "${itemsCount}",
-			locator1 = "DataErasure#REMAINING_ITEMS_COUNT",
-			value1 = "Remaining Items: ${itemsCount}");
-
+	macro editEntryCP {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = "${rowEntry}");

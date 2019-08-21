@@ -130,7 +130,9 @@ definition {
 
 	macro _gotoImportSite {
 		if (isSet(siteName)) {
-			SitePages.openPagesAdmin(siteURLKey = "${siteName}");
+			SitePages.openPagesAdmin(
+				baseURL = "${baseURL}",
+				siteURLKey = "${siteName}");
 		}
 
 		ProductMenu.gotoPortlet(
@@ -547,7 +549,9 @@ definition {
 	}
 
 	macro importSiteCP {
-		LAR._gotoImportSite(siteName = "${siteName}");
+		LAR._gotoImportSite(
+			baseURL = "${baseURL}",
+			siteName = "${siteName}");
 
 		LAR._selectImportFileSite(
 			importCampaignValidationError = "${importCampaignValidationError}",

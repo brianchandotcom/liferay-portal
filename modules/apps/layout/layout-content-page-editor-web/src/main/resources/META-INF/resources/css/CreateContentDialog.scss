@@ -1,8 +1,16 @@
 .modal-dialog.create-content-dialog .inline-scroller {
 	max-height: 100vh;
+	padding: 0;
 
-	.map-content-form-header {
-		margin: -1.5rem -1.5rem 0 -1.5rem;
-		padding: 1rem;
+	.map-content-form {
+		padding: calc(1rem + 54px) 1.5rem 1.5rem;
+		position: relative;
+
+		&-header {
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
 	}
 }

@@ -1307,9 +1307,31 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				StringPool.BLANK, 0);
 		}
 
+		List<MBMessage> messages = null;
+
+		if (userId > 0) {
+			messages = getThreadMessages(
+				userId, message.getThreadId(), status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, comparator);
+		}
+		else {
+			messages = getThreadMessages(
+				message.getThreadId(), status, comparator);
+		}
+
+		int dicussionMessagesCount = 0;
+
+		if (message.isDiscussion() &&
+			(PropsValues.DISCUSSION_MAX_COMMENTS > 0)) {
+
+			dicussionMessagesCount = getDiscussionMessagesCount(
+				message.getClassName(), message.getClassPK(),
+				WorkflowConstants.STATUS_APPROVED);
+		}
+
 		return new MBMessageDisplayImpl(
-			userId, message, parentMessage, category, thread, status, this,
-			comparator);
+			message, parentMessage, messages, category, thread,
+			dicussionMessagesCount);
 	}
 
 	@Override

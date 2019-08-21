@@ -115,6 +115,13 @@ public class FragmentCollectionContributorTrackerImpl
 		);
 	}
 
+	@Override
+	public FragmentEntry getFragmentEntry(String fragmentEntryKey) {
+		Map<String, FragmentEntry> fragmentEntriesMap = _getFragmentEntries();
+
+		return fragmentEntriesMap.get(fragmentEntryKey);
+	}
+
 	public ResourceBundleLoader getResourceBundleLoader() {
 		Collection<FragmentCollectionContributor>
 			fragmentCollectionContributors =

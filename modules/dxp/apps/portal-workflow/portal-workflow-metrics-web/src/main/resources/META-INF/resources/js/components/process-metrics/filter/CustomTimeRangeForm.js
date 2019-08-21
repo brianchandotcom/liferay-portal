@@ -6,7 +6,6 @@ import {
 import React, {useEffect, useRef} from 'react';
 import Icon from '../../../shared/components/Icon';
 import MaskedInput from 'react-text-mask';
-import moment from '../../../shared/util/moment';
 import {sub} from '../../../shared/util/lang';
 import {TimeRangeContext} from './store/TimeRangeStore';
 import {useContext} from 'react';
@@ -25,7 +24,7 @@ const CustomTimeRangeForm = ({filterKey}) => {
 	const {setShowCustomForm} = useContext(TimeRangeContext);
 	const wrapperRef = useRef();
 
-	const dateFormat = moment.localeData().longDateFormat('L');
+	const dateFormat = 'MM/DD/YYYY';
 
 	const onBlur = ({target: {name, value}}) => {
 		validate(name, value);

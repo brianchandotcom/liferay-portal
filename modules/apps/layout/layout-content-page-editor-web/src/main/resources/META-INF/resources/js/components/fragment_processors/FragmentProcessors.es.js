@@ -38,7 +38,8 @@ const FragmentProcessors = {
 
 	html: {
 		destroy: EditableHTMLFragmentProcessor.destroy,
-		getFloatingToolbarButtons: () => [],
+		getFloatingToolbarButtons:
+			EditableHTMLFragmentProcessor.getFloatingToolbarButtons,
 		init: EditableHTMLFragmentProcessor.init,
 		render: EditableHTMLFragmentProcessor.render
 	},

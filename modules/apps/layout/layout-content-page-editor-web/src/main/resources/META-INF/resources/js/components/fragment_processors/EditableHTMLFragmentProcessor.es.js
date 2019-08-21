@@ -12,6 +12,8 @@
  * details.
  */
 
+import {getFloatingToolbarButtons} from './EditableRichTextFragmentProcessor.es';
+
 let _changedCallback = null;
 let _destroyedCallback = null;
 let _dialog;
@@ -132,6 +134,7 @@ function render(content, value) {
 
 export default {
 	destroy,
+	getFloatingToolbarButtons,
 	init,
 	render
 };

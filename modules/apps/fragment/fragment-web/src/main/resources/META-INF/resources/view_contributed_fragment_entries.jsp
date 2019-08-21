@@ -36,7 +36,7 @@
 
 			<liferay-ui:search-container-column-text>
 				<clay:vertical-card
-					verticalCard="<%= new ContributedFragmentEntryVerticalCard(fragmentEntry, renderRequest, searchContainer.getRowChecker()) %>"
+					verticalCard="<%= new ContributedFragmentEntryVerticalCard(fragmentEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -49,3 +49,13 @@
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:form name="fragmentEntryFm">
+	<aui:input name="fragmentEntryKeys" type="hidden" />
+	<aui:input name="fragmentCollectionId" type="hidden" />
+</aui:form>
+
+<liferay-frontend:component
+	componentId="<%= FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/FragmentEntryDropdownDefaultEventHandler.es"
+/>

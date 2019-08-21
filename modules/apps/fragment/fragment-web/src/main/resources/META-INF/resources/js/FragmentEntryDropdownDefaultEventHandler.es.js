@@ -23,6 +23,34 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		submitForm(this.one('#fragmentEntryFm'), itemData.copyFragmentEntryURL);
 	}
 
+	copyToContributedFragmentEntry(itemData) {
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					destroyOnHide: true,
+					modal: true
+				},
+				eventName: this.ns('selectFragmentCollection'),
+				id: this.ns('selectFragmentCollection'),
+				title: Liferay.Language.get('select-collection'),
+				uri: itemData.selectFragmentCollectionURL
+			},
+			function(selectedItem) {
+				if (selectedItem) {
+					this.one('#fragmentCollectionId').value = selectedItem.id;
+					this.one('#fragmentEntryKeys').value =
+						itemData.fragmentEntryKey;
+
+					submitForm(
+						this.one('#fragmentEntryFm'),
+						itemData.copyContributedFragmentEntryURL
+					);
+				}
+			}.bind(this)
+		);
+	}
+
 	copyToFragmentEntry(itemData) {
 		this._selectFragmentCollection(
 			itemData.fragmentEntryId,

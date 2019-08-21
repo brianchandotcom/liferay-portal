@@ -15,9 +15,17 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.fragment.web.internal.servlet.taglib.util.ContributedFragmentEntryActionDropdownItemsProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -27,9 +35,43 @@ public class ContributedFragmentEntryVerticalCard
 
 	public ContributedFragmentEntryVerticalCard(
 		FragmentEntry fragmentEntry, RenderRequest renderRequest,
-		RowChecker rowChecker) {
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(fragmentEntry, renderRequest, rowChecker);
+
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		ContributedFragmentEntryActionDropdownItemsProvider
+			contributedFragmentEntryActionDropdownItemsProvider =
+				new ContributedFragmentEntryActionDropdownItemsProvider(
+					fragmentEntry, _renderRequest, _renderResponse);
+
+		try {
+			return contributedFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return FragmentWebKeys.FRAGMENT_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContributedFragmentEntryVerticalCard.class);
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 
 }

@@ -1348,9 +1348,7 @@ public class ContentPageEditorDisplayContext {
 	private SoyContext _getMappedAssetEntrySoyContexts(
 		JSONObject jsonObject, List<Long> mappedClassPKs) {
 
-		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
-			!jsonObject.has("fieldId")) {
-
+		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
 			return null;
 		}
 

@@ -12,8 +12,9 @@
  *
  */
 
-package com.liferay.analytics.connector.web.internal.configuration;
+package com.liferay.analytics.connector.web.internal.configuration.persistence.listener;
 
+import com.liferay.analytics.connector.web.internal.configuration.AnalyticsConnectorConfiguration;
 import com.liferay.analytics.connector.web.internal.constants.AnalyticsConnectorConstants;
 import com.liferay.analytics.connector.web.internal.security.auth.verifier.AnalyticsConnectorAuthVerifier;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;

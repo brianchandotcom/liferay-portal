@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>BODY</td>
+	<td>//body</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//li[@class='nav-item']/a[contains(.,'Details')]</td>
 	<td></td>

@@ -204,7 +204,7 @@ definition {
 		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR");
 
 		KeyPress.keyPressNoError(
-			locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_CONNECTOR",
+			locator1 = "KaleoDesignerEditWorkflow#BODY",
 			value1 = "\DELETE");
 
 		AssertConfirm(value1 = "Are you sure you want to delete the selected connector(s)?");

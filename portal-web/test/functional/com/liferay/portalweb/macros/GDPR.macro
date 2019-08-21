@@ -89,6 +89,16 @@ definition {
 			locator1 = "ProductMenu#PORTLET_ACTIVE");
 	}
 
+	macro filterByScope {
+		Click.clickNoWaitForVisible(
+			key_scope = "${scope}",
+			locator1 = "DataErasure#REVIEW_DATA_SCOPE_SELECT");
+
+		AssertElementPresent(
+			key_scope = "${scope}",
+			locator1 = "DataErasure#REVIEW_DATA_SCOPE_SELECTED");
+	}
+
 	macro viewEntryRowInApplicationCP {
 		for (var tableEntryPartialText : list "${tableEntryPartialTextList}") {
 			LexiconTable.viewTableEntryPartialText(

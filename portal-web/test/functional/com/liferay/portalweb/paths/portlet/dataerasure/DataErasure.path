@@ -23,6 +23,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--REVIEW_DATA_SCOPE_SELECT-->
+<tr>
+	<td>REVIEW_DATA_SCOPE_SELECT</td>
+	<td>//div[label[contains(.,'${key_scope}')]]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_DATA_SCOPE_SELECTED</td>
+	<td>//div[label[contains(.,'${key_scope}')]]//input[contains(@checked,'checked')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--REVIEW_DATA_APPLICATIONS_SELECT-->
 <tr>
 	<td>REVIEW_DATA_APPLICATIONS_SELECT</td>

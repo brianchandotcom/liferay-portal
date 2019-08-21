@@ -37,7 +37,7 @@ public interface CSSFontAwesomeConfiguration {
 	 * @return <code>true</code> if Liferay Font Awesome is enabled.
 	 * @review
 	 */
-	@Meta.AD(deflt = "true", name = "enable-font-awesome", required = false)
+	@Meta.AD(deflt = "false", name = "enable-font-awesome", required = false)
 	public boolean enableFontAwesome();
 
 }

@@ -1114,8 +1114,6 @@ public class JournalFolderLocalServiceImpl
 			rebuildTree(
 				folder.getCompanyId(), folderId, folder.getTreePath(), true);
 
-			journalFolderPersistence.flush();
-
 			folder = journalFolderPersistence.findByPrimaryKey(
 				folder.getPrimaryKey());
 		}

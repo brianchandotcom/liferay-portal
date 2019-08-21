@@ -22,10 +22,10 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.base.MBThreadServiceBaseImpl;
+import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -378,16 +379,9 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			getClass().getClassLoader(), "service");
-
 		return LockManagerUtil.lock(
 			getUserId(), MBThread.class.getName(), threadId,
-			String.valueOf(threadId), false,
-			GetterUtil.getLong(
-				configuration.get(
-					"lock.expiration.time.com.liferay.message.boards.model." +
-						"MBThread")));
+			String.valueOf(threadId), false, _mbThreadLockExpirationTime);
 	}
 
 	@Override
@@ -526,6 +520,14 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		LockManagerUtil.unlock(MBThread.class.getName(), threadId);
 	}
 
+	@Activate
+	protected void activate() {
+		_mbThreadLockExpirationTime = GetterUtil.getLong(
+			_configuration.get(
+				"lock.expiration.time.com.liferay.message.boards.model." +
+					"MBThread"));
+	}
+
 	protected List<MBThread> doGetGroupThreads(
 		long groupId, long userId, int status, boolean subscribed,
 		boolean includeAnonymous, int start, int end) {
@@ -585,11 +587,18 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER
+	)
+	private Configuration _configuration;
+
 	@Reference
 	private MBCategoryService _mbCategoryService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
+
+	private long _mbThreadLockExpirationTime;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"

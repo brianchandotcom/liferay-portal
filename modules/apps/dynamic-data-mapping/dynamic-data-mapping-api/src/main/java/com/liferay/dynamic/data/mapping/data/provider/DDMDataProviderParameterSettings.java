@@ -17,10 +17,13 @@ package com.liferay.dynamic.data.mapping.data.provider;
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Rafael Praxedes
  */
 @DDMForm
+@ProviderType
 public interface DDMDataProviderParameterSettings {
 
 	@DDMFormField(
@@ -31,7 +34,7 @@ public interface DDMDataProviderParameterSettings {
 
 	@DDMFormField(
 		label = "%outputs",
-		properties = "nestedFieldNames=outputParameterName,outputParameterId,outputParameterPath,outputParameterType"
+		properties = "nestedFieldNames=outputParameterId,outputParameterName,outputParameterPath,outputParameterType"
 	)
 	public DDMDataProviderOutputParametersSettings[] outputParameters();
 

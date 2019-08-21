@@ -22,6 +22,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Bruno Basto
  */
@@ -77,6 +79,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 		)
 	}
 )
+@ProviderType
 public interface DDLRecordSetSettings {
 
 	@DDMFormField(

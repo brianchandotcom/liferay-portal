@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marcellus Tavares
  */
@@ -75,6 +77,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		)
 	}
 )
+@ProviderType
 public interface PasswordDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 

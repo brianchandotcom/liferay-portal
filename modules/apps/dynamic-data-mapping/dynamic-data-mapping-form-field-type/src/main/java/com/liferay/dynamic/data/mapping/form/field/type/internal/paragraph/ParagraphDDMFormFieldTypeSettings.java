@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Bruno Basto
  */
@@ -80,6 +82,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		)
 	}
 )
+@ProviderType
 public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 

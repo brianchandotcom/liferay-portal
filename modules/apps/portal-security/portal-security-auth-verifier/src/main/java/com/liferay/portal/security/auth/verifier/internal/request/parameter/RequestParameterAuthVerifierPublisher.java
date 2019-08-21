@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.request.parameter.configuration.RequestParameterAuthVerifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
 )
 public class RequestParameterAuthVerifierPublisher
 	extends BaseAuthVerifierPublisher {

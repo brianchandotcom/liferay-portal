@@ -189,6 +189,24 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 			persistedFragmentEntryLink.getRendererKey());
 	}
 
+	@Test
+	public void testDuplicateInvalidFragmentEntryLink() throws Exception {
+		ActionRequest actionRequest = _getMockHttpServletRequest(
+			RandomTestUtil.randomLong());
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_duplicateFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
+
+		Assert.assertNotNull(jsonObject);
+
+		Assert.assertTrue(jsonObject.has("error"));
+
+		Assert.assertEquals(
+			"the-section-could-not-be-duplicated-because-it-has-been-deleted",
+			jsonObject.getString("error"));
+	}
+
 	private MockLiferayPortletRequest _getMockHttpServletRequest(
 			long fragmentEntryLinkId)
 		throws PortalException {

@@ -33,7 +33,9 @@ String backURL = (String)row.getParameter("backURL");
 >
 	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
+		<portlet:param name="tabs1" value="unpublished" />
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
+		<portlet:param name="historyKey" value="workflow" />
 		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 	</liferay-portlet:renderURL>
@@ -45,7 +47,9 @@ String backURL = (String)row.getParameter("backURL");
 	/>
 
 	<portlet:actionURL name="deleteKaleoDraftDefinitions" var="deleteURL">
+		<portlet:param name="tabs1" value="unpublished" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="historyKey" value="workflow" />
 		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
 	</portlet:actionURL>
 

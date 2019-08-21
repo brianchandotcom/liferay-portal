@@ -49,6 +49,8 @@ public interface FragmentCollectionContributorTracker {
 		return getFragmentEntries();
 	}
 
+	public FragmentEntry getFragmentEntry(String fragmentEntryKey);
+
 	public ResourceBundleLoader getResourceBundleLoader();
 
 }

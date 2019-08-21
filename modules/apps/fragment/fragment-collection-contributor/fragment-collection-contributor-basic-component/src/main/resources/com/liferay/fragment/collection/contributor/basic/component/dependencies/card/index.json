@@ -4,31 +4,6 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "p-2",
-					"label": "padding",
-					"name": "padding",
-					"type": "select",
-					"typeOptions": {
-						"validValues": [
-							{
-								"label": "small",
-								"value": "p-2"
-							},
-							{
-								"label": "large",
-								"value": "p-4"
-							}
-						]
-					}
-				},
-				{
-					"dataType": "object",
-					"label": "background-color",
-					"name": "backgroundColor",
-					"type": "colorPalette"
-				},
-				{
-					"dataType": "string",
 					"defaultValue": "sm",
 					"label": "border-radius",
 					"name": "borderRadius",

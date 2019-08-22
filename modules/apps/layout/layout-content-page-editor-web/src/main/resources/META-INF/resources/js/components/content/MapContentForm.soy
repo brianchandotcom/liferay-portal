@@ -41,27 +41,28 @@
 					<div class="row mb-3">
 						<div class="col">
 							<input
-									class="form-control form-control-sm"
-									id="{$selectedItem.itemId}"
-									readonly
-									value="{$selectedItem.itemValue}"
+								class="form-control form-control-sm"
+								id="{$selectedItem.itemId}"
+								readonly
+								value="{$selectedItem.itemValue}"
 							>
 						</div>
 
 						<div class="col">
 							<select
-									class="form-control form-control-sm"
-									data-item-editable-id="{$selectedItem.editableId}"
-									data-item-fragment-entry-link-id="{$selectedItem.fragmentEntryLinkId}"
-									data-onchange="{$_handleFieldChange}"
+								class="form-control form-control-sm"
+								data-item-editable-id="{$selectedItem.editableId}"
+								data-item-fragment-entry-link-id="{$selectedItem.fragmentEntryLinkId}"
+								data-onchange="{$_handleFieldChange}"
 							>
 								{if $_fields}
 									{foreach $field in $_fields}
 										<option
-												value="{$field.key}"
-												{if $field.editableId and $field.editableId != $selectedItem.editableId}
-													disabled
-												{/if}
+											value="{$field.key}"
+
+											{if $field.editableId and $field.editableId != $selectedItem.editableId}
+												disabled
+											{/if}
 										>
 											{$field.label}
 										</option>

@@ -139,7 +139,7 @@ class Filter extends React.Component {
 					item => item.key == defaultItem.key
 				);
 
-				items[index].active = true;
+				defaultItem.active = items[index].active = true;
 
 				this.setState(
 					{

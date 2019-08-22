@@ -16,11 +16,20 @@ class FilterResultsItem extends React.Component {
 
 		const filterQuery = removeItem(filter.key, item, search);
 
+		item.active = false;
+
 		pushToHistory(filterQuery, this.props);
 	}
 
 	render() {
 		const {filter, item} = this.props;
+		const {name, resultName} = item;
+
+		let itemName = name;
+
+		if (resultName) {
+			itemName = resultName(item);
+		}
 
 		return (
 			<li className="tbar-item">
@@ -30,7 +39,7 @@ class FilterResultsItem extends React.Component {
 							<div className="label-section">
 								<span className="font-weight-normal">{`${filter.name}: `}</span>
 
-								<strong>{item.name}</strong>
+								<strong>{itemName}</strong>
 							</div>
 						</span>
 						<span className="label-item label-item-after">

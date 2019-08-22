@@ -10,8 +10,15 @@ import {withRouter} from 'react-router-dom';
 class FilterResultsBar extends React.Component {
 	onClearAllButtonClick() {
 		const {
+			filters,
 			location: {search}
 		} = this.props;
+
+		filters.forEach(filter => {
+			filter.items.forEach(item => {
+				item.active = false;
+			});
+		});
 
 		const query = removeFilters(search);
 

@@ -1177,55 +1177,62 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		deployTask.finalizedBy(deployDepenciesTask);
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskDeployFastCSS(
 		final Project project, final LiferayExtension liferayExtension) {
 
 		Copy deployFastCSSTask = (Copy)GradleUtil.getTask(
 			project, DEPLOY_FAST_CSS_TASK_NAME);
 
-		Copy copy = (Copy)GradleUtil.getTask(
-			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		deployFastCSSTask.setDestinationDir(liferayExtension.getLiferayHome());
+		deployFastCSSTask.setIncludeEmptyDirs(false);
 
-		CopySpec copySpec = deployFastCSSTask.from(copy);
+		deployFastCSSTask.from(
+			GradleUtil.getTask(project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME),
+			new Closure<Void>(project) {
 
-		copySpec.eachFile(
-			new Action<FileCopyDetails>() {
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(
+						new Action<FileCopyDetails>() {
 
-				@Override
-				public void execute(FileCopyDetails fileCopyDetails) {
-					RelativePath relativePath =
-						fileCopyDetails.getRelativePath();
+							@Override
+							public void execute(
+								FileCopyDetails fileCopyDetails) {
 
-					String[] segments = relativePath.getSegments();
+								RelativePath relativePath =
+									fileCopyDetails.getRelativePath();
 
-					if ((segments.length > 2) &&
-						segments[0].equals("META-INF") &&
-						segments[1].equals("resources")) {
+								String[] segments = relativePath.getSegments();
 
-						List<String> newSegments = new ArrayList<>();
+								if ((segments.length > 4) &&
+									segments[2].equals("META-INF") &&
+									segments[3].equals("resources")) {
 
-						for (int i = 2; i < segments.length; i++) {
-							if (!segments[i].equals(".sass-cache")) {
-								newSegments.add(segments[i]);
+									List<String> list = new ArrayList<>();
+
+									list.add(segments[0]);
+									list.add(segments[1]);
+
+									for (int i = 4; i < segments.length; i++) {
+										String segment = segments[i];
+
+										if (!segment.equals(".sass-cache")) {
+											list.add(segment);
+										}
+									}
+
+									segments = list.toArray(new String[0]);
+								}
+
+								fileCopyDetails.setRelativePath(
+									new RelativePath(true, segments));
 							}
-						}
 
-						segments = newSegments.toArray(new String[0]);
-					}
+						});
 
-					fileCopyDetails.setRelativePath(
-						new RelativePath(true, segments));
-				}
+					copySpec.include("**/*.css");
 
-			});
-		copySpec.include("**/*.css");
-		copySpec.setIncludeEmptyDirs(false);
-
-		deployFastCSSTask.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
 					String bundleSymbolicName = BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 					String bundleVersion = BndBuilderUtil.getInstruction(
@@ -1238,8 +1245,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					sb.append("-");
 					sb.append(bundleVersion);
 
-					return new File(
-						liferayExtension.getLiferayHome(), sb.toString());
+					copySpec.into(sb.toString());
 				}
 
 			});
@@ -1250,22 +1256,21 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		deployFastTask.dependsOn(deployFastCSSTask);
 	}
 
+	@SuppressWarnings("serial")
 	private void _configureTaskDeployFastJSP(
 		final Project project, final LiferayExtension liferayExtension) {
 
 		Copy deployFastJSPTask = (Copy)GradleUtil.getTask(
 			project, DEPLOY_FAST_JSP_TASK_NAME);
 
-		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
-			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+		deployFastJSPTask.setDestinationDir(liferayExtension.getLiferayHome());
 
-		deployFastJSPTask.from(compileJSPTask);
+		deployFastJSPTask.from(
+			GradleUtil.getTask(project, JspCPlugin.COMPILE_JSP_TASK_NAME),
+			new Closure<Void>(project) {
 
-		deployFastJSPTask.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
 					String bundleSymbolicName = BndBuilderUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 					String bundleVersion = BndBuilderUtil.getInstruction(
@@ -1278,8 +1283,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					sb.append("-");
 					sb.append(bundleVersion);
 
-					return new File(
-						liferayExtension.getLiferayHome(), sb.toString());
+					copySpec.into(sb.toString());
 				}
 
 			});

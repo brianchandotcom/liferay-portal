@@ -26,7 +26,10 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testFormatBndInstructions() throws Exception {
 		test("FormatBndInstructions1/app.testbnd");
-		test("FormatBndInstructions2/app.testbnd");
+		test(
+			"FormatBndInstructions2/app.testbnd",
+			"Deprecated apps not on Marketplace should be moved to the " +
+				"deprecated folder");
 		test(
 			"FormatBndInstructions3/app.testbnd",
 			StringBundler.concat(

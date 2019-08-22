@@ -97,7 +97,10 @@ class FragmentEntryLink extends Component {
 	 * @inheritdoc
 	 */
 	rendered() {
-		if (this._shouldShowConfigPanel()) {
+		if (
+			this.fragmentEntryLinkId === this.activeItemId &&
+			this.activeItemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+		) {
 			this._createFloatingToolbar();
 		} else {
 			this._disposeFloatingToolbar();
@@ -159,8 +162,7 @@ class FragmentEntryLink extends Component {
 	_createFloatingToolbar() {
 		const config = {
 			anchorElement: this.element,
-			buttons: [],
-			fixSelectedPanel: true,
+			buttons: this._getFloatingToolbarButtons(),
 			item: {
 				configuration: this._configuration,
 				configurationValues: this._configurationValues,
@@ -170,8 +172,6 @@ class FragmentEntryLink extends Component {
 			itemId: this.fragmentEntryLinkId,
 			itemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
 			portalElement: document.body,
-			selectedPanelId:
-				FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration.panelId,
 			store: this.store
 		};
 
@@ -192,6 +192,21 @@ class FragmentEntryLink extends Component {
 
 			this._floatingToolbar = null;
 		}
+	}
+
+	/**
+	 * @private
+	 * @return {object[]} Floating toolbar buttons
+	 * @review
+	 */
+	_getFloatingToolbarButtons() {
+		const buttons = [];
+
+		if (this._shouldShowConfigPanel()) {
+			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
+		}
+
+		return buttons;
 	}
 
 	/**

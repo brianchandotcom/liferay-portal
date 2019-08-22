@@ -82,6 +82,10 @@ export {getSessionValue, setSessionValue} from './liferay/util/session.es';
 
 export {openToast} from './liferay/toast/commands/OpenToast.es';
 
+// Throttle API
+
+export {default as throttle} from './liferay/throttle.es';
+
 // Util API
 
 export {default as fetch} from './liferay/util/fetch.es';

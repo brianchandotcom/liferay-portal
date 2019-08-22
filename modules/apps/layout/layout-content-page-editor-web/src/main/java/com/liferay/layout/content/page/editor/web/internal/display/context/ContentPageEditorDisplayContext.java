@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -1348,22 +1347,8 @@ public class ContentPageEditorDisplayContext {
 	private SoyContext _getMappedAssetEntrySoyContexts(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
-		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
-			return null;
-		}
-
-		long classPK = jsonObject.getLong("classPK");
-
-		if (mappedClassPKs.contains(classPK)) {
-			return null;
-		}
-
-		mappedClassPKs.add(classPK);
-
-		long classNameId = jsonObject.getLong("classNameId");
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			classNameId, classPK);
+		AssetEntry assetEntry = MappedContentUtil.getAssetEntry(
+			jsonObject, mappedClassPKs);
 
 		if (assetEntry == null) {
 			return null;
@@ -1373,9 +1358,9 @@ public class ContentPageEditorDisplayContext {
 			SoyContextFactoryUtil.createSoyContext();
 
 		mappedAssetEntrySoyContext.put(
-			"classNameId", classNameId
+			"classNameId", assetEntry.getClassNameId()
 		).put(
-			"classPK", classPK
+			"classPK", assetEntry.getClassPK()
 		).put(
 			"title", assetEntry.getTitle(themeDisplay.getLocale())
 		);

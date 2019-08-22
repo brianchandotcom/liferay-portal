@@ -1248,7 +1248,7 @@ public class ContentPageEditorDisplayContext {
 
 		Set<SoyContext> mappedAssetEntriesSoyContexts = new HashSet<>();
 
-		List<Long> mappedClassPKs = new ArrayList<>();
+		Set<Long> mappedClassPKs = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -1346,7 +1346,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private SoyContext _getMappedAssetEntrySoyContexts(
-		JSONObject jsonObject, List<Long> mappedClassPKs) {
+		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
 		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
 			return null;

@@ -75,6 +75,9 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 			scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
 		}
+		else {
+			scopes = new int[] {ResourceConstants.SCOPE_GROUP_TEMPLATE};
+		}
 
 		List<Permission> permissions = new ArrayList<>();
 

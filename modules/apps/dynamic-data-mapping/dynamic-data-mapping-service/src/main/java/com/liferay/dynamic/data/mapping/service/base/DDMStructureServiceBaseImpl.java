@@ -16,9 +16,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstancePersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkFinder;
@@ -130,13 +128,6 @@ public abstract class DDMStructureServiceBaseImpl
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@Reference
-	protected DDMDataProviderInstancePersistence
-		ddmDataProviderInstancePersistence;
-
-	@Reference
-	protected DDMDataProviderInstanceFinder ddmDataProviderInstanceFinder;
 
 	@Reference
 	protected DDMDataProviderInstanceLinkPersistence

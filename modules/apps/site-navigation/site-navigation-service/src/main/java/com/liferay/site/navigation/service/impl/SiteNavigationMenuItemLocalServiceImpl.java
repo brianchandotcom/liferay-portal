@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemTypeException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
@@ -382,6 +383,11 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		typeSettingsProperties.fastLoad(typeSettings);
 
 		String layoutUuid = typeSettingsProperties.getProperty("layoutUuid");
+
+		if (Validator.isNull(layoutUuid)) {
+			return;
+		}
+
 		long groupId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("groupId"));
 		boolean privateLayout = GetterUtil.getBoolean(

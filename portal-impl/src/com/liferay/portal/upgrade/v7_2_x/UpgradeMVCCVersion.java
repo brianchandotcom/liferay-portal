@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_3_x;
+package com.liferay.portal.upgrade.v7_2_x;
 
 /**
  * @author Alicia García

@@ -1,6 +1,7 @@
-import {filterKeys, processStatusKeys} from '../instance-list/filterConstants';
 import {AppContext} from '../../AppContext';
 import {ChildLink} from '../../../shared/components/router/routerWrapper';
+import {filterConstants} from '../instance-list/store/InstanceListStore';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore';
 import React from 'react';
 
 class WorkloadByStepItem extends React.Component {
@@ -12,9 +13,9 @@ class WorkloadByStepItem extends React.Component {
 		const {taskKey} = this.props;
 
 		return {
-			[filterKeys.processStatus]: [processStatusKeys.pending],
-			[filterKeys.processStep]: [taskKey],
-			[filterKeys.slaStatus]: [slaStatusFilter]
+			[filterConstants.processStatus]: [processStatusConstants.pending],
+			[filterConstants.processStep]: [taskKey],
+			[filterConstants.slaStatus]: [slaStatusFilter]
 		};
 	}
 

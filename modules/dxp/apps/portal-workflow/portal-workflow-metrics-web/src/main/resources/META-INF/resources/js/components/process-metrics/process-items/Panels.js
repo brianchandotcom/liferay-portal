@@ -1,4 +1,4 @@
-import {slaStatusKeys} from '../instance-list/filterConstants';
+import {slaStatusConstants} from '../filter/store/SLAStatusStore';
 
 const PANELS = [
 	{
@@ -6,7 +6,7 @@ const PANELS = [
 		getTitle: () => Liferay.Language.get('overdue'),
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
-		slaStatusFilter: slaStatusKeys.overdue,
+		slaStatusFilter: slaStatusConstants.overdue,
 		totalField: 'instanceCount'
 	},
 	{
@@ -14,7 +14,7 @@ const PANELS = [
 		getTitle: () => Liferay.Language.get('on-time'),
 		iconColor: 'success',
 		iconName: 'check-circle',
-		slaStatusFilter: slaStatusKeys.onTime,
+		slaStatusFilter: slaStatusConstants.onTime,
 		totalField: 'instanceCount'
 	},
 	{
@@ -22,7 +22,7 @@ const PANELS = [
 		getTitle: () => Liferay.Language.get('untracked'),
 		iconColor: 'info',
 		iconName: 'hr',
-		slaStatusFilter: slaStatusKeys.untracked,
+		slaStatusFilter: slaStatusConstants.untracked,
 		totalField: 'instanceCount'
 	},
 	{

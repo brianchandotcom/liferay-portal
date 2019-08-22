@@ -81,6 +81,8 @@ public class SegmentsExperimentUtil {
 		return JSONUtil.put(
 			"description", segmentsExperiment.getDescription()
 		).put(
+			"editable", _isEditable(segmentsExperiment)
+		).put(
 			"goal",
 			toGoalJSONObject(
 				locale, segmentsExperiment.getTypeSettingsProperties())
@@ -143,6 +145,14 @@ public class SegmentsExperimentUtil {
 		).put(
 			"value", status.getValue()
 		);
+	}
+
+	private static boolean _isEditable(SegmentsExperiment segmentsExperiment) {
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.valueOf(
+				segmentsExperiment.getStatus());
+
+		return status.isEditable();
 	}
 
 	private SegmentsExperimentUtil() {

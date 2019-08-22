@@ -1,4 +1,5 @@
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 .unsubscribe-portlet {
 	$icon-width: 40px;
@@ -17,7 +18,7 @@
 
 	@include margins($margin: 20px);
 
-	@include respond-to(desktop) {
+	@include media-breakpoint-up(lg) {
 		@include margins($margin: 100px);
 	}
 

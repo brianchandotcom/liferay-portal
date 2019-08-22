@@ -119,7 +119,9 @@ definition {
 			ddlRecordFieldData = "DDL Record Edit",
 			fieldName = "Text");
 
-		PortletEntry.save();
+		Button.clickSave();
+
+		Workflow.gotoPreviewEdit();
 
 		DDLRecord.viewEditPreview(
 			ddlRecordFieldDataEdit = "DDL Record Edit",

@@ -591,17 +591,6 @@ public class JournalFolderLocalServiceWrapper
 			folderIds, groupId, folderId);
 	}
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.service.SubscriptionLocalService
-		getSubscriptionLocalService() {
-
-		return _journalFolderLocalService.getSubscriptionLocalService();
-	}
-
 	@Override
 	public String getUniqueFolderName(
 		String uuid, long groupId, long parentFolderId, String name,
@@ -675,19 +664,6 @@ public class JournalFolderLocalServiceWrapper
 		return _journalFolderLocalService.searchDDMStructures(
 			companyId, groupIds, folderId, restrictionType, keywords, start,
 			end, obc);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setSubscriptionLocalService(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService) {
-
-		_journalFolderLocalService.setSubscriptionLocalService(
-			subscriptionLocalService);
 	}
 
 	@Override

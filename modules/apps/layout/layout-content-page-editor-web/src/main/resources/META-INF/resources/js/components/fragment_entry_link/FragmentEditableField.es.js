@@ -261,15 +261,7 @@ class FragmentEditableField extends PortletBase {
 			anchorElement: this.element,
 			buttons:
 				this.selectedItems.length > 1
-					? [
-							{
-								icon: 'bolt',
-								id: 'content',
-								panelId: 'content',
-								title: Liferay.Language.get('content'),
-								type: 'panel'
-							}
-					  ]
+					? [FLOATING_TOOLBAR_BUTTONS.content]
 					: processor.getFloatingToolbarButtons(this.editableValues),
 			events: {
 				buttonClicked: this._handleFloatingToolbarButtonClicked

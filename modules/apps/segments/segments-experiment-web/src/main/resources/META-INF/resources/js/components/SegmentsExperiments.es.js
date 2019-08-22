@@ -177,8 +177,8 @@ const STATUS_TO_TYPE = {
 	1: 'primary',
 	2: 'success',
 	3: 'success',
-	4: 'danger',
-	5: 'danger',
+	4: 'primary',
+	5: 'warning',
 	6: 'danger',
 	7: 'warning'
 };

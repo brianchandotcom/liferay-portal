@@ -12,15 +12,16 @@
  * details.
  */
 
-import React from "react";
+import React, {Component} from 'react';
 import PropTypes from "prop-types";
 
 import ImageSlide from "./ImageSlide.es";
 import Arrow from "./Arrow.es";
 
-class Carousel extends React.Component {
+class Carousel extends Component {
 	static propTypes = {
-		views: PropTypes.array.isRequired,
+		items: PropTypes.array.isRequired,
+		startIndex: PropTypes.number,
 		circular: PropTypes.bool
   	};
 
@@ -28,36 +29,36 @@ class Carousel extends React.Component {
 		super(props);
 
 		this.state = {
-			currentItemIndex: 0
+			currentIndex: this.props.startIndex
 		};
   	}
 
 	previousSlide = () => {
-		const lastIndex = this.props.views.length - 1;
-		const { currentItemIndex } = this.state;
-		const shouldResetIndex = currentItemIndex === 0;
-		const index = shouldResetIndex ? lastIndex : currentItemIndex - 1;
+		const lastIndex = this.props.items.length - 1;
+		const { currentIndex } = this.state;
+		const shouldResetIndex = currentIndex === 0;
+		const index = shouldResetIndex ? lastIndex : currentIndex - 1;
 
 		this.setState({
-			currentItemIndex: index
+			currentIndex: index
 		});
 	};
 
 	nextSlide = () => {
-		const lastIndex = this.props.views.length - 1;
-		const { currentItemIndex } = this.state;
-		const shouldResetIndex = currentItemIndex === lastIndex;
-		const index = shouldResetIndex ? 0 : currentItemIndex + 1;
+		const lastIndex = this.props.items.length - 1;
+		const { currentIndex } = this.state;
+		const shouldResetIndex = currentIndex === lastIndex;
+		const index = shouldResetIndex ? 0 : currentIndex + 1;
 
 		this.setState({
-			currentItemIndex: index
+			currentIndex: index
 		});
 	};
 
 	render() {
-		const views = this.props.views;
+		const items = this.props.items;
 
-		const currentItem = views[this.state.currentItemIndex];
+		const currentItem = items[this.state.currentIndex];
 
 		console.log(currentItem.dataset.metadata)
 

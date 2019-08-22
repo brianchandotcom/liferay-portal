@@ -313,4 +313,40 @@ definition {
 			typeSettings = "${typeSettings}");
 	}
 
+	macro updateLayoutTemplateOfPublicLayout {
+		if (!(isSet(groupName))) {
+			fail("Please set 'groupName'.");
+		}
+
+		if (!(isSet(layoutName))) {
+			fail("Please set 'layoutName'.");
+		}
+
+		if (!(isSet(layoutTemplate))) {
+			fail("layoutTemplate not set.");
+		}
+
+		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayout._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayout._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONWidgetUtil._updateLayoutTemplateId(
+			layoutTemplate = "${layoutTemplate}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayout._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
+	}
+
 }

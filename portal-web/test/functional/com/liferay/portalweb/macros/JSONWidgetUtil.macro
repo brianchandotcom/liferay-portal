@@ -111,4 +111,74 @@ definition {
 		return "${widget}";
 	}
 
+	macro _getLayoutTemplateId {
+		if (!(isSet(layoutTemplate))) {
+			fail("layoutTemplate not set.");
+		}
+
+		if ("${layoutTemplate}" == "1 Column") {
+			layoutTemplateId = "1_column";
+		}
+		else if ("${layoutTemplate}" == "2 Columns (50/50)") {
+			layoutTemplateId = "2_columns_i";
+		}
+		else if ("${layoutTemplate}" == "2 Columns (30/70)") {
+			layoutTemplateId = "2_columns_ii";
+		}
+		else if ("${layoutTemplate}" == "2 Columns (70/30)") {
+			layoutTemplateId = "2_columns_iii";
+		}
+		else if ("${layoutTemplate}" == "3 Columns") {
+			layoutTemplateId = "3_columns";
+		}
+		else if ("${layoutTemplate}" == "1-2 Columns (30/70)") {
+			layoutTemplateId = "1_2_columns_i";
+		}
+		else if ("${layoutTemplate}" == "1-2 Columns (70/30)") {
+			layoutTemplateId = "1_2_columns_ii";
+		}
+		else if ("${layoutTemplate}" == "1-2-1 Columns (50/50)") {
+			layoutTemplateId = "1_2_1_columns_i";
+		}
+		else if ("${layoutTemplate}" == "1-2-1 Columns (70/30)") {
+			layoutTemplateId = "1_2_1_columns_ii";
+		}
+		else if ("${layoutTemplate}" == "1-3-1 Columns") {
+			layoutTemplateId = "1_3_1_columns";
+		}
+		else if ("${layoutTemplate}" == "1-3-2 Columns") {
+			layoutTemplateId = "1_3_2_columns";
+		}
+		else if ("${layoutTemplate}" == "2-1-2 Columns") {
+			layoutTemplateId = "2_1_2_columns";
+		}
+		else if ("${layoutTemplate}" == "2-2 Columns") {
+			layoutTemplateId = "2_2_columns";
+		}
+		else if ("${layoutTemplate}" == "3-2-3 Columns") {
+			layoutTemplateId = "3_2_3_columns";
+		}
+		else {
+			fail("'layoutTemplate' could not find a valid layoutTemplateId");
+		}
+
+		return "${layoutTemplateId}";
+	}
+
+	macro _updateLayoutTemplateId {
+		if (!(isSet(layoutTemplate))) {
+			fail("layoutTemplate not set.");
+		}
+
+		if (!(isSet(typeSettings))) {
+			fail("layoutTemplateId not set.");
+		}
+
+		var layoutTemplateId = JSONWidgetUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
+
+		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(layout-template-id=).*","$1${layoutTemplateId}");
+
+		return "${typeSettings}";
+	}
+
 }

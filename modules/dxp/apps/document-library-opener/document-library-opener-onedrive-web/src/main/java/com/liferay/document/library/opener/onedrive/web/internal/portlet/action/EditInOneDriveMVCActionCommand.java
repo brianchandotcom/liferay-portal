@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -144,6 +145,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				throw new PortalException(ioe);
 			}
 		}
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
 			repositoryId, folderId, sourceFileName, mimeType, title,

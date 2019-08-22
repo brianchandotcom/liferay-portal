@@ -22,9 +22,7 @@
 	{@param? spritemap: string}
 	{@param? store: ?}
 
-	<div
-		class="fragments-editor__floating-toolbar {$classes ?: ''}"
-	>
+	<div class="fragments-editor__floating-toolbar {$classes ?: ''}">
 		{if $spritemap and $buttons and (length($buttons) > 0)}
 			{if (not $selectedPanelId) or (not $fixSelectedPanel)}
 				<div class="fragments-editor__floating-toolbar-buttons" ref="buttons">

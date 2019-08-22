@@ -251,6 +251,21 @@ public class MappedContentUtil {
 						continue;
 					}
 
+					JSONObject configJSONObject =
+						editableJSONObject.getJSONObject("config");
+
+					if (configJSONObject != null) {
+						AssetEntry assetEntry = getAssetEntry(
+							configJSONObject, mappedClassPKs,
+							new long[] {
+								PortalUtil.getClassNameId(JournalArticle.class)
+							});
+
+						if (assetEntry != null) {
+							assetEntries.add(assetEntry);
+						}
+					}
+
 					AssetEntry assetEntry = getAssetEntry(
 						editableJSONObject, mappedClassPKs,
 						new long[] {

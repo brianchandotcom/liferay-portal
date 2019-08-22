@@ -1,4 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
 import {compareArrays} from '../../../../shared/util/array';
 import {usePrevious} from '../../../../shared/util/hooks';
 
@@ -31,9 +32,9 @@ const useProcessStatus = processStatusKeys => {
 		setProcessStatuses(processStatuses);
 	};
 
-	const getSelectedProcessStatuses = () => {
+	const getSelectedProcessStatuses = fallbackKeys => {
 		if (!processStatuses || !processStatuses.length) {
-			return null;
+			return buildFallbackItems(fallbackKeys);
 		}
 
 		return processStatuses.filter(item => item.active);

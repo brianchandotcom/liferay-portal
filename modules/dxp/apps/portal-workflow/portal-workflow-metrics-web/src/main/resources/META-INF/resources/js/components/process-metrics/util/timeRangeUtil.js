@@ -1,6 +1,26 @@
+import {buildFallbackItems} from '../../../shared/components/filter/util/filterEvents';
 import moment from '../../../shared/util/moment';
 
+const buildFallbackTimeRange = (fallbackKeys, queryDateEnd, queryDateStart) => {
+	const fallbackItems = buildFallbackItems(fallbackKeys);
+
+	if (fallbackItems && fallbackItems.length) {
+		const customTimeRange = fallbackItems.filter(
+			item => item.key === 'custom'
+		)[0];
+
+		if (customTimeRange) {
+			customTimeRange.dateEnd = parseQueryDate(queryDateEnd, true);
+			customTimeRange.dateStart = parseQueryDate(queryDateStart, true);
+		}
+	}
+
+	return fallbackItems;
+};
+
 const formatDate = date => moment.utc(date).format('L');
+
+const formatDescriptionDate = date => moment.utc(date).format('ll');
 
 const formatQueryDate = date => parseDateMoment(date).format('YYYY-MM-DD');
 
@@ -73,7 +93,9 @@ const parseQueryDate = (date, isEndDate) =>
 	parseDate(date, isEndDate, 'YYYY-MM-DD');
 
 export {
+	buildFallbackTimeRange,
 	formatDate,
+	formatDescriptionDate,
 	formatQueryDate,
 	formatTimeRange,
 	parseDate,

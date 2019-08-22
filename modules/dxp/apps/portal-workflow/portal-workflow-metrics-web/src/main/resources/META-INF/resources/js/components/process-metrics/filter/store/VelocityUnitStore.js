@@ -1,6 +1,9 @@
-import React, {useEffect, useState, useContext, createContext} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
+import {compareArrays} from '../../../../shared/util/array';
 import moment from 'moment';
 import {TimeRangeContext} from './TimeRangeStore';
+import {usePrevious} from '../../../../shared/util/hooks';
 
 const useVelocityUnit = velocityUnitKeys => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
@@ -29,9 +32,9 @@ const useVelocityUnit = velocityUnitKeys => {
 
 	const defaultVelocityUnit = getDefaultVelocityUnit(velocityUnits);
 
-	const getSelectedVelocityUnit = () => {
+	const getSelectedVelocityUnit = fallbackKeys => {
 		if (!velocityUnits || !velocityUnits.length) {
-			return null;
+			return buildFallbackItems(fallbackKeys);
 		}
 
 		const selectedVelocityUnits = velocityUnits.filter(item => item.active);
@@ -39,11 +42,30 @@ const useVelocityUnit = velocityUnitKeys => {
 		return selectedVelocityUnits.length ? selectedVelocityUnits[0] : null;
 	};
 
+	const updateData = () => {
+		setVelocityUnits(
+			velocityUnits.map(velocityUnit => ({
+				...velocityUnit,
+				active: velocityUnitKeys.includes(velocityUnit.key)
+			}))
+		);
+	};
+
 	useEffect(() => {
 		if (timeRange) {
 			fetchData(timeRange);
 		}
 	}, [timeRange]);
+
+	const previousKeys = usePrevious(velocityUnitKeys);
+
+	useEffect(() => {
+		const filterChanged = !compareArrays(velocityUnitKeys, previousKeys);
+
+		if (filterChanged && velocityUnits.length) {
+			updateData();
+		}
+	}, [velocityUnitKeys]);
 
 	return {
 		defaultVelocityUnit,
@@ -105,9 +127,9 @@ const velocityUnitsMap = {
 
 const VelocityUnitContext = createContext(null);
 
-const VelocityUnitProvider = ({children, unitKeys}) => {
+const VelocityUnitProvider = ({children, velocityUnitKeys}) => {
 	return (
-		<VelocityUnitContext.Provider value={useVelocityUnit(unitKeys)}>
+		<VelocityUnitContext.Provider value={useVelocityUnit(velocityUnitKeys)}>
 			{children}
 		</VelocityUnitContext.Provider>
 	);

@@ -1,4 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
 import {compareArrays} from '../../../../shared/util/array';
 import {usePrevious} from '../../../../shared/util/hooks';
 
@@ -37,9 +38,9 @@ const useSLAStatus = slaStatusKeys => {
 		setSLAStatuses(slaStatuses);
 	};
 
-	const getSelectedSLAStatuses = () => {
+	const getSelectedSLAStatuses = fallbackKeys => {
 		if (!slaStatuses || !slaStatuses.length) {
-			return null;
+			return buildFallbackItems(fallbackKeys);
 		}
 
 		return slaStatuses.filter(item => item.active);

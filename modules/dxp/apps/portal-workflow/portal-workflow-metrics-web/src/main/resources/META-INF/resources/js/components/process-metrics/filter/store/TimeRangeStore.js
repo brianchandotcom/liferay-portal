@@ -1,9 +1,16 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {formatTimeRange, parseQueryDate} from '../../util/timeRangeUtil';
+import {
+	buildFallbackTimeRange,
+	formatDescriptionDate,
+	formatTimeRange,
+	parseQueryDate
+} from '../../util/timeRangeUtil';
 import {AppContext} from '../../../AppContext';
+import {compareArrays} from '../../../../shared/util/array';
 import {ErrorContext} from '../../../../shared/components/request/Error';
 import {getFiltersParam} from '../../../../shared/components/filter/util/filterUtil';
 import {LoadingContext} from '../../../../shared/components/request/Loading';
+import {usePrevious} from '../../../../shared/util/hooks';
 import {useRouter} from '../../../../shared/components/router/useRouter';
 
 const useTimeRange = timeRangeKeys => {
@@ -22,7 +29,7 @@ const useTimeRange = timeRangeKeys => {
 		setError(null);
 		setLoading(true);
 
-		return client
+		client
 			.get('/time-ranges')
 			.then(({data}) => {
 				const timeRanges = [
@@ -53,9 +60,17 @@ const useTimeRange = timeRangeKeys => {
 
 	const defaultTimeRange = getDefaultTimeRange(timeRanges);
 
-	const getSelectedTimeRange = () => {
+	const getSelectedTimeRange = (
+		fallbackKeys,
+		queryDateEnd,
+		queryDateStart
+	) => {
 		if (!timeRanges || !timeRanges.length) {
-			return null;
+			return buildFallbackTimeRange(
+				fallbackKeys,
+				queryDateEnd,
+				queryDateStart
+			);
 		}
 
 		const selectedTimeRanges = timeRanges.filter(item => item.active);
@@ -63,9 +78,26 @@ const useTimeRange = timeRangeKeys => {
 		return selectedTimeRanges.length ? selectedTimeRanges[0] : null;
 	};
 
+	const updateData = () => {
+		setTimeRanges(
+			timeRanges.map(timeRange => ({
+				...timeRange,
+				active: timeRangeKeys.includes(timeRange.key)
+			}))
+		);
+	};
+
+	useEffect(fetchData, []);
+
+	const previousKeys = usePrevious(timeRangeKeys);
+
 	useEffect(() => {
-		fetchData();
-	}, []);
+		const filterChanged = !compareArrays(timeRangeKeys, previousKeys);
+
+		if (filterChanged && timeRanges.length) {
+			updateData();
+		}
+	}, [timeRangeKeys]);
 
 	return {
 		defaultTimeRange,
@@ -80,7 +112,7 @@ const useTimeRange = timeRangeKeys => {
 const getCustomTimeRange = (filters, timeRangeKeys) => {
 	const itemKey = 'custom';
 
-	return {
+	const customTimeRange = {
 		active: timeRangeKeys.includes(itemKey),
 		dateEnd: parseQueryDate(filters.dateEnd, true),
 		dateStart: parseQueryDate(filters.dateStart),
@@ -88,6 +120,17 @@ const getCustomTimeRange = (filters, timeRangeKeys) => {
 		key: itemKey,
 		name: Liferay.Language.get('custom-range')
 	};
+
+	customTimeRange.resultName = timeRange => getCustomTimeRangeName(timeRange);
+
+	return customTimeRange;
+};
+
+const getCustomTimeRangeName = selectedTimeRange => {
+	const {dateEnd, dateStart} = selectedTimeRange;
+	const formatDate = date => formatDescriptionDate(date);
+
+	return `${formatDate(dateStart)} - ${formatDate(dateEnd)}`;
 };
 
 const getDefaultTimeRange = timeRanges => {
@@ -108,4 +151,9 @@ const TimeRangeProvider = ({children, timeRangeKeys}) => {
 	);
 };
 
-export {TimeRangeContext, TimeRangeProvider, useTimeRange};
+export {
+	getCustomTimeRangeName,
+	TimeRangeContext,
+	TimeRangeProvider,
+	useTimeRange
+};

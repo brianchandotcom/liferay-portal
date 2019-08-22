@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../../AppContext';
+import {buildFallbackItems} from '../../../../shared/components/filter/util/filterEvents';
 import {compareArrays} from '../../../../shared/util/array';
 import {ErrorContext} from '../../../../shared/components/request/Error';
 import {LoadingContext} from '../../../../shared/components/request/Loading';
@@ -35,9 +36,9 @@ const useProcessStep = (processId, processStepKeys) => {
 			});
 	};
 
-	const getSelectedProcessSteps = () => {
+	const getSelectedProcessSteps = fallbackKeys => {
 		if (!processSteps || !processSteps.length) {
-			return null;
+			return buildFallbackItems(fallbackKeys);
 		}
 
 		return processSteps.filter(item => item.active);

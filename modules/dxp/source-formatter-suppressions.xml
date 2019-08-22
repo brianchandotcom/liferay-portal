@@ -3,5 +3,9 @@
 <suppressions>
 	<source-check>
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
+
+		<!-- Temporary suppressions for BNDSuiteCheck(LPS-100170) -->
+
+		<suppress checks="BNDSuiteCheck" files="modules/private/apps/documentum/app\.bnd" />
 	</source-check>
 </suppressions>

@@ -18,6 +18,10 @@ import {EventHandler} from 'metal-events';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 
+import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 const STR_DRAG_LEAVE = 'dragleave';
 const STR_DRAG_OVER = 'dragover';
 const STR_DROP = 'drop';
@@ -48,13 +52,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			'liferay-item-selector-uploader',
 			'liferay-item-viewer',
 			A => {
-				this._itemViewer = new A.LiferayItemViewer({
-					btnCloseCaption: this.closeCaption,
-					editItemURL: this.editItemURL,
-					links: '',
-					uploadItemURL: this.uploadItemURL
-				});
-
 				this._uploadItemViewer = new A.LiferayItemViewer({
 					btnCloseCaption: this.closeCaption,
 					links: '',
@@ -69,6 +66,14 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 				this._renderUI();
 			}
 		);
+
+		ReactDOM.render(
+			<ItemSelectorPreview
+				links=".item-preview"
+				selector=".item-preview a"
+			/>,
+			this.rootNode.appendChild(document.createElement('div'))
+		);
 	}
 
 	/**
@@ -77,7 +82,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	detached() {
 		super.detached();
 
-		this._itemViewer.destroy();
 		this._uploadItemViewer.destroy();
 		this._itemSelectorUploader.destroy();
 
@@ -366,7 +370,6 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 	_renderUI() {
 		const rootNode = this.rootNode;
 
-		this._itemViewer.render(rootNode);
 		this._uploadItemViewer.render(rootNode);
 	}
 

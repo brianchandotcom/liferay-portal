@@ -62,6 +62,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext"
+			keyProperty="uid"
 			modelVar="rankingEntryDisplayContextModelVar"
 		>
 

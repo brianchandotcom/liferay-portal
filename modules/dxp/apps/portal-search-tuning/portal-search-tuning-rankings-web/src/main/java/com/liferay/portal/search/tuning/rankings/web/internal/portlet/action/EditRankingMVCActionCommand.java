@@ -156,7 +156,21 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 			Action action)
 		throws IOException {
 
-		deleteRanking(action._resultsRankingUid);
+		String resultsRankingUid = action._resultsRankingUid;
+
+		String[] deleteResultsRankingUids = null;
+
+		if (Validator.isNotNull(resultsRankingUid)) {
+			deleteResultsRankingUids = new String[] {resultsRankingUid};
+		}
+		else {
+			deleteResultsRankingUids = ParamUtil.getStringValues(
+				actionRequest, "rowIds");
+		}
+
+		for (String deleteResultsRankingUid : deleteResultsRankingUids) {
+			deleteRanking(deleteResultsRankingUid);
+		}
 
 		sendRedirect(actionRequest, actionResponse, action._redirect);
 	}

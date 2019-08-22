@@ -111,6 +111,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
+	content: {
+		icon: 'bolt',
+		id: 'content',
+		panelId: 'content',
+		title: Liferay.Language.get('content'),
+		type: 'panel'
+	},
+
 	edit: {
 		icon: 'pencil',
 		id: 'edit',

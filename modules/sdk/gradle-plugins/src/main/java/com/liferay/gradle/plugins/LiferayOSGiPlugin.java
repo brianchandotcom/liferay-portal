@@ -1175,8 +1175,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, BundleExtension.class);
 
 		String bundleSymbolicName = (String)bundleExtension.get(
-			"Bundle-SymbolicName");
-		String bundleVersion = (String)bundleExtension.get("Bundle-Version");
+			Constants.BUNDLE_SYMBOLICNAME);
+		String bundleVersion = (String)bundleExtension.get(
+			Constants.BUNDLE_VERSION);
 
 		DeployFastTask deployFastTask = (DeployFastTask)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);

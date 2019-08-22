@@ -19,7 +19,9 @@ import {destroy, init} from './EditableRichTextFragmentProcessor.es';
  * @return {object[]} Floating toolbar panels
  */
 function getFloatingToolbarButtons(editableValues) {
-	const linkButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.link);
+	const buttons = [];
+
+	const linkButton = {...FLOATING_TOOLBAR_BUTTONS.link};
 
 	if (
 		editableValues.config &&
@@ -31,7 +33,30 @@ function getFloatingToolbarButtons(editableValues) {
 			'fragments-editor__floating-toolbar--linked-field';
 	}
 
-	return [linkButton, FLOATING_TOOLBAR_BUTTONS.edit];
+	buttons.push(linkButton);
+
+	if (editableValues.mappedField || editableValues.fieldId) {
+		const textPropertiesButton = {
+			...FLOATING_TOOLBAR_BUTTONS.textProperties
+		};
+
+		textPropertiesButton.cssClass =
+			'fragments-editor__floating-toolbar--mapped-field disabled fragments-editor__floating-toolbar--disabled';
+
+		buttons.push(textPropertiesButton);
+	} else {
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.edit);
+	}
+
+	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
+
+	if (editableValues.fieldId || editableValues.mappedField) {
+		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';
+	}
+
+	buttons.push(mapButton);
+
+	return buttons;
 }
 
 /**

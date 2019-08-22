@@ -1286,7 +1286,9 @@ public class ContentPageEditorDisplayContext {
 					JSONObject configJSONObject =
 						editableJSONObject.getJSONObject("config");
 
-					if (configJSONObject != null) {
+					if ((configJSONObject != null) &&
+						(configJSONObject.length() > 0)) {
+
 						SoyContext mappedAssetEntrySoyContext =
 							_getMappedAssetEntrySoyContexts(
 								configJSONObject, mappedClassPKs);

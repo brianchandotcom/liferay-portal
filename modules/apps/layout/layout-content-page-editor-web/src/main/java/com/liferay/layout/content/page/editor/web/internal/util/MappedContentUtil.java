@@ -262,7 +262,9 @@ public class MappedContentUtil {
 					JSONObject configJSONObject =
 						editableJSONObject.getJSONObject("config");
 
-					if (configJSONObject != null) {
+					if ((configJSONObject != null) &&
+						(configJSONObject.length() > 0)) {
+
 						AssetEntry assetEntry = getAssetEntry(
 							configJSONObject, mappedClassPKs,
 							new long[] {

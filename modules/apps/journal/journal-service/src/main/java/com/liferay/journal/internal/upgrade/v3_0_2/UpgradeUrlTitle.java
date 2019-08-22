@@ -62,8 +62,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select friendlyURLEntryLocalizationId, urlTitle, ",
-					"groupId, classPK from FriendlyURLEntryLocalization where ",
+					"select friendlyURLEntryLocalizationId, groupId, classPK, ",
+					"urlTitle from FriendlyURLEntryLocalization where ",
 					"classNameId = ? and (urlTitle like ? or urlTitle like ",
 					"?)"))) {
 
@@ -75,9 +75,9 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 
 			while (rs.next()) {
 				long friendlyURLEntryLocalizationId = rs.getLong(1);
-				String urlTitle = rs.getString(2);
-				long groupId = rs.getLong(3);
-				long classPK = rs.getLong(4);
+				long groupId = rs.getLong(2);
+				long classPK = rs.getLong(3);
+				String urlTitle = rs.getString(4);
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -99,7 +99,7 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 	protected void updateUrlTitle() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps1 = connection.prepareStatement(
-				"select id_, resourcePrimKey, urlTitle, groupId from " +
+				"select id_, resourcePrimKey, groupId, urlTitle from " +
 					"JournalArticle where urlTitle like ? or urlTitle like " +
 						"?")) {
 
@@ -111,8 +111,9 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			while (rs.next()) {
 				long id = rs.getLong(1);
 				long resourcePrimKey = rs.getLong(2);
-				String urlTitle = rs.getString(3);
-				long groupId = rs.getLong(4);
+				long groupId = rs.getLong(3);
+				String urlTitle = rs.getString(4);
+
 
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(

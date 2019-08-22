@@ -79,6 +79,10 @@ public class MappedContentUtil {
 
 		long classPK = jsonObject.getLong("classPK");
 
+		if (classPK <= 0) {
+			return null;
+		}
+
 		if (mappedClassPKs.contains(classPK)) {
 			return null;
 		}
@@ -86,6 +90,10 @@ public class MappedContentUtil {
 		mappedClassPKs.add(classPK);
 
 		long classNameId = jsonObject.getLong("classNameId");
+
+		if (classNameId <= 0) {
+			return null;
+		}
 
 		if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
 			!ArrayUtil.contains(allowedClassNameIds, classNameId)) {

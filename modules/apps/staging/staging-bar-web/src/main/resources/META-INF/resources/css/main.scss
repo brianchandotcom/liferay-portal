@@ -1,5 +1,5 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 .control-menu {
 	.staging-links {
@@ -22,7 +22,7 @@
 	.staging-bar {
 		position: absolute;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			position: static;
 		}
 	}
@@ -36,13 +36,13 @@
 .publish-btn-group {
 	vertical-align: middle;
 
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		border-radius: 3px;
 		overflow: hidden;
 	}
 
 	.btn {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			font-size: 1em;
 			padding: 13px 15px;
 
@@ -55,7 +55,7 @@
 	}
 
 	.dropdown-toggle {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			border-bottom-left-radius: 0;
 			border-top-left-radius: 0;
 			position: absolute;
@@ -93,7 +93,7 @@
 			margin-bottom: 0;
 			min-width: 210px;
 
-			@include sm() {
+			@include media-breakpoint-up(sm) {
 				float: left;
 			}
 
@@ -121,7 +121,7 @@
 }
 
 .staging-layout-revision-details-list {
-	@include justify-content(space-between);
+	justify-content: space-between;
 
 	> li.control-menu-nav-item {
 		padding: 0 8px;
@@ -137,7 +137,7 @@
 		text-decoration: none;
 	}
 
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		font-size: 14px;
 	}
 }
@@ -164,7 +164,7 @@
 	white-space: nowrap;
 	width: 100%;
 
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		font-size: 14px;
 	}
 

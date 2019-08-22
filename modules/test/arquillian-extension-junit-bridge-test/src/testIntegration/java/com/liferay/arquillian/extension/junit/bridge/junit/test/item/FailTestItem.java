@@ -28,7 +28,7 @@ public class FailTestItem {
 
 	@Test
 	public void testFail() {
-		Assert.fail();
+		Assert.assertTrue(false);
 	}
 
 }

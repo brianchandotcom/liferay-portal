@@ -148,8 +148,14 @@ public class SegmentsExperimentLocalServiceImpl
 			long segmentsExperienceId, long classNameId, long classPK)
 		throws PortalException {
 
-		segmentsExperimentPersistence.removeByS_C_C(
-			segmentsExperienceId, classNameId, classPK);
+		List<SegmentsExperiment> segmentsExperiments =
+			segmentsExperimentPersistence.findByS_C_C(
+				segmentsExperienceId, classNameId, classPK);
+
+		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
+			segmentsExperimentLocalService.deleteSegmentsExperiment(
+				segmentsExperiment);
+		}
 	}
 
 	@Override

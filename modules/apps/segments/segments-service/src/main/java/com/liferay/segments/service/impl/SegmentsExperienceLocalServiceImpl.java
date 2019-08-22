@@ -30,6 +30,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.exception.SegmentsExperienceNameException;
 import com.liferay.segments.exception.SegmentsExperiencePriorityException;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.base.SegmentsExperienceLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -119,7 +120,14 @@ public class SegmentsExperienceLocalServiceImpl
 	public void deleteSegmentsEntrySegmentsExperiences(long segmentsEntryId)
 		throws PortalException {
 
-		segmentsExperiencePersistence.removeBySegmentsEntryId(segmentsEntryId);
+		List<SegmentsExperience> segmentsExperiences =
+			segmentsExperiencePersistence.findBySegmentsEntryId(
+				segmentsEntryId);
+
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			segmentsExperienceLocalService.deleteSegmentsExperience(
+				segmentsExperience);
+		}
 	}
 
 	@Override
@@ -171,10 +179,15 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		segmentsExperimentPersistence.removeByS_C_C(
-			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperience.getClassNameId(),
-			_getPublishedLayoutClassPK(segmentsExperience.getClassPK()));
+		for (SegmentsExperiment segmentsExperiment :
+				segmentsExperimentPersistence.findByS_C_C(
+					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperience.getClassNameId(),
+					_getPublishedLayoutClassPK(
+						segmentsExperience.getClassPK()))) {
+
+			_deleteSegmentsExperiment(segmentsExperiment);
+		}
 
 		// Resources
 
@@ -189,14 +202,26 @@ public class SegmentsExperienceLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
+		// Segments experiences
 
-		segmentsExperiencePersistence.removeByG_C_C(
-			groupId, classNameId, publishedClassPK);
+		List<SegmentsExperience> segmentsExperiences =
+			segmentsExperiencePersistence.findByG_C_C(
+				groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 
-		segmentsExperimentPersistence.removeByS_C_C(
-			SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-			publishedClassPK);
+		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+			segmentsExperienceLocalService.deleteSegmentsExperience(
+				segmentsExperience);
+		}
+
+		// Segments experiments
+
+		for (SegmentsExperiment segmentsExperiment :
+				segmentsExperimentPersistence.findByS_C_C(
+					SegmentsExperienceConstants.ID_DEFAULT, classNameId,
+					_getPublishedLayoutClassPK(classPK))) {
+
+			_deleteSegmentsExperiment(segmentsExperiment);
+		}
 	}
 
 	@Override
@@ -365,6 +390,17 @@ public class SegmentsExperienceLocalServiceImpl
 			});
 
 		return segmentsExperience;
+	}
+
+	private void _deleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		segmentsExperimentPersistence.remove(segmentsExperiment);
+		segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
+			segmentsExperiment.getSegmentsExperimentId());
+		resourceLocalService.deleteResource(
+			segmentsExperiment, ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 
 	private long _getPublishedLayoutClassPK(long classPK) {

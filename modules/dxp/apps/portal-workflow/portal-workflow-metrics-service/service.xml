@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column db-name="slaDefinitionId" name="workflowMetricsSLADefinitionId" primary="true" type="long" />
+		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -32,8 +32,11 @@
 		<column name="pauseNodeKeys" type="String" />
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
-		<column name="status" type="int" />
 		<column name="version" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -72,7 +75,7 @@
 
 		<!-- PK fields -->
 
-		<column db-name="slaDefinitionVersionId" name="workflowMetricsSLADefinitionVersionId" primary="true" type="long" />
+		<column db-name="wmSLADefinitionVersionId" name="workflowMetricsSLADefinitionVersionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -88,7 +91,7 @@
 
 		<!-- Other fields -->
 
-		<column db-name="slaDefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
+		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
 		<column name="version" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
@@ -100,6 +103,9 @@
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
 		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 

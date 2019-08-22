@@ -22,6 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Role role = (Role)row.getObject();
 
 String name = role.getName();
+
+RoleType currentRoleType = RoleTypeRetrieverUtil.getCurrentRoleType(request);
 %>
 
 <liferay-ui:icon-menu
@@ -48,10 +50,10 @@ String name = role.getName();
 	<c:if test="<%= !name.equals(RoleConstants.OWNER) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.PERMISSIONS) %>">
 
 		<%
-		int[] roleTypes = {role.getType()};
+		int[] types = {role.getType()};
 
 		if (role.getType() != RoleConstants.TYPE_REGULAR) {
-			roleTypes = new int[] {RoleConstants.TYPE_REGULAR, role.getType()};
+			types = new int[] {RoleConstants.TYPE_REGULAR, role.getType()};
 		}
 		%>
 
@@ -59,7 +61,7 @@ String name = role.getName();
 			modelResource="<%= Role.class.getName() %>"
 			modelResourceDescription="<%= role.getTitle(locale) %>"
 			resourcePrimKey="<%= String.valueOf(role.getRoleId()) %>"
-			roleTypes="<%= roleTypes %>"
+			roleTypes="<%= types %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -72,7 +74,7 @@ String name = role.getName();
 		/>
 	</c:if>
 
-	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= currentRoleType.allowDelete(role) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteRole" var="deleteRoleURL">
 			<portlet:param name="mvcPath" value="/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

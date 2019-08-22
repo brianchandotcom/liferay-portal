@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Eduardo García
@@ -131,7 +132,17 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true);
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", false);
+
+		public static int[] exclusiveStates() {
+			Stream<Status> stream = Arrays.stream(Status.values());
+
+			return stream.filter(
+				Status::isExclusive
+			).mapToInt(
+				Status::getValue
+			).toArray();
+		}
 
 		public static Optional<Status> parse(int value) {
 			for (Status status : values()) {

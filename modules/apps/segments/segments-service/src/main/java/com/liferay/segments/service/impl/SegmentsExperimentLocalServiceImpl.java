@@ -354,14 +354,27 @@ public class SegmentsExperimentLocalServiceImpl
 			SegmentsExperimentConstants.Status.valueOf(newStatusValue);
 
 		if (newStatus.isExclusive()) {
-			SegmentsExperiment segmentsExperiment =
-				segmentsExperimentPersistence.fetchByS_C_C_S_First(
-					segmentsExperienceId, classNameId, classPK,
-					newStatus.getValue(), null);
+			List<SegmentsExperiment> segmentsExperiments =
+				segmentsExperimentPersistence.findByS_C_C_S(
+					new long[] {segmentsExperienceId}, classNameId, classPK,
+					SegmentsExperimentConstants.Status.exclusiveStates());
 
-			if ((segmentsExperiment != null) &&
-				(segmentsExperiment.getSegmentsExperimentId() !=
-					segmentsExperimentId)) {
+			if (segmentsExperiments.isEmpty()) {
+				return;
+			}
+
+			if (segmentsExperiments.size() > 1) {
+				throw new SegmentsExperimentStatusException(
+					String.format(
+						"There are %d segments experiments with exclusive " +
+							"status",
+						segmentsExperiments.size()));
+			}
+
+			SegmentsExperiment segmentsExperiment = segmentsExperiments.get(0);
+
+			if (segmentsExperiment.getSegmentsExperimentId() !=
+					segmentsExperimentId) {
 
 				throw new SegmentsExperimentStatusException(
 					"A segments experiment with status " + newStatus.name() +

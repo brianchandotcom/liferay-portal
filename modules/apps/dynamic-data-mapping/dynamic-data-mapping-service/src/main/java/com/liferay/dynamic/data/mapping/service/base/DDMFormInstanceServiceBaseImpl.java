@@ -18,11 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionPersistence;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -153,19 +149,7 @@ public abstract class DDMFormInstanceServiceBaseImpl
 			workflowDefinitionLinkLocalService;
 
 	@Reference
-	protected DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence;
-
-	@Reference
-	protected DDMFormInstanceRecordFinder ddmFormInstanceRecordFinder;
-
-	@Reference
 	protected DDMFormInstanceVersionPersistence
 		ddmFormInstanceVersionPersistence;
-
-	@Reference
-	protected DDMStructurePersistence ddmStructurePersistence;
-
-	@Reference
-	protected DDMStructureFinder ddmStructureFinder;
 
 }

@@ -64,6 +64,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
+import com.liferay.roles.admin.web.internal.constants.RolesAdminWebKeys;
+import com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.web.internal.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.io.IOException;
 
@@ -209,9 +212,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 			int type = ParamUtil.getInteger(
 				actionRequest, "type", RoleConstants.TYPE_REGULAR);
 
+			RoleTypeContributor roleTypeContributor =
+				_roleTypeContributorProvider.getRoleTypeContributor(type);
+
 			Role role = _roleService.addRole(
-				null, 0, name, titleMap, descriptionMap, type, subtype,
-				serviceContext);
+				roleTypeContributor.getClassName(), 0, name, titleMap,
+				descriptionMap, type, subtype, serviceContext);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -547,6 +553,23 @@ public class RolesAdminPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
 			personalMenuEntryHelper);
+
+		long roleId = ParamUtil.getLong(portletRequest, "roleId");
+		int type = ParamUtil.getInteger(
+			portletRequest, "type", RoleConstants.TYPE_REGULAR);
+
+		Role role = _roleLocalService.fetchRole(roleId);
+
+		if (role != null) {
+			type = role.getType();
+		}
+
+		portletRequest.setAttribute(
+			RolesAdminWebKeys.CURRENT_ROLE_TYPE,
+			_roleTypeContributorProvider.getRoleTypeContributor(type));
+		portletRequest.setAttribute(
+			RolesAdminWebKeys.ROLE_TYPES,
+			_roleTypeContributorProvider.getRoleTypeContributors());
 	}
 
 	@Reference(unbind = "-")
@@ -709,6 +732,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 	private ResourcePermissionService _resourcePermissionService;
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
+
 	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
 		_serviceTrackerList;
 	private UserService _userService;

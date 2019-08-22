@@ -1,17 +1,14 @@
-@import 'bourbon';
-@import 'mixins';
-
 body.open-admin-panel {
 	&,
 	.control-menu,
 	.affix {
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			padding-right: $admin-panel-width;
 		}
 	}
 
 	.control-menu-level-2 {
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			right: $admin-panel-width;
 		}
 	}
@@ -19,7 +16,7 @@ body.open-admin-panel {
 
 body.open-admin-panel,
 body.sidenav-transition {
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		overflow-x: hidden;
 	}
 }

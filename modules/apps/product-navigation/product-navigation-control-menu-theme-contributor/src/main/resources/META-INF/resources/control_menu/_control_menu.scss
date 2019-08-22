@@ -17,7 +17,7 @@
 			margin-top: -$has-control-menu-margin-top-mobile;
 		}
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			margin-top: $has-control-menu-margin-top-desktop;
 
 			.portlet-boundary > span:first-child {
@@ -57,7 +57,7 @@
 						$has-customization-menu-margin-top-mobile);
 		}
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			margin-top: (
 				$has-control-menu-margin-top-desktop +
 					$has-customization-menu-margin-top-desktop
@@ -111,7 +111,7 @@ a.control-menu-icon,
 	> .container-fluid {
 		padding: 8px;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			padding: 12px;
 		}
 	}
@@ -145,24 +145,24 @@ a.control-menu-icon,
 }
 
 .control-menu-level-1-nav {
-	@include display(flex);
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 
 	> li > .control-menu-nav > .control-menu-nav-item {
-		@include xs {
+		@include media-breakpoint-up(xs) {
 			margin-left: 4px;
 			margin-right: 4px;
 		}
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			margin-left: 8px;
 			margin-right: 8px;
 		}
 	}
 
 	> .control-menu-nav-item {
-		@include align-self(center);
+		align-self: center;
 	}
 }
 
@@ -192,7 +192,7 @@ a.control-menu-icon,
 		text-transform: none;
 	}
 
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		left: 0;
 		position: absolute;
 		right: 0;
@@ -203,7 +203,7 @@ a.control-menu-icon,
 		}
 	}
 
-	@include media-query(null, $screen-xs-max) {
+	@include media-breakpoint-down(md) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -233,11 +233,11 @@ a.control-menu-icon,
 }
 
 .control-menu-level-2-nav {
-	@include display(flex);
-	@include flex-wrap(wrap);
-	@include justify-content(space-between);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 
-	@include media-query(null, $screen-xs-max) {
+	@include media-breakpoint-down(md) {
 		> .control-menu-nav-item {
 			margin-bottom: 55px;
 		}
@@ -259,9 +259,8 @@ a.control-menu-icon,
 }
 
 .control-menu-nav {
-	@include align-items(center);
-	@include display(flex);
-
+	align-items: center;
+	display: flex;
 	font-size: 16px;
 	list-style: none;
 	margin-bottom: 0;
@@ -273,10 +272,9 @@ a.control-menu-icon,
 }
 
 .control-menu-nav-item-content {
-	@include display(flex);
-	@include flex(1 1 0);
-	@include justify-content(center);
-
+	display: flex;
+	flex: 1 1 0;
+	justify-content: center;
 	min-width: 64px;
 	width: 0;
 
@@ -288,9 +286,7 @@ a.control-menu-icon,
 		overflow: hidden;
 		text-overflow: ellipsis;
 		top: 50%;
-
-		@include transform(translateY(-50%));
-
+		transform: translateY(-50%);
 		white-space: nowrap;
 	}
 
@@ -300,7 +296,7 @@ a.control-menu-icon,
 }
 
 .control-menu-nav-item-field {
-	@include flex(0 1 auto);
+	flex: 0 1 auto;
 }
 
 .live-link,
@@ -343,14 +339,13 @@ a.control-menu-icon,
 }
 
 .tools-control-group {
-	@include flex(1);
-	@include flex-wrap(wrap);
-
+	flex: 1;
+	flex-wrap: wrap;
 	min-width: 50px;
 
 	> .control-menu-nav {
-		@include flex-wrap(wrap);
-		@include justify-content(center);
+		flex-wrap: wrap;
+		justify-content: center;
 
 		> li > .lfr-portal-tooltip > .control-menu-icon {
 			@extend %control-menu-icon-monospaced;

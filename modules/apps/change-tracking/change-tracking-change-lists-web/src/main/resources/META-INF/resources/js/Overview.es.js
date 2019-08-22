@@ -18,7 +18,6 @@ import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
 import templates from './Overview.soy';
-import {PublishChangeList} from './PublishChangeList.es';
 
 const SPLIT_REGEX = /({\d+})/g;
 
@@ -28,22 +27,6 @@ const SPLIT_REGEX = /({\d+})/g;
 class Overview extends PortletBase {
 	created() {
 		this._render();
-
-		this._fetchProductionCollection();
-	}
-
-	_fetchProductionCollection() {
-		const url =
-			this.urlCollectionsBase +
-			'?companyId=' +
-			Liferay.ThemeDisplay.getCompanyId() +
-			'&type=production';
-
-		fetch(url)
-			.then(r => r.json())
-			.then(response => {
-				this.productionCTCollectionId = response[0].ctCollectionId;
-			});
 	}
 
 	_fetchAll(urls) {
@@ -71,25 +54,6 @@ class Overview extends PortletBase {
 					})
 			)
 		);
-	}
-
-	_handleClickPublish() {
-		new PublishChangeList({
-			changeListDescription: this.descriptionActiveChangeList,
-			changeListHasCollision: this.hasCollision,
-			changeListName: this.headerTitleActiveChangeList,
-			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
-			urlChangeListsHistory: this.urlChangeListsHistory,
-			urlCheckoutProduction:
-				this.urlCollectionsBase +
-				'/' +
-				this.productionCTCollectionId +
-				'/checkout?companyId=' +
-				Liferay.ThemeDisplay.getCompanyId() +
-				'&userId=' +
-				Liferay.ThemeDisplay.getUserId(),
-			urlPublishChangeList: this.urlActiveCollectionPublish
-		});
 	}
 
 	_handleClickTrash() {
@@ -161,12 +125,6 @@ class Overview extends PortletBase {
 		}
 
 		if (activeCollection !== undefined) {
-			this.urlActiveCollectionPublish = activeCollection.links.find(
-				function(link) {
-					return link.rel === 'publish';
-				}
-			);
-
 			// Changes
 
 			this.changes = {
@@ -436,8 +394,6 @@ Overview.STATE = {
 	 */
 	initialFetch: Config.bool().value(false),
 
-	productionCTCollectionId: Config.number(),
-
 	productionFound: Config.bool().value(false),
 
 	/**
@@ -464,7 +420,15 @@ Overview.STATE = {
 	 */
 	spritemap: Config.string().required(),
 
-	urlActiveCollectionPublish: Config.object(),
+	/**
+	 * URL to publish the current active collection.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	urlActiveCollectionPublish: Config.string().required(),
 
 	/**
 	 * The URL for the REST service to the change entries.

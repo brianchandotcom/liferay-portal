@@ -34,6 +34,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -127,6 +129,8 @@ public class ChangeListsDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
+			"urlActiveCollectionPublish", _getPublishActiveCTCollectionURL()
+		).put(
 			"urlCheckoutProduction",
 			getCheckoutURL(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
@@ -186,26 +190,18 @@ public class ChangeListsDisplayContext {
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
 
-		StringBundler sb = new StringBundler(5);
-
 		if (_confirmationEnabled) {
-			sb.append("javascript:confirm('");
-			sb.append(
+			return StringBundler.concat(
+				"javascript:confirm('",
 				LanguageUtil.format(
 					_httpServletRequest,
 					"do-you-want-to-switch-to-x-change-list",
-					confirmationMessageArg, translateArg));
-			sb.append("') && Liferay.Util.navigate('");
-			sb.append(checkoutURL);
-			sb.append("')");
-		}
-		else {
-			sb.append("javascript:Liferay.Util.navigate('");
-			sb.append(checkoutURL);
-			sb.append("');");
+					confirmationMessageArg, translateArg),
+				"') && Liferay.Util.navigate('", checkoutURL, "')");
 		}
 
-		return sb.toString();
+		return StringBundler.concat(
+			"javascript:Liferay.Util.navigate('", checkoutURL, "');");
 	}
 
 	public String getConfirmationMessage(String ctCollectionName) {
@@ -313,6 +309,28 @@ public class ChangeListsDisplayContext {
 				_themeDisplay.getCompanyId());
 
 		return productionCTCollectionOptional.orElse(null);
+	}
+
+	public String getPublishURL(long ctCollectionId, String name) {
+		PortletURL publishURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.ACTION_PHASE);
+
+		publishURL.setParameter(
+			ActionRequest.ACTION_NAME, "/change_lists/publish_ct_collection");
+
+		publishURL.setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId));
+		publishURL.setParameter("name", name);
+
+		return StringBundler.concat(
+			"javascript:confirm('",
+			HtmlUtil.escapeJS(
+				LanguageUtil.format(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-publish-x-change-list", name,
+					false)),
+			"') && Liferay.Util.navigate('", publishURL, "')");
 	}
 
 	public SearchContainer<CTCollection> getSearchContainer() {
@@ -687,6 +705,17 @@ public class ChangeListsDisplayContext {
 		portletURL.setParameter("select", "true");
 
 		return portletURL;
+	}
+
+	private String _getPublishActiveCTCollectionURL() throws PortalException {
+		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return null;
+		}
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollectionId);
+
+		return getPublishURL(_ctCollectionId, ctCollection.getName());
 	}
 
 	private static final OrderByComparator<CTCollection>

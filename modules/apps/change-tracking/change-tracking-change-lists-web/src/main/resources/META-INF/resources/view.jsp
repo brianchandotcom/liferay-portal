@@ -64,7 +64,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 					String ctCollectionName = production ? "work-on-production" : curCTCollection.getName();
 
 					boolean activeChangeList = changeListsDisplayContext.isChangeListActive(ctCollectionId);
-					String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, curCTCollection.getName(), production ? true : false);
+					String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, ctCollectionName, production ? true : false);
 					%>
 
 					<c:choose>
@@ -85,7 +85,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 										<span class="work-on-production"><liferay-ui:message key="work-on-production" /></span>
 									</c:when>
 									<c:otherwise>
-										<%= HtmlUtil.escape(curCTCollection.getName()) %>
+										<%= HtmlUtil.escape(ctCollectionName) %>
 									</c:otherwise>
 								</c:choose>
 							</liferay-ui:search-container-column-text>
@@ -166,15 +166,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 								<c:choose>
 									<c:when test="<%= changeListsDisplayContext.hasCTEntries(ctCollectionId) %>">
-										<liferay-portlet:renderURL var="publishModalURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-											<liferay-portlet:param name="mvcRenderCommandName" value="/change_lists/publish_modal" />
-											<liferay-portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
-										</liferay-portlet:renderURL>
-
 										<liferay-ui:icon
 											message="publish"
-											onClick='<%= "javascript:" + renderResponse.getNamespace() + "handleClickPublish(\'" + publishModalURL.toString() + "\', \'" + changeListsDisplayContext.getConfirmationMessage(ctCollectionName) +"\');" %>'
-											url="#"
+											url="<%= changeListsDisplayContext.getPublishURL(ctCollectionId, ctCollectionName) %>"
 										/>
 									</c:when>
 									<c:otherwise>
@@ -191,7 +185,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 								</liferay-portlet:actionURL>
 
 								<liferay-ui:icon-delete
-									confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", curCTCollection.getName()) %>'
+									confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", ctCollectionName) %>'
 									message="delete"
 									url="<%= deleteCollectionURL %>"
 								/>
@@ -284,10 +278,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 						<%
 						long ctCollectionId = curCTCollection.getCtCollectionId();
+						String ctCollectionName = curCTCollection.getName();
 						boolean production = curCTCollection.isProduction();
 
 						boolean activeChangeList = changeListsDisplayContext.isChangeListActive(ctCollectionId);
-						String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, curCTCollection.getName(), false);
+						String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, ctCollectionName, false);
 						%>
 
 						<c:if test="<%= !production %>">
@@ -297,7 +292,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 										<div class="card-col-content lfr-card-details-column">
 											<a href="<%= !activeChangeList ? checkoutURL : portletURL.toString() %>">
 												<span class="card-h3" data-qa-id="headerSubTitle">
-													<%= HtmlUtil.escape(curCTCollection.getName()) %>
+													<%= HtmlUtil.escape(ctCollectionName) %>
 												</span>
 											</a>
 
@@ -388,15 +383,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 												<c:choose>
 													<c:when test="<%= changeListsDisplayContext.hasCTEntries(ctCollectionId) %>">
-														<liferay-portlet:renderURL var="publishModalURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-															<liferay-portlet:param name="mvcRenderCommandName" value="/change_lists/publish_modal" />
-															<liferay-portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
-														</liferay-portlet:renderURL>
-
 														<liferay-ui:icon
 															message="publish"
-															onClick='<%= "javascript:" + renderResponse.getNamespace() + "handleClickPublish(\'" + publishModalURL.toString() + "\');" %>'
-															url="#"
+															url="<%= changeListsDisplayContext.getPublishURL(ctCollectionId, ctCollectionName) %>"
 														/>
 													</c:when>
 													<c:otherwise>
@@ -413,7 +402,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 												</liferay-portlet:actionURL>
 
 												<liferay-ui:icon-delete
-													confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", curCTCollection.getName()) %>'
+													confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", ctCollectionName) %>'
 													message="delete"
 													url="<%= deleteCollectionURL %>"
 												/>
@@ -436,16 +425,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 <script>
 	Liferay.on(
-		'<portlet:namespace/>refreshChangeListHistory',
-		function(event) {
-			setTimeout(
-				function() {
-					Liferay.Util.navigate('<%= PortletURLFactoryUtil.create(request, CTPortletKeys.CHANGE_LISTS_HISTORY, PortletRequest.RENDER_PHASE) %>');
-				},
-				1000);
-	});
-
-	Liferay.on(
 		'<portlet:namespace/>refreshSelectChangeList',
 		function(event) {
 			setTimeout(
@@ -464,30 +443,5 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 	if (<%= ParamUtil.getBoolean(request, "refresh") %>) {
 		Liferay.fire('<portlet:namespace/>refreshSelectChangeList');
-	}
-
-	function <portlet:namespace/>handleClickPublish(url) {
-		this.event.preventDefault();
-		this.event.stopPropagation();
-
-		Liferay.Menu._INSTANCE._closeActiveMenu();
-
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					center: true,
-					destroyOnHide: false,
-					height: 389,
-					modal: true,
-					width: 500
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer change-list-publish-modal'
-				},
-				id: '<portlet:namespace/>publishIconDialog',
-				title: '<%= LanguageUtil.get(request, "publish-change-list") %>',
-				uri: url,
-				zIndex: 10000
-			});
 	}
 </script>

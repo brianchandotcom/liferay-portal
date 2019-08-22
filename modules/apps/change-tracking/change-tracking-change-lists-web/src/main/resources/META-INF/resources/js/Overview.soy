@@ -5,8 +5,9 @@
  */
 {template .render}
 	{@param spritemap: string}
-	{@param urlProductionView: string}
+	{@param urlActiveCollectionPublish: string}
 	{@param urlCheckoutProduction: string}
+	{@param urlProductionView: string}
 	{@param urlSelectChangeList: string}
 	{@param? changeEntries: list<[
 		title: string,
@@ -39,7 +40,6 @@
 		userPortraitURL: string,
 		userName: string
 	]}
-	{@param? _handleClickPublish: any}
 	{@param? _handleClickTrash: any}
 
 	{let $headerButtonLabel kind="text"}
@@ -101,7 +101,7 @@
 						{/param}
 						{param headerTitle: $headerTitleActiveChangeList /}
 						{param spritemap: $spritemap /}
-						{param _handleClickPublish: $_handleClickPublish /}
+						{param urlActiveCollectionPublish: $urlActiveCollectionPublish /}
 						{param _handleClickTrash: $_handleClickTrash /}
 					{/call}
 				</div>
@@ -153,7 +153,7 @@
  * This template renders the component's whole content
  */
 {template .overviewCard}
-	{@param  spritemap: string}
+	{@param spritemap: string}
 	{@param? cardEmpty: bool}
 	{@param? cardStateColor: string}
 	{@param? changeEntries: list<[
@@ -199,9 +199,9 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
+	{@param? urlActiveCollectionPublish: string}
 	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
-	{@param? _handleClickPublish: any}
 	{@param? _handleClickTrash: any}
 
 	<div class="overview-card-sheet {$cardStateColor}">
@@ -218,7 +218,7 @@
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
 			{param spritemap: $spritemap /}
-			{param _handleClickPublish: $_handleClickPublish /}
+			{param urlActiveCollectionPublish: $urlActiveCollectionPublish /}
 			{param _handleClickTrash: $_handleClickTrash /}
 		{/call}
 
@@ -243,7 +243,7 @@
 {/template}
 
 {template .overviewCardHeader}
-	{@param  spritemap: string}
+	{@param spritemap: string}
 	{@param? cardEmpty: bool}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
@@ -261,9 +261,9 @@
 	]}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
+	{@param? urlActiveCollectionPublish: string}
 	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
-	{@param? _handleClickPublish: any}
 	{@param? _handleClickTrash: any}
 
 	{let $twoColumns: $headerButton /}
@@ -314,9 +314,11 @@
 							{if $headerButton}
 								<div class="btn-group-item">
 									<div class="flex-col">
-										<button class="btn btn-default btn-primary" {if $headerButtonDisabled} disabled {/if} data-qa-id="headerButton" id="" onclick="{$_handleClickPublish}" type="button">
-											<span class="lfr-btn-label">{$headerButton.label}</span>
-										</button>
+										<a href="{$urlActiveCollectionPublish}">
+											<button class="btn btn-default btn-primary" {if $headerButtonDisabled} disabled {/if} data-qa-id="headerButton" id="" type="button">
+												<span class="lfr-btn-label">{$headerButton.label}</span>
+											</button>
+										</a>
 									</div>
 								</div>
 							{/if}

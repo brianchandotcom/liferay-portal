@@ -41,11 +41,12 @@ import java.io.OutputStream;
 
 import java.net.URL;
 
-import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,10 +59,13 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiPredicate;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -571,34 +575,41 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			return Collections.emptyList();
 		}
 
-		List<File> files = new ArrayList<>();
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				dirPath)) {
-
-			for (Path path : directoryStream) {
-				String pathName = StringUtil.toLowerCase(
-					String.valueOf(path.getFileName()));
-
-				if (!pathName.endsWith(extension)) {
-					continue;
-				}
-
-				if (checkFileName && !_isValid(pathName)) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Override file " + path +
-								" has an invalid name and will be ignored");
-					}
-
-					continue;
-				}
-
-				files.add(path.toFile());
+		BiPredicate<Path, BasicFileAttributes> matcher = (path, attributes) -> {
+			if (attributes.isDirectory()) {
+				return false;
 			}
-		}
 
-		return files;
+			String pathName = StringUtil.toLowerCase(
+				String.valueOf(path.getFileName()));
+
+			if (!pathName.endsWith(extension)) {
+				return false;
+			}
+
+			if (checkFileName && !_isValid(pathName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Override file " + path +
+							" has an invalid name and will be ignored");
+				}
+
+				return false;
+			}
+
+			return true;
+		};
+
+		try (Stream<Path> stream = Files.find(
+				dirPath, Integer.MAX_VALUE, matcher,
+				FileVisitOption.FOLLOW_LINKS)) {
+
+			return stream.map(
+				Path::toFile
+			).collect(
+				Collectors.toList()
+			);
+		}
 	}
 
 	private Set<String> _toFileNames(List<File> jarFiles, List<File> warFiles) {

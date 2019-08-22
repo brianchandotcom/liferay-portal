@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMStructureFinderBaseImpl
+public abstract class DDMStructureFinderBaseImpl
 	extends BasePersistenceImpl<DDMStructure> {
 
 	public DDMStructureFinderBaseImpl() {
@@ -45,33 +51,49 @@ public class DDMStructureFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getDDMStructurePersistence().getBadColumnNames();
+		return ddmStructurePersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the ddm structure persistence.
-	 *
-	 * @return the ddm structure persistence
-	 */
-	public DDMStructurePersistence getDDMStructurePersistence() {
-		return ddmStructurePersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ddm structure persistence.
-	 *
-	 * @param ddmStructurePersistence the ddm structure persistence
-	 */
-	public void setDDMStructurePersistence(
-		DDMStructurePersistence ddmStructurePersistence) {
-
-		this.ddmStructurePersistence = ddmStructurePersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = DDMStructurePersistence.class)
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected DDMStructurePersistence ddmStructurePersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(DDMPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -35,11 +35,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -48,6 +47,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm template version local service.
@@ -63,7 +63,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class DDMTemplateVersionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMTemplateVersionLocalService, IdentifiableOSGiService {
+	implements DDMTemplateVersionLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -339,78 +340,18 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		return ddmTemplateVersionPersistence.update(ddmTemplateVersion);
 	}
 
-	/**
-	 * Returns the ddm template version local service.
-	 *
-	 * @return the ddm template version local service
-	 */
-	public DDMTemplateVersionLocalService getDDMTemplateVersionLocalService() {
-		return ddmTemplateVersionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMTemplateVersionLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm template version local service.
-	 *
-	 * @param ddmTemplateVersionLocalService the ddm template version local service
-	 */
-	public void setDDMTemplateVersionLocalService(
-		DDMTemplateVersionLocalService ddmTemplateVersionLocalService) {
-
-		this.ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm template version persistence.
-	 *
-	 * @return the ddm template version persistence
-	 */
-	public DDMTemplateVersionPersistence getDDMTemplateVersionPersistence() {
-		return ddmTemplateVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm template version persistence.
-	 *
-	 * @param ddmTemplateVersionPersistence the ddm template version persistence
-	 */
-	public void setDDMTemplateVersionPersistence(
-		DDMTemplateVersionPersistence ddmTemplateVersionPersistence) {
-
-		this.ddmTemplateVersionPersistence = ddmTemplateVersionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMTemplateVersion",
-			ddmTemplateVersionLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.dynamic.data.mapping.model.DDMTemplateVersion");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmTemplateVersionLocalService =
+			(DDMTemplateVersionLocalService)aopProxy;
 	}
 
 	/**
@@ -456,20 +397,13 @@ public abstract class DDMTemplateVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMTemplateVersionLocalService.class)
 	protected DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
 
-	@BeanReference(type = DDMTemplateVersionPersistence.class)
+	@Reference
 	protected DDMTemplateVersionPersistence ddmTemplateVersionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

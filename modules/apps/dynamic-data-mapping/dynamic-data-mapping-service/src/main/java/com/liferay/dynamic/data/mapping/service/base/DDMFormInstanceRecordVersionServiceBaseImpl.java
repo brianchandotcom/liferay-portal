@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm form instance record version remote service.
@@ -43,115 +44,26 @@ import javax.sql.DataSource;
  */
 public abstract class DDMFormInstanceRecordVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMFormInstanceRecordVersionService, IdentifiableOSGiService {
+	implements DDMFormInstanceRecordVersionService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>DDMFormInstanceRecordVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the ddm form instance record version local service.
-	 *
-	 * @return the ddm form instance record version local service
-	 */
-	public com.liferay.dynamic.data.mapping.service.
-		DDMFormInstanceRecordVersionLocalService
-			getDDMFormInstanceRecordVersionLocalService() {
-
-		return ddmFormInstanceRecordVersionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMFormInstanceRecordVersionService.class,
+			IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm form instance record version local service.
-	 *
-	 * @param ddmFormInstanceRecordVersionLocalService the ddm form instance record version local service
-	 */
-	public void setDDMFormInstanceRecordVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.
-			DDMFormInstanceRecordVersionLocalService
-				ddmFormInstanceRecordVersionLocalService) {
-
-		this.ddmFormInstanceRecordVersionLocalService =
-			ddmFormInstanceRecordVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm form instance record version remote service.
-	 *
-	 * @return the ddm form instance record version remote service
-	 */
-	public DDMFormInstanceRecordVersionService
-		getDDMFormInstanceRecordVersionService() {
-
-		return ddmFormInstanceRecordVersionService;
-	}
-
-	/**
-	 * Sets the ddm form instance record version remote service.
-	 *
-	 * @param ddmFormInstanceRecordVersionService the ddm form instance record version remote service
-	 */
-	public void setDDMFormInstanceRecordVersionService(
-		DDMFormInstanceRecordVersionService
-			ddmFormInstanceRecordVersionService) {
-
-		this.ddmFormInstanceRecordVersionService =
-			ddmFormInstanceRecordVersionService;
-	}
-
-	/**
-	 * Returns the ddm form instance record version persistence.
-	 *
-	 * @return the ddm form instance record version persistence
-	 */
-	public DDMFormInstanceRecordVersionPersistence
-		getDDMFormInstanceRecordVersionPersistence() {
-
-		return ddmFormInstanceRecordVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm form instance record version persistence.
-	 *
-	 * @param ddmFormInstanceRecordVersionPersistence the ddm form instance record version persistence
-	 */
-	public void setDDMFormInstanceRecordVersionPersistence(
-		DDMFormInstanceRecordVersionPersistence
-			ddmFormInstanceRecordVersionPersistence) {
-
-		this.ddmFormInstanceRecordVersionPersistence =
-			ddmFormInstanceRecordVersionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmFormInstanceRecordVersionService =
+			(DDMFormInstanceRecordVersionService)aopProxy;
 	}
 
 	/**
@@ -197,24 +109,19 @@ public abstract class DDMFormInstanceRecordVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService.class
-	)
+	@Reference
 	protected com.liferay.dynamic.data.mapping.service.
 		DDMFormInstanceRecordVersionLocalService
 			ddmFormInstanceRecordVersionLocalService;
 
-	@BeanReference(type = DDMFormInstanceRecordVersionService.class)
 	protected DDMFormInstanceRecordVersionService
 		ddmFormInstanceRecordVersionService;
 
-	@BeanReference(type = DDMFormInstanceRecordVersionPersistence.class)
+	@Reference
 	protected DDMFormInstanceRecordVersionPersistence
 		ddmFormInstanceRecordVersionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

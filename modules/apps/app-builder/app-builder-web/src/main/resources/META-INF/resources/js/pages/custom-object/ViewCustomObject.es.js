@@ -12,16 +12,33 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 import ListApps from '../app/ListApps.es';
 import EditFormView from '../form-view/EditFormView.es';
 import ListFormViews from '../form-view/ListFormViews.es';
+import {useTitle} from '../../hooks/index.es';
 import EditTableView from '../table-view/EditTableView.es';
 import ListTableViews from '../table-view/ListTableViews.es';
+import {getItem} from '../../utils/client.es';
 
-export default ({match: {path}}) => {
+export default ({
+	match: {
+		params: {dataDefinitionId},
+		path
+	}
+}) => {
+	const [title, setTitle] = useState('');
+
+	useEffect(() => {
+		getItem(
+			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+		).then(dataDefinition => setTitle(dataDefinition.name.en_US));
+	}, [dataDefinitionId]);
+
+	useTitle(title);
+
 	return (
 		<Switch>
 			<Route

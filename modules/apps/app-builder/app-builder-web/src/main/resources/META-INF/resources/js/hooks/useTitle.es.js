@@ -14,17 +14,17 @@
 
 import {useEffect, useRef} from 'react';
 
-const parentSelector = 'li.control-menu-nav-category > ul > li';
-const titleSelector = `${parentSelector} > span.control-menu-level-1-heading`;
-const tooltipSelector = `${parentSelector} > span.taglib-icon-help`;
-const toolbarSelector =
+const PARENT_SELECTOR = 'li.control-menu-nav-category > ul > li';
+const TITLE_SELECTOR = `${PARENT_SELECTOR} > span.control-menu-level-1-heading`;
+const TOOLBAR_SELECTOR =
 	'li.control-menu-nav-category.tools-control-group > ul > li';
+const TOOLTIP_SELECTOR = `${PARENT_SELECTOR} > span.taglib-icon-help`;
 
 export default title => {
 	const previousToolbar = useRef();
 
 	useEffect(() => {
-		const toolbarElement = document.querySelector(toolbarSelector);
+		const toolbarElement = document.querySelector(TOOLBAR_SELECTOR);
 
 		if (toolbarElement) {
 			previousToolbar.current = toolbarElement.cloneNode(true);
@@ -32,7 +32,7 @@ export default title => {
 
 		return () => {
 			if (previousToolbar.current) {
-				const toolbarElement = document.querySelector(toolbarSelector);
+				const toolbarElement = document.querySelector(TOOLBAR_SELECTOR);
 
 				if (toolbarElement) {
 					toolbarElement.parentNode.replaceChild(
@@ -45,13 +45,13 @@ export default title => {
 	}, []);
 
 	useEffect(() => {
-		const titleElement = document.querySelector(titleSelector);
+		const titleElement = document.querySelector(TITLE_SELECTOR);
 
 		if (titleElement) {
 			titleElement.innerText = title;
 		}
 
-		const tooltipElement = document.querySelector(tooltipSelector);
+		const tooltipElement = document.querySelector(TOOLTIP_SELECTOR);
 
 		if (tooltipElement) {
 			tooltipElement.remove();

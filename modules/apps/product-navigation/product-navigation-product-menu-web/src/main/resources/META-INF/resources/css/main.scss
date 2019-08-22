@@ -1,5 +1,7 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'bootstrap/functions';
+@import 'bootstrap/variables';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 .product-menu {
 	.sidebar-header {
@@ -8,7 +10,7 @@
 		padding-right: 9px;
 		padding-top: 8px;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			padding-bottom: 12px;
 			padding-left: 24px;
 			padding-top: 12px;
@@ -32,11 +34,11 @@
 		right: 0;
 		top: 55px;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			top: 64px;
 		}
 
-		@include media-query(null, 320px) {
+		@include media-breakpoint-down(320px) {
 			overflow: visible;
 			position: static;
 		}
@@ -147,9 +149,9 @@
 		left: 0;
 		position: absolute;
 		top: 0;
+		transition-delay: 0.2s;
 
-		@include transition(all 0.6s $ease-out-quart);
-		@include transition-delay(0.2s);
+		@include transition(all 0.6s cubic-bezier(0.165,  0.840, 0.440, 1.000));
 	}
 
 	.cn {
@@ -160,11 +162,10 @@
 		position: absolute;
 		right: 0;
 		top: -1px;
-
-		@include transition(all 0.3s $ease-out-quart);
-		@include transition-delay(0.2s);
-
+		transition-delay: 0.2s;
 		width: 15px;
+
+		@include transition(all 0.3s cubic-bezier(0.165,  0.840, 0.440, 1.000));
 	}
 }
 

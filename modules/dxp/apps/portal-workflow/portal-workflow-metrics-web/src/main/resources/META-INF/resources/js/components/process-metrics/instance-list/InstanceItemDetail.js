@@ -1,238 +1,211 @@
+import React, {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../AppContext';
 import Icon from '../../../shared/components/Icon';
+import {InstanceListContext} from './store/InstanceListStore';
 import moment from '../../../shared/util/moment';
-import React from 'react';
 
-class InstanceItemDetail extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-	}
+function InstanceItemDetail({processId}) {
+	const {client} = useContext(AppContext);
+	const [instance, setInstance] = useState({});
+	const {instanceId} = useContext(InstanceListContext);
 
-	componentWillReceiveProps(nextProps) {
-		const {instanceId, processId} = nextProps;
-
+	useEffect(() => {
 		if (instanceId) {
-			this.fetchData(instanceId, processId).then(data =>
-				this.setState(data)
-			);
+			fetchData(instanceId, processId).then(data => setInstance(data));
 		}
-	}
+	}, [instanceId]);
 
-	fetchData(instanceId, processId) {
-		return this.context.client
+	const fetchData = (instanceId, processId) => {
+		return client
 			.get(`/processes/${processId}/instances/${instanceId}`)
 			.then(({data}) => data);
+	};
+
+	const {
+		assetTitle,
+		assetType,
+		dateCompletion,
+		dateCreated,
+		slaResults = [],
+		slaStatus,
+		status,
+		taskNames = [],
+		userName
+	} = instance;
+
+	const slaResolved = slaResults.filter(({status}) => status === 'Stopped');
+	const slaOpen = slaResults.filter(({status}) =>
+		['Running', 'Paused'].includes(status)
+	);
+
+	let styleName = 'text-danger';
+
+	const completed = status === 'Completed';
+	const empty = slaResults.length === 0;
+	const overdue = slaStatus === 'Overdue';
+
+	if (status === 'Pending' && slaStatus === 'OnTime') {
+		styleName = 'text-success';
+	} else if (status === 'Completed') {
+		styleName = 'text-secondary';
+	} else if (empty) {
+		styleName = 'text-info';
 	}
 
-	render() {
-		const {instanceId} = this.props;
-		const {
-			assetTitle,
-			assetType,
-			dateCompletion,
-			dateCreated,
-			slaResults = [],
-			slaStatus,
-			status,
-			taskNames = [],
-			userName
-		} = this.state;
+	let iconTitleName = 'check-circle';
 
-		const slaResolved = slaResults.filter(
-			({status}) => status === 'Stopped'
-		);
-		const slaOpen = slaResults.filter(({status}) =>
-			['Running', 'Paused'].includes(status)
-		);
+	if (empty) {
+		iconTitleName = 'hr';
+	} else if (overdue) {
+		iconTitleName = 'exclamation-circle';
+	}
 
-		let styleName = 'text-danger';
-
-		const completed = status === 'Completed';
-		const empty = slaResults.length === 0;
-		const overdue = slaStatus === 'Overdue';
-
-		if (status === 'Pending' && slaStatus === 'OnTime') {
-			styleName = 'text-success';
-		} else if (status === 'Completed') {
-			styleName = 'text-secondary';
-		} else if (empty) {
-			styleName = 'text-info';
-		}
-
-		let iconTitleName = 'check-circle';
-
-		if (empty) {
-			iconTitleName = 'hr';
-		} else if (overdue) {
-			iconTitleName = 'exclamation-circle';
-		}
-
-		return (
-			<div
-				aria-labelledby="instanceDetailModalLabel"
-				className="fade modal"
-				id="instanceDetailModal"
-				role="dialog"
-				style={{display: 'none'}}
-				tabIndex="-1"
-			>
-				<div className="modal-dialog modal-lg">
-					<div className="modal-content">
-						<div className="modal-header">
-							<div
-								className="font-weight-medium modal-title"
-								id="instanceDetailModalLabel"
+	return (
+		<div
+			aria-labelledby="instanceDetailModalLabel"
+			className="fade modal"
+			id="instanceDetailModal"
+			role="dialog"
+			style={{display: 'none'}}
+			tabIndex="-1"
+		>
+			<div className="modal-dialog modal-lg">
+				<div className="modal-content">
+					<div className="modal-header">
+						<div
+							className="font-weight-medium modal-title"
+							id="instanceDetailModalLabel"
+						>
+							<span
+								className={`modal-title-indicator ${styleName}`}
 							>
-								<span
-									className={`modal-title-indicator ${styleName}`}
-								>
-									<Icon iconName={iconTitleName} />
-								</span>
+								<Icon iconName={iconTitleName} />
+							</span>
 
+							{`${Liferay.Language.get('item')} #${instanceId}`}
+						</div>
+						<button
+							aria-labelledby="Close"
+							className="close"
+							data-dismiss="modal"
+							role="button"
+							type="button"
+						>
+							<Icon iconName="times" />
+						</button>
+					</div>
+					<div className="modal-body">
+						<InstanceItemDetail.SectionTitle>
+							{Liferay.Language.get('due-date-by-sla')}
+						</InstanceItemDetail.SectionTitle>
+
+						{slaResults.length === 0 && (
+							<p>
+								<span className="font-weight-medium text-muted">
+									{Liferay.Language.get(
+										'no-sla-records-for-this-item'
+									)}
+								</span>
+							</p>
+						)}
+
+						{!!slaOpen.length && (
+							<InstanceItemDetail.SectionSubTitle>
 								{`${Liferay.Language.get(
-									'item'
-								)} #${instanceId}`}
-							</div>
-							<button
-								aria-labelledby="Close"
-								className="close"
-								data-dismiss="modal"
-								role="button"
-								type="button"
-							>
-								<Icon iconName="times" />
-							</button>
-						</div>
-						<div className="modal-body">
-							<InstanceItemDetail.SectionTitle>
-								{Liferay.Language.get('due-date-by-sla')}
-							</InstanceItemDetail.SectionTitle>
+									'open'
+								).toUpperCase()} (${slaOpen.length})`}
+							</InstanceItemDetail.SectionSubTitle>
+						)}
 
-							{slaResults.length === 0 && (
-								<p>
-									<span className="font-weight-medium text-muted">
-										{Liferay.Language.get(
-											'no-sla-records-for-this-item'
-										)}
-									</span>
-								</p>
-							)}
+						{slaOpen.map(item => (
+							<InstanceItemDetail.Item key={item.id} {...item} />
+						))}
 
-							{!!slaOpen.length && (
-								<InstanceItemDetail.SectionSubTitle>
-									{`${Liferay.Language.get(
-										'open'
-									).toUpperCase()} (${slaOpen.length})`}
-								</InstanceItemDetail.SectionSubTitle>
-							)}
+						{!!slaResolved.length && (
+							<InstanceItemDetail.SectionSubTitle>
+								{`${Liferay.Language.get(
+									'resolved'
+								).toUpperCase()} (${slaResolved.length})`}
+							</InstanceItemDetail.SectionSubTitle>
+						)}
 
-							{slaOpen.map(item => (
-								<InstanceItemDetail.Item
-									key={item.id}
-									{...item}
-								/>
-							))}
+						{slaResolved.map(item => (
+							<InstanceItemDetail.Item key={item.id} {...item} />
+						))}
 
-							{!!slaResolved.length && (
-								<InstanceItemDetail.SectionSubTitle>
-									{`${Liferay.Language.get(
-										'resolved'
-									).toUpperCase()} (${slaResolved.length})`}
-								</InstanceItemDetail.SectionSubTitle>
-							)}
+						<InstanceItemDetail.SectionTitle className="mt-5">
+							{Liferay.Language.get('process-details')}
+						</InstanceItemDetail.SectionTitle>
 
-							{slaResolved.map(item => (
-								<InstanceItemDetail.Item
-									key={item.id}
-									{...item}
-								/>
-							))}
+						<InstanceItemDetail.SectionAttribute
+							description={Liferay.Language.get('process-status')}
+							detail={status}
+						/>
 
-							<InstanceItemDetail.SectionTitle className="mt-5">
-								{Liferay.Language.get('process-details')}
-							</InstanceItemDetail.SectionTitle>
+						<InstanceItemDetail.SectionAttribute
+							description={Liferay.Language.get('created-by')}
+							detail={userName}
+						/>
 
+						{!!dateCreated && (
 							<InstanceItemDetail.SectionAttribute
 								description={Liferay.Language.get(
-									'process-status'
+									'creation-date'
 								)}
-								detail={status}
-							/>
-
-							<InstanceItemDetail.SectionAttribute
-								description={Liferay.Language.get('created-by')}
-								detail={userName}
-							/>
-
-							{!!dateCreated && (
-								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get(
-										'creation-date'
+								detail={moment
+									.utc(dateCreated)
+									.format(
+										Liferay.Language.get('mmm-dd-yyyy-lt')
 									)}
-									detail={moment
-										.utc(dateCreated)
-										.format(
-											Liferay.Language.get(
-												'mmm-dd-yyyy-lt'
-											)
-										)}
-								/>
-							)}
-
-							<InstanceItemDetail.SectionAttribute
-								description={Liferay.Language.get('asset-type')}
-								detail={assetType}
 							/>
+						)}
 
+						<InstanceItemDetail.SectionAttribute
+							description={Liferay.Language.get('asset-type')}
+							detail={assetType}
+						/>
+
+						<InstanceItemDetail.SectionAttribute
+							description={Liferay.Language.get('asset-title')}
+							detail={assetTitle}
+						/>
+
+						{!completed && (
 							<InstanceItemDetail.SectionAttribute
 								description={Liferay.Language.get(
-									'asset-title'
+									'current-step'
 								)}
-								detail={assetTitle}
+								detail={taskNames.join(', ')}
 							/>
+						)}
 
-							{!completed && (
-								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get(
-										'current-step'
+						{completed && !!dateCompletion && (
+							<InstanceItemDetail.SectionAttribute
+								description={Liferay.Language.get('end-date')}
+								detail={moment
+									.utc(dateCompletion)
+									.format(
+										Liferay.Language.get('mmm-dd-yyyy-lt')
 									)}
-									detail={taskNames.join(', ')}
-								/>
-							)}
+							/>
+						)}
 
-							{completed && !!dateCompletion && (
-								<InstanceItemDetail.SectionAttribute
-									description={Liferay.Language.get(
-										'end-date'
-									)}
-									detail={moment
-										.utc(dateCompletion)
-										.format(
-											Liferay.Language.get(
-												'mmm-dd-yyyy-lt'
-											)
-										)}
-								/>
-							)}
+						<a
+							className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
+							href={`/group/control_panel/manage/-/workflow_instance/view/${instanceId}`}
+							target="_blank"
+						>
+							{Liferay.Language.get('go-to-submission-page')}
 
-							<a
-								className="btn btn-secondary btn-sm mb-1 font-weight-medium mt-3"
-								href={`/group/control_panel/manage/-/workflow_instance/view/${instanceId}`}
-								target="_blank"
-							>
-								{Liferay.Language.get('go-to-submission-page')}
-
-								<span className="inline-item inline-item-after">
-									<Icon iconName="shortcut" />
-								</span>
-							</a>
-						</div>
+							<span className="inline-item inline-item-after">
+								<Icon iconName="shortcut" />
+							</span>
+						</a>
 					</div>
 				</div>
 			</div>
-		);
-	}
+		</div>
+	);
 }
 
 InstanceItemDetail.Item = ({
@@ -323,5 +296,4 @@ InstanceItemDetail.SectionAttribute = ({description, detail}) => {
 	);
 };
 
-InstanceItemDetail.contextType = AppContext;
 export default InstanceItemDetail;

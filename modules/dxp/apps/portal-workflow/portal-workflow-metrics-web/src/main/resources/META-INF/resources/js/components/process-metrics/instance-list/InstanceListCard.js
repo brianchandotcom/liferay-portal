@@ -1,151 +1,108 @@
-import React, {Fragment} from 'react';
-import {AppContext} from '../../AppContext';
-import {completionPeriodKeys} from './filterConstants';
-import {getRequestUrl} from '../../../shared/components/filter/util/filterUtil';
-import {InstanceContext} from './InstanceContext';
+import {
+	InstanceListProvider,
+	InstanceListContext
+} from './store/InstanceListStore';
+import React, {useContext} from 'react';
+import {ErrorContext} from '../../../shared/components/request/Error';
+import {getFiltersParam} from '../../../shared/components/filter/util/filterUtil';
+import {InstanceFiltersProvider} from './store/InstanceFiltersStore';
 import InstanceItemDetail from './InstanceItemDetail';
-import InstanceListFilter from './InstanceListFilter';
+import InstanceListFilters from './InstanceListFilters';
 import InstanceListTable from './InstanceListTable';
 import ListView from '../../../shared/components/list/ListView';
+import {LoadingContext} from '../../../shared/components/request/Loading';
 import PaginationBar from '../../../shared/components/pagination/PaginationBar';
 import ReloadButton from '../../../shared/components/list/ReloadButton';
+import Request from '../../../shared/components/request/Request';
 
-class InstanceListCard extends React.Component {
-	constructor(props) {
-		super(props);
+export function InstanceListCard({page, pageSize, processId, query}) {
+	const filters = getFiltersParam(query);
+	const {
+		slaStatuses = [],
+		statuses = [],
+		taskKeys = [],
+		timeRange = []
+	} = filters;
 
-		this.state = {
-			error: null,
-			items: [],
-			loading: false,
-			totalCount: 0
-		};
-	}
-
-	componentWillMount() {
-		this.loadProcess();
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.loadInstances(nextProps);
-	}
-
-	handleRequestError() {
-		this.setState({
-			error: Liferay.Language.get(
-				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
-			),
-			loading: false
-		});
-	}
-
-	loadInstances(props = this.props) {
-		const {loading} = this.state;
-		const {page, pageSize, processId, query} = props;
-
-		if (loading) {
-			return;
-		}
-
-		const requestUrl = getRequestUrl(
-			query,
-			`/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`,
-			[completionPeriodKeys.allTime]
-		);
-
-		return this.requestData(requestUrl)
-			.then(({items, totalCount}) => {
-				this.setState({
-					items,
-					totalCount
-				});
-			})
-			.catch(this.handleRequestError.bind(this));
-	}
-
-	loadProcess({processId} = this.props) {
-		const {loading} = this.state;
-
-		if (loading) {
-			return;
-		}
-
-		return this.requestData(`/processes/${processId}/title`)
-			.then(data => {
-				this.context.setTitle(
-					`${data}: ${Liferay.Language.get('all-items')}`
-				);
-			})
-			.catch(this.handleRequestError.bind(this));
-	}
-
-	requestData(endpoint) {
-		const {client} = this.context;
-
-		this.setState({
-			loading: true
-		});
-
-		return client.get(endpoint).then(({data}) => {
-			this.setState({
-				error: null,
-				loading: false
-			});
-
-			return data;
-		});
-	}
-
-	setInstanceId(instanceId) {
-		this.setState({instanceId});
-	}
-
-	render() {
-		const {error, instanceId, items = [], loading, totalCount} = this.state;
-		const {page, pageSize, processId, query} = this.props;
-
-		const fetching = !loading && !totalCount;
-
-		return (
-			<Fragment>
-				<InstanceListFilter
+	return (
+		<Request>
+			<InstanceFiltersProvider
+				processId={processId}
+				processStatusKeys={statuses}
+				processStepKeys={taskKeys}
+				slaStatusKeys={slaStatuses}
+				timeRangeKeys={timeRange}
+			>
+				<InstanceListProvider
+					page={page}
+					pageSize={pageSize}
 					processId={processId}
 					query={query}
-					totalCount={totalCount}
-				/>
-				<InstanceContext.Provider
-					value={{setInstanceId: this.setInstanceId.bind(this)}}
 				>
-					<div className="container-fluid-1280 mt-4">
-						<ListView
-							emptyActionButton={<ReloadButton />}
-							emptyMessageText={Liferay.Language.get(
-								'there-are-no-process-items-at-the-moment'
-							)}
-							errorMessageText={error}
-							fetching={fetching}
-							loading={loading}
-						>
-							<InstanceListTable items={items} />
+					<InstanceListCard.Header
+						processId={processId}
+						query={query}
+					/>
 
-							<PaginationBar
-								page={page}
-								pageCount={items.length}
-								pageSize={pageSize}
-								totalCount={totalCount}
-							/>
-						</ListView>
-					</div>
-
-					<InstanceItemDetail
-						instanceId={instanceId}
+					<InstanceListCard.Body
+						page={page}
+						pageSize={pageSize}
 						processId={processId}
 					/>
-				</InstanceContext.Provider>
-			</Fragment>
-		);
-	}
+				</InstanceListProvider>
+			</InstanceFiltersProvider>
+		</Request>
+	);
 }
 
-InstanceListCard.contextType = AppContext;
+InstanceListCard.Body = ({page, pageSize, processId}) => {
+	const {error} = useContext(ErrorContext);
+	const {items = [], totalCount} = useContext(InstanceListContext);
+	const {loading} = useContext(LoadingContext);
+
+	const fetching = !loading && !totalCount;
+	const errorMessage = error
+		? Liferay.Language.get(
+				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
+		  )
+		: null;
+
+	return (
+		<>
+			<div className="container-fluid-1280 mt-4">
+				<ListView
+					emptyActionButton={<ReloadButton />}
+					emptyMessageText={Liferay.Language.get(
+						'there-are-no-process-items-at-the-moment'
+					)}
+					errorMessageText={errorMessage}
+					fetching={fetching}
+					loading={loading}
+				>
+					<InstanceListTable items={items} />
+
+					<PaginationBar
+						page={page}
+						pageCount={items.length}
+						pageSize={pageSize}
+						totalCount={totalCount}
+					/>
+				</ListView>
+			</div>
+
+			<InstanceItemDetail processId={processId} />
+		</>
+	);
+};
+
+InstanceListCard.Header = () => {
+	const {totalCount} = useContext(InstanceListContext);
+
+	return (
+		<Request.Success>
+			<InstanceListFilters totalCount={totalCount} />
+		</Request.Success>
+	);
+};
+
 export default InstanceListCard;

@@ -50,6 +50,22 @@ definition {
 		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			PortletEntry.save();
 		}
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
 	@description = "This test ensures that an Excel document can be added via the OneDrive editor."

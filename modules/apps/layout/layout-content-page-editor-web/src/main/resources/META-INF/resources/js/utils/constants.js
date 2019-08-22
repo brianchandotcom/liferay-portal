@@ -40,6 +40,17 @@ export const COMPATIBLE_TYPES = {
 
 	image: ['ddm-image', 'image'],
 
+	link: [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'ddm-text-html',
+		'text',
+		'textarea',
+		'url'
+	],
+
 	'rich-text': [
 		'ddm-date',
 		'ddm-decimal',

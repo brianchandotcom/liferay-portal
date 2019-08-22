@@ -40,7 +40,7 @@ function getFloatingToolbarButtons(editableValues) {
 		const textPropertiesButton = FLOATING_TOOLBAR_BUTTONS.textProperties;
 
 		textPropertiesButton.cssClass =
-			'fragments-editor__floating-toolbar--mapped-field';
+			'disabled fragments-editor__floating-toolbar--disabled fragments-editor__floating-toolbar--mapped-field';
 
 		buttons.push(textPropertiesButton);
 	} else {

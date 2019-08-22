@@ -574,8 +574,6 @@ definition {
 			WikiPage.addPG(
 				wikiPageContent = "Wiki Page${entryCount} Content",
 				wikiPageTitle = "Wiki Page${entryCount} Title");
-
-			Refresh();
 		}
 
 		for (var entryCount : list "1,2,3") {

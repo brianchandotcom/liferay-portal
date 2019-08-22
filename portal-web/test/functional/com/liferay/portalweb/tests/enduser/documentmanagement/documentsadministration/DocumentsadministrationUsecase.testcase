@@ -534,8 +534,6 @@ definition {
 
 		DMDocument.enableActionsMenuOnPortlet();
 
-		Refresh();
-
 		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
 
 		User.logoutUserPG();

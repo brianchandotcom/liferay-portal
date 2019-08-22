@@ -289,13 +289,9 @@ definition {
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
 
-		Refresh();
-
 		DMDocument.addPG(
 			dmDocumentFile = "Document_2.doc",
 			dmDocumentTitle = "Document_2.doc");
-
-		Refresh();
 
 		DMDocument.addPG(
 			dmDocumentFile = "Document_3.doc",

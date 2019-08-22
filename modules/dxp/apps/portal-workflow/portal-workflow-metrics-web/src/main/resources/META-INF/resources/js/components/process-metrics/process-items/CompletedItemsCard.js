@@ -32,7 +32,12 @@ CompletedItemsCard.Body = ({processId}) => {
 			title={Liferay.Language.get('completed-items')}
 		>
 			<Request.Success>
-				<TimeRangeFilter filterKey="timeRange" position="right" />
+				<TimeRangeFilter
+					filterKey="timeRange"
+					hideControl={true}
+					position="right"
+					showFilterName={false}
+				/>
 			</Request.Success>
 		</ProcessItemsCard>
 	);

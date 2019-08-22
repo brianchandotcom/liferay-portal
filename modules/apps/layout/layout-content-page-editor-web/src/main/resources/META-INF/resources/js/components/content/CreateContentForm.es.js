@@ -51,6 +51,10 @@ class CreateContentForm extends PortletBase {
 
 	_handleContentNameChange() {
 		this._validateForm();
+
+		this.emit('titleChanged', {
+			title: this.refs.contentName.value
+		});
 	}
 
 	_handleStructureChange(event) {
@@ -135,7 +139,18 @@ CreateContentForm.STATE = {
 		})
 	)
 		.internal()
-		.value(null)
+		.value(null),
+
+	/**
+	 * Selected structure ID
+	 * @default null
+	 * @instance
+	 * @memberOf CreateContentForm
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	selectedStructureId: Config.string().value('')
 };
 
 const ConnectedCreateContentForm = getConnectedComponent(CreateContentForm, [

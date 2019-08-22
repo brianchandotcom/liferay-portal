@@ -210,40 +210,42 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		JsonPrimitive jsonPrimitive = responseJSONObject.getAsJsonPrimitive(
 			"id");
 
-		DriveItemUploadableProperties driveItemUploadableProperties =
-			new DriveItemUploadableProperties();
+		if (fileEntry.getSize() > 0) {
+			DriveItemUploadableProperties driveItemUploadableProperties =
+				new DriveItemUploadableProperties();
 
-		IDriveItemCreateUploadSessionRequest
-			iDriveItemCreateUploadSessionRequest =
-				iGraphServiceClientBuilder.me(
-				).drive(
-				).items(
-					jsonPrimitive.getAsString()
-				).createUploadSession(
-					driveItemUploadableProperties
-				).buildRequest();
+			IDriveItemCreateUploadSessionRequest
+				iDriveItemCreateUploadSessionRequest =
+					iGraphServiceClientBuilder.me(
+					).drive(
+					).items(
+						jsonPrimitive.getAsString()
+					).createUploadSession(
+						driveItemUploadableProperties
+					).buildRequest();
 
-		ChunkedUploadProvider<DriveItem> chunkedUploadProvider =
-			new ChunkedUploadProvider<>(
-				iDriveItemCreateUploadSessionRequest.post(),
-				iGraphServiceClientBuilder, fileEntry.getContentStream(),
-				fileEntry.getSize(), DriveItem.class);
+			ChunkedUploadProvider<DriveItem> chunkedUploadProvider =
+				new ChunkedUploadProvider<>(
+					iDriveItemCreateUploadSessionRequest.post(),
+					iGraphServiceClientBuilder, fileEntry.getContentStream(),
+					fileEntry.getSize(), DriveItem.class);
 
-		try {
-			_sendStatusMessage(
-				OneDriveBackgroundTaskConstants.PORTAL_START, fileEntry,
-				BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			try {
+				_sendStatusMessage(
+					OneDriveBackgroundTaskConstants.PORTAL_START, fileEntry,
+					BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
-			chunkedUploadProvider.upload(
-				null, _createIProgressCallback(fileEntry),
-				new int[] {10 * 320 * 1024});
+				chunkedUploadProvider.upload(
+					null, _createIProgressCallback(fileEntry),
+					new int[] {10 * 320 * 1024});
 
-			_sendStatusMessage(
-				OneDriveBackgroundTaskConstants.PORTAL_END, fileEntry,
-				BackgroundTaskConstants.STATUS_IN_PROGRESS);
-		}
-		catch (IOException ioe) {
-			throw new PortalException(ioe);
+				_sendStatusMessage(
+					OneDriveBackgroundTaskConstants.PORTAL_END, fileEntry,
+					BackgroundTaskConstants.STATUS_IN_PROGRESS);
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
 		}
 
 		_dlOpenerFileEntryReferenceLocalService.

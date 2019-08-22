@@ -1,9 +1,11 @@
-import {filterKeys, processStatusKeys} from '../instance-list/filterConstants';
 import {AppContext} from '../../AppContext';
 import {ChildLink} from '../../../shared/components/router/routerWrapper';
+import {filterConstants} from '../instance-list/store/InstanceListStore';
 import {formatNumber} from '../../../shared/util/numeral';
+import {formatQueryDate} from '../util/timeRangeUtil';
 import {getPercentage} from '../../../shared/util/util';
 import Icon from '../../../shared/components/Icon';
+import {processStatusConstants} from '../filter/store/ProcessStatusStore';
 import React from 'react';
 
 class SummaryCard extends React.Component {
@@ -35,16 +37,22 @@ class SummaryCard extends React.Component {
 		const {completed, slaStatusFilter, timeRange} = this.props;
 
 		const filterParams = {
-			[filterKeys.processStatus]: [
+			[filterConstants.processStatus]: [
 				completed
-					? processStatusKeys.completed
-					: processStatusKeys.pending
+					? processStatusConstants.completed
+					: processStatusConstants.pending
 			],
-			[filterKeys.slaStatus]: [slaStatusFilter]
+			[filterConstants.slaStatus]: [slaStatusFilter]
 		};
 
 		if (timeRange) {
-			filterParams[filterKeys.completionPeriod] = timeRange.key;
+			filterParams[filterConstants.timeRange] = [timeRange.key];
+			filterParams[filterConstants.timeRangeDateEnd] = formatQueryDate(
+				timeRange.dateEnd
+			);
+			filterParams[filterConstants.timeRangeDateStart] = formatQueryDate(
+				timeRange.dateStart
+			);
 		}
 
 		return filterParams;

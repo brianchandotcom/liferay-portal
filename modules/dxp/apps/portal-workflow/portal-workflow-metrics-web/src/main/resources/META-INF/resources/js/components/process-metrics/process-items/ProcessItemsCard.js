@@ -14,6 +14,7 @@ function ProcessItemsCard({
 	completed,
 	description,
 	processId,
+	timeRange,
 	title
 }) {
 	return (
@@ -28,6 +29,7 @@ function ProcessItemsCard({
 				<ProcessItemsCard.Body
 					completed={completed}
 					processId={processId}
+					timeRange={timeRange}
 				/>
 			</Panel>
 		</Request>
@@ -47,7 +49,7 @@ ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
 
 		let urlRequest = `/processes/${processId}?completed=${completed}`;
 
-		if (timeRange) {
+		if (timeRange && timeRange.dateEnd && timeRange.dateStart) {
 			const {dateEnd, dateStart} = timeRange;
 
 			urlRequest += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;

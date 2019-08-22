@@ -23,9 +23,18 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-@Component(immediate = true, service = InputStreamSanitizer.class)
-public class InputStreamSanitizerImpl implements InputStreamSanitizer {
+@Component(
+	immediate = true,
+	service = {
+		com.liferay.portal.kernel.security.io.InputStreamSanitizer.class,
+		InputStreamSanitizer.class
+	}
+)
+public class InputStreamSanitizerImpl
+	implements com.liferay.portal.kernel.security.io.InputStreamSanitizer,
+			   InputStreamSanitizer {
 
 	@Override
 	public InputStream sanitize(InputStream inputStream) {

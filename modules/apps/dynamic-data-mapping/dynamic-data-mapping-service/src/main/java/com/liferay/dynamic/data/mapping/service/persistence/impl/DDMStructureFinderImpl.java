@@ -34,16 +34,19 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
  * @author Connor McKay
  * @author Marcellus Tavares
  */
+@Component(service = DDMStructureFinder.class)
 public class DDMStructureFinderImpl
 	extends DDMStructureFinderBaseImpl implements DDMStructureFinder {
 
@@ -680,10 +683,10 @@ public class DDMStructureFinderImpl
 		return sb.toString();
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = DDMPermissionSupport.class)
+	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
 
 }

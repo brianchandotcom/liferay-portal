@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -26,9 +27,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion",
+	service = AopService.class
+)
 public class DDMFormInstanceVersionLocalServiceImpl
 	extends DDMFormInstanceVersionLocalServiceBaseImpl {
 

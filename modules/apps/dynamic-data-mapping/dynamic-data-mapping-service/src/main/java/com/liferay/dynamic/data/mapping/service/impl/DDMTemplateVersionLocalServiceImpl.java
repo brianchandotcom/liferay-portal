@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateVersionVersionComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -25,9 +26,15 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplateVersion",
+	service = AopService.class
+)
 public class DDMTemplateVersionLocalServiceImpl
 	extends DDMTemplateVersionLocalServiceBaseImpl {
 

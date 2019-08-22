@@ -31,14 +31,16 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -46,6 +48,7 @@ import java.util.List;
  * @author Marcellus Tavares
  * @author Juan Fernández
  */
+@Component(service = DDMTemplateFinder.class)
 public class DDMTemplateFinderImpl
 	extends DDMTemplateFinderBaseImpl implements DDMTemplateFinder {
 
@@ -120,7 +123,7 @@ public class DDMTemplateFinderImpl
 		long groupId, long structureClassNameId, int status) {
 
 		long[] groupIds = {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doCountByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, false);
@@ -264,7 +267,7 @@ public class DDMTemplateFinderImpl
 		long groupId, long structureClassNameId, int status) {
 
 		long[] groupIds = {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doCountByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, true);
@@ -274,7 +277,7 @@ public class DDMTemplateFinderImpl
 	public int filterCountByG_SC_S(
 		long[] groupIds, long structureClassNameId, int status) {
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doCountByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, true);
@@ -422,7 +425,7 @@ public class DDMTemplateFinderImpl
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		long[] groupIds = {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doFindByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, start, end,
@@ -434,7 +437,7 @@ public class DDMTemplateFinderImpl
 		long[] groupIds, long structureClassNameId, int status, int start,
 		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doFindByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, start, end,
@@ -592,7 +595,7 @@ public class DDMTemplateFinderImpl
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		long[] groupIds = {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doFindByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, start, end,
@@ -604,7 +607,7 @@ public class DDMTemplateFinderImpl
 		long[] groupIds, long structureClassNameId, int status, int start,
 		int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classNameId = _portal.getClassNameId(DDMStructure.class);
 
 		return doFindByG_C_SC_S(
 			groupIds, classNameId, structureClassNameId, status, start, end,
@@ -1081,10 +1084,13 @@ public class DDMTemplateFinderImpl
 		return sb.toString();
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = DDMPermissionSupport.class)
+	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
+
+	@Reference
+	private Portal _portal;
 
 }

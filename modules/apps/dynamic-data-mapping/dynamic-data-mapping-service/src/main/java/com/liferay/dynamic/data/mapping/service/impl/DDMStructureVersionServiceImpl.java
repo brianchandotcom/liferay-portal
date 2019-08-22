@@ -17,17 +17,27 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Pablo Carvalho
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddm",
+		"json.web.service.context.path=DDMStructureVersion"
+	},
+	service = AopService.class
+)
 public class DDMStructureVersionServiceImpl
 	extends DDMStructureVersionServiceBaseImpl {
 
@@ -81,10 +91,10 @@ public class DDMStructureVersionServiceImpl
 			structureId);
 	}
 
-	private static volatile ModelResourcePermission<DDMStructure>
-		_ddmStructureModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMStructureVersionServiceImpl.class,
-				"_ddmStructureModelResourcePermission", DDMStructure.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
+	)
+	private ModelResourcePermission<DDMStructure>
+		_ddmStructureModelResourcePermission;
 
 }

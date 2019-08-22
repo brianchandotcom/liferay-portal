@@ -27,14 +27,17 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Rafael Praxedes
  */
+@Component(service = DDMStructureLinkFinder.class)
 public class DDMStructureLinkFinderImpl
 	extends DDMStructureLinkFinderBaseImpl implements DDMStructureLinkFinder {
 
@@ -190,7 +193,7 @@ public class DDMStructureLinkFinderImpl
 		}
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

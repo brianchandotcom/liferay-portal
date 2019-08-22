@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
@@ -48,9 +48,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructureLayout",
+	service = AopService.class
+)
 public class DDMStructureLayoutLocalServiceImpl
 	extends DDMStructureLayoutLocalServiceBaseImpl {
 
@@ -201,7 +208,7 @@ public class DDMStructureLayoutLocalServiceImpl
 		DDMStructureLayout structureLayout) {
 
 		DDMFormLayoutDeserializer ddmFormLayoutDeserializer =
-			ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
+			_ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
 				"json");
 
 		DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
@@ -267,12 +274,12 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext =
-			ddmSearchHelper.buildStructureLayoutSearchContext(
+			_ddmSearchHelper.buildStructureLayoutSearchContext(
 				companyId, groupIds, classNameId, keywords, keywords,
 				StringPool.BLANK, null, WorkflowConstants.STATUS_ANY, start,
 				end, orderByComparator);
 
-		return ddmSearchHelper.doSearch(
+		return _ddmSearchHelper.doSearch(
 			searchContext, DDMStructureLayout.class,
 			ddmStructureLayoutPersistence::findByPrimaryKey);
 	}
@@ -282,12 +289,12 @@ public class DDMStructureLayoutLocalServiceImpl
 		throws PortalException {
 
 		SearchContext searchContext =
-			ddmSearchHelper.buildStructureLayoutSearchContext(
+			_ddmSearchHelper.buildStructureLayoutSearchContext(
 				companyId, groupIds, classNameId, keywords, keywords,
 				StringPool.BLANK, null, WorkflowConstants.STATUS_ANY,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		return ddmSearchHelper.doSearchCount(
+		return _ddmSearchHelper.doSearchCount(
 			searchContext, DDMStructureLayout.class);
 	}
 
@@ -329,7 +336,7 @@ public class DDMStructureLayoutLocalServiceImpl
 
 	protected String serialize(DDMFormLayout ddmFormLayout) {
 		DDMFormLayoutSerializer ddmFormLayoutSerializer =
-			ddmFormLayoutSerializerTracker.getDDMFormLayoutSerializer("json");
+			_ddmFormLayoutSerializerTracker.getDDMFormLayoutSerializer("json");
 
 		DDMFormLayoutSerializerSerializeRequest.Builder builder =
 			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
@@ -345,19 +352,19 @@ public class DDMStructureLayoutLocalServiceImpl
 	protected void validate(DDMFormLayout ddmFormLayout)
 		throws PortalException {
 
-		ddmFormLayoutValidator.validate(ddmFormLayout);
+		_ddmFormLayoutValidator.validate(ddmFormLayout);
 	}
 
-	@ServiceReference(type = DDMFormLayoutDeserializerTracker.class)
-	protected DDMFormLayoutDeserializerTracker ddmFormLayoutDeserializerTracker;
+	@Reference
+	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
 
-	@ServiceReference(type = DDMFormLayoutSerializerTracker.class)
-	protected DDMFormLayoutSerializerTracker ddmFormLayoutSerializerTracker;
+	@Reference
+	private DDMFormLayoutSerializerTracker _ddmFormLayoutSerializerTracker;
 
-	@ServiceReference(type = DDMFormLayoutValidator.class)
-	protected DDMFormLayoutValidator ddmFormLayoutValidator;
+	@Reference
+	private DDMFormLayoutValidator _ddmFormLayoutValidator;
 
-	@ServiceReference(type = DDMSearchHelper.class)
-	protected DDMSearchHelper ddmSearchHelper;
+	@Reference
+	private DDMSearchHelper _ddmSearchHelper;
 
 }

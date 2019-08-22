@@ -64,7 +64,6 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.soy.SoyTranslationPlugin;
 import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
-import com.liferay.gradle.plugins.tasks.DeployFastTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
@@ -134,6 +133,7 @@ import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 
 /**
@@ -158,6 +158,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_FAST_JSP_TASK_NAME = "deployFastJSP";
 
+	public static final String DEPLOY_FAST_TASK_NAME = "deployFast";
+
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
@@ -180,6 +182,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			_addConfigurationCompileInclude(project);
 
 		_addTaskAutoUpdateXml(project);
+		_addTaskDeployFast(project);
 		_addTasksBuildWSDDJar(project, liferayExtension);
 		_addTaskDeployFastCSS(project);
 		_addTaskDeployFastJSP(project);
@@ -193,8 +196,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project, deployDependenciesTask);
-		DeployFastTask deployFastTask = _configureTaskDeployFast(
-			project, liferayExtension);
 		_configureTaskJar(project);
 		_configureTaskJavadoc(project);
 		_configureTaskTest(project);
@@ -226,8 +227,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					_configureBundleExtensionDefaults(
 						project, liferayOSGiExtension,
 						compileIncludeConfiguration);
-					_configureTaskDeployFastCSS(project);
-					_configureTaskDeployFastJSP(project);
+					_configureTaskDeployFastCSS(project, liferayExtension);
+					_configureTaskDeployFastJSP(project, liferayExtension);
 				}
 
 			});
@@ -809,6 +810,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	private Task _addTaskDeployFast(Project project) {
+		Task deployFastTask = project.task(DEPLOY_FAST_TASK_NAME);
+
+		deployFastTask.setDescription(
+			"Builds and deploys resources to the Liferay work directory.");
+		deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
+
+		return deployFastTask;
+	}
+
 	private Copy _addTaskDeployFastCSS(Project project) {
 		Copy deployFastCSSTask = GradleUtil.addTask(
 			project, DEPLOY_FAST_CSS_TASK_NAME, Copy.class);
@@ -1166,33 +1177,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		deployTask.finalizedBy(deployDepenciesTask);
 	}
 
-	private DeployFastTask _configureTaskDeployFast(
-		Project project, LiferayExtension liferayExtension) {
+	private void _configureTaskDeployFastCSS(
+		final Project project, final LiferayExtension liferayExtension) {
 
-		String bundleSymbolicName = BndBuilderUtil.getInstruction(
-			project, Constants.BUNDLE_SYMBOLICNAME);
-		String bundleVersion = BndBuilderUtil.getInstruction(
-			project, Constants.BUNDLE_VERSION);
-
-		DeployFastTask deployFastTask = (DeployFastTask)GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
-
-		deployFastTask.setDestinationDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						liferayExtension.getLiferayHome(),
-						"work/" + bundleSymbolicName + "-" + bundleVersion);
-				}
-
-			});
-
-		return deployFastTask;
-	}
-
-	private void _configureTaskDeployFastCSS(Project project) {
 		Copy deployFastCSSTask = (Copy)GradleUtil.getTask(
 			project, DEPLOY_FAST_CSS_TASK_NAME);
 
@@ -1200,6 +1187,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
 		CopySpec copySpec = deployFastCSSTask.from(copy);
+
 		copySpec.eachFile(
 			new Action<FileCopyDetails>() {
 
@@ -1233,15 +1221,38 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		copySpec.include("**/*.css");
 		copySpec.setIncludeEmptyDirs(false);
 
-		Task deployFastTask = GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
+		deployFastCSSTask.into(
+			new Callable<File>() {
 
-		deployFastCSSTask.into(deployFastTask.getDestinationDir());
+				@Override
+				public File call() throws Exception {
+					String bundleSymbolicName = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+					String bundleVersion = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_VERSION);
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("work/");
+					sb.append(bundleSymbolicName);
+					sb.append("-");
+					sb.append(bundleVersion);
+
+					return new File(
+						liferayExtension.getLiferayHome(), sb.toString());
+				}
+
+			});
+
+		Task deployFastTask = GradleUtil.getTask(
+			project, DEPLOY_FAST_TASK_NAME);
 
 		deployFastTask.dependsOn(deployFastCSSTask);
 	}
 
-	private void _configureTaskDeployFastJSP(Project project) {
+	private void _configureTaskDeployFastJSP(
+		final Project project, final LiferayExtension liferayExtension) {
+
 		Copy deployFastJSPTask = (Copy)GradleUtil.getTask(
 			project, DEPLOY_FAST_JSP_TASK_NAME);
 
@@ -1250,10 +1261,31 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		deployFastJSPTask.from(compileJSPTask);
 
-		Task deployFastTask = GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
+		deployFastJSPTask.into(
+			new Callable<File>() {
 
-		deployFastJSPTask.into(deployFastTask.getDestinationDir());
+				@Override
+				public File call() throws Exception {
+					String bundleSymbolicName = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+					String bundleVersion = BndBuilderUtil.getInstruction(
+						project, Constants.BUNDLE_VERSION);
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("work/");
+					sb.append(bundleSymbolicName);
+					sb.append("-");
+					sb.append(bundleVersion);
+
+					return new File(
+						liferayExtension.getLiferayHome(), sb.toString());
+				}
+
+			});
+
+		Task deployFastTask = GradleUtil.getTask(
+			project, DEPLOY_FAST_TASK_NAME);
 
 		deployFastTask.dependsOn(deployFastJSPTask);
 	}

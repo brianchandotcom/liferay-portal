@@ -4,8 +4,8 @@
  * CreateContentForm
  */
 {template .render}
-	{@param? _handleContentNameChange: any}
-	{@param? _handleStructureChange: any}
+	{@param? _formValid: bool}
+	{@param? _handleFormChange: any}
 	{@param? _structures: list<[
 		id: string,
 		label: string,
@@ -18,9 +18,17 @@
 	{@param? selectedStructureId: string}
 	{@param? spritemap: string}
 
-	<form class="p-4">
+	<form class="p-4" data-onchange="{$_handleFormChange}">
 		<fieldset>
-			<div class="form-group">
+			{let $nameFormGroupClasses kind="text"}
+				form-group
+
+				{if not $_formValid}
+					{sp}has-error
+				{/if}
+			{/let}
+
+			<div class="{$nameFormGroupClasses}">
 				<label for="contentName">
 					{msg desc=""}content-name{/msg}
 
@@ -31,24 +39,27 @@
 
 				<input
 					class="form-control"
-					data-onblur="{$_handleContentNameChange}"
 					id="contentName"
-					ref="contentName"
+					name="title"
+					required
 				>
 
-				<div class="form-feedback-group hide">
-					<div class="form-feedback-item">
-						<span class="form-feedback-indicator mr-1">
-							<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
-								<use href="{$spritemap}#exclamation-full" />
-							</svg>
-						</span>
-						{msg desc=""}this-field-is-required{/msg}
+				{if not $_formValid}
+					<div class="form-feedback-group">
+						<div class="form-feedback-item">
+							<span class="form-feedback-indicator mr-1">
+								<svg class="lexicon-icon lexicon-icon-exclamation-full" focusable="false" role="presentation">
+									<use href="{$spritemap}#exclamation-full" />
+								</svg>
+							</span>
+							{msg desc=""}this-field-is-required{/msg}
+						</div>
 					</div>
-				</div>
+				{/if}
 			</div>
 
 			<h3 class="sheet-subtitle">{msg desc=""}content-structure{/msg}</h3>
+
 			{if $_structureTypes}
 				<div class="form-group">
 					<label for="selectStructureType">
@@ -58,15 +69,10 @@
 					<select
 						class="form-control"
 						id="selectStructureType"
-						ref="structureType"
+						required
 					>
 						{foreach $structureType in $_structureTypes}
-							<option
-									value="{$structureType.id}"
-									{if $selectedStructureId == $structureType.id}
-										selected
-									{/if}
-							>
+							<option value="{$structureType.id}" selected>
 								{$structureType.label}
 							</option>
 						{/foreach}
@@ -82,12 +88,21 @@
 
 					<select
 						class="form-control"
-						data-onchange="{$_handleStructureChange}"
 						id="selectStructure"
-						ref="structure"
+						name="ddmStructure"
+						required
 					>
 						{foreach $structure in $_structures}
-							<option value="{$structure.id}" selected>{$structure.label} ({$structure.countLabel})</option>
+							<option
+								value="{$structure.id}"
+
+								{if $selectedStructureId == $structure.id}
+									selected
+								{/if}
+
+							>
+								{$structure.label} ({$structure.countLabel})
+							</option>
 						{/foreach}
 					</select>
 				</div>

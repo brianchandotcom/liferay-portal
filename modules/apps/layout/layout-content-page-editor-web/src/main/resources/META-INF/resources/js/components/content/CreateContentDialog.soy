@@ -9,10 +9,8 @@
 		label: string
 	]}
 	{@param? _handleCancelButtonClick: any}
-	{@param? _handleFormValidated: any}
-	{@param? _handleStructureChange: any }
+	{@param? _handleCreateContentFormChange: any}
 	{@param? _handleSubmitButtonClick: any}
-	{@param? _handleTitleChange: any}
 	{@param? _handleVisibleChanged: any}
 	{@param? _step: number}
 	{@param? _stepLabel: string}
@@ -27,9 +25,7 @@
 			{if $_step == 1}
 				{call com.liferay.layout.content.page.editor.web.CreateContentForm.render}
 					{param events: [
-							'formValidated': $_handleFormValidated,
-							'structureChanged': $_handleStructureChange,
-							'titleChanged': $_handleTitleChange,
+						'formChanged': $_handleCreateContentFormChange
 					] /}
 
 					{param selectedStructureId: $_ddmStructure ? $_ddmStructure.id : ''/}

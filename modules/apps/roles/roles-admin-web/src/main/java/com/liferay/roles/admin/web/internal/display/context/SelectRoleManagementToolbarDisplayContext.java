@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -35,6 +34,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
+import com.liferay.roles.admin.web.internal.role.type.RoleType;
+import com.liferay.roles.admin.web.internal.role.type.util.RoleTypeRetrieverUtil;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
@@ -59,8 +60,8 @@ public class SelectRoleManagementToolbarDisplayContext {
 		_renderResponse = renderResponse;
 		_eventName = eventName;
 
-		_roleType = ParamUtil.getInteger(
-			_httpServletRequest, "roleType", RoleConstants.TYPE_REGULAR);
+		_currentRoleType = RoleTypeRetrieverUtil.getCurrentRoleType(
+			renderRequest);
 	}
 
 	public String getClearResultsURL() {
@@ -76,7 +77,8 @@ public class SelectRoleManagementToolbarDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/select_role.jsp");
 
-		portletURL.setParameter("roleType", String.valueOf(_roleType));
+		portletURL.setParameter(
+			"type", String.valueOf(_currentRoleType.getType()));
 
 		User selUser = _getSelectedUser();
 
@@ -150,8 +152,8 @@ public class SelectRoleManagementToolbarDisplayContext {
 		if (filterManageableRoles) {
 			results = RoleLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-				new Integer[] {_roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				roleSearch.getOrderByComparator());
+				new Integer[] {_currentRoleType.getType()}, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, roleSearch.getOrderByComparator());
 
 			if (groupId == 0) {
 				results = UsersAdminUtil.filterRoles(
@@ -170,12 +172,13 @@ public class SelectRoleManagementToolbarDisplayContext {
 		else {
 			total = RoleLocalServiceUtil.searchCount(
 				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-				new Integer[] {_roleType});
+				new Integer[] {_currentRoleType.getType()});
 
 			results = RoleLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-				new Integer[] {_roleType}, roleSearch.getStart(),
-				roleSearch.getEnd(), roleSearch.getOrderByComparator());
+				new Integer[] {_currentRoleType.getType()},
+				roleSearch.getStart(), roleSearch.getEnd(),
+				roleSearch.getOrderByComparator());
 		}
 
 		roleSearch.setResults(results);
@@ -214,11 +217,11 @@ public class SelectRoleManagementToolbarDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectRoleManagementToolbarDisplayContext.class);
 
+	private final RoleType _currentRoleType;
 	private final String _eventName;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RoleSearch _roleSearch;
-	private final int _roleType;
 
 }

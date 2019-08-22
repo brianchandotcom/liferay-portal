@@ -165,6 +165,29 @@ class MapContentForm extends PortletBase {
 			});
 		}
 	}
+
+	getSerializedFields() {
+		const ddmForm = {
+			availableLanguagesIds: [this.languageId],
+			defaultLanguageId: this.languageId,
+			fieldValues: this._fields.map(field => {
+				let itemValue = '';
+
+				this.selectedItems.forEach(selectedItem => {
+					if (selectedItem.editableId === field.editableId) {
+						itemValue = selectedItem.itemValue;
+					}
+				});
+
+				return {
+					name: field.key,
+					value: itemValue
+				};
+			})
+		};
+
+		return JSON.stringify(ddmForm);
+	}
 }
 
 /**

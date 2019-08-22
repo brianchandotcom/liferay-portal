@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
@@ -259,6 +260,14 @@ public class SegmentsExperimentLocalServiceImpl
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId);
+
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.valueOf(
+				segmentsExperiment.getStatus());
+
+		if (!status.isEditable()) {
+			throw new LockedSegmentsExperimentException(segmentsExperimentId);
+		}
 
 		_validateGoal(goal);
 		_validateName(name);

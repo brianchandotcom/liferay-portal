@@ -101,7 +101,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY</td>
-	<td>xpath=(//article//p[contains(@class,'text-secondary')])[last()]</td>
+	<td>xpath=(//div[contains(@class,'text-secondary')]/p[contains(.,'${key_commentReply}')])[last()]</td>
 	<td></td>
 </tr>
 <tr>

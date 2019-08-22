@@ -315,6 +315,7 @@ definition {
 			value1 = "Reply");
 
 		AssertTextEquals(
+			key_commentReply = "${commentReply}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY",
 			value1 = "${commentReply}");
 	}

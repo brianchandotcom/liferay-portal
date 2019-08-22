@@ -42,16 +42,21 @@ class FilterResultsItem extends React.Component {
 								<strong>{itemName}</strong>
 							</div>
 						</span>
-						<span className="label-item label-item-after">
-							<button
-								aria-label="close"
-								className="btn close"
-								onClick={this.onRemoveButtonClick.bind(this)}
-								type="button"
-							>
-								<Icon iconName="times" />
-							</button>
-						</span>
+
+						{!filter.pinned && (
+							<span className="label-item label-item-after">
+								<button
+									aria-label="close"
+									className="btn close"
+									onClick={this.onRemoveButtonClick.bind(
+										this
+									)}
+									type="button"
+								>
+									<Icon iconName="times" />
+								</button>
+							</span>
+						)}
 					</span>
 				</div>
 			</li>

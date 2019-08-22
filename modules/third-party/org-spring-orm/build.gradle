@@ -1,0 +1,43 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "org.hibernate", name: "hibernate-core", version: "3.6.10.Final"
+	compile group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"spring-orm.jar"
+	}
+}
+
+javadoc {
+	enabled = false
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	originalLibModuleName = "spring-orm"
+}

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeReque
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.petra.string.StringPool;
@@ -153,6 +154,22 @@ public class DDMStructureLayoutLocalServiceImpl
 
 		return ddmStructureLayoutPersistence.remove(structureLayout);
 	}
+
+	@Override
+	public void deleteDDMStructureLayouts(
+			long classNameId, DDMStructureVersion ddmStructureVersion)
+		throws PortalException {
+
+		List<DDMStructureLayout> ddmStructureLayouts =
+			ddmStructureLayoutPersistence.findByG_C_SV(
+				ddmStructureVersion.getGroupId(), classNameId,
+				ddmStructureVersion.getStructureVersionId());
+
+		for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
+			deleteDDMStructureLayout(ddmStructureLayout);
+		}
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #deleteDDMStructureLayout(DDMStructureLayout)}

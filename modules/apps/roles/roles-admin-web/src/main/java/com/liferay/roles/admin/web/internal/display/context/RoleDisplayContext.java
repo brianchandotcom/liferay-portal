@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +57,10 @@ public class RoleDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
+
+		_currentRoleTypeContributor =
+			RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
+				httpServletRequest);
 	}
 
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {
@@ -105,10 +111,9 @@ public class RoleDisplayContext {
 								_httpServletRequest, "define-permissions"));
 					});
 
-				int type = ParamUtil.getInteger(
-					_httpServletRequest, "type", RoleConstants.TYPE_REGULAR);
+				if (_currentRoleTypeContributor.getType() ==
+						RoleConstants.TYPE_REGULAR) {
 
-				if (type == RoleConstants.TYPE_REGULAR) {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(false);
@@ -174,63 +179,35 @@ public class RoleDisplayContext {
 			PortletURL portletURL)
 		throws Exception {
 
-		int type = ParamUtil.getInteger(_httpServletRequest, "type", 1);
+		NavigationItemList navigationItemList = new NavigationItemList();
 
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_REGULAR);
+		for (RoleTypeContributor roleTypeContributor :
+				RoleTypeContributorRetrieverUtil.getRoleTypeContributors(
+					_httpServletRequest)) {
 
-						PortletURL viewRegularRoleNavigationURL =
-							PortletURLUtil.clone(
-								portletURL, liferayPortletResponse);
+			navigationItemList.add(
+				navigationItem -> {
+					navigationItem.setActive(
+						_currentRoleTypeContributor.getType() ==
+							roleTypeContributor.getType());
 
-						navigationItem.setHref(
-							viewRegularRoleNavigationURL, "type",
-							RoleConstants.TYPE_REGULAR);
+					PortletURL viewRegularRoleNavigationURL =
+						PortletURLUtil.clone(
+							portletURL, liferayPortletResponse);
 
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "regular-roles"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_SITE);
+					navigationItem.setHref(
+						viewRegularRoleNavigationURL, "type",
+						roleTypeContributor.getType());
 
-						PortletURL viewSiteRoleNavigationURL =
-							PortletURLUtil.clone(
-								portletURL, liferayPortletResponse);
+					navigationItem.setLabel(
+						LanguageUtil.get(
+							_httpServletRequest,
+							roleTypeContributor.getTabTitle(
+								_httpServletRequest.getLocale())));
+				});
+		}
 
-						navigationItem.setHref(
-							viewSiteRoleNavigationURL, "type",
-							RoleConstants.TYPE_SITE);
-
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "site-roles"));
-					});
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							type == RoleConstants.TYPE_ORGANIZATION);
-
-						PortletURL viewOrganizationRoleNavigationURL =
-							PortletURLUtil.clone(
-								portletURL, liferayPortletResponse);
-
-						navigationItem.setHref(
-							viewOrganizationRoleNavigationURL, "type",
-							RoleConstants.TYPE_ORGANIZATION);
-
-						navigationItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "organization-roles"));
-					});
-			}
-		};
+		return navigationItemList;
 	}
 
 	private String _getCurrentURL() {
@@ -269,15 +246,7 @@ public class RoleDisplayContext {
 			tabsNames.add("details");
 		}
 
-		String name = role.getName();
-
-		if (!name.equals(RoleConstants.ADMINISTRATOR) &&
-			!name.equals(RoleConstants.ANALYTICS_ADMINISTRATOR) &&
-			!name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) &&
-			!name.equals(RoleConstants.ORGANIZATION_OWNER) &&
-			!name.equals(RoleConstants.OWNER) &&
-			!name.equals(RoleConstants.SITE_ADMINISTRATOR) &&
-			!name.equals(RoleConstants.SITE_OWNER) &&
+		if (_currentRoleTypeContributor.isAllowDefinePermissions(role) &&
 			RolePermissionUtil.contains(
 				permissionChecker, role.getRoleId(),
 				ActionKeys.DEFINE_PERMISSIONS)) {
@@ -285,17 +254,7 @@ public class RoleDisplayContext {
 			tabsNames.add("define-permissions");
 		}
 
-		boolean unassignableRole = false;
-
-		if (name.equals(RoleConstants.GUEST) ||
-			name.equals(RoleConstants.OWNER) ||
-			name.equals(RoleConstants.USER)) {
-
-			unassignableRole = true;
-		}
-
-		if (!unassignableRole &&
-			(role.getType() == RoleConstants.TYPE_REGULAR) &&
+		if (_currentRoleTypeContributor.isAllowAssignMembers(role) &&
 			RolePermissionUtil.contains(
 				permissionChecker, role.getRoleId(),
 				ActionKeys.ASSIGN_MEMBERS)) {
@@ -356,6 +315,7 @@ public class RoleDisplayContext {
 		"users", "sites", "organizations", "user-groups"
 	};
 
+	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final HttpServletRequest _httpServletRequest;
 	private final RenderResponse _renderResponse;
 

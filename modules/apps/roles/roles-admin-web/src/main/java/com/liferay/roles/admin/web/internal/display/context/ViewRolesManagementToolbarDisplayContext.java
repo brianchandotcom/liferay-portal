@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -34,6 +33,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
+import com.liferay.roles.admin.web.internal.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil;
 import com.liferay.roles.admin.web.internal.search.RoleChecker;
 
 import java.util.LinkedHashMap;
@@ -60,7 +61,9 @@ public class ViewRolesManagementToolbarDisplayContext {
 		_renderResponse = renderResponse;
 		_displayStyle = displayStyle;
 
-		_type = ParamUtil.getInteger(httpServletRequest, "type", 1);
+		_currentRoleTypeContributor =
+			RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(
+				renderRequest);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -94,22 +97,15 @@ public class ViewRolesManagementToolbarDisplayContext {
 						dropdownItem.setHref(
 							_renderResponse.createRenderURL(), "mvcPath",
 							"/edit_role.jsp", "redirect", getPortletURL(),
-							"tabs1", "details", "type", String.valueOf(_type));
+							"tabs1", "details", "type",
+							String.valueOf(
+								_currentRoleTypeContributor.getType()));
 
-						String title = null;
-
-						if (_type == RoleConstants.TYPE_SITE) {
-							title = "site-role";
-						}
-						else if (_type == RoleConstants.TYPE_ORGANIZATION) {
-							title = "organization-role";
-						}
-						else {
-							title = "regular-role";
-						}
+						String label = _currentRoleTypeContributor.getTitle(
+							_renderRequest.getLocale());
 
 						dropdownItem.setLabel(
-							LanguageUtil.get(_httpServletRequest, title));
+							LanguageUtil.get(_httpServletRequest, label));
 					});
 			}
 		};
@@ -168,7 +164,8 @@ public class ViewRolesManagementToolbarDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
-		portletURL.setParameter("type", String.valueOf(_type));
+		portletURL.setParameter(
+			"type", String.valueOf(_currentRoleTypeContributor.getType()));
 
 		portletURL.setParameter("displayStyle", _displayStyle);
 
@@ -215,13 +212,14 @@ public class ViewRolesManagementToolbarDisplayContext {
 
 		List<Role> results = RoleServiceUtil.search(
 			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			roleSearchTerms.getTypesObj(), new LinkedHashMap<String, Object>(),
-			roleSearch.getStart(), roleSearch.getEnd(),
-			roleSearch.getOrderByComparator());
+			new Integer[] {_currentRoleTypeContributor.getType()},
+			new LinkedHashMap<String, Object>(), roleSearch.getStart(),
+			roleSearch.getEnd(), roleSearch.getOrderByComparator());
 
 		int total = RoleServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), roleSearchTerms.getKeywords(),
-			roleSearchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
+			new Integer[] {_currentRoleTypeContributor.getType()},
+			new LinkedHashMap<String, Object>());
 
 		roleSearch.setResults(results);
 		roleSearch.setTotal(total);
@@ -289,6 +287,7 @@ public class ViewRolesManagementToolbarDisplayContext {
 		};
 	}
 
+	private final RoleTypeContributor _currentRoleTypeContributor;
 	private final String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
@@ -297,6 +296,5 @@ public class ViewRolesManagementToolbarDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RoleSearch _roleSearch;
-	private int _type;
 
 }

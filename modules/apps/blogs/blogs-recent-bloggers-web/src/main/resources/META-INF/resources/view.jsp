@@ -47,11 +47,11 @@ else {
 		headerNames.add("posts");
 		headerNames.add("date");
 
-		boolean statsUserRendered = false;
-
 		if (displayStyle.equals("user-name")) {
 			searchContainer.setHeaderNames(headerNames);
 		}
+
+		boolean statsUserRendered = false;
 
 		List resultRows = searchContainer.getResultRows();
 

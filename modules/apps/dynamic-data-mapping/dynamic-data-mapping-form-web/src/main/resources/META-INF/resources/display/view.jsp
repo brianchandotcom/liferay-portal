@@ -214,13 +214,15 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							</liferay-portlet:resourceURL>
 
 							function <portlet:namespace />autoSave() {
-								A.io.request(
+								const data = new URLSearchParams({
+									<portlet:namespace />formInstanceId: <%= formInstanceId %>,
+									<portlet:namespace />serializedDDMFormValues: JSON.stringify(<portlet:namespace />form.toJSON())
+								});
+
+								Liferay.Util.fetch(
 									'<%= autoSaveFormInstanceRecordURL.toString() %>',
 									{
-										data: {
-											<portlet:namespace />formInstanceId: <%= formInstanceId %>,
-											<portlet:namespace />serializedDDMFormValues: JSON.stringify(<portlet:namespace />form.toJSON())
-										},
+										body: data,
 										method: 'POST'
 									}
 								);

@@ -288,25 +288,29 @@ AUI.add(
 			_getTemplate: function(callback) {
 				var instance = this;
 
-				var config = {
-					data: {},
-					on: {
-						success: function(event, id, xhr) {
-							if (callback) {
-								callback.call(instance, xhr.responseText);
-							}
-						}
-					}
-				};
-
 				var key =
 					Liferay.Util.getPortletNamespace(
 						Liferay.PortletKeys.DYNAMIC_DATA_MAPPING
 					) + 'definition';
+				
+				const data = new URLSearchParams();
+				data.append(key, JSON.stringify(instance.get('definition')));
 
-				config.data[key] = JSON.stringify(instance.get('definition'));
-
-				A.io.request(instance._getTemplateResourceURL(), config);
+				Liferay.Util.fetch(
+					instance._getTemplateResourceURL(),
+					{
+						body: data,
+						method: 'POST'
+					}
+				)
+				.then(response => {
+					return response.text();
+				})
+				.then(response => {
+					if (callback) {
+						callback.call(instance, response)
+					}
+				});
 			},
 
 			_getTemplateResourceURL: function() {
@@ -2817,48 +2821,48 @@ AUI.add(
 
 					if (!cache || start <= cache.total) {
 						if (instance._canLoadMore(key, start, end)) {
-							A.io.request(
+							const data = new URLSearchParams({
+								cmd: 'get',
+								end: end,
+								expandParentLayouts: false,
+								groupId: groupId,
+								p_auth: Liferay.authToken,
+								paginate: true,
+								parentLayoutId: parentLayoutId,
+								privateLayout: privateLayout,
+								start: start
+							});
+
+							Liferay.Util.fetch(
 								themeDisplay.getPathMain() +
 									'/portal/get_layouts',
 								{
-									after: {
-										success: function() {
-											var response = JSON.parse(
-												this.get('responseData')
-											);
-
-											var layouts =
-												response && response.layouts;
-
-											if (layouts) {
-												instance._updateCache(
-													key,
-													layouts,
-													start,
-													end,
-													response.total
-												);
-
-												callback.call(
-													instance,
-													layouts
-												);
-											}
-										}
-									},
-									data: {
-										cmd: 'get',
-										end: end,
-										expandParentLayouts: false,
-										groupId: groupId,
-										p_auth: Liferay.authToken,
-										paginate: true,
-										parentLayoutId: parentLayoutId,
-										privateLayout: privateLayout,
-										start: start
-									}
+									body: data,
+									method: 'POST'
 								}
-							);
+							)
+							.then(response => {
+								return response.json();
+							})
+							.then(response => {
+								var layouts =
+									response && response.layouts;
+
+								if (layouts) {
+									instance._updateCache(
+										key,
+										layouts,
+										start,
+										end,
+										response.total
+									);
+
+									callback.call(
+										instance,
+										layouts
+									);
+								}
+							});
 						} else if (cache) {
 							callback.call(instance, cache.layouts);
 						}
@@ -2895,80 +2899,80 @@ AUI.add(
 					} else {
 						var selectedLayout = instance.get('selectedLayout');
 
-						A.io.request(
+						const data = new URLSearchParams({
+							cmd: 'getSiblingLayoutsJSON',
+							expandParentLayouts: false,
+							groupId: groupId,
+							layoutId: selectedLayout.layoutId,
+							max: instance.get('delta'),
+							p_auth: Liferay.authToken,
+							paginate: true,
+							privateLayout: privateLayout
+						});
+
+						Liferay.Util.fetch(
 							themeDisplay.getPathMain() + '/portal/get_layouts',
 							{
-								after: {
-									failure: function() {
-										var bodyNode = instance._modal.bodyNode;
-
-										var listNode = bodyNode.one(
-											'.lfr-ddm-pages-container'
-										);
-
-										listNode.addClass('top-ended');
-
-										instance._requestInitialLayouts(
-											0,
-											groupId,
-											privateLayout,
-											instance._renderLayouts
-										);
-									},
-									success: function() {
-										var response = JSON.parse(
-											this.get('responseData')
-										);
-
-										var layouts =
-											response && response.layouts;
-
-										if (layouts) {
-											var parentLayoutId =
-												response.ancestorLayoutIds[0];
-
-											var key = [
-												parentLayoutId,
-												groupId,
-												privateLayout
-											].join('-');
-
-											var start = response.start;
-
-											var end = start + layouts.length;
-
-											instance._currentParentLayoutId = parentLayoutId;
-
-											instance._setSelectedLayoutPath(
-												groupId,
-												privateLayout,
-												response
-											);
-
-											instance._updateCache(
-												key,
-												layouts,
-												start,
-												end,
-												response.total
-											);
-
-											callback.call(instance, layouts);
-										}
-									}
-								},
-								data: {
-									cmd: 'getSiblingLayoutsJSON',
-									expandParentLayouts: false,
-									groupId: groupId,
-									layoutId: selectedLayout.layoutId,
-									max: instance.get('delta'),
-									p_auth: Liferay.authToken,
-									paginate: true,
-									privateLayout: privateLayout
-								}
+								body: data,
+								method: 'POST'
 							}
-						);
+						)
+						.then(response => {
+							return response.json();
+						})
+						.then(response => {
+							var layouts =
+								response && response.layouts;
+
+							if (layouts) {
+								var parentLayoutId =
+									response.ancestorLayoutIds[0];
+
+								var key = [
+									parentLayoutId,
+									groupId,
+									privateLayout
+								].join('-');
+
+								var start = response.start;
+
+								var end = start + layouts.length;
+
+								instance._currentParentLayoutId = parentLayoutId;
+
+								instance._setSelectedLayoutPath(
+									groupId,
+									privateLayout,
+									response
+								);
+
+								instance._updateCache(
+									key,
+									layouts,
+									start,
+									end,
+									response.total
+								);
+
+								callback.call(instance, layouts);
+							}
+						})
+						.catch(() => {
+							var bodyNode = instance._modal.bodyNode;
+
+							var listNode = bodyNode.one(
+								'.lfr-ddm-pages-container'
+							);
+
+							listNode.addClass('top-ended');
+
+							instance._requestInitialLayouts(
+								0,
+								groupId,
+								privateLayout,
+								instance._renderLayouts
+							);	
+						});
 					}
 				},
 

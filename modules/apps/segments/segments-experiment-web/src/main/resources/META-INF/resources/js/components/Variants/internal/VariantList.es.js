@@ -19,6 +19,7 @@ import Variant from './Variant.es';
 import {SegmentsVariantType} from '../../../types.es';
 
 function VariantList({
+	editable,
 	onVariantDeletion,
 	onVariantEdition,
 	selectedSegmentsExperienceId,
@@ -34,6 +35,7 @@ function VariantList({
 							selectedSegmentsExperienceId
 						}
 						control={variant.control}
+						editable={editable}
 						key={variant.segmentsExperimentRelId}
 						name={variant.name}
 						onVariantDeletion={onVariantDeletion}
@@ -48,6 +50,7 @@ function VariantList({
 }
 
 VariantList.propTypes = {
+	editable: PropTypes.bool.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
 	variants: PropTypes.arrayOf(SegmentsVariantType)

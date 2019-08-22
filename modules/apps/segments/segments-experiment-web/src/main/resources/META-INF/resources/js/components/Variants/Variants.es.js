@@ -21,6 +21,7 @@ import VariantList from './internal/VariantList.es';
 import VariantForm from './internal/VariantForm.es';
 
 function Variants({
+	editable,
 	onVariantCreation,
 	onVariantDeletion,
 	onVariantEdition,
@@ -52,16 +53,19 @@ function Variants({
 				</>
 			)}
 
-			<ClayButton
-				className="mb-3"
-				displayType="secondary"
-				onClick={() => setCreatingVariant(!creatingVariant)}
-				small
-			>
-				{Liferay.Language.get('create-variant')}
-			</ClayButton>
+			{editable && (
+				<ClayButton
+					className="mb-3"
+					displayType="secondary"
+					onClick={() => setCreatingVariant(!creatingVariant)}
+					small
+				>
+					{Liferay.Language.get('create-variant')}
+				</ClayButton>
+			)}
 
 			<VariantList
+				editable={editable}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
@@ -127,6 +131,7 @@ function Variants({
 }
 
 Variants.propTypes = {
+	editable: PropTypes.bool.isRequired,
 	onVariantCreation: PropTypes.func.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,

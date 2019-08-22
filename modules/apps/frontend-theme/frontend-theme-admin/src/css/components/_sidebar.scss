@@ -25,13 +25,13 @@
 			color: $secondary;
 		}
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			padding-top: 0;
 		}
 	}
 
 	.navbar-default {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 
 			.navbar-nav {
@@ -60,13 +60,13 @@
 	.navigation-bar-light,
 	.sidebar-block > .list-group-item,
 	.panel {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 			border-color: transparent;
 		}
 	}
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		background-color: transparent;
 	}
 }

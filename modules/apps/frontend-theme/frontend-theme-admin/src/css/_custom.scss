@@ -49,7 +49,7 @@ body {
 
 	.sidenav-container {
 		.sidenav-content {
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				margin-right: -15px;
 			}
 		}

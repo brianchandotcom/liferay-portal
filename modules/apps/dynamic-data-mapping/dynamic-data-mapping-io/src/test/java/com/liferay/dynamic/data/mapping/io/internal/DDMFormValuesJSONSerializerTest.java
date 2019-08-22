@@ -26,14 +26,17 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONObjectUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+import org.json.JSONObject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,6 +47,24 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
+
+	public static String toOrderedJSONString(String jsonString) {
+		JSONObject jsonObject = new JSONObject(jsonString) {
+
+			@Override
+			protected Set<Map.Entry<String, Object>> entrySet() {
+				Set<Map.Entry<String, Object>> entrySet = new TreeSet<>(
+					Comparator.comparing(Map.Entry::getKey));
+
+				entrySet.addAll(super.entrySet());
+
+				return entrySet;
+			}
+
+		};
+
+		return jsonObject.toString();
+	}
 
 	@Before
 	@Override
@@ -197,14 +218,24 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected Value createImageValue(int index) {
-		JSONObject jsonObject = JSONUtil.put(
-			"alt", "This is a image description. " + index
-		).put(
-			"data", "base64Value" + index
-		);
+		JSONObject jsonObject = new JSONObject() {
 
-		return new UnlocalizedValue(
-			JSONObjectUtil.toOrderedJSONString(jsonObject));
+			@Override
+			protected Set<Map.Entry<String, Object>> entrySet() {
+				Set<Map.Entry<String, Object>> entrySet = new TreeSet<>(
+					Comparator.comparing(Map.Entry::getKey));
+
+				entrySet.addAll(super.entrySet());
+
+				return entrySet;
+			}
+
+		};
+
+		jsonObject.put("alt", "This is a image description. " + index);
+		jsonObject.put("data", "base64Value" + index);
+
+		return new UnlocalizedValue(jsonObject.toString());
 	}
 
 	protected DDMFormFieldValue createSeparatorDDMFormFieldValue(

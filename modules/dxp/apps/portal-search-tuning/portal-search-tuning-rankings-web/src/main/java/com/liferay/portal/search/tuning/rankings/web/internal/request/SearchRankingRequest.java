@@ -14,20 +14,24 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.request;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.Sort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingFields;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexDefinition;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,12 +42,13 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchRankingRequest {
 
 	public SearchRankingRequest(
-		HttpServletRequest httpServletRequest, Queries queries,
+		HttpServletRequest httpServletRequest, Queries queries, Sorts sorts,
 		SearchContainer searchContainer,
 		SearchEngineAdapter searchEngineAdapter) {
 
 		_httpServletRequest = httpServletRequest;
 		_queries = queries;
+		_sorts = sorts;
 		_searchContext = SearchContextFactory.getInstance(httpServletRequest);
 		_searchContainer = searchContainer;
 		_searchEngineAdapter = searchEngineAdapter;
@@ -54,19 +59,18 @@ public class SearchRankingRequest {
 
 		String keywords = _searchContext.getKeywords();
 
-		if ((keywords != null) && (keywords != StringPool.BLANK)) {
-			searchSearchRequest.setQuery(_queries.match("keywords", keywords));
+		if (!Validator.isBlank(keywords)) {
+			searchSearchRequest.setQuery(
+				_queries.match(RankingFields.NAME, keywords));
 		}
 		else {
 			searchSearchRequest.setQuery(_queries.matchAll());
 		}
 
-		_searchContext.setSorts(_getSort());
-
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setIndexNames(RankingIndexDefinition.INDEX_NAME);
 		searchSearchRequest.setSize(_searchContainer.getDelta());
-		searchSearchRequest.setSorts(_searchContext.getSorts());
+		searchSearchRequest.setSorts(_getSorts());
 		searchSearchRequest.setStart(_searchContainer.getStart());
 
 		SearchSearchResponse searchSearchResponse =
@@ -83,28 +87,20 @@ public class SearchRankingRequest {
 		return searchRankingResponse;
 	}
 
-	private Sort _getSort() {
+	private Collection<Sort> _getSorts() {
 		String orderByCol = ParamUtil.getString(
-			_httpServletRequest, "orderByCol", "keywords");
+			_httpServletRequest, "orderByCol",
+			RankingFields.QUERY_STRING_KEYWORD);
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, "orderByType", "asc");
 
-		Sort sort = null;
+		SortOrder sortOrder = SortOrder.ASC;
 
-		boolean orderByAsc = true;
-
-		if (Objects.equals(orderByType, "asc")) {
-			orderByAsc = false;
+		if (Objects.equals(orderByType, "desc")) {
+			sortOrder = SortOrder.DESC;
 		}
 
-		if (Objects.equals(orderByCol, "modified-date")) {
-			sort = new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
-		}
-		else {
-			sort = new Sort(orderByCol, orderByAsc);
-		}
-
-		return sort;
+		return Arrays.asList(_sorts.field(orderByCol, sortOrder));
 	}
 
 	private final HttpServletRequest _httpServletRequest;
@@ -112,5 +108,6 @@ public class SearchRankingRequest {
 	private final SearchContainer _searchContainer;
 	private final SearchContext _searchContext;
 	private final SearchEngineAdapter _searchEngineAdapter;
+	private final Sorts _sorts;
 
 }

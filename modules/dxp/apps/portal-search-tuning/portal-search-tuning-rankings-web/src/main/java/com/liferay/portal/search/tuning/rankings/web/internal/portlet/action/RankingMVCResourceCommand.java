@@ -14,40 +14,26 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.query.IdsQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.searcher.SearchRequest;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys;
-import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.results.builder.RankingGetHiddenResultsBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.results.builder.RankingGetSearchResultsBuilder;
+import com.liferay.portal.search.tuning.rankings.web.internal.results.builder.RankingGetVisibleResultsBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.searcher.RankingSearchRequestHelper;
 
 import java.io.IOException;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -73,17 +59,9 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		try {
-			String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-			if (cmd.equals("getVisibleResults")) {
-				_writeVisibleDocumentsJSON(resourceRequest, resourceResponse);
-			}
-			else if (cmd.equals("getHiddenResults")) {
-				_writeHiddenDocumentsJSON(resourceRequest, resourceResponse);
-			}
-			else if (cmd.equals("getSearchResults")) {
-				_writeSearchDocumentsJSON(resourceRequest, resourceResponse);
-			}
+			writeJSONPortletResponse(
+				resourceRequest, resourceResponse,
+				getJSONObject(resourceRequest));
 
 			return false;
 		}
@@ -94,139 +72,106 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
-	protected SearchRequest buildSearchRequest(
-		ResourceRequest resourceRequest) {
-
-		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-			resourceRequest, null);
-
-		return searchRequestBuilder.build();
+	protected static JSONObject getJSONObject(JSONArray jsonArray) {
+		return JSONUtil.put(
+			"documents", jsonArray
+		).put(
+			"total", jsonArray.length()
+		);
 	}
 
-	protected SearchRequest buildSearchRequest(
-		ResourceRequest resourceRequest, Ranking ranking) {
+	protected JSONObject getHiddenResults(ResourceRequest resourceRequest) {
+		RankingGetHiddenResultsBuilder rankingGetHiddenResultsBuilder =
+			new RankingGetHiddenResultsBuilder(
+				queries, rankingIndexReader, searchEngineAdapter);
 
-		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
-			resourceRequest, ranking);
+		RankingMVCResourceRequest rankingMVCResourceRequest =
+			new RankingMVCResourceRequest(resourceRequest);
 
-		rankingSearchRequestHelper.contribute(searchRequestBuilder, ranking);
-
-		return searchRequestBuilder.build();
+		return getJSONObject(
+			rankingGetHiddenResultsBuilder.rankingId(
+				rankingMVCResourceRequest.getRankingId()
+			).build());
 	}
 
-	protected Document getDocument(String index, String id, String type) {
-		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
-			index, id);
+	protected JSONObject getJSONObject(ResourceRequest resourceRequest) {
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 
-		getDocumentRequest.setType(type);
-		getDocumentRequest.setFetchSourceInclude("*");
-
-		GetDocumentResponse getDocumentResponse = searchEngineAdapter.execute(
-			getDocumentRequest);
-
-		if (!getDocumentResponse.isExists()) {
-			return null;
+		if (cmd.equals("getHiddenResults")) {
+			return getHiddenResults(resourceRequest);
 		}
 
-		return getDocumentResponse.getDocument();
-	}
-
-	protected Query getIdsQuery(String id) {
-		IdsQuery idsQuery = queries.ids();
-
-		idsQuery.addIds(id);
-
-		return idsQuery;
-	}
-
-	protected SearchRequestBuilder getSearchRequestBuilder(
-		ResourceRequest resourceRequest, Ranking ranking) {
-
-		String queryString = _getQueryString(ranking, resourceRequest);
-
-		return searchRequestBuilderFactory.builder(
-		).addComplexQueryPart(
-			complexQueryPartBuilderFactory.builder(
-			).query(
-				getIdsQuery(queryString)
-			).occur(
-				"should"
-			).build()
-		).from(
-			ParamUtil.getInteger(resourceRequest, "from")
-		).queryString(
-			queryString
-		).size(
-			ParamUtil.getInteger(resourceRequest, "size", 10)
-		).withSearchContext(
-			searchContext -> searchContext.setCompanyId(
-				ParamUtil.getLong(resourceRequest, "companyId"))
-		);
-	}
-
-	protected String getTitle(Document document) {
-		String title = document.getString(Field.TITLE + "_en_US");
-
-		if (!Validator.isBlank(title)) {
-			return title;
+		if (cmd.equals("getSearchResults")) {
+			return getSearchResults(resourceRequest);
 		}
 
-		return document.getString(Field.TITLE);
+		if (cmd.equals("getVisibleResults")) {
+			return getVisibleResults(resourceRequest);
+		}
+
+		return null;
 	}
 
-	protected void populateHiddenDocuments(
-		JSONArray jsonArray, Ranking ranking) {
+	protected JSONObject getSearchResults(ResourceRequest resourceRequest) {
+		RankingGetSearchResultsBuilder rankingGetSearchResultsBuilder =
+			new RankingGetSearchResultsBuilder(
+				complexQueryPartBuilderFactory, queries, searcher,
+				searchRequestBuilderFactory);
 
-		List<String> ids = ranking.getBlockIds();
+		RankingMVCResourceRequest rankingMVCResourceRequest =
+			new RankingMVCResourceRequest(resourceRequest);
 
-		Stream<String> stream = ids.stream();
-
-		stream.map(
-			id -> getDocument(
-				ranking.getIndex(), id,
-				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE)
-		).filter(
-			document -> document != null
-		).map(
-			document -> _withHiddenIcon(_translate(document))
-		).forEach(
-			jsonArray::put
-		);
+		return getJSONObject(
+			rankingGetSearchResultsBuilder.companyId(
+				rankingMVCResourceRequest.getCompanyId()
+			).from(
+				rankingMVCResourceRequest.getFrom()
+			).queryString(
+				rankingMVCResourceRequest.getQueryString()
+			).size(
+				rankingMVCResourceRequest.getSize()
+			).build());
 	}
 
-	protected void populateSearchDocuments(
-		ResourceRequest resourceRequest, JSONArray jsonArray) {
+	protected JSONObject getVisibleResults(ResourceRequest resourceRequest) {
+		RankingGetVisibleResultsBuilder rankingGetVisibleResultsBuilder =
+			new RankingGetVisibleResultsBuilder(
+				complexQueryPartBuilderFactory, rankingIndexReader,
+				rankingSearchRequestHelper, queries, searcher,
+				searchRequestBuilderFactory);
 
-		SearchRequest searchRequest = buildSearchRequest(resourceRequest);
+		RankingMVCResourceRequest rankingMVCResourceRequest =
+			new RankingMVCResourceRequest(resourceRequest);
 
-		SearchResponse searchResponse = searcher.search(searchRequest);
-
-		Stream<Document> stream = searchResponse.getDocumentsStream();
-
-		stream.map(
-			document -> _translate(document)
-		).forEach(
-			jsonArray::put
-		);
+		return getJSONObject(
+			rankingGetVisibleResultsBuilder.companyId(
+				rankingMVCResourceRequest.getCompanyId()
+			).from(
+				rankingMVCResourceRequest.getFrom()
+			).queryString(
+				rankingMVCResourceRequest.getQueryString()
+			).rankingId(
+				rankingMVCResourceRequest.getRankingId()
+			).size(
+				rankingMVCResourceRequest.getSize()
+			).build());
 	}
 
-	protected void populateVisibleDocuments(
-		ResourceRequest resourceRequest, JSONArray jsonArray, Ranking ranking) {
+	protected void writeJSONPortletResponse(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		JSONObject jsonObject) {
 
-		SearchRequest searchRequest = buildSearchRequest(
-			resourceRequest, ranking);
+		if (jsonObject == null) {
+			return;
+		}
 
-		SearchResponse searchResponse = searcher.search(searchRequest);
-
-		Stream<Document> stream = searchResponse.getDocumentsStream();
-
-		stream.map(
-			document -> _withPinnedIcon(
-				ranking.isPinned(document.getString(Field.UID)),
-				_translate(document))
-		).forEach(
-			jsonArray::put
-		);
+		try {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonObject);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	@Reference
@@ -250,124 +195,34 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
-	private String _getParamKeywords(ResourceRequest resourceRequest) {
-		return ParamUtil.getString(resourceRequest, "keywords");
-	}
+	private class RankingMVCResourceRequest {
 
-	private String _getQueryString(Ranking ranking) {
-		List<String> queryStrings = ranking.getQueryStrings();
-
-		Stream<String> stream = queryStrings.stream();
-
-		return stream.findFirst(
-		).orElse(
-			ranking.getName()
-		);
-	}
-
-	private String _getQueryString(
-		Ranking ranking, ResourceRequest resourceRequest) {
-
-		String queryStringOfUrl = _getParamKeywords(resourceRequest);
-
-		if (!queryStringOfUrl.equals(StringPool.BLANK)) {
-			return queryStringOfUrl;
+		public RankingMVCResourceRequest(ResourceRequest resourceRequest) {
+			_resourceRequest = resourceRequest;
 		}
 
-		return _getQueryString(ranking);
-	}
-
-	private String _getRankingId(ResourceRequest resourceRequest) {
-		return ParamUtil.getString(
-			resourceRequest, RankingMVCResourceCommand._PARAM_RANKING_ID);
-	}
-
-	private JSONObject _translate(Document document) {
-		return JSONUtil.put(
-			"author", document.getString(Field.USER_NAME)
-		).put(
-			"clicks", document.getString("clicks")
-		).put(
-			"description", document.getString(Field.DESCRIPTION)
-		).put(
-			"id", document.getString(Field.UID)
-		).put(
-			"title", getTitle(document)
-		).put(
-			"type", document.getString(Field.ENTRY_CLASS_NAME)
-		);
-	}
-
-	private JSONObject _withHiddenIcon(JSONObject jsonObject) {
-		return jsonObject.put("hidden", true);
-	}
-
-	private JSONObject _withPinnedIcon(boolean pinned, JSONObject jsonObject) {
-		if (pinned) {
-			jsonObject.put("pinned", true);
+		public long getCompanyId() {
+			return ParamUtil.getLong(_resourceRequest, "companyId");
 		}
 
-		return jsonObject;
-	}
-
-	private void _writeHiddenDocumentsJSON(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-			_getRankingId(resourceRequest));
-
-		optional.ifPresent(
-			ranking -> populateHiddenDocuments(jsonArray, optional.get()));
-
-		_writeJSON(resourceRequest, resourceResponse, jsonArray);
-	}
-
-	private void _writeJSON(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		JSONArray jsonArray) {
-
-		JSONObject jsonObject = JSONUtil.put(
-			"documents", jsonArray
-		).put(
-			"total", jsonArray.length()
-		);
-
-		try {
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse, jsonObject);
+		public int getFrom() {
+			return ParamUtil.getInteger(_resourceRequest, "from");
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
+
+		public String getQueryString() {
+			return ParamUtil.getString(_resourceRequest, "keywords");
 		}
+
+		public String getRankingId() {
+			return ParamUtil.getString(_resourceRequest, "resultsRankingUid");
+		}
+
+		public int getSize() {
+			return ParamUtil.getInteger(_resourceRequest, "size", 10);
+		}
+
+		private final ResourceRequest _resourceRequest;
+
 	}
-
-	private void _writeSearchDocumentsJSON(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		populateSearchDocuments(resourceRequest, jsonArray);
-
-		_writeJSON(resourceRequest, resourceResponse, jsonArray);
-	}
-
-	private void _writeVisibleDocumentsJSON(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
-			_getRankingId(resourceRequest));
-
-		optional.ifPresent(
-			ranking -> populateVisibleDocuments(
-				resourceRequest, jsonArray, ranking));
-
-		_writeJSON(resourceRequest, resourceResponse, jsonArray);
-	}
-
-	private static final String _PARAM_RANKING_ID = "resultsRankingUid";
 
 }

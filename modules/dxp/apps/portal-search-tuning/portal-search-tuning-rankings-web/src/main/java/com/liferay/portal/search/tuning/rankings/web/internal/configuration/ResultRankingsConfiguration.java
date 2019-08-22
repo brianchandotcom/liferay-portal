@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
+package com.liferay.portal.search.tuning.rankings.web.internal.configuration;
 
 /**
  * @author André de Oliveira
  */
-public class LiferayTypeMappingsConstants {
+public interface ResultRankingsConfiguration {
 
-	public static final String LIFERAY_DOCUMENT_TYPE = "LiferayDocumentType";
+	public boolean allowDuplicateQueryStrings();
 
 }

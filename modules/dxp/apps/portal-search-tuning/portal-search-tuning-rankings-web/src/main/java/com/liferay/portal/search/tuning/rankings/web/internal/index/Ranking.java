@@ -14,11 +14,17 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -29,6 +35,7 @@ import java.util.stream.Stream;
 public class Ranking {
 
 	public Ranking(Ranking ranking) {
+		_aliases = new ArrayList<>(ranking._aliases);
 		_blockIds = new LinkedHashSet<>(ranking._blockIds);
 		_id = ranking._id;
 		_inactive = ranking._inactive;
@@ -36,7 +43,11 @@ public class Ranking {
 		_name = ranking._name;
 		_pinIds = new HashSet<>(ranking._pinIds);
 		_pins = new ArrayList<>(ranking._pins);
-		_queryStrings = new ArrayList<>(ranking._queryStrings);
+		_queryString = ranking._queryString;
+	}
+
+	public List<String> getAliases() {
+		return Collections.unmodifiableList(_aliases);
 	}
 
 	public List<String> getBlockIds() {
@@ -55,12 +66,42 @@ public class Ranking {
 		return _name;
 	}
 
+	public String getNameForDisplay() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_name);
+
+		if (!Objects.equals(_name, _queryString)) {
+			sb.append(CharPool.OPEN_BRACKET);
+			sb.append(_queryString);
+			sb.append(CharPool.CLOSE_BRACKET);
+		}
+
+		if (_inactive) {
+			sb.append("{INACTIVE}");
+		}
+
+		return sb.toString();
+	}
+
 	public List<Pin> getPins() {
 		return Collections.unmodifiableList(_pins);
 	}
 
-	public List<String> getQueryStrings() {
-		return Collections.unmodifiableList(_queryStrings);
+	public String getQueryString() {
+		return _queryString;
+	}
+
+	public Collection<String> getQueryStrings() {
+		return Stream.concat(
+			Stream.of(_queryString), _aliases.stream()
+		).filter(
+			string -> !Validator.isBlank(string)
+		).distinct(
+		).sorted(
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public boolean isInactive() {
@@ -99,6 +140,12 @@ public class Ranking {
 
 		public RankingBuilder(Ranking ranking) {
 			_ranking = ranking;
+		}
+
+		public RankingBuilder aliases(List<String> aliases) {
+			_ranking._aliases = aliases;
+
+			return this;
 		}
 
 		public RankingBuilder blocks(List<String> hiddenIds) {
@@ -157,8 +204,8 @@ public class Ranking {
 			return this;
 		}
 
-		public RankingBuilder queryStrings(List<String> queryStrings) {
-			_ranking._queryStrings = queryStrings;
+		public RankingBuilder queryString(String queryString) {
+			_ranking._queryString = queryString;
 
 			return this;
 		}
@@ -178,6 +225,7 @@ public class Ranking {
 	private Ranking() {
 	}
 
+	private List<String> _aliases = new ArrayList<>();
 	private Set<String> _blockIds = new LinkedHashSet<>();
 	private String _id;
 	private boolean _inactive;
@@ -185,6 +233,6 @@ public class Ranking {
 	private String _name;
 	private Set<String> _pinIds = new LinkedHashSet<>();
 	private List<Pin> _pins = new ArrayList<>();
-	private List<String> _queryStrings = new ArrayList<>();
+	private String _queryString;
 
 }

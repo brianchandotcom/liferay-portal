@@ -15,7 +15,6 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -26,10 +25,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
-import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.TermQuery;
-import com.liferay.portal.search.query.TermsQuery;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,30 +40,14 @@ import org.osgi.service.component.annotations.Reference;
 public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	@Override
-	public boolean exists(RankingCriteria rankingCriteria) {
-		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
-
-		searchSearchRequest.setQuery(_translate(rankingCriteria));
-		searchSearchRequest.setSize(0);
-
-		SearchSearchResponse searchSearchResponse =
-			_searchEngineAdapter.execute(searchSearchRequest);
-
-		if (searchSearchResponse.getCount() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public Optional<Ranking> fetchByQueryStringOptional(String queryString) {
 		if (Validator.isBlank(queryString)) {
 			return Optional.empty();
 		}
 
-		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
+		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
+		searchSearchRequest.setIndexNames(RankingIndexDefinition.INDEX_NAME);
 		searchSearchRequest.setQuery(getQueryStringQuery(queryString));
 		searchSearchRequest.setSize(1);
 
@@ -84,14 +64,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		).map(
 			document -> translate(document, id)
 		);
-	}
-
-	protected SearchSearchRequest createSearchSearchRequest() {
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
-		searchSearchRequest.setIndexNames(_getIndexName());
-
-		return searchSearchRequest;
 	}
 
 	protected Optional<Ranking> getFirstRankingOptional(
@@ -114,23 +86,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		List<SearchHit> searchHitsList = searchHits.getSearchHits();
 
 		return searchHitsList.get(0);
-	}
-
-	protected BooleanQuery getQueryStringQuery(
-		RankingCriteria rankingCriteria) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		String queryString = rankingCriteria.getQueryString();
-
-		if (!Validator.isBlank(queryString)) {
-			TermQuery termQuery = _queries.term(
-				RankingFields.QUERY_STRINGS, queryString);
-
-			booleanQuery.addShouldQueryClauses(termQuery);
-		}
-
-		return booleanQuery;
 	}
 
 	protected BooleanQuery getQueryStringQuery(String queryString) {
@@ -162,7 +117,7 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 
 	private Document _getDocument(String id) {
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
-			_getIndexName(), id);
+			RankingIndexDefinition.INDEX_NAME, id);
 
 		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
 
@@ -174,40 +129,6 @@ public class RankingIndexReaderImpl implements RankingIndexReader {
 		}
 
 		return null;
-	}
-
-	private String _getIndexName() {
-		return RankingIndexDefinition.INDEX_NAME;
-	}
-
-	private BooleanQuery _translate(RankingCriteria rankingCriteria) {
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		BooleanQuery queryStringBooleanQuery = getQueryStringQuery(
-			rankingCriteria);
-
-		List<String> aliases = rankingCriteria.getAliases();
-
-		if (ListUtil.isNotEmpty(aliases)) {
-			TermsQuery termsQuery = _queries.terms(RankingFields.QUERY_STRINGS);
-
-			termsQuery.addValues(aliases.toArray());
-
-			queryStringBooleanQuery.addShouldQueryClauses(termsQuery);
-		}
-
-		MatchQuery indexMatchQuery = _queries.match(
-			"index", rankingCriteria.getIndex());
-
-		booleanQuery.addMustQueryClauses(
-			indexMatchQuery, queryStringBooleanQuery);
-
-		if (rankingCriteria.getId() != null) {
-			booleanQuery.addMustNotQueryClauses(
-				_queries.match("_id", rankingCriteria.getId()));
-		}
-
-		return booleanQuery;
 	}
 
 	@Reference

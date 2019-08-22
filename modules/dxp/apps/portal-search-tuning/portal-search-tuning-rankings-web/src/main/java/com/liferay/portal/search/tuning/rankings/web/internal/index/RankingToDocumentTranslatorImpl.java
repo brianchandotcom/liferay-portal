@@ -38,20 +38,24 @@ public class RankingToDocumentTranslatorImpl
 	public Document translate(Ranking ranking) {
 		return _documentBuilderFactory.builder(
 		).setStrings(
+			RankingFields.ALIASES, ArrayUtil.toStringArray(ranking.getAliases())
+		).setStrings(
 			RankingFields.BLOCKS, ArrayUtil.toStringArray(ranking.getBlockIds())
 		).setBoolean(
 			RankingFields.INACTIVE, ranking.isInactive()
 		).setString(
-			"index", ranking.getIndex()
+			RankingFields.INDEX, ranking.getIndex()
 		).setString(
 			RankingFields.NAME, ranking.getName()
 		).setValues(
 			RankingFields.PINS, _toMaps(ranking.getPins())
+		).setString(
+			RankingFields.QUERY_STRING, ranking.getQueryString()
 		).setStrings(
 			RankingFields.QUERY_STRINGS,
 			ArrayUtil.toStringArray(ranking.getQueryStrings())
 		).setString(
-			"uid", ranking.getId()
+			RankingFields.UID, ranking.getId()
 		).build();
 	}
 
@@ -68,8 +72,10 @@ public class RankingToDocumentTranslatorImpl
 		return stream.map(
 			pin -> new LinkedHashMap<String, String>() {
 				{
-					put("position", String.valueOf(pin.getPosition()));
-					put("uid", pin.getId());
+					put(
+						RankingFields.POSITION,
+						String.valueOf(pin.getPosition()));
+					put(RankingFields.UID, pin.getId());
 				}
 			}
 		).collect(

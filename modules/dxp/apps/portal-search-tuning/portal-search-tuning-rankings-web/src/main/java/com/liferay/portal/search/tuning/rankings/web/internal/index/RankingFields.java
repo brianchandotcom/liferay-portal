@@ -25,14 +25,22 @@ public class RankingFields {
 
 	public static final String INACTIVE = "inactive";
 
+	public static final String INDEX = "index";
+
 	public static final String NAME = "name";
 
 	public static final String PINS = "pins";
 
+	public static final String POSITION = "position";
+
 	public static final String QUERY_STRING = "queryString";
+
+	public static final String QUERY_STRING_KEYWORD = "queryString.keyword";
 
 	public static final String QUERY_STRINGS = "queryStrings";
 
 	public static final String QUERY_STRINGS_KEYWORD = "queryStrings.keyword";
+
+	public static final String UID = "uid";
 
 }

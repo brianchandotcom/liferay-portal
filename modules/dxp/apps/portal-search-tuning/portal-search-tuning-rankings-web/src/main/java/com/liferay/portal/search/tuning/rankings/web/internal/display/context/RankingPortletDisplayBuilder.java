@@ -31,6 +31,7 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.DocumentToRankingTranslator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.web.internal.request.SearchRankingRequest;
@@ -55,7 +56,7 @@ public class RankingPortletDisplayBuilder {
 	public RankingPortletDisplayBuilder(
 		DocumentToRankingTranslator documentToRankingTranslator,
 		HttpServletRequest httpServletRequest, Language language,
-		Queries queries, RenderRequest renderRequest,
+		Queries queries, Sorts sorts, RenderRequest renderRequest,
 		RenderResponse renderResponse,
 		SearchEngineAdapter searchEngineAdapter) {
 
@@ -63,6 +64,7 @@ public class RankingPortletDisplayBuilder {
 		_httpServletRequest = httpServletRequest;
 		_language = language;
 		_queries = queries;
+		_sorts = sorts;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_searchEngineAdapter = searchEngineAdapter;
@@ -339,7 +341,7 @@ public class RankingPortletDisplayBuilder {
 			getSearchContainer(getKeywords());
 
 		SearchRankingRequest searchRankingRequest = new SearchRankingRequest(
-			_httpServletRequest, _queries, searchContainer,
+			_httpServletRequest, _queries, _sorts, searchContainer,
 			_searchEngineAdapter);
 
 		SearchRankingResponse searchRankingResponse =
@@ -363,5 +365,6 @@ public class RankingPortletDisplayBuilder {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final SearchEngineAdapter _searchEngineAdapter;
+	private final Sorts _sorts;
 
 }

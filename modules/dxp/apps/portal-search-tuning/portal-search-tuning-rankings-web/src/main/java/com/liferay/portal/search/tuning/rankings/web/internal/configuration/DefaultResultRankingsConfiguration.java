@@ -12,21 +12,17 @@
  *
  */
 
-package com.liferay.portal.search.tuning.rankings.web.internal.index;
-
-import java.util.List;
+package com.liferay.portal.search.tuning.rankings.web.internal.configuration;
 
 /**
  * @author André de Oliveira
  */
-public interface RankingCriteria {
+public class DefaultResultRankingsConfiguration
+	implements ResultRankingsConfiguration {
 
-	public List<String> getAliases();
-
-	public String getId();
-
-	public String getIndex();
-
-	public String getQueryString();
+	@Override
+	public boolean allowDuplicateQueryStrings() {
+		return false;
+	}
 
 }

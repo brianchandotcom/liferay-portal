@@ -14,11 +14,37 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
+import java.util.Collection;
+
 /**
  * @author André de Oliveira
  */
-public interface RankingCriteriaBuilderFactory {
+public interface DuplicateQueryStringsDetector {
 
-	public RankingCriteriaBuilder builder();
+	public Criteria.Builder builder();
+
+	public boolean detect(Criteria criteria);
+
+	public interface Criteria {
+
+		public String getIndex();
+
+		public Collection<String> getQueryStrings();
+
+		public String getUnlessRankingId();
+
+		public interface Builder {
+
+			public Criteria build();
+
+			public Builder index(String index);
+
+			public Builder queryStrings(Collection<String> queryStrings);
+
+			public Builder unlessRankingId(String unlessRankingId);
+
+		}
+
+	}
 
 }

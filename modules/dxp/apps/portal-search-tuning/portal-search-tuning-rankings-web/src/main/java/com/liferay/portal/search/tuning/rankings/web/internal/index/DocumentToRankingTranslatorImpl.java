@@ -37,6 +37,8 @@ public class DocumentToRankingTranslatorImpl
 	@Override
 	public Ranking translate(Document document, String id) {
 		return builder(
+		).aliases(
+			_getAliases(document)
 		).blocks(
 			document.getStrings(RankingFields.BLOCKS)
 		).id(
@@ -49,8 +51,8 @@ public class DocumentToRankingTranslatorImpl
 			_getName(document)
 		).pins(
 			_getPins(document)
-		).queryStrings(
-			_getQueryStrings(document)
+		).queryString(
+			_getQueryString(document)
 		).build();
 	}
 
@@ -58,11 +60,26 @@ public class DocumentToRankingTranslatorImpl
 		return new Ranking.RankingBuilder();
 	}
 
+	private List<String> _getAliases(Document document) {
+		List<String> aliases = document.getStrings(RankingFields.ALIASES);
+
+		if (ListUtil.isEmpty(aliases)) {
+			List<String> queryStrings = document.getStrings(
+				RankingFields.QUERY_STRINGS);
+
+			queryStrings.remove(document.getString(RankingFields.QUERY_STRING));
+
+			return queryStrings;
+		}
+
+		return aliases;
+	}
+
 	private String _getName(Document document) {
 		String string = document.getString(RankingFields.NAME);
 
 		if (Validator.isBlank(string)) {
-			return document.getString(RankingFields.QUERY_STRING);
+			return _getQueryString(document);
 		}
 
 		return string;
@@ -84,14 +101,18 @@ public class DocumentToRankingTranslatorImpl
 		return pinStream.collect(Collectors.toList());
 	}
 
-	private List<String> _getQueryStrings(Document document) {
-		List<String> strings = document.getStrings(RankingFields.QUERY_STRINGS);
+	private String _getQueryString(Document document) {
+		String string = document.getString(RankingFields.QUERY_STRING);
 
-		if (ListUtil.isEmpty(strings)) {
-			return document.getStrings(RankingFields.ALIASES);
+		if (Validator.isBlank(string)) {
+			List<String> strings = _getAliases(document);
+
+			if (!ListUtil.isEmpty(strings)) {
+				return strings.get(0);
+			}
 		}
 
-		return strings;
+		return string;
 	}
 
 	private Ranking.Pin _toPin(Map<String, String> map) {

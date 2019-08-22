@@ -19,15 +19,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Bryan Engler
  */
 public class RankingEntryDisplayContextBuilder {
-
-	public static final String INACTIVE_INDICATOR = "X";
 
 	public RankingEntryDisplayContextBuilder(Ranking ranking) {
 		_ranking = ranking;
@@ -39,9 +36,9 @@ public class RankingEntryDisplayContextBuilder {
 
 		_setHiddenResultsCount(rankingEntryDisplayContext);
 		_setIndex(rankingEntryDisplayContext);
-		_setName(rankingEntryDisplayContext);
+		_setNameForDisplay(rankingEntryDisplayContext);
 		_setPinnedResultsCount(rankingEntryDisplayContext);
-		_setQueryStrings(rankingEntryDisplayContext);
+		_setAliases(rankingEntryDisplayContext);
 		_setStatus(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
 
@@ -52,22 +49,20 @@ public class RankingEntryDisplayContextBuilder {
 		return String.valueOf(list.size());
 	}
 
-	private List<String> _getQueryStrings() {
-		List<String> queryStrings = new ArrayList<>(_ranking.getQueryStrings());
-
-		if (_ranking.isInactive()) {
-			queryStrings.add(INACTIVE_INDICATOR);
-		}
-
-		return queryStrings;
-	}
-
 	private int _getStatus() {
 		if (_ranking.isInactive()) {
 			return WorkflowConstants.STATUS_INACTIVE;
 		}
 
 		return WorkflowConstants.STATUS_APPROVED;
+	}
+
+	private void _setAliases(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setAliases(
+			StringUtil.merge(
+				_ranking.getAliases(), StringPool.COMMA_AND_SPACE));
 	}
 
 	private void _setHiddenResultsCount(
@@ -83,10 +78,10 @@ public class RankingEntryDisplayContextBuilder {
 		rankingEntryDisplayContext.setIndex(_ranking.getIndex());
 	}
 
-	private void _setName(
+	private void _setNameForDisplay(
 		RankingEntryDisplayContext rankingEntryDisplayContext) {
 
-		rankingEntryDisplayContext.setKeywords(_ranking.getName());
+		rankingEntryDisplayContext.setKeywords(_ranking.getNameForDisplay());
 	}
 
 	private void _setPinnedResultsCount(
@@ -94,13 +89,6 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setPinnedResultsCount(
 			getSizeString(_ranking.getPins()));
-	}
-
-	private void _setQueryStrings(
-		RankingEntryDisplayContext rankingEntryDisplayContext) {
-
-		rankingEntryDisplayContext.setAliases(
-			StringUtil.merge(_getQueryStrings(), StringPool.COMMA_AND_SPACE));
 	}
 
 	private void _setStatus(

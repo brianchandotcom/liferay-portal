@@ -108,10 +108,10 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 	},
 
 	fragmentConfiguration: {
-		icon: '',
+		icon: 'cog',
 		id: 'fragment_configuration',
 		panelId: 'fragment_configuration',
-		title: '',
+		title: Liferay.Language.get('fragment-configuration'),
 		type: 'panel'
 	},
 

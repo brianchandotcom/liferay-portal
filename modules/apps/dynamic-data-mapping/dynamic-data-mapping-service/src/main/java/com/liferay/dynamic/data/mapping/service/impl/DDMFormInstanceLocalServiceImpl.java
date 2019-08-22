@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -51,16 +52,22 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance",
+	service = AopService.class
+)
 public class DDMFormInstanceLocalServiceImpl
 	extends DDMFormInstanceLocalServiceBaseImpl {
 
@@ -520,7 +527,7 @@ public class DDMFormInstanceLocalServiceImpl
 		DDMForm ddmForm = DDMFormFactory.create(DDMFormInstanceSettings.class);
 
 		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
+			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
 				"json");
 
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
@@ -586,7 +593,7 @@ public class DDMFormInstanceLocalServiceImpl
 
 	protected String serialize(DDMFormValues ddmFormValues) {
 		DDMFormValuesSerializer ddmFormValuesSerializer =
-			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
+			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
 
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
@@ -654,7 +661,7 @@ public class DDMFormInstanceLocalServiceImpl
 			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
-		ddmFormValuesValidator.validate(settingsDDMFormValues);
+		_ddmFormValuesValidator.validate(settingsDDMFormValues);
 	}
 
 	protected void validateName(
@@ -682,15 +689,15 @@ public class DDMFormInstanceLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMFormValuesDeserializerTracker.class)
-	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
-
-	@ServiceReference(type = DDMFormValuesSerializerTracker.class)
-	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
-
-	@ServiceReference(type = DDMFormValuesValidator.class)
-	protected DDMFormValuesValidator ddmFormValuesValidator;
-
 	private static final String _VERSION_DEFAULT = "1.0";
+
+	@Reference
+	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+
+	@Reference
+	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
+
+	@Reference
+	private DDMFormValuesValidator _ddmFormValuesValidator;
 
 }

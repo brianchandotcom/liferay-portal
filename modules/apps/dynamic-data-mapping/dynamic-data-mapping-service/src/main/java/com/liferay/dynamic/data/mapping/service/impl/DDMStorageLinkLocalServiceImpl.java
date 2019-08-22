@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStorageLinkLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -24,10 +25,16 @@ import java.util.List;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStorageLink",
+	service = AopService.class
+)
 public class DDMStorageLinkLocalServiceImpl
 	extends DDMStorageLinkLocalServiceBaseImpl {
 

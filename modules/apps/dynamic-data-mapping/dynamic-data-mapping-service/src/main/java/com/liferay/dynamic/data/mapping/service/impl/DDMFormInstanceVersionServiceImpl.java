@@ -17,18 +17,28 @@ package com.liferay.dynamic.data.mapping.service.impl;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceVersionServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Leonardo Barros
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddm",
+		"json.web.service.context.path=DDMFormInstanceVersion"
+	},
+	service = AopService.class
+)
 public class DDMFormInstanceVersionServiceImpl
 	extends DDMFormInstanceVersionServiceBaseImpl {
 
@@ -96,11 +106,10 @@ public class DDMFormInstanceVersionServiceImpl
 			ddmFormInstanceId, status);
 	}
 
-	private static volatile ModelResourcePermission<DDMFormInstance>
-		_ddmFormInstanceVersionPermissionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMFormInstanceVersionServiceImpl.class,
-				"_ddmFormInstanceVersionPermissionModelResourcePermission",
-				DDMFormInstance.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceVersionPermissionModelResourcePermission;
 
 }

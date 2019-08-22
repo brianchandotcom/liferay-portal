@@ -36,10 +36,10 @@ String componentId = renderResponse.getNamespace() + "dataLayoutBuilder";
 	/>
 </aui:form>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/pages/form-view/EditFormViewApp.es as App" %>'>
+<aui:script require='<%= npmResolvedPackageName + "/js/pages/form-view/EditFormViewApp.es as EditFormViewApp" %>'>
 	Liferay.componentReady('<%= componentId %>').then(
 		function(dataLayoutBuilder) {
-			App.default(
+			EditFormViewApp.default(
 				'<%= editFormViewRootElementId %>',
 				{
 					dataLayoutBuilder: dataLayoutBuilder

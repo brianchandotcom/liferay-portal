@@ -23,13 +23,16 @@ import {ClayIconSpriteContext} from '@clayui/icon';
  * - Provides commonly-needed context (for example, the Clay spritemap).
  * - Unmounts when portlets are destroyed.
  *
+ * The React docs advise not to rely on the render return value, so we
+ * don't propagate it.
+ *
  * @see https://reactjs.org/docs/react-dom.html#render
  */
 export default function render(element, container, callback) {
 	const spritemap =
 		Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-	// React docs advise not to rely on return value, so we don't propagate it.
+	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={spritemap}>
 			{element}

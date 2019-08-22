@@ -12,24 +12,16 @@
  * details.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
-import ReactDOM from 'react-dom';
-
-const App = () => {
-	return (
-		<AppContextProvider>
-			<EditFormView />
-		</AppContextProvider>
-	);
-};
 
 export default id => {
-	const container = document.getElementById(id);
-	ReactDOM.render(<App />, container);
-
-	Liferay.once('destroyPortlet', () =>
-		ReactDOM.unmountComponentAtNode(container)
+	render(
+		<AppContextProvider>
+			<EditFormView />
+		</AppContextProvider>,
+		document.getElementById(id)
 	);
 };

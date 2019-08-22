@@ -114,7 +114,7 @@
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
 
-		<!-- Temporary suppressions for BNDSuiteCheck(LPS-100170) -->
+		<!-- Temporary suppressions for deprecated apps (LPS-100170) -->
 
 		<suppress checks="BNDSuiteCheck" files="modules/apps/amazon-rankings/app\.bnd" />
 		<suppress checks="BNDSuiteCheck" files="modules/apps/asset-tags-validator/app\.bnd" />

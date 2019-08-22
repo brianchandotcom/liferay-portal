@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
@@ -414,14 +413,6 @@ public interface JournalFolderLocalService
 	public void getSubfolderIds(
 		List<Long> folderIds, long groupId, long folderId);
 
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.service.SubscriptionLocalService
-		getSubscriptionLocalService();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueFolderName(
 		String uuid, long groupId, long parentFolderId, String name, int count);
@@ -456,14 +447,6 @@ public interface JournalFolderLocalService
 			String keywords, int start, int end,
 			OrderByComparator<DDMStructure> obc)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSubscriptionLocalService(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService);
 
 	public void subscribe(long userId, long groupId, long folderId)
 		throws PortalException;

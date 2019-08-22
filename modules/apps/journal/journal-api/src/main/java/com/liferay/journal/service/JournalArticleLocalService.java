@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.File;
 import java.io.Serializable;
@@ -2150,14 +2149,6 @@ public interface JournalArticleLocalService
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey);
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.service.SubscriptionLocalService
-		getSubscriptionLocalService();
-
-	/**
 	 * Returns the web content articles matching the group and DDM template key.
 	 *
 	 * @param groupId the primary key of the web content article's group
@@ -3247,14 +3238,6 @@ public interface JournalArticleLocalService
 			long groupId, long userId, long creatorUserId, int status,
 			int start, int end)
 		throws PortalException;
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setSubscriptionLocalService(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService);
 
 	public void setTreePaths(long folderId, String treePath, boolean reindex)
 		throws PortalException;

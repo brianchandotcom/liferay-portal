@@ -2693,17 +2693,6 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.portal.kernel.service.SubscriptionLocalService
-		getSubscriptionLocalService() {
-
-		return _journalArticleLocalService.getSubscriptionLocalService();
-	}
-
-	/**
 	 * Returns the web content articles matching the group and DDM template key.
 	 *
 	 * @param groupId the primary key of the web content article's group
@@ -3966,19 +3955,6 @@ public class JournalArticleLocalServiceWrapper
 
 		return _journalArticleLocalService.searchJournalArticles(
 			groupId, userId, creatorUserId, status, start, end);
-	}
-
-	/**
-	 * @deprecated As of Judson (7.1.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setSubscriptionLocalService(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService) {
-
-		_journalArticleLocalService.setSubscriptionLocalService(
-			subscriptionLocalService);
 	}
 
 	@Override

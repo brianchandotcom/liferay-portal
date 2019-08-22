@@ -110,7 +110,7 @@
 		{call .selectOption}
 			{param optionId: '' /}
 			{param optionLabel: $unmappedLabel /}
-			{param selectedId: $mappedFieldId or $unmappedLabel /}
+			{param selectedId: $mappedFieldId ?: '' /}
 		{/call}
 
 		{foreach $field in $fields}

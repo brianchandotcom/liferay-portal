@@ -292,25 +292,22 @@ AUI.add(
 					Liferay.Util.getPortletNamespace(
 						Liferay.PortletKeys.DYNAMIC_DATA_MAPPING
 					) + 'definition';
-				
+
 				const data = new URLSearchParams();
 				data.append(key, JSON.stringify(instance.get('definition')));
 
-				Liferay.Util.fetch(
-					instance._getTemplateResourceURL(),
-					{
-						body: data,
-						method: 'POST'
-					}
-				)
-				.then(response => {
-					return response.text();
+				Liferay.Util.fetch(instance._getTemplateResourceURL(), {
+					body: data,
+					method: 'POST'
 				})
-				.then(response => {
-					if (callback) {
-						callback.call(instance, response)
-					}
-				});
+					.then(response => {
+						return response.text();
+					})
+					.then(response => {
+						if (callback) {
+							callback.call(instance, response);
+						}
+					});
 			},
 
 			_getTemplateResourceURL: function() {
@@ -2841,28 +2838,24 @@ AUI.add(
 									method: 'POST'
 								}
 							)
-							.then(response => {
-								return response.json();
-							})
-							.then(response => {
-								var layouts =
-									response && response.layouts;
+								.then(response => {
+									return response.json();
+								})
+								.then(response => {
+									var layouts = response && response.layouts;
 
-								if (layouts) {
-									instance._updateCache(
-										key,
-										layouts,
-										start,
-										end,
-										response.total
-									);
+									if (layouts) {
+										instance._updateCache(
+											key,
+											layouts,
+											start,
+											end,
+											response.total
+										);
 
-									callback.call(
-										instance,
-										layouts
-									);
-								}
-							});
+										callback.call(instance, layouts);
+									}
+								});
 						} else if (cache) {
 							callback.call(instance, cache.layouts);
 						}
@@ -2917,62 +2910,61 @@ AUI.add(
 								method: 'POST'
 							}
 						)
-						.then(response => {
-							return response.json();
-						})
-						.then(response => {
-							var layouts =
-								response && response.layouts;
+							.then(response => {
+								return response.json();
+							})
+							.then(response => {
+								var layouts = response && response.layouts;
 
-							if (layouts) {
-								var parentLayoutId =
-									response.ancestorLayoutIds[0];
+								if (layouts) {
+									var parentLayoutId =
+										response.ancestorLayoutIds[0];
 
-								var key = [
-									parentLayoutId,
-									groupId,
-									privateLayout
-								].join('-');
+									var key = [
+										parentLayoutId,
+										groupId,
+										privateLayout
+									].join('-');
 
-								var start = response.start;
+									var start = response.start;
 
-								var end = start + layouts.length;
+									var end = start + layouts.length;
 
-								instance._currentParentLayoutId = parentLayoutId;
+									instance._currentParentLayoutId = parentLayoutId;
 
-								instance._setSelectedLayoutPath(
+									instance._setSelectedLayoutPath(
+										groupId,
+										privateLayout,
+										response
+									);
+
+									instance._updateCache(
+										key,
+										layouts,
+										start,
+										end,
+										response.total
+									);
+
+									callback.call(instance, layouts);
+								}
+							})
+							.catch(() => {
+								var bodyNode = instance._modal.bodyNode;
+
+								var listNode = bodyNode.one(
+									'.lfr-ddm-pages-container'
+								);
+
+								listNode.addClass('top-ended');
+
+								instance._requestInitialLayouts(
+									0,
 									groupId,
 									privateLayout,
-									response
+									instance._renderLayouts
 								);
-
-								instance._updateCache(
-									key,
-									layouts,
-									start,
-									end,
-									response.total
-								);
-
-								callback.call(instance, layouts);
-							}
-						})
-						.catch(() => {
-							var bodyNode = instance._modal.bodyNode;
-
-							var listNode = bodyNode.one(
-								'.lfr-ddm-pages-container'
-							);
-
-							listNode.addClass('top-ended');
-
-							instance._requestInitialLayouts(
-								0,
-								groupId,
-								privateLayout,
-								instance._renderLayouts
-							);	
-						});
+							});
 					}
 				},
 
@@ -4295,7 +4287,6 @@ AUI.add(
 			'aui-datatable',
 			'aui-datatype',
 			'aui-image-viewer',
-			'aui-io-request',
 			'aui-parse-content',
 			'aui-set',
 			'aui-sortable-list',

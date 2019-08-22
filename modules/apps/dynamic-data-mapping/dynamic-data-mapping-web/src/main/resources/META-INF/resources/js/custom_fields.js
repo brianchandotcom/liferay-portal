@@ -707,7 +707,7 @@ AUI.add(
 		var customCellEditors = [
 			ColorCellEditor,
 			DLFileEntryCellEditor,
-			JournalArticleCellEditor,
+			JournalArticleCellEditor
 		];
 
 		customCellEditors.forEach(function(item, index) {

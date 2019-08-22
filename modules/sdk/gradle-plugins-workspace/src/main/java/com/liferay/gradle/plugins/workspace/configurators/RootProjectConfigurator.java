@@ -24,6 +24,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 import com.bmuschko.gradle.docker.tasks.image.DockerPullImage;
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile;
 
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
@@ -683,6 +684,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
+
+		Task deployTask = GradleUtil.addTask(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
+
+		deployTask.finalizedBy(copy);
 
 		return copy;
 	}

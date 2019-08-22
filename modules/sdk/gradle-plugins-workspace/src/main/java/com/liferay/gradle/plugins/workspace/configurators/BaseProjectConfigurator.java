@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
@@ -122,6 +123,11 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			RootProjectConfigurator.CREATE_DOCKER_CONTAINER_TASK_NAME);
 
 		createDockerContainerTask.dependsOn(copy);
+
+		Task deployTask = GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
+
+		deployTask.finalizedBy(copy);
 
 		return copy;
 	}

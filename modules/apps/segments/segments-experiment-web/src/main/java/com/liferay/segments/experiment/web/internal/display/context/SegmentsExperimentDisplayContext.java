@@ -270,7 +270,8 @@ public class SegmentsExperimentDisplayContext {
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.fetchSegmentsExperiment(
 				segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				layout.getPlid(), SegmentsExperimentConstants.STATUS_DRAFT);
+				layout.getPlid(),
+				new int[] {SegmentsExperimentConstants.STATUS_DRAFT});
 
 		return Optional.ofNullable(segmentsExperiment);
 	}

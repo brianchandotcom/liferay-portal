@@ -160,7 +160,8 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK, int status) {
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] status) {
 
 		List<SegmentsExperiment> segmentsExperiments =
 			segmentsExperimentFinder.findByS_C_C_S(
@@ -236,7 +237,8 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK, int status) {
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] status) {
 
 		int count = segmentsExperimentFinder.countByS_C_C_S(
 			segmentsExperienceId, classNameId, classPK, status);

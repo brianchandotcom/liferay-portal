@@ -60,7 +60,7 @@ public class SegmentsExperimentServiceImpl
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
-			int status)
+			int[] status)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(

@@ -236,13 +236,13 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
-				SegmentsExperimentConstants.STATUS_RUNNING));
+				new int[] {SegmentsExperimentConstants.STATUS_RUNNING}));
 		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
-				SegmentsExperimentConstants.STATUS_DRAFT));
+				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}));
 	}
 
 	@Test
@@ -340,13 +340,13 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
-				SegmentsExperimentConstants.STATUS_RUNNING));
+				new int[] {SegmentsExperimentConstants.STATUS_RUNNING}));
 		Assert.assertTrue(
 			_segmentsExperimentLocalService.hasSegmentsExperiment(
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
-				SegmentsExperimentConstants.STATUS_DRAFT));
+				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}));
 	}
 
 	@Test(expected = SegmentsExperimentStatusException.class)

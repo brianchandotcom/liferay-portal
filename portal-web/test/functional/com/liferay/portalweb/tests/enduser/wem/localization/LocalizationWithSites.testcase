@@ -774,7 +774,6 @@ definition {
 			siteName = "Site Name");
 
 		Alert.viewLocalizationMessage(
-			defaultLanguageLocalizationMessage = "Mostrar la página en español (España).",
 			preferredLanguageLocalizationMessage = "Set English (United States) as your preferred language.",
 			translationLanguageLocalizationMessage = "Esta página se muestra en inglés (Estados Unidos).");
 

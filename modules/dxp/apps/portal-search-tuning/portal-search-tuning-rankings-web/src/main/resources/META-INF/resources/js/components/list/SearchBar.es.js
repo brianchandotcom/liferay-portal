@@ -30,7 +30,7 @@ class SearchBar extends Component {
 		 */
 		dataMap: PropTypes.object.isRequired,
 		disableSearch: PropTypes.bool,
-		fetchDocumentsUrl: PropTypes.string,
+		fetchDocumentsSearchUrl: PropTypes.string,
 		onAddResultSubmit: PropTypes.func,
 		onClickHide: PropTypes.func,
 		onClickPin: PropTypes.func,
@@ -109,7 +109,7 @@ class SearchBar extends Component {
 
 	render() {
 		const {
-			fetchDocumentsUrl,
+			fetchDocumentsSearchUrl,
 			onAddResultSubmit,
 			resultIds,
 			selectedIds
@@ -272,8 +272,8 @@ class SearchBar extends Component {
 									{onAddResultSubmit && (
 										<ul className="navbar-nav">
 											<AddResult
-												fetchDocumentsUrl={
-													fetchDocumentsUrl
+												fetchDocumentsSearchUrl={
+													fetchDocumentsSearchUrl
 												}
 												onAddResultSubmit={
 													onAddResultSubmit

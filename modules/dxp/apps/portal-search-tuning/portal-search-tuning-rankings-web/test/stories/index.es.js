@@ -69,7 +69,8 @@ storiesOf('Main|ResultsRankingForm', module)
 		<ResultsRankingForm
 			cancelUrl=""
 			fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
-			fetchDocumentsUrl="http://www.mocky.io/v2/5cca1d49310000bf0312ce66"
+			fetchDocumentsSearchUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
+			fetchDocumentsVisibleUrl="http://www.mocky.io/v2/5cca1d49310000bf0312ce66"
 			formName="testFm"
 			initialAliases={['one', 'two', 'three']}
 			saveActionUrl="#"
@@ -97,7 +98,7 @@ storiesOf('Components|List', module)
 		<List
 			dataLoading={false}
 			dataMap={mockDataMap}
-			fetchDocumentsUrl=""
+			fetchDocumentsSearchUrl=""
 			onAddResultSubmit={action('onAddResultSubmit')}
 			onClickHide={action('onClickHide')}
 			onClickPin={action('onClickPin')}
@@ -109,7 +110,7 @@ storiesOf('Components|List', module)
 		<List
 			dataLoading={false}
 			dataMap={{}}
-			fetchDocumentsUrl=""
+			fetchDocumentsSearchUrl=""
 			onAddResultSubmit={action('onAddResultSubmit')}
 		/>
 	))
@@ -118,7 +119,7 @@ storiesOf('Components|List', module)
 			dataLoading={false}
 			dataMap={{}}
 			displayError
-			fetchDocumentsUrl=""
+			fetchDocumentsSearchUrl=""
 			onAddResultSubmit={action('onAddResultSubmit')}
 			onLoadResults={action('load-results')}
 		/>

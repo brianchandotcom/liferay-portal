@@ -72,7 +72,8 @@ class ResultsRankingForm extends Component {
 	static propTypes = {
 		cancelUrl: PropTypes.string.isRequired,
 		fetchDocumentsHiddenUrl: PropTypes.string.isRequired,
-		fetchDocumentsUrl: PropTypes.string.isRequired,
+		fetchDocumentsSearchUrl: PropTypes.string.isRequired,
+		fetchDocumentsVisibleUrl: PropTypes.string.isRequired,
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
 		searchQuery: PropTypes.string.isRequired
@@ -190,7 +191,7 @@ class ResultsRankingForm extends Component {
 	}
 
 	componentDidMount() {
-		this._handleFetchResultsData();
+		this._handleFetchResultsDataVisible();
 		this._handleFetchResultsDataHidden();
 	}
 
@@ -298,7 +299,7 @@ class ResultsRankingForm extends Component {
 	 * Retrieves results data from a search query. This will also handle loading
 	 * more data to the results list.
 	 */
-	_handleFetchResultsData = () => {
+	_handleFetchResultsDataVisible = () => {
 		this.setState({
 			dataLoading: true,
 			displayError: false
@@ -306,7 +307,7 @@ class ResultsRankingForm extends Component {
 
 		const {companyId, namespace} = this.context;
 
-		return fetchDocuments(this.props.fetchDocumentsUrl, {
+		return fetchDocuments(this.props.fetchDocumentsVisibleUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: DELTA * this.state.visibleCur,
 			[`${namespace}keywords`]: this.props.searchQuery,
@@ -646,7 +647,7 @@ class ResultsRankingForm extends Component {
 	render() {
 		const {namespace} = this.context;
 
-		const {cancelUrl, fetchDocumentsUrl, searchQuery} = this.props;
+		const {cancelUrl, fetchDocumentsSearchUrl, searchQuery} = this.props;
 
 		const {
 			aliases,
@@ -738,8 +739,8 @@ class ResultsRankingForm extends Component {
 											dataLoading={dataLoading}
 											dataMap={dataMap}
 											displayError={displayError}
-											fetchDocumentsUrl={
-												fetchDocumentsUrl
+											fetchDocumentsSearchUrl={
+												fetchDocumentsSearchUrl
 											}
 											onAddResultSubmit={
 												this._handleUpdateAddResultIds
@@ -747,7 +748,8 @@ class ResultsRankingForm extends Component {
 											onClickHide={this._handleClickHide}
 											onClickPin={this._handleClickPin}
 											onLoadResults={
-												this._handleFetchResultsData
+												this
+													._handleFetchResultsDataVisible
 											}
 											onMove={this._handleMove}
 											resultIds={this._getResultIdsVisible()}

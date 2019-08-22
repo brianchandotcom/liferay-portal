@@ -12,7 +12,7 @@
 import React from 'react';
 import SearchBar from '../../../../src/main/resources/META-INF/resources/js/components/list/SearchBar.es';
 import {fireEvent, render} from '@testing-library/react';
-import {FETCH_VISIBLE_DOCUMENTS_URL, getMockResultsData} from '../../mock-data';
+import {FETCH_SEARCH_DOCUMENTS_URL, getMockResultsData} from '../../mock-data';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
@@ -28,7 +28,7 @@ describe('SearchBar', () => {
 		const {queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 				onClickHide={jest.fn()}
 				onClickPin={jest.fn()}
@@ -46,7 +46,7 @@ describe('SearchBar', () => {
 		const {queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onClickHide={jest.fn()}
 				onClickPin={jest.fn()}
 				onSelectAll={jest.fn()}
@@ -64,7 +64,7 @@ describe('SearchBar', () => {
 		const {queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 				onClickHide={jest.fn()}
 				onClickPin={jest.fn()}
@@ -83,7 +83,7 @@ describe('SearchBar', () => {
 		const {container, getByTestId} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 				onClickHide={jest.fn()}
 				onClickPin={jest.fn()}
@@ -103,7 +103,7 @@ describe('SearchBar', () => {
 		const {queryByText} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 				onClickHide={jest.fn()}
 				onClickPin={jest.fn()}

@@ -100,7 +100,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 			cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
 			fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
 			fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
-			fetchDocumentsUrl: '<%= resultsRankingResourceURL %>',
+			fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
 			formName: '<portlet:namespace />editResultsRankingsFm',
 			initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
 			searchQuery: '<%= HtmlUtil.escape(keywords) %>'

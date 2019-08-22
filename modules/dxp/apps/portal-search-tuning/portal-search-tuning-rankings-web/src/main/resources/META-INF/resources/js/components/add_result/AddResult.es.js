@@ -32,7 +32,7 @@ class AddResult extends Component {
 	static contextType = ThemeContext;
 
 	static propTypes = {
-		fetchDocumentsUrl: PropTypes.string.isRequired,
+		fetchDocumentsSearchUrl: PropTypes.string.isRequired,
 		onAddResultSubmit: PropTypes.func.isRequired
 	};
 
@@ -70,7 +70,7 @@ class AddResult extends Component {
 			displayError: false
 		});
 
-		fetchDocuments(this.props.fetchDocumentsUrl, {
+		fetchDocuments(this.props.fetchDocumentsSearchUrl, {
 			[`${namespace}companyId`]: companyId,
 			[`${namespace}from`]: page * selectedDelta - selectedDelta,
 			[`${namespace}keywords`]: addResultSearchQuery,

@@ -19,6 +19,7 @@ import {
 } from '@testing-library/react';
 import {
 	FETCH_HIDDEN_DOCUMENTS_URL,
+	FETCH_SEARCH_DOCUMENTS_URL,
 	FETCH_VISIBLE_DOCUMENTS_URL
 } from '../mock-data';
 
@@ -42,7 +43,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery="example"
 			/>
@@ -58,7 +60,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -74,7 +77,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -92,7 +96,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
@@ -111,7 +116,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
@@ -134,7 +140,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -158,7 +165,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				initialAliases={['one', 'two', 'three']}
 				searchQuery=""
@@ -183,7 +191,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -201,7 +210,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -221,7 +231,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -239,7 +250,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -259,7 +271,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -281,7 +294,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -309,7 +323,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -333,7 +348,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -363,7 +379,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -401,7 +418,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl="cancel"
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>
@@ -426,7 +444,8 @@ describe('ResultsRankingForm', () => {
 			<ResultsRankingForm
 				cancelUrl=""
 				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
 				formName={FORM_NAME}
 				searchQuery=""
 			/>

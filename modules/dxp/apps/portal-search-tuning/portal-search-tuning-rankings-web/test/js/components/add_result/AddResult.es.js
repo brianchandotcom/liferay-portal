@@ -11,7 +11,7 @@
 
 import AddResult from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResult.es';
 import React from 'react';
-import {FETCH_VISIBLE_DOCUMENTS_URL} from '../../mock-data';
+import {FETCH_SEARCH_DOCUMENTS_URL} from '../../mock-data';
 import {
 	fireEvent,
 	render,
@@ -61,7 +61,7 @@ describe('AddResult', () => {
 	it('shows a modal when the add a result button gets clicked', async () => {
 		const {getByText, queryByTestId} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -76,7 +76,7 @@ describe('AddResult', () => {
 	it('closes the modal when the cancel button gets clicked', async () => {
 		const {getByTestId, getByText, queryByTestId} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -97,7 +97,7 @@ describe('AddResult', () => {
 	it('prompts a message to search in the modal', () => {
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -118,7 +118,7 @@ describe('AddResult', () => {
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -146,7 +146,7 @@ describe('AddResult', () => {
 	it('shows the results in the modal after enter key is pressed', async () => {
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={jest.fn()}
 			/>
 		);
@@ -172,7 +172,7 @@ describe('AddResult', () => {
 
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={onAddResultSubmit}
 			/>
 		);
@@ -203,7 +203,7 @@ describe('AddResult', () => {
 
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={onAddResultSubmit}
 			/>
 		);
@@ -237,7 +237,7 @@ describe('AddResult', () => {
 
 		const {getByTestId, getByText} = render(
 			<AddResult
-				fetchDocumentsUrl={FETCH_VISIBLE_DOCUMENTS_URL}
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
 				onAddResultSubmit={onAddResultSubmit}
 			/>
 		);

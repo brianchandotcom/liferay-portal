@@ -18,14 +18,13 @@ import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filt
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.osgi.util.StringPlus;
-import com.liferay.petra.reflect.AnnotationLocator;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -117,21 +116,42 @@ public class HttpMethodFeature implements Feature {
 	private void _collectHttpMethods(
 		ResourceInfo resourceInfo, FeatureContext featureContext) {
 
-		List<Annotation> annotations = AnnotationLocator.locate(
-			resourceInfo.getResourceMethod(), null);
+		Method method = resourceInfo.getResourceMethod();
 
-		for (Annotation annotation : annotations) {
-			Class<? extends Annotation> annotationType =
-				annotation.annotationType();
+		while (method != null) {
+			for (Annotation annotation : method.getAnnotations()) {
+				Class<? extends Annotation> annotationType =
+					annotation.annotationType();
 
-			HttpMethod[] annotationsByType =
-				annotationType.getAnnotationsByType(HttpMethod.class);
+				HttpMethod[] annotationsByType =
+					annotationType.getAnnotationsByType(HttpMethod.class);
 
-			if (annotationsByType != null) {
-				for (HttpMethod httpMethod : annotationsByType) {
-					_scopes.add(httpMethod.value());
+				if (annotationsByType != null) {
+					for (HttpMethod httpMethod : annotationsByType) {
+						_scopes.add(httpMethod.value());
+					}
 				}
 			}
+
+			method = _getSuperMethod(method);
+		}
+	}
+
+	private Method _getSuperMethod(Method method) {
+		Class<?> clazz = method.getDeclaringClass();
+
+		clazz = clazz.getSuperclass();
+
+		if (clazz == Object.class) {
+			return null;
+		}
+
+		try {
+			return clazz.getDeclaredMethod(
+				method.getName(), method.getParameterTypes());
+		}
+		catch (NoSuchMethodException nsme) {
+			return null;
 		}
 	}
 

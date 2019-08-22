@@ -1,5 +1,5 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 $border-color: #c9c9c9;
 $section-header-bg: #cce6f7;
@@ -717,7 +717,7 @@ $section-header-bg: #cce6f7;
 
 /* ---------- Responsive ---------- */
 
-@include respond-to(phone) {
+@include media-breakpoint-down(md) {
 	.contacts-portlet {
 		.toolbar {
 			.filter-container {
@@ -772,8 +772,8 @@ $section-header-bg: #cce6f7;
 			left: 0;
 			position: relative;
 
-			@include transition-duration(0.3s);
-			@include transition-property(left);
+			transition-duration: 0.3s;
+			transition-property: left;
 
 			z-index: 1;
 		}
@@ -782,8 +782,8 @@ $section-header-bg: #cce6f7;
 			background: #fff;
 			margin-left: 0;
 
-			@include transition-duration(0.3s);
-			@include transition-property(margin-left);
+			transition-duration: 0.3s;
+			transition-property: margin-left;
 
 			z-index: 1;
 

@@ -144,7 +144,7 @@ CreateContentForm.STATE = {
 
 	/**
 	 * Selected structure ID
-	 * @default null
+	 * @default ''
 	 * @instance
 	 * @memberOf CreateContentForm
 	 * @private

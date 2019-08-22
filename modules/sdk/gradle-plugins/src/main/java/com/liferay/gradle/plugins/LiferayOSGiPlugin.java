@@ -1171,13 +1171,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private DeployFastTask _configureTaskDeployFast(
 		Project project, LiferayExtension liferayExtension) {
 
-		final BundleExtension bundleExtension = GradleUtil.getExtension(
-			project, BundleExtension.class);
-
-		String bundleSymbolicName = (String)bundleExtension.get(
-			Constants.BUNDLE_SYMBOLICNAME);
-		String bundleVersion = (String)bundleExtension.get(
-			Constants.BUNDLE_VERSION);
+		String bundleSymbolicName = BndBuilderUtil.getInstruction(
+			project, Constants.BUNDLE_SYMBOLICNAME);
+		String bundleVersion = BndBuilderUtil.getInstruction(
+			project, Constants.BUNDLE_VERSION);
 
 		DeployFastTask deployFastTask = (DeployFastTask)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);

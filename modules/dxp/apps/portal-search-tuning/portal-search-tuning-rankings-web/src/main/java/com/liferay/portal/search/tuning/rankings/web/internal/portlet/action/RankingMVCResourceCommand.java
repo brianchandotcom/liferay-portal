@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -221,10 +222,6 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
-	private static boolean _isDocumentUid(String queryString) {
-		return queryString.startsWith("com.liferay");
-	}
-
 	private String _getParamKeywords(ResourceRequest resourceRequest) {
 		return ParamUtil.getString(resourceRequest, "keywords");
 	}
@@ -245,7 +242,7 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 
 		String queryStringOfUrl = _getParamKeywords(resourceRequest);
 
-		if (_isDocumentUid(queryStringOfUrl)) {
+		if (!queryStringOfUrl.equals(StringPool.BLANK)) {
 			return queryStringOfUrl;
 		}
 

@@ -448,6 +448,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'dropTargetItemId',
 	'dropTargetItemType',
 	'dropTargetBorder',
+	'duplicateFragmentEntryLinkURL',
 	'enableConfiguration',
 	'fragmentEditorEnabled',
 	'fragmentEntryLinks',

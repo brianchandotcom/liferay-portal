@@ -289,7 +289,7 @@
 						min-height: 40px;
 					}
 
-					@include md {
+					@include media-breakpoint-up(md) {
 						.layout-col-content {
 							padding-left: 20px;
 							padding-right: 20px;

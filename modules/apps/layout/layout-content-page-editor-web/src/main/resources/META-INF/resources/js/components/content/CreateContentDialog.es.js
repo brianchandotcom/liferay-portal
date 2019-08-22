@@ -120,7 +120,7 @@ class CreateContentDialog extends Component {
 CreateContentDialog.STATE = {
 	/**
 	 * Selected DDM structure
-	 * @default 1
+	 * @default undefined
 	 * @instance
 	 * @memberOf CreateContentDialog
 	 * @private
@@ -145,7 +145,7 @@ CreateContentDialog.STATE = {
 
 	/**
 	 * Current content title
-	 * @default 1
+	 * @default ''
 	 * @instance
 	 * @memberOf CreateContentDialog
 	 * @private

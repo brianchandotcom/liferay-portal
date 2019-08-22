@@ -64,6 +64,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
+import com.liferay.roles.admin.web.internal.constants.RolesAdminWebKeys;
+import com.liferay.roles.admin.web.internal.role.type.RoleType;
+import com.liferay.roles.admin.web.internal.role.type.provider.RoleTypeProvider;
 
 import java.io.IOException;
 
@@ -209,9 +212,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 			int type = ParamUtil.getInteger(
 				actionRequest, "type", RoleConstants.TYPE_REGULAR);
 
+			RoleType roleType = _roleTypeProvider.getRoleType(type);
+
 			Role role = _roleService.addRole(
-				null, 0, name, titleMap, descriptionMap, type, subtype,
-				serviceContext);
+				roleType.getClassName(), 0, name, titleMap, descriptionMap,
+				type, subtype, serviceContext);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -403,7 +408,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 				if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 					(role.getType() == RoleConstants.TYPE_PROVIDER) ||
-					(role.getType() == RoleConstants.TYPE_SITE)) {
+					(role.getType() == RoleConstants.TYPE_SITE) ||
+					(role.getType() == 910212835)) {
 
 					scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 				}
@@ -547,6 +553,22 @@ public class RolesAdminPortlet extends MVCPortlet {
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
 			personalMenuEntryHelper);
+
+		long roleId = ParamUtil.getLong(portletRequest, "roleId");
+		int type = ParamUtil.getInteger(
+			portletRequest, "type", RoleConstants.TYPE_REGULAR);
+
+		Role role = _roleLocalService.fetchRole(roleId);
+
+		if (role != null) {
+			type = role.getType();
+		}
+
+		portletRequest.setAttribute(
+			RolesAdminWebKeys.CURRENT_ROLE_TYPE,
+			_roleTypeProvider.getRoleType(type));
+		portletRequest.setAttribute(
+			RolesAdminWebKeys.ROLE_TYPES, _roleTypeProvider.getRoleTypes());
 	}
 
 	@Reference(unbind = "-")
@@ -709,6 +731,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 	private ResourcePermissionService _resourcePermissionService;
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;
+
+	@Reference
+	private RoleTypeProvider _roleTypeProvider;
+
 	private ServiceTrackerList<PersonalMenuEntry, PersonalMenuEntry>
 		_serviceTrackerList;
 	private UserService _userService;

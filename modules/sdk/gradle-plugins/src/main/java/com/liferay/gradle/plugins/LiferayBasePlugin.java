@@ -228,7 +228,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			project, DEPLOY_FAST_TASK_NAME, DeployFastTask.class);
 
 		deployFastTask.setDescription(
-			"Builds and deploys resources to Liferay work directory.");
+			"Builds and deploys resources to the Liferay work directory.");
 		deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
 
 		return deployFastTask;

@@ -181,8 +181,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		_addTaskAutoUpdateXml(project);
 		_addTasksBuildWSDDJar(project, liferayExtension);
-		Copy deployFastCSSTask = _addTaskDeployFastCSS(project);
-		Copy deployFastJSPTask = _addTaskDeployFastJSP(project);
+		_addTaskDeployFastCSS(project);
+		_addTaskDeployFastJSP(project);
 
 		Copy deployDependenciesTask = _addTaskDeployDependencies(
 			project, liferayExtension);
@@ -226,10 +226,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					_configureBundleExtensionDefaults(
 						project, liferayOSGiExtension,
 						compileIncludeConfiguration);
-					_configureTaskDeployFastCSS(
-						deployFastTask, deployFastCSSTask);
-					_configureTaskDeployFastJSP(
-						deployFastTask, deployFastJSPTask);
+					_configureTaskDeployFastCSS(project);
+					_configureTaskDeployFastJSP(project);
 				}
 
 			});
@@ -1194,12 +1192,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return deployFastTask;
 	}
 
-	private void _configureTaskDeployFastCSS(
-		DeployFastTask deployFastTask, Copy deployFastCSSTask) {
+	private void _configureTaskDeployFastCSS(Project project) {
+		Copy deployFastCSSTask = (Copy)GradleUtil.getTask(
+			project, DEPLOY_FAST_CSS_TASK_NAME);
 
 		Copy copy = (Copy)GradleUtil.getTask(
-			deployFastTask.getProject(),
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 
 		CopySpec copySpec = deployFastCSSTask.from(copy);
 		copySpec.eachFile(
@@ -1235,18 +1233,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		copySpec.include("**/*.css");
 		copySpec.setIncludeEmptyDirs(false);
 
+		Task deployFastTask = GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
+
 		deployFastCSSTask.into(deployFastTask.getDestinationDir());
 
 		deployFastTask.dependsOn(deployFastCSSTask);
 	}
 
-	private void _configureTaskDeployFastJSP(
-		DeployFastTask deployFastTask, Copy deployFastJSPTask) {
+	private void _configureTaskDeployFastJSP(Project project) {
+		Copy deployFastJSPTask = (Copy)GradleUtil.getTask(
+			project, DEPLOY_FAST_JSP_TASK_NAME);
 
 		final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
-			deployFastTask.getProject(), JspCPlugin.COMPILE_JSP_TASK_NAME);
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
 		deployFastJSPTask.from(compileJSPTask);
+
+		Task deployFastTask = GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_FAST_TASK_NAME);
 
 		deployFastJSPTask.into(deployFastTask.getDestinationDir());
 

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
+
 export const addItem = (endpoint, item) => {
 	return fetch(getURL(endpoint), {
 		body: JSON.stringify(item),

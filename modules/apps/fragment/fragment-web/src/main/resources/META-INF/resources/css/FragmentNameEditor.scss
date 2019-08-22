@@ -1,5 +1,4 @@
-@import 'atlas/variables';
-@import 'bootstrap/mixins';
+@import 'atlas-variables';
 
 @include media-breakpoint-up(sm) {
 	.fragment-name-editor__dialog {

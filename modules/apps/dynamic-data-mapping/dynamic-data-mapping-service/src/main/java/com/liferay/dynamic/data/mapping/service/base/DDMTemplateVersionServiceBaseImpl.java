@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm template version remote service.
@@ -43,105 +44,23 @@ import javax.sql.DataSource;
  */
 public abstract class DDMTemplateVersionServiceBaseImpl
 	extends BaseServiceImpl
-	implements DDMTemplateVersionService, IdentifiableOSGiService {
+	implements DDMTemplateVersionService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. Use <code>DDMTemplateVersionService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dynamic.data.mapping.service.DDMTemplateVersionServiceUtil</code>.
 	 */
-
-	/**
-	 * Returns the ddm template version local service.
-	 *
-	 * @return the ddm template version local service
-	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService
-			getDDMTemplateVersionLocalService() {
-
-		return ddmTemplateVersionLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMTemplateVersionService.class, IdentifiableOSGiService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm template version local service.
-	 *
-	 * @param ddmTemplateVersionLocalService the ddm template version local service
-	 */
-	public void setDDMTemplateVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService
-			ddmTemplateVersionLocalService) {
-
-		this.ddmTemplateVersionLocalService = ddmTemplateVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm template version remote service.
-	 *
-	 * @return the ddm template version remote service
-	 */
-	public DDMTemplateVersionService getDDMTemplateVersionService() {
-		return ddmTemplateVersionService;
-	}
-
-	/**
-	 * Sets the ddm template version remote service.
-	 *
-	 * @param ddmTemplateVersionService the ddm template version remote service
-	 */
-	public void setDDMTemplateVersionService(
-		DDMTemplateVersionService ddmTemplateVersionService) {
-
-		this.ddmTemplateVersionService = ddmTemplateVersionService;
-	}
-
-	/**
-	 * Returns the ddm template version persistence.
-	 *
-	 * @return the ddm template version persistence
-	 */
-	public DDMTemplateVersionPersistence getDDMTemplateVersionPersistence() {
-		return ddmTemplateVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm template version persistence.
-	 *
-	 * @param ddmTemplateVersionPersistence the ddm template version persistence
-	 */
-	public void setDDMTemplateVersionPersistence(
-		DDMTemplateVersionPersistence ddmTemplateVersionPersistence) {
-
-		this.ddmTemplateVersionPersistence = ddmTemplateVersionPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-	}
-
-	public void destroy() {
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmTemplateVersionService = (DDMTemplateVersionService)aopProxy;
 	}
 
 	/**
@@ -187,22 +106,17 @@ public abstract class DDMTemplateVersionServiceBaseImpl
 		}
 	}
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService.class
-	)
+	@Reference
 	protected
 		com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService
 			ddmTemplateVersionLocalService;
 
-	@BeanReference(type = DDMTemplateVersionService.class)
 	protected DDMTemplateVersionService ddmTemplateVersionService;
 
-	@BeanReference(type = DDMTemplateVersionPersistence.class)
+	@Reference
 	protected DDMTemplateVersionPersistence ddmTemplateVersionPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 

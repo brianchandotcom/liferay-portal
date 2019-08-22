@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -36,11 +36,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -49,6 +48,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm storage link local service.
@@ -64,7 +64,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class DDMStorageLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMStorageLinkLocalService, IdentifiableOSGiService {
+	implements DDMStorageLinkLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -361,122 +361,17 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		return ddmStorageLinkPersistence.update(ddmStorageLink);
 	}
 
-	/**
-	 * Returns the ddm storage link local service.
-	 *
-	 * @return the ddm storage link local service
-	 */
-	public DDMStorageLinkLocalService getDDMStorageLinkLocalService() {
-		return ddmStorageLinkLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMStorageLinkLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm storage link local service.
-	 *
-	 * @param ddmStorageLinkLocalService the ddm storage link local service
-	 */
-	public void setDDMStorageLinkLocalService(
-		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
-
-		this.ddmStorageLinkLocalService = ddmStorageLinkLocalService;
-	}
-
-	/**
-	 * Returns the ddm storage link persistence.
-	 *
-	 * @return the ddm storage link persistence
-	 */
-	public DDMStorageLinkPersistence getDDMStorageLinkPersistence() {
-		return ddmStorageLinkPersistence;
-	}
-
-	/**
-	 * Sets the ddm storage link persistence.
-	 *
-	 * @param ddmStorageLinkPersistence the ddm storage link persistence
-	 */
-	public void setDDMStorageLinkPersistence(
-		DDMStorageLinkPersistence ddmStorageLinkPersistence) {
-
-		this.ddmStorageLinkPersistence = ddmStorageLinkPersistence;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure version local service.
-	 *
-	 * @return the ddm structure version local service
-	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			getDDMStructureVersionLocalService() {
-
-		return ddmStructureVersionLocalService;
-	}
-
-	/**
-	 * Sets the ddm structure version local service.
-	 *
-	 * @param ddmStructureVersionLocalService the ddm structure version local service
-	 */
-	public void setDDMStructureVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService) {
-
-		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure version persistence.
-	 *
-	 * @return the ddm structure version persistence
-	 */
-	public DDMStructureVersionPersistence getDDMStructureVersionPersistence() {
-		return ddmStructureVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm structure version persistence.
-	 *
-	 * @param ddmStructureVersionPersistence the ddm structure version persistence
-	 */
-	public void setDDMStructureVersionPersistence(
-		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
-		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink",
-			ddmStorageLinkLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.dynamic.data.mapping.model.DDMStorageLink");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmStorageLinkLocalService = (DDMStorageLinkLocalService)aopProxy;
 	}
 
 	/**
@@ -521,30 +416,16 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 
-	@BeanReference(type = DDMStorageLinkPersistence.class)
+	@Reference
 	protected DDMStorageLinkPersistence ddmStorageLinkPersistence;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService;
-
-	@BeanReference(type = DDMStructureVersionPersistence.class)
+	@Reference
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

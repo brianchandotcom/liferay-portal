@@ -32,7 +32,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -53,13 +53,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -68,6 +65,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm structure local service.
@@ -83,7 +81,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class DDMStructureLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMStructureLocalService, IdentifiableOSGiService {
+	implements DDMStructureLocalService, AopService, IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -505,534 +503,17 @@ public abstract class DDMStructureLocalServiceBaseImpl
 		return ddmStructurePersistence.update(ddmStructure);
 	}
 
-	/**
-	 * Returns the ddm structure local service.
-	 *
-	 * @return the ddm structure local service
-	 */
-	public DDMStructureLocalService getDDMStructureLocalService() {
-		return ddmStructureLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMStructureLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm structure local service.
-	 *
-	 * @param ddmStructureLocalService the ddm structure local service
-	 */
-	public void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		this.ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure persistence.
-	 *
-	 * @return the ddm structure persistence
-	 */
-	public DDMStructurePersistence getDDMStructurePersistence() {
-		return ddmStructurePersistence;
-	}
-
-	/**
-	 * Sets the ddm structure persistence.
-	 *
-	 * @param ddmStructurePersistence the ddm structure persistence
-	 */
-	public void setDDMStructurePersistence(
-		DDMStructurePersistence ddmStructurePersistence) {
-
-		this.ddmStructurePersistence = ddmStructurePersistence;
-	}
-
-	/**
-	 * Returns the ddm structure finder.
-	 *
-	 * @return the ddm structure finder
-	 */
-	public DDMStructureFinder getDDMStructureFinder() {
-		return ddmStructureFinder;
-	}
-
-	/**
-	 * Sets the ddm structure finder.
-	 *
-	 * @param ddmStructureFinder the ddm structure finder
-	 */
-	public void setDDMStructureFinder(DDMStructureFinder ddmStructureFinder) {
-		this.ddmStructureFinder = ddmStructureFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the ddm data provider instance local service.
-	 *
-	 * @return the ddm data provider instance local service
-	 */
-	public
-		com.liferay.dynamic.data.mapping.service.
-			DDMDataProviderInstanceLocalService
-				getDDMDataProviderInstanceLocalService() {
-
-		return ddmDataProviderInstanceLocalService;
-	}
-
-	/**
-	 * Sets the ddm data provider instance local service.
-	 *
-	 * @param ddmDataProviderInstanceLocalService the ddm data provider instance local service
-	 */
-	public void setDDMDataProviderInstanceLocalService(
-		com.liferay.dynamic.data.mapping.service.
-			DDMDataProviderInstanceLocalService
-				ddmDataProviderInstanceLocalService) {
-
-		this.ddmDataProviderInstanceLocalService =
-			ddmDataProviderInstanceLocalService;
-	}
-
-	/**
-	 * Returns the ddm data provider instance persistence.
-	 *
-	 * @return the ddm data provider instance persistence
-	 */
-	public DDMDataProviderInstancePersistence
-		getDDMDataProviderInstancePersistence() {
-
-		return ddmDataProviderInstancePersistence;
-	}
-
-	/**
-	 * Sets the ddm data provider instance persistence.
-	 *
-	 * @param ddmDataProviderInstancePersistence the ddm data provider instance persistence
-	 */
-	public void setDDMDataProviderInstancePersistence(
-		DDMDataProviderInstancePersistence ddmDataProviderInstancePersistence) {
-
-		this.ddmDataProviderInstancePersistence =
-			ddmDataProviderInstancePersistence;
-	}
-
-	/**
-	 * Returns the ddm data provider instance finder.
-	 *
-	 * @return the ddm data provider instance finder
-	 */
-	public DDMDataProviderInstanceFinder getDDMDataProviderInstanceFinder() {
-		return ddmDataProviderInstanceFinder;
-	}
-
-	/**
-	 * Sets the ddm data provider instance finder.
-	 *
-	 * @param ddmDataProviderInstanceFinder the ddm data provider instance finder
-	 */
-	public void setDDMDataProviderInstanceFinder(
-		DDMDataProviderInstanceFinder ddmDataProviderInstanceFinder) {
-
-		this.ddmDataProviderInstanceFinder = ddmDataProviderInstanceFinder;
-	}
-
-	/**
-	 * Returns the ddm data provider instance link local service.
-	 *
-	 * @return the ddm data provider instance link local service
-	 */
-	public com.liferay.dynamic.data.mapping.service.
-		DDMDataProviderInstanceLinkLocalService
-			getDDMDataProviderInstanceLinkLocalService() {
-
-		return ddmDataProviderInstanceLinkLocalService;
-	}
-
-	/**
-	 * Sets the ddm data provider instance link local service.
-	 *
-	 * @param ddmDataProviderInstanceLinkLocalService the ddm data provider instance link local service
-	 */
-	public void setDDMDataProviderInstanceLinkLocalService(
-		com.liferay.dynamic.data.mapping.service.
-			DDMDataProviderInstanceLinkLocalService
-				ddmDataProviderInstanceLinkLocalService) {
-
-		this.ddmDataProviderInstanceLinkLocalService =
-			ddmDataProviderInstanceLinkLocalService;
-	}
-
-	/**
-	 * Returns the ddm data provider instance link persistence.
-	 *
-	 * @return the ddm data provider instance link persistence
-	 */
-	public DDMDataProviderInstanceLinkPersistence
-		getDDMDataProviderInstanceLinkPersistence() {
-
-		return ddmDataProviderInstanceLinkPersistence;
-	}
-
-	/**
-	 * Sets the ddm data provider instance link persistence.
-	 *
-	 * @param ddmDataProviderInstanceLinkPersistence the ddm data provider instance link persistence
-	 */
-	public void setDDMDataProviderInstanceLinkPersistence(
-		DDMDataProviderInstanceLinkPersistence
-			ddmDataProviderInstanceLinkPersistence) {
-
-		this.ddmDataProviderInstanceLinkPersistence =
-			ddmDataProviderInstanceLinkPersistence;
-	}
-
-	/**
-	 * Returns the class name local service.
-	 *
-	 * @return the class name local service
-	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService
-		getClassNameLocalService() {
-
-		return classNameLocalService;
-	}
-
-	/**
-	 * Sets the class name local service.
-	 *
-	 * @param classNameLocalService the class name local service
-	 */
-	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService
-			classNameLocalService) {
-
-		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name persistence.
-	 *
-	 * @return the class name persistence
-	 */
-	public ClassNamePersistence getClassNamePersistence() {
-		return classNamePersistence;
-	}
-
-	/**
-	 * Sets the class name persistence.
-	 *
-	 * @param classNamePersistence the class name persistence
-	 */
-	public void setClassNamePersistence(
-		ClassNamePersistence classNamePersistence) {
-
-		this.classNamePersistence = classNamePersistence;
-	}
-
-	/**
-	 * Returns the resource local service.
-	 *
-	 * @return the resource local service
-	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService
-		getResourceLocalService() {
-
-		return resourceLocalService;
-	}
-
-	/**
-	 * Sets the resource local service.
-	 *
-	 * @param resourceLocalService the resource local service
-	 */
-	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService
-			resourceLocalService) {
-
-		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the user local service.
-	 *
-	 * @return the user local service
-	 */
-	public com.liferay.portal.kernel.service.UserLocalService
-		getUserLocalService() {
-
-		return userLocalService;
-	}
-
-	/**
-	 * Sets the user local service.
-	 *
-	 * @param userLocalService the user local service
-	 */
-	public void setUserLocalService(
-		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
-
-		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user persistence.
-	 *
-	 * @return the user persistence
-	 */
-	public UserPersistence getUserPersistence() {
-		return userPersistence;
-	}
-
-	/**
-	 * Sets the user persistence.
-	 *
-	 * @param userPersistence the user persistence
-	 */
-	public void setUserPersistence(UserPersistence userPersistence) {
-		this.userPersistence = userPersistence;
-	}
-
-	/**
-	 * Returns the ddm structure layout local service.
-	 *
-	 * @return the ddm structure layout local service
-	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService
-			getDDMStructureLayoutLocalService() {
-
-		return ddmStructureLayoutLocalService;
-	}
-
-	/**
-	 * Sets the ddm structure layout local service.
-	 *
-	 * @param ddmStructureLayoutLocalService the ddm structure layout local service
-	 */
-	public void setDDMStructureLayoutLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService
-			ddmStructureLayoutLocalService) {
-
-		this.ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure layout persistence.
-	 *
-	 * @return the ddm structure layout persistence
-	 */
-	public DDMStructureLayoutPersistence getDDMStructureLayoutPersistence() {
-		return ddmStructureLayoutPersistence;
-	}
-
-	/**
-	 * Sets the ddm structure layout persistence.
-	 *
-	 * @param ddmStructureLayoutPersistence the ddm structure layout persistence
-	 */
-	public void setDDMStructureLayoutPersistence(
-		DDMStructureLayoutPersistence ddmStructureLayoutPersistence) {
-
-		this.ddmStructureLayoutPersistence = ddmStructureLayoutPersistence;
-	}
-
-	/**
-	 * Returns the ddm structure link local service.
-	 *
-	 * @return the ddm structure link local service
-	 */
-	public com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService
-		getDDMStructureLinkLocalService() {
-
-		return ddmStructureLinkLocalService;
-	}
-
-	/**
-	 * Sets the ddm structure link local service.
-	 *
-	 * @param ddmStructureLinkLocalService the ddm structure link local service
-	 */
-	public void setDDMStructureLinkLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService
-			ddmStructureLinkLocalService) {
-
-		this.ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure link persistence.
-	 *
-	 * @return the ddm structure link persistence
-	 */
-	public DDMStructureLinkPersistence getDDMStructureLinkPersistence() {
-		return ddmStructureLinkPersistence;
-	}
-
-	/**
-	 * Sets the ddm structure link persistence.
-	 *
-	 * @param ddmStructureLinkPersistence the ddm structure link persistence
-	 */
-	public void setDDMStructureLinkPersistence(
-		DDMStructureLinkPersistence ddmStructureLinkPersistence) {
-
-		this.ddmStructureLinkPersistence = ddmStructureLinkPersistence;
-	}
-
-	/**
-	 * Returns the ddm structure link finder.
-	 *
-	 * @return the ddm structure link finder
-	 */
-	public DDMStructureLinkFinder getDDMStructureLinkFinder() {
-		return ddmStructureLinkFinder;
-	}
-
-	/**
-	 * Sets the ddm structure link finder.
-	 *
-	 * @param ddmStructureLinkFinder the ddm structure link finder
-	 */
-	public void setDDMStructureLinkFinder(
-		DDMStructureLinkFinder ddmStructureLinkFinder) {
-
-		this.ddmStructureLinkFinder = ddmStructureLinkFinder;
-	}
-
-	/**
-	 * Returns the ddm structure version local service.
-	 *
-	 * @return the ddm structure version local service
-	 */
-	public
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			getDDMStructureVersionLocalService() {
-
-		return ddmStructureVersionLocalService;
-	}
-
-	/**
-	 * Sets the ddm structure version local service.
-	 *
-	 * @param ddmStructureVersionLocalService the ddm structure version local service
-	 */
-	public void setDDMStructureVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService) {
-
-		this.ddmStructureVersionLocalService = ddmStructureVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure version persistence.
-	 *
-	 * @return the ddm structure version persistence
-	 */
-	public DDMStructureVersionPersistence getDDMStructureVersionPersistence() {
-		return ddmStructureVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm structure version persistence.
-	 *
-	 * @param ddmStructureVersionPersistence the ddm structure version persistence
-	 */
-	public void setDDMStructureVersionPersistence(
-		DDMStructureVersionPersistence ddmStructureVersionPersistence) {
-
-		this.ddmStructureVersionPersistence = ddmStructureVersionPersistence;
-	}
-
-	/**
-	 * Returns the ddm template local service.
-	 *
-	 * @return the ddm template local service
-	 */
-	public com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService
-		getDDMTemplateLocalService() {
-
-		return ddmTemplateLocalService;
-	}
-
-	/**
-	 * Sets the ddm template local service.
-	 *
-	 * @param ddmTemplateLocalService the ddm template local service
-	 */
-	public void setDDMTemplateLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService
-			ddmTemplateLocalService) {
-
-		this.ddmTemplateLocalService = ddmTemplateLocalService;
-	}
-
-	/**
-	 * Returns the ddm template persistence.
-	 *
-	 * @return the ddm template persistence
-	 */
-	public DDMTemplatePersistence getDDMTemplatePersistence() {
-		return ddmTemplatePersistence;
-	}
-
-	/**
-	 * Sets the ddm template persistence.
-	 *
-	 * @param ddmTemplatePersistence the ddm template persistence
-	 */
-	public void setDDMTemplatePersistence(
-		DDMTemplatePersistence ddmTemplatePersistence) {
-
-		this.ddmTemplatePersistence = ddmTemplatePersistence;
-	}
-
-	/**
-	 * Returns the ddm template finder.
-	 *
-	 * @return the ddm template finder
-	 */
-	public DDMTemplateFinder getDDMTemplateFinder() {
-		return ddmTemplateFinder;
-	}
-
-	/**
-	 * Sets the ddm template finder.
-	 *
-	 * @param ddmTemplateFinder the ddm template finder
-	 */
-	public void setDDMTemplateFinder(DDMTemplateFinder ddmTemplateFinder) {
-		this.ddmTemplateFinder = ddmTemplateFinder;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMStructure",
-			ddmStructureLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.dynamic.data.mapping.model.DDMStructure");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmStructureLocalService = (DDMStructureLocalService)aopProxy;
 	}
 
 	/**
@@ -1077,118 +558,57 @@ public abstract class DDMStructureLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMStructureLocalService.class)
 	protected DDMStructureLocalService ddmStructureLocalService;
 
-	@BeanReference(type = DDMStructurePersistence.class)
+	@Reference
 	protected DDMStructurePersistence ddmStructurePersistence;
 
-	@BeanReference(type = DDMStructureFinder.class)
+	@Reference
 	protected DDMStructureFinder ddmStructureFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.
-			DDMDataProviderInstanceLocalService
-				ddmDataProviderInstanceLocalService;
-
-	@BeanReference(type = DDMDataProviderInstancePersistence.class)
+	@Reference
 	protected DDMDataProviderInstancePersistence
 		ddmDataProviderInstancePersistence;
 
-	@BeanReference(type = DDMDataProviderInstanceFinder.class)
+	@Reference
 	protected DDMDataProviderInstanceFinder ddmDataProviderInstanceFinder;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService.class
-	)
-	protected com.liferay.dynamic.data.mapping.service.
-		DDMDataProviderInstanceLinkLocalService
-			ddmDataProviderInstanceLinkLocalService;
-
-	@BeanReference(type = DDMDataProviderInstanceLinkPersistence.class)
+	@Reference
 	protected DDMDataProviderInstanceLinkPersistence
 		ddmDataProviderInstanceLinkPersistence;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ClassNameLocalService
 		classNameLocalService;
 
-	@ServiceReference(type = ClassNamePersistence.class)
-	protected ClassNamePersistence classNamePersistence;
-
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.ResourceLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.ResourceLocalService
 		resourceLocalService;
 
-	@ServiceReference(
-		type = com.liferay.portal.kernel.service.UserLocalService.class
-	)
+	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
 
-	@ServiceReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService
-			ddmStructureLayoutLocalService;
-
-	@BeanReference(type = DDMStructureLayoutPersistence.class)
+	@Reference
 	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService
-			ddmStructureLinkLocalService;
-
-	@BeanReference(type = DDMStructureLinkPersistence.class)
+	@Reference
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 
-	@BeanReference(type = DDMStructureLinkFinder.class)
+	@Reference
 	protected DDMStructureLinkFinder ddmStructureLinkFinder;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService.class
-	)
-	protected
-		com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService
-			ddmStructureVersionLocalService;
-
-	@BeanReference(type = DDMStructureVersionPersistence.class)
+	@Reference
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
 
-	@BeanReference(
-		type = com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService.class
-	)
-	protected com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService
-		ddmTemplateLocalService;
-
-	@BeanReference(type = DDMTemplatePersistence.class)
+	@Reference
 	protected DDMTemplatePersistence ddmTemplatePersistence;
 
-	@BeanReference(type = DDMTemplateFinder.class)
+	@Reference
 	protected DDMTemplateFinder ddmTemplateFinder;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

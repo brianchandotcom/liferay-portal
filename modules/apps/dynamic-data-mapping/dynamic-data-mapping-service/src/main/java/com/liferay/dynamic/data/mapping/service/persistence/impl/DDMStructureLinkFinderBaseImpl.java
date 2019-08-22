@@ -16,41 +16,63 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMStructureLinkFinderBaseImpl
+public abstract class DDMStructureLinkFinderBaseImpl
 	extends BasePersistenceImpl<DDMStructureLink> {
 
 	public DDMStructureLinkFinderBaseImpl() {
 		setModelClass(DDMStructureLink.class);
 	}
 
-	/**
-	 * Returns the ddm structure link persistence.
-	 *
-	 * @return the ddm structure link persistence
-	 */
-	public DDMStructureLinkPersistence getDDMStructureLinkPersistence() {
-		return ddmStructureLinkPersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ddm structure link persistence.
-	 *
-	 * @param ddmStructureLinkPersistence the ddm structure link persistence
-	 */
-	public void setDDMStructureLinkPersistence(
-		DDMStructureLinkPersistence ddmStructureLinkPersistence) {
-
-		this.ddmStructureLinkPersistence = ddmStructureLinkPersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = DDMStructureLinkPersistence.class)
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
+
+	static {
+		try {
+			Class.forName(DDMPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

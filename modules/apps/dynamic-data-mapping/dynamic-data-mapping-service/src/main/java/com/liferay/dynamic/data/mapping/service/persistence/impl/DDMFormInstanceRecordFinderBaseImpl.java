@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMFormInstanceRecordFinderBaseImpl
+public abstract class DDMFormInstanceRecordFinderBaseImpl
 	extends BasePersistenceImpl<DDMFormInstanceRecord> {
 
 	public DDMFormInstanceRecordFinderBaseImpl() {
@@ -44,36 +50,49 @@ public class DDMFormInstanceRecordFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getDDMFormInstanceRecordPersistence().getBadColumnNames();
+		return ddmFormInstanceRecordPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the ddm form instance record persistence.
-	 *
-	 * @return the ddm form instance record persistence
-	 */
-	public DDMFormInstanceRecordPersistence
-		getDDMFormInstanceRecordPersistence() {
-
-		return ddmFormInstanceRecordPersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ddm form instance record persistence.
-	 *
-	 * @param ddmFormInstanceRecordPersistence the ddm form instance record persistence
-	 */
-	public void setDDMFormInstanceRecordPersistence(
-		DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence) {
-
-		this.ddmFormInstanceRecordPersistence =
-			ddmFormInstanceRecordPersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = DDMFormInstanceRecordPersistence.class)
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected DDMFormInstanceRecordPersistence ddmFormInstanceRecordPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(DDMPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

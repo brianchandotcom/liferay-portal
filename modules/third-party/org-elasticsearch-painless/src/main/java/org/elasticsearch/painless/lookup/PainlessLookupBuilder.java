@@ -35,10 +35,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import java.util.Set;
 import static org.elasticsearch.painless.lookup.PainlessLookupUtility.DEF_CLASS_NAME;
 import static org.elasticsearch.painless.lookup.PainlessLookupUtility.buildPainlessConstructorKey;
 import static org.elasticsearch.painless.lookup.PainlessLookupUtility.buildPainlessFieldKey;
@@ -1106,23 +1108,22 @@ public final class PainlessLookupBuilder {
 
     private void setFunctionalInterfaceMethod(Class<?> targetClass, PainlessClassBuilder painlessClassBuilder) {
         if (targetClass.isInterface()) {
-            List<java.lang.reflect.Method> javaMethods = new ArrayList<>();
+            java.lang.reflect.Method targetJavaMethod = null;
 
             for (java.lang.reflect.Method javaMethod : targetClass.getMethods()) {
-                if (javaMethod.isDefault() == false && Modifier.isStatic(javaMethod.getModifiers()) == false) {
-                    try {
-                        Object.class.getMethod(javaMethod.getName(), javaMethod.getParameterTypes());
-                    } catch (ReflectiveOperationException roe) {
-                        javaMethods.add(javaMethod);
-                    }
+                if (javaMethod.isDefault() == false && Modifier.isStatic(javaMethod.getModifiers()) == false && !_isObjectClassMethod(javaMethod)) {
+					if (targetJavaMethod != null) {
+						return;
+					}
+
+					targetJavaMethod = javaMethod;
                 }
             }
 
-            if (javaMethods.size() == 1) {
-                java.lang.reflect.Method javaMethod = javaMethods.get(0);
-                String painlessMethodKey = buildPainlessMethodKey(javaMethod.getName(), javaMethod.getParameterCount());
-                painlessClassBuilder.functionalInterfaceMethod = painlessClassBuilder.methods.get(painlessMethodKey);
-            }
+			if (targetJavaMethod != null) {
+				String painlessMethodKey = buildPainlessMethodKey(targetJavaMethod.getName(), targetJavaMethod.getParameterCount());
+				painlessClassBuilder.functionalInterfaceMethod = painlessClassBuilder.methods.get(painlessMethodKey);
+			}
         }
     }
 
@@ -1152,6 +1153,30 @@ public final class PainlessLookupBuilder {
 		}
 		else {
 			return false;
+		}
+	}
+
+	private static boolean _isObjectClassMethod(Method method) {
+		String name = method.getName();
+
+		if (_OBJECT_CLASS_METHOD_NAMES.contains(name)) {
+			try {
+				Object.class.getMethod(method.getName(), method.getParameterTypes());
+
+				return true;
+			}
+			catch (ReflectiveOperationException roe) {
+			}
+		}
+
+		return false;
+	}
+
+	private static final Set<String> _OBJECT_CLASS_METHOD_NAMES = new HashSet<>();
+
+	static {
+		for (Method method : Object.class.getMethods()) {
+			_OBJECT_CLASS_METHOD_NAMES.add(method.getName());
 		}
 	}
 }

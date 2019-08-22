@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>REASON_SELECT</td>
-	<td>//div[contains(.,'Reason for the Report')]/select[contains(@name,'FlagsPortlet')]</td>
+	<td>//div[contains(.,'Reason for the Report')]/select[@name='selectedReason']</td>
 	<td></td>
 </tr>
 <tr>

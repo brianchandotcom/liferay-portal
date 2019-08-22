@@ -1,5 +1,5 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 @import 'common_main';
 
@@ -50,7 +50,7 @@
 			margin-top: 1em;
 			text-align: center;
 
-			@include respond-to(desktop) {
+			@include media-breakpoint-up(lg) {
 				float: right;
 				margin-top: 0;
 			}
@@ -128,7 +128,7 @@
 				vertical-align: middle;
 			}
 
-			@include respond-to(phone, tablet) {
+			@include media-breakpoint-down(lg) {
 				clear: both;
 				display: block;
 
@@ -213,7 +213,7 @@
 
 	.entry-card {
 		.aspect-ratio.aspect-ratio-bg-cover {
-			@include media-query(null, $screen-xs-max) {
+			@include media-breakpoint-down(md) {
 				padding-bottom: 50%;
 			}
 		}
@@ -235,7 +235,7 @@
 		.social-bookmarks {
 			z-index: 1;
 
-			@include respond-to(desktop) {
+			@include media-breakpoint-up(lg) {
 				display: inline-block;
 				right: 35px;
 				top: 0;
@@ -254,7 +254,7 @@
 	.info-bar-container.affix + .entry-body {
 		margin-top: 47px;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			margin-top: 59px;
 		}
 	}

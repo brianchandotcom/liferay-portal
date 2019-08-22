@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -63,6 +64,13 @@ public class MappedContentUtil {
 	public static AssetEntry getAssetEntry(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
+		return getAssetEntry(jsonObject, mappedClassPKs, new long[0]);
+	}
+
+	public static AssetEntry getAssetEntry(
+		JSONObject jsonObject, Set<Long> mappedClassPKs,
+		long[] allowedClassNameIds) {
+
 		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
 			!jsonObject.has("fieldId")) {
 
@@ -79,7 +87,9 @@ public class MappedContentUtil {
 
 		long classNameId = jsonObject.getLong("classNameId");
 
-		if (classNameId != PortalUtil.getClassNameId(JournalArticle.class)) {
+		if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
+			!ArrayUtil.contains(allowedClassNameIds, classNameId)) {
+
 			return null;
 		}
 
@@ -242,7 +252,10 @@ public class MappedContentUtil {
 					}
 
 					AssetEntry assetEntry = getAssetEntry(
-						editableJSONObject, mappedClassPKs);
+						editableJSONObject, mappedClassPKs,
+						new long[] {
+							PortalUtil.getClassNameId(JournalArticle.class)
+						});
 
 					if (assetEntry == null) {
 						continue;

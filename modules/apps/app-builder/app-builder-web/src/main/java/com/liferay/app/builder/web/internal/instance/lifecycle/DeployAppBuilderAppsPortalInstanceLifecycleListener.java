@@ -30,7 +30,6 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Jeyvison Nascimento
@@ -56,7 +55,7 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 					jsonArray.getString(i));
 
 				if (appDeployer != null) {
-					appDeployer.deploy(appBuilderApp);
+					appDeployer.deploy(appBuilderApp.getAppBuilderAppId());
 				}
 			}
 		}
@@ -65,7 +64,7 @@ public class DeployAppBuilderAppsPortalInstanceLifecycleListener
 	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
+	@Reference
 	private AppDeployerTracker _appDeployerTracker;
 
 }

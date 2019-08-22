@@ -55,14 +55,15 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	@Override
-	public void deploy(AppBuilderApp appBuilderApp) {
-		long appId = appBuilderApp.getAppBuilderAppId();
+	public void deploy(long appId) throws Exception {
+		String portletName = _getPortletName(appId);
+		String panelCategoryKey = _getPanelCategoryKey(appId);
+
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.getAppBuilderApp(appId);
 
 		String appName = appBuilderApp.getName(
 			LocaleThreadLocal.getDefaultLocale());
-
-		String portletName = _getPortletName(appId);
-		String panelCategoryKey = _getPanelCategoryKey(appId);
 
 		_serviceRegistrationsMap.computeIfAbsent(
 			appId,
@@ -79,9 +80,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	}
 
 	@Override
-	public void undeploy(AppBuilderApp appBuilderApp) {
+	public void undeploy(long appId) throws Exception {
 		ServiceRegistration<?>[] serviceRegistrations =
-			_serviceRegistrationsMap.remove(appBuilderApp.getAppBuilderAppId());
+			_serviceRegistrationsMap.remove(appId);
 
 		if (serviceRegistrations == null) {
 			return;
@@ -90,6 +91,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
 			serviceRegistration.unregister();
 		}
+
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.getAppBuilderApp(appId);
 
 		appBuilderApp.setStatus(
 			AppBuilderAppConstants.Status.UNDEPLOYED.getValue());

@@ -215,6 +215,10 @@ public class ContentPageEditorDisplayContext {
 			"deleteFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/delete_fragment_entry_link")
+		).put(
+			"duplicateFragmentEntryLinkURL",
+			getFragmentEntryActionURL(
+				"/content_layout/duplicate_fragment_entry_link")
 		);
 
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {

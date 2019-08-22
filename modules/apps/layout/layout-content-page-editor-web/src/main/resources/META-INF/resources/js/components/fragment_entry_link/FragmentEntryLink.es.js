@@ -89,6 +89,15 @@ class FragmentEntryLink extends Component {
 	/**
 	 * @inheritdoc
 	 */
+	created() {
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
+			this
+		);
+	}
+
+	/**
+	 * @inheritdoc
+	 */
 	disposed() {
 		this._disposeFloatingToolbar();
 	}
@@ -163,6 +172,9 @@ class FragmentEntryLink extends Component {
 		const config = {
 			anchorElement: this.element,
 			buttons: this._getFloatingToolbarButtons(),
+			events: {
+				buttonClicked: this._handleFloatingToolbarButtonClicked
+			},
 			item: {
 				configuration: this._configuration,
 				configurationValues: this._configurationValues,
@@ -202,11 +214,32 @@ class FragmentEntryLink extends Component {
 	_getFloatingToolbarButtons() {
 		const buttons = [];
 
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.removeFragment);
+
 		if (this._shouldShowConfigPanel()) {
 			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
 		}
 
 		return buttons;
+	}
+
+	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
+	 * @private
+	 */
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId} = data;
+
+		if (panelId === FLOATING_TOOLBAR_BUTTONS.removeFragment.panelId) {
+			event.preventDefault();
+
+			removeItem(
+				this.store,
+				removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
+			);
+		}
 	}
 
 	/**

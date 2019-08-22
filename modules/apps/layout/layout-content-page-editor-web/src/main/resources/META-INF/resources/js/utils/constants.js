@@ -158,6 +158,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
+	removeFragment: {
+		icon: 'times-circle',
+		id: 'remove_fragment',
+		panelId: 'remove_fragment',
+		title: Liferay.Language.get('remove-fragment'),
+		type: 'panel'
+	},
+
 	spacing: {
 		icon: 'table',
 		id: 'spacing',

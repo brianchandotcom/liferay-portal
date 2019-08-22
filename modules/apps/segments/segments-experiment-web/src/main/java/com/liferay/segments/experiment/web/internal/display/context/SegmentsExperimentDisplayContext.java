@@ -149,7 +149,7 @@ public class SegmentsExperimentDisplayContext {
 					"segmentsExperiment",
 					SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
 						locale,
-						_getDraftSegmentsExperimentOptional(
+						_getActiveSegmentsExperimentOptional(
 							segmentsExperience.getSegmentsExperienceId()
 						).orElse(
 							null
@@ -169,7 +169,7 @@ public class SegmentsExperimentDisplayContext {
 				"segmentsExperiment",
 				SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
 					locale,
-					_getDraftSegmentsExperimentOptional(
+					_getActiveSegmentsExperimentOptional(
 						SegmentsExperienceConstants.ID_DEFAULT
 					).orElse(
 						null
@@ -248,6 +248,19 @@ public class SegmentsExperimentDisplayContext {
 		return _segmentsExperienceId;
 	}
 
+	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
+			long segmentsExperienceId)
+		throws PortalException {
+
+		Layout layout = _themeDisplay.getLayout();
+
+		return Optional.ofNullable(
+			_segmentsExperimentService.fetchSegmentsExperiment(
+				segmentsExperienceId, _portal.getClassNameId(Layout.class),
+				layout.getPlid(),
+				SegmentsExperimentConstants.Status.exclusiveStates()));
+	}
+
 	private String _getContentPageEditorActionURL(String action) {
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(_renderResponse);
@@ -259,21 +272,6 @@ public class SegmentsExperimentDisplayContext {
 
 		return HttpUtil.addParameter(
 			actionURL.toString(), "p_l_mode", Constants.EDIT);
-	}
-
-	private Optional<SegmentsExperiment> _getDraftSegmentsExperimentOptional(
-			long segmentsExperienceId)
-		throws PortalException {
-
-		Layout layout = _themeDisplay.getLayout();
-
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.fetchSegmentsExperiment(
-				segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				layout.getPlid(),
-				new int[] {SegmentsExperimentConstants.STATUS_DRAFT});
-
-		return Optional.ofNullable(segmentsExperiment);
 	}
 
 	private long _getRequestSegmentsExperienceId() {
@@ -300,7 +298,7 @@ public class SegmentsExperimentDisplayContext {
 		long requestSegmentsExperienceId = _getRequestSegmentsExperienceId();
 
 		if (requestSegmentsExperienceId != -1) {
-			_segmentsExperiment = _getDraftSegmentsExperimentOptional(
+			_segmentsExperiment = _getActiveSegmentsExperimentOptional(
 				getSelectedSegmentsExperienceId()
 			).orElse(
 				null
@@ -325,7 +323,7 @@ public class SegmentsExperimentDisplayContext {
 			}
 		}
 
-		_segmentsExperiment = _getDraftSegmentsExperimentOptional(
+		_segmentsExperiment = _getActiveSegmentsExperimentOptional(
 			getSelectedSegmentsExperienceId()
 		).orElse(
 			null

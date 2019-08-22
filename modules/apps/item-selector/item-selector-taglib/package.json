@@ -5,7 +5,10 @@
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-events": "2.16.8",
-		"metal-state": "2.16.8"
+		"metal-state": "2.16.8",
+		"prop-types": "^15.7.2",
+		"react": "^16.9.0",
+		"react-dom": "^16.9.0"
 	},
 	"name": "item-selector-taglib",
 	"scripts": {

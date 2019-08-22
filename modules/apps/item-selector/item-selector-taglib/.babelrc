@@ -2,5 +2,8 @@
     "ignore": [
     	"**/image_selector.js",
         "**/config.js"
-    ]
+    ],
+    "presets": [
+		"@babel/preset-react"
+	]
 }

@@ -12,24 +12,35 @@
  * details.
  */
 
-package com.liferay.segments.service.persistence;
+package com.liferay.segments.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Eduardo Garcia
- * @generated
+ * @author Eduardo García
  */
 @ProviderType
-public interface SegmentsExperimentFinder {
+public class LockedSegmentsExperimentException extends PortalException {
 
-	public int countByS_C_C_S(
-		long segmentsExperienceId, long classNameId, long classPK,
-		int[] status);
+	public LockedSegmentsExperimentException() {
+	}
 
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
-		findByS_C_C_S(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int[] status, int start, int end);
+	public LockedSegmentsExperimentException(long segmentsExperimentId) {
+		super("Segments experiment " + segmentsExperimentId + " is locked");
+	}
+
+	public LockedSegmentsExperimentException(String msg) {
+		super(msg);
+	}
+
+	public LockedSegmentsExperimentException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public LockedSegmentsExperimentException(Throwable cause) {
+		super(cause);
+	}
 
 }

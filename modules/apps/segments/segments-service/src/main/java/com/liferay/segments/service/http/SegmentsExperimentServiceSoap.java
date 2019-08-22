@@ -90,7 +90,7 @@ public class SegmentsExperimentServiceSoap {
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			fetchSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
-				int status)
+				int[] status)
 		throws RemoteException {
 
 		try {

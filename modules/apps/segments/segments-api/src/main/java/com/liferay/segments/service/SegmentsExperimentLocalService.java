@@ -200,7 +200,8 @@ public interface SegmentsExperimentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK, int status);
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
@@ -335,7 +336,8 @@ public interface SegmentsExperimentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK, int status);
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] status);
 
 	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,

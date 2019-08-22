@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checks;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
@@ -35,7 +36,8 @@ public class BNDSuiteCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws ReflectiveOperationException {
 
 		if (!absolutePath.endsWith("/app.bnd")) {
 			return content;
@@ -53,6 +55,17 @@ public class BNDSuiteCheck extends BaseFileCheck {
 		if (content.matches("(?s).*Liferay-Releng-Deprecated:\\s*true.*")) {
 			content = BNDSourceUtil.updateInstruction(
 				content, "Liferay-Releng-Suite", StringPool.BLANK);
+
+			if ((ReleaseInfo.getBuildNumber() >=
+					ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER) &&
+				content.matches(
+					"(?s).*Liferay-Releng-Marketplace:\\s*false.*")) {
+
+				addMessage(
+					fileName,
+					"Deprecated apps not on Marketplace should be moved to " +
+						"the deprecated folder");
+			}
 		}
 
 		String[] lines = StringUtil.splitLines(content);

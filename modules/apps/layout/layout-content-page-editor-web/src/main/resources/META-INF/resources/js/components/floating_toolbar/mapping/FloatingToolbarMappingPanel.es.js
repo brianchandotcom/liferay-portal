@@ -325,9 +325,11 @@ class FloatingToolbarMappingPanel extends PortletBase {
 				this._clearFragmentBackgroundImage();
 			});
 		} else if (this.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
-			this.store.dispatch({
-				type: CLEAR_FRAGMENT_EDITOR,
-				value: this.itemId
+			requestAnimationFrame(() => {
+				this.store.dispatch({
+					type: CLEAR_FRAGMENT_EDITOR,
+					value: this.itemId
+				});
 			});
 		}
 	}

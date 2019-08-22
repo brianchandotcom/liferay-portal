@@ -277,6 +277,14 @@ const INITIAL_STATE = {
 	dropTargetItemType: Config.string().value(''),
 
 	/**
+	 * URL for duplicating a FragmentEntryLink
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	duplicateFragmentEntryLinkURL: Config.string().value(''),
+
+	/**
 	 * URL for editing a comment to a FragmentEntryLink
 	 * @default ''
 	 * @review

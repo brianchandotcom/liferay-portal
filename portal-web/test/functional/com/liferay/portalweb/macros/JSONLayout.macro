@@ -112,27 +112,6 @@ definition {
 		return "${typeSettings}";
 	}
 
-	@summary = "Directly calls the JavaScript API to update typeSettings"
-	macro _updateTypeSettings {
-		var javaScript =
-		'''Liferay.Service(
-	'/layout/update-layout',
-	{
-		groupId: ${groupId},
-		privateLayout: ${privateLayout},
-		layoutId: ${layoutId},
-		typeSettings: '${typeSettings}'
-	},
-		function(obj) {
-			console.log(obj);
-		}
-);''';
-
-		var JSON = selenium.getEval("${javaScript}");
-
-		return "${JSON}";
-	}
-
 	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
 	macro addPrivateLayout {
 		if (!(isSet(groupName))) {
@@ -259,12 +238,12 @@ definition {
 			layoutName = "${layoutName}",
 			privateLayout = "true");
 
-		var typeSettings = JSONWidgetUtil._addWidgetToTypeSettings(
+		var typeSettings = JSONTypeSettingsUtil._addWidgetToTypeSettings(
 			column = "${column}",
 			widgetName = "${widgetName}",
 			typeSettings = "${typeSettings}");
 
-		JSONLayout._updateTypeSettings(
+		JSONTypeSettingsUtil._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "true",
@@ -301,12 +280,12 @@ definition {
 			layoutName = "${layoutName}",
 			privateLayout = "false");
 
-		var typeSettings = JSONWidgetUtil._addWidgetToTypeSettings(
+		var typeSettings = JSONTypeSettingsUtil._addWidgetToTypeSettings(
 			column = "${column}",
 			widgetName = "${widgetName}",
 			typeSettings = "${typeSettings}");
 
-		JSONLayout._updateTypeSettings(
+		JSONTypeSettingsUtil._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "false",
@@ -338,11 +317,11 @@ definition {
 			layoutName = "${layoutName}",
 			privateLayout = "false");
 
-		var typeSettings = JSONWidgetUtil._updateLayoutTemplateId(
+		var typeSettings = JSONTypeSettingsUtil._updateLayoutTemplateId(
 			layoutTemplate = "${layoutTemplate}",
 			typeSettings = "${typeSettings}");
 
-		JSONLayout._updateTypeSettings(
+		JSONTypeSettingsUtil._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
 			privateLayout = "false",

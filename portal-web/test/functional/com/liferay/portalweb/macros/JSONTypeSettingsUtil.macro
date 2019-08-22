@@ -10,7 +10,7 @@ definition {
 			fail("Please set 'typeSettings'");
 		}
 
-		var widget = JSONWidgetUtil._generateWidget(
+		var widget = JSONTypeSettingsUtil._generateWidget(
 			widgetName = "${widgetName}");
 
 		if (contains("${typeSettings}","column-${column}=")) {
@@ -174,11 +174,32 @@ definition {
 			fail("layoutTemplateId not set.");
 		}
 
-		var layoutTemplateId = JSONWidgetUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
+		var layoutTemplateId = JSONTypeSettingsUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
 
 		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(layout-template-id=).*","$1${layoutTemplateId}");
 
 		return "${typeSettings}";
+	}
+
+	@summary = "Directly calls the JavaScript API to update typeSettings"
+	macro _updateTypeSettings {
+		var javaScript =
+		'''Liferay.Service(
+			'/layout/update-layout',
+			{
+				groupId: ${groupId},
+				privateLayout: ${privateLayout},
+				layoutId: ${layoutId},
+				typeSettings: '${typeSettings}'
+			},
+			function(obj) {
+				console.log(obj);
+			}
+		);''';
+
+		var JSON = selenium.getEval("${javaScript}");
+
+		return "${JSON}";
 	}
 
 }

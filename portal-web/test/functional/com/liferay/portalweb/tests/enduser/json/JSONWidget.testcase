@@ -97,7 +97,7 @@ definition {
 				layoutName = "Test Page Name",
 				privateLayout = "false");
 
-			var layoutTemplateId = JSONWidgetUtil._getLayoutTemplateId(
+			var layoutTemplateId = JSONTypeSettingsUtil._getLayoutTemplateId(
 				layoutTemplate = "${layoutTemplate}");
 
 			if (!(contains("${typeSettings}","${layoutTemplateId}"))) {

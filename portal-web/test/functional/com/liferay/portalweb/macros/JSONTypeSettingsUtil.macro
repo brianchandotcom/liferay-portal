@@ -70,7 +70,10 @@ definition {
 			var portletId = "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet";
 		}
 		else if ("${widgetName}" == "Related Assets") {
-			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet_INSTANCE";
+			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet";
+		}
+		else if ("${widgetName}" == "RSS Publisher") {
+			var portletId = "com_liferay_rss_web_portlet_RSSPortlet";
 		}
 		else if ("${widgetName}" == "Search Results") {
 			var portletId = "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet";

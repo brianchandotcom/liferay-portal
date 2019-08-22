@@ -259,7 +259,7 @@ public class DLOpenerOneDriveManager {
 		return _backgroundTaskManager.addBackgroundTask(
 			userId, CompanyConstants.SYSTEM,
 			StringBundler.concat(
-				DLOpenerOneDriveManager.class.getName(), StringPool.POUND,
+				DLOpenerOneDriveManager.class.getSimpleName(), StringPool.POUND,
 				fileEntry.getFileEntryId()),
 			UploadOneDriveDocumentBackgroundTaskExecutor.class.getName(),
 			taskContextMap, new ServiceContext());

@@ -88,12 +88,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 	<portlet:param name="<%= Constants.CMD %>" value="getHiddenResults" />
 </liferay-portlet:resourceURL>
 
+<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="searchResultsRankingResourceURL">
+	<portlet:param name="companyId" value="<%= companyId %>" />
+	<portlet:param name="<%= Constants.CMD %>" value="getSearchResults" />
+</liferay-portlet:resourceURL>
+
 <aui:script require='<%= npmResolvedPackageName + "/js/index.es as ResultsRankings" %>'>
 	ResultsRankings.default(
 		'<%= resultsRankingsRootElementId %>',
 		{
 			cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
 			fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
+			fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
 			fetchDocumentsUrl: '<%= resultsRankingResourceURL %>',
 			formName: '<portlet:namespace />editResultsRankingsFm',
 			initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,

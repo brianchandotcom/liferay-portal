@@ -81,6 +81,9 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 			else if (cmd.equals("getHiddenResults")) {
 				_writeHiddenDocumentsJSON(resourceRequest, resourceResponse);
 			}
+			else if (cmd.equals("getSearchResults")) {
+				_writeSearchDocumentsJSON(resourceRequest, resourceResponse);
+			}
 
 			return false;
 		}
@@ -89,6 +92,15 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 
 			throw re;
 		}
+	}
+
+	protected SearchRequest buildSearchRequest(
+		ResourceRequest resourceRequest) {
+
+		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
+			resourceRequest, null);
+
+		return searchRequestBuilder.build();
 	}
 
 	protected SearchRequest buildSearchRequest(
@@ -177,6 +189,22 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 			document -> document != null
 		).map(
 			document -> _withHiddenIcon(_translate(document))
+		).forEach(
+			jsonArray::put
+		);
+	}
+
+	protected void populateSearchDocuments(
+		ResourceRequest resourceRequest, JSONArray jsonArray) {
+
+		SearchRequest searchRequest = buildSearchRequest(resourceRequest);
+
+		SearchResponse searchResponse = searcher.search(searchRequest);
+
+		Stream<Document> stream = searchResponse.getDocumentsStream();
+
+		stream.map(
+			document -> _translate(document)
 		).forEach(
 			jsonArray::put
 		);
@@ -287,25 +315,24 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		String uid = _getRankingId(resourceRequest);
-
-		Optional<Ranking> optional = rankingIndexReader.fetchOptional(uid);
+		Optional<Ranking> optional = rankingIndexReader.fetchOptional(
+			_getRankingId(resourceRequest));
 
 		optional.ifPresent(
 			ranking -> populateHiddenDocuments(jsonArray, optional.get()));
+
+		_writeJSON(resourceRequest, resourceResponse, jsonArray);
+	}
+
+	private void _writeJSON(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+		JSONArray jsonArray) {
 
 		JSONObject jsonObject = JSONUtil.put(
 			"documents", jsonArray
 		).put(
 			"total", jsonArray.length()
 		);
-
-		_writeJSON(resourceRequest, resourceResponse, jsonObject);
-	}
-
-	private void _writeJSON(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-		JSONObject jsonObject) {
 
 		try {
 			JSONPortletResponseUtil.writeJSON(
@@ -314,6 +341,16 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
+	}
+
+	private void _writeSearchDocumentsJSON(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		populateSearchDocuments(resourceRequest, jsonArray);
+
+		_writeJSON(resourceRequest, resourceResponse, jsonArray);
 	}
 
 	private void _writeVisibleDocumentsJSON(
@@ -328,13 +365,7 @@ public class RankingMVCResourceCommand implements MVCResourceCommand {
 			ranking -> populateVisibleDocuments(
 				resourceRequest, jsonArray, ranking));
 
-		JSONObject jsonObject = JSONUtil.put(
-			"documents", jsonArray
-		).put(
-			"total", jsonArray.length()
-		);
-
-		_writeJSON(resourceRequest, resourceResponse, jsonObject);
+		_writeJSON(resourceRequest, resourceResponse, jsonArray);
 	}
 
 	private static final String _PARAM_RANKING_ID = "resultsRankingUid";

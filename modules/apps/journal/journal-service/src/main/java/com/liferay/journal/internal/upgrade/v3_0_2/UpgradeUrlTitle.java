@@ -18,7 +18,6 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -33,10 +32,8 @@ import java.sql.ResultSet;
 public class UpgradeUrlTitle extends UpgradeProcess {
 
 	public UpgradeUrlTitle(
-		ClassNameLocalService classNameLocalService,
 		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
 
-		_classNameLocalService = classNameLocalService;
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 	}
 
@@ -53,9 +50,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			groupId,
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			resourcePrimKey, normalizedURLTitle);
+			groupId, _JOURNAL_ARTICLE_CLASSNAMEID, resourcePrimKey,
+			normalizedURLTitle);
 	}
 
 	protected void updateFriendlyURLEntryLocalization() throws Exception {
@@ -67,7 +63,7 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 					"classNameId = ? and (urlTitle like ? or urlTitle like ",
 					"?)"))) {
 
-			ps1.setLong(1, PortalUtil.getClassNameId(JournalArticle.class));
+			ps1.setLong(1, _JOURNAL_ARTICLE_CLASSNAMEID);
 			ps1.setString(2, "%/%");
 			ps1.setString(3, "%.%");
 
@@ -114,7 +110,6 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 				long groupId = rs.getLong(3);
 				String urlTitle = rs.getString(4);
 
-
 				try (PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 							connection,
@@ -133,7 +128,9 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 		}
 	}
 
-	private final ClassNameLocalService _classNameLocalService;
+	private static final long _JOURNAL_ARTICLE_CLASSNAMEID =
+		PortalUtil.getClassNameId(JournalArticle.class);
+
 	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

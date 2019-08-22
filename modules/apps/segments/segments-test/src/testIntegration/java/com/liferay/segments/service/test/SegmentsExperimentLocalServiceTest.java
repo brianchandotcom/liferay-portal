@@ -33,6 +33,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
@@ -411,6 +412,31 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
 				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}));
+	}
+
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testUpdateSegmentsExperimentNameInStatusRunning()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentLocalService.addSegmentsExperiment(
+				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getClassNameId(),
+				segmentsExperience.getClassPK(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
+				StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(),
+			RandomTestUtil.randomString(), null, null, null);
 	}
 
 	@Test(expected = SegmentsExperimentStatusException.class)

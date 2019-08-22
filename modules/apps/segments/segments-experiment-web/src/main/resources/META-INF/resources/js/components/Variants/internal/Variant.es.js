@@ -61,6 +61,7 @@ function Variant({
 					<ClayList.ItemField>
 						<ClayButton
 							borderless
+							className="component-action"
 							displayType="secondary"
 							onClick={_handleEditVariantContent}
 							small
@@ -79,6 +80,7 @@ function Variant({
 										'show-actions'
 									)}
 									borderless
+									className="component-action"
 									displayType="secondary"
 									small
 								>

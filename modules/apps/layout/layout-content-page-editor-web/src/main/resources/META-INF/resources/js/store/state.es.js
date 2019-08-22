@@ -95,7 +95,7 @@ const INITIAL_STATE = {
 	 * @review
 	 * @type {string}
 	 */
-	addStucturedContentURL: Config.string().value(''),
+	addStructuredContentURL: Config.string().value(''),
 
 	/**
 	 * List of asset browser links that can be used

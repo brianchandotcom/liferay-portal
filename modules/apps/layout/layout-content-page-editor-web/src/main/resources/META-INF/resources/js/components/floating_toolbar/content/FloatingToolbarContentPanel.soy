@@ -5,7 +5,7 @@
  */
 {template .render}
 	{@param? _handleCreateContentClick: any}
-	{@param? _selectedItemsCount: number}
+	{@param? selectedItems: list<?>}
 
 	<div class="floating-toolbar-content-panel p-3">
 		<button
@@ -15,7 +15,11 @@
 			{msg desc=""}create-new-content{/msg}
 
 			<span class="badge badge-primary ml-2">
-				{$_selectedItemsCount}
+				{if $selectedItems}
+					{length($selectedItems)}
+				{else}
+					0
+				{/if}
 			</span>
 		</button>
 	</div>

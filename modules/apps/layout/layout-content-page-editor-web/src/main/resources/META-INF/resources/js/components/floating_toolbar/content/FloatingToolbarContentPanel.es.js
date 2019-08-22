@@ -14,7 +14,7 @@
 
 import 'clay-checkbox';
 import Component from 'metal-component';
-import Soy, {Config} from 'metal-soy';
+import Soy from 'metal-soy';
 
 import './FloatingToolbarContentPanelDelegateTemplate.soy';
 import getConnectedComponent from '../../../store/ConnectedComponent.es';
@@ -25,14 +25,6 @@ import {openCreateContentDialog} from '../../../utils/FragmentsEditorDialogUtils
  * FloatingToolbarContentPanel
  */
 class FloatingToolbarContentPanel extends Component {
-	prepareStateForRender(state) {
-		if (state.selectedItems) {
-			state._selectedItemsCount = this.selectedItems.length;
-		}
-
-		return state;
-	}
-
 	/**
 	 * Opens content creation dialog
 	 * @private
@@ -49,24 +41,7 @@ class FloatingToolbarContentPanel extends Component {
  * @static
  * @type {!Object}
  */
-FloatingToolbarContentPanel.STATE = {
-	/**
-	 * Selected items count
-	 * @default undefined
-	 * @memberof FloatingToolbarContentPanel
-	 * @review
-	 * @type {object}
-	 */
-	_selectedItemsCount: Config.number().value(0),
-
-	/**
-	 * @default undefined
-	 * @memberof FloatingToolbarContentPanel
-	 * @review
-	 * @type {object}
-	 */
-	store: Config.object().value(null)
-};
+FloatingToolbarContentPanel.STATE = {};
 
 const ConnectedFloatingToolbarContentPanel = getConnectedComponent(
 	FloatingToolbarContentPanel,

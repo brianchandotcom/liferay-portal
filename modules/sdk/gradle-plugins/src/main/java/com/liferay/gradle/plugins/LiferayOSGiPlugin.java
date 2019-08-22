@@ -227,8 +227,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					_configureBundleExtensionDefaults(
 						project, liferayOSGiExtension,
 						compileIncludeConfiguration);
-					_configureTaskDeployFastCSS(project);
-					_configureTaskDeployFastJSP(project);
 				}
 
 			});
@@ -813,6 +811,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private Task _addTaskDeployFast(Project project) {
 		Task deployFastTask = project.task(DEPLOY_FAST_TASK_NAME);
 
+		deployFastTask.dependsOn(DEPLOY_FAST_CSS_TASK_NAME);
+		deployFastTask.dependsOn(DEPLOY_FAST_JSP_TASK_NAME);
 		deployFastTask.setDescription(
 			"Builds and deploys resources to the Liferay work directory.");
 		deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
@@ -1272,26 +1272,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		deployTask.finalizedBy(deployDepenciesTask);
-	}
-
-	private void _configureTaskDeployFastCSS(Project project) {
-		Task deployFastTask = GradleUtil.getTask(
-			project, DEPLOY_FAST_TASK_NAME);
-
-		Copy deployFastCSSTask = (Copy)GradleUtil.getTask(
-			project, DEPLOY_FAST_CSS_TASK_NAME);
-
-		deployFastTask.dependsOn(deployFastCSSTask);
-	}
-
-	private void _configureTaskDeployFastJSP(Project project) {
-		Task deployFastTask = GradleUtil.getTask(
-			project, DEPLOY_FAST_TASK_NAME);
-
-		Copy deployFastJSPTask = (Copy)GradleUtil.getTask(
-			project, DEPLOY_FAST_JSP_TASK_NAME);
-
-		deployFastTask.dependsOn(deployFastJSPTask);
 	}
 
 	private void _configureTaskJar(final Project project) {

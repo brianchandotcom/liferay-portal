@@ -1,4 +1,5 @@
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 @import 'variables';
 
@@ -19,7 +20,7 @@
 	}
 }
 
-@include sm {
+@include media-breakpoint-up(sm) {
 	$fragmentEditorMargin: $managementBarHeight + $editorBorderWidth +
 		$toolbarBorderWidth * 2;
 

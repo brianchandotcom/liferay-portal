@@ -1,4 +1,5 @@
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 @import 'variables';
 
@@ -12,7 +13,7 @@
 	position: relative;
 	width: 100%;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		float: left;
 		height: 50%;
 		text-align: center;

@@ -18,6 +18,7 @@ import EditTableViewTabColumns from './EditTableViewTabColumns.es';
 import Button from '../../components/button/Button.es';
 import {Loading} from '../../components/loading/Loading.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
+import {useControlPanelToolbar} from '../../hooks/index.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
 
 const {Body} = Sidebar;
@@ -32,6 +33,14 @@ export default ({
 		dataDefinition: null,
 		dataListView: null
 	});
+
+	let title = Liferay.Language.get('untitled-table-view');
+
+	if (state.dataListView) {
+		title = state.dataListView.name.en_US;
+	}
+
+	useControlPanelToolbar(title);
 
 	const onChange = event => {
 		const name = event.target.value;

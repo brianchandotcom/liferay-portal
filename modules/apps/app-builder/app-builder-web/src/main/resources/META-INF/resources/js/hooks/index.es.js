@@ -12,6 +12,7 @@
  * details.
  */
 
+import useControlPanelToolbar from './useControlPanelToolbar.es';
 import useKeyDown from './useKeyDown.es';
 
-export {useKeyDown};
+export {useControlPanelToolbar, useKeyDown};

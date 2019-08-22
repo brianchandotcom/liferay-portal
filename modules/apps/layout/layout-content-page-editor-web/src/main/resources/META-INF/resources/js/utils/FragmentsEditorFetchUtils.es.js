@@ -137,6 +137,15 @@ function getAssetMappingFields(classNameId, classPK) {
 	}).then(response => response.json());
 }
 
+/**
+ * @param {string} ddmStructureId
+ */
+function getContentStructureMappingFields(ddmStructureId) {
+	return _fetch(_store.getState().getContentStructureMappingFieldsURL, {
+		ddmStructureId
+	}).then(response => response.json());
+}
+
 function getExperienceUsedPortletIds(segmentsExperienceId) {
 	return _fetch(_store.getState().getExperienceUsedPortletsURL, {
 		segmentsExperienceId
@@ -276,6 +285,7 @@ export {
 	editFragmentEntryLinkComment,
 	getAssetFieldValue,
 	getAssetMappingFields,
+	getContentStructureMappingFields,
 	getExperienceUsedPortletIds,
 	getMappedContents,
 	getStructureMappingFields,

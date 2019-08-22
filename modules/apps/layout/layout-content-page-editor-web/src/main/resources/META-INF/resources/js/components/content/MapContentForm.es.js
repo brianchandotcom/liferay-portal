@@ -24,6 +24,7 @@ import {
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import {getItemPath} from '../../utils/FragmentsEditorGetUtils.es';
+import {getContentStructureMappingFields} from '../../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * MapContentForm
@@ -50,15 +51,12 @@ class MapContentForm extends PortletBase {
 	 * @inheritdoc
 	 * @review
 	 */
-	syncGetContentStructureMappingFieldsURL() {
-		if (this.getContentStructureMappingFieldsURL) {
+	syncDdmStructure() {
+		if (this.ddmStructure) {
 			this._fields = null;
 
-			this.fetch(this.getContentStructureMappingFieldsURL, {
-				ddmStructureId: this.ddmStructure.id
-			})
-				.then(response => response.json())
-				.then(response => {
+			getContentStructureMappingFields(this.ddmStructure.id).then(
+				response => {
 					const compatibleTypes = {};
 
 					Object.keys(COMPATIBLE_TYPES).forEach(editableType => {
@@ -84,7 +82,8 @@ class MapContentForm extends PortletBase {
 					});
 
 					this._fields = fields;
-				});
+				}
+			);
 		}
 	}
 
@@ -232,6 +231,13 @@ MapContentForm.STATE = {
 	 */
 	_structureLabel: Config.string().value(''),
 
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberOf MapContentForm
+	 * @review
+	 * @type {object}
+	 */
 	ddmStructure: Config.shapeOf({
 		id: Config.string().required(),
 		label: Config.string().required()
@@ -241,7 +247,6 @@ MapContentForm.STATE = {
 const ConnectedMapContentForm = getConnectedComponent(MapContentForm, [
 	'defaultLanguageId',
 	'defaultSegmentsExperienceId',
-	'getContentStructureMappingFieldsURL',
 	'fragmentEntryLinks',
 	'languageId',
 	'layoutData',

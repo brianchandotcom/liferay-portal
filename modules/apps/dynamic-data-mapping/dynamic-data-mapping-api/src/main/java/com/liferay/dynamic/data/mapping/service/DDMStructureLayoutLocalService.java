@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -121,6 +122,7 @@ public interface DDMStructureLayoutLocalService
 	 * @return the ddm structure layout that was removed
 	 */
 	@Indexable(type = IndexableType.DELETE)
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public DDMStructureLayout deleteDDMStructureLayout(
 		DDMStructureLayout ddmStructureLayout);
 
@@ -135,6 +137,10 @@ public interface DDMStructureLayoutLocalService
 	public DDMStructureLayout deleteDDMStructureLayout(long structureLayoutId)
 		throws PortalException;
 
+	public void deleteDDMStructureLayouts(
+			long classNameId, DDMStructureVersion ddmStructureVersion)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -142,6 +148,11 @@ public interface DDMStructureLayoutLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 #deleteDDMStructureLayout(DDMStructureLayout)}
+	 */
+	@Deprecated
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(DDMStructureLayout structureLayout);
 

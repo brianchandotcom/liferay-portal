@@ -12,7 +12,6 @@
  * details.
  */
 
-import {dom} from 'metal-dom';
 import {Config} from 'metal-state';
 import {PortletBase} from 'frontend-js-web';
 import Soy from 'metal-soy';
@@ -36,55 +35,31 @@ class CreateContentForm extends PortletBase {
 				.then(response => response.json())
 				.then(response => {
 					this._structures = response;
-
-					if (this._structures.length > 0) {
-						this.emit('structureChanged', {
-							ddmStructure: {
-								id: this._structures[0].id,
-								label: this._structures[0].label
-							}
-						});
-					}
 				});
 		}
 	}
 
-	_handleContentNameChange() {
-		this._validateForm();
+	/**
+	 * @param {Event} event
+	 */
+	_handleFormChange(event) {
+		const form = event.delegateTarget;
 
-		this.emit('titleChanged', {
-			title: this.refs.contentName.value
-		});
-	}
+		const [ddmStructureOption] = form.elements.namedItem(
+			'ddmStructure'
+		).selectedOptions;
 
-	_handleStructureChange(event) {
-		const structure =
-			event.delegateTarget.options[event.delegateTarget.selectedIndex];
+		this._formValid = form.checkValidity();
 
-		this.emit('structureChanged', {
+		this.emit('formChanged', {
 			ddmStructure: {
-				id: structure.value,
-				label: structure.text
-			}
+				id: ddmStructureOption.value,
+				label: ddmStructureOption.innerText
+			},
+
+			title: form.elements.namedItem('title').value,
+			valid: this._formValid
 		});
-	}
-
-	_validateForm() {
-		if (this.refs.contentName.value === '') {
-			dom.addClasses(this.refs.contentName.parentNode, 'has-error');
-			dom.removeClasses(this.refs.contentName.nextSibling, 'hide');
-
-			this.emit('formValidated', {
-				valid: false
-			});
-		} else {
-			dom.removeClasses(this.refs.contentName.parentNode, 'has-error');
-			dom.addClasses(this.refs.contentName.nextSibling, 'hide');
-
-			this.emit('formValidated', {
-				valid: true
-			});
-		}
 	}
 }
 
@@ -95,6 +70,18 @@ class CreateContentForm extends PortletBase {
  * @type {!Object}
  */
 CreateContentForm.STATE = {
+	/**
+	 * @default true
+	 * @instance
+	 * @memberof CreateContentForm
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+	_formValid: Config.bool()
+		.internal()
+		.value(true),
+
 	/**
 	 * List of available structure types
 	 * @default null

@@ -81,20 +81,13 @@ class CreateContentDialog extends Component {
 	}
 
 	/**
-	 * Control form validation state
 	 * @private
 	 * @review
 	 */
-	_handleFormValidated(event) {
-		this._valid = event.valid;
-	}
-
-	_handleStructureChange(event) {
+	_handleCreateContentFormChange(event) {
 		this._ddmStructure = event.ddmStructure;
-	}
-
-	_handleTitleChange(event) {
 		this._title = event.title;
+		this._valid = event.valid;
 	}
 
 	/**

@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int roleType = ParamUtil.getInteger(request, "roleType");
+RoleType roleType = RoleTypeRetrieverUtil.getCurrentRoleType(request);
 %>
 
 <c:choose>
-	<c:when test="<%= roleType == RoleConstants.TYPE_ORGANIZATION %>">
+	<c:when test="<%= roleType.getType() == RoleConstants.TYPE_ORGANIZATION %>">
 		<%@ include file="/select_organization_role.jspf" %>
 	</c:when>
-	<c:when test="<%= roleType == RoleConstants.TYPE_SITE %>">
+	<c:when test="<%= roleType.getType() == RoleConstants.TYPE_SITE %>">
 		<%@ include file="/select_site_role.jspf" %>
 	</c:when>
 	<c:otherwise>

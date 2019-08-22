@@ -1,5 +1,5 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 .color-cell-editor-hidden {
 	display: none;
@@ -30,7 +30,7 @@
 		.tab-pane {
 			min-height: 500px;
 
-			@include respond-to(phone) {
+			@include media-breakpoint-down(md) {
 				min-height: 100px;
 
 				.form-builder-field .btn {

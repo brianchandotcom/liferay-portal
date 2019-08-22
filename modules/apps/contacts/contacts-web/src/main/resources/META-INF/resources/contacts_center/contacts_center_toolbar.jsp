@@ -74,7 +74,7 @@ if (user2 != null) {
 	</div>
 </div>
 
-<aui:script position="inline" use="aui-dialog-iframe-deprecated,aui-io-plugin-deprecated,aui-io-request-deprecated,aui-toolbar,liferay-util-window">
+<aui:script position="inline" use="aui-dialog-iframe-deprecated,aui-io-plugin-deprecated,aui-toolbar,liferay-util-window">
 	var buttonRow = A.one('#<portlet:namespace />userToolbar');
 
 	var contactsToolbarChildren = [];
@@ -255,27 +255,24 @@ if (user2 != null) {
 
 		var searchInput = A.one('.contacts-portlet #<portlet:namespace />name');
 
-		A.io.request(
-			uri,
-			{
-				after: {
-					failure: function(event, id, obj) {
-						Liferay.component('contactsCenter').showMessage(false);
-					},
-					success: function(event, id, obj) {
-						Liferay.component('contactsCenter').renderSelectedContacts(this.get('responseData'), lastNameAnchor);
-					}
-				},
-				data: {
-					<portlet:namespace />end: end,
-					<portlet:namespace />filterBy: contactFilerSelectValue,
-					<portlet:namespace />jsonFormat: true,
-					<portlet:namespace />keywords: searchInput.get('value'),
-					<portlet:namespace />start: 0,
-					<portlet:namespace />userIds: userIds.join()
-				},
-				dataType: 'JSON'
-			}
-		);
+		var data = new URLSearchParams({
+			<portlet:namespace />end: end,
+			<portlet:namespace />filterBy: contactFilerSelectValue,
+			<portlet:namespace />jsonFormat: true,
+			<portlet:namespace />keywords: searchInput.get('value'),
+			<portlet:namespace />start: 0,
+			<portlet:namespace />userIds: userIds.join()
+		});
+
+		Liferay.Util.fetch(uri, {
+			body: data,
+			method: 'POST'
+		}).then(function(response) {
+			return response.json();
+		}).then(function(data) {
+			Liferay.component('contactsCenter').renderSelectedContacts(data, lastNameAnchor);
+		}).catch(function() {
+			Liferay.component('contactsCenter').showMessage(false);
+		});
 	}
 </aui:script>

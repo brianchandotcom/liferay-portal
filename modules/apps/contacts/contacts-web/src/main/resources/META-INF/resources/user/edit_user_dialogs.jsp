@@ -89,7 +89,7 @@ if (extension) {
 	</aui:form>
 </div>
 
-<aui:script position="inline" use="aui-base,aui-io-request-deprecated">
+<aui:script position="inline" use="aui-base">
 	var form = A.one('#<%= portletNamespace %>dialogForm');
 
 	form.on(
@@ -122,39 +122,33 @@ if (extension) {
 				</c:otherwise>
 			</c:choose>
 
-			A.io.request(
-				uri,
-				{
-					after: {
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+			var formData = new FormData(form);
 
-							if (!responseData.success) {
-								var message = A.one('#<%= portletNamespace %>errorMessage');
+			Liferay.Util.fetch(uri, {
+				body: formData,
+				method: 'POST'
+			}).then(function(response) {
+					return response.json();
+			}).then(function(responseData) {
+					if (!responseData.success) {
+						var message = A.one('#<%= portletNamespace %>errorMessage');
 
-								if (message) {
-									message.html('<span class="alert alert-danger">' + responseData.message + '</span>');
-								}
-							}
-							else {
-								Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
-
-								var redirect = responseData.redirect;
-
-								if (redirect) {
-									var topWindow = Liferay.Util.getTop();
-
-									topWindow.location.href = redirect;
-								}
-							}
+						if (message) {
+							message.html('<span class="alert alert-danger">' + responseData.message + '</span>');
 						}
-					},
-					dataType: 'JSON',
-					form: {
-						id: form
 					}
-				}
-			);
+					else {
+						Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
+
+						var redirect = responseData.redirect;
+
+						if (redirect) {
+							var topWindow = Liferay.Util.getTop();
+
+							topWindow.location.href = redirect;
+						}
+					}
+			});
 		}
 	);
 </aui:script>

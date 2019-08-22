@@ -631,16 +631,16 @@ AUI.add(
 						);
 						actionURL.setWindowState('NORMAL');
 
-						A.io.request(actionURL.toString(), {
-							after: {
-								failure: function(event, id, obj) {
-									instance.showMessage(false);
-								},
-								success: function(event, id, obj) {
-									location.href = contact.redirect;
-								}
-							}
-						});
+						Liferay.Util.fetch(actionURL.toString())
+							.then(response => {
+								return response.text();
+							})
+							.then(data => {
+								location.href = contact.redirect;
+							})
+							.catch(() => {
+								instance.showMessage(false);
+							});
 					}
 				},
 
@@ -741,19 +741,16 @@ AUI.add(
 									uri
 								) || uri;
 
-							A.io.request(uri, {
-								after: {
-									failure: function(event, id, obj) {
-										instance.showMessage(false);
-									},
-									success: function(event, id, obj) {
-										instance.addContactResults(
-											this.get('responseData')
-										);
-									}
-								},
-								dataType: 'JSON'
-							});
+							Liferay.Util.fetch(uri)
+								.then(response => {
+									return response.json();
+								})
+								.then(data => {
+									instance.addContactResults(data);
+								})
+								.catch(err => {
+									instance.showMessage(false);
+								});
 						}
 					} else {
 						contacts = instance._contactsCheckBox.all(

@@ -47,7 +47,7 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 						</div>
 					</div>
 
-					<aui:script position="inline" use="aui-io-request-deprecated,aui-toolbar">
+					<aui:script position="inline" use="aui-toolbar">
 						var buttonRow = A.one('#<portlet:namespace />entryToolbar');
 
 						var contactsToolbarChildren = [];
@@ -78,22 +78,19 @@ boolean portalUser = ParamUtil.getBoolean(request, "portalUser");
 										var confirmMessage = '<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-from-your-contacts", entry.getFullName(), false) %>';
 
 										if (confirm(confirmMessage)) {
-											A.io.request(
-												'<portlet:actionURL name="deleteEntry" />',
-												{
-													after: {
-														failure: function(event, id, obj) {
-															Liferay.component('contactsCenter').showMessage(false);
-														},
-														success: function(event, id, obj) {
-															location.href = '<%= HtmlUtil.escape(redirect) %>';
-														}
-													},
-													data: {
-														<portlet:namespace />entryId: <%= entryId %>
-													}
-												}
-											);
+											var data = new URLSearchParams();
+											data.append(<portlet:namespace />entryId, <%= entryId %>);
+
+											Liferay.Util.fetch('<portlet:actionURL name="deleteEntry" />', {
+												body: data,
+												method: 'POST'
+											}).then(function(response) {
+												return response.text();
+											}).then(function(data) {
+												location.href = '<%= HtmlUtil.escape(redirect) %>';
+											}).catch(function() {
+												Liferay.component('contactsCenter').showMessage(false);
+											});
 										}
 									}
 								},

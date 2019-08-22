@@ -155,7 +155,7 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	url="<%= exportURL %>"
 />
 
-<aui:script use="aui-base,aui-io-plugin-deprecated,aui-io-request-deprecated">
+<aui:script use="aui-base,aui-io-plugin-deprecated">
 	var contactAction = A.one('.contacts-portlet .contacts-action');
 
 	if (contactAction) {
@@ -164,31 +164,30 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 			function(event) {
 				event.preventDefault();
 
-				A.io.request(
-					event.currentTarget.getAttribute('href'),
-					{
-						on: {
-							success: function(event, id, obj) {
-								var contactProfile = A.one('.contacts-portlet .contacts-container');
+				Liferay.Util.fetch(event.currentTarget.getAttribute('href')).then(
+					function(response) {
+						return response.text();
+					}
+				).then(
+					function(data) {
+						var contactProfile = A.one('.contacts-portlet .contacts-container');
 
-								if (!contactProfile.io) {
-									contactProfile.plug(
-										A.Plugin.IO,
-										{
-											autoLoad: false
-										}
-									);
+						if (!contactProfile.io) {
+							contactProfile.plug(
+								A.Plugin.IO,
+								{
+									autoLoad: false
 								}
-
-								<liferay-portlet:renderURL var="viewSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="mvcPath" value="/view_user.jsp" />
-									<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
-								</liferay-portlet:renderURL>
-
-								contactProfile.io.set('uri', '<%= viewSummaryURL %>');
-								contactProfile.io.start();
-							}
+							);
 						}
+
+						<liferay-portlet:renderURL var="viewSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+							<portlet:param name="mvcPath" value="/view_user.jsp" />
+							<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
+						</liferay-portlet:renderURL>
+
+						contactProfile.io.set('uri', '<%= viewSummaryURL %>');
+						contactProfile.io.start();
 					}
 				);
 			},

@@ -49,7 +49,7 @@ if (entryId > 0) {
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-io-request-deprecated,datatype-number">
+<aui:script use="datatype-number">
 	Liferay.Util.focusFormField(document.<portlet:namespace />addEntry.<portlet:namespace />fullName);
 
 	var form = A.one('#<portlet:namespace />addEntry');
@@ -83,42 +83,36 @@ if (entryId > 0) {
 
 			var searchInput = A.one('.contacts-portlet #<portlet:namespace />name');
 
-			A.io.request(
-				form.attr('action'),
-				{
-					after: {
-						failure: failureCallback,
-						success: function(event, id, obj) {
-							var responseData = this.get('responseData');
+			var data = new URLSearchParams({
+				<portlet:namespace />end: end,
+				<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
+				<portlet:namespace />keywords: searchInput.get('value'),
+				<portlet:namespace />start: 0
+			});
 
-							if (!responseData.success) {
-								var message = A.one('#<portlet:namespace />errorMessage');
+			Liferay.Util.fetch(from.attr('action'), {
+				body: data,
+				method: 'POST'
+			}).then(function(response) {
+				return repsonse.json();
+			}).then(function(responseData) {
+				if (!responseData.success) {
+					var message = A.one('#<portlet:namespace />errorMessage');
 
-								if (message) {
-									message.addClass('alert alert-danger');
+					if (message) {
+						message.addClass('alert alert-danger');
 
-									message.html(responseData.message);
-								}
-							}
-							else {
-								Liferay.component('contactsCenter').renderEntry(responseData);
-
-								Liferay.component('contactsCenter').closePopup();
-							}
-						}
-					},
-					data: {
-						<portlet:namespace />end: end,
-						<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
-						<portlet:namespace />keywords: searchInput.get('value'),
-						<portlet:namespace />start: 0
-					},
-					dataType: 'JSON',
-					form: {
-						id: form
+						message.html(responseData.message);
 					}
 				}
-			);
+				else {
+					Liferay.component('contactsCenter').renderEntry(responseData);
+
+					Liferay.component('contactsCenter').closePopup();
+				}
+			}).catch(function() {
+				failureCallback();
+			});
 		}
 	);
 </aui:script>

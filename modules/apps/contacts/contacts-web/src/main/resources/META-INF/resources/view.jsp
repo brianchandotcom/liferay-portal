@@ -412,7 +412,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 			</aui:col>
 		</aui:row>
 
-		<aui:script use="aui-io-deprecated,aui-loading-mask-deprecated,datatype-number,liferay-contacts-center">
+		<aui:script use="aui-loading-mask-deprecated,datatype-number,liferay-contacts-center">
 			var searchInput = A.one('.contacts-portlet #<portlet:namespace />name');
 
 			Liferay.component(
@@ -479,23 +479,23 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var node = event.currentTarget;
 
-					A.io.request(
-						node.getAttribute('data-viewSummaryURL'),
-						{
-							after: {
-								failure: function(event, id, obj) {
-									contactsContainer.loadingmask.hide();
+					Liferay.Util.request(node.getAttribute('data-viewSummaryURL')).then(
+						function(response) {
+							return response.json();
+						}
+					).then(
+						function(data) {
+							contactsCenter.renderContent(data, true);
 
-									contactsCenter.showMessage(false);
-								},
-								success: function(event, id, obj) {
-									contactsCenter.renderContent(this.get('responseData'), true);
+							window.scrollTo(0,0);
 
-									window.scrollTo(0,0);
+							contactsContainer.loadingmask.hide();
+						}
+					).catch(
+						function() {
+							contactsContainer.loadingmask.hide();
 
-									contactsContainer.loadingmask.hide();
-								}
-							}
+							contactsCenter.showMessage(false);
 						}
 					);
 				},
@@ -512,25 +512,24 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var lastNameAnchor = node.getAttribute('data-lastNameAnchor');
 
-					A.io.request(
+					var data = new URLSearchParams({
+						<portlet:namespace />end: end,
+						<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
+						<portlet:namespace />keywords: searchInput.get('value'),
+						<portlet:namespace />start: start
+					});
+
+					Liferay.Util.fetch(
 						'<portlet:resourceURL id="getContacts"><portlet:param name="portletResource" value="<%= portletResource %>" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:resourceURL>',
 						{
-							after: {
-								success: function(event, id, obj) {
-									var responseData = this.get('responseData');
-
-									contactsCenter.showMoreResult(responseData, lastNameAnchor);
-								}
-							},
-							data: {
-								<portlet:namespace />end: end,
-								<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
-								<portlet:namespace />keywords: searchInput.get('value'),
-								<portlet:namespace />start: start
-							},
-							dataType: 'JSON'
+							body: data,
+							method: 'POST'
 						}
-					);
+					).then(function(response) {
+						return response.json();
+					}).then(function(data) {
+						contactsCenter.showMoreResult(data, lastNameAnchor);
+					});
 				},
 				'.more-results a'
 			);
@@ -543,27 +542,23 @@ portletURL.setWindowState(WindowState.NORMAL);
 					var userId = checkBox.val();
 
 					if (checkBox.get('checked')) {
-						A.io.request(
+						var data = new URLSearchParams({
+							<portlet:namespace />userId: userId
+						});
+
+						Liferay.Util.fetch(
 							'<portlet:resourceURL id="getContact"><portlet:param name="portletResource" value="<%= portletResource %>" /></portlet:resourceURL>',
 							{
-								after: {
-									failure: function(event, id, obj) {
-										contactsCenter.showMessage(false, responseData.message);
-									},
-									success: function(event, id, obj) {
-										var responseData = this.get('responseData');
-
-										if (responseData.success) {
-											contactsCenter.addContactResult(responseData);
-										}
-									}
-								},
-								data: {
-									<portlet:namespace />userId: userId
-								},
-								dataType: 'JSON'
+								body: data,
+								method: 'POST'
 							}
-						);
+						).then(function(response) {
+							return response.json();
+						}).then(function(data) {
+							if (data.success) {
+								contactsCenter.addContactResult(data);
+							}
+						});
 					}
 					else {
 						contactsCenter.deleteContactResult(userId);
@@ -581,23 +576,20 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var userId = instance.one('input').val();
 
-					var ioRequest = A.io.request(
-						node.getAttribute('data-viewSummaryURL'),
-						{
-							after: {
-								failure: function(event, id, obj) {
-									contactsCenter.showMessage(false);
-								},
-								success: function(event, id, obj) {
-									contactsCenter.renderContent(this.get('responseData'));
-								}
-							},
-							data: {
-								<portlet:namespace />showDetailView: true,
-								<portlet:namespace />userId: userId
-							}
-						}
-					);
+					var data = new URLSearchParams();
+					data.append(<portlet:namespace />showDetailView, true);
+					data.append(<portlet:namespace />userId, userId);
+
+					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL'), {
+						body: data,
+						method: 'POST'
+					}).then(function(response) {
+						return response.json();
+					}).then(function(data) {
+						contactsCenter.renderContent(data);
+					}).catch(function() {
+						contactsCenter.showMessage(false);
+					});
 				},
 				'.lfr-contact-grid-item'
 			);

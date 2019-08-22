@@ -169,10 +169,6 @@ AUI.add(
 						pollerRequest: requestStr
 					}),
 					body: data,
-					headers: {
-						'Content-Type':
-							'application/x-www-form-urlencoded; charset=UTF-8'
-					},
 					method: 'POST'
 				})
 					.then(response => {
@@ -217,10 +213,6 @@ AUI.add(
 
 				Liferay.Util.fetch(_getSendUrl(), {
 					body: data,
-					headers: {
-						'Content-Type':
-							'application/x-www-form-urlencoded; charset=UTF-8'
-					},
 					method: 'POST'
 				})
 					.then(response => {

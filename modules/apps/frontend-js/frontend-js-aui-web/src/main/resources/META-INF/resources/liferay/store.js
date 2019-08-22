@@ -117,10 +117,6 @@ AUI.add(
 					themeDisplay.getPathMain() + '/portal/session_click',
 					{
 						body: data,
-						headers: {
-							'Content-Type':
-								'application/x-www-form-urlencoded; charset=UTF-8'
-						},
 						method: 'POST'
 					}
 				)

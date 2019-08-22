@@ -41,16 +41,23 @@ public class RankingIndexWriterImpl implements RankingIndexWriter {
 
 	@Override
 	public void remove(String id) {
-		_searchEngineAdapter.execute(
-			new DeleteDocumentRequest(RankingIndexDefinition.INDEX_NAME, id));
+		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
+			RankingIndexDefinition.INDEX_NAME, id);
+
+		deleteDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(deleteDocumentRequest);
 	}
 
 	@Override
 	public void update(Ranking ranking) {
-		_searchEngineAdapter.execute(
-			new IndexDocumentRequest(
-				RankingIndexDefinition.INDEX_NAME, ranking.getId(),
-				_rankingToDocumentTranslator.translate(ranking)));
+		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
+			RankingIndexDefinition.INDEX_NAME, ranking.getId(),
+			_rankingToDocumentTranslator.translate(ranking));
+
+		indexDocumentRequest.setRefresh(true);
+
+		_searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
 	@Reference(unbind = "-")

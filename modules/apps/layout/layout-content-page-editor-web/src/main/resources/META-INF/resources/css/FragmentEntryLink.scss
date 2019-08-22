@@ -1,6 +1,5 @@
-@import 'bourbon';
-
-@import 'mixins';
+@import 'atlas/variables';
+@import 'bootstrap/mixins';
 
 @import 'variables';
 
@@ -15,20 +14,18 @@
 			opacity: 0;
 			padding: 10px 20px 10px 10px;
 			pointer-events: none;
+			transform: translateY(0);
 			width: 100%;
 			z-index: $portletTopperZIndex;
-
-			@include transform(translateY(0));
 		}
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			&:hover,
 			&.focus {
 				> .portlet-topper {
 					opacity: 1;
 					pointer-events: all;
-
-					@include transform(translateY(0));
+					transform: translateY(0);
 
 					.portlet-topper-toolbar {
 						position: absolute;

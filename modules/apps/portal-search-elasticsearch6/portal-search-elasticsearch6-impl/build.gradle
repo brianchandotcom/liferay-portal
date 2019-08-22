@@ -14,7 +14,7 @@ dependencies {
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.9.8"
 	compileInclude group: "com.liferay", name: "org.elasticsearch.analysis.common", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.client.xpack.transport", version: elasticsearchVersion
-	compileInclude group: "com.liferay", name: "org.elasticsearch.painless", version: "6.5.0.LIFERAY-PATCHED-1"
+	compileInclude group: "com.liferay", name: "org.elasticsearch.painless", version: "6.5.0.LIFERAY-PATCHED-2"
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.classloader", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.cli", version: elasticsearchVersion
 	compileInclude group: "com.liferay", name: "org.elasticsearch.secure.sm", version: elasticsearchVersion

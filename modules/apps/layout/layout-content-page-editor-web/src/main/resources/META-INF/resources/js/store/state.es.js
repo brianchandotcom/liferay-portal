@@ -90,6 +90,14 @@ const INITIAL_STATE = {
 	addPortletURL: Config.string().value(''),
 
 	/**
+	 * URL for adding structured content
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	addStucturedContentURL: Config.string().value(''),
+
+	/**
 	 * List of asset browser links that can be used
 	 * for selecting an asset
 	 * @default []

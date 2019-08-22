@@ -22,6 +22,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Role role = (Role)row.getObject();
 
 String name = role.getName();
+
+RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(request);
 %>
 
 <liferay-ui:icon-menu
@@ -72,7 +74,7 @@ String name = role.getName();
 		/>
 	</c:if>
 
-	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= currentRoleTypeContributor.isAllowDelete(role) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteRole" var="deleteRoleURL">
 			<portlet:param name="mvcPath" value="/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

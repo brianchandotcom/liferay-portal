@@ -14,24 +14,14 @@
  */
 --%>
 
+<%
+RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(request);
+%>
+
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
-
-		<%
-		String icon = "user";
-
-		int roleType = role.getType();
-
-		if (roleType == RoleConstants.TYPE_SITE) {
-			icon = "sites";
-		}
-		else if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-			icon = "organizations";
-		}
-		%>
-
 		<liferay-ui:search-container-column-icon
-			icon="<%= icon %>"
+			icon="<%= currentRoleTypeContributor.getIcon() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -62,7 +52,7 @@
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 		/>
 
-		<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">
+		<c:if test="<%= ArrayUtil.isNotEmpty(currentRoleTypeContributor.getSubtypes()) %>">
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="subType"

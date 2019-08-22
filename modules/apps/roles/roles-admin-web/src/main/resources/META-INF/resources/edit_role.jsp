@@ -31,20 +31,21 @@ if (role != null) {
 	roleName = role.getName();
 }
 
-int type = ParamUtil.getInteger(request, "type");
 String subtype = BeanParamUtil.getString(role, request, "subtype");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
 renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") : role.getTitle(locale));
+
+RoleTypeContributor currentRoleTypeContributor = RoleTypeContributorRetrieverUtil.getCurrentRoleTypeContributor(request);
 %>
 
 <liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= role != null %>">
 	<c:choose>
-		<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
+		<c:when test="<%= currentRoleTypeContributor.getType() == RoleConstants.TYPE_REGULAR %>">
 			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", HtmlUtil.escape(roleName)) %>' />
 		</c:when>
 		<c:otherwise>
@@ -63,7 +64,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="tabs1" value="details" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
-	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
+	<portlet:param name="type" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= editRoleURL %>" cssClass="container-fluid container-fluid-max-xl container-form-view" method="post" name="fm">
@@ -78,20 +79,29 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:choose>
-				<c:when test="<%= (role == null) && (type == 0) %>">
+				<c:when test="<%= role == null %>">
 					<aui:select name="type">
-						<aui:option label="regular" value="<%= RoleConstants.TYPE_REGULAR %>" />
-						<aui:option label="site" value="<%= RoleConstants.TYPE_SITE %>" />
-						<aui:option label="organization" value="<%= RoleConstants.TYPE_ORGANIZATION %>" />
+
+						<%
+						List<RoleTypeContributor> roleTypeContributors = RoleTypeContributorRetrieverUtil.getRoleTypeContributors(request);
+
+						for (RoleTypeContributor roleTypeContributor : roleTypeContributors) {
+						%>
+
+							<aui:option label="<%= roleTypeContributor.getName() %>" value="<%= roleTypeContributor.getType() %>" />
+
+						<%
+						}
+						%>
+
 					</aui:select>
 				</c:when>
-				<c:when test="<%= role == null %>">
-					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, RoleConstants.getTypeLabel(type)) %>" />
-
-					<aui:input name="type" type="hidden" value="<%= String.valueOf(type) %>" />
-				</c:when>
 				<c:otherwise>
-					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>" />
+					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, currentRoleTypeContributor.getName()) %>" />
+
+					<c:if test="<%= role == null %>">
+						<aui:input name="type" type="hidden" value="<%= String.valueOf(currentRoleTypeContributor.getType()) %>" />
+					</c:if>
 				</c:otherwise>
 			</c:choose>
 
@@ -106,20 +116,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 			<c:if test="<%= role != null %>">
 
 				<%
-				String[] subtypes = null;
-
-				if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-					subtypes = PropsValues.ROLES_ORGANIZATION_SUBTYPES;
-				}
-				else if (role.getType() == RoleConstants.TYPE_REGULAR) {
-					subtypes = PropsValues.ROLES_REGULAR_SUBTYPES;
-				}
-				else if (role.getType() == RoleConstants.TYPE_SITE) {
-					subtypes = PropsValues.ROLES_SITE_SUBTYPES;
-				}
-				else {
-					subtypes = new String[0];
-				}
+				String[] subtypes = currentRoleTypeContributor.getSubtypes();
 				%>
 
 				<c:if test="<%= subtypes.length > 0 %>">

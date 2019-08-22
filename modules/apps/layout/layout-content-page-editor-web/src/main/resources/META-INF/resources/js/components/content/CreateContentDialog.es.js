@@ -60,8 +60,6 @@ class CreateContentDialog extends Component {
 	 */
 	_handleCancelButtonClick() {
 		this.dispose();
-
-		this.onCancelButtonClick();
 	}
 
 	/**
@@ -72,9 +70,40 @@ class CreateContentDialog extends Component {
 	_handleSubmitButtonClick() {
 		if (this._step === 1) {
 			this._step = 2;
-		}
+		} else {
+			const ddmFormValuesElement = document.createElement('input');
 
-		this.onSubmitButtonClick();
+			ddmFormValuesElement.setAttribute(
+				'name',
+				`${this.portletNamespace}ddmFormValues`
+			);
+			ddmFormValuesElement.setAttribute('type', 'hidden');
+			ddmFormValuesElement.setAttribute(
+				'value',
+				this.refs.modal.refs.mapContentForm.getSerializedFields()
+			);
+
+			const ddmStructureIdElement = document.createElement('input');
+
+			ddmStructureIdElement.setAttribute(
+				'name',
+				`${this.portletNamespace}ddmStructureId`
+			);
+			ddmStructureIdElement.setAttribute('type', 'hidden');
+			ddmStructureIdElement.setAttribute('value', this._ddmStructure.id);
+
+			const titleElement = document.createElement('input');
+
+			titleElement.setAttribute('name', `${this.portletNamespace}title`);
+			titleElement.setAttribute('type', 'hidden');
+			titleElement.setAttribute('value', this._title);
+
+			document.hrefFm.appendChild(ddmFormValuesElement);
+			document.hrefFm.appendChild(ddmStructureIdElement);
+			document.hrefFm.appendChild(titleElement);
+
+			submitForm(document.hrefFm, this.addStucturedContentURL);
+		}
 	}
 
 	/**
@@ -88,6 +117,10 @@ class CreateContentDialog extends Component {
 
 	_handleStructureChange(event) {
 		this._ddmStructure = event.ddmStructure;
+	}
+
+	_handleTitleChange(event) {
+		this._title = event.title;
 	}
 
 	/**
@@ -140,6 +173,17 @@ CreateContentDialog.STATE = {
 	_step: Config.number().value(1),
 
 	/**
+	 * Current content title
+	 * @default 1
+	 * @instance
+	 * @memberOf CreateContentDialog
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_title: Config.string().value(''),
+
+	/**
 	 * Is form valid
 	 * @default false
 	 * @instance
@@ -180,7 +224,7 @@ CreateContentDialog.STATE = {
 
 const ConnectedCreateContentDialog = getConnectedComponent(
 	CreateContentDialog,
-	['savingChanges', 'spritemap']
+	['addStucturedContentURL', 'portletNamespace', 'savingChanges', 'spritemap']
 );
 
 Soy.register(ConnectedCreateContentDialog, templates);

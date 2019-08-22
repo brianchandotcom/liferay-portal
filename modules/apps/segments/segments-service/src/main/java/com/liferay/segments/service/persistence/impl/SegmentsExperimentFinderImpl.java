@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.impl.SegmentsExperimentImpl;
 import com.liferay.segments.service.persistence.SegmentsExperimentFinder;
@@ -47,7 +49,8 @@ public class SegmentsExperimentFinderImpl
 
 	@Override
 	public int countByS_C_C_S(
-		long segmentsExperienceId, long classNameId, long classPK, int status) {
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] status) {
 
 		Session session = null;
 
@@ -55,6 +58,8 @@ public class SegmentsExperimentFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), COUNT_BY_S_C_C_S);
+
+			sql = _replaceSegmentsExperimentStatus(sql, status);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -65,7 +70,6 @@ public class SegmentsExperimentFinderImpl
 			qPos.add(segmentsExperienceId);
 			qPos.add(classNameId);
 			qPos.add(classPK);
-			qPos.add(status);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -89,7 +93,7 @@ public class SegmentsExperimentFinderImpl
 
 	@Override
 	public List<SegmentsExperiment> findByS_C_C_S(
-		long segmentsExperienceId, long classNameId, long classPK, int status,
+		long segmentsExperienceId, long classNameId, long classPK, int[] status,
 		int start, int end) {
 
 		Session session = null;
@@ -98,6 +102,8 @@ public class SegmentsExperimentFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_S_C_C_S);
+
+			sql = _replaceSegmentsExperimentStatus(sql, status);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -108,7 +114,6 @@ public class SegmentsExperimentFinderImpl
 			qPos.add(segmentsExperienceId);
 			qPos.add(classNameId);
 			qPos.add(classPK);
-			qPos.add(status);
 
 			return (List<SegmentsExperiment>)QueryUtil.list(
 				q, getDialect(), start, end);
@@ -119,6 +124,21 @@ public class SegmentsExperimentFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private String _replaceSegmentsExperimentStatus(String sql, int[] status) {
+		StringBundler sb = new StringBundler(status.length);
+
+		for (int i = 0; i < status.length; i++) {
+			sb.append(status[i]);
+
+			if (i != (status.length - 1)) {
+				sb.append(", ");
+			}
+		}
+
+		return StringUtil.replace(
+			sql, "[$SEGMENTS_EXPERIMENT_STATUS$]", sb.toString());
 	}
 
 	@Reference

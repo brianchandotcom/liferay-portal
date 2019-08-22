@@ -14,7 +14,8 @@
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
 				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status = ?)
+				(SegmentsExperiment.status IN ([$SEGMENTS_EXPERIMENT_STATUS$]))
+
 		]]>
 	</sql>
 	<sql id="com.liferay.segments.service.persistence.SegmentsExperimentFinder.findByS_C_C_S">
@@ -30,7 +31,7 @@
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
 				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status = ?)
+				(SegmentsExperiment.status IN ([$SEGMENTS_EXPERIMENT_STATUS$]))
 		]]>
 	</sql>
 </custom-sql>

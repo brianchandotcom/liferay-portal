@@ -894,6 +894,37 @@ definition {
 	}
 
 	@priority = "4"
+	test SearchContentPagesSmoke {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		for (var portletName : list "Search Bar,Search Results") {
+			PageEditor.addWidget(portletName = "${portletName}");
+		}
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Site Name",
+			title = "WC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Content Page Name",
+			siteName = "Site Name");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title",
+			searchAssetType = "Web Content Article",
+			searchTerm = "WC Title");
+	}
+
+	@priority = "4"
 	test SearchDeletedWebContent {
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

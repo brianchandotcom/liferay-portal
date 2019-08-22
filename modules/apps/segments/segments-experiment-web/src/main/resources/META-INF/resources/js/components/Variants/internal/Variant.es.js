@@ -37,6 +37,8 @@ function Variant({
 			<ClayList.ItemField expand>
 				<ClayList.ItemTitle>
 					<ClayButton
+						className="lfr-portal-tooltip text-truncate"
+						data-title={name}
 						displayType="unstyled"
 						onClick={_handleVariantNavigation}
 					>

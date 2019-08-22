@@ -15,6 +15,7 @@
 		id: string,
 		label: string
 	]>}
+	{@param? selectedStructureId: string}
 	{@param? spritemap: string}
 
 	<form>
@@ -56,12 +57,18 @@
 
 					<select
 						class="form-control"
-						data-onchange="{$_handleStructureChange}"
 						id="selectStructureType"
 						ref="structureType"
 					>
 						{foreach $structureType in $_structureTypes}
-							<option value="{$structureType.id}" selected>{$structureType.label}</option>
+							<option
+									value="{$structureType.id}"
+									{if $selectedStructureId == $structureType.id}
+										selected
+									{/if}
+							>
+								{$structureType.label}
+							</option>
 						{/foreach}
 					</select>
 				</div>
@@ -75,6 +82,7 @@
 
 					<select
 						class="form-control"
+						data-onchange="{$_handleStructureChange}"
 						id="selectStructure"
 						ref="structure"
 					>

@@ -114,6 +114,38 @@
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portal/service\.xml" />
 		<suppress checks="XMLServiceEntityNameCheck" files="portal-impl/src/com/liferay/portlet/exportimport/service\.xml" />
 
+		<!-- Temporary suppressions for BNDSuiteCheck(LPS-100170) -->
+
+		<suppress checks="BNDSuiteCheck" files="modules/apps/amazon-rankings/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/asset-tags-validator/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/bookmarks/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/calevent/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/chat/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/currency-converter/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/dictionary/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/directory/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/flash/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/google-maps/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/journal-properties-transformer-listener/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/loan-calculator/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/mail-reader/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/microblogs/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/network-utilities/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/opensocial/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/password-generator/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/powwow/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/quick-note/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/recent-documents/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/tasks/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/translator/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/unit-converter/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/weather/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/web-form/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/web-proxy/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/wysiwyg/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/xsl-content/app\.bnd" />
+		<suppress checks="BNDSuiteCheck" files="modules/apps/youtube/app\.bnd" />
+
 		<!-- Temporary suppressions for portal -->
 
 		<suppress checks="GradleDependencyVersionCheck" files="modules/sdk/.*" />

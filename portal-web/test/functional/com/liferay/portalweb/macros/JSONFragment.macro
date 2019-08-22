@@ -68,14 +68,6 @@ definition {
 
 		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
 
-		echo("## Searching for a 'Collection' with the following info using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Group Id: ${groupId}");
-
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
 			-u test@liferay.com:test \
@@ -150,19 +142,6 @@ definition {
 			fail("Please set 'name'.");
 		}
 
-		echo("## Adding a 'Fragment Collection' with the following info using JSONWS:");
-
-		echo("## * Collection Name: ${name}");
-
-		if (isSet(groupName)) {
-			echo("## * Group Name: ${groupName}");
-		}
-		else {
-			echo("## * Group Key: ${groupKey}");
-		}
-
-		echo("## * Group Id: ${groupId}");
-
 		JSONFragment._addFragmentCollection(
 			groupId = "${groupId}",
 			name = "${name}");
@@ -198,23 +177,6 @@ definition {
 			fail("Please set 'name'.");
 		}
 
-		echo("## Adding a 'Fragment' with the following info using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Collection Id: ${collectionId}");
-
-		echo("## * Fragment Name: ${name}");
-
-		if (isSet(groupName)) {
-			echo("## * Group Name: ${groupName}");
-		}
-		else {
-			echo("## * Group Key: ${groupKey}");
-		}
-
-		echo("## * Group Id: ${groupId}");
-
 		JSONFragment._addSection(
 			collectionId = "${collectionId}",
 			configuration = "${configuration}",
@@ -236,12 +198,6 @@ definition {
 		}
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-
-		echo("## Asserts a 'Fragment Collection' doesn't exist in a group using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Group Name: ${groupName}");
 
 		var collectionNameResult = JSONFragment._getCollectionName(
 			collectionName = "${collectionName}",
@@ -267,12 +223,6 @@ definition {
 		}
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-
-		echo("## Asserts a 'Fragment Collection' doesn't exist in a group using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Group Name: ${groupName}");
 
 		var collectionNameResult = JSONFragment._getCollectionName(
 			collectionName = "${collectionName}",
@@ -308,14 +258,6 @@ definition {
 			groupId = "${groupId}"
 		);
 
-		echo("## Asserts a 'Fragment' exists in a group using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Fragment Name: ${fragmentName}");
-
-		echo("## * Group Name: ${groupName}");
-
 		var fragmentNameResult = JSONFragment._getFragmentName(
 			fragmentCollectionId = "${fragmentCollectionId}",
 			fragmentName = "${fragmentName}",
@@ -350,14 +292,6 @@ definition {
 			collectionName = "${collectionName}",
 			groupId = "${groupId}"
 		);
-
-		echo("## Asserts a 'Fragment' doesn't exist in a group using JSONWS:");
-
-		echo("## * Collection Name: ${collectionName}");
-
-		echo("## * Fragment Name: ${fragmentName}");
-
-		echo("## * Group Name: ${groupName}");
 
 		var fragmentNameResult = JSONFragment._getFragmentName(
 			fragmentCollectionId = "${fragmentCollectionId}",

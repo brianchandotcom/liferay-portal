@@ -38,18 +38,6 @@ definition {
 				-d categoryProperties=
 		''';
 
-		echo("## Assign a 'Category' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Parent Category Id: ${categoryId}");
-
-		echo("## * Vocabulary Id: ${vocabularyId}");
-
-		echo("## * Title Map: ${titleMap}");
-
-		echo("## * Description Map: ${descriptionMap}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
@@ -86,14 +74,6 @@ definition {
 				-d Settings=
 		''';
 
-		echo("## Assign a 'Vocabulary' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Title Map: ${titleMap}");
-
-		echo("## * Description Map: ${descriptionMap}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
@@ -126,12 +106,6 @@ definition {
 				-d -obc=
 		''';
 
-		echo("## Get a 'Category' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Category Name: ${categoryName}");
-
 		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${categoryName}')]['categoryId']");
 		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
 		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
@@ -163,12 +137,6 @@ definition {
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
-
-		echo("## Get a 'Vocabulary' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Vocabulary Name: ${vocabularyName}");
 
 		var vocabularyId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${vocabularyName}')]['vocabularyId']");
 		var vocabularyId = StringUtil.replace("${vocabularyId}", "[&quot;", "");

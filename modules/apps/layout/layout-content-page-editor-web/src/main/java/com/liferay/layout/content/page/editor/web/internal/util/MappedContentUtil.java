@@ -25,6 +25,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -58,6 +59,46 @@ import javax.servlet.http.HttpServletRequest;
  * @author Víctor Galán
  */
 public class MappedContentUtil {
+
+	public static AssetEntry getAssetEntry(
+		JSONObject jsonObject, Set<Long> mappedClassPKs) {
+
+		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
+			!jsonObject.has("fieldId")) {
+
+			return null;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+
+		if (mappedClassPKs.contains(classPK)) {
+			return null;
+		}
+
+		mappedClassPKs.add(classPK);
+
+		long classNameId = jsonObject.getLong("classNameId");
+
+		if (classNameId != PortalUtil.getClassNameId(JournalArticle.class)) {
+			return null;
+		}
+
+		try {
+			return AssetEntryServiceUtil.getEntry(
+				PortalUtil.getClassName(classNameId), classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get asset entry for class name ID ",
+						classNameId, " with primary key ", classPK),
+					pe);
+			}
+		}
+
+		return null;
+	}
 
 	public static JSONArray getMappedContentsJSONArray(
 		String backURL, long groupId, HttpServletRequest httpServletRequest,
@@ -200,32 +241,8 @@ public class MappedContentUtil {
 						continue;
 					}
 
-					if (!editableJSONObject.has("classNameId") ||
-						!editableJSONObject.has("classPK") ||
-						!editableJSONObject.has("fieldId")) {
-
-						continue;
-					}
-
-					long classPK = editableJSONObject.getLong("classPK");
-
-					if (mappedClassPKs.contains(classPK)) {
-						continue;
-					}
-
-					mappedClassPKs.add(classPK);
-
-					long classNameId = editableJSONObject.getLong(
-						"classNameId");
-
-					if (classNameId != PortalUtil.getClassNameId(
-							JournalArticle.class)) {
-
-						continue;
-					}
-
-					AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
-						PortalUtil.getClassName(classNameId), classPK);
+					AssetEntry assetEntry = getAssetEntry(
+						editableJSONObject, mappedClassPKs);
 
 					if (assetEntry == null) {
 						continue;

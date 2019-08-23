@@ -1,0 +1,18 @@
+.field-type {
+	border: 2px solid transparent;
+	border-radius: 4px;
+	box-sizing: border-box;
+	cursor: grab;
+	transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+	&:hover {
+		border-color: #80acff;
+		box-shadow: 0px 2px 4px rgba(39, 40, 51, 0.12);
+		transform: translateX(-2px);
+	}
+
+	.sticker {
+		background-color: #f7f8f9;
+		color: #6b6c7e;
+	}
+}

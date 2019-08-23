@@ -228,6 +228,15 @@ public class ResourceBundleUtil {
 				ResourceBundleLoaderUtil.
 					getResourceBundleLoaderByBundleSymbolicName(symbolicName);
 		}
+		else {
+			ClassLoader portalClassLoader =
+				PortalClassLoaderUtil.getClassLoader();
+
+			if (classLoader == portalClassLoader) {
+				resourceBundleLoader =
+					ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+			}
+		}
 
 		if (resourceBundleLoader == null) {
 			return ResourceBundle.getBundle(

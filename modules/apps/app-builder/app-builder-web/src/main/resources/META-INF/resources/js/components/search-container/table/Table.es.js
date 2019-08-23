@@ -49,6 +49,8 @@ export default ({actions, columns, items}) => {
 								);
 							}
 
+							const {onClick} = column;
+
 							return (
 								<Cell
 									className={
@@ -57,6 +59,7 @@ export default ({actions, columns, items}) => {
 									expanded={index === 0}
 									headingTitle={index === 0}
 									key={index}
+									onClick={() => onClick && onClick(item)}
 								>
 									{cell}
 								</Cell>

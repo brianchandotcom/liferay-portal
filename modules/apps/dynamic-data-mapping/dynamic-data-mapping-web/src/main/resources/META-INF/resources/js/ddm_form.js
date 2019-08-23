@@ -312,13 +312,9 @@ AUI.add(
 			_getTemplateResourceURL: function() {
 				var instance = this;
 
-				var portletURL = Liferay.PortletURL.createRenderURL(
-					themeDisplay.getURLControlPanel()
-				);
-
 				var container = instance.get('container');
 
-				var parameters = {
+				var templateResourceParameters = {
 					doAsUserId: instance.get('doAsGroupId'),
 					fieldName: instance.get('name'),
 					mode: instance.get('mode'),
@@ -333,12 +329,12 @@ AUI.add(
 					p_p_state: 'pop_up'
 				};
 
-				var portletURL = Liferay.Util.PortletURL.createRenderURL(
+				var templateResourceURL = Liferay.Util.PortletURL.createRenderURL(
 					themeDisplay.getURLControlPanel(),
-					parameters
+					templateResourceParameters
 				);
 
-				return portletURL;
+				return templateResourceURL.toString();
 			},
 
 			_valueDisplayLocale: function() {
@@ -1407,7 +1403,7 @@ AUI.add(
 						URL: instance.getUploadURL()
 					};
 
-					var parameters = {
+					var documentLibraryParameters = {
 						criteria: criteria,
 						itemSelectedEventName:
 							portletNamespace + 'selectDocumentLibrary',
@@ -1420,12 +1416,12 @@ AUI.add(
 						p_p_state: 'pop_up'
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createURL(
+					var documentLibraryURL = Liferay.Util.PortletURL.createPortletURL(
 						themeDisplay.getLayoutRelativeControlPanelURL(),
-						parameters
+						documentLibraryParameters
 					);
 
-					return portletURL;
+					return documentLibraryURL.toString();
 				},
 
 				getParsedValue: function(value) {
@@ -1451,7 +1447,7 @@ AUI.add(
 				},
 
 				getUploadURL: function() {
-					var parameters = {
+					var uploadParameters = {
 						cmd: 'add_temp',
 						'javax.portlet.action':
 							'/document_library/upload_file_entry',
@@ -1459,12 +1455,12 @@ AUI.add(
 						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createActionURL(
+					var uploadURL = Liferay.Util.PortletURL.createActionURL(
 						themeDisplay.getLayoutRelativeControlPanelURL(),
-						parameters
+						uploadParameters
 					);
 
-					return portletURL;
+					return uploadURL.toString();
 				},
 
 				setValue: function(value) {
@@ -1656,7 +1652,7 @@ AUI.add(
 						(groupIdNode && groupIdNode.getAttribute('value')) ||
 						themeDisplay.getScopeGroupId();
 
-					var parameters = {
+					var webContentSelectorParameters = {
 						eventName: 'selectContent',
 						groupId: groupId,
 						p_p_auth: container.getData('assetBrowserAuthToken'),
@@ -1670,12 +1666,12 @@ AUI.add(
 						p_p_state: 'pop_up'
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createRenderURL(
+					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
 						themeDisplay.getURLControlPanel(),
-						parameters
+						webContentSelectorParameters
 					);
 
-					return portletURL;
+					return webContentSelectorURL.toString();
 				},
 
 				setValue: function(value) {
@@ -3189,7 +3185,7 @@ AUI.add(
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 					};
 
-					var parameters = {
+					var documentLibraryParameters = {
 						criteria: criteria,
 						itemSelectedEventName:
 							portletNamespace + 'selectDocumentLibrary',
@@ -3201,12 +3197,12 @@ AUI.add(
 						p_p_state: 'pop_up'
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createURL(
+					var documentLibraryURL = Liferay.Util.PortletURL.createPortletURL(
 						themeDisplay.getLayoutRelativeControlPanelURL(),
-						parameters
+						documentLibraryParameters
 					);
 
-					return portletURL;
+					return documentLibraryURL.toString();
 				},
 
 				getValue: function() {

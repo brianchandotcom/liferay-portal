@@ -14,6 +14,7 @@
 
 import '../FieldBase/FieldBase.es';
 import './DocumentLibraryRegister.soy.js';
+import {createActionURL, createPortletURL} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import templates from './DocumentLibrary.soy.js';
@@ -65,7 +66,7 @@ class DocumentLibrary extends Component {
 				'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 		};
 
-		const parameters = {
+		const documentLibrarySelectorParameters = {
 			criteria:
 				'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
 			doAsGroupId: themeDisplay.getScopeGroupId(),
@@ -80,28 +81,28 @@ class DocumentLibrary extends Component {
 			p_p_state: 'pop_up'
 		};
 
-		const portletURL = Liferay.Util.PortletURL.createURL(
+		const documentLibrarySelectorURL = createPortletURL(
 			themeDisplay.getLayoutRelativeControlPanelURL(),
-			parameters
+			documentLibrarySelectorParameters
 		);
 
-		return portletURL;
+		return documentLibrarySelectorURL.toString();
 	}
 
 	getUploadURL() {
-		const parameters = {
+		const uploadParameters = {
 			cmd: 'add_temp',
 			'javax.portlet.action': '/document_library/upload_file_entry',
 			p_auth: Liferay.authToken,
 			p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
 		};
 
-		const portletURL = Liferay.Util.PortletURL.createActionURL(
+		const uploadURL = createActionURL(
 			themeDisplay.getLayoutRelativeURL(),
-			parameters
+			uploadParameters
 		);
 
-		return portletURL;
+		return uploadURL.toString();
 	}
 
 	_handleClearButtonClicked() {

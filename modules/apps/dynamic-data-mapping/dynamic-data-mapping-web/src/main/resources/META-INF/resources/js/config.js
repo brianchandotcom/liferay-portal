@@ -41,7 +41,6 @@
 							'liferay-layouts-tree-selectable',
 							'liferay-map-base',
 							'liferay-notice',
-							'liferay-portlet-url',
 							'liferay-translation-manager',
 							'liferay-util-window'
 						]

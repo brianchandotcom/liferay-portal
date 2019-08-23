@@ -343,7 +343,7 @@ AUI.add(
 						URL: instance._getUploadURL()
 					};
 
-					var parameters = {
+					var documentLibrarySelectorParameters = {
 						criteria:
 							'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
 						itemSelectedEventName:
@@ -356,18 +356,16 @@ AUI.add(
 						p_p_state: 'pop_up'
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createURL(
+					var documentLibrarySelectorURL = Liferay.Util.PortletURL.createPortletURL(
 						themeDisplay.getLayoutRelativeControlPanelURL(),
-						parameters
+						documentLibrarySelectorParameters
 					);
 
-					return portletURL;
+					return documentLibrarySelectorURL.toString();
 				},
 
 				_getUploadURL: function() {
-					var instance = this;
-
-					var parameters = {
+					var uploadParameters = {
 						cmd: 'add_temp',
 						'javax.portlet.action':
 							'/document_library/upload_file_entry',
@@ -375,12 +373,12 @@ AUI.add(
 						p_p_id: Liferay.PortletKeys.DOCUMENT_LIBRARY
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createActionURL(
+					var uploadURL = Liferay.Util.PortletURL.createActionURL(
 						themeDisplay.getLayoutRelativeControlPanelURL(),
-						parameters
+						uploadParameters
 					);
 
-					return portletURL;
+					return uploadURL.toString();
 				},
 
 				_isDocumentLibraryDialogOpen: function() {
@@ -585,9 +583,7 @@ AUI.add(
 				},
 
 				_getWebContentSelectorURL: function() {
-					var instance = this;
-
-					var parameters = {
+					var webContentSelectorParameters = {
 						eventName: 'selectContent',
 						groupId: themeDisplay.getScopeGroupId(),
 						p_auth: Liferay.authToken,
@@ -601,12 +597,12 @@ AUI.add(
 						p_p_state: 'pop_up'
 					};
 
-					var portletURL = Liferay.Util.PortletURL.createRenderURL(
+					var webContentSelectorURL = Liferay.Util.PortletURL.createRenderURL(
 						themeDisplay.getURLControlPanel(),
-						parameters
+						webContentSelectorParameters
 					);
 
-					return portletURL;
+					return webContentSelectorURL.toString();
 				},
 
 				_handleCancelEvent: function(event) {

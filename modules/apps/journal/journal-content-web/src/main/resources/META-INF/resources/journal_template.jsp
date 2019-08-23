@@ -136,7 +136,7 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 						templatePreview.setContent(response);
 					})
 					.catch(function() {
-						templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');						
+						templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
 					});
 
 					new Liferay.Alert(

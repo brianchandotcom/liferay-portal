@@ -56,6 +56,9 @@ function SegmentsExperimentsSidebar({
 			<SegmentsExperiments
 				onCreateSegmentsExperiment={_handleCreateSegmentsExperiment}
 				onEditSegmentsExperiment={_handleEditSegmentsExperiment}
+				onEditSegmentsExperimentStatus={
+					_handleEditSegmentExperimentStatus
+				}
 				onSelectSegmentsExperienceChange={
 					_handleSelectSegmentsExperience
 				}
@@ -169,6 +172,41 @@ function SegmentsExperimentsSidebar({
 					segmentsEntryName: segmentsExperiment.segmentsEntryName,
 					segmentsExperienceId:
 						segmentsExperiment.segmentsExperienceId
+				});
+			});
+	}
+
+	function _handleEditSegmentExperimentStatus(segmentsExperiment, status) {
+		const body = {
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status
+		};
+
+		segmentsExperimentsUtil
+			.editExperimentStatus(body)
+			.then(function _successCallback(objectResponse) {
+				const {segmentsExperiment} = objectResponse;
+
+				setSegmentsExperiment({
+					description: segmentsExperiment.description,
+					editable: segmentsExperiment.editable,
+					goal: segmentsExperiment.goal,
+					name: segmentsExperiment.name,
+					segmentsEntryName: segmentsExperiment.segmentsEntryName,
+					segmentsExperienceId:
+						segmentsExperiment.segmentsExperienceId,
+					segmentsExperimentId:
+						segmentsExperiment.segmentsExperimentId,
+					status: segmentsExperiment.status
+				});
+			})
+			.catch(function _errorCallback() {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					title: Liferay.Language.get('error'),
+					type: 'danger'
 				});
 			});
 	}

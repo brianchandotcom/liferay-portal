@@ -26,6 +26,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
 		deleteSegmentsVariantURL,
+		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
 		editSegmentsVariantLayoutURL,
 		editSegmentsVariantURL
@@ -43,6 +44,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 						createSegmentsExperimentURL,
 						createSegmentsVariantURL,
 						deleteSegmentsVariantURL,
+						editSegmentsExperimentStatusURL,
 						editSegmentsExperimentURL,
 						editSegmentsVariantURL
 					},

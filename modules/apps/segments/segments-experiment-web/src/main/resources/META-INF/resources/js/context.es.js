@@ -26,6 +26,7 @@ const SegmentsExperimentsContext = React.createContext({
 		createVariant: () => {},
 		deleteVariant: () => {},
 		editExperiment: () => {},
+		editExperimentStatus: () => {},
 		editVariant: () => {}
 	}
 });
@@ -41,6 +42,7 @@ SegmentsExperimentsContext.Provider.propTypes = {
 		createVariant: PropTypes.func.isRequired,
 		deleteVariant: PropTypes.func.isRequired,
 		editExperiment: PropTypes.func.isRequired,
+		editExperimentStatus: PropTypes.func.isRequired,
 		editVariant: PropTypes.func.isRequired
 	})
 };

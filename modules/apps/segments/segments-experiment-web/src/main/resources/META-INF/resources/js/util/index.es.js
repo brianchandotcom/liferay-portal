@@ -23,6 +23,7 @@ function SegmentsExperimentsUtil({
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
 		deleteSegmentsVariantURL,
+		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
 		editSegmentsVariantURL
 	} = endpoints;
@@ -92,11 +93,25 @@ function SegmentsExperimentsUtil({
 			});
 	}
 
+	function editExperimentStatus(body) {
+		return fetch(editSegmentsExperimentStatusURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
+			});
+	}
+
 	return {
 		createExperiment,
 		createVariant,
 		deleteVariant,
 		editExperiment,
+		editExperimentStatus,
 		editVariant
 	};
 }
@@ -107,6 +122,7 @@ SegmentsExperimentsUtil.propTypes = {
 		createSegmentsExperimentURL: PropTypes.string.isRequired,
 		createSegmentsVariantURL: PropTypes.string.isRequired,
 		deleteSegmentsVariantURL: PropTypes.string.isRequired,
+		editSegmentsExperimentStatusURL: PropTypes.string.isRequired,
 		editSegmentsExperimentURL: PropTypes.string.isRequired,
 		editSegmentsVariantURL: PropTypes.string.isRequired
 	}),

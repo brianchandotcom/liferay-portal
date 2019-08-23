@@ -16,6 +16,7 @@ package com.liferay.adaptive.media.document.library.thumbnails.internal.configur
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -32,37 +33,45 @@ public interface AMSystemImagesConfiguration {
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for preview resolution.
+	 * @review
 	 */
 	@Meta.AD(
-		deflt = "", description = "preview-am-configuration-description",
+		deflt = StringPool.BLANK,
+		description = "preview-am-configuration-description",
 		name = "preview-am-configuration", required = false
 	)
 	public String previewlAMConfiguration();
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.
+	 * @review
 	 */
 	@Meta.AD(
-		deflt = "", description = "thumbnail-am-configuration-description",
+		deflt = StringPool.BLANK,
+		description = "thumbnail-am-configuration-description",
 		name = "thumbnail-am-configuration", required = false
 	)
 	public String thumbnailAMConfiguration();
 
 	/**
-	 * Sets the Adaptive Media Configuration ID for first custom thumbnail resolution.
+	 * Sets the Adaptive Media Configuration ID for first custom thumbnail
+	 * resolution.
+	 * @review
 	 */
 	@Meta.AD(
-		deflt = "",
+		deflt = StringPool.BLANK,
 		description = "thumbnail-custom-1-am-configuration-description",
 		name = "thumbnail-custom-1-am-configuration", required = false
 	)
 	public String thumbnailCustom1AMConfiguration();
 
 	/**
-	 * Sets the Adaptive Media Configuration ID for second custom thumbnail resolution.
+	 * Sets the Adaptive Media Configuration ID for second custom thumbnail
+	 * resolution.
+	 * @review
 	 */
 	@Meta.AD(
-		deflt = "",
+		deflt = StringPool.BLANK,
 		description = "thumbnail-custom-2-am-configuration-description",
 		name = "thumbnail-custom-2-am-configuration", required = false
 	)

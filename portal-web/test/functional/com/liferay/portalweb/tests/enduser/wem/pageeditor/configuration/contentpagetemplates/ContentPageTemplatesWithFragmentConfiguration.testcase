@@ -84,4 +84,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-99543. User can change text fragment configuration in a content page template."
+	@priority = "5"
+	test AddTextConfigurationFragmentToContentPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
+
+		PageEditorConfiguration.changeConfigText(
+			editableText = "Updated fragment text",
+			fragmentName = "Text Fragment Example",
+			textConfigName = "buttonText");
+
+		PageEditor.clickPublish();
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		task ("Assert text is changed") {
+			AssertVisible(
+				key_content = "Updated fragment text",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 }

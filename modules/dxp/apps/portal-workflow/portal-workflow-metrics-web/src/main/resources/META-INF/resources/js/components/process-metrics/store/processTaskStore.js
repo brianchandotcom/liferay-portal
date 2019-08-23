@@ -13,7 +13,7 @@ class ProcessTaskStore {
 			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
 			.then(({data}) =>
 				this.setState({
-					processTasks: data.items
+					processTasks: data.items || []
 				})
 			);
 	}

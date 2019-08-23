@@ -253,6 +253,28 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, int status)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId);
+
+		_validateStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperiment.getSegmentsExperienceId(),
+			segmentsExperiment.getClassNameId(),
+			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+			status);
+
+		segmentsExperiment.setModifiedDate(new Date());
+		segmentsExperiment.setStatus(status);
+
+		return segmentsExperimentPersistence.update(segmentsExperiment);
+	}
+
+	@Override
+	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,
 			String goal, String goalTarget)
 		throws PortalException {

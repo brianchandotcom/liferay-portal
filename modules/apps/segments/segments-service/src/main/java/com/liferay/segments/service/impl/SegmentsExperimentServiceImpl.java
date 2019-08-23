@@ -128,6 +128,21 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, int status)
+		throws PortalException {
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(),
+			segmentsExperimentLocalService.getSegmentsExperiment(
+				segmentsExperimentId),
+			ActionKeys.UPDATE);
+
+		return segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperimentId, status);
+	}
+
+	@Override
+	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,
 			String goal, String goalTarget)
 		throws PortalException {

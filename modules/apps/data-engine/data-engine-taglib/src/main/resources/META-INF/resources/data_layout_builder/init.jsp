@@ -23,6 +23,7 @@ java.lang.String componentId = GetterUtil.getString((java.lang.String)request.ge
 java.lang.String dataDefinitionInputId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:dataDefinitionInputId"));
 java.lang.Long dataLayoutId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-builder:dataLayoutId")));
 java.lang.String dataLayoutInputId = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:dataLayoutInputId"));
+boolean localizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-builder:localizable")));
 java.lang.String namespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-data-engine:data-layout-builder:namespace"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-data-engine:data-layout-builder:dynamicAttributes");
 %>

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.adaptive.media.web.internal.configuration.definition;
+package com.liferay.adaptive.media.document.library.thumbnails.internal.settings.definition;
 
-import com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration;
+import com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

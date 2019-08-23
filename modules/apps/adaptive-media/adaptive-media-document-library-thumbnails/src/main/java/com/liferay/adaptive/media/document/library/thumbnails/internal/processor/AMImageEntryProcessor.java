@@ -290,16 +290,16 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	}
 
 	private Stream<AdaptiveMedia<AMImageProcessor>> _getAdaptiveMediaStream(
-			FileVersion fileVersion, String thumbnailAMConfiguration, int width,
-			int height)
+			FileVersion fileVersion, String configurationUuid, int defaultWidth,
+			int defaultHeight)
 		throws PortalException {
 
-		if (Validator.isNotNull(thumbnailAMConfiguration)) {
+		if (Validator.isNotNull(configurationUuid)) {
 			return _amImageFinder.getAdaptiveMediaStream(
 				amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 					fileVersion
 				).forConfiguration(
-					thumbnailAMConfiguration
+					configurationUuid
 				).done());
 		}
 
@@ -307,9 +307,9 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 			amImageQueryBuilder -> amImageQueryBuilder.forFileVersion(
 				fileVersion
 			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, width
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_WIDTH, defaultWidth
 			).with(
-				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, height
+				AMImageAttribute.AM_IMAGE_ATTRIBUTE_HEIGHT, defaultHeight
 			).done());
 	}
 
@@ -333,7 +333,8 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_THUMBNAIL_CUSTOM_1_MAX_HEIGHT));
 		}
-		else if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
+
+		if (index == _THUMBNAIL_INDEX_CUSTOM_2) {
 			return _getAdaptiveMediaStream(
 				fileVersion,
 				_amSystemImagesConfiguration.thumbnailCustom2AMConfiguration(),

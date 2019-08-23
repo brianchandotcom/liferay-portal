@@ -44,9 +44,7 @@ class UserNameFields extends PortletBase {
 		this._formDataCache = {};
 		this._maxLengthsCache = {};
 
-		this._loadingAnimationMarkupText = `<div class="loading-animation" id="${
-			this.portletNamespace
-		}loadingUserNameFields"></div>`;
+		this._loadingAnimationMarkupText = `<div class="loading-animation" id="${this.portletNamespace}loadingUserNameFields"></div>`;
 	}
 
 	/**

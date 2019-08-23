@@ -3493,12 +3493,12 @@ go</echo>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
 						<![CDATA[
-							if [ "$1" = "aspectj" ]
-							then
-								CATALINA_OPTS="${CATALINA_OPTS} ${aspectj.agent} -Dorg.aspectj.weaver.loadtime.configuration=${aspectj.configuration}"
+if [ "$1" = "aspectj" ]
+then
+	CATALINA_OPTS="${CATALINA_OPTS} ${aspectj.agent} -Dorg.aspectj.weaver.loadtime.configuration=${aspectj.configuration}"
 
-								shift
-							fi
+	shift
+fi
 						]]>
 					</echo>
 				</then>
@@ -3532,14 +3532,14 @@ go</echo>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
 						<![CDATA[
-							if [ "$1" = "jacoco" ]
-							then
-								JACOCO_OPTS="${jacoco.agent}"
+if [ "$1" = "jacoco" ]
+then
+	JACOCO_OPTS="${jacoco.agent}"
 
-								CATALINA_OPTS="${CATALINA_OPTS} ${JACOCO_OPTS}"
+	CATALINA_OPTS="${CATALINA_OPTS} ${JACOCO_OPTS}"
 
-								shift
-							fi
+	shift
+fi
 						]]>
 					</echo>
 				</then>
@@ -3559,7 +3559,7 @@ go</echo>
 				<then>
 					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
 						<![CDATA[
-							JPDA_ADDRESS="8000"
+JPDA_ADDRESS="8000"
 						]]>
 					</echo>
 				</then>

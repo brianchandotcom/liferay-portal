@@ -34,7 +34,10 @@ import {
 	getFragmentColumn,
 	getFragmentRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	duplicateFragmentEntryLink,
+	updatePageEditorLayoutData
+} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -288,6 +291,8 @@ function addFragmentEntryLinkReducer(state, action) {
 /**
  * @param {object} state
  * @param {object} action
+ * @param {string} action.fragmentEntryLinkId
+ * @param {string} action.fragmentEntryLinkRowType
  * @return {object}
  * @review
  */
@@ -295,7 +300,63 @@ function duplicateFragmentEntryLinkReducer(state, action) {
 	let nextState = state;
 
 	return new Promise(resolve => {
-		resolve(nextState);
+		duplicateFragmentEntryLink(action.fragmentEntryLinkId)
+			.then(response => response.json())
+			.then(response => {
+				let fragmentEntryLink = setIn(response, ['content'], '');
+
+				fragmentEntryLink = setIn(
+					fragmentEntryLink,
+					['configuration'],
+					fragmentEntryLink.configuration
+						? JSON.parse(fragmentEntryLink.configuration)
+						: {}
+				);
+
+				fragmentEntryLink = setIn(
+					fragmentEntryLink,
+					['editableValues'],
+					JSON.parse(fragmentEntryLink.editableValues)
+				);
+
+				let nextData = nextState.layoutData;
+
+				nextData = _duplicateFragment(
+					action.fragmentEntryLinkId,
+					fragmentEntryLink,
+					action.fragmentEntryLinkRowType,
+					nextData
+				);
+
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				)
+					.then(response => {
+						if (response.error) {
+							throw response.error;
+						}
+
+						nextState = setIn(nextState, ['layoutData'], nextData);
+
+						nextState = setIn(
+							nextState,
+							[
+								'fragmentEntryLinks',
+								fragmentEntryLink.fragmentEntryLinkId
+							],
+							fragmentEntryLink
+						);
+
+						resolve(nextState);
+					})
+					.catch(() => {
+						resolve(nextState);
+					});
+			})
+			.catch(() => {
+				resolve(nextState);
+			});
 	});
 }
 
@@ -693,6 +754,54 @@ function _addSingleFragmentRow(
 		[fragmentEntryLinkId],
 		fragmentEntryLinkRowType
 	);
+}
+
+/**
+ * Duplicate a fragment inside layoutData
+ * @param {string} originalFragmentEntryLinkId
+ * @param {object} fragmentEntryLink
+ * @param {string} fragmentEntryLinkRowType
+ * @param {object} layoutData
+ * @private
+ * @return {object}
+ * @review
+ */
+function _duplicateFragment(
+	originalFragmentEntryLinkId,
+	fragmentEntryLink,
+	fragmentEntryLinkRowType,
+	layoutData
+) {
+	let nextData = layoutData;
+
+	if (fragmentEntryLinkRowType === FRAGMENTS_EDITOR_ROW_TYPES.componentRow) {
+		const fragmentColumn = getFragmentColumn(
+			layoutData.structure,
+			originalFragmentEntryLinkId
+		);
+
+		nextData = _addFragmentToColumn(
+			layoutData,
+			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentColumn.columnId,
+			fragmentColumn.fragmentEntryLinkIds.length
+		);
+	} else {
+		const position =
+			getFragmentRowIndex(
+				layoutData.structure,
+				originalFragmentEntryLinkId
+			) + 1;
+
+		nextData = _addSingleFragmentRow(
+			layoutData,
+			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkRowType,
+			position
+		);
+	}
+
+	return nextData;
 }
 
 /**

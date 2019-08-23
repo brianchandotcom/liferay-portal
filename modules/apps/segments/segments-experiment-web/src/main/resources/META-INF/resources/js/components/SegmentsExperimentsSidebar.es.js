@@ -143,6 +143,17 @@ function SegmentsExperimentsSidebar({
 					segmentsExperimentRel
 				} = objectResponse;
 
+				const {
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
+				} = segmentsExperiment;
+
 				setVariants([{...segmentsExperimentRel, control: true}]);
 
 				setCreationModal({
@@ -150,16 +161,14 @@ function SegmentsExperimentsSidebar({
 				});
 
 				setSegmentsExperiment({
-					description: segmentsExperiment.description,
-					editable: segmentsExperiment.editable,
-					goal: segmentsExperiment.goal,
-					name: segmentsExperiment.name,
-					segmentsEntryName: segmentsExperiment.segmentsEntryName,
-					segmentsExperienceId:
-						segmentsExperiment.segmentsExperienceId,
-					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId,
-					status: segmentsExperiment.status
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
 				});
 			})
 			.catch(function _errorCallback() {
@@ -185,19 +194,26 @@ function SegmentsExperimentsSidebar({
 		segmentsExperimentsUtil
 			.editExperimentStatus(body)
 			.then(function _successCallback(objectResponse) {
-				const {segmentsExperiment} = objectResponse;
+				const {
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
+				} = objectResponse.segmentsExperiment;
 
 				setSegmentsExperiment({
-					description: segmentsExperiment.description,
-					editable: segmentsExperiment.editable,
-					goal: segmentsExperiment.goal,
-					name: segmentsExperiment.name,
-					segmentsEntryName: segmentsExperiment.segmentsEntryName,
-					segmentsExperienceId:
-						segmentsExperiment.segmentsExperienceId,
-					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId,
-					status: segmentsExperiment.status
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
 				});
 			})
 			.catch(function _errorCallback() {
@@ -237,23 +253,30 @@ function SegmentsExperimentsSidebar({
 		segmentsExperimentsUtil
 			.editExperiment(body)
 			.then(function _successCallback(objectResponse) {
-				const {segmentsExperiment} = objectResponse;
+				const {
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
+				} = objectResponse.segmentsExperiment;
 
 				setEditionModal({
 					active: false
 				});
 
 				setSegmentsExperiment({
-					description: segmentsExperiment.description,
-					editable: segmentsExperiment.editable,
-					goal: segmentsExperiment.goal,
-					name: segmentsExperiment.name,
-					segmentsEntryName: segmentsExperiment.segmentsEntryName,
-					segmentsExperienceId:
-						segmentsExperiment.segmentsExperienceId,
-					segmentsExperimentId:
-						segmentsExperiment.segmentsExperimentId,
-					status: segmentsExperiment.status
+					description,
+					editable,
+					goal,
+					name,
+					segmentsEntryName,
+					segmentsExperienceId,
+					segmentsExperimentId,
+					status
 				});
 			})
 			.catch(function _errorCallback() {

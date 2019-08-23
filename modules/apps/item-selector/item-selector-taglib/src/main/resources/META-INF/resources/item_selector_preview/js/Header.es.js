@@ -12,17 +12,53 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = ({ headerTitle }) => (
-  <div className="nav-bar">
-    <h1>{headerTitle}</h1>
-  </div>
+const Header = ({handleAdd, handleClose, headerTitle}) => (
+	<div className="nav-bar">
+		<ClayButton
+			borderless
+			displayType="secondary"
+			monospaced
+			onClick={handleClose}
+		>
+			<ClayIcon symbol="angle-left"  />
+		</ClayButton>
+
+		<strong>{headerTitle}</strong>
+
+		<ClayButton
+			borderless
+			displayType="secondary"
+			monospaced
+		>
+			<ClayIcon symbol="pencil"  />
+		</ClayButton>
+
+		<ClayButton
+			borderless
+			displayType="secondary"
+			monospaced
+		>
+			<ClayIcon symbol="info-panel-open"  />
+		</ClayButton>
+
+		<ClayButton
+			displayType="primary"
+			onClick={handleAdd}
+		>
+			{Liferay.Language.get('add')}
+		</ClayButton>
+	</div>
 );
 
 Header.propTypes = {
-  headerTitle: PropTypes.string.isRequired
+	handleAdd: PropTypes.func.isRequired,
+	handleClose: PropTypes.func.isRequired,
+	headerTitle: PropTypes.string.isRequired
 };
 
 export default Header;

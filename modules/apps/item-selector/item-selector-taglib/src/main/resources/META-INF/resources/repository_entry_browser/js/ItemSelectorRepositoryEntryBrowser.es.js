@@ -69,8 +69,9 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		ReactDOM.render(
 			<ItemSelectorPreview
-				links=".item-preview"
-				selector=".item-preview a"
+				headerTitle = {this.closeCaption}
+				links = ".item-preview"
+				selector = ".item-preview a"
 			/>,
 			this.rootNode.appendChild(document.createElement('div'))
 		);

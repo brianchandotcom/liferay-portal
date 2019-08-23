@@ -9,17 +9,25 @@
 
 	&.main {
 		transform: translateX(0%);
-		transition: transform 0.3s, opacity 0.15s ease-in-out;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 		width: $sidebarMainWidth;
 
 		&.closed {
 			opacity: 0;
-			transform: translateX(100%);
+			transform: translateX($sidebarMainWidth - $sidebarMiniWidth);
 		}
 	}
 
 	&.mini {
 		padding: 16px;
+		transform: translateX(0%);
+		transition: transform 0.3s ease-in-out;
 		width: $sidebarMiniWidth;
+
+		&.closed {
+			transform: translateX($sidebarMiniWidth);
+		}
+	}
+}
 	}
 }

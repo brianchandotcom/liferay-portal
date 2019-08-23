@@ -261,16 +261,7 @@ public class ServletResponseUtil {
 			}
 		}
 		catch (IOException ioe) {
-			if ((ioe instanceof SocketException) ||
-				isClientAbortException(ioe)) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
-				}
-			}
-			else {
-				throw ioe;
-			}
+			_checkSocketException(ioe);
 		}
 	}
 
@@ -302,16 +293,7 @@ public class ServletResponseUtil {
 			}
 		}
 		catch (IOException ioe) {
-			if ((ioe instanceof SocketException) ||
-				isClientAbortException(ioe)) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(ioe, ioe);
-				}
-			}
-			else {
-				throw ioe;
-			}
+			_checkSocketException(ioe);
 		}
 	}
 
@@ -554,6 +536,19 @@ public class ServletResponseUtil {
 
 			httpServletResponse.setHeader(
 				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
+		}
+	}
+
+	private static void _checkSocketException(IOException ioe)
+		throws IOException {
+
+		if ((ioe instanceof SocketException) || isClientAbortException(ioe)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
+		}
+		else {
+			throw ioe;
 		}
 	}
 

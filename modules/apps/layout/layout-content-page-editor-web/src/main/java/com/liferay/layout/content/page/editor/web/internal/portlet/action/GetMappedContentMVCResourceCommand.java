@@ -56,12 +56,15 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
+		long segmentsExperienceId = ParamUtil.getLong(
+			resourceRequest, "segmentsExperienceId");
+
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			MappedContentUtil.getMappedContentsJSONArray(
 				backURL, themeDisplay.getScopeGroupId(),
 				_portal.getHttpServletRequest(resourceRequest), classNameId,
-				classPK));
+				classPK, segmentsExperienceId));
 	}
 
 	@Reference

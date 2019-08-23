@@ -307,7 +307,7 @@ public class ContentPageEditorDisplayContext {
 			"mappedContents",
 			MappedContentUtil.getMappedContentsJSONArray(
 				themeDisplay.getURLCurrent(), _groupId, request, classNameId,
-				classPK)
+				classPK, getSegmentsExperienceId())
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);

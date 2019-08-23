@@ -6,6 +6,7 @@
 {template .render}
 	{@param spritemap: string}
 	{@param urlProductionView: string}
+	{@param urlCheckoutProduction: string}
 	{@param urlSelectChangeList: string}
 	{@param? changeEntries: list<[
 		title: string,
@@ -31,7 +32,6 @@
 	{@param? headerTitleActiveChangeList: string}
 	{@param? headerTitleProductionInformation: string}
 	{@param? initialFetch: bool}
-	{@param? productionCTCollectionId: number}
 	{@param? productionFound: bool}
 	{@param? publishedBy: [
 		dateTime: string,
@@ -40,7 +40,6 @@
 		userName: string
 	]}
 	{@param? _handleClickPublish: any}
-	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
 
 	{let $headerButtonLabel kind="text"}
@@ -95,15 +94,14 @@
 						{param changeListsProductionDropdownMenuTitle kind="text"}
 							{msg desc=""}work-on-production{/msg}
 						{/param}
+						{param urlCheckoutProduction: $urlCheckoutProduction /}
 						{param urlSelectChangeList: $urlSelectChangeList /}
 						{param headerSubTitle kind="text"}
 							{msg desc=""}active-change-list{/msg}
 						{/param}
 						{param headerTitle: $headerTitleActiveChangeList /}
-						{param productionCTCollectionId: $productionCTCollectionId /}
 						{param spritemap: $spritemap /}
 						{param _handleClickPublish: $_handleClickPublish /}
-						{param _handleClickRecentCollections: $_handleClickRecentCollections /}
 						{param _handleClickTrash: $_handleClickTrash /}
 					{/call}
 				</div>
@@ -194,7 +192,6 @@
 	]}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
-	{@param? productionCTCollectionId: number}
 	{@param? publishedBy: [
 		dateTime: string,
 		userInitials: string,
@@ -202,9 +199,9 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
+	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
 	{@param? _handleClickPublish: any}
-	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
 
 	<div class="overview-card-sheet {$cardStateColor}">
@@ -215,14 +212,13 @@
 			{param changeListsDropdownMenu: $changeListsDropdownMenu /}
 			{param changeListsDropdownMenuTitle: $changeListsDropdownMenuTitle /}
 			{param changeListsProductionDropdownMenuTitle: $changeListsProductionDropdownMenuTitle /}
+			{param urlCheckoutProduction: $urlCheckoutProduction /}
 			{param urlSelectChangeList: $urlSelectChangeList /}
 			{param headerLink: $headerLink /}
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
-			{param productionCTCollectionId: $productionCTCollectionId /}
 			{param spritemap: $spritemap /}
 			{param _handleClickPublish: $_handleClickPublish /}
-			{param _handleClickRecentCollections: $_handleClickRecentCollections /}
 			{param _handleClickTrash: $_handleClickTrash /}
 		{/call}
 
@@ -265,10 +261,9 @@
 	]}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
-	{@param? productionCTCollectionId: number}
+	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
 	{@param? _handleClickPublish: any}
-	{@param? _handleClickRecentCollections: any}
 	{@param? _handleClickTrash: any}
 
 	{let $twoColumns: $headerButton /}
@@ -306,7 +301,7 @@
 								<a class="dropdown-item" href="{$changeListsDropdownMenuItem.checkoutURL}">{$changeListsDropdownMenuItem.label}</a>
 							{/foreach}
 							<a class="dropdown-item dropdown-item-last" data-qa-id="selectChangeListMenuItem" href="{$urlSelectChangeList}">{$changeListsDropdownMenuTitle}</a>
-							<a class="dropdown-item" data-collection-id="{$productionCTCollectionId}" data-production="true" data-qa-id="selectProductionChangeListMenuItem" href="#" onclick="{$_handleClickRecentCollections}">{$changeListsProductionDropdownMenuTitle}</a>
+							<a class="dropdown-item" data-qa-id="selectProductionChangeListMenuItem" href="{$urlCheckoutProduction}">{$changeListsProductionDropdownMenuTitle}</a>
 						</div>
 					</div>
 				{/if}

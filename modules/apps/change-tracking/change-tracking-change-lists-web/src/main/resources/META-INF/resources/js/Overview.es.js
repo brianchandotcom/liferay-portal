@@ -32,68 +32,6 @@ class Overview extends PortletBase {
 		this._fetchProductionCollection();
 	}
 
-	_checkoutCollection(ctCollectionId, production) {
-		const init = {
-			headers: {
-				'content-type': 'application/json'
-			},
-			method: 'POST'
-		};
-
-		const url =
-			this.urlCollectionsBase +
-			'/' +
-			ctCollectionId +
-			'/checkout?companyId=' +
-			Liferay.ThemeDisplay.getCompanyId() +
-			'&userId=' +
-			Liferay.ThemeDisplay.getUserId();
-
-		fetch(url, init)
-			.then(response => {
-				if (response.status === 202) {
-					Liferay.fire('refreshChangeTrackingIndicator');
-
-					if (production) {
-						Liferay.Util.navigate(this.urlSelectProduction);
-					} else {
-						this._render();
-					}
-				} else if (response.status === 400) {
-					response.json().then(data => {
-						openToast({
-							message: Liferay.Util.sub(
-								Liferay.Language.get(
-									'an-error-occured-when-trying-to-check-x-out-x'
-								),
-								this.changeListName,
-								data.message
-							),
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						});
-					});
-				}
-			})
-			.catch(error => {
-				const message =
-					typeof error === 'string'
-						? error
-						: Liferay.Util.sub(
-								Liferay.Language.get(
-									'an-error-occured-when-trying-to-check-x-out'
-								),
-								this.changeListName
-						  );
-
-				openToast({
-					message,
-					title: Liferay.Language.get('error'),
-					type: 'danger'
-				});
-			});
-	}
-
 	_fetchProductionCollection() {
 		const url =
 			this.urlCollectionsBase +
@@ -152,30 +90,6 @@ class Overview extends PortletBase {
 				Liferay.ThemeDisplay.getUserId(),
 			urlPublishChangeList: this.urlActiveCollectionPublish
 		});
-	}
-
-	_handleClickRecentCollections(event) {
-		event.preventDefault();
-
-		let ok = true;
-
-		if (this.checkoutConfirmationEnabled) {
-			const label = this._sub(
-				Liferay.Language.get('do-you-want-to-switch-to-x-change-list'),
-				[event.target.text]
-			);
-			ok = confirm(label);
-		}
-
-		if (ok) {
-			const collectionId = event.target.getAttribute(
-				'data-collection-id'
-			);
-
-			const production = event.target.getAttribute('data-production');
-
-			this._checkoutCollection(collectionId, production);
-		}
 	}
 
 	_handleClickTrash() {
@@ -562,6 +476,16 @@ Overview.STATE = {
 	urlChangeEntries: Config.string(),
 
 	urlChangeListsHistory: Config.string().required(),
+
+	/**
+	 * URL to check out production.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	urlCheckoutProduction: Config.string().required(),
 
 	/**
 	 * Base REST API URL to the collection resource.

@@ -107,6 +107,8 @@ public class ChangeListsDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
+			"urlCheckoutProduction", _getCheckoutProductionURL()
+		).put(
 			"urlCollectionsBase",
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking-legacy/collections"
@@ -393,38 +395,19 @@ public class ChangeListsDisplayContext {
 
 		long ctCollectionId = _getCTCollectionId();
 
-		PortletURL checkoutURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
-			PortletRequest.ACTION_PHASE);
-
-		checkoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
-
 		for (CTCollection ctCollection : ctCollections) {
 			if (ctCollection.getCtCollectionId() != ctCollectionId) {
-				checkoutURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId()));
-
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:");
-				sb.append(_renderResponse.getNamespace());
-				sb.append("checkoutCollection('");
-				sb.append(checkoutURL.toString());
-				sb.append("','");
-				sb.append(
-					LanguageUtil.format(
-						_httpServletRequest,
-						"do-you-want-to-switch-to-x-change-list",
-						ctCollection.getName(), false));
-				sb.append("');");
-
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonArray.put(
 					jsonObject.put(
-						"checkoutURL", sb.toString()
+						"checkoutURL",
+						_getCheckoutURL(
+							ctCollection.getCtCollectionId(),
+							LanguageUtil.format(
+								_httpServletRequest,
+								"do-you-want-to-switch-to-x-change-list",
+								ctCollection.getName(), false))
 					).put(
 						"label", ctCollection.getName()
 					));
@@ -436,6 +419,40 @@ public class ChangeListsDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private String _getCheckoutProductionURL() {
+		return _getCheckoutURL(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			LanguageUtil.format(
+				_httpServletRequest, "do-you-want-to-switch-to-x-change-list",
+				"work-on-production", true));
+	}
+
+	private String _getCheckoutURL(
+		long ctCollectionId, String confirmationMessage) {
+
+		PortletURL checkoutURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.ACTION_PHASE);
+
+		checkoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
+
+		checkoutURL.setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId));
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("javascript:");
+		sb.append(_renderResponse.getNamespace());
+		sb.append("checkoutCollection('");
+		sb.append(checkoutURL.toString());
+		sb.append("','");
+		sb.append(confirmationMessage);
+		sb.append("');");
+
+		return sb.toString();
 	}
 
 	private long _getCTCollectionId() {

@@ -26,6 +26,9 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.
 class DataLayoutBuilder extends Component {
 	attached() {
 		const {layoutProvider} = this.refs;
+		const {localizable} = this.props;
+
+		if (localizable) {
 		const dependencies = [this._getTranslationManager()];
 
 		Promise.all(dependencies).then(results => {
@@ -47,6 +50,7 @@ class DataLayoutBuilder extends Component {
 				});
 			}
 		});
+	}
 	}
 
 	render() {
@@ -309,6 +313,7 @@ DataLayoutBuilder.PROPS = {
 		themeDisplay.getDefaultLanguageId()
 	),
 	fieldTypes: Config.array().value([]),
+	localizable: Config.bool().value(false),
 	portletNamespace: Config.string().required(),
 	spritemap: Config.string().required()
 };

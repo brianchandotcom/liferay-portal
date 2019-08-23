@@ -28,6 +28,7 @@
 				dataLayoutInputId: '<%= namespace + dataLayoutInputId %>',
 				editingLanguageId: '<%= themeDisplay.getLanguageId() %>',
 				fieldTypes: <%= fieldTypesJSONArray %>,
+				localizable: <%= localizable %>,
 				portletNamespace: '<%= namespace %>',
 				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 			},

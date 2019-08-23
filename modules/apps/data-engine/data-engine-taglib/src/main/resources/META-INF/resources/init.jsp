@@ -35,6 +35,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Set" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%!
 private static ArrayList<Object> _toArrayList(Object obj) {

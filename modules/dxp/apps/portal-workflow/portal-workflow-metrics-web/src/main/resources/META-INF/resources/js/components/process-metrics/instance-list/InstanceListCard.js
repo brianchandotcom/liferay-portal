@@ -57,27 +57,31 @@ export function InstanceListCard({page, pageSize, processId, query}) {
 
 InstanceListCard.Body = ({page, pageSize, processId}) => {
 	const {error} = useContext(ErrorContext);
-	const {items = [], totalCount} = useContext(InstanceListContext);
+	const {items = [], searching, totalCount} = useContext(InstanceListContext);
 	const {loading} = useContext(LoadingContext);
 
-	const fetching = !loading && !totalCount;
-	const errorMessage = error
+	const emptyMessageText = searching
+		? Liferay.Language.get('no-results-were-found')
+		: Liferay.Language.get(
+				'once-there-are-active-processes-metrics-will-appear-here'
+		  );
+	const errorMessageText = error
 		? Liferay.Language.get(
 				'there-was-a-problem-retrieving-data-please-try-reloading-the-page'
 		  )
 		: null;
+	const fetching = !loading && !totalCount;
 
 	return (
 		<>
 			<div className="container-fluid-1280 mt-4">
 				<ListView
 					emptyActionButton={<ReloadButton />}
-					emptyMessageText={Liferay.Language.get(
-						'there-are-no-process-items-at-the-moment'
-					)}
-					errorMessageText={errorMessage}
+					emptyMessageText={emptyMessageText}
+					errorMessageText={errorMessageText}
 					fetching={fetching}
 					loading={loading}
+					searching={searching}
 				>
 					<InstanceListTable items={items} />
 

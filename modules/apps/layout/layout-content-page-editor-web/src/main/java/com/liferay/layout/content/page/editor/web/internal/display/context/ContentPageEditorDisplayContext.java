@@ -303,11 +303,15 @@ public class ContentPageEditorDisplayContext {
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 		).put(
 			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
-		).put(
+		);
+
+		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
+			_groupId, classNameId, classPK, getSegmentsExperienceId());
+
+		soyContext.put(
 			"mappedContents",
 			MappedContentUtil.getMappedContentsJSONArray(
-				themeDisplay.getURLCurrent(), _groupId, request, classNameId,
-				classPK, getSegmentsExperienceId())
+				assetEntries, themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);

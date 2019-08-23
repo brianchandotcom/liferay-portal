@@ -194,15 +194,15 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 	const secondDate = moment.utc(keys[1]);
 	const startDate = moment.utc(timeRange.dateStart);
 
+	const diffLeftDays = parseInt(
+		moment.duration(secondDate.diff(startDate)).asDays()
+	);
+
 	const diffLeftMonths = parseInt(
 		moment.duration(secondDate.diff(startDate)).asMonths()
 	);
 
 	const nextToLastDay = moment.utc(keys[lengthKeys - 2]);
-
-	const diffLeftDays = parseInt(
-		moment.duration(secondDate.diff(startDate)).asDays()
-	);
 
 	const diffRightDays = parseInt(
 		moment.duration(endDate.diff(nextToLastDay)).asDays()

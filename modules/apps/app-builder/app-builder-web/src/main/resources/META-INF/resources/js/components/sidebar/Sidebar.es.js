@@ -23,28 +23,19 @@ import Button from '../button/Button.es';
 const Sidebar = ({
 	children,
 	closeable = true,
-	onClosed = () => {},
-	onSearch = null
+	onSearch = null,
+	onToggle = () => {}
 }) => {
 	const [isClosed, setClosed] = useState(false);
 
-	const onToggle = () => {
+	const handleToggle = () => {
 		const closed = !isClosed;
 		setClosed(closed);
-		onClosed(closed);
+		onToggle(closed);
 	};
 
 	return (
 		<div>
-			{closeable && (
-				<div className={classNames('app-builder-sidebar', 'mini')}>
-					<Button
-						displayType="secondary"
-						onClick={onToggle}
-						symbol="angle-left"
-					/>
-				</div>
-			)}
 			<div
 				className={classNames('app-builder-sidebar', 'main', {
 					closed: isClosed
@@ -55,12 +46,25 @@ const Sidebar = ({
 						<SearchHeader
 							closeable={closeable}
 							onSearch={onSearch}
-							onToggle={onToggle}
+							onToggle={handleToggle}
 						/>
 					)}
 					{children}
 				</div>
 			</div>
+			{closeable && (
+				<div
+					className={classNames('app-builder-sidebar', 'mini', {
+						closed: !isClosed
+					})}
+				>
+					<Button
+						displayType="secondary"
+						onClick={handleToggle}
+						symbol="angle-left"
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

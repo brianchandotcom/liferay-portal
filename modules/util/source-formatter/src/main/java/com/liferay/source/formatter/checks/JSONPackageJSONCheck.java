@@ -235,6 +235,20 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 					"/package.json",
 				absolutePath, "clay-.*"));
 
+		String frontEndJSPackageJSONContent = getPortalContent(
+			"modules/apps/frontend-js/frontend-js-web/package.json",
+			absolutePath);
+
+		if (Validator.isNull(frontEndJSPackageJSONContent)) {
+			return _expectedDependencyVersionsMap;
+		}
+
+		JSONObject jsonObject = new JSONObject(frontEndJSPackageJSONContent);
+
+		_expectedDependencyVersionsMap.put(
+			jsonObject.getString("name"),
+			"^" + jsonObject.getString("version"));
+
 		return _expectedDependencyVersionsMap;
 	}
 

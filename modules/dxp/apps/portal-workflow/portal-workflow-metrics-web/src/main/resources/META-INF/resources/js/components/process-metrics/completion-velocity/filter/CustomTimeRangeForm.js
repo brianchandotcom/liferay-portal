@@ -109,7 +109,7 @@ const CustomTimeRangeForm = ({filterKey}) => {
 			<div className="dropdown-divider" />
 
 			<div className="custom-range-footer">
-				<button className="btn btn-secondary" onClick={onCancel}>
+				<button className="btn btn-secondary" onMouseDown={onCancel}>
 					{Liferay.Language.get('cancel')}
 				</button>
 

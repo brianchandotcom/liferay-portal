@@ -16,6 +16,9 @@ package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 /**
  * @author Cristina González
  */
@@ -25,6 +28,16 @@ public class AccessToken {
 		if (oAuth2AccessToken == null) {
 			throw new IllegalArgumentException("Access token is null");
 		}
+
+		Integer expiresIn = oAuth2AccessToken.getExpiresIn();
+
+		if (expiresIn == null) {
+			expiresIn = 0;
+		}
+
+		LocalDateTime now = LocalDateTime.now();
+
+		_expirationDate = now.plus(expiresIn, ChronoUnit.SECONDS);
 
 		_oAuth2AccessToken = oAuth2AccessToken;
 	}
@@ -38,13 +51,16 @@ public class AccessToken {
 	}
 
 	public boolean isValid() {
-		if (_oAuth2AccessToken.getExpiresIn() > 0) {
+		LocalDateTime now = LocalDateTime.now();
+
+		if (now.isBefore(_expirationDate)) {
 			return true;
 		}
 
 		return false;
 	}
 
+	private final LocalDateTime _expirationDate;
 	private final OAuth2AccessToken _oAuth2AccessToken;
 
 }

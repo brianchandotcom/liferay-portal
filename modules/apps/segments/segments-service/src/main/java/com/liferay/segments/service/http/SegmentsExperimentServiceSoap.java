@@ -191,6 +191,25 @@ public class SegmentsExperimentServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
+			updateSegmentsExperiment(long segmentsExperimentId, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.updateSegmentsExperiment(
+					segmentsExperimentId, status);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap
 			updateSegmentsExperiment(
 				long segmentsExperimentId, String name, String description,
 				String goal, String goalTarget)

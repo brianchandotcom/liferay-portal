@@ -258,7 +258,7 @@ AUI.add(
 					reservedParameters
 				);
 
-				var portletURL = Liferay.Util.PortletURL.createURL(
+				var portletURL = Liferay.Util.PortletURL.createPortletURL(
 					options.basePortletURL,
 					parameters
 				);

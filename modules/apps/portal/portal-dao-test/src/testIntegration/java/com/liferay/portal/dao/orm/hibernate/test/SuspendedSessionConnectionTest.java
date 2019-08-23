@@ -82,6 +82,7 @@ public class SuspendedSessionConnectionTest {
 	private static CompanyPersistence _companyPersistence;
 
 	private static final TransactionConfig _innerTransactionConfig;
+	private static final TransactionConfig _outerTransactionConfig;
 
 	static {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
@@ -90,11 +91,7 @@ public class SuspendedSessionConnectionTest {
 		builder.setRollbackForClasses(Exception.class);
 
 		_innerTransactionConfig = builder.build();
-	}
 
-	private static final TransactionConfig _outerTransactionConfig;
-
-	static {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.SUPPORTS);

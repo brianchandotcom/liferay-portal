@@ -116,7 +116,7 @@ portletURL.setParameter("eventName", eventName);
 	</liferay-ui:search-container>
 </div>
 
-<aui:script use="aui-base,aui-io">
+<aui:script use="aui-base">
 	var Util = Liferay.Util;
 
 	var structureFormContainer = A.one('#<portlet:namespace />selectDDMStructureFieldForm');
@@ -138,37 +138,36 @@ portletURL.setParameter("eventName", eventName);
 
 		var form = A.one('#' + result.form);
 
-		A.io.request(
+		var data = new URLSearchParams(new FormData(document.querySelector('#'+result.form)));
+
+		Liferay.Util.fetch(
 			form.attr('action'),
 			{
-				dataType: 'JSON',
-				form: {
-					id: form
-				},
-				on: {
-					success: function(event, id, obj) {
-						var respondData = this.get('responseData');
-
-						var message = A.one('#<portlet:namespace />message');
-
-						if (respondData.success) {
-							result.className = '<%= editAssetListDisplayContext.getClassName(assetRendererFactory) %>';
-							result.displayValue = respondData.displayValue;
-							result.value = respondData.value;
-
-							message.hide();
-
-							Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
-
-							Util.getWindow().destroy();
-						}
-						else {
-							message.show();
-						}
-					}
-				}
+				body: data,
+				method: 'POST'
 			}
-		);
+		)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(response) {
+			var message = A.one('#<portlet:namespace />message');
+
+			if (response.success) {
+				result.className = '<%= editAssetListDisplayContext.getClassName(assetRendererFactory) %>';
+				result.displayValue = response.displayValue;
+				result.value = response.value;
+
+				message.hide();
+
+				Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+				Util.getWindow().destroy();
+			}
+			else {
+				message.show();
+			}
+		});
 	};
 
 	structureFormContainer.delegate(

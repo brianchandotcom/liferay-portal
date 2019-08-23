@@ -72,7 +72,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article, 0);
 %>
 
-<aui:script use="aui-io-request,aui-parse-content,liferay-alert">
+<aui:script use="aui-parse-content,liferay-alert">
 	var templatePreview = A.one('.template-preview-content');
 	var form = A.one('#<%= refererPortletName %>fm');
 	var templateKeyInput = A.one('#<%= refererPortletName + "ddmTemplateKey" %>');
@@ -113,31 +113,31 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 
 					templatePreview.html('<div class="loading-animation"></div>');
 
-					var data = Liferay.Util.ns(
+					var data = new URLSearchParams(Liferay.Util.ns(
 						'<%= PortalUtil.getPortletNamespace(JournalContentPortletKeys.JOURNAL_CONTENT) %>',
 						{
 							ddmTemplateKey: event.ddmtemplatekey
 						}
-					);
+					));
 
-					A.io.request(
+					Liferay.Util.fetch(
 						'<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/journal_template_resources.jsp" /><portlet:param name="articleResourcePrimKey" value="<%= String.valueOf(assetRenderer.getClassPK()) %>" /></liferay-portlet:resourceURL>',
 						{
-							data: data,
-							on: {
-								failure: function() {
-									templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
-								},
-								success: function(event, id, obj) {
-									var responseData = this.get('responseData');
-
-									templatePreview.plug(A.Plugin.ParseContent);
-
-									templatePreview.setContent(responseData);
-								}
-							}
+							body: data,
+							method: 'POST'
 						}
-					);
+					)
+					.then(function(response) {
+						return response.text();
+					})
+					.then(function(response) {
+						templatePreview.plug(A.Plugin.ParseContent);
+
+						templatePreview.setContent(response);
+					})
+					.catch(function() {
+						templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');						
+					});
 
 					new Liferay.Alert(
 						{

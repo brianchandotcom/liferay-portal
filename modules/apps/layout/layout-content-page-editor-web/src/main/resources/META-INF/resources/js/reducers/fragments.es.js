@@ -286,6 +286,20 @@ function addFragmentEntryLinkReducer(state, action) {
 }
 
 /**
+ * @param {object} state
+ * @param {object} action
+ * @return {object}
+ * @review
+ */
+function duplicateFragmentEntryLinkReducer(state, action) {
+	let nextState = state;
+
+	return new Promise(resolve => {
+		resolve(nextState);
+	});
+}
+
+/**
  * @param {string} renderFragmentEntryURL
  * @param {{fragmentEntryLinkId: string}} fragmentEntryLink
  * @param {string} portletNamespace
@@ -768,6 +782,7 @@ export {
 	addFragment,
 	addFragmentEntryLinkReducer,
 	deleteFragmentEntryLinkCommentReducer,
+	duplicateFragmentEntryLinkReducer,
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,

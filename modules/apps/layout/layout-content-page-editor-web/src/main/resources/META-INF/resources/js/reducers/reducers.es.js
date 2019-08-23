@@ -15,6 +15,7 @@
 import {
 	addFragmentEntryLinkReducer,
 	deleteFragmentEntryLinkCommentReducer,
+	duplicateFragmentEntryLinkReducer,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,
 	toggleShowResolvedCommentsReducer,
@@ -66,6 +67,7 @@ import {
 	DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 	DELETE_SEGMENTS_EXPERIENCE,
 	DISABLE_FRAGMENT_EDITOR,
+	DUPLICATE_FRAGMENT_ENTRY_LINK,
 	EDIT_SEGMENTS_EXPERIENCE,
 	ENABLE_FRAGMENT_EDITOR,
 	HIDE_MAPPING_TYPE_DIALOG,
@@ -118,6 +120,7 @@ const reducers = {
 	[DELETE_FRAGMENT_ENTRY_LINK_COMMENT]: deleteFragmentEntryLinkCommentReducer,
 	[DELETE_SEGMENTS_EXPERIENCE]: deleteSegmentsExperienceReducer,
 	[DISABLE_FRAGMENT_EDITOR]: createSetValueReducer('fragmentEditorEnabled'),
+	[DUPLICATE_FRAGMENT_ENTRY_LINK]: duplicateFragmentEntryLinkReducer,
 	[EDIT_SEGMENTS_EXPERIENCE]: editSegmentsExperienceReducer,
 	[ENABLE_FRAGMENT_EDITOR]: createSetValueReducer('fragmentEditorEnabled'),
 	[HIDE_MAPPING_TYPE_DIALOG]: createSetValueReducer(

@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
@@ -145,6 +146,46 @@ public class NodeExtension {
 		};
 
 		_project = project;
+
+		_useNpm = new Callable<Boolean>() {
+
+			@Override
+			public Boolean call() throws Exception {
+				if (FileUtil.exists(project, "package-lock.json")) {
+					return true;
+				}
+
+				if (getYarnScriptFile() == null) {
+					return true;
+				}
+
+				return false;
+			}
+
+		};
+
+		_yarnScriptFile = new Callable<File>() {
+
+			@Override
+			public File call() throws Exception {
+				File dir = project.getProjectDir();
+
+				while (true) {
+					File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
+
+					if ((files != null) && (files.length > 0)) {
+						return files[0];
+					}
+
+					dir = dir.getParentFile();
+
+					if (dir == null) {
+						return null;
+					}
+				}
+			}
+
+		};
 	}
 
 	public File getNodeDir() {
@@ -171,12 +212,20 @@ public class NodeExtension {
 		return GradleUtil.toString(_npmVersion);
 	}
 
+	public File getYarnScriptFile() {
+		return GradleUtil.toFile(_project, _yarnScriptFile);
+	}
+
 	public boolean isDownload() {
 		return _download;
 	}
 
 	public boolean isGlobal() {
 		return _global;
+	}
+
+	public boolean isUseNpm() {
+		return GradleUtil.toBoolean(_useNpm);
 	}
 
 	public NodeExtension npmArgs(Iterable<?> npmArgs) {
@@ -227,6 +276,14 @@ public class NodeExtension {
 		_npmVersion = npmVersion;
 	}
 
+	public void setUseNpm(Object useNpm) {
+		_useNpm = useNpm;
+	}
+
+	public void setYarnScriptFile(Object yarnScriptFile) {
+		_yarnScriptFile = yarnScriptFile;
+	}
+
 	private static final Map<String, String> _npmVersions =
 		new HashMap<String, String>() {
 			{
@@ -257,5 +314,7 @@ public class NodeExtension {
 	private Object _npmUrl;
 	private Object _npmVersion;
 	private final Project _project;
+	private Object _useNpm;
+	private Object _yarnScriptFile;
 
 }

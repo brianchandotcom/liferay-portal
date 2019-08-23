@@ -306,7 +306,7 @@ else {
 						cancel: '<liferay-ui:message key="cancel" />'
 					},
 					title: '<liferay-ui:message key="assign-users" />',
-					url: selectUsersURL
+					url: selectUsersURL.toString()
 				}
 			);
 

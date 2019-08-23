@@ -11455,14 +11455,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<stop-lcs-app-server />
 	</target>
 
-	<target name="test-integration">
-		<ant dir="portal-kernel" inheritAll="false" target="test-integration" />
-
-		<ant dir="portal-impl" inheritAll="false" target="test-integration" />
-
-		<ant dir="util-java" inheritAll="false" target="test-integration" />
-	</target>
-
 	<target name="test-package">
 		<ant dir="portal-kernel" inheritAll="false" target="test-package" />
 

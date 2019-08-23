@@ -1156,10 +1156,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<echo>The "start" target is now deprecated. Please use the "compile" target instead.</echo>
 	</target>
 
-	<target name="test-integration">
-		<ant antfile="build-test.xml" inheritAll="false" target="test-integration" />
-	</target>
-
 	<target name="test-package">
 		<ant antfile="build-test.xml" inheritAll="false" target="test-package" />
 	</target>

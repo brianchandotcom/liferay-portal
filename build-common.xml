@@ -385,18 +385,12 @@ information.
 
 		<sequential>
 			<if>
-				<equals arg1="@{test.type}" arg2="integration" />
+				<equals arg1="@{test.type}" arg2="unit" />
 				<then>
-					<compile-test-integration />
+					<compile-test-cmd
+						test.type="unit"
+					/>
 				</then>
-				<elseif>
-					<equals arg1="@{test.type}" arg2="unit" />
-					<then>
-						<compile-test-cmd
-							test.type="unit"
-						/>
-					</then>
-				</elseif>
 				<elseif>
 					<equals arg1="@{test.type}" arg2="functional" />
 					<then>
@@ -454,29 +448,6 @@ information.
 					/>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="compile-test-integration">
-		<sequential>
-			<compile-test-cmd
-				test.type="integration"
-			/>
-
-			<ant dir="${project.dir}/portal-kernel" inheritAll="false" target="jar" />
-
-			<if>
-				<uptodate
-					targetfile="${project.dir}/portal-impl/portal-impl.jar"
-				>
-					<srcfiles dir="${project.dir}/portal-impl/classes" includes="**/*" />
-				</uptodate>
-				<else>
-					<ant dir="${project.dir}/portal-impl" inheritAll="false" target="jar" />
-				</else>
-			</if>
-
-			<delete dir="${java.io.tmpdir}/osgi" />
 		</sequential>
 	</macrodef>
 
@@ -1029,42 +1000,19 @@ information.
 			</condition>
 
 			<if>
-				<equals arg1="@{test.type}" arg2="unit" />
+				<isset property="junit.java.unit.gc[@{junit.jvm.override.version}]" />
 				<then>
-					<if>
-						<isset property="junit.java.unit.gc[@{junit.jvm.override.version}]" />
-						<then>
-							<propertycopy from="junit.java.unit.gc[@{junit.jvm.override.version}]" name="junit.java.unit.gc" override="true" />
-						</then>
-					</if>
+					<propertycopy from="junit.java.unit.gc[@{junit.jvm.override.version}]" name="junit.java.unit.gc" override="true" />
+				</then>
+			</if>
 
-					<if>
-						<equals arg1="${junit.java.unit.gc.logging}" arg2="on" />
-						<then>
-							<property name="junit.java.gc" value="${junit.java.unit.gc} -verbose:gc -XX:+PrintGCCause -XX:+PrintGCDetails" />
-						</then>
-						<else>
-							<property name="junit.java.gc" value="${junit.java.unit.gc}" />
-						</else>
-					</if>
+			<if>
+				<equals arg1="${junit.java.unit.gc.logging}" arg2="on" />
+				<then>
+					<property name="junit.java.gc" value="${junit.java.unit.gc} -verbose:gc -XX:+PrintGCCause -XX:+PrintGCDetails" />
 				</then>
 				<else>
-					<if>
-						<isset property="junit.java.integration.gc[@{junit.jvm.override.version}]" />
-						<then>
-							<propertycopy from="junit.java.integration.gc[@{junit.jvm.override.version}]" name="junit.java.integration.gc" override="true" />
-						</then>
-					</if>
-
-					<property name="aspectj.weaver.enabled" value="true" />
-
-					<local name="project.dir.name" />
-
-					<basename file="${project.dir}" property="project.dir.name" />
-
-					<condition else="${junit.java.integration.gc} -verbose:gc -Xloggc:/tmp/${project.dir.name}-@{test.type}-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" property="junit.java.gc" value="${junit.java.integration.gc} -Xlog:gc:/tmp/${project.dir.name}-@{test.type}-gc.log">
-						<isset property="junit.java.integration.gc[@{junit.jvm.override.version}]" />
-					</condition>
+					<property name="junit.java.gc" value="${junit.java.unit.gc}" />
 				</else>
 			</if>
 
@@ -1118,39 +1066,6 @@ information.
 				<formatter type="xml" />
 				<test.classes />
 			</junit>
-
-			<if>
-				<and>
-					<equals arg1="@{test.type}" arg2="integration" />
-					<isset property="database.type" />
-				</and>
-				<then>
-					<for param="test.results.file">
-						<path>
-							<fileset
-								dir="test-results/@{test.type}"
-							>
-								<include name="TEST-*.xml" />
-								<exclude name="TEST-*-*.xml" />
-							</fileset>
-						</path>
-						<sequential>
-							<local name="test.results.file.class.name" />
-
-							<basename file="@{test.results.file}" property="test.results.file.class.name" suffix=".xml" />
-
-							<xmltask dest="test-results/@{test.type}/TEST-${test.results.file.class.name}-${database.type}.xml" source="@{test.results.file}">
-								<replace
-									path="/testsuite/@name"
-									withText="${test.results.file.class.name}-${database.type}"
-								/>
-							</xmltask>
-
-							<delete file="@{test.results.file}" />
-						</sequential>
-					</for>
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -1495,18 +1410,6 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<elseif>
 					<resourcecount count="0" when="gt">
 						<fileset
-							dir="test/integration"
-							erroronmissingdir="false"
-							includes="**/${test.class}.java"
-						/>
-					</resourcecount>
-					<then>
-						<var name="test.type" value="integration" />
-					</then>
-				</elseif>
-				<elseif>
-					<resourcecount count="0" when="gt">
-						<fileset
 							dir="test/unit"
 							erroronmissingdir="false"
 							includes="**/${test.class}.java"
@@ -1648,30 +1551,6 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 		<sequential>
 			<var name="junit.classpath" value="${classpath.full}" />
-
-			<if>
-				<and>
-					<equals arg1="${basedir.unix}" arg2="${project.dir}/portal-impl" />
-					<equals arg1="@{test.type}" arg2="integration" />
-				</and>
-				<then>
-					<var name="junit.classpath" value="${classpath.portal-impl-integration}" />
-
-					<for param="lfrbuild-ci">
-						<fileset
-							dir="${project.dir}/modules"
-							includes="**/.lfrbuild-ci"
-						/>
-						<sequential>
-							<local name="module.dir" />
-
-							<dirname file="@{lfrbuild-ci}" property="module.dir" />
-
-							<var name="junit.classpath" value="${junit.classpath};${module.dir}/classes" />
-						</sequential>
-					</for>
-				</then>
-			</if>
 
 			<if>
 				<and>
@@ -1855,14 +1734,6 @@ rerun your task.
 			<if>
 				<available file="test/${current.test.dir}" type="dir" />
 				<then>
-					<if>
-						<equals arg1="@{test.type}" arg2="integration" />
-						<then>
-							<delete dir="${liferay.home}/data" />
-							<delete dir="${liferay.home}/osgi/state" />
-						</then>
-					</if>
-
 					<junit-cmd
 						forkmode="@{junit.forkmode}"
 						junit.jvm.override="@{junit.jvm.override}"
@@ -1928,7 +1799,6 @@ rerun your task.
 					<propertyref name="jira.project.keys" />
 					<propertyref name="jsp.precompile.from.source" />
 					<propertyref name="junit.code.coverage" />
-					<propertyref name="junit.java.integration.gc" />
 					<propertyref name="junit.java.unit.gc" />
 					<propertyref name="liferay.home" />
 					<propertyref name="liferay.releng.app.title.prefix" />
@@ -2027,7 +1897,6 @@ rerun your task.
 				<propertyset>
 					<propertyref name="app.server.parent.dir" />
 					<propertyref name="app.server.type" />
-					<propertyref name="junit.java.integration.gc" />
 					<propertyref name="junit.java.unit.gc" />
 					<propertyref name="junit.java.unit.gc.logging" />
 					<propertyref name="junit.test.excludes" />
@@ -2078,13 +1947,8 @@ rerun your task.
 
 	<target name="compile-test">
 		<if>
-			<or>
-				<available file="test/integration" type="dir" />
-				<available file="test/unit" type="dir" />
-			</or>
+			<available file="test/unit" type="dir" />
 			<then>
-				<compile-test-integration />
-
 				<compile-test-cmd
 					test.type="unit"
 				/>
@@ -2375,7 +2239,6 @@ rerun your task.
 	</target>
 
 	<target name="test">
-		<antcall target="test-integration" />
 		<antcall target="test-unit" />
 	</target>
 
@@ -2474,35 +2337,7 @@ rerun your task.
 			</then>
 		</if>
 
-		<if>
-			<or>
-				<not>
-					<isset property="test.type" />
-				</not>
-				<equals arg1="${test.type}" arg2="integration" />
-			</or>
-			<then>
-				<test-cmd
-					junit.forkmode="once"
-					junit.jvm.override="${junit.jvm.override}"
-					junit.jvm.override.version="${junit.jvm.override.version}"
-					test.includes="${test.classes}"
-					test.type="integration"
-				/>
-			</then>
-		</if>
-
 		<lstopwatch action="total" name="test.class.group" />
-	</target>
-
-	<target depends="compile" name="test-integration">
-		<compile-test-integration />
-
-		<test-cmd
-			junit.forkmode="once"
-			test.includes="**/*Test.class"
-			test.type="integration"
-		/>
 	</target>
 
 	<target depends="compile" name="test-method">
@@ -2604,12 +2439,6 @@ rerun your task.
 			property="test.package.dir"
 			regexp="\."
 			replace="/"
-		/>
-
-		<test-cmd
-			junit.forkmode="once"
-			test.includes="**/${test.package.dir}/*Test.class"
-			test.type="integration"
 		/>
 
 		<test-cmd

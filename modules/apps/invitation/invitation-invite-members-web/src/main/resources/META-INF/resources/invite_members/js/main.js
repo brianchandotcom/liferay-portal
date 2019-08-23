@@ -287,31 +287,34 @@ AUI.add(
 
 					var end = start + instance.get('pageDelta');
 
-					A.io.request(instance.get(STR_AVAILABLE_USERS_URL), {
-						after: {
-							success: function(event, id, obj) {
-								var responseData = this.get('responseData');
-
-								var moreResults = instance._membersList.one(
-									'.more-results'
-								);
-
-								moreResults.remove();
-
-								instance._membersList.append(
-									instance
-										._renderResults(responseData)
-										.join(STR_BLANK)
-								);
-							}
-						},
-						data: instance.ns({
+					const body = new URLSearchParams(
+						instance.ns({
 							end: end,
 							keywords: instance._inviteUserSearch.get('value'),
 							start: start
-						}),
-						dataType: 'json'
-					});
+						})
+					);
+
+					Liferay.Util.fetch(instance.get(STR_AVAILABLE_USERS_URL), {
+						body,
+						method: 'POST'
+					})
+						.then(response => {
+							return response.json();
+						})
+						.then(responseData => {
+							var moreResults = instance._membersList.one(
+								'.more-results'
+							);
+
+							moreResults.remove();
+
+							instance._membersList.append(
+								instance
+									._renderResults(responseData)
+									.join(STR_BLANK)
+							);
+						});
 				},
 
 				_removeEmailInvite: function(user) {

@@ -64,9 +64,7 @@ public class MappedContentUtil {
 	public static AssetEntry getAssetEntry(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
-		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
-			!jsonObject.has("fieldId")) {
-
+		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
 			return null;
 		}
 

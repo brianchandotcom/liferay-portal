@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from './shared/ClayButton.es';
+import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -78,9 +78,7 @@ class SynonymSetsForm extends Component {
 			this._originalSynonymSets = props.synonymSets;
 
 			props.synonymSets.split(',').forEach(synonym => {
-				this.state.synonyms.push(
-					synonym
-				);
+				this.state.synonyms.push(synonym);
 			});
 		}
 	}
@@ -116,16 +114,19 @@ class SynonymSetsForm extends Component {
 						<div className="sheet-footer">
 							<ClayButton
 								disabled={synonyms.length === 0}
-								displayStyle="primary"
-								label={Liferay.Language.get('publish')}
+								displayType="primary"
 								onClick={this._handleSubmit}
 								type="submit"
-							/>
+							>
+								{Liferay.Language.get('publish')}
+							</ClayButton>
 
 							<ClayButton
-								label={Liferay.Language.get('cancel')}
+								displayType="secondary"
 								onClick={this._handleCancel}
-							/>
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
 						</div>
 					</div>
 				</div>

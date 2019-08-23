@@ -15,7 +15,7 @@
 package com.liferay.adaptive.media.document.library.thumbnails.internal.processor;
 
 import com.liferay.adaptive.media.AdaptiveMedia;
-import com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration;
+import com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration;
 import com.liferay.adaptive.media.image.finder.AMImageFinder;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;

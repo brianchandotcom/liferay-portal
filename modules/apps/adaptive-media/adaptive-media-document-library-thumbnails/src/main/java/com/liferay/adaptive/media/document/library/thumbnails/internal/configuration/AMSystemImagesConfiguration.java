@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.configuration;
+package com.liferay.adaptive.media.document.library.thumbnails.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "adaptive-media")
 @Meta.OCD(
-	id = "com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration",
+	id = "com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration",
 	localization = "content/Language",
 	name = "adaptive-media-system-images-configuration-name"
 )

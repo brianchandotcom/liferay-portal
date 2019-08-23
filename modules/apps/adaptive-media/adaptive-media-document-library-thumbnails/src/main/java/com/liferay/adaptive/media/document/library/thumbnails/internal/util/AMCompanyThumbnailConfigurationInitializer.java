@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.document.library.thumbnails.internal.util;
 
-import com.liferay.adaptive.media.configuration.AMSystemImagesConfiguration;
+import com.liferay.adaptive.media.document.library.thumbnails.internal.configuration.AMSystemImagesConfiguration;
 import com.liferay.adaptive.media.exception.AMImageConfigurationException;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationHelper;

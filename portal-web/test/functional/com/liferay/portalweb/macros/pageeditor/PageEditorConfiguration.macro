@@ -1,5 +1,15 @@
 definition {
 
+	macro changeConfigText {
+		Click(
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
+
+		FormFields.editText(
+			fieldName = "${textConfigName}",
+			fieldValue = "${editableText}");
+	}
+
 	macro checkConfigCheckbox {
 		Click(
 			fragment_name = "${fragmentName}",

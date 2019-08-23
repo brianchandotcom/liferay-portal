@@ -45,6 +45,7 @@ import com.liferay.item.selector.criteria.DownloadURLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
@@ -311,7 +312,9 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"mappedContents",
 			MappedContentUtil.getMappedContentsJSONArray(
-				assetEntries, themeDisplay.getURLCurrent(), request)
+				assetEntries, themeDisplay.getURLCurrent(),
+				new long[] {PortalUtil.getClassNameId(JournalArticle.class)},
+				request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		);

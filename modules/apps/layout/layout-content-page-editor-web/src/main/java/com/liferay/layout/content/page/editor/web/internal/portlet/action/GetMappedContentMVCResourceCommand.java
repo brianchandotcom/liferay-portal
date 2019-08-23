@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -70,6 +71,7 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, resourceResponse,
 			MappedContentUtil.getMappedContentsJSONArray(
 				assetEntries, backURL,
+				new long[] {_portal.getClassNameId(JournalArticle.class)},
 				_portal.getHttpServletRequest(resourceRequest)));
 	}
 

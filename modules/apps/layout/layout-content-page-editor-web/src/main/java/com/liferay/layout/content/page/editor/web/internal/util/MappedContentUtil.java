@@ -66,13 +66,6 @@ public class MappedContentUtil {
 	public static AssetEntry getAssetEntry(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
 
-		return getAssetEntry(jsonObject, mappedClassPKs, new long[0]);
-	}
-
-	public static AssetEntry getAssetEntry(
-		JSONObject jsonObject, Set<Long> mappedClassPKs,
-		long[] allowedClassNameIds) {
-
 		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK") ||
 			!jsonObject.has("fieldId")) {
 
@@ -94,12 +87,6 @@ public class MappedContentUtil {
 		long classNameId = jsonObject.getLong("classNameId");
 
 		if (classNameId <= 0) {
-			return null;
-		}
-
-		if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
-			!ArrayUtil.contains(allowedClassNameIds, classNameId)) {
-
 			return null;
 		}
 
@@ -140,12 +127,19 @@ public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
 		Set<AssetEntry> assetEntries, String backURL,
-		HttpServletRequest httpServletRequest) {
+		long[] allowedClassNameIds, HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
 			for (AssetEntry assetEntry : assetEntries) {
+				if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
+					!ArrayUtil.contains(
+						allowedClassNameIds, assetEntry.getClassNameId())) {
+
+					continue;
+				}
+
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
 						assetEntry, backURL, httpServletRequest));
@@ -260,10 +254,7 @@ public class MappedContentUtil {
 						(configJSONObject.length() > 0)) {
 
 						AssetEntry assetEntry = getAssetEntry(
-							configJSONObject, mappedClassPKs,
-							new long[] {
-								PortalUtil.getClassNameId(JournalArticle.class)
-							});
+							configJSONObject, mappedClassPKs);
 
 						if (assetEntry != null) {
 							assetEntries.add(assetEntry);
@@ -271,10 +262,7 @@ public class MappedContentUtil {
 					}
 
 					AssetEntry assetEntry = getAssetEntry(
-						editableJSONObject, mappedClassPKs,
-						new long[] {
-							PortalUtil.getClassNameId(JournalArticle.class)
-						});
+						editableJSONObject, mappedClassPKs);
 
 					if (assetEntry == null) {
 						continue;

@@ -29,5 +29,12 @@
 		}
 	}
 }
+
+.app-builder-sidebar-content {
+	padding-right: $sidebarMainWidth;
+	transition: padding-right 0.3s ease-in-out;
+
+	&.closed {
+		padding-right: $sidebarMiniWidth;
 	}
 }

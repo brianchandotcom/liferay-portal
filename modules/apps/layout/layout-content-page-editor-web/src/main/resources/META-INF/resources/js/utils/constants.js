@@ -164,14 +164,6 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		panelId: 'spacing',
 		title: Liferay.Language.get('spacing'),
 		type: 'panel'
-	},
-
-	textProperties: {
-		icon: 'pencil',
-		id: 'text_properties',
-		panelId: 'text_properties',
-		title: Liferay.Language.get('text-properties'),
-		type: 'panel'
 	}
 };
 

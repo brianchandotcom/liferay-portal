@@ -145,7 +145,17 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 
 		Assert.assertNotNull(jsonObject);
 
+		Assert.assertTrue(jsonObject.has("configuration"));
+		Assert.assertTrue(jsonObject.has("editableValues"));
+		Assert.assertTrue(jsonObject.has("fragmentEntryKey"));
 		Assert.assertTrue(jsonObject.has("fragmentEntryLinkId"));
+		Assert.assertTrue(jsonObject.has("name"));
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryKey(),
+			jsonObject.getString("fragmentEntryKey"));
+		Assert.assertEquals(
+			fragmentEntry.getName(), jsonObject.getString("name"));
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

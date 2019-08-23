@@ -114,9 +114,21 @@ definition {
 		var assetType = StringUtil.lowerCase("${assetType}");
 		var key_contentBody = "${contentBody}";
 
-		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATIONS_TITLE",
-			value1 = "${user} added a new ${assetType} to ${content}.");
+		if (isSet(fragmentName)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Notifications#NOTIFICATIONS_TITLE",
+				value1 = "${user} added a new comment to ${fragmentName}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Notifications#NOTIFICATIONS_TITLE",
+				value1 = '''in the "Content Page Name" page.''');
+		}
+
+		else {
+			AssertTextEquals(
+				locator1 = "Notifications#NOTIFICATIONS_TITLE",
+				value1 = "${user} added a new ${assetType} to ${content}.");
+		}
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Notifications#NOTIFICATIONS_CONTENT",

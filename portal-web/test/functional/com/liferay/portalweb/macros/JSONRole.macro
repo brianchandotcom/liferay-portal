@@ -133,7 +133,7 @@ definition {
 	}
 
 	macro getRoleIdByName {
-		Variables.assertDefined(parameterList = "${userEmailAddress}");
+		Variables.assertDefined(parameterList = "${roleTitle}");
 
 		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
 

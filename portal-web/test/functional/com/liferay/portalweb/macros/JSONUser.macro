@@ -163,7 +163,7 @@ definition {
 	}
 
 	macro addUserToSite {
-		Variables.assertDefined(parameterList = "${userEmailAddress},${userScreenName}");
+		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 

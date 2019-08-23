@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentRelNameException;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentRelLocalServiceBaseImpl;
@@ -58,6 +61,8 @@ public class SegmentsExperimentRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		_validateSegmentsExperimentStatus(segmentsExperimentId);
+
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long segmentsExperimentRelId = counterLocalService.increment();
@@ -92,10 +97,25 @@ public class SegmentsExperimentRelLocalServiceImpl
 	}
 
 	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperimentRel deleteSegmentsExperimentRel(
 			SegmentsExperimentRel segmentsExperimentRel)
 		throws PortalException {
+
+		return segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+			segmentsExperimentRel, false);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SegmentsExperimentRel deleteSegmentsExperimentRel(
+			SegmentsExperimentRel segmentsExperimentRel,
+			boolean skipSegmentsExperimentStatusValidation)
+		throws PortalException {
+
+		if (!skipSegmentsExperimentStatusValidation) {
+			_validateSegmentsExperimentStatus(
+				segmentsExperimentRel.getSegmentsExperimentId());
+		}
 
 		// Segments experiment rel
 
@@ -123,7 +143,7 @@ public class SegmentsExperimentRelLocalServiceImpl
 				segmentsExperimentRels) {
 
 			segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
-				segmentsExperimentRel);
+				segmentsExperimentRel, true);
 		}
 	}
 
@@ -154,6 +174,9 @@ public class SegmentsExperimentRelLocalServiceImpl
 			segmentsExperimentRelPersistence.findByPrimaryKey(
 				segmentsExperimentRelId);
 
+		_validateSegmentsExperimentStatus(
+			segmentsExperimentRel.getSegmentsExperimentId());
+
 		if (segmentsExperimentRel.isControl()) {
 			throw new SegmentsExperimentRelNameException(
 				"The experiment control experience cannot be updated");
@@ -169,6 +192,22 @@ public class SegmentsExperimentRelLocalServiceImpl
 			segmentsExperience);
 
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+	}
+
+	private void _validateSegmentsExperimentStatus(long segmentsExperimentId)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId);
+
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.valueOf(
+				segmentsExperiment.getStatus());
+
+		if (!status.isEditable()) {
+			throw new LockedSegmentsExperimentException(segmentsExperimentId);
+		}
 	}
 
 	@Reference

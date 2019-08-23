@@ -34,7 +34,7 @@ public interface AMSystemImagesConfiguration {
 	 * Sets the Adaptive Media Configuration ID for preview resolution.
 	 */
 	@Meta.AD(
-		deflt = "", description = "am-configuration-id-for-preview",
+		deflt = "", description = "preview-am-configuration-description",
 		name = "preview-am-configuration", required = false
 	)
 	public String previewlAMConfiguration();
@@ -43,7 +43,7 @@ public interface AMSystemImagesConfiguration {
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.
 	 */
 	@Meta.AD(
-		deflt = "", description = "am-configuration-id-for-thumbnail",
+		deflt = "", description = "thumbnail-am-configuration-description",
 		name = "thumbnail-am-configuration", required = false
 	)
 	public String thumbnailAMConfiguration();
@@ -52,7 +52,8 @@ public interface AMSystemImagesConfiguration {
 	 * Sets the Adaptive Media Configuration ID for first custom thumbnail resolution.
 	 */
 	@Meta.AD(
-		deflt = "", description = "am-configuration-id-for-custom-thumbnail-1",
+		deflt = "",
+		description = "thumbnail-custom-1-am-configuration-description",
 		name = "thumbnail-custom-1-am-configuration", required = false
 	)
 	public String thumbnailCustom1AMConfiguration();
@@ -61,7 +62,8 @@ public interface AMSystemImagesConfiguration {
 	 * Sets the Adaptive Media Configuration ID for second custom thumbnail resolution.
 	 */
 	@Meta.AD(
-		deflt = "", description = "am-configuration-id-for-custom-thumbnail-2",
+		deflt = "",
+		description = "thumbnail-custom-2-am-configuration-description",
 		name = "thumbnail-custom-2-am-configuration", required = false
 	)
 	public String thumbnailCustom2AMConfiguration();

@@ -1906,6 +1906,15 @@ public class ServicePreAction extends Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
+		// Service context
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			httpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		// Theme display
+
 		ThemeDisplay themeDisplay = _initThemeDisplay(
 			httpServletRequest, httpServletResponse);
 
@@ -1914,13 +1923,6 @@ public class ServicePreAction extends Action {
 		}
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		// Service context
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			httpServletRequest);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		// Ajaxable render
 

@@ -5,6 +5,8 @@ const buildFallbackItems = fallbackKeys => {
 			key
 		}));
 	}
+
+	return null;
 };
 
 const handleClickOutside = (callback, wrapperRef) => event => {

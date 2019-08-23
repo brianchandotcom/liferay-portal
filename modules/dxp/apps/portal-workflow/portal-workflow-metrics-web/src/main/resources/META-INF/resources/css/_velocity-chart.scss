@@ -50,8 +50,10 @@
 }
 
 .workflow-tooltip-chart {
+	border-collapse: collapse;
+
 	.workflow-tooltip-chart-header {
-		box-shadow: 0 1px 0 0 #e7e7ed;
+		border-bottom: solid 1px #e7e7ed;
 
 		.workflow-tooltip-chart-column {
 			font-weight: 600;

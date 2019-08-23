@@ -42,6 +42,11 @@ import templates from './FragmentsEditor.soy';
 const WRAPPER_SELECTOR = '.fragment-entry-link-list-wrapper';
 
 /**
+ * DOM selector where the sidebar is rendered
+ */
+const SIDEBAR_SELECTOR = '.fragments-editor-sidebar';
+
+/**
  * FragmentsEditor
  * @review
  */
@@ -192,8 +197,9 @@ class FragmentsEditor extends Component {
 				type: UPDATE_ACTIVE_ITEM
 			});
 		} else if (
-			dom.closest(event.target, WRAPPER_SELECTOR) ||
-			event.target === document.querySelector(WRAPPER_SELECTOR)
+			(dom.closest(event.target, WRAPPER_SELECTOR) ||
+				event.target === document.querySelector(WRAPPER_SELECTOR)) &&
+			!dom.closest(event.target, SIDEBAR_SELECTOR)
 		) {
 			this.store.dispatch({
 				type: CLEAR_ACTIVE_ITEM

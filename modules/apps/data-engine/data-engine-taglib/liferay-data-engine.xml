@@ -32,6 +32,12 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>localizable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
 				<name>namespace</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

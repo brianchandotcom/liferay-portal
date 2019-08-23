@@ -80,4 +80,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-99543. User can change text fragment configuration in a display page template."
+	@priority = "5"
+	test AddTextConfigurationFragmentToDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a section fragment to the fragment collection via JSON") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Text Fragment Example");
+
+		PageEditorConfiguration.changeConfigText(
+			editableText = "Updated fragment text",
+			fragmentName = "Text Fragment Example",
+			textConfigName = "buttonText");
+
+		Button.clickPublish();
+
+		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+			displayPageName = "Display Page Name",
+			item = "Edit");
+
+		task ("Assert text is changed") {
+			AssertVisible(
+				key_content = "Updated fragment text",
+				key_fragmentClass = "configuration",
+				key_position = "1",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
 }

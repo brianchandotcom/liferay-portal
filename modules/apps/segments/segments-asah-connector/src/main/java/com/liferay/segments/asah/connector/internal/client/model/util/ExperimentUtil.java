@@ -222,8 +222,28 @@ public class ExperimentUtil {
 	}
 
 	private static ExperimentStatus _toExperimentStatus(int status) {
-		if (status == SegmentsExperimentConstants.STATUS_DRAFT) {
-			return ExperimentStatus.DRAFT;
+		if (status == SegmentsExperimentConstants.STATUS_COMPLETED) {
+			return ExperimentStatus.COMPLETED;
+		}
+		else if (status ==
+					SegmentsExperimentConstants.STATUS_FINISHED_NO_WINNER) {
+
+			return ExperimentStatus.FINISHED_NO_WINNER;
+		}
+		else if (status == SegmentsExperimentConstants.STATUS_FINISHED_WINNER) {
+			return ExperimentStatus.FINISHED_WINNER;
+		}
+		else if (status == SegmentsExperimentConstants.STATUS_PAUSED) {
+			return ExperimentStatus.PAUSED;
+		}
+		else if (status == SegmentsExperimentConstants.STATUS_RUNNING) {
+			return ExperimentStatus.RUNNING;
+		}
+		else if (status == SegmentsExperimentConstants.STATUS_SCHEDULED) {
+			return ExperimentStatus.SCHEDULED;
+		}
+		else if (status == SegmentsExperimentConstants.STATUS_TERMINATED) {
+			return ExperimentStatus.TERMINATED;
 		}
 
 		return ExperimentStatus.DRAFT;

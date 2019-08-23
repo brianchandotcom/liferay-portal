@@ -15,5 +15,5 @@
 import React from 'react';
 
 export default ({children}) => {
-	return <div className="sidebar-header">{children}</div>;
+	return <div className="pb-0 sidebar-header">{children}</div>;
 };

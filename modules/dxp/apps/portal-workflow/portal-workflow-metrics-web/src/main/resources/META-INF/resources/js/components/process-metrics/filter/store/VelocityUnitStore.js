@@ -60,7 +60,7 @@ const useVelocityUnit = velocityUnitKeys => {
 	const previousKeys = usePrevious(velocityUnitKeys);
 
 	useEffect(() => {
-		const filterChanged = !compareArrays(velocityUnitKeys, previousKeys);
+		const filterChanged = !compareArrays(previousKeys, velocityUnitKeys);
 
 		if (filterChanged && velocityUnits.length) {
 			updateData();

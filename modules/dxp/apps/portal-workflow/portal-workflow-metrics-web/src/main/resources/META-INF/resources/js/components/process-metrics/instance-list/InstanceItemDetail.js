@@ -33,23 +33,22 @@ function InstanceItemDetail({processId}) {
 		userName
 	} = instance;
 
-	const slaResolved = slaResults.filter(({status}) => status === 'Stopped');
-	const slaOpen = slaResults.filter(({status}) =>
-		['Running', 'Paused'].includes(status)
-	);
-
-	let styleName = 'text-danger';
-
 	const completed = status === 'Completed';
 	const empty = slaResults.length === 0;
 	const overdue = slaStatus === 'Overdue';
+	const slaOpen = slaResults.filter(({status}) =>
+		['Running', 'Paused'].includes(status)
+	);
+	const slaResolved = slaResults.filter(({status}) => status === 'Stopped');
 
-	if (status === 'Pending' && slaStatus === 'OnTime') {
-		styleName = 'text-success';
+	let styleName = 'text-danger';
+
+	if (empty) {
+		styleName = 'text-info';
 	} else if (status === 'Completed') {
 		styleName = 'text-secondary';
-	} else if (empty) {
-		styleName = 'text-info';
+	} else if (status === 'Pending' && slaStatus === 'OnTime') {
+		styleName = 'text-success';
 	}
 
 	let iconTitleName = 'check-circle';
@@ -226,8 +225,8 @@ InstanceItemDetail.Item = ({
 		iconName = 'check-circle';
 	}
 
-	if (status === 'Stopped' && onTime) {
-		statusText = `(${Liferay.Language.get('resolved-on-time')})`;
+	if (status === 'Paused') {
+		statusText = `(${Liferay.Language.get('sla-paused')})`;
 	} else if (status === 'Running') {
 		const remainingTimePositive = onTime
 			? remainingTime
@@ -245,13 +244,14 @@ InstanceItemDetail.Item = ({
 		if (onTime) {
 			onTimeText = Liferay.Language.get('left');
 		}
+
 		statusText = `${moment
 			.utc(dateOverdue)
 			.format(
 				Liferay.Language.get('mmm-dd-yyyy-lt')
 			)} (${durationText} ${onTimeText})`;
-	} else if (status === 'Paused') {
-		statusText = `(${Liferay.Language.get('sla-paused')})`;
+	} else if (status === 'Stopped' && onTime) {
+		statusText = `(${Liferay.Language.get('resolved-on-time')})`;
 	}
 
 	return (

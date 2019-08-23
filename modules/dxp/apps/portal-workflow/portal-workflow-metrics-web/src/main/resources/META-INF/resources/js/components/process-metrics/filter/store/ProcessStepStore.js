@@ -58,7 +58,7 @@ const useProcessStep = (processId, processStepKeys) => {
 	const previousKeys = usePrevious(processStepKeys);
 
 	useEffect(() => {
-		const filterChanged = !compareArrays(processStepKeys, previousKeys);
+		const filterChanged = !compareArrays(previousKeys, processStepKeys);
 
 		if (filterChanged && processSteps.length) {
 			updateData();

@@ -22,7 +22,7 @@ const useProcessStatus = processStatusKeys => {
 	const [processStatuses, setProcessStatuses] = useState([]);
 
 	const fetchData = () => {
-		const processStatuses = [pendingStatus, completedStatus].map(
+		const processStatuses = [completedStatus, pendingStatus].map(
 			processStatus => ({
 				...processStatus,
 				active: processStatusKeys.includes(processStatus.key)
@@ -66,7 +66,7 @@ const useProcessStatus = processStatusKeys => {
 	const previousKeys = usePrevious(processStatusKeys);
 
 	useEffect(() => {
-		const filterChanged = !compareArrays(processStatusKeys, previousKeys);
+		const filterChanged = !compareArrays(previousKeys, processStatusKeys);
 
 		if (filterChanged && processStatuses.length) {
 			updateData();

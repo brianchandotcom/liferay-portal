@@ -28,7 +28,7 @@ const useSLAStatus = slaStatusKeys => {
 	const [slaStatuses, setSLAStatuses] = useState([]);
 
 	const fetchData = () => {
-		const slaStatuses = [overdueStatus, onTimeStatus, untrackedStatus].map(
+		const slaStatuses = [onTimeStatus, overdueStatus, untrackedStatus].map(
 			slaStatus => ({
 				...slaStatus,
 				active: slaStatusKeys.includes(slaStatus.key)
@@ -60,7 +60,7 @@ const useSLAStatus = slaStatusKeys => {
 	const previousKeys = usePrevious(slaStatusKeys);
 
 	useEffect(() => {
-		const filterChanged = !compareArrays(slaStatusKeys, previousKeys);
+		const filterChanged = !compareArrays(previousKeys, slaStatusKeys);
 
 		if (filterChanged && slaStatuses.length) {
 			updateData();

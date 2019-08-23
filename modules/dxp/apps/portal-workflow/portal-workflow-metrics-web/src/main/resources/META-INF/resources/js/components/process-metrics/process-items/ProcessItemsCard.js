@@ -81,7 +81,7 @@ ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
 
 			<Request.Success>
 				{process && (
-					<div className={'pt-1 pb-4 d-flex'}>
+					<div className={'d-flex pb-4 pt-1'}>
 						{PANELS.map((panel, index) => (
 							<SummaryCard
 								{...panel}

@@ -92,7 +92,7 @@ const useTimeRange = timeRangeKeys => {
 	const previousKeys = usePrevious(timeRangeKeys);
 
 	useEffect(() => {
-		const filterChanged = !compareArrays(timeRangeKeys, previousKeys);
+		const filterChanged = !compareArrays(previousKeys, timeRangeKeys);
 
 		if (filterChanged && timeRanges.length) {
 			updateData();
@@ -102,9 +102,9 @@ const useTimeRange = timeRangeKeys => {
 	return {
 		defaultTimeRange,
 		getSelectedTimeRange,
-		showCustomForm,
 		setShowCustomForm,
 		setTimeRanges,
+		showCustomForm,
 		timeRanges
 	};
 };

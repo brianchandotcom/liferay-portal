@@ -12,7 +12,7 @@ const InstanceListTable = ({items}) => {
 					<tr>
 						<th style={{width: '4%'}} />
 
-						<th className="table-head-title" style={{width: '10%'}}>
+						<th className="table-head-title" style={{width: '9%'}}>
 							{Liferay.Language.get('id')}
 						</th>
 
@@ -23,7 +23,7 @@ const InstanceListTable = ({items}) => {
 							{Liferay.Language.get('item-subject')}
 						</th>
 
-						<th className="table-head-title" style={{width: '25%'}}>
+						<th className="table-head-title" style={{width: '23%'}}>
 							{Liferay.Language.get('process-step')}
 						</th>
 
@@ -33,7 +33,7 @@ const InstanceListTable = ({items}) => {
 
 						<th
 							className="pr-4 table-head-title text-right"
-							style={{width: '15%'}}
+							style={{width: '18%'}}
 						>
 							{Liferay.Language.get('creation-date')}
 						</th>

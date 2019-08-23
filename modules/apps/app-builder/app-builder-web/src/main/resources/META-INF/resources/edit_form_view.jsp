@@ -19,22 +19,29 @@
 <%
 String editFormViewRootElementId = renderResponse.getNamespace() + "-app-builder-edit-form-view";
 String componentId = renderResponse.getNamespace() + "dataLayoutBuilder";
+long dataDefinitionId = ParamUtil.getLong(request, "dataDefinitionId");
+long dataLayoutId = ParamUtil.getLong(request, "dataLayoutId");
+boolean isNewCustomObject = ParamUtil.getBoolean(request, "isNewCustomObject");
 %>
 
-<div id="<%= editFormViewRootElementId %>"></div>
+<div class="app-builder-root">
+	<aui:form>
+		<aui:input name="dataDefinition" type="hidden" />
+		<aui:input name="dataLayout" type="hidden" />
 
-<aui:form>
-	<aui:input name="dataDefinition" type="hidden" />
-	<aui:input name="dataLayout" type="hidden" />
+		<div id="<%= editFormViewRootElementId %>"></div>
 
-	<liferay-data-engine:data-layout-builder
-		componentId="<%= componentId %>"
-		dataDefinitionInputId="dataDefinition"
-		dataLayoutId="<%= 0L %>"
-		dataLayoutInputId="dataLayout"
-		namespace="<%= renderResponse.getNamespace() %>"
-	/>
-</aui:form>
+		<liferay-data-engine:data-layout-builder
+			componentId="<%= componentId %>"
+			dataDefinitionInputId="dataDefinition"
+			dataLayoutId="<%= 0L %>"
+			dataLayoutInputId="dataLayout"
+			namespace="<%= renderResponse.getNamespace() %>"
+		/>
+	</aui:form>
+</div>
+
+<portlet:renderURL var="basePortletURL" />
 
 <aui:script require='<%= npmResolvedPackageName + "/js/pages/form-view/EditFormViewApp.es as EditFormViewApp" %>'>
 	Liferay.componentReady('<%= componentId %>').then(
@@ -42,7 +49,11 @@ String componentId = renderResponse.getNamespace() + "dataLayoutBuilder";
 			EditFormViewApp.default(
 				'<%= editFormViewRootElementId %>',
 				{
-					dataLayoutBuilder: dataLayoutBuilder
+					basePortletURL: '<%= basePortletURL %>',
+					dataLayoutBuilder: dataLayoutBuilder,
+					dataDefinitionId: <%= dataDefinitionId %>,
+					dataLayoutId: <%= dataLayoutId %>,
+					isNewCustomObject: <%= isNewCustomObject %>
 				}
 			);
 		}

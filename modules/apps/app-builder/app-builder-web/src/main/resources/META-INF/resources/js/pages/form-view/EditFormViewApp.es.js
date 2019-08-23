@@ -17,10 +17,10 @@ import React from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 
-export default id => {
+export default (id, {basePortletURL, ...props}) => {
 	render(
-		<AppContextProvider>
-			<EditFormView />
+		<AppContextProvider basePortletURL={basePortletURL}>
+			<EditFormView {...props} />
 		</AppContextProvider>,
 		document.getElementById(id)
 	);

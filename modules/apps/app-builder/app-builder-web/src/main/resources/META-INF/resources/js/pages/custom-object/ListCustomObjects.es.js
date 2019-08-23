@@ -107,6 +107,8 @@ export default withRouter(({history}) => {
 			if (isAddFormView) {
 				Liferay.Util.navigate(
 					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
+						dataDefinitionId: id,
+						isNewCustomObject: true,
 						mvcRenderCommandName: '/edit_form_view'
 					})
 				);

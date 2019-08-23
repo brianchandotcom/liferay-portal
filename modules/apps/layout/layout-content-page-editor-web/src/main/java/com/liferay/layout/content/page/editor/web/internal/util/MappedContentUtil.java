@@ -195,29 +195,7 @@ public class MappedContentUtil {
 		return jsonObject;
 	}
 
-	private static JSONObject _getJournalArticleStatusJSONObject(long classPK)
-		throws PortalException {
-
-		JournalArticle journalArticle =
-			JournalArticleServiceUtil.getLatestArticle(classPK);
-
-		journalArticle = JournalArticleServiceUtil.getLatestArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			WorkflowConstants.STATUS_ANY);
-
-		return JSONUtil.put(
-			"hasApprovedVersion",
-			!journalArticle.isApproved() && journalArticle.hasApprovedVersion()
-		).put(
-			"label",
-			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
-		).put(
-			"style",
-			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
-		);
-	}
-
-	private static Set<AssetEntry> _getMappedAssetEntries(
+	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK)
 		throws PortalException {
 
@@ -292,6 +270,36 @@ public class MappedContentUtil {
 		}
 
 		return assetEntries;
+	}
+
+	private static JSONObject _getJournalArticleStatusJSONObject(long classPK)
+		throws PortalException {
+
+		JournalArticle journalArticle =
+			JournalArticleServiceUtil.getLatestArticle(classPK);
+
+		journalArticle = JournalArticleServiceUtil.getLatestArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			WorkflowConstants.STATUS_ANY);
+
+		return JSONUtil.put(
+			"hasApprovedVersion",
+			!journalArticle.isApproved() && journalArticle.hasApprovedVersion()
+		).put(
+			"label",
+			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
+		).put(
+			"style",
+			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
+		);
+	}
+
+	private static Set<AssetEntry> _getMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK)
+		throws PortalException {
+
+		return _getFragmentEntryLinksMappedAssetEntries(
+			groupId, layoutClassNameId, layoutClassPK);
 	}
 
 	private static JSONObject _getMappedContentJSONObject(

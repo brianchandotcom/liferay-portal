@@ -23,8 +23,6 @@ import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
@@ -276,28 +274,6 @@ public class MappedContentUtil {
 		return assetEntries;
 	}
 
-	private static JSONObject _getJournalArticleStatusJSONObject(long classPK)
-		throws PortalException {
-
-		JournalArticle journalArticle =
-			JournalArticleServiceUtil.getLatestArticle(classPK);
-
-		journalArticle = JournalArticleServiceUtil.getLatestArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			WorkflowConstants.STATUS_ANY);
-
-		return JSONUtil.put(
-			"hasApprovedVersion",
-			!journalArticle.isApproved() && journalArticle.hasApprovedVersion()
-		).put(
-			"label",
-			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
-		).put(
-			"style",
-			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
-		);
-	}
-
 	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK,
 			long segmentsExperienceId, Set<Long> mappedClassPKs)
@@ -365,14 +341,51 @@ public class MappedContentUtil {
 			ResourceActionsUtil.getModelResource(
 				themeDisplay.getLocale(), assetEntry.getClassName())
 		).put(
-			"status",
-			_getJournalArticleStatusJSONObject(assetEntry.getClassPK())
+			"status", _getStatusJSONObject(assetEntry)
 		).put(
 			"title", assetEntry.getTitle(themeDisplay.getLocale())
 		).put(
 			"usagesCount",
 			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
 				assetEntry.getEntryId())
+		);
+	}
+
+	private static JSONObject _getStatusJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			assetEntry.getAssetRendererFactory();
+
+		AssetRenderer latestAssetRenderer =
+			assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+
+		boolean hasApprovedVersion = false;
+
+		if (latestAssetRenderer.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) {
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(),
+				AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+			if (assetRenderer.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				hasApprovedVersion = true;
+			}
+		}
+
+		return JSONUtil.put(
+			"hasApprovedVersion", hasApprovedVersion
+		).put(
+			"label",
+			WorkflowConstants.getStatusLabel(latestAssetRenderer.getStatus())
+		).put(
+			"style",
+			LabelItem.getStyleFromWorkflowStatus(
+				latestAssetRenderer.getStatus())
 		);
 	}
 

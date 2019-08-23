@@ -69,6 +69,26 @@ public class SegmentsExperimentRelLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteSegmentsExperimentRel() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+			segmentsExperimentRel);
+
+		Assert.assertNull(
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId()));
+	}
+
+	@Test
 	public void testGetSegmentsExperimentRels() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 

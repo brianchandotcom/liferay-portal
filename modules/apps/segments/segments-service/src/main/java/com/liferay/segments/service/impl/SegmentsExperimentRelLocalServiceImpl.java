@@ -115,8 +115,16 @@ public class SegmentsExperimentRelLocalServiceImpl
 	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
 		throws PortalException {
 
-		segmentsExperimentRelPersistence.removeBySegmentsExperimentId(
-			segmentsExperimentId);
+		List<SegmentsExperimentRel> segmentsExperimentRels =
+			segmentsExperimentRelPersistence.findBySegmentsExperimentId(
+				segmentsExperimentId);
+
+		for (SegmentsExperimentRel segmentsExperimentRel :
+				segmentsExperimentRels) {
+
+			segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+				segmentsExperimentRel);
+		}
 	}
 
 	@Override

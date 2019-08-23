@@ -13,16 +13,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import SynonymSetsForm from './components/SynonymSetsForm.es';
 import ThemeContext from './ThemeContext.es';
+import {ClayIconSpriteContext} from '@clayui/icon';
 
 export default function(id, props, context) {
 	// LPS-100378
 	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
-		<ThemeContext.Provider value={context}>
-			<div className="synonym-sets-root">
-				<SynonymSetsForm {...props} />
-			</div>
-		</ThemeContext.Provider>,
+		<ClayIconSpriteContext.Provider value={context.spritemap}>
+			<ThemeContext.Provider value={context}>
+				<div className="synonym-sets-root">
+					<SynonymSetsForm {...props} />
+				</div>
+			</ThemeContext.Provider>
+		</ClayIconSpriteContext.Provider>,
 		document.getElementById(id)
 	);
 }

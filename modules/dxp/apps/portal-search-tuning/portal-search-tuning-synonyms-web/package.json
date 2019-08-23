@@ -1,10 +1,11 @@
 {
 	"dependencies": {
+		"@clayui/form": "^3.0.0-milestone.2",
+		"@clayui/icon": "^3.0.0-milestone.2",
 		"classnames": "2.2.6",
 		"prop-types": "15.7.2",
 		"react": "16.9.0",
-		"react-dom": "16.9.0",
-		"react-select": "^2.4.2"
+		"react-dom": "16.9.0"
 	},
 	"main": "js/index-synonym-sets.es.js",
 	"name": "portal-search-synonyms-web",

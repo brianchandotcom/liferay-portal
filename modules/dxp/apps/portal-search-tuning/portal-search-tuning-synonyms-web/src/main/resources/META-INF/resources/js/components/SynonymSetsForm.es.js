@@ -10,9 +10,18 @@
  */
 
 import ClayButton from './shared/ClayButton.es';
-import ClayMultiselect from './shared/ClayMultiselect.es';
+import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+
+/**
+ * Filters out empty strings from the passed in array.
+ * @param {Array} list The list of strings to filter.
+ * @returns {Array} The filtered list.
+ */
+function filterEmptyStrings(list) {
+	return list.filter(item => item.trim());
+}
 
 class SynonymSetsForm extends Component {
 	static propTypes = {
@@ -24,6 +33,7 @@ class SynonymSetsForm extends Component {
 	};
 
 	state = {
+		inputValue: '',
 		synonyms: []
 	};
 
@@ -31,14 +41,16 @@ class SynonymSetsForm extends Component {
 		window.history.back();
 	};
 
+	_handleInputChange = value => {
+		this.setState({inputValue: value});
+	};
+
 	_handleSubmit = event => {
 		event.preventDefault();
 
 		const form = document.forms[this.props.formName];
 
-		const synonymSetsString = this.state.synonyms
-			.map(s => s.value)
-			.toString();
+		const synonymSetsString = this.state.synonyms;
 
 		form.elements[this.props.inputName].value = synonymSetsString;
 
@@ -50,8 +62,12 @@ class SynonymSetsForm extends Component {
 	};
 
 	_handleUpdate = value => {
+		const newValue = filterEmptyStrings(value.map(item => item.trim()));
+
 		this.setState({
-			synonyms: value
+			synonyms: newValue.filter(
+				(item, index) => newValue.indexOf(item) === index
+			)
 		});
 	};
 
@@ -62,16 +78,15 @@ class SynonymSetsForm extends Component {
 			this._originalSynonymSets = props.synonymSets;
 
 			props.synonymSets.split(',').forEach(synonym => {
-				this.state.synonyms.push({
-					label: synonym,
-					value: synonym
-				});
+				this.state.synonyms.push(
+					synonym
+				);
 			});
 		}
 	}
 
 	render() {
-		const {synonyms} = this.state;
+		const {inputValue, synonyms} = this.state;
 
 		return (
 			<div className="synonym-sets-form">
@@ -87,21 +102,16 @@ class SynonymSetsForm extends Component {
 							)}
 						</div>
 
-						<label>{Liferay.Language.get('synonyms')}</label>
-
-						<ClayMultiselect
-							onAction={this._handleUpdate}
-							onSubmit={this._handleSubmit}
-							value={synonyms}
+						<ClayForm.MultiSelect
+							helpText={Liferay.Language.get(
+								'type-a-comma-or-press-enter-to-input-a-synonym'
+							)}
+							inputValue={inputValue}
+							items={synonyms}
+							label={Liferay.Language.get('synonyms')}
+							onInputChange={this._handleInputChange}
+							onItemsChange={this._handleUpdate}
 						/>
-
-						<div className="form-feedback-group">
-							<div className="form-text">
-								{Liferay.Language.get(
-									'type-a-comma-or-press-enter-to-input-a-synonym'
-								)}
-							</div>
-						</div>
 
 						<div className="sheet-footer">
 							<ClayButton

@@ -15,7 +15,7 @@
 import 'clay-label';
 import 'clay-progress-bar';
 import 'clay-sticker';
-import {PortletBase, fetch, openToast} from 'frontend-js-web';
+import {PortletBase, createPortletURL, fetch, openToast} from 'frontend-js-web';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
 
@@ -196,7 +196,7 @@ class ChangeListsHistory extends PortletBase {
 		);
 
 		processUsers.forEach(processUser => {
-			const parameters = {
+			const userFilterParameters = {
 				displayStyle: 'list',
 				orderByCol: this.orderByCol,
 				orderByType: this.orderByType,
@@ -204,17 +204,17 @@ class ChangeListsHistory extends PortletBase {
 			};
 
 			if (this.keywords) {
-				parameters.keywords = this.keywords;
+				userFilterParameters.keywords = this.keywords;
 			}
 
-			const userFilterUrl = Liferay.Util.PortletURL.createURL(
+			const userFilterURL = createPortletURL(
 				this.baseURL,
-				parameters
+				userFilterParameters
 			);
 
 			updatedFilterByUserItems.push({
 				active: this.filterUser === processUser.userId.toString(),
-				href: userFilterUrl,
+				href: userFilterURL.toString(),
 				label: processUser.userName,
 				type: 'item'
 			});
@@ -229,24 +229,24 @@ class ChangeListsHistory extends PortletBase {
 		this.processEntries = [];
 
 		processEntries.forEach(processEntry => {
-			const viewURL = Liferay.Util.PortletURL.createURL(this.baseURL);
+			const viewURL = createPortletURL(this.baseURL);
 
-			const parameters = {
+			const detailsParameters = {
 				mvcRenderCommandName: '/change_lists_history/view_details',
-				backURL: viewURL,
+				backURL: viewURL.toString(),
 				ctCollectionId: processEntry.ctcollection.ctCollectionId,
 				orderByCol: 'title',
 				orderByType: 'desc'
 			};
 
-			const detailsURL = Liferay.Util.PortletURL.createURL(
+			const detailsURL = createPortletURL(
 				this.baseURL,
-				parameters
+				detailsParameters
 			);
 
 			this.processEntries.push({
 				description: processEntry.ctcollection.description,
-				detailsLink: detailsURL,
+				detailsLink: detailsURL.toString(),
 				name: processEntry.ctcollection.name,
 				percentage: processEntry.percentage,
 				state: ChangeListsHistory._getState(processEntry.status),

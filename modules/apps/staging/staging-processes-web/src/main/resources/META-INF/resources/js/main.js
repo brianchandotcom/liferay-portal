@@ -799,62 +799,65 @@ AUI.add(
 					var redirectNode = instance.byId('redirect');
 
 					if (cmdNode.val() === 'add' || cmdNode.val() === 'update') {
-						var parameters = {
+						var redirectParameters = {
 							cmd: cmdNode.val()
 						};
 
 						if (instance._exportLAR) {
-							parameters.mvcRenderCommandName =
+							redirectParameters.mvcRenderCommandName =
 								'editExportConfiguration';
-							parameters.tabs2 = 'new-export-process';
-							parameters.exportConfigurationButtons = 'custom';
+							redirectParameters.tabs2 = 'new-export-process';
+							redirectParameters.exportConfigurationButtons =
+								'custom';
 						} else {
-							parameters.mvcRenderCommandName =
+							redirectParameters.mvcRenderCommandName =
 								'editPublishConfiguration';
-							parameters.tabs2 = 'new-publication-process';
-							parameters.publishConfigurationButtons = 'custom';
+							redirectParameters.tabs2 =
+								'new-publication-process';
+							redirectParameters.publishConfigurationButtons =
+								'custom';
 						}
 
 						var groupIdNode = instance.byId('groupId');
 
 						if (groupIdNode) {
-							parameters.groupId = groupIdNode.val();
+							redirectParameters.groupId = groupIdNode.val();
 						}
 
 						var liveGroupIdNode = instance.byId('liveGroupId');
 
 						if (liveGroupIdNode) {
-							parameters.liveGroupId = liveGroupIdNode.val();
+							redirectParameters.liveGroupId = liveGroupIdNode.val();
 						}
 
 						var privateLayoutNode = instance.byId('privateLayout');
 
 						if (privateLayoutNode) {
-							parameters.privateLayout = privateLayoutNode.val();
+							redirectParameters.privateLayout = privateLayoutNode.val();
 						}
 
 						var rootNodeNameNode = instance.byId('rootNodeName');
 
 						if (rootNodeNameNode) {
-							parameters.rootNodeName = rootNodeNameNode.val();
+							redirectParameters.rootNodeName = rootNodeNameNode.val();
 						}
 
-						var portletURL = Liferay.Util.PortletURL.createURL(
+						var redirectPortletURL = Liferay.Util.PortletURL.createPortletURL(
 							redirectNode.val(),
-							parameters
+							redirectParameters
 						);
 
-						redirectNode.val(portletURL);
+						redirectNode.val(redirectPortletURL.toString());
 					}
 
 					if (cmdNode) {
 						var form = instance.get('form');
 
-						var portletURL = Liferay.Util.PortletURL.createActionURL(
+						var formPortletURL = Liferay.Util.PortletURL.createActionURL(
 							form.get('action')
 						);
 
-						form.set('action', portletURL);
+						form.set('action', formPortletURL.toString());
 
 						var currentURL = instance.byId('currentURL');
 

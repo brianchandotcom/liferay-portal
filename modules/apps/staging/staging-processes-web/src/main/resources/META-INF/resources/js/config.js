@@ -32,7 +32,6 @@
 							'aui-tree-view',
 							'liferay-notice',
 							'liferay-portlet-base',
-							'liferay-portlet-url',
 							'liferay-store',
 							'liferay-util-window'
 						]

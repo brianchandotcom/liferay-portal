@@ -98,6 +98,11 @@ public class SegmentsExperimentDisplayContext {
 			"/delete_segments_experiment_rel");
 	}
 
+	public String getEditSegmentsExperimentStatusURL() {
+		return _getSegmentsExperimentActionURL(
+			"/edit_segments_experiment_status");
+	}
+
 	public String getEditSegmentsExperimentURL() {
 		return _getSegmentsExperimentActionURL("/edit_segments_experiment");
 	}

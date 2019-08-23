@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="PersistenceCallCheck" files="modules/apps/portal/portal-dao-test/src/testIntegration/java/com/liferay/portal/dao/orm/hibernate/test/SessionSuspendedConnectionTest\.java" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/portal/portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeServiceModuleRelease.java" />
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="modules/apps/portal/portal-upgrade-api/src/main/java/com/liferay/portal/upgrade/release/BaseUpgradeWebModuleRelease.java" />

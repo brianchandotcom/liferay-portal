@@ -264,8 +264,8 @@ public class ResourceConfigurationFactory {
 
 		List<V1EnvVar> v1EnvVars = new ArrayList<>(
 			Arrays.asList(
-				_newConfigurationEnvVar("DB2INSTANCE", "db2inst1"),
 				_newConfigurationEnvVar("DB2INST1_PASSWORD", db2Password),
+				_newConfigurationEnvVar("DB2INSTANCE", "db2inst1"),
 				_newConfigurationEnvVar("LICENSE", "accept")));
 
 		return _newDatabaseConfigurationPod(

@@ -124,6 +124,18 @@ public class SegmentsExperimentRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			deleteSegmentsExperimentRel(
+				com.liferay.segments.model.SegmentsExperimentRel
+					segmentsExperimentRel,
+				boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+			segmentsExperimentRel, force);
+	}
+
+	@Override
 	public void deleteSegmentsExperimentRels(long segmentsExperimentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

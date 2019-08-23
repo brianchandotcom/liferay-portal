@@ -37,7 +37,7 @@ const ShowResolvedCommentsToggle = () => {
 				checked={showResolvedComments}
 				disabled={!showResolvedComments && !hasResolvedComments}
 				label={Liferay.Language.get('show-resolved-comments')}
-				onChange={() => dispatch(toggleShowResolvedComments())}
+				onClick={() => dispatch(toggleShowResolvedComments())}
 			/>
 		</div>
 	);

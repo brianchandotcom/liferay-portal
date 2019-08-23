@@ -18,9 +18,15 @@ import {Config} from 'metal-state';
 
 import '../floating_toolbar/fragment_configuration/FloatingToolbarFragmentConfigurationPanel.es';
 import './FragmentEntryLinkContent.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from '../../actions/saveChanges.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 import {
+	DUPLICATE_FRAGMENT_ENTRY_LINK,
 	MOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_SELECTED_SIDEBAR_PANEL_ID
@@ -195,6 +201,22 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Duplicate this fragmentEntryLink
+	 * @private
+	 */
+	_duplicateFragmentEntryLink() {
+		this.store
+			.dispatch(enableSavingChangesStatusAction())
+			.dispatch({
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				fragmentEntryLinkRowType: this.rowType,
+				type: DUPLICATE_FRAGMENT_ENTRY_LINK
+			})
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
+	}
+
+	/**
 	 * Disposes of an existing floating toolbar instance.
 	 * @private
 	 */
@@ -215,6 +237,8 @@ class FragmentEntryLink extends Component {
 		const buttons = [];
 
 		buttons.push(FLOATING_TOOLBAR_BUTTONS.removeFragment);
+
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
 
 		if (this._shouldShowConfigPanel()) {
 			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
@@ -239,6 +263,12 @@ class FragmentEntryLink extends Component {
 				this.store,
 				removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
 			);
+		} else if (
+			panelId === FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId
+		) {
+			event.preventDefault();
+
+			this._duplicateFragmentEntryLink();
 		}
 	}
 

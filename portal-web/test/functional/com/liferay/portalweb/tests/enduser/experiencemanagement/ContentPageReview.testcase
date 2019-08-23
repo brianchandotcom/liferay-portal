@@ -248,6 +248,51 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
+	@description = "This case ensures a user can reopen a comment already marked as resolved after publishing a content page."
+	@priority = "4"
+	test ReopenResolvedComment {
+		property test.name.skip.portal.instance = "ContentPageReview#ReopenResolvedComment";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Static Text");
+
+		PageEditor.addComment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentComment = "This is a fragment comment",
+			fragmentName = "Static Text",
+			position = "1");
+
+		PageEditor.replyToComment(commentReply = "Fragment Comment 1");
+
+		PageEditor.resolveComment(fragmentComment = "This is a fragment comment");
+
+		PageEditor.clickPublish();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "This is static text.",
+			key_fragmentClass = "static-text",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.reopenResolvedComment(
+			commentReply = "Fragment Comment 1",
+			fragmentComment = "This is a fragment comment");
+
+		PageEditor.replyToComment(commentReply = "Fragment Comment 2");
+	}
+
 	@description = "This case ensures a user can mark a fragment comment as resolved after publishing a content page."
 	@priority = "4"
 	test ResolveComment {

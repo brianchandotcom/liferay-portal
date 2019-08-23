@@ -72,8 +72,12 @@ public class OAuth2Manager {
 		AccessToken accessToken = accessTokenOptional.get();
 
 		if (!accessToken.isValid()) {
-			return Optional.of(
-				refreshOAuth2AccessToken(companyId, userId, accessToken));
+			if (accessToken.getRefreshToken() != null) {
+				return Optional.of(
+					refreshOAuth2AccessToken(companyId, userId, accessToken));
+			}
+
+			return Optional.empty();
 		}
 
 		return Optional.of(accessToken);

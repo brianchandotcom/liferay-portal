@@ -120,6 +120,24 @@ public class MappedContentUtil {
 		return null;
 	}
 
+	public static Set<AssetEntry> getMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		Set<Long> mappedClassPKs = new HashSet<>();
+
+		Set<AssetEntry> assetEntries = _getFragmentEntryLinksMappedAssetEntries(
+			groupId, layoutClassNameId, layoutClassPK, mappedClassPKs);
+
+		assetEntries.addAll(
+			_getLayoutMappedAssetEntries(
+				groupId, layoutClassNameId, layoutClassPK, segmentsExperienceId,
+				mappedClassPKs));
+
+		return assetEntries;
+	}
+
 	public static JSONArray getMappedContentsJSONArray(
 		String backURL, long groupId, HttpServletRequest httpServletRequest,
 		long layoutClassNameId, long layoutClassPK, long segmentsExperienceId) {
@@ -127,7 +145,7 @@ public class MappedContentUtil {
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
-			Set<AssetEntry> assetEntries = _getMappedAssetEntries(
+			Set<AssetEntry> assetEntries = getMappedAssetEntries(
 				groupId, layoutClassNameId, layoutClassPK,
 				segmentsExperienceId);
 
@@ -335,24 +353,6 @@ public class MappedContentUtil {
 					}
 				}
 			});
-
-		return assetEntries;
-	}
-
-	private static Set<AssetEntry> _getMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK,
-			long segmentsExperienceId)
-		throws PortalException {
-
-		Set<Long> mappedClassPKs = new HashSet<>();
-
-		Set<AssetEntry> assetEntries = _getFragmentEntryLinksMappedAssetEntries(
-			groupId, layoutClassNameId, layoutClassPK, mappedClassPKs);
-
-		assetEntries.addAll(
-			_getLayoutMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK, segmentsExperienceId,
-				mappedClassPKs));
 
 		return assetEntries;
 	}

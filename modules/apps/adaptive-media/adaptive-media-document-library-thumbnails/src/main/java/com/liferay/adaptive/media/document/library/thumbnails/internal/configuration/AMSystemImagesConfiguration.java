@@ -40,7 +40,7 @@ public interface AMSystemImagesConfiguration {
 		description = "preview-am-configuration-description",
 		name = "preview-am-configuration", required = false
 	)
-	public String previewlAMConfiguration();
+	public String previewAMConfiguration();
 
 	/**
 	 * Sets the Adaptive Media Configuration ID for thumbnail resolution.

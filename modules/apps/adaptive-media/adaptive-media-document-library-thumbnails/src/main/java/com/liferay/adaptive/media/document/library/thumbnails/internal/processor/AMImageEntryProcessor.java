@@ -121,7 +121,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_getAdaptiveMediaStream(
 				fileVersion,
-				_amSystemImagesConfiguration.previewlAMConfiguration(),
+				_amSystemImagesConfiguration.previewAMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(
@@ -147,7 +147,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_getAdaptiveMediaStream(
 				fileVersion,
-				_amSystemImagesConfiguration.previewlAMConfiguration(),
+				_amSystemImagesConfiguration.previewAMConfiguration(),
 				PrefsPropsUtil.getInteger(
 					PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH),
 				PrefsPropsUtil.getInteger(

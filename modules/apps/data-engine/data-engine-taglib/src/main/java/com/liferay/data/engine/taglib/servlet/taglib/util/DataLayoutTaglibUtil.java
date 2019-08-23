@@ -382,6 +382,10 @@ public class DataLayoutTaglibUtil {
 			_createFieldContext(
 				httpServletRequest, LocaleThreadLocal.getThemeDisplayLocale(),
 				fieldType.getName())
+		).put(
+			"system",
+			MapUtil.getBoolean(
+				fieldTypeProperties, "data.engine.field.type.system")
 		);
 	}
 

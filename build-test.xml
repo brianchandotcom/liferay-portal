@@ -7862,6 +7862,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-facebook-properties" />
 		<antcall target="prepare-selenium-google-properties" />
+		<antcall target="prepare-selenium-onedrive-properties" />
 		<antcall target="prepare-selenium-openid-properties" />
 		<antcall target="prepare-selenium-recaptcha-properties" />
 		<antcall target="prepare-selenium-required-properties" />
@@ -8619,6 +8620,35 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					google.client.secret.3=${google.client.secret.3}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-onedrive-properties">
+		<if>
+			<isset property="onedrive.client.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					onedrive.client.id=${onedrive.client.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="onedrive.client.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					onedrive.client.secret=${onedrive.client.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="onedrive.tenant" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					onedrive.tenant=${onedrive.tenant}
 				</echo>
 			</then>
 		</if>

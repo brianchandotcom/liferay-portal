@@ -1169,7 +1169,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				for (Task task : project.getTasks()) {
 					String taskName = task.getName();
 
-					if (taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME) ||
+					if (taskName.equals(DEPLOY_FAST_TASK_NAME) ||
+						taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME) ||
 						taskName.equals("eclipseClasspath") ||
 						taskName.equals("eclipseProject") ||
 						taskName.equals("ideaModule") ||

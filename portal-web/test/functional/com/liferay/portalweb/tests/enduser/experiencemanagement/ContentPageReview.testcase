@@ -131,6 +131,10 @@ definition {
 
 		PageEditor.replyToComment(commentReply = "Fragment Comment.");
 
+		PageEditor.viewCommentReply(
+			commentReply = "Fragment Comment.",
+			user = "Test Test");
+
 		PageEditor.deleteComment(fragmentComment = "This is a fragment comment.");
 	}
 

@@ -1,3 +1,2 @@
 Bundle-SymbolicName: org.springframework.orm
 Bundle-Version: 4.3.22.LIFERAY-PATCHED-1
-Export-Package: org.springframework.*

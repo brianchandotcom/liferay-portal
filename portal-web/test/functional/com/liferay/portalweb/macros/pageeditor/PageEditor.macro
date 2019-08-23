@@ -303,6 +303,26 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro reopenResolvedComment {
+		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL");
+
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL");
+
+		AssertTextEquals(
+			key_fragmentComment = "${fragmentComment}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_RESOLVED_COMMENTS_ENTRY",
+			value1 = "${fragmentComment}");
+
+		AssertTextEquals(
+			key_commentReply = "${commentReply}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_RESOLVED_COMMENTS_ENTRY",
+			value1 = "${commentReply}");
+
+		AssertElementPresent(locator1 = "Button#REPLY_DISABLED");
+
+		Click.clickNoMouseOver(locator1 = "Button#REOPEN");
+	}
+
 	macro replyToComment {
 		AssertClick(
 			locator1 = "Button#REPLY",
@@ -323,6 +343,8 @@ definition {
 	}
 
 	macro resolveComment {
+		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED");
+
 		Click.clickNoMouseOver(locator1 = "Button#RESOLVE");
 
 		AssertTextNotPresent(value1 = "${fragmentComment}");

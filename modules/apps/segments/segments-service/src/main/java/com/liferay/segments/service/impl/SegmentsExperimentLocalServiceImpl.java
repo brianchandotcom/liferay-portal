@@ -256,21 +256,10 @@ public class SegmentsExperimentLocalServiceImpl
 			long segmentsExperimentId, int status)
 		throws PortalException {
 
-		SegmentsExperiment segmentsExperiment =
+		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
-				segmentsExperimentId);
-
-		_validateStatus(
-			segmentsExperiment.getSegmentsExperimentId(),
-			segmentsExperiment.getSegmentsExperienceId(),
-			segmentsExperiment.getClassNameId(),
-			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+				segmentsExperimentId),
 			status);
-
-		segmentsExperiment.setModifiedDate(new Date());
-		segmentsExperiment.setStatus(status);
-
-		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
 
 	@Override
@@ -314,21 +303,10 @@ public class SegmentsExperimentLocalServiceImpl
 			String segmentsExperimentKey, int status)
 		throws PortalException {
 
-		SegmentsExperiment segmentsExperiment =
+		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
-				segmentsExperimentKey, null);
-
-		_validateStatus(
-			segmentsExperiment.getSegmentsExperimentId(),
-			segmentsExperiment.getSegmentsExperienceId(),
-			segmentsExperiment.getClassNameId(),
-			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+				segmentsExperimentKey, null),
 			status);
-
-		segmentsExperiment.setModifiedDate(new Date());
-		segmentsExperiment.setStatus(status);
-
-		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
@@ -346,6 +324,23 @@ public class SegmentsExperimentLocalServiceImpl
 			ProjectionFactoryUtil.property("segmentsExperienceId"));
 
 		return dynamicQuery;
+	}
+
+	private SegmentsExperiment _updateSegmentsExperimentStatus(
+			SegmentsExperiment segmentsExperiment, int status)
+		throws SegmentsExperimentStatusException {
+
+		_validateStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperiment.getSegmentsExperienceId(),
+			segmentsExperiment.getClassNameId(),
+			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
+			status);
+
+		segmentsExperiment.setModifiedDate(new Date());
+		segmentsExperiment.setStatus(status);
+
+		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
 
 	private void _validate(

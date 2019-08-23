@@ -1,5 +1,5 @@
 buildCSS {
-	imports=[
+	imports = [
 		new File(npmInstall.nodeModulesDir, "clay-css/src/scss")
 	]
 }

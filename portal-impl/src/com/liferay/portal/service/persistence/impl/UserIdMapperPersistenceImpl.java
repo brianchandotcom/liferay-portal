@@ -120,18 +120,22 @@ public class UserIdMapperPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user ID mappers
 	 */
+	@Deprecated
 	@Override
 	public List<UserIdMapper> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserIdMapper> orderByComparator) {
+		OrderByComparator<UserIdMapper> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUserId(userId, start, end, orderByComparator, true);
+		return findByUserId(userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -145,14 +149,12 @@ public class UserIdMapperPersistenceImpl
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user ID mappers
 	 */
 	@Override
 	public List<UserIdMapper> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserIdMapper> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserIdMapper> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -162,30 +164,23 @@ public class UserIdMapperPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUserId;
+			finderArgs = new Object[] {userId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
-		List<UserIdMapper> list = null;
+		List<UserIdMapper> list = (List<UserIdMapper>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (UserIdMapper userIdMapper : list) {
+				if ((userId != userIdMapper.getUserId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserIdMapper userIdMapper : list) {
-					if ((userId != userIdMapper.getUserId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -241,14 +236,10 @@ public class UserIdMapperPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -632,15 +623,20 @@ public class UserIdMapperPersistenceImpl
 	}
 
 	/**
-	 * Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the user ID mapper where userId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_T(long,String)}
 	 * @param userId the user ID
 	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
+	@Deprecated
 	@Override
-	public UserIdMapper fetchByU_T(long userId, String type) {
-		return fetchByU_T(userId, type, true);
+	public UserIdMapper fetchByU_T(
+		long userId, String type, boolean useFinderCache) {
+
+		return fetchByU_T(userId, type);
 	}
 
 	/**
@@ -652,23 +648,13 @@ public class UserIdMapperPersistenceImpl
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	@Override
-	public UserIdMapper fetchByU_T(
-		long userId, String type, boolean useFinderCache) {
-
+	public UserIdMapper fetchByU_T(long userId, String type) {
 		type = Objects.toString(type, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {userId, type};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {userId, type};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_T, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByU_T, finderArgs, this);
 
 		if (result instanceof UserIdMapper) {
 			UserIdMapper userIdMapper = (UserIdMapper)result;
@@ -718,10 +704,8 @@ public class UserIdMapperPersistenceImpl
 				List<UserIdMapper> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByU_T, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByU_T, finderArgs, list);
 				}
 				else {
 					UserIdMapper userIdMapper = list.get(0);
@@ -732,10 +716,7 @@ public class UserIdMapperPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByU_T, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByU_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -888,15 +869,20 @@ public class UserIdMapperPersistenceImpl
 	}
 
 	/**
-	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the user ID mapper where type = &#63; and externalUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_E(String,String)}
 	 * @param type the type
 	 * @param externalUserId the external user ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
+	@Deprecated
 	@Override
-	public UserIdMapper fetchByT_E(String type, String externalUserId) {
-		return fetchByT_E(type, externalUserId, true);
+	public UserIdMapper fetchByT_E(
+		String type, String externalUserId, boolean useFinderCache) {
+
+		return fetchByT_E(type, externalUserId);
 	}
 
 	/**
@@ -908,24 +894,14 @@ public class UserIdMapperPersistenceImpl
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
 	 */
 	@Override
-	public UserIdMapper fetchByT_E(
-		String type, String externalUserId, boolean useFinderCache) {
-
+	public UserIdMapper fetchByT_E(String type, String externalUserId) {
 		type = Objects.toString(type, "");
 		externalUserId = Objects.toString(externalUserId, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {type, externalUserId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {type, externalUserId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_E, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByT_E, finderArgs, this);
 
 		if (result instanceof UserIdMapper) {
 			UserIdMapper userIdMapper = (UserIdMapper)result;
@@ -987,10 +963,8 @@ public class UserIdMapperPersistenceImpl
 				List<UserIdMapper> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByT_E, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByT_E, finderArgs, list);
 				}
 				else {
 					UserIdMapper userIdMapper = list.get(0);
@@ -1001,10 +975,7 @@ public class UserIdMapperPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByT_E, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByT_E, finderArgs);
 
 				throw processException(e);
 			}
@@ -1594,16 +1565,20 @@ public class UserIdMapperPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserIdMapperModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user ID mappers
 	 */
+	@Deprecated
 	@Override
 	public List<UserIdMapper> findAll(
-		int start, int end, OrderByComparator<UserIdMapper> orderByComparator) {
+		int start, int end, OrderByComparator<UserIdMapper> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1616,13 +1591,11 @@ public class UserIdMapperPersistenceImpl
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user ID mappers
 	 */
 	@Override
 	public List<UserIdMapper> findAll(
-		int start, int end, OrderByComparator<UserIdMapper> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<UserIdMapper> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1632,23 +1605,16 @@ public class UserIdMapperPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<UserIdMapper> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserIdMapper>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<UserIdMapper> list = (List<UserIdMapper>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1695,14 +1661,10 @@ public class UserIdMapperPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

@@ -119,18 +119,22 @@ public class ExpandoRowPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByTableId(long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
+	@Deprecated
 	@Override
 	public List<ExpandoRow> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByTableId(tableId, start, end, orderByComparator, true);
+		return findByTableId(tableId, start, end, orderByComparator);
 	}
 
 	/**
@@ -144,14 +148,12 @@ public class ExpandoRowPersistenceImpl
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
 	@Override
 	public List<ExpandoRow> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -161,30 +163,23 @@ public class ExpandoRowPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByTableId;
-				finderArgs = new Object[] {tableId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByTableId;
+			finderArgs = new Object[] {tableId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByTableId;
 			finderArgs = new Object[] {tableId, start, end, orderByComparator};
 		}
 
-		List<ExpandoRow> list = null;
+		List<ExpandoRow> list = (List<ExpandoRow>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (ExpandoRow expandoRow : list) {
+				if ((tableId != expandoRow.getTableId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoRow expandoRow : list) {
-					if ((tableId != expandoRow.getTableId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -240,14 +235,10 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -629,18 +620,22 @@ public class ExpandoRowPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassPK(long, int, int, OrderByComparator)}
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
+	@Deprecated
 	@Override
 	public List<ExpandoRow> findByClassPK(
 		long classPK, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator) {
+		OrderByComparator<ExpandoRow> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByClassPK(classPK, start, end, orderByComparator, true);
+		return findByClassPK(classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -654,14 +649,12 @@ public class ExpandoRowPersistenceImpl
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando rows
 	 */
 	@Override
 	public List<ExpandoRow> findByClassPK(
 		long classPK, int start, int end,
-		OrderByComparator<ExpandoRow> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoRow> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -671,30 +664,23 @@ public class ExpandoRowPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByClassPK;
-				finderArgs = new Object[] {classPK};
-			}
+			finderPath = _finderPathWithoutPaginationFindByClassPK;
+			finderArgs = new Object[] {classPK};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByClassPK;
 			finderArgs = new Object[] {classPK, start, end, orderByComparator};
 		}
 
-		List<ExpandoRow> list = null;
+		List<ExpandoRow> list = (List<ExpandoRow>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (ExpandoRow expandoRow : list) {
+				if ((classPK != expandoRow.getClassPK())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (ExpandoRow expandoRow : list) {
-					if ((classPK != expandoRow.getClassPK())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -750,14 +736,10 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1140,15 +1122,20 @@ public class ExpandoRowPersistenceImpl
 	}
 
 	/**
-	 * Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_C(long,long)}
 	 * @param tableId the table ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	 */
+	@Deprecated
 	@Override
-	public ExpandoRow fetchByT_C(long tableId, long classPK) {
-		return fetchByT_C(tableId, classPK, true);
+	public ExpandoRow fetchByT_C(
+		long tableId, long classPK, boolean useFinderCache) {
+
+		return fetchByT_C(tableId, classPK);
 	}
 
 	/**
@@ -1160,21 +1147,11 @@ public class ExpandoRowPersistenceImpl
 	 * @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	 */
 	@Override
-	public ExpandoRow fetchByT_C(
-		long tableId, long classPK, boolean useFinderCache) {
+	public ExpandoRow fetchByT_C(long tableId, long classPK) {
+		Object[] finderArgs = new Object[] {tableId, classPK};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {tableId, classPK};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByT_C, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByT_C, finderArgs, this);
 
 		if (result instanceof ExpandoRow) {
 			ExpandoRow expandoRow = (ExpandoRow)result;
@@ -1213,10 +1190,8 @@ public class ExpandoRowPersistenceImpl
 				List<ExpandoRow> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByT_C, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByT_C, finderArgs, list);
 				}
 				else {
 					ExpandoRow expandoRow = list.get(0);
@@ -1227,10 +1202,7 @@ public class ExpandoRowPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByT_C, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByT_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -1769,16 +1741,20 @@ public class ExpandoRowPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoRowModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando rows
 	 */
+	@Deprecated
 	@Override
 	public List<ExpandoRow> findAll(
-		int start, int end, OrderByComparator<ExpandoRow> orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoRow> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1791,13 +1767,11 @@ public class ExpandoRowPersistenceImpl
 	 * @param start the lower bound of the range of expando rows
 	 * @param end the upper bound of the range of expando rows (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando rows
 	 */
 	@Override
 	public List<ExpandoRow> findAll(
-		int start, int end, OrderByComparator<ExpandoRow> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<ExpandoRow> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1807,23 +1781,16 @@ public class ExpandoRowPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<ExpandoRow> list = null;
-
-		if (useFinderCache) {
-			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<ExpandoRow> list = (List<ExpandoRow>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1870,14 +1837,10 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

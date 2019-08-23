@@ -125,20 +125,23 @@ public class PortletItemPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PortletItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet items
 	 */
+	@Deprecated
 	@Override
 	public List<PortletItem> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator<PortletItem> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_C(
-			groupId, classNameId, start, end, orderByComparator, true);
+		return findByG_C(groupId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -153,14 +156,12 @@ public class PortletItemPersistenceImpl
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet items
 	 */
 	@Override
 	public List<PortletItem> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PortletItem> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -170,34 +171,27 @@ public class PortletItemPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_C;
-				finderArgs = new Object[] {groupId, classNameId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_C;
+			finderArgs = new Object[] {groupId, classNameId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<PortletItem> list = null;
+		List<PortletItem> list = (List<PortletItem>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletItem portletItem : list) {
+				if ((groupId != portletItem.getGroupId()) ||
+					(classNameId != portletItem.getClassNameId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (PortletItem portletItem : list) {
-					if ((groupId != portletItem.getGroupId()) ||
-						(classNameId != portletItem.getClassNameId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -257,14 +251,10 @@ public class PortletItemPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -689,22 +679,25 @@ public class PortletItemPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PortletItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_C(long,String,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet items
 	 */
+	@Deprecated
 	@Override
 	public List<PortletItem> findByG_P_C(
 		long groupId, String portletId, long classNameId, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator) {
+		OrderByComparator<PortletItem> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_P_C(
-			groupId, portletId, classNameId, start, end, orderByComparator,
-			true);
+			groupId, portletId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -720,14 +713,12 @@ public class PortletItemPersistenceImpl
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching portlet items
 	 */
 	@Override
 	public List<PortletItem> findByG_P_C(
 		long groupId, String portletId, long classNameId, int start, int end,
-		OrderByComparator<PortletItem> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PortletItem> orderByComparator) {
 
 		portletId = Objects.toString(portletId, "");
 
@@ -739,35 +730,28 @@ public class PortletItemPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_P_C;
-				finderArgs = new Object[] {groupId, portletId, classNameId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_P_C;
+			finderArgs = new Object[] {groupId, portletId, classNameId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_P_C;
 			finderArgs = new Object[] {
 				groupId, portletId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<PortletItem> list = null;
+		List<PortletItem> list = (List<PortletItem>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (PortletItem portletItem : list) {
+				if ((groupId != portletItem.getGroupId()) ||
+					!portletId.equals(portletItem.getPortletId()) ||
+					(classNameId != portletItem.getClassNameId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (PortletItem portletItem : list) {
-					if ((groupId != portletItem.getGroupId()) ||
-						!portletId.equals(portletItem.getPortletId()) ||
-						(classNameId != portletItem.getClassNameId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -842,14 +826,10 @@ public class PortletItemPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1332,19 +1312,23 @@ public class PortletItemPersistenceImpl
 	}
 
 	/**
-	 * Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the portlet item where groupId = &#63; and name = &#63; and portletId = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_N_P_C(long,String,String,long)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portlet item, or <code>null</code> if a matching portlet item could not be found
 	 */
+	@Deprecated
 	@Override
 	public PortletItem fetchByG_N_P_C(
-		long groupId, String name, String portletId, long classNameId) {
+		long groupId, String name, String portletId, long classNameId,
+		boolean useFinderCache) {
 
-		return fetchByG_N_P_C(groupId, name, portletId, classNameId, true);
+		return fetchByG_N_P_C(groupId, name, portletId, classNameId);
 	}
 
 	/**
@@ -1359,24 +1343,17 @@ public class PortletItemPersistenceImpl
 	 */
 	@Override
 	public PortletItem fetchByG_N_P_C(
-		long groupId, String name, String portletId, long classNameId,
-		boolean useFinderCache) {
+		long groupId, String name, String portletId, long classNameId) {
 
 		name = Objects.toString(name, "");
 		portletId = Objects.toString(portletId, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			groupId, name, portletId, classNameId
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, name, portletId, classNameId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_N_P_C, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByG_N_P_C, finderArgs, this);
 
 		if (result instanceof PortletItem) {
 			PortletItem portletItem = (PortletItem)result;
@@ -1447,22 +1424,14 @@ public class PortletItemPersistenceImpl
 				List<PortletItem> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByG_N_P_C, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByG_N_P_C, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, name, portletId, classNameId
-								};
-							}
-
 							_log.warn(
 								"PortletItemPersistenceImpl.fetchByG_N_P_C(long, String, String, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1478,10 +1447,8 @@ public class PortletItemPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByG_N_P_C, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByG_N_P_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -2124,16 +2091,20 @@ public class PortletItemPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PortletItemModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portlet items
 	 */
+	@Deprecated
 	@Override
 	public List<PortletItem> findAll(
-		int start, int end, OrderByComparator<PortletItem> orderByComparator) {
+		int start, int end, OrderByComparator<PortletItem> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -2146,13 +2117,11 @@ public class PortletItemPersistenceImpl
 	 * @param start the lower bound of the range of portlet items
 	 * @param end the upper bound of the range of portlet items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portlet items
 	 */
 	@Override
 	public List<PortletItem> findAll(
-		int start, int end, OrderByComparator<PortletItem> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<PortletItem> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2162,23 +2131,16 @@ public class PortletItemPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<PortletItem> list = null;
-
-		if (useFinderCache) {
-			list = (List<PortletItem>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<PortletItem> list = (List<PortletItem>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2225,14 +2187,10 @@ public class PortletItemPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

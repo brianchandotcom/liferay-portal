@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization;
 
@@ -79,16 +80,19 @@ public interface LVEntryLocalizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId(long, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localizations
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalization> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator);
+		OrderByComparator<LVEntryLocalization> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localizations where lvEntryId = &#63;.
@@ -101,14 +105,11 @@ public interface LVEntryLocalizationPersistence
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localizations
 	 */
 	public java.util.List<LVEntryLocalization> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryLocalization> orderByComparator);
 
 	/**
 	 * Returns the first lv entry localization in the ordered set where lvEntryId = &#63;.
@@ -120,8 +121,7 @@ public interface LVEntryLocalizationPersistence
 	 */
 	public LVEntryLocalization findByLvEntryId_First(
 			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalization> orderByComparator)
+			OrderByComparator<LVEntryLocalization> orderByComparator)
 		throws NoSuchLVEntryLocalizationException;
 
 	/**
@@ -133,8 +133,7 @@ public interface LVEntryLocalizationPersistence
 	 */
 	public LVEntryLocalization fetchByLvEntryId_First(
 		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator);
+		OrderByComparator<LVEntryLocalization> orderByComparator);
 
 	/**
 	 * Returns the last lv entry localization in the ordered set where lvEntryId = &#63;.
@@ -146,8 +145,7 @@ public interface LVEntryLocalizationPersistence
 	 */
 	public LVEntryLocalization findByLvEntryId_Last(
 			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalization> orderByComparator)
+			OrderByComparator<LVEntryLocalization> orderByComparator)
 		throws NoSuchLVEntryLocalizationException;
 
 	/**
@@ -159,8 +157,7 @@ public interface LVEntryLocalizationPersistence
 	 */
 	public LVEntryLocalization fetchByLvEntryId_Last(
 		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator);
+		OrderByComparator<LVEntryLocalization> orderByComparator);
 
 	/**
 	 * Returns the lv entry localizations before and after the current lv entry localization in the ordered set where lvEntryId = &#63;.
@@ -173,8 +170,7 @@ public interface LVEntryLocalizationPersistence
 	 */
 	public LVEntryLocalization[] findByLvEntryId_PrevAndNext(
 			long lvEntryLocalizationId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalization> orderByComparator)
+			OrderByComparator<LVEntryLocalization> orderByComparator)
 		throws NoSuchLVEntryLocalizationException;
 
 	/**
@@ -205,14 +201,17 @@ public interface LVEntryLocalizationPersistence
 		throws NoSuchLVEntryLocalizationException;
 
 	/**
-	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryId_LanguageId(long,String)}
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
+	@Deprecated
 	public LVEntryLocalization fetchByLvEntryId_LanguageId(
-		long lvEntryId, String languageId);
+		long lvEntryId, String languageId, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry localization where lvEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -223,7 +222,7 @@ public interface LVEntryLocalizationPersistence
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
 	public LVEntryLocalization fetchByLvEntryId_LanguageId(
-		long lvEntryId, String languageId, boolean useFinderCache);
+		long lvEntryId, String languageId);
 
 	/**
 	 * Removes the lv entry localization where lvEntryId = &#63; and languageId = &#63; from the database.
@@ -256,12 +255,16 @@ public interface LVEntryLocalizationPersistence
 		throws NoSuchLVEntryLocalizationException;
 
 	/**
-	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByHeadId(long)}
 	 * @param headId the head ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
-	public LVEntryLocalization fetchByHeadId(long headId);
+	@Deprecated
+	public LVEntryLocalization fetchByHeadId(
+		long headId, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry localization where headId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -270,8 +273,7 @@ public interface LVEntryLocalizationPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization, or <code>null</code> if a matching lv entry localization could not be found
 	 */
-	public LVEntryLocalization fetchByHeadId(
-		long headId, boolean useFinderCache);
+	public LVEntryLocalization fetchByHeadId(long headId);
 
 	/**
 	 * Removes the lv entry localization where headId = &#63; from the database.
@@ -371,15 +373,18 @@ public interface LVEntryLocalizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localizations
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalization> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator);
+		OrderByComparator<LVEntryLocalization> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localizations.
@@ -391,14 +396,11 @@ public interface LVEntryLocalizationPersistence
 	 * @param start the lower bound of the range of lv entry localizations
 	 * @param end the upper bound of the range of lv entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localizations
 	 */
 	public java.util.List<LVEntryLocalization> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryLocalization>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryLocalization> orderByComparator);
 
 	/**
 	 * Removes all the lv entry localizations from the database.

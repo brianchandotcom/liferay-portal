@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -68,16 +69,18 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
+	@Deprecated
 	public java.util.List<Team> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the teams where uuid = &#63;.
@@ -90,14 +93,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the first team in the ordered set where uuid = &#63;.
@@ -108,9 +108,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @throws NoSuchTeamException if a matching team could not be found
 	 */
 	public Team findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			String uuid, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -121,9 +119,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the first matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		String uuid, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the last team in the ordered set where uuid = &#63;.
@@ -134,9 +130,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @throws NoSuchTeamException if a matching team could not be found
 	 */
 	public Team findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			String uuid, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -147,9 +141,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the last matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		String uuid, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the teams before and after the current team in the ordered set where uuid = &#63;.
@@ -161,9 +153,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @throws NoSuchTeamException if a team with the primary key could not be found
 	 */
 	public Team[] findByUuid_PrevAndNext(
-			long teamId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			long teamId, String uuid, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -193,13 +183,17 @@ public interface TeamPersistence extends BasePersistence<Team> {
 		throws NoSuchTeamException;
 
 	/**
-	 * Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
-	public Team fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public Team fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the team where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -209,8 +203,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
-	public Team fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public Team fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the team where uuid = &#63; and groupId = &#63; from the database.
@@ -263,17 +256,19 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
+	@Deprecated
 	public java.util.List<Team> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the teams where uuid = &#63; and companyId = &#63;.
@@ -287,14 +282,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the first team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -307,8 +299,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public Team findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -320,9 +311,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the first matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByUuid_C_First(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		String uuid, long companyId, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the last team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -335,8 +324,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public Team findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -348,9 +336,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the last matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByUuid_C_Last(
-		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		String uuid, long companyId, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the teams before and after the current team in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -364,8 +350,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public Team[] findByUuid_C_PrevAndNext(
 			long teamId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -414,16 +399,18 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
+	@Deprecated
 	public java.util.List<Team> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		OrderByComparator<Team> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the teams where groupId = &#63;.
@@ -436,14 +423,11 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching teams
 	 */
 	public java.util.List<Team> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the first team in the ordered set where groupId = &#63;.
@@ -454,9 +438,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @throws NoSuchTeamException if a matching team could not be found
 	 */
 	public Team findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			long groupId, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -467,9 +449,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the first matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		long groupId, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the last team in the ordered set where groupId = &#63;.
@@ -480,9 +460,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @throws NoSuchTeamException if a matching team could not be found
 	 */
 	public Team findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			long groupId, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -493,9 +471,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @return the last matching team, or <code>null</code> if a matching team could not be found
 	 */
 	public Team fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		long groupId, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the teams before and after the current team in the ordered set where groupId = &#63;.
@@ -508,8 +484,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public Team[] findByGroupId_PrevAndNext(
 			long teamId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -550,8 +525,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public java.util.List<Team> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Returns the teams before and after the current team in the ordered set of teams that the user has permission to view where groupId = &#63;.
@@ -564,8 +538,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public Team[] filterFindByGroupId_PrevAndNext(
 			long teamId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Team>
-				orderByComparator)
+			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException;
 
 	/**
@@ -602,13 +575,16 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public Team findByG_N(long groupId, String name) throws NoSuchTeamException;
 
 	/**
-	 * Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_N(long,String)}
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
-	public Team fetchByG_N(long groupId, String name);
+	@Deprecated
+	public Team fetchByG_N(long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Returns the team where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -618,7 +594,7 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching team, or <code>null</code> if a matching team could not be found
 	 */
-	public Team fetchByG_N(long groupId, String name, boolean useFinderCache);
+	public Team fetchByG_N(long groupId, String name);
 
 	/**
 	 * Removes the team where groupId = &#63; and name = &#63; from the database.
@@ -716,15 +692,17 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TeamModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of teams
 	 */
+	@Deprecated
 	public java.util.List<Team> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
+		int start, int end, OrderByComparator<Team> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the teams.
@@ -736,14 +714,10 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of teams
 	 */
 	public java.util.List<Team> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Team> orderByComparator);
 
 	/**
 	 * Removes all the teams from the database.
@@ -804,8 +778,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	 */
 	public java.util.List<com.liferay.portal.kernel.model.User> getUsers(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<com.liferay.portal.kernel.model.User> orderByComparator);
+		OrderByComparator<com.liferay.portal.kernel.model.User>
+			orderByComparator);
 
 	/**
 	 * Returns the number of users associated with the team.
@@ -970,8 +944,8 @@ public interface TeamPersistence extends BasePersistence<Team> {
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
 		getUserGroups(
 			long pk, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.UserGroup> orderByComparator);
+			OrderByComparator<com.liferay.portal.kernel.model.UserGroup>
+				orderByComparator);
 
 	/**
 	 * Returns the number of user groups associated with the team.

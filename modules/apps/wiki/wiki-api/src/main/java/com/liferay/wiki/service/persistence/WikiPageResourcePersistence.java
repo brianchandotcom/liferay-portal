@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
 
@@ -71,16 +72,19 @@ public interface WikiPageResourcePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiPageResourceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
+	@Deprecated
 	public java.util.List<WikiPageResource> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki page resources where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface WikiPageResourcePersistence
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
 	public java.util.List<WikiPageResource> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the first wiki page resource in the ordered set where uuid = &#63;.
@@ -111,9 +112,7 @@ public interface WikiPageResourcePersistence
 	 * @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	 */
 	public WikiPageResource findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			String uuid, OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -124,9 +123,7 @@ public interface WikiPageResourcePersistence
 	 * @return the first matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
 	public WikiPageResource fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		String uuid, OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the last wiki page resource in the ordered set where uuid = &#63;.
@@ -137,9 +134,7 @@ public interface WikiPageResourcePersistence
 	 * @throws NoSuchPageResourceException if a matching wiki page resource could not be found
 	 */
 	public WikiPageResource findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			String uuid, OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -150,9 +145,7 @@ public interface WikiPageResourcePersistence
 	 * @return the last matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
 	public WikiPageResource fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		String uuid, OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63;.
@@ -165,8 +158,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource[] findByUuid_PrevAndNext(
 			long resourcePrimKey, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -196,13 +188,17 @@ public interface WikiPageResourcePersistence
 		throws NoSuchPageResourceException;
 
 	/**
-	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
-	public WikiPageResource fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public WikiPageResource fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,8 +208,7 @@ public interface WikiPageResourcePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
-	public WikiPageResource fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public WikiPageResource fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the wiki page resource where uuid = &#63; and groupId = &#63; from the database.
@@ -267,17 +262,20 @@ public interface WikiPageResourcePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiPageResourceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
+	@Deprecated
 	public java.util.List<WikiPageResource> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki page resources where uuid = &#63; and companyId = &#63;.
@@ -291,14 +289,11 @@ public interface WikiPageResourcePersistence
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki page resources
 	 */
 	public java.util.List<WikiPageResource> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the first wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -311,8 +306,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -325,8 +319,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the last wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -339,8 +332,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -353,8 +345,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Returns the wiki page resources before and after the current wiki page resource in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -368,8 +359,7 @@ public interface WikiPageResourcePersistence
 	 */
 	public WikiPageResource[] findByUuid_C_PrevAndNext(
 			long resourcePrimKey, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-				orderByComparator)
+			OrderByComparator<WikiPageResource> orderByComparator)
 		throws NoSuchPageResourceException;
 
 	/**
@@ -401,13 +391,17 @@ public interface WikiPageResourcePersistence
 		throws NoSuchPageResourceException;
 
 	/**
-	 * Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByN_T(long,String)}
 	 * @param nodeId the node ID
 	 * @param title the title
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
-	public WikiPageResource fetchByN_T(long nodeId, String title);
+	@Deprecated
+	public WikiPageResource fetchByN_T(
+		long nodeId, String title, boolean useFinderCache);
 
 	/**
 	 * Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -417,8 +411,7 @@ public interface WikiPageResourcePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	 */
-	public WikiPageResource fetchByN_T(
-		long nodeId, String title, boolean useFinderCache);
+	public WikiPageResource fetchByN_T(long nodeId, String title);
 
 	/**
 	 * Removes the wiki page resource where nodeId = &#63; and title = &#63; from the database.
@@ -518,15 +511,18 @@ public interface WikiPageResourcePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiPageResourceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki page resources
 	 */
+	@Deprecated
 	public java.util.List<WikiPageResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator);
+		OrderByComparator<WikiPageResource> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki page resources.
@@ -538,14 +534,11 @@ public interface WikiPageResourcePersistence
 	 * @param start the lower bound of the range of wiki page resources
 	 * @param end the upper bound of the range of wiki page resources (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki page resources
 	 */
 	public java.util.List<WikiPageResource> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiPageResource>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiPageResource> orderByComparator);
 
 	/**
 	 * Removes all the wiki page resources from the database.

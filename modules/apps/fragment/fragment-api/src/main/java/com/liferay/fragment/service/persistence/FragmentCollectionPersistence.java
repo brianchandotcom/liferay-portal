@@ -17,6 +17,7 @@ package com.liferay.fragment.service.persistence;
 import com.liferay.fragment.exception.NoSuchCollectionException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface FragmentCollectionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
+	@Deprecated
 	public java.util.List<FragmentCollection> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the fragment collections where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface FragmentCollectionPersistence
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
 	public java.util.List<FragmentCollection> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the first fragment collection in the ordered set where uuid = &#63;.
@@ -112,8 +113,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByUuid_First(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -124,9 +124,7 @@ public interface FragmentCollectionPersistence
 	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		String uuid, OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the last fragment collection in the ordered set where uuid = &#63;.
@@ -138,8 +136,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByUuid_Last(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -150,9 +147,7 @@ public interface FragmentCollectionPersistence
 	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		String uuid, OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set where uuid = &#63;.
@@ -165,8 +160,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] findByUuid_PrevAndNext(
 			long fragmentCollectionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -196,13 +190,17 @@ public interface FragmentCollectionPersistence
 		throws NoSuchCollectionException;
 
 	/**
-	 * Returns the fragment collection where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the fragment collection where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
-	public FragmentCollection fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public FragmentCollection fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the fragment collection where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,8 +210,7 @@ public interface FragmentCollectionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
-	public FragmentCollection fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public FragmentCollection fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the fragment collection where uuid = &#63; and groupId = &#63; from the database.
@@ -267,17 +264,20 @@ public interface FragmentCollectionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
+	@Deprecated
 	public java.util.List<FragmentCollection> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the fragment collections where uuid = &#63; and companyId = &#63;.
@@ -291,14 +291,11 @@ public interface FragmentCollectionPersistence
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
 	public java.util.List<FragmentCollection> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the first fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -311,8 +308,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -325,8 +321,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the last fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -339,8 +334,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -353,8 +347,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -368,8 +361,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] findByUuid_C_PrevAndNext(
 			long fragmentCollectionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -419,16 +411,19 @@ public interface FragmentCollectionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
+	@Deprecated
 	public java.util.List<FragmentCollection> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the fragment collections where groupId = &#63;.
@@ -441,14 +436,11 @@ public interface FragmentCollectionPersistence
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
 	public java.util.List<FragmentCollection> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the first fragment collection in the ordered set where groupId = &#63;.
@@ -460,8 +452,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByGroupId_First(
 			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -472,9 +463,7 @@ public interface FragmentCollectionPersistence
 	 * @return the first matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		long groupId, OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the last fragment collection in the ordered set where groupId = &#63;.
@@ -486,8 +475,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByGroupId_Last(
 			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -498,9 +486,7 @@ public interface FragmentCollectionPersistence
 	 * @return the last matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		long groupId, OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63;.
@@ -513,8 +499,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] findByGroupId_PrevAndNext(
 			long fragmentCollectionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -555,8 +540,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public java.util.List<FragmentCollection> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set of fragment collections that the user has permission to view where groupId = &#63;.
@@ -569,8 +553,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] filterFindByGroupId_PrevAndNext(
 			long fragmentCollectionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -609,14 +592,17 @@ public interface FragmentCollectionPersistence
 		throws NoSuchCollectionException;
 
 	/**
-	 * Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_FCK(long,String)}
 	 * @param groupId the group ID
 	 * @param fragmentCollectionKey the fragment collection key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
+	@Deprecated
 	public FragmentCollection fetchByG_FCK(
-		long groupId, String fragmentCollectionKey);
+		long groupId, String fragmentCollectionKey, boolean useFinderCache);
 
 	/**
 	 * Returns the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -627,7 +613,7 @@ public interface FragmentCollectionPersistence
 	 * @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
 	 */
 	public FragmentCollection fetchByG_FCK(
-		long groupId, String fragmentCollectionKey, boolean useFinderCache);
+		long groupId, String fragmentCollectionKey);
 
 	/**
 	 * Removes the fragment collection where groupId = &#63; and fragmentCollectionKey = &#63; from the database.
@@ -682,17 +668,20 @@ public interface FragmentCollectionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeN(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
+	@Deprecated
 	public java.util.List<FragmentCollection> findByG_LikeN(
 		long groupId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the fragment collections where groupId = &#63; and name LIKE &#63;.
@@ -706,14 +695,11 @@ public interface FragmentCollectionPersistence
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching fragment collections
 	 */
 	public java.util.List<FragmentCollection> findByG_LikeN(
 		long groupId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the first fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -726,8 +712,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByG_LikeN_First(
 			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -740,8 +725,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection fetchByG_LikeN_First(
 		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the last fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -754,8 +738,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection findByG_LikeN_Last(
 			long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -768,8 +751,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection fetchByG_LikeN_Last(
 		long groupId, String name,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -783,8 +765,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] findByG_LikeN_PrevAndNext(
 			long fragmentCollectionId, long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -829,8 +810,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public java.util.List<FragmentCollection> filterFindByG_LikeN(
 		long groupId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Returns the fragment collections before and after the current fragment collection in the ordered set of fragment collections that the user has permission to view where groupId = &#63; and name LIKE &#63;.
@@ -844,8 +824,7 @@ public interface FragmentCollectionPersistence
 	 */
 	public FragmentCollection[] filterFindByG_LikeN_PrevAndNext(
 			long fragmentCollectionId, long groupId, String name,
-			com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-				orderByComparator)
+			OrderByComparator<FragmentCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -954,15 +933,18 @@ public interface FragmentCollectionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of fragment collections
 	 */
+	@Deprecated
 	public java.util.List<FragmentCollection> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator);
+		OrderByComparator<FragmentCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the fragment collections.
@@ -974,14 +956,11 @@ public interface FragmentCollectionPersistence
 	 * @param start the lower bound of the range of fragment collections
 	 * @param end the upper bound of the range of fragment collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of fragment collections
 	 */
 	public java.util.List<FragmentCollection> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<FragmentCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<FragmentCollection> orderByComparator);
 
 	/**
 	 * Removes all the fragment collections from the database.

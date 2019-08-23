@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.social.kernel.exception.NoSuchActivityException;
 import com.liferay.social.kernel.model.SocialActivity;
 
@@ -71,16 +72,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where groupId = &#63;.
@@ -93,14 +97,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where groupId = &#63;.
@@ -111,9 +112,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long groupId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -124,9 +123,7 @@ public interface SocialActivityPersistence
 	 * @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long groupId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where groupId = &#63;.
@@ -137,9 +134,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long groupId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -150,9 +145,7 @@ public interface SocialActivityPersistence
 	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long groupId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where groupId = &#63;.
@@ -165,8 +158,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByGroupId_PrevAndNext(
 			long activityId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -214,16 +206,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where companyId = &#63;.
@@ -236,14 +231,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where companyId = &#63;.
@@ -254,9 +246,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long companyId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -267,9 +257,7 @@ public interface SocialActivityPersistence
 	 * @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long companyId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where companyId = &#63;.
@@ -280,9 +268,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long companyId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -293,9 +279,7 @@ public interface SocialActivityPersistence
 	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long companyId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where companyId = &#63;.
@@ -308,8 +292,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByCompanyId_PrevAndNext(
 			long activityId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -357,16 +340,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where userId = &#63;.
@@ -379,14 +365,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where userId = &#63;.
@@ -397,9 +380,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByUserId_First(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long userId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -410,9 +391,7 @@ public interface SocialActivityPersistence
 	 * @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long userId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where userId = &#63;.
@@ -423,9 +402,7 @@ public interface SocialActivityPersistence
 	 * @throws NoSuchActivityException if a matching social activity could not be found
 	 */
 	public SocialActivity findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long userId, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -436,9 +413,7 @@ public interface SocialActivityPersistence
 	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long userId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where userId = &#63;.
@@ -451,8 +426,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByUserId_PrevAndNext(
 			long activityId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -501,16 +475,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByActivitySetId(long, int, int, OrderByComparator)}
 	 * @param activitySetId the activity set ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByActivitySetId(
 		long activitySetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where activitySetId = &#63;.
@@ -523,14 +500,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByActivitySetId(
 		long activitySetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where activitySetId = &#63;.
@@ -542,8 +516,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByActivitySetId_First(
 			long activitySetId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -555,8 +528,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByActivitySetId_First(
 		long activitySetId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where activitySetId = &#63;.
@@ -568,8 +540,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByActivitySetId_Last(
 			long activitySetId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -581,8 +552,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByActivitySetId_Last(
 		long activitySetId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where activitySetId = &#63;.
@@ -595,8 +565,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByActivitySetId_PrevAndNext(
 			long activityId, long activitySetId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -625,12 +594,16 @@ public interface SocialActivityPersistence
 		throws NoSuchActivityException;
 
 	/**
-	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByMirrorActivityId(long)}
 	 * @param mirrorActivityId the mirror activity ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
-	public SocialActivity fetchByMirrorActivityId(long mirrorActivityId);
+	@Deprecated
+	public SocialActivity fetchByMirrorActivityId(
+		long mirrorActivityId, boolean useFinderCache);
 
 	/**
 	 * Returns the social activity where mirrorActivityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -639,8 +612,7 @@ public interface SocialActivityPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
-	public SocialActivity fetchByMirrorActivityId(
-		long mirrorActivityId, boolean useFinderCache);
+	public SocialActivity fetchByMirrorActivityId(long mirrorActivityId);
 
 	/**
 	 * Removes the social activity where mirrorActivityId = &#63; from the database.
@@ -689,16 +661,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassNameId(long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where classNameId = &#63;.
@@ -711,14 +686,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63;.
@@ -730,8 +702,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByClassNameId_First(
 			long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -742,9 +713,7 @@ public interface SocialActivityPersistence
 	 * @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByClassNameId_First(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long classNameId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where classNameId = &#63;.
@@ -756,8 +725,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByClassNameId_Last(
 			long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -768,9 +736,7 @@ public interface SocialActivityPersistence
 	 * @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
 	public SocialActivity fetchByClassNameId_Last(
-		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		long classNameId, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where classNameId = &#63;.
@@ -783,8 +749,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByClassNameId_PrevAndNext(
 			long activityId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -833,16 +798,19 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByReceiverUserId(long, int, int, OrderByComparator)}
 	 * @param receiverUserId the receiver user ID
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where receiverUserId = &#63;.
@@ -855,14 +823,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where receiverUserId = &#63;.
@@ -874,8 +839,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByReceiverUserId_First(
 			long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -887,8 +851,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByReceiverUserId_First(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where receiverUserId = &#63;.
@@ -900,8 +863,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByReceiverUserId_Last(
 			long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -913,8 +875,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByReceiverUserId_Last(
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where receiverUserId = &#63;.
@@ -927,8 +888,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByReceiverUserId_PrevAndNext(
 			long activityId, long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -979,17 +939,20 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where classNameId = &#63; and classPK = &#63;.
@@ -1003,14 +966,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1023,8 +983,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByC_C_First(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1037,8 +996,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1051,8 +1009,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByC_C_Last(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1065,8 +1022,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -1080,8 +1036,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByC_C_PrevAndNext(
 			long activityId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1137,19 +1092,21 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param mirrorActivityId the mirror activity ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByM_C_C(
 		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		int end, OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1164,15 +1121,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByM_C_C(
 		long mirrorActivityId, long classNameId, long classPK, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		int end, OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1186,8 +1139,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByM_C_C_First(
 			long mirrorActivityId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1201,8 +1153,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByM_C_C_First(
 		long mirrorActivityId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1216,8 +1167,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByM_C_C_Last(
 			long mirrorActivityId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1231,8 +1181,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByM_C_C_Last(
 		long mirrorActivityId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where mirrorActivityId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1247,9 +1196,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByM_C_C_PrevAndNext(
 			long activityId, long mirrorActivityId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			long classPK, OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1308,18 +1255,21 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_T(long,long,int, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1334,14 +1284,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByC_C_T(
 		long classNameId, long classPK, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1355,8 +1302,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByC_C_T_First(
 			long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1370,8 +1316,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByC_C_T_First(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1385,8 +1330,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity findByC_C_T_Last(
 			long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1400,8 +1344,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByC_C_T_Last(
 		long classNameId, long classPK, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
@@ -1416,8 +1359,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity[] findByC_C_T_PrevAndNext(
 			long activityId, long classNameId, long classPK, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1482,6 +1424,7 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_C_C_T_R(long,long,long,long,int,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param classNameId the class name ID
@@ -1491,13 +1434,15 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findByG_U_C_C_T_R(
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
@@ -1515,15 +1460,12 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activities
 	 */
 	public java.util.List<SocialActivity> findByG_U_C_C_T_R(
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the first social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
@@ -1541,8 +1483,7 @@ public interface SocialActivityPersistence
 	public SocialActivity findByG_U_C_C_T_R_First(
 			long groupId, long userId, long classNameId, long classPK, int type,
 			long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1560,8 +1501,7 @@ public interface SocialActivityPersistence
 	public SocialActivity fetchByG_U_C_C_T_R_First(
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the last social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
@@ -1579,8 +1519,7 @@ public interface SocialActivityPersistence
 	public SocialActivity findByG_U_C_C_T_R_Last(
 			long groupId, long userId, long classNameId, long classPK, int type,
 			long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1598,8 +1537,7 @@ public interface SocialActivityPersistence
 	public SocialActivity fetchByG_U_C_C_T_R_Last(
 		long groupId, long userId, long classNameId, long classPK, int type,
 		long receiverUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Returns the social activities before and after the current social activity in the ordered set where groupId = &#63; and userId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63;.
@@ -1618,8 +1556,7 @@ public interface SocialActivityPersistence
 	public SocialActivity[] findByG_U_C_C_T_R_PrevAndNext(
 			long activityId, long groupId, long userId, long classNameId,
 			long classPK, int type, long receiverUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-				orderByComparator)
+			OrderByComparator<SocialActivity> orderByComparator)
 		throws NoSuchActivityException;
 
 	/**
@@ -1670,8 +1607,9 @@ public interface SocialActivityPersistence
 		throws NoSuchActivityException;
 
 	/**
-	 * Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_U_CD_C_C_T_R(long,long,long,long,long,int,long)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param createDate the create date
@@ -1679,11 +1617,13 @@ public interface SocialActivityPersistence
 	 * @param classPK the class pk
 	 * @param type the type
 	 * @param receiverUserId the receiver user ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity, or <code>null</code> if a matching social activity could not be found
 	 */
+	@Deprecated
 	public SocialActivity fetchByG_U_CD_C_C_T_R(
 		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId);
+		long classPK, int type, long receiverUserId, boolean useFinderCache);
 
 	/**
 	 * Returns the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1700,7 +1640,7 @@ public interface SocialActivityPersistence
 	 */
 	public SocialActivity fetchByG_U_CD_C_C_T_R(
 		long groupId, long userId, long createDate, long classNameId,
-		long classPK, int type, long receiverUserId, boolean useFinderCache);
+		long classPK, int type, long receiverUserId);
 
 	/**
 	 * Removes the social activity where groupId = &#63; and userId = &#63; and createDate = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; from the database.
@@ -1814,15 +1754,17 @@ public interface SocialActivityPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activities
 	 */
+	@Deprecated
 	public java.util.List<SocialActivity> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator);
+		int start, int end, OrderByComparator<SocialActivity> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the social activities.
@@ -1834,14 +1776,11 @@ public interface SocialActivityPersistence
 	 * @param start the lower bound of the range of social activities
 	 * @param end the upper bound of the range of social activities (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activities
 	 */
 	public java.util.List<SocialActivity> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialActivity>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SocialActivity> orderByComparator);
 
 	/**
 	 * Removes all the social activities from the database.

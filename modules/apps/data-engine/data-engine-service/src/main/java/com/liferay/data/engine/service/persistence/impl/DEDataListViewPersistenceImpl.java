@@ -135,18 +135,22 @@ public class DEDataListViewPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DEDataListViewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
+	@Deprecated
 	@Override
 	public List<DEDataListView> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator) {
+		OrderByComparator<DEDataListView> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -160,14 +164,12 @@ public class DEDataListViewPersistenceImpl
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	@Override
 	public List<DEDataListView> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -179,30 +181,23 @@ public class DEDataListViewPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<DEDataListView> list = null;
+		List<DEDataListView> list = (List<DEDataListView>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (DEDataListView deDataListView : list) {
+				if (!uuid.equals(deDataListView.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DEDataListView deDataListView : list) {
-					if (!uuid.equals(deDataListView.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -269,14 +264,10 @@ public class DEDataListViewPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -688,15 +679,20 @@ public class DEDataListViewPersistenceImpl
 	}
 
 	/**
-	 * Returns the de data list view where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the de data list view where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
+	@Deprecated
 	@Override
-	public DEDataListView fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public DEDataListView fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -708,23 +704,13 @@ public class DEDataListViewPersistenceImpl
 	 * @return the matching de data list view, or <code>null</code> if a matching de data list view could not be found
 	 */
 	@Override
-	public DEDataListView fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public DEDataListView fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof DEDataListView) {
 			DEDataListView deDataListView = (DEDataListView)result;
@@ -774,10 +760,8 @@ public class DEDataListViewPersistenceImpl
 				List<DEDataListView> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					DEDataListView deDataListView = list.get(0);
@@ -788,10 +772,7 @@ public class DEDataListViewPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -946,20 +927,23 @@ public class DEDataListViewPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DEDataListViewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
+	@Deprecated
 	@Override
 	public List<DEDataListView> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator) {
+		OrderByComparator<DEDataListView> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -974,14 +958,12 @@ public class DEDataListViewPersistenceImpl
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	@Override
 	public List<DEDataListView> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -993,34 +975,27 @@ public class DEDataListViewPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<DEDataListView> list = null;
+		List<DEDataListView> list = (List<DEDataListView>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (DEDataListView deDataListView : list) {
+				if (!uuid.equals(deDataListView.getUuid()) ||
+					(companyId != deDataListView.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DEDataListView deDataListView : list) {
-					if (!uuid.equals(deDataListView.getUuid()) ||
-						(companyId != deDataListView.getCompanyId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1091,14 +1066,10 @@ public class DEDataListViewPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1553,22 +1524,25 @@ public class DEDataListViewPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DEDataListViewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_D(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param ddmStructureId the ddm structure ID
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
+	@Deprecated
 	@Override
 	public List<DEDataListView> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator) {
+		OrderByComparator<DEDataListView> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_C_D(
-			groupId, companyId, ddmStructureId, start, end, orderByComparator,
-			true);
+			groupId, companyId, ddmStructureId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1584,14 +1558,12 @@ public class DEDataListViewPersistenceImpl
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching de data list views
 	 */
 	@Override
 	public List<DEDataListView> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1601,13 +1573,10 @@ public class DEDataListViewPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_D;
-				finderArgs = new Object[] {groupId, companyId, ddmStructureId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_C_D;
+			finderArgs = new Object[] {groupId, companyId, ddmStructureId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_C_D;
 			finderArgs = new Object[] {
 				groupId, companyId, ddmStructureId, start, end,
@@ -1615,23 +1584,18 @@ public class DEDataListViewPersistenceImpl
 			};
 		}
 
-		List<DEDataListView> list = null;
+		List<DEDataListView> list = (List<DEDataListView>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (DEDataListView deDataListView : list) {
+				if ((groupId != deDataListView.getGroupId()) ||
+					(companyId != deDataListView.getCompanyId()) ||
+					(ddmStructureId != deDataListView.getDdmStructureId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DEDataListView deDataListView : list) {
-					if ((groupId != deDataListView.getGroupId()) ||
-						(companyId != deDataListView.getCompanyId()) ||
-						(ddmStructureId !=
-							deDataListView.getDdmStructureId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1695,14 +1659,10 @@ public class DEDataListViewPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2632,17 +2592,20 @@ public class DEDataListViewPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DEDataListViewModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data list views
 	 */
+	@Deprecated
 	@Override
 	public List<DEDataListView> findAll(
-		int start, int end,
-		OrderByComparator<DEDataListView> orderByComparator) {
+		int start, int end, OrderByComparator<DEDataListView> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -2655,13 +2618,12 @@ public class DEDataListViewPersistenceImpl
 	 * @param start the lower bound of the range of de data list views
 	 * @param end the upper bound of the range of de data list views (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of de data list views
 	 */
 	@Override
 	public List<DEDataListView> findAll(
-		int start, int end, OrderByComparator<DEDataListView> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<DEDataListView> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2671,23 +2633,16 @@ public class DEDataListViewPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DEDataListView> list = null;
-
-		if (useFinderCache) {
-			list = (List<DEDataListView>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<DEDataListView> list = (List<DEDataListView>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2734,14 +2689,10 @@ public class DEDataListViewPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

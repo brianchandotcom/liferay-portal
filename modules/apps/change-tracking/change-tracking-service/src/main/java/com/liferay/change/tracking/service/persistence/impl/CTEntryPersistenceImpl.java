@@ -131,19 +131,22 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCTCollectionId(long, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByCTCollectionId(
 		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		return findByCTCollectionId(
-			ctCollectionId, start, end, orderByComparator, true);
+			ctCollectionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -157,13 +160,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByCTCollectionId(
 		long ctCollectionId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -173,32 +175,25 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCTCollectionId;
+			finderArgs = new Object[] {ctCollectionId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCTCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -254,14 +249,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -652,21 +643,23 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_MCNI(long,long, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelClassNameId the model class name ID
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByC_MCNI(
 		long ctCollectionId, long modelClassNameId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		return findByC_MCNI(
-			ctCollectionId, modelClassNameId, start, end, orderByComparator,
-			true);
+			ctCollectionId, modelClassNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -681,13 +674,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MCNI(
 		long ctCollectionId, long modelClassNameId, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -697,34 +689,27 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MCNI;
-				finderArgs = new Object[] {ctCollectionId, modelClassNameId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_MCNI;
+			finderArgs = new Object[] {ctCollectionId, modelClassNameId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_MCNI;
 			finderArgs = new Object[] {
 				ctCollectionId, modelClassNameId, start, end, orderByComparator
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
+					(modelClassNameId != ctEntry.getModelClassNameId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(modelClassNameId != ctEntry.getModelClassNameId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -784,14 +769,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1215,21 +1196,24 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_MRPK(long,long, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelResourcePrimKey the model resource prim key
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByC_MRPK(
 		long ctCollectionId, long modelResourcePrimKey, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
 		return findByC_MRPK(
-			ctCollectionId, modelResourcePrimKey, start, end, orderByComparator,
-			true);
+			ctCollectionId, modelResourcePrimKey, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1244,13 +1228,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MRPK(
 		long ctCollectionId, long modelResourcePrimKey, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1260,15 +1243,10 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MRPK;
-				finderArgs = new Object[] {
-					ctCollectionId, modelResourcePrimKey
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_MRPK;
+			finderArgs = new Object[] {ctCollectionId, modelResourcePrimKey};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_MRPK;
 			finderArgs = new Object[] {
 				ctCollectionId, modelResourcePrimKey, start, end,
@@ -1276,22 +1254,18 @@ public class CTEntryPersistenceImpl
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
+					(modelResourcePrimKey !=
+						ctEntry.getModelResourcePrimKey())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(modelResourcePrimKey !=
-							ctEntry.getModelResourcePrimKey())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1351,14 +1325,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1780,20 +1750,22 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param status the status
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByC_S(
 		long ctCollectionId, int status, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator) {
+		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		return findByC_S(
-			ctCollectionId, status, start, end, orderByComparator, true);
+		return findByC_S(ctCollectionId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1808,13 +1780,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_S(
 		long ctCollectionId, int status, int start, int end,
-		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1824,34 +1795,27 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S;
-				finderArgs = new Object[] {ctCollectionId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_S;
+			finderArgs = new Object[] {ctCollectionId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				ctCollectionId, status, start, end, orderByComparator
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
+					(status != ctEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(status != ctEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1911,14 +1875,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2339,19 +2299,23 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_MCNI_MCPK(long,long,long)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelClassNameId the model class name ID
 	 * @param modelClassPK the model class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ct entry, or <code>null</code> if a matching ct entry could not be found
 	 */
+	@Deprecated
 	@Override
 	public CTEntry fetchByC_MCNI_MCPK(
-		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+		long ctCollectionId, long modelClassNameId, long modelClassPK,
+		boolean useFinderCache) {
 
 		return fetchByC_MCNI_MCPK(
-			ctCollectionId, modelClassNameId, modelClassPK, true);
+			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
 	/**
@@ -2365,23 +2329,14 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public CTEntry fetchByC_MCNI_MCPK(
-		long ctCollectionId, long modelClassNameId, long modelClassPK,
-		boolean useFinderCache) {
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			ctCollectionId, modelClassNameId, modelClassPK
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				ctCollectionId, modelClassNameId, modelClassPK
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_MCNI_MCPK, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByC_MCNI_MCPK, finderArgs, this);
 
 		if (result instanceof CTEntry) {
 			CTEntry ctEntry = (CTEntry)result;
@@ -2425,10 +2380,8 @@ public class CTEntryPersistenceImpl
 				List<CTEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_MCNI_MCPK, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByC_MCNI_MCPK, finderArgs, list);
 				}
 				else {
 					CTEntry ctEntry = list.get(0);
@@ -2439,10 +2392,8 @@ public class CTEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByC_MCNI_MCPK, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathFetchByC_MCNI_MCPK, finderArgs);
 
 				throw processException(e);
 			}
@@ -2603,22 +2554,26 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_MCNI_S(long,long,int, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelClassNameId the model class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByC_MCNI_S(
 		long ctCollectionId, long modelClassNameId, int status, int start,
-		int end, OrderByComparator<CTEntry> orderByComparator) {
+		int end, OrderByComparator<CTEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_MCNI_S(
 			ctCollectionId, modelClassNameId, status, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -2634,14 +2589,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MCNI_S(
 		long ctCollectionId, long modelClassNameId, int status, int start,
-		int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2651,15 +2604,12 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MCNI_S;
-				finderArgs = new Object[] {
-					ctCollectionId, modelClassNameId, status
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_MCNI_S;
+			finderArgs = new Object[] {
+				ctCollectionId, modelClassNameId, status
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_MCNI_S;
 			finderArgs = new Object[] {
 				ctCollectionId, modelClassNameId, status, start, end,
@@ -2667,22 +2617,18 @@ public class CTEntryPersistenceImpl
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
+					(modelClassNameId != ctEntry.getModelClassNameId()) ||
+					(status != ctEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(modelClassNameId != ctEntry.getModelClassNameId()) ||
-						(status != ctEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2746,14 +2692,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3210,22 +3152,26 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_MRPK_S(long,long,int, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param modelResourcePrimKey the model resource prim key
 	 * @param status the status
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findByC_MRPK_S(
 		long ctCollectionId, long modelResourcePrimKey, int status, int start,
-		int end, OrderByComparator<CTEntry> orderByComparator) {
+		int end, OrderByComparator<CTEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_MRPK_S(
 			ctCollectionId, modelResourcePrimKey, status, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -3241,14 +3187,12 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct entries
 	 */
 	@Override
 	public List<CTEntry> findByC_MRPK_S(
 		long ctCollectionId, long modelResourcePrimKey, int status, int start,
-		int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3258,15 +3202,12 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MRPK_S;
-				finderArgs = new Object[] {
-					ctCollectionId, modelResourcePrimKey, status
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_MRPK_S;
+			finderArgs = new Object[] {
+				ctCollectionId, modelResourcePrimKey, status
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_MRPK_S;
 			finderArgs = new Object[] {
 				ctCollectionId, modelResourcePrimKey, status, start, end,
@@ -3274,23 +3215,19 @@ public class CTEntryPersistenceImpl
 			};
 		}
 
-		List<CTEntry> list = null;
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTEntry ctEntry : list) {
+				if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
+					(modelResourcePrimKey !=
+						ctEntry.getModelResourcePrimKey()) ||
+					(status != ctEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(modelResourcePrimKey !=
-							ctEntry.getModelResourcePrimKey()) ||
-						(status != ctEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3354,14 +3291,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4371,16 +4304,20 @@ public class CTEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct entries
 	 */
+	@Deprecated
 	@Override
 	public List<CTEntry> findAll(
-		int start, int end, OrderByComparator<CTEntry> orderByComparator) {
+		int start, int end, OrderByComparator<CTEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -4393,13 +4330,11 @@ public class CTEntryPersistenceImpl
 	 * @param start the lower bound of the range of ct entries
 	 * @param end the upper bound of the range of ct entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct entries
 	 */
 	@Override
 	public List<CTEntry> findAll(
-		int start, int end, OrderByComparator<CTEntry> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<CTEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4409,23 +4344,16 @@ public class CTEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<CTEntry> list = (List<CTEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -4472,14 +4400,10 @@ public class CTEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

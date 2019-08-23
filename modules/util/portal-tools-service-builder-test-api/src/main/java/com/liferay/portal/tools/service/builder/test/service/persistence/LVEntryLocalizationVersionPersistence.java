@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 
@@ -81,17 +82,20 @@ public interface LVEntryLocalizationVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryLocalizationId(long, int, int, OrderByComparator)}
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalizationVersion>
 		findByLvEntryLocalizationId(
 			long lvEntryLocalizationId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator);
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryLocalizationId = &#63;.
@@ -104,15 +108,12 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion>
 		findByLvEntryLocalizationId(
 			long lvEntryLocalizationId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator,
-			boolean useFinderCache);
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
@@ -124,8 +125,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryLocalizationId_First(
 			long lvEntryLocalizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -137,8 +137,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_First(
 		long lvEntryLocalizationId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
@@ -150,8 +149,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryLocalizationId_Last(
 			long lvEntryLocalizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -163,8 +161,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Last(
 		long lvEntryLocalizationId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryLocalizationId = &#63;.
@@ -177,8 +174,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion[] findByLvEntryLocalizationId_PrevAndNext(
 			long lvEntryLocalizationVersionId, long lvEntryLocalizationId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -209,14 +205,17 @@ public interface LVEntryLocalizationVersionPersistence
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
-	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryLocalizationId_Version(long,int)}
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
+	@Deprecated
 	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Version(
-		long lvEntryLocalizationId, int version);
+		long lvEntryLocalizationId, int version, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -227,7 +226,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryLocalizationId_Version(
-		long lvEntryLocalizationId, int version, boolean useFinderCache);
+		long lvEntryLocalizationId, int version);
 
 	/**
 	 * Removes the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; from the database.
@@ -281,16 +280,19 @@ public interface LVEntryLocalizationVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId(long, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63;.
@@ -303,14 +305,11 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63;.
@@ -322,8 +321,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_First(
 			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -335,8 +333,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_First(
 		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63;.
@@ -348,8 +345,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_Last(
 			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -361,8 +357,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_Last(
 		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63;.
@@ -375,8 +370,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion[] findByLvEntryId_PrevAndNext(
 			long lvEntryLocalizationVersionId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -427,17 +421,20 @@ public interface LVEntryLocalizationVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId_Version(long,int, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param version the version
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
@@ -451,14 +448,11 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
@@ -471,8 +465,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_Version_First(
 			long lvEntryId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -485,8 +478,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_Version_First(
 		long lvEntryId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
@@ -499,8 +491,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_Version_Last(
 			long lvEntryId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -513,8 +504,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_Version_Last(
 		long lvEntryId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63; and version = &#63;.
@@ -528,8 +518,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion[] findByLvEntryId_Version_PrevAndNext(
 			long lvEntryLocalizationVersionId, long lvEntryId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -583,18 +572,21 @@ public interface LVEntryLocalizationVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId_LanguageId(long,String, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalizationVersion>
 		findByLvEntryId_LanguageId(
 			long lvEntryId, String languageId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator);
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
@@ -608,15 +600,12 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion>
 		findByLvEntryId_LanguageId(
 			long lvEntryId, String languageId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator,
-			boolean useFinderCache);
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
@@ -629,8 +618,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_LanguageId_First(
 			long lvEntryId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -643,8 +631,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_First(
 		long lvEntryId, String languageId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
@@ -657,8 +644,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion findByLvEntryId_LanguageId_Last(
 			long lvEntryId, String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -671,8 +657,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Last(
 		long lvEntryId, String languageId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry localization versions before and after the current lv entry localization version in the ordered set where lvEntryId = &#63; and languageId = &#63;.
@@ -687,8 +672,7 @@ public interface LVEntryLocalizationVersionPersistence
 	public LVEntryLocalizationVersion[] findByLvEntryId_LanguageId_PrevAndNext(
 			long lvEntryLocalizationVersionId, long lvEntryId,
 			String languageId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LVEntryLocalizationVersion> orderByComparator)
+			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
@@ -722,15 +706,18 @@ public interface LVEntryLocalizationVersionPersistence
 		throws NoSuchLVEntryLocalizationVersionException;
 
 	/**
-	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryId_LanguageId_Version(long,String,int)}
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
+	@Deprecated
 	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Version(
-		long lvEntryId, String languageId, int version);
+		long lvEntryId, String languageId, int version, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -742,7 +729,7 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
 	public LVEntryLocalizationVersion fetchByLvEntryId_LanguageId_Version(
-		long lvEntryId, String languageId, int version, boolean useFinderCache);
+		long lvEntryId, String languageId, int version);
 
 	/**
 	 * Removes the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; from the database.
@@ -852,15 +839,18 @@ public interface LVEntryLocalizationVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions.
@@ -872,14 +862,11 @@ public interface LVEntryLocalizationVersionPersistence
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
 	public java.util.List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator);
 
 	/**
 	 * Removes all the lv entry localization versions from the database.

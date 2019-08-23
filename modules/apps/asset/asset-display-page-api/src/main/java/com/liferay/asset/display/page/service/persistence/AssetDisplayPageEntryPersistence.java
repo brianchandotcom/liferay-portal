@@ -17,6 +17,7 @@ package com.liferay.asset.display.page.service.persistence;
 import com.liferay.asset.display.page.exception.NoSuchDisplayPageEntryException;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface AssetDisplayPageEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
+	@Deprecated
 	public java.util.List<AssetDisplayPageEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
 	public java.util.List<AssetDisplayPageEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the first asset display page entry in the ordered set where uuid = &#63;.
@@ -112,8 +113,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByUuid_First(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -125,8 +125,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByUuid_First(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the last asset display page entry in the ordered set where uuid = &#63;.
@@ -138,8 +137,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByUuid_Last(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -151,8 +149,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByUuid_Last(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63;.
@@ -165,8 +162,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry[] findByUuid_PrevAndNext(
 			long assetDisplayPageEntryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -196,13 +192,17 @@ public interface AssetDisplayPageEntryPersistence
 		throws NoSuchDisplayPageEntryException;
 
 	/**
-	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
-	public AssetDisplayPageEntry fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public AssetDisplayPageEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the asset display page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,8 +212,7 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
-	public AssetDisplayPageEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public AssetDisplayPageEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the asset display page entry where uuid = &#63; and groupId = &#63; from the database.
@@ -267,17 +266,20 @@ public interface AssetDisplayPageEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
+	@Deprecated
 	public java.util.List<AssetDisplayPageEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where uuid = &#63; and companyId = &#63;.
@@ -291,14 +293,11 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
 	public java.util.List<AssetDisplayPageEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the first asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -311,8 +310,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -325,8 +323,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the last asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -339,8 +336,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -353,8 +349,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -368,8 +363,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry[] findByUuid_C_PrevAndNext(
 			long assetDisplayPageEntryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -419,16 +413,19 @@ public interface AssetDisplayPageEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
+	@Deprecated
 	public java.util.List<AssetDisplayPageEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where groupId = &#63;.
@@ -441,14 +438,11 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
 	public java.util.List<AssetDisplayPageEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the first asset display page entry in the ordered set where groupId = &#63;.
@@ -460,8 +454,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByGroupId_First(
 			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -473,8 +466,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the last asset display page entry in the ordered set where groupId = &#63;.
@@ -486,8 +478,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByGroupId_Last(
 			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -499,8 +490,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where groupId = &#63;.
@@ -513,8 +503,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry[] findByGroupId_PrevAndNext(
 			long assetDisplayPageEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -564,17 +553,20 @@ public interface AssetDisplayPageEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutPageTemplateEntryId(long, int, int, OrderByComparator)}
 	 * @param layoutPageTemplateEntryId the layout page template entry ID
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
+	@Deprecated
 	public java.util.List<AssetDisplayPageEntry>
 		findByLayoutPageTemplateEntryId(
 			long layoutPageTemplateEntryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator);
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset display page entries where layoutPageTemplateEntryId = &#63;.
@@ -587,15 +579,12 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset display page entries
 	 */
 	public java.util.List<AssetDisplayPageEntry>
 		findByLayoutPageTemplateEntryId(
 			long layoutPageTemplateEntryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator,
-			boolean useFinderCache);
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the first asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
@@ -607,8 +596,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByLayoutPageTemplateEntryId_First(
 			long layoutPageTemplateEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -620,8 +608,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByLayoutPageTemplateEntryId_First(
 		long layoutPageTemplateEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the last asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
@@ -633,8 +620,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry findByLayoutPageTemplateEntryId_Last(
 			long layoutPageTemplateEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -646,8 +632,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry fetchByLayoutPageTemplateEntryId_Last(
 		long layoutPageTemplateEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Returns the asset display page entries before and after the current asset display page entry in the ordered set where layoutPageTemplateEntryId = &#63;.
@@ -660,8 +645,7 @@ public interface AssetDisplayPageEntryPersistence
 	 */
 	public AssetDisplayPageEntry[] findByLayoutPageTemplateEntryId_PrevAndNext(
 			long assetDisplayPageEntryId, long layoutPageTemplateEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<AssetDisplayPageEntry> orderByComparator)
+			OrderByComparator<AssetDisplayPageEntry> orderByComparator)
 		throws NoSuchDisplayPageEntryException;
 
 	/**
@@ -694,15 +678,18 @@ public interface AssetDisplayPageEntryPersistence
 		throws NoSuchDisplayPageEntryException;
 
 	/**
-	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C(long,long,long)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
+	@Deprecated
 	public AssetDisplayPageEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK);
+		long groupId, long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Returns the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -714,7 +701,7 @@ public interface AssetDisplayPageEntryPersistence
 	 * @return the matching asset display page entry, or <code>null</code> if a matching asset display page entry could not be found
 	 */
 	public AssetDisplayPageEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK, boolean useFinderCache);
+		long groupId, long classNameId, long classPK);
 
 	/**
 	 * Removes the asset display page entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -820,15 +807,18 @@ public interface AssetDisplayPageEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetDisplayPageEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset display page entries
 	 */
+	@Deprecated
 	public java.util.List<AssetDisplayPageEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset display page entries.
@@ -840,14 +830,11 @@ public interface AssetDisplayPageEntryPersistence
 	 * @param start the lower bound of the range of asset display page entries
 	 * @param end the upper bound of the range of asset display page entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset display page entries
 	 */
 	public java.util.List<AssetDisplayPageEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetDisplayPageEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetDisplayPageEntry> orderByComparator);
 
 	/**
 	 * Removes all the asset display page entries from the database.

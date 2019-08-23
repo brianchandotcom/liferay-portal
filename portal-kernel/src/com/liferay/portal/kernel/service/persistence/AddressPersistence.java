@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchAddressException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -68,16 +69,18 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where uuid = &#63;.
@@ -90,14 +93,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where uuid = &#63;.
@@ -108,9 +108,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			String uuid, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -121,9 +119,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		String uuid, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where uuid = &#63;.
@@ -134,9 +130,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			String uuid, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -147,9 +141,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		String uuid, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where uuid = &#63;.
@@ -162,8 +154,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByUuid_PrevAndNext(
 			long addressId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -213,17 +204,19 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where uuid = &#63; and companyId = &#63;.
@@ -237,14 +230,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -257,8 +247,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -271,8 +260,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -285,8 +273,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -299,8 +286,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -314,8 +300,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByUuid_C_PrevAndNext(
 			long addressId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -365,16 +350,18 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63;.
@@ -387,14 +374,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63;.
@@ -405,9 +389,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			long companyId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -418,9 +400,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		long companyId, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where companyId = &#63;.
@@ -431,9 +411,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			long companyId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -444,9 +422,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		long companyId, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63;.
@@ -459,8 +435,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByCompanyId_PrevAndNext(
 			long addressId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -508,16 +483,18 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where userId = &#63;.
@@ -530,14 +507,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where userId = &#63;.
@@ -548,9 +522,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByUserId_First(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			long userId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -561,9 +533,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		long userId, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where userId = &#63;.
@@ -574,9 +544,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
 	public Address findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			long userId, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -587,9 +555,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
 	public Address fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		long userId, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where userId = &#63;.
@@ -602,8 +568,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByUserId_PrevAndNext(
 			long addressId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -653,17 +618,19 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63;.
@@ -677,14 +644,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -697,8 +661,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_First(
 			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -711,8 +674,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -725,8 +687,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_Last(
 			long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -739,8 +700,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -754,8 +714,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByC_C_PrevAndNext(
 			long addressId, long companyId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -810,18 +769,20 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -836,14 +797,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -857,8 +815,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_First(
 			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -872,8 +829,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -887,8 +843,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_Last(
 			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -902,8 +857,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -918,8 +872,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByC_C_C_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -979,6 +932,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_C_M(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -986,13 +940,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByC_C_C_M(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		int start, int end, OrderByComparator<Address> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1008,15 +963,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C_M(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1031,8 +982,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_M_First(
 			long companyId, long classNameId, long classPK, boolean mailing,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1047,8 +997,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_M_First(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1063,8 +1012,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_M_Last(
 			long companyId, long classNameId, long classPK, boolean mailing,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1079,8 +1027,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_M_Last(
 		long companyId, long classNameId, long classPK, boolean mailing,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and mailing = &#63;.
@@ -1096,9 +1043,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByC_C_C_M_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
-			boolean mailing,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			boolean mailing, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1162,6 +1107,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_C_P(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -1169,13 +1115,14 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		int start, int end, OrderByComparator<Address> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1191,15 +1138,11 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
 	public java.util.List<Address> findByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the first address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1214,8 +1157,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_P_First(
 			long companyId, long classNameId, long classPK, boolean primary,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1230,8 +1172,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_P_First(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the last address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1246,8 +1187,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address findByC_C_C_P_Last(
 			long companyId, long classNameId, long classPK, boolean primary,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1262,8 +1202,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address fetchByC_C_C_P_Last(
 		long companyId, long classNameId, long classPK, boolean primary,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Returns the addresses before and after the current address in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -1279,9 +1218,7 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 */
 	public Address[] findByC_C_C_P_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
-			boolean primary,
-			com.liferay.portal.kernel.util.OrderByComparator<Address>
-				orderByComparator)
+			boolean primary, OrderByComparator<Address> orderByComparator)
 		throws NoSuchAddressException;
 
 	/**
@@ -1385,15 +1322,17 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of addresses
 	 */
+	@Deprecated
 	public java.util.List<Address> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator);
+		int start, int end, OrderByComparator<Address> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the addresses.
@@ -1405,14 +1344,10 @@ public interface AddressPersistence extends BasePersistence<Address> {
 	 * @param start the lower bound of the range of addresses
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of addresses
 	 */
 	public java.util.List<Address> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Address>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Address> orderByComparator);
 
 	/**
 	 * Removes all the addresses from the database.

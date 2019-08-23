@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 
@@ -69,16 +70,18 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where uuid = &#63;.
@@ -91,14 +94,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63;.
@@ -109,9 +109,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			String uuid, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -122,9 +120,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		String uuid, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where uuid = &#63;.
@@ -135,9 +131,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			String uuid, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -148,9 +142,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		String uuid, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63;.
@@ -163,8 +155,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByUuid_PrevAndNext(
 			long nodeId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -194,13 +185,17 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 		throws NoSuchNodeException;
 
 	/**
-	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
-	public WikiNode fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public WikiNode fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the wiki node where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -210,8 +205,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
-	public WikiNode fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public WikiNode fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the wiki node where uuid = &#63; and groupId = &#63; from the database.
@@ -264,17 +258,19 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where uuid = &#63; and companyId = &#63;.
@@ -288,14 +284,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -308,8 +301,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -322,8 +314,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -336,8 +327,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -350,8 +340,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -365,8 +354,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByUuid_C_PrevAndNext(
 			long nodeId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -416,16 +404,18 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where groupId = &#63;.
@@ -438,14 +428,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where groupId = &#63;.
@@ -456,9 +443,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			long groupId, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -469,9 +454,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		long groupId, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where groupId = &#63;.
@@ -482,9 +465,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			long groupId, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -495,9 +476,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		long groupId, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63;.
@@ -510,8 +489,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByGroupId_PrevAndNext(
 			long nodeId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -552,8 +530,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public java.util.List<WikiNode> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63;.
@@ -566,8 +543,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] filterFindByGroupId_PrevAndNext(
 			long nodeId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -623,16 +599,18 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where companyId = &#63;.
@@ -645,14 +623,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where companyId = &#63;.
@@ -663,9 +638,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			long companyId, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -676,9 +649,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the first matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		long companyId, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where companyId = &#63;.
@@ -689,9 +660,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @throws NoSuchNodeException if a matching wiki node could not be found
 	 */
 	public WikiNode findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			long companyId, OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -702,9 +671,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @return the last matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
 	public WikiNode fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		long companyId, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63;.
@@ -717,8 +684,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByCompanyId_PrevAndNext(
 			long nodeId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -748,13 +714,17 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 		throws NoSuchNodeException;
 
 	/**
-	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_N(long,String)}
 	 * @param groupId the group ID
 	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
-	public WikiNode fetchByG_N(long groupId, String name);
+	@Deprecated
+	public WikiNode fetchByG_N(
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Returns the wiki node where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -764,8 +734,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching wiki node, or <code>null</code> if a matching wiki node could not be found
 	 */
-	public WikiNode fetchByG_N(
-		long groupId, String name, boolean useFinderCache);
+	public WikiNode fetchByG_N(long groupId, String name);
 
 	/**
 	 * Removes the wiki node where groupId = &#63; and name = &#63; from the database.
@@ -818,17 +787,19 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where groupId = &#63; and status = &#63;.
@@ -842,14 +813,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -862,8 +830,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByG_S_First(
 			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -876,8 +843,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -890,8 +856,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByG_S_Last(
 			long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -904,8 +869,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where groupId = &#63; and status = &#63;.
@@ -919,8 +883,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByG_S_PrevAndNext(
 			long nodeId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -964,8 +927,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public java.util.List<WikiNode> filterFindByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set of wiki nodes that the user has permission to view where groupId = &#63; and status = &#63;.
@@ -979,8 +941,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] filterFindByG_S_PrevAndNext(
 			long nodeId, long groupId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -1041,17 +1002,19 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes where companyId = &#63; and status = &#63;.
@@ -1065,14 +1028,11 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching wiki nodes
 	 */
 	public java.util.List<WikiNode> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the first wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -1085,8 +1045,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByC_S_First(
 			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -1099,8 +1058,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the last wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -1113,8 +1071,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode findByC_S_Last(
 			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -1127,8 +1084,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode fetchByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Returns the wiki nodes before and after the current wiki node in the ordered set where companyId = &#63; and status = &#63;.
@@ -1142,8 +1098,7 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 */
 	public WikiNode[] findByC_S_PrevAndNext(
 			long nodeId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-				orderByComparator)
+			OrderByComparator<WikiNode> orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -1240,15 +1195,17 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki nodes
 	 */
+	@Deprecated
 	public java.util.List<WikiNode> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator);
+		int start, int end, OrderByComparator<WikiNode> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the wiki nodes.
@@ -1260,14 +1217,10 @@ public interface WikiNodePersistence extends BasePersistence<WikiNode> {
 	 * @param start the lower bound of the range of wiki nodes
 	 * @param end the upper bound of the range of wiki nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of wiki nodes
 	 */
 	public java.util.List<WikiNode> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<WikiNode>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<WikiNode> orderByComparator);
 
 	/**
 	 * Removes all the wiki nodes from the database.

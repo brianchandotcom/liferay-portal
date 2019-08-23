@@ -17,6 +17,7 @@ package com.liferay.announcements.kernel.service.persistence;
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where uuid = &#63;.
@@ -112,8 +113,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUuid_First(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -124,9 +124,7 @@ public interface AnnouncementsEntryPersistence
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
 	public AnnouncementsEntry fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where uuid = &#63;.
@@ -138,8 +136,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUuid_Last(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -150,9 +147,7 @@ public interface AnnouncementsEntryPersistence
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
 	public AnnouncementsEntry fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		String uuid, OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63;.
@@ -165,8 +160,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(
 			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -207,8 +201,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63;.
@@ -221,8 +214,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(
 			long entryId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -281,17 +273,20 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -305,14 +300,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -325,8 +317,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -339,8 +330,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -353,8 +343,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -367,8 +356,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -382,8 +370,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(
 			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -428,8 +415,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -443,8 +429,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(
 			long entryId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -503,16 +488,19 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where userId = &#63;.
@@ -525,14 +513,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where userId = &#63;.
@@ -544,8 +529,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUserId_First(
 			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -556,9 +540,7 @@ public interface AnnouncementsEntryPersistence
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
 	public AnnouncementsEntry fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where userId = &#63;.
@@ -570,8 +552,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByUserId_Last(
 			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -582,9 +563,7 @@ public interface AnnouncementsEntryPersistence
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	 */
 	public AnnouncementsEntry fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		long userId, OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where userId = &#63;.
@@ -597,8 +576,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByUserId_PrevAndNext(
 			long entryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -639,8 +617,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where userId = &#63;.
@@ -653,8 +630,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(
 			long entryId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -713,17 +689,20 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -737,14 +716,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -757,8 +733,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_First(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -771,8 +746,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -785,8 +759,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_Last(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -799,8 +772,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -814,8 +786,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByC_C_PrevAndNext(
 			long entryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -860,8 +831,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -875,8 +845,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(
 			long entryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -940,18 +909,21 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -966,14 +938,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -987,8 +956,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_C_First(
 			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1002,8 +970,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_C_First(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1017,8 +984,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_C_Last(
 			long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1032,8 +998,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_C_Last(
 		long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1048,8 +1013,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByC_C_C_PrevAndNext(
 			long entryId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1097,8 +1061,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByC_C_C(
 		long companyId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1113,8 +1076,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByC_C_C_PrevAndNext(
 			long entryId, long companyId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1182,18 +1144,21 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_A(long,long,boolean, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param alert the alert
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1208,14 +1173,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1229,8 +1191,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_A_First(
 			long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1244,8 +1205,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_A_First(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1259,8 +1219,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_A_Last(
 			long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1274,8 +1233,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_A_Last(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1290,8 +1248,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(
 			long entryId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1339,8 +1296,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public java.util.List<AnnouncementsEntry> filterFindByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1355,8 +1311,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(
 			long entryId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1427,6 +1382,7 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_C_A(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -1434,13 +1390,15 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findByC_C_C_A(
 		long companyId, long classNameId, long classPK, boolean alert,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1456,15 +1414,12 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findByC_C_C_A(
 		long companyId, long classNameId, long classPK, boolean alert,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the first announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1479,8 +1434,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_C_A_First(
 			long companyId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1495,8 +1449,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_C_A_First(
 		long companyId, long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the last announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1511,8 +1464,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry findByC_C_C_A_Last(
 			long companyId, long classNameId, long classPK, boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1527,8 +1479,7 @@ public interface AnnouncementsEntryPersistence
 	 */
 	public AnnouncementsEntry fetchByC_C_C_A_Last(
 		long companyId, long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1545,8 +1496,7 @@ public interface AnnouncementsEntryPersistence
 	public AnnouncementsEntry[] findByC_C_C_A_PrevAndNext(
 			long entryId, long companyId, long classNameId, long classPK,
 			boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1599,8 +1549,7 @@ public interface AnnouncementsEntryPersistence
 	public java.util.List<AnnouncementsEntry> filterFindByC_C_C_A(
 		long companyId, long classNameId, long classPK, boolean alert,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where companyId = &#63; and classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1617,8 +1566,7 @@ public interface AnnouncementsEntryPersistence
 	public AnnouncementsEntry[] filterFindByC_C_C_A_PrevAndNext(
 			long entryId, long companyId, long classNameId, long classPK,
 			boolean alert,
-			com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-				orderByComparator)
+			OrderByComparator<AnnouncementsEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1735,15 +1683,18 @@ public interface AnnouncementsEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of announcements entries
 	 */
+	@Deprecated
 	public java.util.List<AnnouncementsEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator);
+		OrderByComparator<AnnouncementsEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the announcements entries.
@@ -1755,14 +1706,11 @@ public interface AnnouncementsEntryPersistence
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of announcements entries
 	 */
 	public java.util.List<AnnouncementsEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AnnouncementsEntry> orderByComparator);
 
 	/**
 	 * Removes all the announcements entries from the database.

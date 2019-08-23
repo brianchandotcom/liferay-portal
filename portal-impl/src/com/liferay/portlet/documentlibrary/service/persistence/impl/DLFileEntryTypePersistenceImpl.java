@@ -135,18 +135,22 @@ public class DLFileEntryTypePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileEntryType> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -160,14 +164,12 @@ public class DLFileEntryTypePersistenceImpl
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
 	@Override
 	public List<DLFileEntryType> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -179,30 +181,24 @@ public class DLFileEntryTypePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<DLFileEntryType> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
+		List<DLFileEntryType> list =
+			(List<DLFileEntryType>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileEntryType dlFileEntryType : list) {
-					if (!uuid.equals(dlFileEntryType.getUuid())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if (!uuid.equals(dlFileEntryType.getUuid())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -269,14 +265,10 @@ public class DLFileEntryTypePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -690,15 +682,20 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the document library file entry type where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry type where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 */
+	@Deprecated
 	@Override
-	public DLFileEntryType fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public DLFileEntryType fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -710,23 +707,13 @@ public class DLFileEntryTypePersistenceImpl
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 */
 	@Override
-	public DLFileEntryType fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public DLFileEntryType fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof DLFileEntryType) {
 			DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
@@ -776,10 +763,8 @@ public class DLFileEntryTypePersistenceImpl
 				List<DLFileEntryType> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					DLFileEntryType dlFileEntryType = list.get(0);
@@ -790,10 +775,8 @@ public class DLFileEntryTypePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -949,20 +932,23 @@ public class DLFileEntryTypePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileEntryType> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -977,14 +963,12 @@ public class DLFileEntryTypePersistenceImpl
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
 	@Override
 	public List<DLFileEntryType> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -996,34 +980,28 @@ public class DLFileEntryTypePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileEntryType> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
+		List<DLFileEntryType> list =
+			(List<DLFileEntryType>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileEntryType dlFileEntryType : list) {
-					if (!uuid.equals(dlFileEntryType.getUuid()) ||
-						(companyId != dlFileEntryType.getCompanyId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if (!uuid.equals(dlFileEntryType.getUuid()) ||
+					(companyId != dlFileEntryType.getCompanyId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1094,14 +1072,10 @@ public class DLFileEntryTypePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1550,18 +1524,22 @@ public class DLFileEntryTypePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileEntryType> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1575,14 +1553,12 @@ public class DLFileEntryTypePersistenceImpl
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry types
 	 */
 	@Override
 	public List<DLFileEntryType> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1592,30 +1568,24 @@ public class DLFileEntryTypePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<DLFileEntryType> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
+		List<DLFileEntryType> list =
+			(List<DLFileEntryType>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileEntryType dlFileEntryType : list) {
-					if ((groupId != dlFileEntryType.getGroupId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if ((groupId != dlFileEntryType.getGroupId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1671,14 +1641,10 @@ public class DLFileEntryTypePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2459,6 +2425,31 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the document library file entry types where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of document library file entry types
+	 * @param end the upper bound of the range of document library file entry types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library file entry types
+	 */
+	@Deprecated
+	@Override
+	public List<DLFileEntryType> findByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByGroupId(groupIds, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the document library file entry types where groupId = any &#63;.
 	 *
 	 * <p>
@@ -2475,29 +2466,6 @@ public class DLFileEntryTypePersistenceImpl
 	public List<DLFileEntryType> findByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<DLFileEntryType> orderByComparator) {
-
-		return findByGroupId(groupIds, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entry types where groupId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of document library file entry types
-	 * @param end the upper bound of the range of document library file entry types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching document library file entry types
-	 */
-	@Override
-	public List<DLFileEntryType> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator,
-		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -2517,32 +2485,26 @@ public class DLFileEntryTypePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {StringUtil.merge(groupIds)};
-			}
+			finderArgs = new Object[] {StringUtil.merge(groupIds)};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), start, end, orderByComparator
 			};
 		}
 
-		List<DLFileEntryType> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
+		List<DLFileEntryType> list =
+			(List<DLFileEntryType>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileEntryType dlFileEntryType : list) {
-					if (!ArrayUtil.contains(
-							groupIds, dlFileEntryType.getGroupId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileEntryType dlFileEntryType : list) {
+				if (!ArrayUtil.contains(
+						groupIds, dlFileEntryType.getGroupId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2600,17 +2562,12 @@ public class DLFileEntryTypePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByGroupId, finderArgs,
-						list);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByGroupId, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByGroupId, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByGroupId, finderArgs);
 
 				throw processException(e);
 			}
@@ -2918,15 +2875,20 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
-	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file entry type where groupId = &#63; and fileEntryTypeKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_F(long,String)}
 	 * @param groupId the group ID
 	 * @param fileEntryTypeKey the file entry type key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 */
+	@Deprecated
 	@Override
-	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey) {
-		return fetchByG_F(groupId, fileEntryTypeKey, true);
+	public DLFileEntryType fetchByG_F(
+		long groupId, String fileEntryTypeKey, boolean useFinderCache) {
+
+		return fetchByG_F(groupId, fileEntryTypeKey);
 	}
 
 	/**
@@ -2938,23 +2900,13 @@ public class DLFileEntryTypePersistenceImpl
 	 * @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
 	 */
 	@Override
-	public DLFileEntryType fetchByG_F(
-		long groupId, String fileEntryTypeKey, boolean useFinderCache) {
-
+	public DLFileEntryType fetchByG_F(long groupId, String fileEntryTypeKey) {
 		fileEntryTypeKey = Objects.toString(fileEntryTypeKey, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {groupId, fileEntryTypeKey};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, fileEntryTypeKey};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_F, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByG_F, finderArgs, this);
 
 		if (result instanceof DLFileEntryType) {
 			DLFileEntryType dlFileEntryType = (DLFileEntryType)result;
@@ -3005,10 +2957,8 @@ public class DLFileEntryTypePersistenceImpl
 				List<DLFileEntryType> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByG_F, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByG_F, finderArgs, list);
 				}
 				else {
 					DLFileEntryType dlFileEntryType = list.get(0);
@@ -3019,10 +2969,7 @@ public class DLFileEntryTypePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByG_F, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByG_F, finderArgs);
 
 				throw processException(e);
 			}
@@ -3703,17 +3650,21 @@ public class DLFileEntryTypePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entry types
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileEntryType> findAll(
 		int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator) {
+		OrderByComparator<DLFileEntryType> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -3726,14 +3677,12 @@ public class DLFileEntryTypePersistenceImpl
 	 * @param start the lower bound of the range of document library file entry types
 	 * @param end the upper bound of the range of document library file entry types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entry types
 	 */
 	@Override
 	public List<DLFileEntryType> findAll(
 		int start, int end,
-		OrderByComparator<DLFileEntryType> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileEntryType> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3743,23 +3692,17 @@ public class DLFileEntryTypePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DLFileEntryType> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileEntryType>)FinderCacheUtil.getResult(
+		List<DLFileEntryType> list =
+			(List<DLFileEntryType>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3806,14 +3749,10 @@ public class DLFileEntryTypePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

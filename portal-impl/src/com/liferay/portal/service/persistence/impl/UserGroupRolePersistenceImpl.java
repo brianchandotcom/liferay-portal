@@ -119,18 +119,22 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUserId(userId, start, end, orderByComparator, true);
+		return findByUserId(userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -144,14 +148,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -161,30 +163,24 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUserId;
+			finderArgs = new Object[] {userId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserGroupRole userGroupRole : list) {
-					if ((userId != userGroupRole.getUserId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (UserGroupRole userGroupRole : list) {
+				if ((userId != userGroupRole.getUserId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -240,14 +236,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -632,18 +624,22 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -657,14 +653,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -674,30 +668,24 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserGroupRole userGroupRole : list) {
-					if ((groupId != userGroupRole.getGroupId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (UserGroupRole userGroupRole : list) {
+				if ((groupId != userGroupRole.getGroupId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -753,14 +741,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1144,18 +1128,22 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRoleId(long, int, int, OrderByComparator)}
 	 * @param roleId the role ID
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByRoleId(roleId, start, end, orderByComparator, true);
+		return findByRoleId(roleId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1169,14 +1157,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1186,30 +1172,24 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByRoleId;
-				finderArgs = new Object[] {roleId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByRoleId;
+			finderArgs = new Object[] {roleId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByRoleId;
 			finderArgs = new Object[] {roleId, start, end, orderByComparator};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserGroupRole userGroupRole : list) {
-					if ((roleId != userGroupRole.getRoleId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (UserGroupRole userGroupRole : list) {
+				if ((roleId != userGroupRole.getRoleId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1265,14 +1245,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1661,19 +1637,23 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_G(long,long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findByU_G(
 		long userId, long groupId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByU_G(userId, groupId, start, end, orderByComparator, true);
+		return findByU_G(userId, groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1688,14 +1668,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findByU_G(
 		long userId, long groupId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1705,34 +1683,28 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU_G;
-				finderArgs = new Object[] {userId, groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByU_G;
+			finderArgs = new Object[] {userId, groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByU_G;
 			finderArgs = new Object[] {
 				userId, groupId, start, end, orderByComparator
 			};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserGroupRole userGroupRole : list) {
-					if ((userId != userGroupRole.getUserId()) ||
-						(groupId != userGroupRole.getGroupId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (UserGroupRole userGroupRole : list) {
+				if ((userId != userGroupRole.getUserId()) ||
+					(groupId != userGroupRole.getGroupId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1792,14 +1764,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2219,19 +2187,23 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_R(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param roleId the role ID
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findByG_R(
 		long groupId, long roleId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_R(groupId, roleId, start, end, orderByComparator, true);
+		return findByG_R(groupId, roleId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2246,14 +2218,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findByG_R(
 		long groupId, long roleId, int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2263,34 +2233,28 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_R;
-				finderArgs = new Object[] {groupId, roleId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_R;
+			finderArgs = new Object[] {groupId, roleId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_R;
 			finderArgs = new Object[] {
 				groupId, roleId, start, end, orderByComparator
 			};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (UserGroupRole userGroupRole : list) {
-					if ((groupId != userGroupRole.getGroupId()) ||
-						(roleId != userGroupRole.getRoleId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (UserGroupRole userGroupRole : list) {
+				if ((groupId != userGroupRole.getGroupId()) ||
+					(roleId != userGroupRole.getRoleId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2350,14 +2314,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3216,17 +3176,20 @@ public class UserGroupRolePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user group roles
 	 */
+	@Deprecated
 	@Override
 	public List<UserGroupRole> findAll(
-		int start, int end,
-		OrderByComparator<UserGroupRole> orderByComparator) {
+		int start, int end, OrderByComparator<UserGroupRole> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -3239,13 +3202,12 @@ public class UserGroupRolePersistenceImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user group roles
 	 */
 	@Override
 	public List<UserGroupRole> findAll(
-		int start, int end, OrderByComparator<UserGroupRole> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<UserGroupRole> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3255,23 +3217,17 @@ public class UserGroupRolePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<UserGroupRole> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserGroupRole>)FinderCacheUtil.getResult(
+		List<UserGroupRole> list =
+			(List<UserGroupRole>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3318,14 +3274,10 @@ public class UserGroupRolePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

@@ -133,15 +133,20 @@ public class WeDeployAuthAppPersistenceImpl
 	}
 
 	/**
-	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the we deploy auth app where redirectURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByRU_CI(String,String)}
 	 * @param redirectURI the redirect uri
 	 * @param clientId the client ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
+	@Deprecated
 	@Override
-	public WeDeployAuthApp fetchByRU_CI(String redirectURI, String clientId) {
-		return fetchByRU_CI(redirectURI, clientId, true);
+	public WeDeployAuthApp fetchByRU_CI(
+		String redirectURI, String clientId, boolean useFinderCache) {
+
+		return fetchByRU_CI(redirectURI, clientId);
 	}
 
 	/**
@@ -153,24 +158,14 @@ public class WeDeployAuthAppPersistenceImpl
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	@Override
-	public WeDeployAuthApp fetchByRU_CI(
-		String redirectURI, String clientId, boolean useFinderCache) {
-
+	public WeDeployAuthApp fetchByRU_CI(String redirectURI, String clientId) {
 		redirectURI = Objects.toString(redirectURI, "");
 		clientId = Objects.toString(clientId, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {redirectURI, clientId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {redirectURI, clientId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByRU_CI, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByRU_CI, finderArgs, this);
 
 		if (result instanceof WeDeployAuthApp) {
 			WeDeployAuthApp weDeployAuthApp = (WeDeployAuthApp)result;
@@ -232,22 +227,14 @@ public class WeDeployAuthAppPersistenceImpl
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByRU_CI, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByRU_CI, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									redirectURI, clientId
-								};
-							}
-
 							_log.warn(
 								"WeDeployAuthAppPersistenceImpl.fetchByRU_CI(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -263,10 +250,7 @@ public class WeDeployAuthAppPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByRU_CI, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByRU_CI, finderArgs);
 
 				throw processException(e);
 			}
@@ -433,15 +417,20 @@ public class WeDeployAuthAppPersistenceImpl
 	}
 
 	/**
-	 * Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the we deploy auth app where clientId = &#63; and clientSecret = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByCI_CS(String,String)}
 	 * @param clientId the client ID
 	 * @param clientSecret the client secret
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
+	@Deprecated
 	@Override
-	public WeDeployAuthApp fetchByCI_CS(String clientId, String clientSecret) {
-		return fetchByCI_CS(clientId, clientSecret, true);
+	public WeDeployAuthApp fetchByCI_CS(
+		String clientId, String clientSecret, boolean useFinderCache) {
+
+		return fetchByCI_CS(clientId, clientSecret);
 	}
 
 	/**
@@ -453,24 +442,14 @@ public class WeDeployAuthAppPersistenceImpl
 	 * @return the matching we deploy auth app, or <code>null</code> if a matching we deploy auth app could not be found
 	 */
 	@Override
-	public WeDeployAuthApp fetchByCI_CS(
-		String clientId, String clientSecret, boolean useFinderCache) {
-
+	public WeDeployAuthApp fetchByCI_CS(String clientId, String clientSecret) {
 		clientId = Objects.toString(clientId, "");
 		clientSecret = Objects.toString(clientSecret, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {clientId, clientSecret};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {clientId, clientSecret};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCI_CS, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByCI_CS, finderArgs, this);
 
 		if (result instanceof WeDeployAuthApp) {
 			WeDeployAuthApp weDeployAuthApp = (WeDeployAuthApp)result;
@@ -532,22 +511,14 @@ public class WeDeployAuthAppPersistenceImpl
 				List<WeDeployAuthApp> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCI_CS, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByCI_CS, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									clientId, clientSecret
-								};
-							}
-
 							_log.warn(
 								"WeDeployAuthAppPersistenceImpl.fetchByCI_CS(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -563,10 +534,7 @@ public class WeDeployAuthAppPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCI_CS, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByCI_CS, finderArgs);
 
 				throw processException(e);
 			}
@@ -1152,17 +1120,21 @@ public class WeDeployAuthAppPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WeDeployAuthAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of we deploy auth apps
 	 * @param end the upper bound of the range of we deploy auth apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth apps
 	 */
+	@Deprecated
 	@Override
 	public List<WeDeployAuthApp> findAll(
 		int start, int end,
-		OrderByComparator<WeDeployAuthApp> orderByComparator) {
+		OrderByComparator<WeDeployAuthApp> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1175,14 +1147,12 @@ public class WeDeployAuthAppPersistenceImpl
 	 * @param start the lower bound of the range of we deploy auth apps
 	 * @param end the upper bound of the range of we deploy auth apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth apps
 	 */
 	@Override
 	public List<WeDeployAuthApp> findAll(
 		int start, int end,
-		OrderByComparator<WeDeployAuthApp> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<WeDeployAuthApp> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1192,23 +1162,17 @@ public class WeDeployAuthAppPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<WeDeployAuthApp> list = null;
-
-		if (useFinderCache) {
-			list = (List<WeDeployAuthApp>)finderCache.getResult(
+		List<WeDeployAuthApp> list =
+			(List<WeDeployAuthApp>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1255,14 +1219,10 @@ public class WeDeployAuthAppPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

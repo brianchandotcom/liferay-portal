@@ -146,18 +146,22 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -171,14 +175,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -190,30 +192,23 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if (!uuid.equals(blogsEntry.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if (!uuid.equals(blogsEntry.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -280,14 +275,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -696,15 +687,20 @@ public class BlogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the blogs entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the blogs entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
+	@Deprecated
 	@Override
-	public BlogsEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public BlogsEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -716,23 +712,13 @@ public class BlogsEntryPersistenceImpl
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	@Override
-	public BlogsEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public BlogsEntry fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof BlogsEntry) {
 			BlogsEntry blogsEntry = (BlogsEntry)result;
@@ -782,10 +768,8 @@ public class BlogsEntryPersistenceImpl
 				List<BlogsEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					BlogsEntry blogsEntry = list.get(0);
@@ -796,10 +780,7 @@ public class BlogsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -954,20 +935,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -982,14 +966,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1001,34 +983,27 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if (!uuid.equals(blogsEntry.getUuid()) ||
+					(companyId != blogsEntry.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if (!uuid.equals(blogsEntry.getUuid()) ||
-						(companyId != blogsEntry.getCompanyId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1099,14 +1074,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1547,18 +1518,22 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1572,14 +1547,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1589,30 +1562,23 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1668,14 +1634,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2434,18 +2396,22 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2459,14 +2425,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2476,32 +2440,25 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2557,14 +2514,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2948,15 +2901,20 @@ public class BlogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the blogs entry where groupId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the blogs entry where groupId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_UT(long,String)}
 	 * @param groupId the group ID
 	 * @param urlTitle the url title
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
+	@Deprecated
 	@Override
-	public BlogsEntry fetchByG_UT(long groupId, String urlTitle) {
-		return fetchByG_UT(groupId, urlTitle, true);
+	public BlogsEntry fetchByG_UT(
+		long groupId, String urlTitle, boolean useFinderCache) {
+
+		return fetchByG_UT(groupId, urlTitle);
 	}
 
 	/**
@@ -2968,23 +2926,13 @@ public class BlogsEntryPersistenceImpl
 	 * @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
 	 */
 	@Override
-	public BlogsEntry fetchByG_UT(
-		long groupId, String urlTitle, boolean useFinderCache) {
-
+	public BlogsEntry fetchByG_UT(long groupId, String urlTitle) {
 		urlTitle = Objects.toString(urlTitle, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {groupId, urlTitle};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, urlTitle};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_UT, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByG_UT, finderArgs, this);
 
 		if (result instanceof BlogsEntry) {
 			BlogsEntry blogsEntry = (BlogsEntry)result;
@@ -3034,10 +2982,8 @@ public class BlogsEntryPersistenceImpl
 				List<BlogsEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_UT, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByG_UT, finderArgs, list);
 				}
 				else {
 					BlogsEntry blogsEntry = list.get(0);
@@ -3048,10 +2994,7 @@ public class BlogsEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByG_UT, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByG_UT, finderArgs);
 
 				throw processException(e);
 			}
@@ -3205,20 +3148,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LtD(long,Date, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param displayDate the display date
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_LtD(
 		long groupId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_LtD(
-			groupId, displayDate, start, end, orderByComparator, true);
+		return findByG_LtD(groupId, displayDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -3233,14 +3179,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_LtD(
 		long groupId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3251,22 +3195,18 @@ public class BlogsEntryPersistenceImpl
 			groupId, _getTime(displayDate), start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3337,14 +3277,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4216,19 +4152,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_S(
 		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
+		return findByG_S(groupId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -4243,14 +4183,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_S(
 		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4260,34 +4198,27 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_S;
-				finderArgs = new Object[] {groupId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_S;
+			finderArgs = new Object[] {groupId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 				groupId, status, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4347,14 +4278,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5162,20 +5089,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_NotS(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_NotS(
 		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_NotS(
-			groupId, status, start, end, orderByComparator, true);
+		return findByG_NotS(groupId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -5190,14 +5120,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_NotS(
 		long groupId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5208,21 +5136,17 @@ public class BlogsEntryPersistenceImpl
 			groupId, status, start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5282,14 +5206,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6098,20 +6018,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_U(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_U(
 		long companyId, long userId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_U(
-			companyId, userId, start, end, orderByComparator, true);
+		return findByC_U(companyId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -6126,14 +6049,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_U(
 		long companyId, long userId, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6143,34 +6064,27 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_U;
-				finderArgs = new Object[] {companyId, userId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_U;
+			finderArgs = new Object[] {companyId, userId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_U;
 			finderArgs = new Object[] {
 				companyId, userId, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(userId != blogsEntry.getUserId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(userId != blogsEntry.getUserId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6230,14 +6144,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6654,20 +6564,24 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LtD(long,Date, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param displayDate the display date
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_LtD(
 		long companyId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_LtD(
-			companyId, displayDate, start, end, orderByComparator, true);
+			companyId, displayDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -6682,14 +6596,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_LtD(
 		long companyId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6700,22 +6612,18 @@ public class BlogsEntryPersistenceImpl
 			companyId, _getTime(displayDate), start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6786,14 +6694,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7237,20 +7141,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_S(
-			companyId, status, start, end, orderByComparator, true);
+		return findByC_S(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -7265,14 +7172,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7282,34 +7187,27 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S;
-				finderArgs = new Object[] {companyId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_S;
+			finderArgs = new Object[] {companyId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7369,14 +7267,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7793,20 +7687,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_NotS(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_NotS(
-			companyId, status, start, end, orderByComparator, true);
+		return findByC_NotS(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -7821,14 +7718,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7839,21 +7734,17 @@ public class BlogsEntryPersistenceImpl
 			companyId, status, start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7913,14 +7804,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8337,20 +8224,23 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLtD_S(Date,int, int, int, OrderByComparator)}
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByLtD_S(
 		Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByLtD_S(
-			displayDate, status, start, end, orderByComparator, true);
+		return findByLtD_S(displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -8365,14 +8255,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByLtD_S(
 		Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8383,22 +8271,18 @@ public class BlogsEntryPersistenceImpl
 			_getTime(displayDate), status, start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8469,14 +8353,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8923,21 +8803,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_LtD(long,long,Date, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param displayDate the display date
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_U_LtD(
 		long groupId, long userId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_LtD(
-			groupId, userId, displayDate, start, end, orderByComparator, true);
+			groupId, userId, displayDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -8953,14 +8837,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_U_LtD(
 		long groupId, long userId, Date displayDate, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8972,23 +8854,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -9063,14 +8941,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9997,21 +9871,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_S(
-			groupId, userId, status, start, end, orderByComparator, true);
+			groupId, userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -10027,14 +9905,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10044,35 +9920,28 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U_S;
-				finderArgs = new Object[] {groupId, userId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_U_S;
+			finderArgs = new Object[] {groupId, userId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_U_S;
 			finderArgs = new Object[] {
 				groupId, userId, status, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -10136,14 +10005,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11015,6 +10880,34 @@ public class BlogsEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_S(long,long,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of blogs entries
+	 * @param end the upper bound of the range of blogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching blogs entries
+	 */
+	@Deprecated
+	@Override
+	public List<BlogsEntry> findByG_U_S(
+		long groupId, long userId, int[] statuses, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_U_S(
+			groupId, userId, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -11033,32 +10926,6 @@ public class BlogsEntryPersistenceImpl
 	public List<BlogsEntry> findByG_U_S(
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
-
-		return findByG_U_S(
-			groupId, userId, statuses, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the blogs entries where groupId = &#63; and userId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of blogs entries
-	 * @param end the upper bound of the range of blogs entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching blogs entries
-	 */
-	@Override
-	public List<BlogsEntry> findByG_U_S(
-		long groupId, long userId, int[] statuses, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -11079,36 +10946,29 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(statuses)
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(statuses)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, userId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			_finderPathWithPaginationFindByG_U_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_U_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					!ArrayUtil.contains(statuses, blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						!ArrayUtil.contains(statuses, blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -11176,16 +11036,12 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_U_S, finderArgs, list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByG_U_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_U_S, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByG_U_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -11554,21 +11410,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_NotS(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_NotS(
-			groupId, userId, status, start, end, orderByComparator, true);
+			groupId, userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -11584,14 +11444,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_U_NotS(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -11602,22 +11460,18 @@ public class BlogsEntryPersistenceImpl
 			groupId, userId, status, start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -11681,14 +11535,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12553,21 +12403,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_D_S(long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_D_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_D_S(
-			groupId, displayDate, status, start, end, orderByComparator, true);
+			groupId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -12583,14 +12437,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_D_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -12600,15 +12452,10 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_D_S;
-				finderArgs = new Object[] {
-					groupId, _getTime(displayDate), status
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_D_S;
+			finderArgs = new Object[] {groupId, _getTime(displayDate), status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_D_S;
 			finderArgs = new Object[] {
 				groupId, _getTime(displayDate), status, start, end,
@@ -12616,23 +12463,18 @@ public class BlogsEntryPersistenceImpl
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					!Objects.equals(displayDate, blogsEntry.getDisplayDate()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						!Objects.equals(
-							displayDate, blogsEntry.getDisplayDate()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -12707,14 +12549,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13639,21 +13477,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_GtD_S(long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_GtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_GtD_S(
-			groupId, displayDate, status, start, end, orderByComparator, true);
+			groupId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -13669,14 +13511,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_GtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -13688,23 +13528,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(displayDate.getTime() >=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(displayDate.getTime() >=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -13779,14 +13615,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14713,21 +14545,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LtD_S(long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_LtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_LtD_S(
-			groupId, displayDate, status, start, end, orderByComparator, true);
+			groupId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -14743,14 +14579,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_LtD_S(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -14762,23 +14596,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -14853,14 +14683,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -15787,21 +15613,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LtD_NotS(long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_LtD_NotS(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_LtD_NotS(
-			groupId, displayDate, status, start, end, orderByComparator, true);
+			groupId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -15817,14 +15647,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_LtD_NotS(
 		long groupId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -15836,23 +15664,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -15927,14 +15751,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -16862,21 +16682,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_U_S(long,long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_U_S(
 		long companyId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_U_S(
-			companyId, userId, status, start, end, orderByComparator, true);
+			companyId, userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -16892,14 +16716,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_U_S(
 		long companyId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -16909,35 +16731,28 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_U_S;
-				finderArgs = new Object[] {companyId, userId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_U_S;
+			finderArgs = new Object[] {companyId, userId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_U_S;
 			finderArgs = new Object[] {
 				companyId, userId, status, start, end, orderByComparator
 			};
 		}
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -17001,14 +16816,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17455,21 +17266,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_U_NotS(long,long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_U_NotS(
-			companyId, userId, status, start, end, orderByComparator, true);
+			companyId, userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -17485,14 +17300,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_U_NotS(
 		long companyId, long userId, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -17503,22 +17316,18 @@ public class BlogsEntryPersistenceImpl
 			companyId, userId, status, start, end, orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -17582,14 +17391,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18036,22 +17841,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LtD_S(long,Date,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_LtD_S(
 		long companyId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_LtD_S(
-			companyId, displayDate, status, start, end, orderByComparator,
-			true);
+			companyId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -18067,14 +17875,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_LtD_S(
 		long companyId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -18086,23 +17892,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -18177,14 +17979,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18660,22 +18458,25 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LtD_NotS(long,Date,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param displayDate the display date
 	 * @param status the status
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByC_LtD_NotS(
 		long companyId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator) {
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_LtD_NotS(
-			companyId, displayDate, status, start, end, orderByComparator,
-			true);
+			companyId, displayDate, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -18691,14 +18492,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByC_LtD_NotS(
 		long companyId, Date displayDate, int status, int start, int end,
-		OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -18710,23 +18509,19 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((companyId != blogsEntry.getCompanyId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((companyId != blogsEntry.getCompanyId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -18801,14 +18596,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -19289,6 +19080,7 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_LtD_S(long,long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param displayDate the display date
@@ -19296,16 +19088,19 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_U_LtD_S(
 		long groupId, long userId, Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		int end, OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_LtD_S(
-			groupId, userId, displayDate, status, start, end, orderByComparator,
-			true);
+			groupId, userId, displayDate, status, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -19322,14 +19117,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_U_LtD_S(
 		long groupId, long userId, Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -19341,24 +19134,20 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status != blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status != blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -19437,14 +19226,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -20424,6 +20209,7 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_LtD_NotS(long,long,Date,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param displayDate the display date
@@ -20431,16 +20217,19 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		int end, OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_LtD_NotS(
-			groupId, userId, displayDate, status, start, end, orderByComparator,
-			true);
+			groupId, userId, displayDate, status, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -20457,14 +20246,12 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findByG_U_LtD_NotS(
 		long groupId, long userId, Date displayDate, int status, int start,
-		int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -20476,24 +20263,20 @@ public class BlogsEntryPersistenceImpl
 			orderByComparator
 		};
 
-		List<BlogsEntry> list = null;
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsEntry blogsEntry : list) {
+				if ((groupId != blogsEntry.getGroupId()) ||
+					(userId != blogsEntry.getUserId()) ||
+					(displayDate.getTime() <=
+						blogsEntry.getDisplayDate().getTime()) ||
+					(status == blogsEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (BlogsEntry blogsEntry : list) {
-					if ((groupId != blogsEntry.getGroupId()) ||
-						(userId != blogsEntry.getUserId()) ||
-						(displayDate.getTime() <=
-							blogsEntry.getDisplayDate().getTime()) ||
-						(status == blogsEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -20572,14 +20355,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -22310,16 +22089,20 @@ public class BlogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BlogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of blogs entries
 	 */
+	@Deprecated
 	@Override
 	public List<BlogsEntry> findAll(
-		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -22332,13 +22115,11 @@ public class BlogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of blogs entries
 	 * @param end the upper bound of the range of blogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of blogs entries
 	 */
 	@Override
 	public List<BlogsEntry> findAll(
-		int start, int end, OrderByComparator<BlogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<BlogsEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -22348,23 +22129,16 @@ public class BlogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<BlogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<BlogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<BlogsEntry> list = (List<BlogsEntry>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -22411,14 +22185,10 @@ public class BlogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

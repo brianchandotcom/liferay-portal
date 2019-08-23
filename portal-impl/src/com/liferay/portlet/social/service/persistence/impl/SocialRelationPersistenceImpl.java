@@ -122,18 +122,22 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -147,14 +151,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -166,30 +168,24 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if (!uuid.equals(socialRelation.getUuid())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if (!uuid.equals(socialRelation.getUuid())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -256,14 +252,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -679,20 +671,23 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -707,14 +702,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -726,34 +719,28 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if (!uuid.equals(socialRelation.getUuid()) ||
-						(companyId != socialRelation.getCompanyId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if (!uuid.equals(socialRelation.getUuid()) ||
+					(companyId != socialRelation.getCompanyId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -824,14 +811,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1279,18 +1262,22 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1304,14 +1291,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1321,32 +1306,26 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((companyId != socialRelation.getCompanyId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((companyId != socialRelation.getCompanyId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1402,14 +1381,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1796,18 +1771,22 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId1(long, int, int, OrderByComparator)}
 	 * @param userId1 the user id1
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByUserId1(
 		long userId1, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUserId1(userId1, start, end, orderByComparator, true);
+		return findByUserId1(userId1, start, end, orderByComparator);
 	}
 
 	/**
@@ -1821,14 +1800,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByUserId1(
 		long userId1, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1838,30 +1815,24 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId1;
-				finderArgs = new Object[] {userId1};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUserId1;
+			finderArgs = new Object[] {userId1};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUserId1;
 			finderArgs = new Object[] {userId1, start, end, orderByComparator};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((userId1 != socialRelation.getUserId1())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((userId1 != socialRelation.getUserId1())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1917,14 +1888,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2311,18 +2278,22 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId2(long, int, int, OrderByComparator)}
 	 * @param userId2 the user id2
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByUserId2(
 		long userId2, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUserId2(userId2, start, end, orderByComparator, true);
+		return findByUserId2(userId2, start, end, orderByComparator);
 	}
 
 	/**
@@ -2336,14 +2307,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByUserId2(
 		long userId2, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2353,30 +2322,24 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId2;
-				finderArgs = new Object[] {userId2};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUserId2;
+			finderArgs = new Object[] {userId2};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUserId2;
 			finderArgs = new Object[] {userId2, start, end, orderByComparator};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((userId2 != socialRelation.getUserId2())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((userId2 != socialRelation.getUserId2())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2432,14 +2395,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2823,18 +2782,22 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByType(int, int, int, OrderByComparator)}
 	 * @param type the type
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByType(
 		int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByType(type, start, end, orderByComparator, true);
+		return findByType(type, start, end, orderByComparator);
 	}
 
 	/**
@@ -2848,14 +2811,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByType(
 		int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2865,30 +2826,24 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByType;
-				finderArgs = new Object[] {type};
-			}
+			finderPath = _finderPathWithoutPaginationFindByType;
+			finderArgs = new Object[] {type};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByType;
 			finderArgs = new Object[] {type, start, end, orderByComparator};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((type != socialRelation.getType())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((type != socialRelation.getType())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2944,14 +2899,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3338,19 +3289,23 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_T(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param type the type
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByC_T(
 		long companyId, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_T(companyId, type, start, end, orderByComparator, true);
+		return findByC_T(companyId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -3365,14 +3320,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByC_T(
 		long companyId, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3382,34 +3335,28 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_T;
-				finderArgs = new Object[] {companyId, type};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_T;
+			finderArgs = new Object[] {companyId, type};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_T;
 			finderArgs = new Object[] {
 				companyId, type, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((companyId != socialRelation.getCompanyId()) ||
-						(type != socialRelation.getType())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((companyId != socialRelation.getCompanyId()) ||
+					(type != socialRelation.getType())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3469,14 +3416,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3897,20 +3840,23 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU1_U2(long,long, int, int, OrderByComparator)}
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByU1_U2(
 		long userId1, long userId2, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByU1_U2(
-			userId1, userId2, start, end, orderByComparator, true);
+		return findByU1_U2(userId1, userId2, start, end, orderByComparator);
 	}
 
 	/**
@@ -3925,14 +3871,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByU1_U2(
 		long userId1, long userId2, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3942,34 +3886,28 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU1_U2;
-				finderArgs = new Object[] {userId1, userId2};
-			}
+			finderPath = _finderPathWithoutPaginationFindByU1_U2;
+			finderArgs = new Object[] {userId1, userId2};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByU1_U2;
 			finderArgs = new Object[] {
 				userId1, userId2, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((userId1 != socialRelation.getUserId1()) ||
-						(userId2 != socialRelation.getUserId2())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((userId1 != socialRelation.getUserId1()) ||
+					(userId2 != socialRelation.getUserId2())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4029,14 +3967,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4457,19 +4391,23 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU1_T(long,int, int, int, OrderByComparator)}
 	 * @param userId1 the user id1
 	 * @param type the type
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByU1_T(
 		long userId1, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByU1_T(userId1, type, start, end, orderByComparator, true);
+		return findByU1_T(userId1, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -4484,14 +4422,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByU1_T(
 		long userId1, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4501,34 +4437,28 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU1_T;
-				finderArgs = new Object[] {userId1, type};
-			}
+			finderPath = _finderPathWithoutPaginationFindByU1_T;
+			finderArgs = new Object[] {userId1, type};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByU1_T;
 			finderArgs = new Object[] {
 				userId1, type, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((userId1 != socialRelation.getUserId1()) ||
-						(type != socialRelation.getType())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((userId1 != socialRelation.getUserId1()) ||
+					(type != socialRelation.getType())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4588,14 +4518,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5015,19 +4941,23 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU2_T(long,int, int, int, OrderByComparator)}
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findByU2_T(
 		long userId2, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByU2_T(userId2, type, start, end, orderByComparator, true);
+		return findByU2_T(userId2, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -5042,14 +4972,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social relations
 	 */
 	@Override
 	public List<SocialRelation> findByU2_T(
 		long userId2, int type, int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5059,34 +4987,28 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU2_T;
-				finderArgs = new Object[] {userId2, type};
-			}
+			finderPath = _finderPathWithoutPaginationFindByU2_T;
+			finderArgs = new Object[] {userId2, type};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByU2_T;
 			finderArgs = new Object[] {
 				userId2, type, start, end, orderByComparator
 			};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialRelation socialRelation : list) {
-					if ((userId2 != socialRelation.getUserId2()) ||
-						(type != socialRelation.getType())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialRelation socialRelation : list) {
+				if ((userId2 != socialRelation.getUserId2()) ||
+					(type != socialRelation.getType())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5146,14 +5068,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5574,16 +5492,21 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU1_U2_T(long,long,int)}
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @param type the type
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
 	 */
+	@Deprecated
 	@Override
-	public SocialRelation fetchByU1_U2_T(long userId1, long userId2, int type) {
-		return fetchByU1_U2_T(userId1, userId2, type, true);
+	public SocialRelation fetchByU1_U2_T(
+		long userId1, long userId2, int type, boolean useFinderCache) {
+
+		return fetchByU1_U2_T(userId1, userId2, type);
 	}
 
 	/**
@@ -5596,21 +5519,11 @@ public class SocialRelationPersistenceImpl
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
 	 */
 	@Override
-	public SocialRelation fetchByU1_U2_T(
-		long userId1, long userId2, int type, boolean useFinderCache) {
+	public SocialRelation fetchByU1_U2_T(long userId1, long userId2, int type) {
+		Object[] finderArgs = new Object[] {userId1, userId2, type};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {userId1, userId2, type};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU1_U2_T, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByU1_U2_T, finderArgs, this);
 
 		if (result instanceof SocialRelation) {
 			SocialRelation socialRelation = (SocialRelation)result;
@@ -5654,10 +5567,8 @@ public class SocialRelationPersistenceImpl
 				List<SocialRelation> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByU1_U2_T, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByU1_U2_T, finderArgs, list);
 				}
 				else {
 					SocialRelation socialRelation = list.get(0);
@@ -5668,10 +5579,8 @@ public class SocialRelationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByU1_U2_T, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByU1_U2_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -6482,17 +6391,20 @@ public class SocialRelationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialRelationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social relations
 	 */
+	@Deprecated
 	@Override
 	public List<SocialRelation> findAll(
-		int start, int end,
-		OrderByComparator<SocialRelation> orderByComparator) {
+		int start, int end, OrderByComparator<SocialRelation> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -6505,13 +6417,12 @@ public class SocialRelationPersistenceImpl
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social relations
 	 */
 	@Override
 	public List<SocialRelation> findAll(
-		int start, int end, OrderByComparator<SocialRelation> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<SocialRelation> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6521,23 +6432,17 @@ public class SocialRelationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SocialRelation> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialRelation>)FinderCacheUtil.getResult(
+		List<SocialRelation> list =
+			(List<SocialRelation>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -6584,14 +6489,10 @@ public class SocialRelationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

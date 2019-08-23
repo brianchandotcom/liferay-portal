@@ -171,18 +171,23 @@ public class LVEntryLocalizationVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryLocalizationId(long, int, int, OrderByComparator)}
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public static List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
 		long lvEntryLocalizationId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryLocalizationId(
-			lvEntryLocalizationId, start, end, orderByComparator);
+			lvEntryLocalizationId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -196,17 +201,14 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryLocalizationId(
 		long lvEntryLocalizationId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().findByLvEntryLocalizationId(
-			lvEntryLocalizationId, start, end, orderByComparator,
-			useFinderCache);
+			lvEntryLocalizationId, start, end, orderByComparator);
 	}
 
 	/**
@@ -337,18 +339,21 @@ public class LVEntryLocalizationVersionUtil {
 	}
 
 	/**
-	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryLocalizationId_Version(long,int)}
 	 * @param lvEntryLocalizationId the lv entry localization ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
+	@Deprecated
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryLocalizationId_Version(
-			long lvEntryLocalizationId, int version) {
+			long lvEntryLocalizationId, int version, boolean useFinderCache) {
 
 		return getPersistence().fetchByLvEntryLocalizationId_Version(
-			lvEntryLocalizationId, version);
+			lvEntryLocalizationId, version, useFinderCache);
 	}
 
 	/**
@@ -361,10 +366,10 @@ public class LVEntryLocalizationVersionUtil {
 	 */
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryLocalizationId_Version(
-			long lvEntryLocalizationId, int version, boolean useFinderCache) {
+			long lvEntryLocalizationId, int version) {
 
 		return getPersistence().fetchByLvEntryLocalizationId_Version(
-			lvEntryLocalizationId, version, useFinderCache);
+			lvEntryLocalizationId, version);
 	}
 
 	/**
@@ -435,18 +440,22 @@ public class LVEntryLocalizationVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId(long, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public static List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId(
-			lvEntryId, start, end, orderByComparator);
+			lvEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -460,16 +469,14 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().findByLvEntryId(
-			lvEntryId, start, end, orderByComparator, useFinderCache);
+			lvEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -616,19 +623,23 @@ public class LVEntryLocalizationVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId_Version(long,int, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param version the version
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId_Version(
-			lvEntryId, version, start, end, orderByComparator);
+			lvEntryId, version, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -643,16 +654,14 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_Version(
 		long lvEntryId, int version, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().findByLvEntryId_Version(
-			lvEntryId, version, start, end, orderByComparator, useFinderCache);
+			lvEntryId, version, start, end, orderByComparator);
 	}
 
 	/**
@@ -809,19 +818,24 @@ public class LVEntryLocalizationVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId_LanguageId(long,String, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
+	@Deprecated
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
 		long lvEntryId, String languageId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLvEntryId_LanguageId(
-			lvEntryId, languageId, start, end, orderByComparator);
+			lvEntryId, languageId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -836,17 +850,14 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findByLvEntryId_LanguageId(
 		long lvEntryId, String languageId, int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
 		return getPersistence().findByLvEntryId_LanguageId(
-			lvEntryId, languageId, start, end, orderByComparator,
-			useFinderCache);
+			lvEntryId, languageId, start, end, orderByComparator);
 	}
 
 	/**
@@ -987,19 +998,23 @@ public class LVEntryLocalizationVersionUtil {
 	}
 
 	/**
-	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryId_LanguageId_Version(long,String,int)}
 	 * @param lvEntryId the lv entry ID
 	 * @param languageId the language ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry localization version, or <code>null</code> if a matching lv entry localization version could not be found
 	 */
+	@Deprecated
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryId_LanguageId_Version(
-			long lvEntryId, String languageId, int version) {
+			long lvEntryId, String languageId, int version,
+			boolean useFinderCache) {
 
 		return getPersistence().fetchByLvEntryId_LanguageId_Version(
-			lvEntryId, languageId, version);
+			lvEntryId, languageId, version, useFinderCache);
 	}
 
 	/**
@@ -1013,11 +1028,10 @@ public class LVEntryLocalizationVersionUtil {
 	 */
 	public static LVEntryLocalizationVersion
 		fetchByLvEntryId_LanguageId_Version(
-			long lvEntryId, String languageId, int version,
-			boolean useFinderCache) {
+			long lvEntryId, String languageId, int version) {
 
 		return getPersistence().fetchByLvEntryId_LanguageId_Version(
-			lvEntryId, languageId, version, useFinderCache);
+			lvEntryId, languageId, version);
 	}
 
 	/**
@@ -1166,16 +1180,21 @@ public class LVEntryLocalizationVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryLocalizationVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
+	@Deprecated
 	public static List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1188,16 +1207,13 @@ public class LVEntryLocalizationVersionUtil {
 	 * @param start the lower bound of the range of lv entry localization versions
 	 * @param end the upper bound of the range of lv entry localization versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry localization versions
 	 */
 	public static List<LVEntryLocalizationVersion> findAll(
 		int start, int end,
-		OrderByComparator<LVEntryLocalizationVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LVEntryLocalizationVersion> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**

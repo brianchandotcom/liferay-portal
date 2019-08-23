@@ -127,18 +127,22 @@ public class TrashVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TrashVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByEntryId(long, int, int, OrderByComparator)}
 	 * @param entryId the entry ID
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
+	@Deprecated
 	@Override
 	public List<TrashVersion> findByEntryId(
 		long entryId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByEntryId(entryId, start, end, orderByComparator, true);
+		return findByEntryId(entryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -152,14 +156,12 @@ public class TrashVersionPersistenceImpl
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
 	@Override
 	public List<TrashVersion> findByEntryId(
 		long entryId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -169,30 +171,23 @@ public class TrashVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByEntryId;
-				finderArgs = new Object[] {entryId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByEntryId;
+			finderArgs = new Object[] {entryId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByEntryId;
 			finderArgs = new Object[] {entryId, start, end, orderByComparator};
 		}
 
-		List<TrashVersion> list = null;
+		List<TrashVersion> list = (List<TrashVersion>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TrashVersion trashVersion : list) {
+				if ((entryId != trashVersion.getEntryId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TrashVersion trashVersion : list) {
-					if ((entryId != trashVersion.getEntryId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -248,14 +243,10 @@ public class TrashVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -642,20 +633,23 @@ public class TrashVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TrashVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE_C(long,long, int, int, OrderByComparator)}
 	 * @param entryId the entry ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
+	@Deprecated
 	@Override
 	public List<TrashVersion> findByE_C(
 		long entryId, long classNameId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator) {
+		OrderByComparator<TrashVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByE_C(
-			entryId, classNameId, start, end, orderByComparator, true);
+		return findByE_C(entryId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -670,14 +664,12 @@ public class TrashVersionPersistenceImpl
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching trash versions
 	 */
 	@Override
 	public List<TrashVersion> findByE_C(
 		long entryId, long classNameId, int start, int end,
-		OrderByComparator<TrashVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TrashVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -687,34 +679,27 @@ public class TrashVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByE_C;
-				finderArgs = new Object[] {entryId, classNameId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByE_C;
+			finderArgs = new Object[] {entryId, classNameId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByE_C;
 			finderArgs = new Object[] {
 				entryId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<TrashVersion> list = null;
+		List<TrashVersion> list = (List<TrashVersion>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TrashVersion trashVersion : list) {
+				if ((entryId != trashVersion.getEntryId()) ||
+					(classNameId != trashVersion.getClassNameId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TrashVersion trashVersion : list) {
-					if ((entryId != trashVersion.getEntryId()) ||
-						(classNameId != trashVersion.getClassNameId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -774,14 +759,10 @@ public class TrashVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1197,15 +1178,20 @@ public class TrashVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the trash version where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the trash version where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching trash version, or <code>null</code> if a matching trash version could not be found
 	 */
+	@Deprecated
 	@Override
-	public TrashVersion fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
+	public TrashVersion fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache) {
+
+		return fetchByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -1217,21 +1203,11 @@ public class TrashVersionPersistenceImpl
 	 * @return the matching trash version, or <code>null</code> if a matching trash version could not be found
 	 */
 	@Override
-	public TrashVersion fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache) {
+	public TrashVersion fetchByC_C(long classNameId, long classPK) {
+		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByC_C, finderArgs, this);
 
 		if (result instanceof TrashVersion) {
 			TrashVersion trashVersion = (TrashVersion)result;
@@ -1270,10 +1246,8 @@ public class TrashVersionPersistenceImpl
 				List<TrashVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByC_C, finderArgs, list);
 				}
 				else {
 					TrashVersion trashVersion = list.get(0);
@@ -1284,9 +1258,7 @@ public class TrashVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -1828,16 +1800,20 @@ public class TrashVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TrashVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of trash versions
 	 */
+	@Deprecated
 	@Override
 	public List<TrashVersion> findAll(
-		int start, int end, OrderByComparator<TrashVersion> orderByComparator) {
+		int start, int end, OrderByComparator<TrashVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1850,13 +1826,11 @@ public class TrashVersionPersistenceImpl
 	 * @param start the lower bound of the range of trash versions
 	 * @param end the upper bound of the range of trash versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of trash versions
 	 */
 	@Override
 	public List<TrashVersion> findAll(
-		int start, int end, OrderByComparator<TrashVersion> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<TrashVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1866,23 +1840,16 @@ public class TrashVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<TrashVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<TrashVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<TrashVersion> list = (List<TrashVersion>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1929,14 +1896,10 @@ public class TrashVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

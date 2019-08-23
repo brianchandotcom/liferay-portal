@@ -158,18 +158,22 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByTableId(long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByTableId(
-			tableId, start, end, orderByComparator);
+			tableId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -183,16 +187,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByTableId(
-			tableId, start, end, orderByComparator, useFinderCache);
+			tableId, start, end, orderByComparator);
 	}
 
 	/**
@@ -324,18 +326,22 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByColumnId(long, int, int, OrderByComparator)}
 	 * @param columnId the column ID
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByColumnId(
-			columnId, start, end, orderByComparator);
+			columnId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -349,16 +355,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByColumnId(
-			columnId, start, end, orderByComparator, useFinderCache);
+			columnId, start, end, orderByComparator);
 	}
 
 	/**
@@ -493,18 +497,22 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRowId(long, int, int, OrderByComparator)}
 	 * @param rowId the row ID
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByRowId(
 		long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByRowId(
-			rowId, start, end, orderByComparator);
+			rowId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -518,16 +526,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByRowId(
 		long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByRowId(
-			rowId, start, end, orderByComparator, useFinderCache);
+			rowId, start, end, orderByComparator);
 	}
 
 	/**
@@ -660,19 +666,23 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_C(long,long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_C(
-			tableId, columnId, start, end, orderByComparator);
+			tableId, columnId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -687,16 +697,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByT_C(
-			tableId, columnId, start, end, orderByComparator, useFinderCache);
+			tableId, columnId, start, end, orderByComparator);
 	}
 
 	/**
@@ -844,19 +852,23 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_R(long,long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param rowId the row ID
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_R(
-			tableId, rowId, start, end, orderByComparator);
+			tableId, rowId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -871,16 +883,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByT_R(
-			tableId, rowId, start, end, orderByComparator, useFinderCache);
+			tableId, rowId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1028,19 +1038,23 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_CPK(long,long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_CPK(
-			tableId, classPK, start, end, orderByComparator);
+			tableId, classPK, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1055,16 +1069,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByT_CPK(
-			tableId, classPK, start, end, orderByComparator, useFinderCache);
+			tableId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -1190,14 +1202,19 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando value where columnId = &#63; and rowId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the expando value where columnId = &#63; and rowId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_R(long,long)}
 	 * @param columnId the column ID
 	 * @param rowId the row ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
-	public static ExpandoValue fetchByC_R(long columnId, long rowId) {
-		return getPersistence().fetchByC_R(columnId, rowId);
+	@Deprecated
+	public static ExpandoValue fetchByC_R(
+		long columnId, long rowId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_R(columnId, rowId, useFinderCache);
 	}
 
 	/**
@@ -1208,10 +1225,8 @@ public class ExpandoValueUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
-	public static ExpandoValue fetchByC_R(
-		long columnId, long rowId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_R(columnId, rowId, useFinderCache);
+	public static ExpandoValue fetchByC_R(long columnId, long rowId) {
+		return getPersistence().fetchByC_R(columnId, rowId);
 	}
 
 	/**
@@ -1275,19 +1290,24 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
+			classNameId, classPK, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1302,17 +1322,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator,
-			useFinderCache);
+			classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -1440,17 +1457,21 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_C_C(long,long,long)}
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
+	@Deprecated
 	public static ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK) {
+		long tableId, long columnId, long classPK, boolean useFinderCache) {
 
-		return getPersistence().fetchByT_C_C(tableId, columnId, classPK);
+		return getPersistence().fetchByT_C_C(
+			tableId, columnId, classPK, useFinderCache);
 	}
 
 	/**
@@ -1463,10 +1484,9 @@ public class ExpandoValueUtil {
 	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
 	 */
 	public static ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK, boolean useFinderCache) {
+		long tableId, long columnId, long classPK) {
 
-		return getPersistence().fetchByT_C_C(
-			tableId, columnId, classPK, useFinderCache);
+		return getPersistence().fetchByT_C_C(tableId, columnId, classPK);
 	}
 
 	/**
@@ -1538,20 +1558,25 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_C_D(long,long,String, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param columnId the column ID
 	 * @param data the data
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findByT_C_D(
 		long tableId, long columnId, String data, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
+		OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByT_C_D(
-			tableId, columnId, data, start, end, orderByComparator);
+			tableId, columnId, data, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1567,17 +1592,14 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando values
 	 */
 	public static List<ExpandoValue> findByT_C_D(
 		long tableId, long columnId, String data, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoValue> orderByComparator) {
 
 		return getPersistence().findByT_C_D(
-			tableId, columnId, data, start, end, orderByComparator,
-			useFinderCache);
+			tableId, columnId, data, start, end, orderByComparator);
 	}
 
 	/**
@@ -1794,15 +1816,20 @@ public class ExpandoValueUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando values
 	 */
+	@Deprecated
 	public static List<ExpandoValue> findAll(
-		int start, int end, OrderByComparator<ExpandoValue> orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoValue> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1815,15 +1842,12 @@ public class ExpandoValueUtil {
 	 * @param start the lower bound of the range of expando values
 	 * @param end the upper bound of the range of expando values (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando values
 	 */
 	public static List<ExpandoValue> findAll(
-		int start, int end, OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<ExpandoValue> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**

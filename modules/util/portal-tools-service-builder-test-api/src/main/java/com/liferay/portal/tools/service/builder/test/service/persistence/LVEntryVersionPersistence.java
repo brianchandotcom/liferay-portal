@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder.test.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntryVersion;
 
@@ -79,16 +80,19 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLvEntryId(long, int, int, OrderByComparator)}
 	 * @param lvEntryId the lv entry ID
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where lvEntryId = &#63;.
@@ -101,14 +105,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByLvEntryId(
 		long lvEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where lvEntryId = &#63;.
@@ -119,9 +120,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByLvEntryId_First(
-			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -132,9 +131,7 @@ public interface LVEntryVersionPersistence
 	 * @return the first matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByLvEntryId_First(
-		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where lvEntryId = &#63;.
@@ -145,9 +142,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByLvEntryId_Last(
-			long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -158,9 +153,7 @@ public interface LVEntryVersionPersistence
 	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByLvEntryId_Last(
-		long lvEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		long lvEntryId, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where lvEntryId = &#63;.
@@ -173,8 +166,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByLvEntryId_PrevAndNext(
 			long lvEntryVersionId, long lvEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -204,13 +196,17 @@ public interface LVEntryVersionPersistence
 		throws NoSuchLVEntryVersionException;
 
 	/**
-	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLvEntryId_Version(long,int)}
 	 * @param lvEntryId the lv entry ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
-	public LVEntryVersion fetchByLvEntryId_Version(long lvEntryId, int version);
+	@Deprecated
+	public LVEntryVersion fetchByLvEntryId_Version(
+		long lvEntryId, int version, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry version where lvEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -220,8 +216,7 @@ public interface LVEntryVersionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
-	public LVEntryVersion fetchByLvEntryId_Version(
-		long lvEntryId, int version, boolean useFinderCache);
+	public LVEntryVersion fetchByLvEntryId_Version(long lvEntryId, int version);
 
 	/**
 	 * Removes the lv entry version where lvEntryId = &#63; and version = &#63; from the database.
@@ -272,16 +267,19 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63;.
@@ -294,14 +292,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63;.
@@ -312,9 +307,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			String uuid, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -325,9 +318,7 @@ public interface LVEntryVersionPersistence
 	 * @return the first matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		String uuid, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where uuid = &#63;.
@@ -338,9 +329,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			String uuid, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -351,9 +340,7 @@ public interface LVEntryVersionPersistence
 	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		String uuid, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63;.
@@ -366,8 +353,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByUuid_PrevAndNext(
 			long lvEntryVersionId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -418,17 +404,20 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_Version(String,int, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param version the version
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByUuid_Version(
 		String uuid, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and version = &#63;.
@@ -442,14 +431,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_Version(
 		String uuid, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and version = &#63;.
@@ -462,8 +448,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_Version_First(
 			String uuid, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -476,8 +461,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_Version_First(
 		String uuid, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where uuid = &#63; and version = &#63;.
@@ -490,8 +474,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_Version_Last(
 			String uuid, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -504,8 +487,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_Version_Last(
 		String uuid, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and version = &#63;.
@@ -519,8 +501,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByUuid_Version_PrevAndNext(
 			long lvEntryVersionId, String uuid, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -573,17 +554,20 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUUID_G(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByUUID_G(
 		String uuid, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and groupId = &#63;.
@@ -597,14 +581,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUUID_G(
 		String uuid, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
@@ -617,8 +598,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUUID_G_First(
 			String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -631,8 +611,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUUID_G_First(
 		String uuid, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
@@ -645,8 +624,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUUID_G_Last(
 			String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -659,8 +637,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUUID_G_Last(
 		String uuid, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and groupId = &#63;.
@@ -674,8 +651,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByUUID_G_PrevAndNext(
 			long lvEntryVersionId, String uuid, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -709,15 +685,18 @@ public interface LVEntryVersionPersistence
 		throws NoSuchLVEntryVersionException;
 
 	/**
-	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G_Version(String,long,int)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
+	@Deprecated
 	public LVEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version);
+		String uuid, long groupId, int version, boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -729,7 +708,7 @@ public interface LVEntryVersionPersistence
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version, boolean useFinderCache);
+		String uuid, long groupId, int version);
 
 	/**
 	 * Removes the lv entry version where uuid = &#63; and groupId = &#63; and version = &#63; from the database.
@@ -786,17 +765,20 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63;.
@@ -810,14 +792,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -830,8 +809,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -844,8 +822,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -858,8 +835,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -872,8 +848,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -887,8 +862,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByUuid_C_PrevAndNext(
 			long lvEntryVersionId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -943,18 +917,21 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C_Version(String,long,int, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param version the version
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByUuid_C_Version(
 		String uuid, long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -969,14 +946,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByUuid_C_Version(
 		String uuid, long companyId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -990,8 +964,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_C_Version_First(
 			String uuid, long companyId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1005,8 +978,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_C_Version_First(
 		String uuid, long companyId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1020,8 +992,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByUuid_C_Version_Last(
 			String uuid, long companyId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1035,8 +1006,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByUuid_C_Version_Last(
 		String uuid, long companyId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -1051,8 +1021,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByUuid_C_Version_PrevAndNext(
 			long lvEntryVersionId, String uuid, long companyId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1105,16 +1074,19 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63;.
@@ -1127,14 +1099,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63;.
@@ -1145,9 +1114,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			long groupId, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1158,9 +1125,7 @@ public interface LVEntryVersionPersistence
 	 * @return the first matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		long groupId, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where groupId = &#63;.
@@ -1171,9 +1136,7 @@ public interface LVEntryVersionPersistence
 	 * @throws NoSuchLVEntryVersionException if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			long groupId, OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1184,9 +1147,7 @@ public interface LVEntryVersionPersistence
 	 * @return the last matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		long groupId, OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63;.
@@ -1199,8 +1160,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByGroupId_PrevAndNext(
 			long lvEntryVersionId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1251,17 +1211,20 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId_Version(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param version the version
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and version = &#63;.
@@ -1275,14 +1238,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -1295,8 +1255,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByGroupId_Version_First(
 			long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1309,8 +1268,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByGroupId_Version_First(
 		long groupId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -1323,8 +1281,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByGroupId_Version_Last(
 			long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1337,8 +1294,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByGroupId_Version_Last(
 		long groupId, int version,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -1352,8 +1308,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByGroupId_Version_PrevAndNext(
 			long lvEntryVersionId, long groupId, int version,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1406,17 +1361,20 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_UGK(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1430,14 +1388,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findByG_UGK(
 		long groupId, String uniqueGroupKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the first lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1450,8 +1405,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByG_UGK_First(
 			long groupId, String uniqueGroupKey,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1464,8 +1418,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByG_UGK_First(
 		long groupId, String uniqueGroupKey,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the last lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1478,8 +1431,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion findByG_UGK_Last(
 			long groupId, String uniqueGroupKey,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1492,8 +1444,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion fetchByG_UGK_Last(
 		long groupId, String uniqueGroupKey,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Returns the lv entry versions before and after the current lv entry version in the ordered set where groupId = &#63; and uniqueGroupKey = &#63;.
@@ -1507,8 +1458,7 @@ public interface LVEntryVersionPersistence
 	 */
 	public LVEntryVersion[] findByG_UGK_PrevAndNext(
 			long lvEntryVersionId, long groupId, String uniqueGroupKey,
-			com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-				orderByComparator)
+			OrderByComparator<LVEntryVersion> orderByComparator)
 		throws NoSuchLVEntryVersionException;
 
 	/**
@@ -1542,15 +1492,19 @@ public interface LVEntryVersionPersistence
 		throws NoSuchLVEntryVersionException;
 
 	/**
-	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_UGK_Version(long,String,int)}
 	 * @param groupId the group ID
 	 * @param uniqueGroupKey the unique group key
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
+	@Deprecated
 	public LVEntryVersion fetchByG_UGK_Version(
-		long groupId, String uniqueGroupKey, int version);
+		long groupId, String uniqueGroupKey, int version,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1562,8 +1516,7 @@ public interface LVEntryVersionPersistence
 	 * @return the matching lv entry version, or <code>null</code> if a matching lv entry version could not be found
 	 */
 	public LVEntryVersion fetchByG_UGK_Version(
-		long groupId, String uniqueGroupKey, int version,
-		boolean useFinderCache);
+		long groupId, String uniqueGroupKey, int version);
 
 	/**
 	 * Removes the lv entry version where groupId = &#63; and uniqueGroupKey = &#63; and version = &#63; from the database.
@@ -1667,15 +1620,17 @@ public interface LVEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry versions
 	 */
+	@Deprecated
 	public java.util.List<LVEntryVersion> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator);
+		int start, int end, OrderByComparator<LVEntryVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the lv entry versions.
@@ -1687,14 +1642,11 @@ public interface LVEntryVersionPersistence
 	 * @param start the lower bound of the range of lv entry versions
 	 * @param end the upper bound of the range of lv entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lv entry versions
 	 */
 	public java.util.List<LVEntryVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LVEntryVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LVEntryVersion> orderByComparator);
 
 	/**
 	 * Removes all the lv entry versions from the database.
@@ -1759,7 +1711,7 @@ public interface LVEntryVersionPersistence
 		<com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry>
 			getBigDecimalEntries(
 				long pk, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
+				OrderByComparator
 					<com.liferay.portal.tools.service.builder.test.model.
 						BigDecimalEntry> orderByComparator);
 

@@ -17,6 +17,7 @@ package com.liferay.changeset.service.persistence;
 import com.liferay.changeset.exception.NoSuchEntryException;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries where groupId = &#63;.
@@ -93,14 +97,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the first changeset entry in the ordered set where groupId = &#63;.
@@ -111,9 +112,7 @@ public interface ChangesetEntryPersistence
 	 * @throws NoSuchEntryException if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			long groupId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -124,9 +123,7 @@ public interface ChangesetEntryPersistence
 	 * @return the first matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		long groupId, OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the last changeset entry in the ordered set where groupId = &#63;.
@@ -137,9 +134,7 @@ public interface ChangesetEntryPersistence
 	 * @throws NoSuchEntryException if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			long groupId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -150,9 +145,7 @@ public interface ChangesetEntryPersistence
 	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		long groupId, OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63;.
@@ -165,8 +158,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry[] findByGroupId_PrevAndNext(
 			long changesetEntryId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -214,16 +206,19 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries where companyId = &#63;.
@@ -236,14 +231,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the first changeset entry in the ordered set where companyId = &#63;.
@@ -254,9 +246,7 @@ public interface ChangesetEntryPersistence
 	 * @throws NoSuchEntryException if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			long companyId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -267,9 +257,7 @@ public interface ChangesetEntryPersistence
 	 * @return the first matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		long companyId, OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the last changeset entry in the ordered set where companyId = &#63;.
@@ -280,9 +268,7 @@ public interface ChangesetEntryPersistence
 	 * @throws NoSuchEntryException if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			long companyId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -293,9 +279,7 @@ public interface ChangesetEntryPersistence
 	 * @return the last matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		long companyId, OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the changeset entries before and after the current changeset entry in the ordered set where companyId = &#63;.
@@ -308,8 +292,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry[] findByCompanyId_PrevAndNext(
 			long changesetEntryId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -358,16 +341,19 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByChangesetCollectionId(long, int, int, OrderByComparator)}
 	 * @param changesetCollectionId the changeset collection ID
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findByChangesetCollectionId(
 		long changesetCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries where changesetCollectionId = &#63;.
@@ -380,14 +366,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findByChangesetCollectionId(
 		long changesetCollectionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the first changeset entry in the ordered set where changesetCollectionId = &#63;.
@@ -399,8 +382,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByChangesetCollectionId_First(
 			long changesetCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -412,8 +394,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByChangesetCollectionId_First(
 		long changesetCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63;.
@@ -425,8 +406,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByChangesetCollectionId_Last(
 			long changesetCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -438,8 +418,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByChangesetCollectionId_Last(
 		long changesetCollectionId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63;.
@@ -452,8 +431,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry[] findByChangesetCollectionId_PrevAndNext(
 			long changesetEntryId, long changesetCollectionId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -504,17 +482,20 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries where groupId = &#63; and classNameId = &#63;.
@@ -528,14 +509,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the first changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -548,8 +526,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByG_C_First(
 			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -562,8 +539,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the last changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -576,8 +552,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByG_C_Last(
 			long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -590,8 +565,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the changeset entries before and after the current changeset entry in the ordered set where groupId = &#63; and classNameId = &#63;.
@@ -605,8 +579,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry[] findByG_C_PrevAndNext(
 			long changesetEntryId, long groupId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -659,17 +632,20 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param changesetCollectionId the changeset collection ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findByC_C(
 		long changesetCollectionId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries where changesetCollectionId = &#63; and classNameId = &#63;.
@@ -683,14 +659,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findByC_C(
 		long changesetCollectionId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the first changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
@@ -703,8 +676,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByC_C_First(
 			long changesetCollectionId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -717,8 +689,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByC_C_First(
 		long changesetCollectionId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the last changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
@@ -731,8 +702,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry findByC_C_Last(
 			long changesetCollectionId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -745,8 +715,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry fetchByC_C_Last(
 		long changesetCollectionId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Returns the changeset entries before and after the current changeset entry in the ordered set where changesetCollectionId = &#63; and classNameId = &#63;.
@@ -760,8 +729,7 @@ public interface ChangesetEntryPersistence
 	 */
 	public ChangesetEntry[] findByC_C_PrevAndNext(
 			long changesetEntryId, long changesetCollectionId, long classNameId,
-			com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-				orderByComparator)
+			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -795,15 +763,19 @@ public interface ChangesetEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C_C(long,long,long)}
 	 * @param changesetCollectionId the changeset collection ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
+	@Deprecated
 	public ChangesetEntry fetchByC_C_C(
-		long changesetCollectionId, long classNameId, long classPK);
+		long changesetCollectionId, long classNameId, long classPK,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -815,8 +787,7 @@ public interface ChangesetEntryPersistence
 	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
 	 */
 	public ChangesetEntry fetchByC_C_C(
-		long changesetCollectionId, long classNameId, long classPK,
-		boolean useFinderCache);
+		long changesetCollectionId, long classNameId, long classPK);
 
 	/**
 	 * Removes the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -920,15 +891,17 @@ public interface ChangesetEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ChangesetEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of changeset entries
 	 */
+	@Deprecated
 	public java.util.List<ChangesetEntry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator);
+		int start, int end, OrderByComparator<ChangesetEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the changeset entries.
@@ -940,14 +913,11 @@ public interface ChangesetEntryPersistence
 	 * @param start the lower bound of the range of changeset entries
 	 * @param end the upper bound of the range of changeset entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of changeset entries
 	 */
 	public java.util.List<ChangesetEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ChangesetEntry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<ChangesetEntry> orderByComparator);
 
 	/**
 	 * Removes all the changeset entries from the database.

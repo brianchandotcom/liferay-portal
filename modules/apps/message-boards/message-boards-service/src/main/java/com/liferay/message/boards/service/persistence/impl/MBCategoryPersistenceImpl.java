@@ -128,18 +128,22 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -153,14 +157,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -172,30 +174,23 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if (!uuid.equals(mbCategory.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if (!uuid.equals(mbCategory.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -262,14 +257,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -678,15 +669,20 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Returns the message boards category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message boards category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
+	@Deprecated
 	@Override
-	public MBCategory fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public MBCategory fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -698,23 +694,13 @@ public class MBCategoryPersistenceImpl
 	 * @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
 	 */
 	@Override
-	public MBCategory fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public MBCategory fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof MBCategory) {
 			MBCategory mbCategory = (MBCategory)result;
@@ -764,10 +750,8 @@ public class MBCategoryPersistenceImpl
 				List<MBCategory> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					MBCategory mbCategory = list.get(0);
@@ -778,10 +762,7 @@ public class MBCategoryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -936,20 +917,23 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -964,14 +948,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -983,34 +965,27 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if (!uuid.equals(mbCategory.getUuid()) ||
+					(companyId != mbCategory.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if (!uuid.equals(mbCategory.getUuid()) ||
-						(companyId != mbCategory.getCompanyId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1081,14 +1056,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1529,18 +1500,22 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1554,14 +1529,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1571,30 +1544,23 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1650,14 +1616,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2416,18 +2378,22 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2441,14 +2407,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2458,32 +2422,25 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((companyId != mbCategory.getCompanyId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((companyId != mbCategory.getCompanyId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2539,14 +2496,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2935,20 +2888,24 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_P(
-			groupId, parentCategoryId, start, end, orderByComparator, true);
+			groupId, parentCategoryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2963,14 +2920,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2980,35 +2935,27 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_P;
-				finderArgs = new Object[] {groupId, parentCategoryId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_P;
+			finderArgs = new Object[] {groupId, parentCategoryId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_P;
 			finderArgs = new Object[] {
 				groupId, parentCategoryId, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					(parentCategoryId != mbCategory.getParentCategoryId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						(parentCategoryId !=
-							mbCategory.getParentCategoryId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3068,14 +3015,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3909,6 +3852,33 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Deprecated
+	@Override
+	public List<MBCategory> findByG_P(
+		long groupId, long[] parentCategoryIds, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_P(
+			groupId, parentCategoryIds, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = any &#63;.
 	 *
 	 * <p>
@@ -3926,31 +3896,6 @@ public class MBCategoryPersistenceImpl
 	public List<MBCategory> findByG_P(
 		long groupId, long[] parentCategoryIds, int start, int end,
 		OrderByComparator<MBCategory> orderByComparator) {
-
-		return findByG_P(
-			groupId, parentCategoryIds, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByG_P(
-		long groupId, long[] parentCategoryIds, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
@@ -3971,37 +3916,29 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds)
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(parentCategoryIds), start, end,
 				orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			_finderPathWithPaginationFindByG_P, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_P, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					!ArrayUtil.contains(
+						parentCategoryIds, mbCategory.getParentCategoryId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						!ArrayUtil.contains(
-							parentCategoryIds,
-							mbCategory.getParentCategoryId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4065,16 +4002,12 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_P, finderArgs, list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByG_P, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByG_P, finderArgs);
 
 				throw processException(e);
 			}
@@ -4415,19 +4348,23 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByG_S(
 		long groupId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
+		return findByG_S(groupId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -4442,14 +4379,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByG_S(
 		long groupId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4459,34 +4394,27 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_S;
-				finderArgs = new Object[] {groupId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_S;
+			finderArgs = new Object[] {groupId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_S;
 			finderArgs = new Object[] {
 				groupId, status, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4546,14 +4474,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5362,20 +5286,23 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_S(
-			companyId, status, start, end, orderByComparator, true);
+		return findByC_S(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -5390,14 +5317,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5407,34 +5332,27 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S;
-				finderArgs = new Object[] {companyId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_S;
+			finderArgs = new Object[] {companyId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((companyId != mbCategory.getCompanyId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((companyId != mbCategory.getCompanyId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5494,14 +5412,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5925,22 +5839,26 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNotC_G_P(long,long,long, int, int, OrderByComparator)}
 	 * @param categoryId the category ID
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByNotC_G_P(
 		long categoryId, long groupId, long parentCategoryId, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator) {
+		int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByNotC_G_P(
 			categoryId, groupId, parentCategoryId, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -5956,14 +5874,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByNotC_G_P(
 		long categoryId, long groupId, long parentCategoryId, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5974,23 +5890,18 @@ public class MBCategoryPersistenceImpl
 			categoryId, groupId, parentCategoryId, start, end, orderByComparator
 		};
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((categoryId == mbCategory.getCategoryId()) ||
+					(groupId != mbCategory.getGroupId()) ||
+					(parentCategoryId != mbCategory.getParentCategoryId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((categoryId == mbCategory.getCategoryId()) ||
-						(groupId != mbCategory.getGroupId()) ||
-						(parentCategoryId !=
-							mbCategory.getParentCategoryId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6054,14 +5965,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6585,6 +6492,35 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNotC_G_P(long,long,long, int, int, OrderByComparator)}
+	 * @param categoryId the category ID
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Deprecated
+	@Override
+	public List<MBCategory> findByNotC_G_P(
+		long[] categoryIds, long groupId, long[] parentCategoryIds, int start,
+		int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByNotC_G_P(
+			categoryIds, groupId, parentCategoryIds, start, end,
+			orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the message boards categories where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63;.
 	 *
 	 * <p>
@@ -6603,33 +6539,6 @@ public class MBCategoryPersistenceImpl
 	public List<MBCategory> findByNotC_G_P(
 		long[] categoryIds, long groupId, long[] parentCategoryIds, int start,
 		int end, OrderByComparator<MBCategory> orderByComparator) {
-
-		return findByNotC_G_P(
-			categoryIds, groupId, parentCategoryIds, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByNotC_G_P(
-		long[] categoryIds, long groupId, long[] parentCategoryIds, int start,
-		int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
 
 		if (categoryIds == null) {
 			categoryIds = new long[0];
@@ -6658,15 +6567,12 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds)
-				};
-			}
+			finderArgs = new Object[] {
+				StringUtil.merge(categoryIds), groupId,
+				StringUtil.merge(parentCategoryIds)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				StringUtil.merge(categoryIds), groupId,
 				StringUtil.merge(parentCategoryIds), start, end,
@@ -6674,25 +6580,20 @@ public class MBCategoryPersistenceImpl
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			_finderPathWithPaginationFindByNotC_G_P, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				_finderPathWithPaginationFindByNotC_G_P, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if (!ArrayUtil.contains(
+						categoryIds, mbCategory.getCategoryId()) ||
+					(groupId != mbCategory.getGroupId()) ||
+					!ArrayUtil.contains(
+						parentCategoryIds, mbCategory.getParentCategoryId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if (!ArrayUtil.contains(
-							categoryIds, mbCategory.getCategoryId()) ||
-						(groupId != mbCategory.getGroupId()) ||
-						!ArrayUtil.contains(
-							parentCategoryIds,
-							mbCategory.getParentCategoryId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6770,17 +6671,12 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByNotC_G_P, finderArgs,
-						list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByNotC_G_P, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByNotC_G_P, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByNotC_G_P, finderArgs);
 
 				throw processException(e);
 			}
@@ -7202,22 +7098,25 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByG_P_S(
 		long groupId, long parentCategoryId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_P_S(
-			groupId, parentCategoryId, status, start, end, orderByComparator,
-			true);
+			groupId, parentCategoryId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -7233,14 +7132,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByG_P_S(
 		long groupId, long parentCategoryId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7250,36 +7147,28 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_P_S;
-				finderArgs = new Object[] {groupId, parentCategoryId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_P_S;
+			finderArgs = new Object[] {groupId, parentCategoryId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_P_S;
 			finderArgs = new Object[] {
 				groupId, parentCategoryId, status, start, end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					(parentCategoryId != mbCategory.getParentCategoryId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						(parentCategoryId !=
-							mbCategory.getParentCategoryId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7343,14 +7232,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8233,6 +8118,34 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_S(long,long,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Deprecated
+	@Override
+	public List<MBCategory> findByG_P_S(
+		long groupId, long[] parentCategoryIds, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_P_S(
+			groupId, parentCategoryIds, status, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -8251,33 +8164,6 @@ public class MBCategoryPersistenceImpl
 	public List<MBCategory> findByG_P_S(
 		long groupId, long[] parentCategoryIds, int status, int start, int end,
 		OrderByComparator<MBCategory> orderByComparator) {
-
-		return findByG_P_S(
-			groupId, parentCategoryIds, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByG_P_S(
-		long groupId, long[] parentCategoryIds, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
@@ -8299,38 +8185,30 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds), status
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(parentCategoryIds), status, start,
 				end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			_finderPathWithPaginationFindByG_P_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_P_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					!ArrayUtil.contains(
+						parentCategoryIds, mbCategory.getParentCategoryId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						!ArrayUtil.contains(
-							parentCategoryIds,
-							mbCategory.getParentCategoryId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8400,16 +8278,12 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_P_S, finderArgs, list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByG_P_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_S, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByG_P_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -8789,22 +8663,25 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_NotS(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param status the status
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByG_P_NotS(
 		long groupId, long parentCategoryId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator) {
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_P_NotS(
-			groupId, parentCategoryId, status, start, end, orderByComparator,
-			true);
+			groupId, parentCategoryId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -8820,14 +8697,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByG_P_NotS(
 		long groupId, long parentCategoryId, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8838,23 +8713,18 @@ public class MBCategoryPersistenceImpl
 			groupId, parentCategoryId, status, start, end, orderByComparator
 		};
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					(parentCategoryId != mbCategory.getParentCategoryId()) ||
+					(status == mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						(parentCategoryId !=
-							mbCategory.getParentCategoryId()) ||
-						(status == mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8918,14 +8788,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9808,6 +9674,34 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_NotS(long,long,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Deprecated
+	@Override
+	public List<MBCategory> findByG_P_NotS(
+		long groupId, long[] parentCategoryIds, int status, int start, int end,
+		OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_P_NotS(
+			groupId, parentCategoryIds, status, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = any &#63; and status &ne; &#63;.
 	 *
 	 * <p>
@@ -9826,33 +9720,6 @@ public class MBCategoryPersistenceImpl
 	public List<MBCategory> findByG_P_NotS(
 		long groupId, long[] parentCategoryIds, int status, int start, int end,
 		OrderByComparator<MBCategory> orderByComparator) {
-
-		return findByG_P_NotS(
-			groupId, parentCategoryIds, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByG_P_NotS(
-		long groupId, long[] parentCategoryIds, int status, int start, int end,
-		OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
 
 		if (parentCategoryIds == null) {
 			parentCategoryIds = new long[0];
@@ -9874,38 +9741,30 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, StringUtil.merge(parentCategoryIds), status
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(parentCategoryIds), status, start,
 				end, orderByComparator
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			_finderPathWithPaginationFindByG_P_NotS, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_P_NotS, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((groupId != mbCategory.getGroupId()) ||
+					!ArrayUtil.contains(
+						parentCategoryIds, mbCategory.getParentCategoryId()) ||
+					(status == mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((groupId != mbCategory.getGroupId()) ||
-						!ArrayUtil.contains(
-							parentCategoryIds,
-							mbCategory.getParentCategoryId()) ||
-						(status == mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -9975,17 +9834,12 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_P_NotS, finderArgs,
-						list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByG_P_NotS, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_NotS, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByG_P_NotS, finderArgs);
 
 				throw processException(e);
 			}
@@ -10373,6 +10227,7 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNotC_G_P_S(long,long,long,int, int, int, OrderByComparator)}
 	 * @param categoryId the category ID
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
@@ -10380,16 +10235,19 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findByNotC_G_P_S(
 		long categoryId, long groupId, long parentCategoryId, int status,
-		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByNotC_G_P_S(
 			categoryId, groupId, parentCategoryId, status, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -10406,14 +10264,12 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards categories
 	 */
 	@Override
 	public List<MBCategory> findByNotC_G_P_S(
 		long categoryId, long groupId, long parentCategoryId, int status,
-		int start, int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10425,24 +10281,19 @@ public class MBCategoryPersistenceImpl
 			orderByComparator
 		};
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if ((categoryId == mbCategory.getCategoryId()) ||
+					(groupId != mbCategory.getGroupId()) ||
+					(parentCategoryId != mbCategory.getParentCategoryId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if ((categoryId == mbCategory.getCategoryId()) ||
-						(groupId != mbCategory.getGroupId()) ||
-						(parentCategoryId !=
-							mbCategory.getParentCategoryId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -10510,14 +10361,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11073,6 +10920,36 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNotC_G_P_S(long,long,long,int, int, int, OrderByComparator)}
+	 * @param categoryId the category ID
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards categories
+	 * @param end the upper bound of the range of message boards categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards categories
+	 */
+	@Deprecated
+	@Override
+	public List<MBCategory> findByNotC_G_P_S(
+		long[] categoryIds, long groupId, long[] parentCategoryIds, int status,
+		int start, int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByNotC_G_P_S(
+			categoryIds, groupId, parentCategoryIds, status, start, end,
+			orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the message boards categories where categoryId &ne; all &#63; and groupId = &#63; and parentCategoryId = any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -11092,34 +10969,6 @@ public class MBCategoryPersistenceImpl
 	public List<MBCategory> findByNotC_G_P_S(
 		long[] categoryIds, long groupId, long[] parentCategoryIds, int status,
 		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
-
-		return findByNotC_G_P_S(
-			categoryIds, groupId, parentCategoryIds, status, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards categories
-	 */
-	@Override
-	public List<MBCategory> findByNotC_G_P_S(
-		long[] categoryIds, long groupId, long[] parentCategoryIds, int status,
-		int start, int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
 
 		if (categoryIds == null) {
 			categoryIds = new long[0];
@@ -11148,15 +10997,12 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds), status
-				};
-			}
+			finderArgs = new Object[] {
+				StringUtil.merge(categoryIds), groupId,
+				StringUtil.merge(parentCategoryIds), status
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				StringUtil.merge(categoryIds), groupId,
 				StringUtil.merge(parentCategoryIds), status, start, end,
@@ -11164,26 +11010,21 @@ public class MBCategoryPersistenceImpl
 			};
 		}
 
-		List<MBCategory> list = null;
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			_finderPathWithPaginationFindByNotC_G_P_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				_finderPathWithPaginationFindByNotC_G_P_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (MBCategory mbCategory : list) {
+				if (!ArrayUtil.contains(
+						categoryIds, mbCategory.getCategoryId()) ||
+					(groupId != mbCategory.getGroupId()) ||
+					!ArrayUtil.contains(
+						parentCategoryIds, mbCategory.getParentCategoryId()) ||
+					(status != mbCategory.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (MBCategory mbCategory : list) {
-					if (!ArrayUtil.contains(
-							categoryIds, mbCategory.getCategoryId()) ||
-						(groupId != mbCategory.getGroupId()) ||
-						!ArrayUtil.contains(
-							parentCategoryIds,
-							mbCategory.getParentCategoryId()) ||
-						(status != mbCategory.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -11267,17 +11108,13 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByNotC_G_P_S, finderArgs,
-						list);
-				}
+				finderCache.putResult(
+					_finderPathWithPaginationFindByNotC_G_P_S, finderArgs,
+					list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByNotC_G_P_S, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByNotC_G_P_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -12344,16 +12181,20 @@ public class MBCategoryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards categories
 	 */
+	@Deprecated
 	@Override
 	public List<MBCategory> findAll(
-		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -12366,13 +12207,11 @@ public class MBCategoryPersistenceImpl
 	 * @param start the lower bound of the range of message boards categories
 	 * @param end the upper bound of the range of message boards categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards categories
 	 */
 	@Override
 	public List<MBCategory> findAll(
-		int start, int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -12382,23 +12221,16 @@ public class MBCategoryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<MBCategory> list = null;
-
-		if (useFinderCache) {
-			list = (List<MBCategory>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<MBCategory> list = (List<MBCategory>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -12445,14 +12277,10 @@ public class MBCategoryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

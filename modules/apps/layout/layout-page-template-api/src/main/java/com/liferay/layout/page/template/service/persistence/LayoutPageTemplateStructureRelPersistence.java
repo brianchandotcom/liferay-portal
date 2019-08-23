@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.service.persistence;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateStructureRelException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,16 +73,19 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
+	@Deprecated
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the layout page template structure rels where uuid = &#63;.
@@ -94,14 +98,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where uuid = &#63;.
@@ -113,8 +114,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findByUuid_First(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -126,8 +126,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchByUuid_First(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63;.
@@ -139,8 +138,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findByUuid_Last(
 			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -152,8 +150,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchByUuid_Last(
 		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the layout page template structure rels before and after the current layout page template structure rel in the ordered set where uuid = &#63;.
@@ -166,8 +163,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel[] findByUuid_PrevAndNext(
 			long layoutPageTemplateStructureRelId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -198,14 +194,17 @@ public interface LayoutPageTemplateStructureRelPersistence
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
-	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
+	@Deprecated
 	public LayoutPageTemplateStructureRel fetchByUUID_G(
-		String uuid, long groupId);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the layout page template structure rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -216,7 +215,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
 	public LayoutPageTemplateStructureRel fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+		String uuid, long groupId);
 
 	/**
 	 * Removes the layout page template structure rel where uuid = &#63; and groupId = &#63; from the database.
@@ -271,17 +270,20 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
+	@Deprecated
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the layout page template structure rels where uuid = &#63; and companyId = &#63;.
@@ -295,14 +297,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -315,8 +314,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -329,8 +327,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the last layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -343,8 +340,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -357,8 +353,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the layout page template structure rels before and after the current layout page template structure rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -372,8 +367,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel[] findByUuid_C_PrevAndNext(
 			long layoutPageTemplateStructureRelId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -425,17 +419,20 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutPageTemplateStructureId(long, int, int, OrderByComparator)}
 	 * @param layoutPageTemplateStructureId the layout page template structure ID
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
+	@Deprecated
 	public java.util.List<LayoutPageTemplateStructureRel>
 		findByLayoutPageTemplateStructureId(
 			long layoutPageTemplateStructureId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator);
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the layout page template structure rels where layoutPageTemplateStructureId = &#63;.
@@ -448,15 +445,13 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel>
 		findByLayoutPageTemplateStructureId(
 			long layoutPageTemplateStructureId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator,
-			boolean useFinderCache);
+			OrderByComparator<LayoutPageTemplateStructureRel>
+				orderByComparator);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
@@ -469,8 +464,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public LayoutPageTemplateStructureRel
 			findByLayoutPageTemplateStructureId_First(
 				long layoutPageTemplateStructureId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<LayoutPageTemplateStructureRel> orderByComparator)
+				OrderByComparator<LayoutPageTemplateStructureRel>
+					orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -483,8 +478,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public LayoutPageTemplateStructureRel
 		fetchByLayoutPageTemplateStructureId_First(
 			long layoutPageTemplateStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator);
+			OrderByComparator<LayoutPageTemplateStructureRel>
+				orderByComparator);
 
 	/**
 	 * Returns the last layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
@@ -497,8 +492,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public LayoutPageTemplateStructureRel
 			findByLayoutPageTemplateStructureId_Last(
 				long layoutPageTemplateStructureId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<LayoutPageTemplateStructureRel> orderByComparator)
+				OrderByComparator<LayoutPageTemplateStructureRel>
+					orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -511,8 +506,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 	public LayoutPageTemplateStructureRel
 		fetchByLayoutPageTemplateStructureId_Last(
 			long layoutPageTemplateStructureId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator);
+			OrderByComparator<LayoutPageTemplateStructureRel>
+				orderByComparator);
 
 	/**
 	 * Returns the layout page template structure rels before and after the current layout page template structure rel in the ordered set where layoutPageTemplateStructureId = &#63;.
@@ -527,8 +522,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 			findByLayoutPageTemplateStructureId_PrevAndNext(
 				long layoutPageTemplateStructureRelId,
 				long layoutPageTemplateStructureId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<LayoutPageTemplateStructureRel> orderByComparator)
+				OrderByComparator<LayoutPageTemplateStructureRel>
+					orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -580,17 +575,20 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsExperienceId(long, int, int, OrderByComparator)}
 	 * @param segmentsExperienceId the segments experience ID
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
+	@Deprecated
 	public java.util.List<LayoutPageTemplateStructureRel>
 		findBySegmentsExperienceId(
 			long segmentsExperienceId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator);
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the layout page template structure rels where segmentsExperienceId = &#63;.
@@ -603,15 +601,13 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel>
 		findBySegmentsExperienceId(
 			long segmentsExperienceId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator,
-			boolean useFinderCache);
+			OrderByComparator<LayoutPageTemplateStructureRel>
+				orderByComparator);
 
 	/**
 	 * Returns the first layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
@@ -623,8 +619,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findBySegmentsExperienceId_First(
 			long segmentsExperienceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -636,8 +631,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchBySegmentsExperienceId_First(
 		long segmentsExperienceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the last layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
@@ -649,8 +643,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel findBySegmentsExperienceId_Last(
 			long segmentsExperienceId,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<LayoutPageTemplateStructureRel> orderByComparator)
+			OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -662,8 +655,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 */
 	public LayoutPageTemplateStructureRel fetchBySegmentsExperienceId_Last(
 		long segmentsExperienceId,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Returns the layout page template structure rels before and after the current layout page template structure rel in the ordered set where segmentsExperienceId = &#63;.
@@ -678,8 +670,8 @@ public interface LayoutPageTemplateStructureRelPersistence
 			findBySegmentsExperienceId_PrevAndNext(
 				long layoutPageTemplateStructureRelId,
 				long segmentsExperienceId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<LayoutPageTemplateStructureRel> orderByComparator)
+				OrderByComparator<LayoutPageTemplateStructureRel>
+					orderByComparator)
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
@@ -710,14 +702,18 @@ public interface LayoutPageTemplateStructureRelPersistence
 		throws NoSuchPageTemplateStructureRelException;
 
 	/**
-	 * Returns the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByL_S(long,long)}
 	 * @param layoutPageTemplateStructureId the layout page template structure ID
 	 * @param segmentsExperienceId the segments experience ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
+	@Deprecated
 	public LayoutPageTemplateStructureRel fetchByL_S(
-		long layoutPageTemplateStructureId, long segmentsExperienceId);
+		long layoutPageTemplateStructureId, long segmentsExperienceId,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -728,8 +724,7 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @return the matching layout page template structure rel, or <code>null</code> if a matching layout page template structure rel could not be found
 	 */
 	public LayoutPageTemplateStructureRel fetchByL_S(
-		long layoutPageTemplateStructureId, long segmentsExperienceId,
-		boolean useFinderCache);
+		long layoutPageTemplateStructureId, long segmentsExperienceId);
 
 	/**
 	 * Removes the layout page template structure rel where layoutPageTemplateStructureId = &#63; and segmentsExperienceId = &#63; from the database.
@@ -840,15 +835,18 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateStructureRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template structure rels
 	 */
+	@Deprecated
 	public java.util.List<LayoutPageTemplateStructureRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the layout page template structure rels.
@@ -860,14 +858,11 @@ public interface LayoutPageTemplateStructureRelPersistence
 	 * @param start the lower bound of the range of layout page template structure rels
 	 * @param end the upper bound of the range of layout page template structure rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template structure rels
 	 */
 	public java.util.List<LayoutPageTemplateStructureRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<LayoutPageTemplateStructureRel> orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator);
 
 	/**
 	 * Removes all the layout page template structure rels from the database.

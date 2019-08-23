@@ -158,17 +158,22 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -182,16 +187,13 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -302,14 +304,19 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	 * Returns the asset category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset category where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
-	public static AssetCategory fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	@Deprecated
+	public static AssetCategory fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -320,10 +327,8 @@ public class AssetCategoryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
-	public static AssetCategory fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	public static AssetCategory fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -389,19 +394,23 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -416,16 +425,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -571,18 +578,22 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -596,16 +607,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -817,18 +826,22 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByParentCategoryId(long, int, int, OrderByComparator)}
 	 * @param parentCategoryId the parent category ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByParentCategoryId(
 		long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByParentCategoryId(
-			parentCategoryId, start, end, orderByComparator);
+			parentCategoryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -842,16 +855,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByParentCategoryId(
 		long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByParentCategoryId(
-			parentCategoryId, start, end, orderByComparator, useFinderCache);
+			parentCategoryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -990,18 +1001,22 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVocabularyId(long, int, int, OrderByComparator)}
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByVocabularyId(
 		long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByVocabularyId(
-			vocabularyId, start, end, orderByComparator);
+			vocabularyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1015,16 +1030,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByVocabularyId(
 		long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByVocabularyId(
-			vocabularyId, start, end, orderByComparator, useFinderCache);
+			vocabularyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1166,19 +1179,24 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
-			groupId, parentCategoryId, start, end, orderByComparator);
+			groupId, parentCategoryId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1193,17 +1211,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByG_P(
 		long groupId, long parentCategoryId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByG_P(
-			groupId, parentCategoryId, start, end, orderByComparator,
-			useFinderCache);
+			groupId, parentCategoryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1438,19 +1453,24 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_V(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByG_V(
 		long groupId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_V(
-			groupId, vocabularyId, start, end, orderByComparator);
+			groupId, vocabularyId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1465,17 +1485,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByG_V(
 		long groupId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByG_V(
-			groupId, vocabularyId, start, end, orderByComparator,
-			useFinderCache);
+			groupId, vocabularyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1731,6 +1748,33 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	 * Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_V(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset categories
+	 */
+	@Deprecated
+	public static List<AssetCategory> findByG_V(
+		long groupId, long[] vocabularyIds, int start, int end,
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_V(
+			groupId, vocabularyIds, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = any &#63;.
 	 *
 	 * <p>
@@ -1750,31 +1794,6 @@ public class AssetCategoryUtil {
 
 		return getPersistence().findByG_V(
 			groupId, vocabularyIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and vocabularyId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset categories
-	 */
-	public static List<AssetCategory> findByG_V(
-		long groupId, long[] vocabularyIds, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByG_V(
-			groupId, vocabularyIds, start, end, orderByComparator,
-			useFinderCache);
 	}
 
 	/**
@@ -1870,19 +1889,24 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByP_N(long,String, int, int, OrderByComparator)}
 	 * @param parentCategoryId the parent category ID
 	 * @param name the name
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByP_N(
 		long parentCategoryId, String name, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_N(
-			parentCategoryId, name, start, end, orderByComparator);
+			parentCategoryId, name, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1897,17 +1921,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByP_N(
 		long parentCategoryId, String name, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByP_N(
-			parentCategoryId, name, start, end, orderByComparator,
-			useFinderCache);
+			parentCategoryId, name, start, end, orderByComparator);
 	}
 
 	/**
@@ -2058,19 +2079,24 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByP_V(long,long, int, int, OrderByComparator)}
 	 * @param parentCategoryId the parent category ID
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByP_V(
 		long parentCategoryId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByP_V(
-			parentCategoryId, vocabularyId, start, end, orderByComparator);
+			parentCategoryId, vocabularyId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2085,17 +2111,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByP_V(
 		long parentCategoryId, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByP_V(
-			parentCategoryId, vocabularyId, start, end, orderByComparator,
-			useFinderCache);
+			parentCategoryId, vocabularyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2245,19 +2268,23 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByN_V(String,long, int, int, OrderByComparator)}
 	 * @param name the name
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByN_V(
 		String name, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByN_V(
-			name, vocabularyId, start, end, orderByComparator);
+			name, vocabularyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2272,16 +2299,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByN_V(
 		String name, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByN_V(
-			name, vocabularyId, start, end, orderByComparator, useFinderCache);
+			name, vocabularyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2436,21 +2461,25 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_V(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByG_P_V(
 		long groupId, long parentCategoryId, long vocabularyId, int start,
-		int end, OrderByComparator<AssetCategory> orderByComparator) {
+		int end, OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_V(
 			groupId, parentCategoryId, vocabularyId, start, end,
-			orderByComparator);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2466,17 +2495,15 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByG_P_V(
 		long groupId, long parentCategoryId, long vocabularyId, int start,
-		int end, OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByG_P_V(
 			groupId, parentCategoryId, vocabularyId, start, end,
-			orderByComparator, useFinderCache);
+			orderByComparator);
 	}
 
 	/**
@@ -2741,20 +2768,25 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeN_V(long,String,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param vocabularyId the vocabulary ID
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findByG_LikeN_V(
 		long groupId, String name, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LikeN_V(
-			groupId, name, vocabularyId, start, end, orderByComparator);
+			groupId, name, vocabularyId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2770,17 +2802,14 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset categories
 	 */
 	public static List<AssetCategory> findByG_LikeN_V(
 		long groupId, String name, long vocabularyId, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetCategory> orderByComparator) {
 
 		return getPersistence().findByG_LikeN_V(
-			groupId, name, vocabularyId, start, end, orderByComparator,
-			useFinderCache);
+			groupId, name, vocabularyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -3053,6 +3082,34 @@ public class AssetCategoryUtil {
 	}
 
 	/**
+	 * Returns an ordered range of all the asset categories where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeN_V(long,String,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset categories
+	 */
+	@Deprecated
+	public static List<AssetCategory> findByG_LikeN_V(
+		long groupId, String name, long[] vocabularyIds, int start, int end,
+		OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_LikeN_V(
+			groupId, name, vocabularyIds, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
 	 * Returns an ordered range of all the asset categories where groupId = &#63; and name LIKE &#63; and vocabularyId = any &#63;.
 	 *
 	 * <p>
@@ -3073,32 +3130,6 @@ public class AssetCategoryUtil {
 
 		return getPersistence().findByG_LikeN_V(
 			groupId, name, vocabularyIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and name LIKE &#63; and vocabularyId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset categories
-	 */
-	public static List<AssetCategory> findByG_LikeN_V(
-		long groupId, String name, long[] vocabularyIds, int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByG_LikeN_V(
-			groupId, name, vocabularyIds, start, end, orderByComparator,
-			useFinderCache);
 	}
 
 	/**
@@ -3190,18 +3221,22 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset category where parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByP_N_V(long,String,long)}
 	 * @param parentCategoryId the parent category ID
 	 * @param name the name
 	 * @param vocabularyId the vocabulary ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
+	@Deprecated
 	public static AssetCategory fetchByP_N_V(
-		long parentCategoryId, String name, long vocabularyId) {
+		long parentCategoryId, String name, long vocabularyId,
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByP_N_V(
-			parentCategoryId, name, vocabularyId);
+			parentCategoryId, name, vocabularyId, useFinderCache);
 	}
 
 	/**
@@ -3214,11 +3249,10 @@ public class AssetCategoryUtil {
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
 	public static AssetCategory fetchByP_N_V(
-		long parentCategoryId, String name, long vocabularyId,
-		boolean useFinderCache) {
+		long parentCategoryId, String name, long vocabularyId) {
 
 		return getPersistence().fetchByP_N_V(
-			parentCategoryId, name, vocabularyId, useFinderCache);
+			parentCategoryId, name, vocabularyId);
 	}
 
 	/**
@@ -3298,6 +3332,35 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_N_V(long,long,String,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param parentCategoryId the parent category ID
+	 * @param name the name
+	 * @param vocabularyId the vocabulary ID
+	 * @param start the lower bound of the range of asset categories
+	 * @param end the upper bound of the range of asset categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset categories
+	 */
+	@Deprecated
+	public static List<AssetCategory> findByG_P_N_V(
+		long groupId, long parentCategoryId, String name, long vocabularyId,
+		int start, int end, OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_P_N_V(
+			groupId, parentCategoryId, name, vocabularyId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @param name the name
@@ -3315,33 +3378,6 @@ public class AssetCategoryUtil {
 		return getPersistence().findByG_P_N_V(
 			groupId, parentCategoryId, name, vocabularyId, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset categories where groupId = &#63; and parentCategoryId = &#63; and name = &#63; and vocabularyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentCategoryId the parent category ID
-	 * @param name the name
-	 * @param vocabularyId the vocabulary ID
-	 * @param start the lower bound of the range of asset categories
-	 * @param end the upper bound of the range of asset categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset categories
-	 */
-	public static List<AssetCategory> findByG_P_N_V(
-		long groupId, long parentCategoryId, String name, long vocabularyId,
-		int start, int end, OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByG_P_N_V(
-			groupId, parentCategoryId, name, vocabularyId, start, end,
-			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3594,16 +3630,20 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	 * Returns the asset category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_ERC(long,String)}
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
+	@Deprecated
 	public static AssetCategory fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+		long companyId, String externalReferenceCode, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().fetchByC_ERC(
+			companyId, externalReferenceCode, useFinderCache);
 	}
 
 	/**
@@ -3615,10 +3655,9 @@ public class AssetCategoryUtil {
 	 * @return the matching asset category, or <code>null</code> if a matching asset category could not be found
 	 */
 	public static AssetCategory fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+		long companyId, String externalReferenceCode) {
 
-		return getPersistence().fetchByC_ERC(
-			companyId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**
@@ -3747,16 +3786,20 @@ public class AssetCategoryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset categories
 	 */
+	@Deprecated
 	public static List<AssetCategory> findAll(
-		int start, int end,
-		OrderByComparator<AssetCategory> orderByComparator) {
+		int start, int end, OrderByComparator<AssetCategory> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3769,15 +3812,13 @@ public class AssetCategoryUtil {
 	 * @param start the lower bound of the range of asset categories
 	 * @param end the upper bound of the range of asset categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset categories
 	 */
 	public static List<AssetCategory> findAll(
-		int start, int end, OrderByComparator<AssetCategory> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<AssetCategory> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**

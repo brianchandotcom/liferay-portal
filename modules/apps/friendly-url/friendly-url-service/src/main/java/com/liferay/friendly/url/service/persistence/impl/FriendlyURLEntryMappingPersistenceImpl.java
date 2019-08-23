@@ -128,15 +128,20 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
 	 */
+	@Deprecated
 	@Override
-	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
+	public FriendlyURLEntryMapping fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache) {
+
+		return fetchByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -148,21 +153,11 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
 	 */
 	@Override
-	public FriendlyURLEntryMapping fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache) {
+	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK) {
+		Object[] finderArgs = new Object[] {classNameId, classPK};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByC_C, finderArgs, this);
 
 		if (result instanceof FriendlyURLEntryMapping) {
 			FriendlyURLEntryMapping friendlyURLEntryMapping =
@@ -202,10 +197,8 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				List<FriendlyURLEntryMapping> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByC_C, finderArgs, list);
 				}
 				else {
 					FriendlyURLEntryMapping friendlyURLEntryMapping = list.get(
@@ -217,9 +210,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -734,17 +725,21 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryMappingModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of friendly url entry mappings
 	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry mappings
 	 */
+	@Deprecated
 	@Override
 	public List<FriendlyURLEntryMapping> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntryMapping> orderByComparator) {
+		OrderByComparator<FriendlyURLEntryMapping> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -757,14 +752,12 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 * @param start the lower bound of the range of friendly url entry mappings
 	 * @param end the upper bound of the range of friendly url entry mappings (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry mappings
 	 */
 	@Override
 	public List<FriendlyURLEntryMapping> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntryMapping> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntryMapping> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -774,23 +767,17 @@ public class FriendlyURLEntryMappingPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<FriendlyURLEntryMapping> list = null;
-
-		if (useFinderCache) {
-			list = (List<FriendlyURLEntryMapping>)finderCache.getResult(
+		List<FriendlyURLEntryMapping> list =
+			(List<FriendlyURLEntryMapping>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -838,14 +825,10 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

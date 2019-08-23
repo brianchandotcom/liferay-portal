@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchMailingListException;
 import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface MBMailingListPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
+	@Deprecated
 	public java.util.List<MBMailingList> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface MBMailingListPersistence
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public java.util.List<MBMailingList> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the first message boards mailing list in the ordered set where uuid = &#63;.
@@ -111,9 +112,7 @@ public interface MBMailingListPersistence
 	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			String uuid, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -124,9 +123,7 @@ public interface MBMailingListPersistence
 	 * @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		String uuid, OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the last message boards mailing list in the ordered set where uuid = &#63;.
@@ -137,9 +134,7 @@ public interface MBMailingListPersistence
 	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			String uuid, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -150,9 +145,7 @@ public interface MBMailingListPersistence
 	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		String uuid, OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63;.
@@ -165,8 +158,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList[] findByUuid_PrevAndNext(
 			long mailingListId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -196,13 +188,17 @@ public interface MBMailingListPersistence
 		throws NoSuchMailingListException;
 
 	/**
-	 * Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
-	public MBMailingList fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public MBMailingList fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the message boards mailing list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,8 +208,7 @@ public interface MBMailingListPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
-	public MBMailingList fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public MBMailingList fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the message boards mailing list where uuid = &#63; and groupId = &#63; from the database.
@@ -267,17 +262,20 @@ public interface MBMailingListPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
+	@Deprecated
 	public java.util.List<MBMailingList> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where uuid = &#63; and companyId = &#63;.
@@ -291,14 +289,11 @@ public interface MBMailingListPersistence
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public java.util.List<MBMailingList> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the first message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -311,8 +306,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -325,8 +319,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the last message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -339,8 +332,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -353,8 +345,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -368,8 +359,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList[] findByUuid_C_PrevAndNext(
 			long mailingListId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -419,16 +409,19 @@ public interface MBMailingListPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByActive(boolean, int, int, OrderByComparator)}
 	 * @param active the active
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
+	@Deprecated
 	public java.util.List<MBMailingList> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		OrderByComparator<MBMailingList> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists where active = &#63;.
@@ -441,14 +434,11 @@ public interface MBMailingListPersistence
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards mailing lists
 	 */
 	public java.util.List<MBMailingList> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the first message boards mailing list in the ordered set where active = &#63;.
@@ -459,9 +449,7 @@ public interface MBMailingListPersistence
 	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList findByActive_First(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			boolean active, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -472,9 +460,7 @@ public interface MBMailingListPersistence
 	 * @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		boolean active, OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the last message boards mailing list in the ordered set where active = &#63;.
@@ -485,9 +471,7 @@ public interface MBMailingListPersistence
 	 * @throws NoSuchMailingListException if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList findByActive_Last(
-			boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			boolean active, OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -498,9 +482,7 @@ public interface MBMailingListPersistence
 	 * @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
 	public MBMailingList fetchByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		boolean active, OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Returns the message boards mailing lists before and after the current message boards mailing list in the ordered set where active = &#63;.
@@ -513,8 +495,7 @@ public interface MBMailingListPersistence
 	 */
 	public MBMailingList[] findByActive_PrevAndNext(
 			long mailingListId, boolean active,
-			com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-				orderByComparator)
+			OrderByComparator<MBMailingList> orderByComparator)
 		throws NoSuchMailingListException;
 
 	/**
@@ -544,13 +525,17 @@ public interface MBMailingListPersistence
 		throws NoSuchMailingListException;
 
 	/**
-	 * Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C(long,long)}
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
-	public MBMailingList fetchByG_C(long groupId, long categoryId);
+	@Deprecated
+	public MBMailingList fetchByG_C(
+		long groupId, long categoryId, boolean useFinderCache);
 
 	/**
 	 * Returns the message boards mailing list where groupId = &#63; and categoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -560,8 +545,7 @@ public interface MBMailingListPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
 	 */
-	public MBMailingList fetchByG_C(
-		long groupId, long categoryId, boolean useFinderCache);
+	public MBMailingList fetchByG_C(long groupId, long categoryId);
 
 	/**
 	 * Removes the message boards mailing list where groupId = &#63; and categoryId = &#63; from the database.
@@ -661,15 +645,17 @@ public interface MBMailingListPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBMailingListModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards mailing lists
 	 */
+	@Deprecated
 	public java.util.List<MBMailingList> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator);
+		int start, int end, OrderByComparator<MBMailingList> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards mailing lists.
@@ -681,14 +667,10 @@ public interface MBMailingListPersistence
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards mailing lists
 	 */
 	public java.util.List<MBMailingList> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMailingList>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<MBMailingList> orderByComparator);
 
 	/**
 	 * Removes all the message boards mailing lists from the database.

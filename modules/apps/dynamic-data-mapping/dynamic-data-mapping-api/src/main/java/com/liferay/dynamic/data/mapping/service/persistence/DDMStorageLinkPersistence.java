@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface DDMStorageLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
+	@Deprecated
 	public java.util.List<DDMStorageLink> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface DDMStorageLinkPersistence
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
 	public java.util.List<DDMStorageLink> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the first ddm storage link in the ordered set where uuid = &#63;.
@@ -111,9 +112,7 @@ public interface DDMStorageLinkPersistence
 	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -124,9 +123,7 @@ public interface DDMStorageLinkPersistence
 	 * @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		String uuid, OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the last ddm storage link in the ordered set where uuid = &#63;.
@@ -137,9 +134,7 @@ public interface DDMStorageLinkPersistence
 	 * @throws NoSuchStorageLinkException if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -150,9 +145,7 @@ public interface DDMStorageLinkPersistence
 	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		String uuid, OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63;.
@@ -165,8 +158,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink[] findByUuid_PrevAndNext(
 			long storageLinkId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -217,17 +209,20 @@ public interface DDMStorageLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
+	@Deprecated
 	public java.util.List<DDMStorageLink> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where uuid = &#63; and companyId = &#63;.
@@ -241,14 +236,11 @@ public interface DDMStorageLinkPersistence
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
 	public java.util.List<DDMStorageLink> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the first ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -261,8 +253,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -275,8 +266,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the last ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -289,8 +279,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -303,8 +292,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -318,8 +306,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink[] findByUuid_C_PrevAndNext(
 			long storageLinkId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -350,12 +337,15 @@ public interface DDMStorageLinkPersistence
 		throws NoSuchStorageLinkException;
 
 	/**
-	 * Returns the ddm storage link where classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm storage link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByClassPK(long)}
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
-	public DDMStorageLink fetchByClassPK(long classPK);
+	@Deprecated
+	public DDMStorageLink fetchByClassPK(long classPK, boolean useFinderCache);
 
 	/**
 	 * Returns the ddm storage link where classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -364,7 +354,7 @@ public interface DDMStorageLinkPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
-	public DDMStorageLink fetchByClassPK(long classPK, boolean useFinderCache);
+	public DDMStorageLink fetchByClassPK(long classPK);
 
 	/**
 	 * Removes the ddm storage link where classPK = &#63; from the database.
@@ -413,16 +403,19 @@ public interface DDMStorageLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureId(long, int, int, OrderByComparator)}
 	 * @param structureId the structure ID
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
+	@Deprecated
 	public java.util.List<DDMStorageLink> findByStructureId(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where structureId = &#63;.
@@ -435,14 +428,11 @@ public interface DDMStorageLinkPersistence
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
 	public java.util.List<DDMStorageLink> findByStructureId(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the first ddm storage link in the ordered set where structureId = &#63;.
@@ -454,8 +444,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByStructureId_First(
 			long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -466,9 +455,7 @@ public interface DDMStorageLinkPersistence
 	 * @return the first matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByStructureId_First(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		long structureId, OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the last ddm storage link in the ordered set where structureId = &#63;.
@@ -480,8 +467,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByStructureId_Last(
 			long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -492,9 +478,7 @@ public interface DDMStorageLinkPersistence
 	 * @return the last matching ddm storage link, or <code>null</code> if a matching ddm storage link could not be found
 	 */
 	public DDMStorageLink fetchByStructureId_Last(
-		long structureId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		long structureId, OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureId = &#63;.
@@ -507,8 +491,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink[] findByStructureId_PrevAndNext(
 			long storageLinkId, long structureId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -557,16 +540,19 @@ public interface DDMStorageLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureVersionId(long, int, int, OrderByComparator)}
 	 * @param structureVersionId the structure version ID
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
+	@Deprecated
 	public java.util.List<DDMStorageLink> findByStructureVersionId(
 		long structureVersionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where structureVersionId = &#63;.
@@ -579,14 +565,11 @@ public interface DDMStorageLinkPersistence
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm storage links
 	 */
 	public java.util.List<DDMStorageLink> findByStructureVersionId(
 		long structureVersionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the first ddm storage link in the ordered set where structureVersionId = &#63;.
@@ -598,8 +581,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByStructureVersionId_First(
 			long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -611,8 +593,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink fetchByStructureVersionId_First(
 		long structureVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the last ddm storage link in the ordered set where structureVersionId = &#63;.
@@ -624,8 +605,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink findByStructureVersionId_Last(
 			long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -637,8 +617,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink fetchByStructureVersionId_Last(
 		long structureVersionId,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Returns the ddm storage links before and after the current ddm storage link in the ordered set where structureVersionId = &#63;.
@@ -651,8 +630,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public DDMStorageLink[] findByStructureVersionId_PrevAndNext(
 			long storageLinkId, long structureVersionId,
-			com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-				orderByComparator)
+			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException;
 
 	/**
@@ -684,6 +662,27 @@ public interface DDMStorageLinkPersistence
 		long[] structureVersionIds, int start, int end);
 
 	/**
+	 * Returns an ordered range of all the ddm storage links where structureVersionId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureVersionId(long, int, int, OrderByComparator)}
+	 * @param structureVersionId the structure version ID
+	 * @param start the lower bound of the range of ddm storage links
+	 * @param end the upper bound of the range of ddm storage links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm storage links
+	 */
+	@Deprecated
+	public java.util.List<DDMStorageLink> findByStructureVersionId(
+		long[] structureVersionIds, int start, int end,
+		OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
+
+	/**
 	 * Returns an ordered range of all the ddm storage links where structureVersionId = any &#63;.
 	 *
 	 * <p>
@@ -698,28 +697,7 @@ public interface DDMStorageLinkPersistence
 	 */
 	public java.util.List<DDMStorageLink> findByStructureVersionId(
 		long[] structureVersionIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the ddm storage links where structureVersionId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param start the lower bound of the range of ddm storage links
-	 * @param end the upper bound of the range of ddm storage links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm storage links
-	 */
-	public java.util.List<DDMStorageLink> findByStructureVersionId(
-		long[] structureVersionIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Removes all the ddm storage links where structureVersionId = &#63; from the database.
@@ -823,15 +801,17 @@ public interface DDMStorageLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStorageLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm storage links
 	 */
+	@Deprecated
 	public java.util.List<DDMStorageLink> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator);
+		int start, int end, OrderByComparator<DDMStorageLink> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ddm storage links.
@@ -843,14 +823,11 @@ public interface DDMStorageLinkPersistence
 	 * @param start the lower bound of the range of ddm storage links
 	 * @param end the upper bound of the range of ddm storage links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm storage links
 	 */
 	public java.util.List<DDMStorageLink> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMStorageLink>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<DDMStorageLink> orderByComparator);
 
 	/**
 	 * Removes all the ddm storage links from the database.

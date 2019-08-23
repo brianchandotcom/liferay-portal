@@ -123,18 +123,22 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -148,14 +152,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,30 +167,23 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -244,14 +239,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1008,18 +999,22 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUserId(userId, start, end, orderByComparator, true);
+		return findByUserId(userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1033,14 +1028,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1050,30 +1043,23 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUserId;
+			finderArgs = new Object[] {userId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((userId != tasksEntry.getUserId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((userId != tasksEntry.getUserId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1129,14 +1115,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1519,19 +1501,23 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssigneeUserId(long, int, int, OrderByComparator)}
 	 * @param assigneeUserId the assignee user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByAssigneeUserId(
 		long assigneeUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByAssigneeUserId(
-			assigneeUserId, start, end, orderByComparator, true);
+			assigneeUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1545,14 +1531,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByAssigneeUserId(
 		long assigneeUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1562,32 +1546,25 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByAssigneeUserId;
-				finderArgs = new Object[] {assigneeUserId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByAssigneeUserId;
+			finderArgs = new Object[] {assigneeUserId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByAssigneeUserId;
 			finderArgs = new Object[] {
 				assigneeUserId, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((assigneeUserId != tasksEntry.getAssigneeUserId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((assigneeUserId != tasksEntry.getAssigneeUserId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1643,14 +1620,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2039,19 +2012,23 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByResolverUserId(long, int, int, OrderByComparator)}
 	 * @param resolverUserId the resolver user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByResolverUserId(
 		long resolverUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByResolverUserId(
-			resolverUserId, start, end, orderByComparator, true);
+			resolverUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2065,14 +2042,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByResolverUserId(
 		long resolverUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2082,32 +2057,25 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByResolverUserId;
-				finderArgs = new Object[] {resolverUserId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByResolverUserId;
+			finderArgs = new Object[] {resolverUserId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByResolverUserId;
 			finderArgs = new Object[] {
 				resolverUserId, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((resolverUserId != tasksEntry.getResolverUserId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((resolverUserId != tasksEntry.getResolverUserId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2163,14 +2131,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2561,19 +2525,23 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByG_U(
 		long groupId, long userId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByG_U(groupId, userId, start, end, orderByComparator, true);
+		return findByG_U(groupId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2588,14 +2556,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByG_U(
 		long groupId, long userId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2605,34 +2571,27 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U;
-				finderArgs = new Object[] {groupId, userId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_U;
+			finderArgs = new Object[] {groupId, userId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_U;
 			finderArgs = new Object[] {
 				groupId, userId, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(userId != tasksEntry.getUserId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(userId != tasksEntry.getUserId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2692,14 +2651,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3510,20 +3465,24 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_A(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param assigneeUserId the assignee user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByG_A(
 		long groupId, long assigneeUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_A(
-			groupId, assigneeUserId, start, end, orderByComparator, true);
+			groupId, assigneeUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -3538,14 +3497,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByG_A(
 		long groupId, long assigneeUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3555,34 +3512,27 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_A;
-				finderArgs = new Object[] {groupId, assigneeUserId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_A;
+			finderArgs = new Object[] {groupId, assigneeUserId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, assigneeUserId, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(assigneeUserId != tasksEntry.getAssigneeUserId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(assigneeUserId != tasksEntry.getAssigneeUserId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3642,14 +3592,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4468,20 +4414,24 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_R(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param resolverUserId the resolver user ID
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByG_R(
 		long groupId, long resolverUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_R(
-			groupId, resolverUserId, start, end, orderByComparator, true);
+			groupId, resolverUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -4496,14 +4446,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByG_R(
 		long groupId, long resolverUserId, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4513,34 +4461,27 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_R;
-				finderArgs = new Object[] {groupId, resolverUserId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_R;
+			finderArgs = new Object[] {groupId, resolverUserId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_R;
 			finderArgs = new Object[] {
 				groupId, resolverUserId, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(resolverUserId != tasksEntry.getResolverUserId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(resolverUserId != tasksEntry.getResolverUserId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4600,14 +4541,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5426,19 +5363,23 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_S(long,int, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByU_S(
 		long userId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByU_S(userId, status, start, end, orderByComparator, true);
+		return findByU_S(userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -5453,14 +5394,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByU_S(
 		long userId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5470,34 +5409,27 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU_S;
-				finderArgs = new Object[] {userId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByU_S;
+			finderArgs = new Object[] {userId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByU_S;
 			finderArgs = new Object[] {
 				userId, status, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((userId != tasksEntry.getUserId()) ||
+					(status != tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((userId != tasksEntry.getUserId()) ||
-						(status != tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5557,14 +5489,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5895,6 +5823,32 @@ public class TasksEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the tasks entries where userId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_S(long,int, int, int, OrderByComparator)}
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tasks entries
+	 * @param end the upper bound of the range of tasks entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tasks entries
+	 */
+	@Deprecated
+	@Override
+	public List<TasksEntry> findByU_S(
+		long userId, int[] statuses, int start, int end,
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByU_S(userId, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the tasks entries where userId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -5912,30 +5866,6 @@ public class TasksEntryPersistenceImpl
 	public List<TasksEntry> findByU_S(
 		long userId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator) {
-
-		return findByU_S(userId, statuses, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tasks entries where userId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of tasks entries
-	 * @param end the upper bound of the range of tasks entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching tasks entries
-	 */
-	@Override
-	public List<TasksEntry> findByU_S(
-		long userId, int[] statuses, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -5956,33 +5886,26 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {userId, StringUtil.merge(statuses)};
-			}
+			finderArgs = new Object[] {userId, StringUtil.merge(statuses)};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				userId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			_finderPathWithPaginationFindByU_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByU_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((userId != tasksEntry.getUserId()) ||
+					!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((userId != tasksEntry.getUserId()) ||
-						!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6046,16 +5969,12 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByU_S, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByU_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByU_S, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByU_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -6271,20 +6190,23 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_S(long,int, int, int, OrderByComparator)}
 	 * @param assigneeUserId the assignee user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByA_S(
 		long assigneeUserId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByA_S(
-			assigneeUserId, status, start, end, orderByComparator, true);
+		return findByA_S(assigneeUserId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -6299,14 +6221,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByA_S(
 		long assigneeUserId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6316,34 +6236,27 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByA_S;
-				finderArgs = new Object[] {assigneeUserId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByA_S;
+			finderArgs = new Object[] {assigneeUserId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByA_S;
 			finderArgs = new Object[] {
 				assigneeUserId, status, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((assigneeUserId != tasksEntry.getAssigneeUserId()) ||
+					(status != tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((assigneeUserId != tasksEntry.getAssigneeUserId()) ||
-						(status != tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6403,14 +6316,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6744,6 +6653,33 @@ public class TasksEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the tasks entries where assigneeUserId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_S(long,int, int, int, OrderByComparator)}
+	 * @param assigneeUserId the assignee user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tasks entries
+	 * @param end the upper bound of the range of tasks entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tasks entries
+	 */
+	@Deprecated
+	@Override
+	public List<TasksEntry> findByA_S(
+		long assigneeUserId, int[] statuses, int start, int end,
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByA_S(
+			assigneeUserId, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the tasks entries where assigneeUserId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -6761,31 +6697,6 @@ public class TasksEntryPersistenceImpl
 	public List<TasksEntry> findByA_S(
 		long assigneeUserId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator) {
-
-		return findByA_S(
-			assigneeUserId, statuses, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tasks entries where assigneeUserId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param assigneeUserId the assignee user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of tasks entries
-	 * @param end the upper bound of the range of tasks entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching tasks entries
-	 */
-	@Override
-	public List<TasksEntry> findByA_S(
-		long assigneeUserId, int[] statuses, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -6806,35 +6717,28 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					assigneeUserId, StringUtil.merge(statuses)
-				};
-			}
+			finderArgs = new Object[] {
+				assigneeUserId, StringUtil.merge(statuses)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				assigneeUserId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			_finderPathWithPaginationFindByA_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByA_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((assigneeUserId != tasksEntry.getAssigneeUserId()) ||
+					!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((assigneeUserId != tasksEntry.getAssigneeUserId()) ||
-						!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6898,16 +6802,12 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByA_S, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByA_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByA_S, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByA_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -7128,21 +7028,25 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_U_S(
-			groupId, userId, status, start, end, orderByComparator, true);
+			groupId, userId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -7158,14 +7062,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7175,35 +7077,28 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U_S;
-				finderArgs = new Object[] {groupId, userId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_U_S;
+			finderArgs = new Object[] {groupId, userId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_U_S;
 			finderArgs = new Object[] {
 				groupId, userId, status, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(userId != tasksEntry.getUserId()) ||
+					(status != tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(userId != tasksEntry.getUserId()) ||
-						(status != tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7267,14 +7162,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8146,6 +8037,34 @@ public class TasksEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the tasks entries where groupId = &#63; and userId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_S(long,long,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tasks entries
+	 * @param end the upper bound of the range of tasks entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tasks entries
+	 */
+	@Deprecated
+	@Override
+	public List<TasksEntry> findByG_U_S(
+		long groupId, long userId, int[] statuses, int start, int end,
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_U_S(
+			groupId, userId, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the tasks entries where groupId = &#63; and userId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -8164,32 +8083,6 @@ public class TasksEntryPersistenceImpl
 	public List<TasksEntry> findByG_U_S(
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator) {
-
-		return findByG_U_S(
-			groupId, userId, statuses, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tasks entries where groupId = &#63; and userId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param userId the user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of tasks entries
-	 * @param end the upper bound of the range of tasks entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching tasks entries
-	 */
-	@Override
-	public List<TasksEntry> findByG_U_S(
-		long groupId, long userId, int[] statuses, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -8210,36 +8103,29 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, userId, StringUtil.merge(statuses)
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, userId, StringUtil.merge(statuses)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, userId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			_finderPathWithPaginationFindByG_U_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_U_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(userId != tasksEntry.getUserId()) ||
+					!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(userId != tasksEntry.getUserId()) ||
-						!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8307,16 +8193,12 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByG_U_S, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByG_U_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByG_U_S, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByG_U_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -8688,22 +8570,25 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_A_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param assigneeUserId the assignee user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator) {
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_A_S(
-			groupId, assigneeUserId, status, start, end, orderByComparator,
-			true);
+			groupId, assigneeUserId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -8719,14 +8604,12 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int status, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8736,35 +8619,28 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_A_S;
-				finderArgs = new Object[] {groupId, assigneeUserId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_A_S;
+			finderArgs = new Object[] {groupId, assigneeUserId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_A_S;
 			finderArgs = new Object[] {
 				groupId, assigneeUserId, status, start, end, orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(assigneeUserId != tasksEntry.getAssigneeUserId()) ||
+					(status != tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(assigneeUserId != tasksEntry.getAssigneeUserId()) ||
-						(status != tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8828,14 +8704,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9712,6 +9584,34 @@ public class TasksEntryPersistenceImpl
 	}
 
 	/**
+	 * Returns an ordered range of all the tasks entries where groupId = &#63; and assigneeUserId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_A_S(long,long,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param assigneeUserId the assignee user ID
+	 * @param status the status
+	 * @param start the lower bound of the range of tasks entries
+	 * @param end the upper bound of the range of tasks entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tasks entries
+	 */
+	@Deprecated
+	@Override
+	public List<TasksEntry> findByG_A_S(
+		long groupId, long assigneeUserId, int[] statuses, int start, int end,
+		OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByG_A_S(
+			groupId, assigneeUserId, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the tasks entries where groupId = &#63; and assigneeUserId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -9730,33 +9630,6 @@ public class TasksEntryPersistenceImpl
 	public List<TasksEntry> findByG_A_S(
 		long groupId, long assigneeUserId, int[] statuses, int start, int end,
 		OrderByComparator<TasksEntry> orderByComparator) {
-
-		return findByG_A_S(
-			groupId, assigneeUserId, statuses, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tasks entries where groupId = &#63; and assigneeUserId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param assigneeUserId the assignee user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of tasks entries
-	 * @param end the upper bound of the range of tasks entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching tasks entries
-	 */
-	@Override
-	public List<TasksEntry> findByG_A_S(
-		long groupId, long assigneeUserId, int[] statuses, int start, int end,
-		OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -9778,36 +9651,29 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, assigneeUserId, StringUtil.merge(statuses)
-				};
-			}
+			finderArgs = new Object[] {
+				groupId, assigneeUserId, StringUtil.merge(statuses)
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				groupId, assigneeUserId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<TasksEntry> list = null;
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			_finderPathWithPaginationFindByG_A_S, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				_finderPathWithPaginationFindByG_A_S, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (TasksEntry tasksEntry : list) {
+				if ((groupId != tasksEntry.getGroupId()) ||
+					(assigneeUserId != tasksEntry.getAssigneeUserId()) ||
+					!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (TasksEntry tasksEntry : list) {
-					if ((groupId != tasksEntry.getGroupId()) ||
-						(assigneeUserId != tasksEntry.getAssigneeUserId()) ||
-						!ArrayUtil.contains(statuses, tasksEntry.getStatus())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -9875,16 +9741,12 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationFindByG_A_S, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(
+					_finderPathWithPaginationFindByG_A_S, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByG_A_S, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathWithPaginationFindByG_A_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -10907,16 +10769,20 @@ public class TasksEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TasksEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of tasks entries
 	 */
+	@Deprecated
 	@Override
 	public List<TasksEntry> findAll(
-		int start, int end, OrderByComparator<TasksEntry> orderByComparator) {
+		int start, int end, OrderByComparator<TasksEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -10929,13 +10795,11 @@ public class TasksEntryPersistenceImpl
 	 * @param start the lower bound of the range of tasks entries
 	 * @param end the upper bound of the range of tasks entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of tasks entries
 	 */
 	@Override
 	public List<TasksEntry> findAll(
-		int start, int end, OrderByComparator<TasksEntry> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<TasksEntry> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10945,23 +10809,16 @@ public class TasksEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<TasksEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<TasksEntry>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<TasksEntry> list = (List<TasksEntry>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -11008,14 +10865,10 @@ public class TasksEntryPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

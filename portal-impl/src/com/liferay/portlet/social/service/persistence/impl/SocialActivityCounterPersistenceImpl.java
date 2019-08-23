@@ -123,18 +123,22 @@ public class SocialActivityCounterPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
+	@Deprecated
 	@Override
 	public List<SocialActivityCounter> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByGroupId(groupId, start, end, orderByComparator, true);
+		return findByGroupId(groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -148,14 +152,12 @@ public class SocialActivityCounterPersistenceImpl
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	@Override
 	public List<SocialActivityCounter> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityCounter> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,30 +167,24 @@ public class SocialActivityCounterPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByGroupId;
+			finderArgs = new Object[] {groupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<SocialActivityCounter> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
+		List<SocialActivityCounter> list =
+			(List<SocialActivityCounter>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialActivityCounter socialActivityCounter : list) {
-					if ((groupId != socialActivityCounter.getGroupId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivityCounter socialActivityCounter : list) {
+				if ((groupId != socialActivityCounter.getGroupId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -244,14 +240,10 @@ public class SocialActivityCounterPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -651,20 +643,23 @@ public class SocialActivityCounterPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
+	@Deprecated
 	@Override
 	public List<SocialActivityCounter> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
+		return findByC_C(classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -679,14 +674,12 @@ public class SocialActivityCounterPersistenceImpl
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	@Override
 	public List<SocialActivityCounter> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityCounter> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -696,35 +689,28 @@ public class SocialActivityCounterPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, classPK};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_C;
+			finderArgs = new Object[] {classNameId, classPK};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
 			};
 		}
 
-		List<SocialActivityCounter> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
+		List<SocialActivityCounter> list =
+			(List<SocialActivityCounter>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialActivityCounter socialActivityCounter : list) {
-					if ((classNameId !=
-							socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivityCounter socialActivityCounter : list) {
+				if ((classNameId != socialActivityCounter.getClassNameId()) ||
+					(classPK != socialActivityCounter.getClassPK())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -784,14 +770,10 @@ public class SocialActivityCounterPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1223,6 +1205,7 @@ public class SocialActivityCounterPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_O(long,long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -1230,16 +1213,19 @@ public class SocialActivityCounterPersistenceImpl
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
+	@Deprecated
 	@Override
 	public List<SocialActivityCounter> findByG_C_C_O(
 		long groupId, long classNameId, long classPK, int ownerType, int start,
-		int end, OrderByComparator<SocialActivityCounter> orderByComparator) {
+		int end, OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_C_C_O(
 			groupId, classNameId, classPK, ownerType, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -1256,14 +1242,12 @@ public class SocialActivityCounterPersistenceImpl
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity counters
 	 */
 	@Override
 	public List<SocialActivityCounter> findByG_C_C_O(
 		long groupId, long classNameId, long classPK, int ownerType, int start,
-		int end, OrderByComparator<SocialActivityCounter> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<SocialActivityCounter> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1273,15 +1257,12 @@ public class SocialActivityCounterPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_C_O;
-				finderArgs = new Object[] {
-					groupId, classNameId, classPK, ownerType
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_C_C_O;
+			finderArgs = new Object[] {
+				groupId, classNameId, classPK, ownerType
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_C_C_O;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, ownerType, start, end,
@@ -1289,24 +1270,20 @@ public class SocialActivityCounterPersistenceImpl
 			};
 		}
 
-		List<SocialActivityCounter> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
+		List<SocialActivityCounter> list =
+			(List<SocialActivityCounter>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SocialActivityCounter socialActivityCounter : list) {
-					if ((groupId != socialActivityCounter.getGroupId()) ||
-						(classNameId !=
-							socialActivityCounter.getClassNameId()) ||
-						(classPK != socialActivityCounter.getClassPK()) ||
-						(ownerType != socialActivityCounter.getOwnerType())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SocialActivityCounter socialActivityCounter : list) {
+				if ((groupId != socialActivityCounter.getGroupId()) ||
+					(classNameId != socialActivityCounter.getClassNameId()) ||
+					(classPK != socialActivityCounter.getClassPK()) ||
+					(ownerType != socialActivityCounter.getOwnerType())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1374,14 +1351,10 @@ public class SocialActivityCounterPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1876,23 +1849,26 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C_N_O_S(long,long,long,String,int,int)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param name the name
 	 * @param ownerType the owner type
 	 * @param startPeriod the start period
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
+	@Deprecated
 	@Override
 	public SocialActivityCounter fetchByG_C_C_N_O_S(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int startPeriod) {
+		int ownerType, int startPeriod, boolean useFinderCache) {
 
 		return fetchByG_C_C_N_O_S(
-			groupId, classNameId, classPK, name, ownerType, startPeriod, true);
+			groupId, classNameId, classPK, name, ownerType, startPeriod);
 	}
 
 	/**
@@ -1910,24 +1886,16 @@ public class SocialActivityCounterPersistenceImpl
 	@Override
 	public SocialActivityCounter fetchByG_C_C_N_O_S(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int startPeriod, boolean useFinderCache) {
+		int ownerType, int startPeriod) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			groupId, classNameId, classPK, name, ownerType, startPeriod
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, startPeriod
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_C_C_N_O_S, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByG_C_C_N_O_S, finderArgs, this);
 
 		if (result instanceof SocialActivityCounter) {
 			SocialActivityCounter socialActivityCounter =
@@ -1998,10 +1966,8 @@ public class SocialActivityCounterPersistenceImpl
 				List<SocialActivityCounter> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByG_C_C_N_O_S, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByG_C_C_N_O_S, finderArgs, list);
 				}
 				else {
 					SocialActivityCounter socialActivityCounter = list.get(0);
@@ -2012,10 +1978,8 @@ public class SocialActivityCounterPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByG_C_C_N_O_S, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByG_C_C_N_O_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -2231,23 +2195,26 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C_N_O_E(long,long,long,String,int,int)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param name the name
 	 * @param ownerType the owner type
 	 * @param endPeriod the end period
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
 	 */
+	@Deprecated
 	@Override
 	public SocialActivityCounter fetchByG_C_C_N_O_E(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int endPeriod) {
+		int ownerType, int endPeriod, boolean useFinderCache) {
 
 		return fetchByG_C_C_N_O_E(
-			groupId, classNameId, classPK, name, ownerType, endPeriod, true);
+			groupId, classNameId, classPK, name, ownerType, endPeriod);
 	}
 
 	/**
@@ -2265,24 +2232,16 @@ public class SocialActivityCounterPersistenceImpl
 	@Override
 	public SocialActivityCounter fetchByG_C_C_N_O_E(
 		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int endPeriod, boolean useFinderCache) {
+		int ownerType, int endPeriod) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			groupId, classNameId, classPK, name, ownerType, endPeriod
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, classNameId, classPK, name, ownerType, endPeriod
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByG_C_C_N_O_E, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByG_C_C_N_O_E, finderArgs, this);
 
 		if (result instanceof SocialActivityCounter) {
 			SocialActivityCounter socialActivityCounter =
@@ -2353,10 +2312,8 @@ public class SocialActivityCounterPersistenceImpl
 				List<SocialActivityCounter> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByG_C_C_N_O_E, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByG_C_C_N_O_E, finderArgs, list);
 				}
 				else {
 					SocialActivityCounter socialActivityCounter = list.get(0);
@@ -2367,10 +2324,8 @@ public class SocialActivityCounterPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByG_C_C_N_O_E, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByG_C_C_N_O_E, finderArgs);
 
 				throw processException(e);
 			}
@@ -3128,17 +3083,21 @@ public class SocialActivityCounterPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity counters
 	 */
+	@Deprecated
 	@Override
 	public List<SocialActivityCounter> findAll(
 		int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
+		OrderByComparator<SocialActivityCounter> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -3151,14 +3110,12 @@ public class SocialActivityCounterPersistenceImpl
 	 * @param start the lower bound of the range of social activity counters
 	 * @param end the upper bound of the range of social activity counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity counters
 	 */
 	@Override
 	public List<SocialActivityCounter> findAll(
 		int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityCounter> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3168,23 +3125,17 @@ public class SocialActivityCounterPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SocialActivityCounter> list = null;
-
-		if (useFinderCache) {
-			list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
+		List<SocialActivityCounter> list =
+			(List<SocialActivityCounter>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3232,14 +3183,10 @@ public class SocialActivityCounterPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

@@ -132,18 +132,21 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -157,13 +160,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -175,30 +177,23 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if (!uuid.equals(group.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if (!uuid.equals(group.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -265,14 +260,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -681,15 +672,20 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
-	public Group fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public Group fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -701,23 +697,13 @@ public class GroupPersistenceImpl
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public Group fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -767,10 +753,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -781,10 +765,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -940,20 +922,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -968,13 +952,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -986,34 +969,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if (!uuid.equals(group.getUuid()) ||
+					(companyId != group.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if (!uuid.equals(group.getUuid()) ||
-						(companyId != group.getCompanyId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1084,14 +1060,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1531,18 +1503,21 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1556,13 +1531,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1572,32 +1546,25 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1653,14 +1620,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2038,14 +2001,17 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLiveGroupId(long)}
 	 * @param liveGroupId the live group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
-	public Group fetchByLiveGroupId(long liveGroupId) {
-		return fetchByLiveGroupId(liveGroupId, true);
+	public Group fetchByLiveGroupId(long liveGroupId, boolean useFinderCache) {
+		return fetchByLiveGroupId(liveGroupId);
 	}
 
 	/**
@@ -2056,19 +2022,11 @@ public class GroupPersistenceImpl
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group fetchByLiveGroupId(long liveGroupId, boolean useFinderCache) {
-		Object[] finderArgs = null;
+	public Group fetchByLiveGroupId(long liveGroupId) {
+		Object[] finderArgs = new Object[] {liveGroupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {liveGroupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByLiveGroupId, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByLiveGroupId, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -2101,20 +2059,14 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByLiveGroupId, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByLiveGroupId, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {liveGroupId};
-							}
-
 							_log.warn(
 								"GroupPersistenceImpl.fetchByLiveGroupId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2130,10 +2082,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByLiveGroupId, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByLiveGroupId, finderArgs);
 
 				throw processException(e);
 			}
@@ -2264,20 +2214,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByC_C(
-			companyId, classNameId, start, end, orderByComparator, true);
+		return findByC_C(companyId, classNameId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2292,13 +2244,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2308,34 +2259,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {companyId, classNameId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_C;
+			finderArgs = new Object[] {companyId, classNameId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				companyId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(classNameId != group.getClassNameId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(classNameId != group.getClassNameId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2395,14 +2339,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2822,20 +2762,23 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_P(
 		long companyId, long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_P(
-			companyId, parentGroupId, start, end, orderByComparator, true);
+			companyId, parentGroupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2850,13 +2793,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_P(
 		long companyId, long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2866,34 +2808,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_P;
-				finderArgs = new Object[] {companyId, parentGroupId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_P;
+			finderArgs = new Object[] {companyId, parentGroupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_P;
 			finderArgs = new Object[] {
 				companyId, parentGroupId, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2953,14 +2888,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3376,15 +3307,20 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where companyId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_GK(long,String)}
 	 * @param companyId the company ID
 	 * @param groupKey the group key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
-	public Group fetchByC_GK(long companyId, String groupKey) {
-		return fetchByC_GK(companyId, groupKey, true);
+	public Group fetchByC_GK(
+		long companyId, String groupKey, boolean useFinderCache) {
+
+		return fetchByC_GK(companyId, groupKey);
 	}
 
 	/**
@@ -3396,23 +3332,13 @@ public class GroupPersistenceImpl
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group fetchByC_GK(
-		long companyId, String groupKey, boolean useFinderCache) {
-
+	public Group fetchByC_GK(long companyId, String groupKey) {
 		groupKey = Objects.toString(groupKey, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId, groupKey};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, groupKey};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_GK, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_GK, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -3462,10 +3388,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_GK, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_GK, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -3476,10 +3400,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_GK, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_GK, finderArgs);
 
 				throw processException(e);
 			}
@@ -3632,15 +3554,20 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where companyId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_F(long,String)}
 	 * @param companyId the company ID
 	 * @param friendlyURL the friendly url
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
-	public Group fetchByC_F(long companyId, String friendlyURL) {
-		return fetchByC_F(companyId, friendlyURL, true);
+	public Group fetchByC_F(
+		long companyId, String friendlyURL, boolean useFinderCache) {
+
+		return fetchByC_F(companyId, friendlyURL);
 	}
 
 	/**
@@ -3652,23 +3579,13 @@ public class GroupPersistenceImpl
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group fetchByC_F(
-		long companyId, String friendlyURL, boolean useFinderCache) {
-
+	public Group fetchByC_F(long companyId, String friendlyURL) {
 		friendlyURL = Objects.toString(friendlyURL, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId, friendlyURL};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, friendlyURL};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_F, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_F, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -3718,10 +3635,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_F, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_F, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -3732,10 +3647,7 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_F, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByC_F, finderArgs);
 
 				throw processException(e);
 			}
@@ -3891,19 +3803,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param site the site
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_S(
 		long companyId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByC_S(companyId, site, start, end, orderByComparator, true);
+		return findByC_S(companyId, site, start, end, orderByComparator);
 	}
 
 	/**
@@ -3918,13 +3833,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_S(
 		long companyId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3934,34 +3848,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S;
-				finderArgs = new Object[] {companyId, site};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_S;
+			finderArgs = new Object[] {companyId, site};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, site, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4021,14 +3928,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4441,20 +4344,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_A(long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param active the active
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_A(
 		long companyId, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByC_A(
-			companyId, active, start, end, orderByComparator, true);
+		return findByC_A(companyId, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -4469,13 +4374,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_A(
 		long companyId, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4485,34 +4389,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_A;
-				finderArgs = new Object[] {companyId, active};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_A;
+			finderArgs = new Object[] {companyId, active};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_A;
 			finderArgs = new Object[] {
 				companyId, active, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(active != group.isActive())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(active != group.isActive())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4572,14 +4469,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4994,20 +4887,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CPK(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_CPK(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByC_CPK(
-			classNameId, classPK, start, end, orderByComparator, true);
+		return findByC_CPK(classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -5022,13 +4917,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_CPK(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5038,34 +4932,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_CPK;
-				finderArgs = new Object[] {classNameId, classPK};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_CPK;
+			finderArgs = new Object[] {classNameId, classPK};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_CPK;
 			finderArgs = new Object[] {
 				classNameId, classPK, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((classNameId != group.getClassNameId()) ||
+					(classPK != group.getClassPK())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((classNameId != group.getClassNameId()) ||
-						(classPK != group.getClassPK())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5125,14 +5012,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5547,19 +5430,22 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_A(int,boolean, int, int, OrderByComparator)}
 	 * @param type the type
 	 * @param active the active
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByT_A(
 		int type, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return findByT_A(type, active, start, end, orderByComparator, true);
+		return findByT_A(type, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -5574,13 +5460,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByT_A(
 		int type, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5590,34 +5475,25 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByT_A;
-				finderArgs = new Object[] {type, active};
-			}
+			finderPath = _finderPathWithoutPaginationFindByT_A;
+			finderArgs = new Object[] {type, active};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByT_A;
 			finderArgs = new Object[] {
 				type, active, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((type != group.getType()) || (active != group.isActive())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((type != group.getType()) ||
-						(active != group.isActive())) {
-
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5677,14 +5553,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6099,22 +5971,24 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_P(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByG_C_P(
 		long groupId, long companyId, long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByG_C_P(
-			groupId, companyId, parentGroupId, start, end, orderByComparator,
-			true);
+			groupId, companyId, parentGroupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -6130,13 +6004,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByG_C_P(
 		long groupId, long companyId, long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6147,22 +6020,18 @@ public class GroupPersistenceImpl
 			groupId, companyId, parentGroupId, start, end, orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((groupId >= group.getGroupId()) ||
+					(companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((groupId >= group.getGroupId()) ||
-						(companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6226,14 +6095,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6518,16 +6383,22 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C_C(long,long,long)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
-	public Group fetchByC_C_C(long companyId, long classNameId, long classPK) {
-		return fetchByC_C_C(companyId, classNameId, classPK, true);
+	public Group fetchByC_C_C(
+		long companyId, long classNameId, long classPK,
+		boolean useFinderCache) {
+
+		return fetchByC_C_C(companyId, classNameId, classPK);
 	}
 
 	/**
@@ -6540,22 +6411,11 @@ public class GroupPersistenceImpl
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
 	@Override
-	public Group fetchByC_C_C(
-		long companyId, long classNameId, long classPK,
-		boolean useFinderCache) {
+	public Group fetchByC_C_C(long companyId, long classNameId, long classPK) {
+		Object[] finderArgs = new Object[] {companyId, classNameId, classPK};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, classNameId, classPK};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_C_C, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -6599,10 +6459,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_C_C, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_C_C, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -6613,10 +6471,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_C_C, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_C_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -6772,22 +6628,26 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_P(long,long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param parentGroupId the parent group ID
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_C_P(
 		long companyId, long classNameId, long parentGroupId, int start,
-		int end, OrderByComparator<Group> orderByComparator) {
+		int end, OrderByComparator<Group> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_C_P(
 			companyId, classNameId, parentGroupId, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -6803,14 +6663,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_C_P(
 		long companyId, long classNameId, long parentGroupId, int start,
-		int end, OrderByComparator<Group> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6820,15 +6678,10 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_P;
-				finderArgs = new Object[] {
-					companyId, classNameId, parentGroupId
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_C_P;
+			finderArgs = new Object[] {companyId, classNameId, parentGroupId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_C_P;
 			finderArgs = new Object[] {
 				companyId, classNameId, parentGroupId, start, end,
@@ -6836,22 +6689,18 @@ public class GroupPersistenceImpl
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(classNameId != group.getClassNameId()) ||
+					(parentGroupId != group.getParentGroupId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(classNameId != group.getClassNameId()) ||
-						(parentGroupId != group.getParentGroupId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6915,14 +6764,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7378,22 +7223,24 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P_S(long,long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
 	 * @param site the site
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_P_S(
 		long companyId, long parentGroupId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_P_S(
-			companyId, parentGroupId, site, start, end, orderByComparator,
-			true);
+			companyId, parentGroupId, site, start, end, orderByComparator);
 	}
 
 	/**
@@ -7409,13 +7256,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_P_S(
 		long companyId, long parentGroupId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7425,35 +7271,28 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_P_S;
-				finderArgs = new Object[] {companyId, parentGroupId, site};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_P_S;
+			finderArgs = new Object[] {companyId, parentGroupId, site};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_P_S;
 			finderArgs = new Object[] {
 				companyId, parentGroupId, site, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId()) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId()) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7517,14 +7356,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7971,18 +7806,22 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where companyId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_L_GK(long,long,String)}
 	 * @param companyId the company ID
 	 * @param liveGroupId the live group ID
 	 * @param groupKey the group key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
 	public Group fetchByC_L_GK(
-		long companyId, long liveGroupId, String groupKey) {
+		long companyId, long liveGroupId, String groupKey,
+		boolean useFinderCache) {
 
-		return fetchByC_L_GK(companyId, liveGroupId, groupKey, true);
+		return fetchByC_L_GK(companyId, liveGroupId, groupKey);
 	}
 
 	/**
@@ -7996,23 +7835,14 @@ public class GroupPersistenceImpl
 	 */
 	@Override
 	public Group fetchByC_L_GK(
-		long companyId, long liveGroupId, String groupKey,
-		boolean useFinderCache) {
+		long companyId, long liveGroupId, String groupKey) {
 
 		groupKey = Objects.toString(groupKey, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId, liveGroupId, groupKey};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, liveGroupId, groupKey};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_L_GK, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_L_GK, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -8067,10 +7897,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_L_GK, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_L_GK, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -8081,10 +7909,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_L_GK, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_L_GK, finderArgs);
 
 				throw processException(e);
 			}
@@ -8256,21 +8082,24 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_T_S(long,String,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @param site the site
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_T_S(
 		long companyId, String treePath, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_T_S(
-			companyId, treePath, site, start, end, orderByComparator, true);
+			companyId, treePath, site, start, end, orderByComparator);
 	}
 
 	/**
@@ -8286,13 +8115,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_T_S(
 		long companyId, String treePath, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		treePath = Objects.toString(treePath, "");
 
@@ -8305,24 +8133,19 @@ public class GroupPersistenceImpl
 			companyId, treePath, site, start, end, orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					!StringUtil.wildcardMatches(
+						group.getTreePath(), treePath, '_', '%', '\\', true) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							group.getTreePath(), treePath, '_', '%', '\\',
-							true) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8397,14 +8220,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8879,21 +8698,24 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LikeN_S(long,String,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param site the site
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_LikeN_S(
 		long companyId, String name, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_LikeN_S(
-			companyId, name, site, start, end, orderByComparator, true);
+			companyId, name, site, start, end, orderByComparator);
 	}
 
 	/**
@@ -8909,13 +8731,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_LikeN_S(
 		long companyId, String name, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		name = Objects.toString(name, "");
 
@@ -8928,23 +8749,19 @@ public class GroupPersistenceImpl
 			companyId, name, site, start, end, orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					!StringUtil.wildcardMatches(
+						group.getName(), name, '_', '%', '\\', false) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							group.getName(), name, '_', '%', '\\', false) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -9019,14 +8836,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9502,21 +9315,24 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S_A(long,boolean,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param site the site
 	 * @param active the active
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_S_A(
 		long companyId, boolean site, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_S_A(
-			companyId, site, active, start, end, orderByComparator, true);
+			companyId, site, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -9532,13 +9348,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_S_A(
 		long companyId, boolean site, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -9548,35 +9363,27 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S_A;
-				finderArgs = new Object[] {companyId, site, active};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_S_A;
+			finderArgs = new Object[] {companyId, site, active};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_S_A;
 			finderArgs = new Object[] {
 				companyId, site, active, start, end, orderByComparator
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(site != group.isSite()) || (active != group.isActive())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(site != group.isSite()) ||
-						(active != group.isActive())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -9640,14 +9447,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10099,6 +9902,7 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_P(long,long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
@@ -10106,16 +9910,19 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByG_C_C_P(
 		long groupId, long companyId, long classNameId, long parentGroupId,
-		int start, int end, OrderByComparator<Group> orderByComparator) {
+		int start, int end, OrderByComparator<Group> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_C_C_P(
 			groupId, companyId, classNameId, parentGroupId, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -10132,14 +9939,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByG_C_C_P(
 		long groupId, long companyId, long classNameId, long parentGroupId,
-		int start, int end, OrderByComparator<Group> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10151,23 +9956,19 @@ public class GroupPersistenceImpl
 			orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((groupId >= group.getGroupId()) ||
+					(companyId != group.getCompanyId()) ||
+					(classNameId != group.getClassNameId()) ||
+					(parentGroupId != group.getParentGroupId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((groupId >= group.getGroupId()) ||
-						(companyId != group.getCompanyId()) ||
-						(classNameId != group.getClassNameId()) ||
-						(parentGroupId != group.getParentGroupId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -10235,14 +10036,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10559,6 +10356,7 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_P_S(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
@@ -10566,16 +10364,19 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByG_C_P_S(
 		long groupId, long companyId, long parentGroupId, boolean site,
-		int start, int end, OrderByComparator<Group> orderByComparator) {
+		int start, int end, OrderByComparator<Group> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_C_P_S(
 			groupId, companyId, parentGroupId, site, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -10592,14 +10393,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByG_C_P_S(
 		long groupId, long companyId, long parentGroupId, boolean site,
-		int start, int end, OrderByComparator<Group> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10611,23 +10410,19 @@ public class GroupPersistenceImpl
 			orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((groupId >= group.getGroupId()) ||
+					(companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId()) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((groupId >= group.getGroupId()) ||
-						(companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId()) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -10695,14 +10490,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11016,20 +10807,23 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and classNameId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the group where companyId = &#63; and classNameId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C_L_GK(long,long,long,String)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param liveGroupId the live group ID
 	 * @param groupKey the group key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching group, or <code>null</code> if a matching group could not be found
 	 */
+	@Deprecated
 	@Override
 	public Group fetchByC_C_L_GK(
-		long companyId, long classNameId, long liveGroupId, String groupKey) {
+		long companyId, long classNameId, long liveGroupId, String groupKey,
+		boolean useFinderCache) {
 
-		return fetchByC_C_L_GK(
-			companyId, classNameId, liveGroupId, groupKey, true);
+		return fetchByC_C_L_GK(companyId, classNameId, liveGroupId, groupKey);
 	}
 
 	/**
@@ -11044,25 +10838,16 @@ public class GroupPersistenceImpl
 	 */
 	@Override
 	public Group fetchByC_C_L_GK(
-		long companyId, long classNameId, long liveGroupId, String groupKey,
-		boolean useFinderCache) {
+		long companyId, long classNameId, long liveGroupId, String groupKey) {
 
 		groupKey = Objects.toString(groupKey, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			companyId, classNameId, liveGroupId, groupKey
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				companyId, classNameId, liveGroupId, groupKey
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_C_L_GK, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_C_L_GK, finderArgs, this);
 
 		if (result instanceof Group) {
 			Group group = (Group)result;
@@ -11122,10 +10907,8 @@ public class GroupPersistenceImpl
 				List<Group> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_C_L_GK, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_C_L_GK, finderArgs, list);
 				}
 				else {
 					Group group = list.get(0);
@@ -11136,10 +10919,8 @@ public class GroupPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_C_L_GK, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_C_L_GK, finderArgs);
 
 				throw processException(e);
 			}
@@ -11327,6 +11108,7 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P_LikeN_S(long,long,String,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
 	 * @param name the name
@@ -11334,16 +11116,19 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_P_LikeN_S(
 		long companyId, long parentGroupId, String name, boolean site,
-		int start, int end, OrderByComparator<Group> orderByComparator) {
+		int start, int end, OrderByComparator<Group> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_P_LikeN_S(
-			companyId, parentGroupId, name, site, start, end, orderByComparator,
-			true);
+			companyId, parentGroupId, name, site, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -11360,14 +11145,12 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_P_LikeN_S(
 		long companyId, long parentGroupId, String name, boolean site,
-		int start, int end, OrderByComparator<Group> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Group> orderByComparator) {
 
 		name = Objects.toString(name, "");
 
@@ -11380,24 +11163,20 @@ public class GroupPersistenceImpl
 			companyId, parentGroupId, name, site, start, end, orderByComparator
 		};
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId()) ||
+					!StringUtil.wildcardMatches(
+						group.getName(), name, '_', '%', '\\', false) ||
+					(site != group.isSite())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId()) ||
-						!StringUtil.wildcardMatches(
-							group.getName(), name, '_', '%', '\\', false) ||
-						(site != group.isSite())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -11476,14 +11255,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11997,6 +11772,7 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P_S_I(long,long,boolean,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentGroupId the parent group ID
 	 * @param site the site
@@ -12004,17 +11780,19 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findByC_P_S_I(
 		long companyId, long parentGroupId, boolean site,
 		boolean inheritContent, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
 		return findByC_P_S_I(
 			companyId, parentGroupId, site, inheritContent, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -12031,14 +11809,13 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching groups
 	 */
 	@Override
 	public List<Group> findByC_P_S_I(
 		long companyId, long parentGroupId, boolean site,
 		boolean inheritContent, int start, int end,
-		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -12048,15 +11825,12 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_P_S_I;
-				finderArgs = new Object[] {
-					companyId, parentGroupId, site, inheritContent
-				};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_P_S_I;
+			finderArgs = new Object[] {
+				companyId, parentGroupId, site, inheritContent
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_P_S_I;
 			finderArgs = new Object[] {
 				companyId, parentGroupId, site, inheritContent, start, end,
@@ -12064,23 +11838,19 @@ public class GroupPersistenceImpl
 			};
 		}
 
-		List<Group> list = null;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId()) ||
+					(site != group.isSite()) ||
+					(inheritContent != group.isInheritContent())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Group group : list) {
-					if ((companyId != group.getCompanyId()) ||
-						(parentGroupId != group.getParentGroupId()) ||
-						(site != group.isSite()) ||
-						(inheritContent != group.isInheritContent())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -12148,14 +11918,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13615,16 +13381,20 @@ public class GroupPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of groups
 	 */
+	@Deprecated
 	@Override
 	public List<Group> findAll(
-		int start, int end, OrderByComparator<Group> orderByComparator) {
+		int start, int end, OrderByComparator<Group> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -13637,13 +13407,11 @@ public class GroupPersistenceImpl
 	 * @param start the lower bound of the range of groups
 	 * @param end the upper bound of the range of groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of groups
 	 */
 	@Override
 	public List<Group> findAll(
-		int start, int end, OrderByComparator<Group> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Group> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -13653,23 +13421,16 @@ public class GroupPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Group> list = null;
-
-		if (useFinderCache) {
-			list = (List<Group>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -13716,14 +13477,10 @@ public class GroupPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

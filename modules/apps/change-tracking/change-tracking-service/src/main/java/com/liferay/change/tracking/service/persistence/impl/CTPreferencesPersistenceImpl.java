@@ -129,19 +129,23 @@ public class CTPreferencesPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCollectionId(long, int, int, OrderByComparator)}
 	 * @param ctCollectionId the ct collection ID
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct preferenceses
 	 */
+	@Deprecated
 	@Override
 	public List<CTPreferences> findByCollectionId(
 		long ctCollectionId, int start, int end,
-		OrderByComparator<CTPreferences> orderByComparator) {
+		OrderByComparator<CTPreferences> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByCollectionId(
-			ctCollectionId, start, end, orderByComparator, true);
+			ctCollectionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -155,14 +159,12 @@ public class CTPreferencesPersistenceImpl
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct preferenceses
 	 */
 	@Override
 	public List<CTPreferences> findByCollectionId(
 		long ctCollectionId, int start, int end,
-		OrderByComparator<CTPreferences> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<CTPreferences> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -172,32 +174,25 @@ public class CTPreferencesPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCollectionId;
+			finderArgs = new Object[] {ctCollectionId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCollectionId;
 			finderArgs = new Object[] {
 				ctCollectionId, start, end, orderByComparator
 			};
 		}
 
-		List<CTPreferences> list = null;
+		List<CTPreferences> list = (List<CTPreferences>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<CTPreferences>)finderCache.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CTPreferences ctPreferences : list) {
+				if ((ctCollectionId != ctPreferences.getCtCollectionId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CTPreferences ctPreferences : list) {
-					if ((ctCollectionId != ctPreferences.getCtCollectionId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -253,14 +248,10 @@ public class CTPreferencesPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -652,15 +643,20 @@ public class CTPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ct preferences where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_U(long,long)}
 	 * @param companyId the company ID
 	 * @param userId the user ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
 	 */
+	@Deprecated
 	@Override
-	public CTPreferences fetchByC_U(long companyId, long userId) {
-		return fetchByC_U(companyId, userId, true);
+	public CTPreferences fetchByC_U(
+		long companyId, long userId, boolean useFinderCache) {
+
+		return fetchByC_U(companyId, userId);
 	}
 
 	/**
@@ -672,21 +668,11 @@ public class CTPreferencesPersistenceImpl
 	 * @return the matching ct preferences, or <code>null</code> if a matching ct preferences could not be found
 	 */
 	@Override
-	public CTPreferences fetchByC_U(
-		long companyId, long userId, boolean useFinderCache) {
+	public CTPreferences fetchByC_U(long companyId, long userId) {
+		Object[] finderArgs = new Object[] {companyId, userId};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, userId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_U, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByC_U, finderArgs, this);
 
 		if (result instanceof CTPreferences) {
 			CTPreferences ctPreferences = (CTPreferences)result;
@@ -725,10 +711,8 @@ public class CTPreferencesPersistenceImpl
 				List<CTPreferences> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_U, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByC_U, finderArgs, list);
 				}
 				else {
 					CTPreferences ctPreferences = list.get(0);
@@ -739,9 +723,7 @@ public class CTPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByC_U, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByC_U, finderArgs);
 
 				throw processException(e);
 			}
@@ -1258,17 +1240,20 @@ public class CTPreferencesPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct preferenceses
 	 */
+	@Deprecated
 	@Override
 	public List<CTPreferences> findAll(
-		int start, int end,
-		OrderByComparator<CTPreferences> orderByComparator) {
+		int start, int end, OrderByComparator<CTPreferences> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1281,13 +1266,12 @@ public class CTPreferencesPersistenceImpl
 	 * @param start the lower bound of the range of ct preferenceses
 	 * @param end the upper bound of the range of ct preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ct preferenceses
 	 */
 	@Override
 	public List<CTPreferences> findAll(
-		int start, int end, OrderByComparator<CTPreferences> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<CTPreferences> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1297,23 +1281,16 @@ public class CTPreferencesPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CTPreferences> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTPreferences>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<CTPreferences> list = (List<CTPreferences>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1360,14 +1337,10 @@ public class CTPreferencesPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

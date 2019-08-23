@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchOrgGroupRoleException;
 import com.liferay.portal.kernel.model.OrgGroupRole;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Set;
 
@@ -71,16 +72,19 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrgGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
+	@Deprecated
 	public java.util.List<OrgGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		OrderByComparator<OrgGroupRole> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the org group roles where groupId = &#63;.
@@ -93,14 +97,11 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
 	public java.util.List<OrgGroupRole> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the first org group role in the ordered set where groupId = &#63;.
@@ -111,9 +112,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @throws NoSuchOrgGroupRoleException if a matching org group role could not be found
 	 */
 	public OrgGroupRole findByGroupId_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			long groupId, OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -124,9 +123,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @return the first matching org group role, or <code>null</code> if a matching org group role could not be found
 	 */
 	public OrgGroupRole fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		long groupId, OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the last org group role in the ordered set where groupId = &#63;.
@@ -137,9 +134,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @throws NoSuchOrgGroupRoleException if a matching org group role could not be found
 	 */
 	public OrgGroupRole findByGroupId_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			long groupId, OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -150,9 +145,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @return the last matching org group role, or <code>null</code> if a matching org group role could not be found
 	 */
 	public OrgGroupRole fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		long groupId, OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the org group roles before and after the current org group role in the ordered set where groupId = &#63;.
@@ -165,8 +158,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 */
 	public OrgGroupRole[] findByGroupId_PrevAndNext(
 			OrgGroupRolePK orgGroupRolePK, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -214,16 +206,19 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrgGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRoleId(long, int, int, OrderByComparator)}
 	 * @param roleId the role ID
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
+	@Deprecated
 	public java.util.List<OrgGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		OrderByComparator<OrgGroupRole> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the org group roles where roleId = &#63;.
@@ -236,14 +231,11 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching org group roles
 	 */
 	public java.util.List<OrgGroupRole> findByRoleId(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the first org group role in the ordered set where roleId = &#63;.
@@ -254,9 +246,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @throws NoSuchOrgGroupRoleException if a matching org group role could not be found
 	 */
 	public OrgGroupRole findByRoleId_First(
-			long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			long roleId, OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -267,9 +257,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @return the first matching org group role, or <code>null</code> if a matching org group role could not be found
 	 */
 	public OrgGroupRole fetchByRoleId_First(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		long roleId, OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the last org group role in the ordered set where roleId = &#63;.
@@ -280,9 +268,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @throws NoSuchOrgGroupRoleException if a matching org group role could not be found
 	 */
 	public OrgGroupRole findByRoleId_Last(
-			long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			long roleId, OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -293,9 +279,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @return the last matching org group role, or <code>null</code> if a matching org group role could not be found
 	 */
 	public OrgGroupRole fetchByRoleId_Last(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		long roleId, OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Returns the org group roles before and after the current org group role in the ordered set where roleId = &#63;.
@@ -308,8 +292,7 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 */
 	public OrgGroupRole[] findByRoleId_PrevAndNext(
 			OrgGroupRolePK orgGroupRolePK, long roleId,
-			com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-				orderByComparator)
+			OrderByComparator<OrgGroupRole> orderByComparator)
 		throws NoSuchOrgGroupRoleException;
 
 	/**
@@ -406,15 +389,17 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrgGroupRoleModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of org group roles
 	 */
+	@Deprecated
 	public java.util.List<OrgGroupRole> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator);
+		int start, int end, OrderByComparator<OrgGroupRole> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the org group roles.
@@ -426,14 +411,10 @@ public interface OrgGroupRolePersistence extends BasePersistence<OrgGroupRole> {
 	 * @param start the lower bound of the range of org group roles
 	 * @param end the upper bound of the range of org group roles (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of org group roles
 	 */
 	public java.util.List<OrgGroupRole> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<OrgGroupRole>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<OrgGroupRole> orderByComparator);
 
 	/**
 	 * Removes all the org group roles from the database.

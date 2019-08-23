@@ -115,14 +115,17 @@ public class CompanyPersistenceImpl
 	}
 
 	/**
-	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByWebId(String)}
 	 * @param webId the web ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
+	@Deprecated
 	@Override
-	public Company fetchByWebId(String webId) {
-		return fetchByWebId(webId, true);
+	public Company fetchByWebId(String webId, boolean useFinderCache) {
+		return fetchByWebId(webId);
 	}
 
 	/**
@@ -133,21 +136,13 @@ public class CompanyPersistenceImpl
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByWebId(String webId, boolean useFinderCache) {
+	public Company fetchByWebId(String webId) {
 		webId = Objects.toString(webId, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {webId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {webId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByWebId, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByWebId, finderArgs, this);
 
 		if (result instanceof Company) {
 			Company company = (Company)result;
@@ -191,10 +186,8 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByWebId, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByWebId, finderArgs, list);
 				}
 				else {
 					Company company = list.get(0);
@@ -205,10 +198,8 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByWebId, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByWebId, finderArgs);
 
 				throw processException(e);
 			}
@@ -344,14 +335,17 @@ public class CompanyPersistenceImpl
 	}
 
 	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByMx(String)}
 	 * @param mx the mx
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
+	@Deprecated
 	@Override
-	public Company fetchByMx(String mx) {
-		return fetchByMx(mx, true);
+	public Company fetchByMx(String mx, boolean useFinderCache) {
+		return fetchByMx(mx);
 	}
 
 	/**
@@ -362,21 +356,13 @@ public class CompanyPersistenceImpl
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByMx(String mx, boolean useFinderCache) {
+	public Company fetchByMx(String mx) {
 		mx = Objects.toString(mx, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {mx};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {mx};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByMx, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByMx, finderArgs, this);
 
 		if (result instanceof Company) {
 			Company company = (Company)result;
@@ -420,20 +406,14 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByMx, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByMx, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {mx};
-							}
-
 							_log.warn(
 								"CompanyPersistenceImpl.fetchByMx(String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -449,10 +429,7 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByMx, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByMx, finderArgs);
 
 				throw processException(e);
 			}
@@ -587,14 +564,17 @@ public class CompanyPersistenceImpl
 	}
 
 	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLogoId(long)}
 	 * @param logoId the logo ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
+	@Deprecated
 	@Override
-	public Company fetchByLogoId(long logoId) {
-		return fetchByLogoId(logoId, true);
+	public Company fetchByLogoId(long logoId, boolean useFinderCache) {
+		return fetchByLogoId(logoId);
 	}
 
 	/**
@@ -605,19 +585,11 @@ public class CompanyPersistenceImpl
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
 	@Override
-	public Company fetchByLogoId(long logoId, boolean useFinderCache) {
-		Object[] finderArgs = null;
+	public Company fetchByLogoId(long logoId) {
+		Object[] finderArgs = new Object[] {logoId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {logoId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByLogoId, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByLogoId, finderArgs, this);
 
 		if (result instanceof Company) {
 			Company company = (Company)result;
@@ -650,20 +622,14 @@ public class CompanyPersistenceImpl
 				List<Company> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByLogoId, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByLogoId, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {logoId};
-							}
-
 							_log.warn(
 								"CompanyPersistenceImpl.fetchByLogoId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -679,10 +645,8 @@ public class CompanyPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByLogoId, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByLogoId, finderArgs);
 
 				throw processException(e);
 			}
@@ -806,18 +770,21 @@ public class CompanyPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CompanyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySystem(boolean, int, int, OrderByComparator)}
 	 * @param system the system
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
+	@Deprecated
 	@Override
 	public List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator) {
+		OrderByComparator<Company> orderByComparator, boolean useFinderCache) {
 
-		return findBySystem(system, start, end, orderByComparator, true);
+		return findBySystem(system, start, end, orderByComparator);
 	}
 
 	/**
@@ -831,13 +798,12 @@ public class CompanyPersistenceImpl
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
 	@Override
 	public List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Company> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -847,30 +813,23 @@ public class CompanyPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindBySystem;
-				finderArgs = new Object[] {system};
-			}
+			finderPath = _finderPathWithoutPaginationFindBySystem;
+			finderArgs = new Object[] {system};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindBySystem;
 			finderArgs = new Object[] {system, start, end, orderByComparator};
 		}
 
-		List<Company> list = null;
+		List<Company> list = (List<Company>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Company>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Company company : list) {
+				if ((system != company.isSystem())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Company company : list) {
-					if ((system != company.isSystem())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -926,14 +885,10 @@ public class CompanyPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1735,16 +1690,20 @@ public class CompanyPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CompanyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
+	@Deprecated
 	@Override
 	public List<Company> findAll(
-		int start, int end, OrderByComparator<Company> orderByComparator) {
+		int start, int end, OrderByComparator<Company> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1757,13 +1716,11 @@ public class CompanyPersistenceImpl
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
 	@Override
 	public List<Company> findAll(
-		int start, int end, OrderByComparator<Company> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Company> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1773,23 +1730,16 @@ public class CompanyPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Company> list = null;
-
-		if (useFinderCache) {
-			list = (List<Company>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<Company> list = (List<Company>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1836,14 +1786,10 @@ public class CompanyPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

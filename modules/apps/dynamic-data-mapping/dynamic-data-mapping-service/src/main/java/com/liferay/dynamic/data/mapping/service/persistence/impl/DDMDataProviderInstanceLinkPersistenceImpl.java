@@ -122,19 +122,23 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByDataProviderInstanceId(long, int, int, OrderByComparator)}
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
+	@Deprecated
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
 		long dataProviderInstanceId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByDataProviderInstanceId(
-			dataProviderInstanceId, start, end, orderByComparator, true);
+			dataProviderInstanceId, start, end, orderByComparator);
 	}
 
 	/**
@@ -148,14 +152,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
 		long dataProviderInstanceId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,38 +167,32 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByDataProviderInstanceId;
-				finderArgs = new Object[] {dataProviderInstanceId};
-			}
+			finderPath =
+				_finderPathWithoutPaginationFindByDataProviderInstanceId;
+			finderArgs = new Object[] {dataProviderInstanceId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByDataProviderInstanceId;
 			finderArgs = new Object[] {
 				dataProviderInstanceId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMDataProviderInstanceLink> list = null;
-
-		if (useFinderCache) {
-			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
+		List<DDMDataProviderInstanceLink> list =
+			(List<DDMDataProviderInstanceLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-						list) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+					list) {
 
-					if ((dataProviderInstanceId !=
-							ddmDataProviderInstanceLink.
-								getDataProviderInstanceId())) {
+				if ((dataProviderInstanceId !=
+						ddmDataProviderInstanceLink.
+							getDataProviderInstanceId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -254,14 +250,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -669,19 +661,22 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureId(long, int, int, OrderByComparator)}
 	 * @param structureId the structure ID
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
+	@Deprecated
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(
 		long structureId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByStructureId(
-			structureId, start, end, orderByComparator, true);
+		return findByStructureId(structureId, start, end, orderByComparator);
 	}
 
 	/**
@@ -695,14 +690,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(
 		long structureId, int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -712,36 +705,30 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByStructureId;
-				finderArgs = new Object[] {structureId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByStructureId;
+			finderArgs = new Object[] {structureId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByStructureId;
 			finderArgs = new Object[] {
 				structureId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMDataProviderInstanceLink> list = null;
-
-		if (useFinderCache) {
-			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
+		List<DDMDataProviderInstanceLink> list =
+			(List<DDMDataProviderInstanceLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-						list) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
+					list) {
 
-					if ((structureId !=
-							ddmDataProviderInstanceLink.getStructureId())) {
+				if ((structureId !=
+						ddmDataProviderInstanceLink.getStructureId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -798,14 +785,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1203,17 +1186,20 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByD_S(long,long)}
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
+	@Deprecated
 	@Override
 	public DDMDataProviderInstanceLink fetchByD_S(
-		long dataProviderInstanceId, long structureId) {
+		long dataProviderInstanceId, long structureId, boolean useFinderCache) {
 
-		return fetchByD_S(dataProviderInstanceId, structureId, true);
+		return fetchByD_S(dataProviderInstanceId, structureId);
 	}
 
 	/**
@@ -1226,20 +1212,14 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByD_S(
-		long dataProviderInstanceId, long structureId, boolean useFinderCache) {
+		long dataProviderInstanceId, long structureId) {
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			dataProviderInstanceId, structureId
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {dataProviderInstanceId, structureId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByD_S, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByD_S, finderArgs, this);
 
 		if (result instanceof DDMDataProviderInstanceLink) {
 			DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
@@ -1280,10 +1260,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				List<DDMDataProviderInstanceLink> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByD_S, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByD_S, finderArgs, list);
 				}
 				else {
 					DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
@@ -1295,9 +1273,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByD_S, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByD_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -1908,17 +1884,21 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMDataProviderInstanceLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm data provider instance links
 	 */
+	@Deprecated
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll(
 		int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1931,14 +1911,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 * @param start the lower bound of the range of ddm data provider instance links
 	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll(
 		int start, int end,
-		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1948,23 +1926,17 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DDMDataProviderInstanceLink> list = null;
-
-		if (useFinderCache) {
-			list = (List<DDMDataProviderInstanceLink>)finderCache.getResult(
+		List<DDMDataProviderInstanceLink> list =
+			(List<DDMDataProviderInstanceLink>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2012,14 +1984,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

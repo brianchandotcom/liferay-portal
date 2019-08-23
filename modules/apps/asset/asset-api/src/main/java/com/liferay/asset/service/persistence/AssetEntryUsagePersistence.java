@@ -17,6 +17,7 @@ package com.liferay.asset.service.persistence;
 import com.liferay.asset.exception.NoSuchEntryUsageException;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,16 +72,19 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages where uuid = &#63;.
@@ -93,14 +97,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where uuid = &#63;.
@@ -111,9 +112,7 @@ public interface AssetEntryUsagePersistence
 	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			String uuid, OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -124,9 +123,7 @@ public interface AssetEntryUsagePersistence
 	 * @return the first matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		String uuid, OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the last asset entry usage in the ordered set where uuid = &#63;.
@@ -137,9 +134,7 @@ public interface AssetEntryUsagePersistence
 	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			String uuid, OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -150,9 +145,7 @@ public interface AssetEntryUsagePersistence
 	 * @return the last matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		String uuid, OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where uuid = &#63;.
@@ -165,8 +158,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage[] findByUuid_PrevAndNext(
 			long assetEntryUsageId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -196,13 +188,17 @@ public interface AssetEntryUsagePersistence
 		throws NoSuchEntryUsageException;
 
 	/**
-	 * Returns the asset entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
-	public AssetEntryUsage fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public AssetEntryUsage fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the asset entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,8 +208,7 @@ public interface AssetEntryUsagePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
-	public AssetEntryUsage fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public AssetEntryUsage fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the asset entry usage where uuid = &#63; and groupId = &#63; from the database.
@@ -265,16 +260,19 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssetEntryId(long, int, int, OrderByComparator)}
 	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages where assetEntryId = &#63;.
@@ -287,14 +285,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where assetEntryId = &#63;.
@@ -306,8 +301,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByAssetEntryId_First(
 			long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -319,8 +313,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByAssetEntryId_First(
 		long assetEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the last asset entry usage in the ordered set where assetEntryId = &#63;.
@@ -332,8 +325,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByAssetEntryId_Last(
 			long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -345,8 +337,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByAssetEntryId_Last(
 		long assetEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where assetEntryId = &#63;.
@@ -359,8 +350,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage[] findByAssetEntryId_PrevAndNext(
 			long assetEntryUsageId, long assetEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -408,16 +398,19 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPlid(long, int, int, OrderByComparator)}
 	 * @param plid the plid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages where plid = &#63;.
@@ -430,14 +423,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where plid = &#63;.
@@ -448,9 +438,7 @@ public interface AssetEntryUsagePersistence
 	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage findByPlid_First(
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			long plid, OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -461,9 +449,7 @@ public interface AssetEntryUsagePersistence
 	 * @return the first matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByPlid_First(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		long plid, OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the last asset entry usage in the ordered set where plid = &#63;.
@@ -474,9 +460,7 @@ public interface AssetEntryUsagePersistence
 	 * @throws NoSuchEntryUsageException if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage findByPlid_Last(
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			long plid, OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -487,9 +471,7 @@ public interface AssetEntryUsagePersistence
 	 * @return the last matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByPlid_Last(
-		long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		long plid, OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where plid = &#63;.
@@ -502,8 +484,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage[] findByPlid_PrevAndNext(
 			long assetEntryUsageId, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -554,17 +535,20 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_T(long,int, int, int, OrderByComparator)}
 	 * @param assetEntryId the asset entry ID
 	 * @param type the type
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages where assetEntryId = &#63; and type = &#63;.
@@ -578,14 +562,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where assetEntryId = &#63; and type = &#63;.
@@ -598,8 +579,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByA_T_First(
 			long assetEntryId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -612,8 +592,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByA_T_First(
 		long assetEntryId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the last asset entry usage in the ordered set where assetEntryId = &#63; and type = &#63;.
@@ -626,8 +605,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByA_T_Last(
 			long assetEntryId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -640,8 +618,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByA_T_Last(
 		long assetEntryId, int type,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where assetEntryId = &#63; and type = &#63;.
@@ -655,8 +632,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage[] findByA_T_PrevAndNext(
 			long assetEntryUsageId, long assetEntryId, int type,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -711,18 +687,21 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_P(long,String,long, int, int, OrderByComparator)}
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages where containerType = &#63; and containerKey = &#63; and plid = &#63;.
@@ -737,14 +716,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the first asset entry usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
@@ -758,8 +734,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByC_C_P_First(
 			long containerType, String containerKey, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -773,8 +748,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByC_C_P_First(
 		long containerType, String containerKey, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the last asset entry usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
@@ -788,8 +762,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage findByC_C_P_Last(
 			long containerType, String containerKey, long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -803,8 +776,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage fetchByC_C_P_Last(
 		long containerType, String containerKey, long plid,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Returns the asset entry usages before and after the current asset entry usage in the ordered set where containerType = &#63; and containerKey = &#63; and plid = &#63;.
@@ -819,9 +791,7 @@ public interface AssetEntryUsagePersistence
 	 */
 	public AssetEntryUsage[] findByC_C_P_PrevAndNext(
 			long assetEntryUsageId, long containerType, String containerKey,
-			long plid,
-			com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-				orderByComparator)
+			long plid, OrderByComparator<AssetEntryUsage> orderByComparator)
 		throws NoSuchEntryUsageException;
 
 	/**
@@ -860,16 +830,20 @@ public interface AssetEntryUsagePersistence
 		throws NoSuchEntryUsageException;
 
 	/**
-	 * Returns the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA_C_C_P(long,long,String,long)}
 	 * @param assetEntryId the asset entry ID
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
+	@Deprecated
 	public AssetEntryUsage fetchByA_C_C_P(
-		long assetEntryId, long containerType, String containerKey, long plid);
+		long assetEntryId, long containerType, String containerKey, long plid,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -882,8 +856,7 @@ public interface AssetEntryUsagePersistence
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public AssetEntryUsage fetchByA_C_C_P(
-		long assetEntryId, long containerType, String containerKey, long plid,
-		boolean useFinderCache);
+		long assetEntryId, long containerType, String containerKey, long plid);
 
 	/**
 	 * Removes the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; from the database.
@@ -990,15 +963,18 @@ public interface AssetEntryUsagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
+	@Deprecated
 	public java.util.List<AssetEntryUsage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator);
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the asset entry usages.
@@ -1010,14 +986,11 @@ public interface AssetEntryUsagePersistence
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
 	public java.util.List<AssetEntryUsage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryUsage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<AssetEntryUsage> orderByComparator);
 
 	/**
 	 * Removes all the asset entry usages from the database.

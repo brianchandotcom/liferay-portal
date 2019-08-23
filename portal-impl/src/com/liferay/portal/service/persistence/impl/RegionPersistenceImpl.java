@@ -119,18 +119,21 @@ public class RegionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCountryId(long, int, int, OrderByComparator)}
 	 * @param countryId the country ID
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
+	@Deprecated
 	@Override
 	public List<Region> findByCountryId(
 		long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		return findByCountryId(countryId, start, end, orderByComparator, true);
+		return findByCountryId(countryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -144,13 +147,12 @@ public class RegionPersistenceImpl
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	@Override
 	public List<Region> findByCountryId(
 		long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -160,32 +162,25 @@ public class RegionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCountryId;
-				finderArgs = new Object[] {countryId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCountryId;
+			finderArgs = new Object[] {countryId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCountryId;
 			finderArgs = new Object[] {
 				countryId, start, end, orderByComparator
 			};
 		}
 
-		List<Region> list = null;
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Region region : list) {
+				if ((countryId != region.getCountryId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Region region : list) {
-					if ((countryId != region.getCountryId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -241,14 +236,10 @@ public class RegionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -628,18 +619,21 @@ public class RegionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByActive(boolean, int, int, OrderByComparator)}
 	 * @param active the active
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
+	@Deprecated
 	@Override
 	public List<Region> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		return findByActive(active, start, end, orderByComparator, true);
+		return findByActive(active, start, end, orderByComparator);
 	}
 
 	/**
@@ -653,13 +647,12 @@ public class RegionPersistenceImpl
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	@Override
 	public List<Region> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -669,30 +662,23 @@ public class RegionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByActive;
-				finderArgs = new Object[] {active};
-			}
+			finderPath = _finderPathWithoutPaginationFindByActive;
+			finderArgs = new Object[] {active};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByActive;
 			finderArgs = new Object[] {active, start, end, orderByComparator};
 		}
 
-		List<Region> list = null;
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Region region : list) {
+				if ((active != region.isActive())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Region region : list) {
-					if ((active != region.isActive())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -748,14 +734,10 @@ public class RegionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1137,15 +1119,20 @@ public class RegionPersistenceImpl
 	}
 
 	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_R(long,String)}
 	 * @param countryId the country ID
 	 * @param regionCode the region code
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
+	@Deprecated
 	@Override
-	public Region fetchByC_R(long countryId, String regionCode) {
-		return fetchByC_R(countryId, regionCode, true);
+	public Region fetchByC_R(
+		long countryId, String regionCode, boolean useFinderCache) {
+
+		return fetchByC_R(countryId, regionCode);
 	}
 
 	/**
@@ -1157,23 +1144,13 @@ public class RegionPersistenceImpl
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
 	@Override
-	public Region fetchByC_R(
-		long countryId, String regionCode, boolean useFinderCache) {
-
+	public Region fetchByC_R(long countryId, String regionCode) {
 		regionCode = Objects.toString(regionCode, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {countryId, regionCode};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {countryId, regionCode};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_R, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_R, finderArgs, this);
 
 		if (result instanceof Region) {
 			Region region = (Region)result;
@@ -1223,10 +1200,8 @@ public class RegionPersistenceImpl
 				List<Region> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_R, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_R, finderArgs, list);
 				}
 				else {
 					Region region = list.get(0);
@@ -1237,10 +1212,7 @@ public class RegionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_R, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByC_R, finderArgs);
 
 				throw processException(e);
 			}
@@ -1396,20 +1368,22 @@ public class RegionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_A(long,boolean, int, int, OrderByComparator)}
 	 * @param countryId the country ID
 	 * @param active the active
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
+	@Deprecated
 	@Override
 	public List<Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
-		return findByC_A(
-			countryId, active, start, end, orderByComparator, true);
+		return findByC_A(countryId, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -1424,13 +1398,12 @@ public class RegionPersistenceImpl
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	@Override
 	public List<Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1440,34 +1413,27 @@ public class RegionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_A;
-				finderArgs = new Object[] {countryId, active};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_A;
+			finderArgs = new Object[] {countryId, active};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_A;
 			finderArgs = new Object[] {
 				countryId, active, start, end, orderByComparator
 			};
 		}
 
-		List<Region> list = null;
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Region region : list) {
+				if ((countryId != region.getCountryId()) ||
+					(active != region.isActive())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Region region : list) {
-					if ((countryId != region.getCountryId()) ||
-						(active != region.isActive())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1527,14 +1493,10 @@ public class RegionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2369,16 +2331,20 @@ public class RegionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of regions
 	 */
+	@Deprecated
 	@Override
 	public List<Region> findAll(
-		int start, int end, OrderByComparator<Region> orderByComparator) {
+		int start, int end, OrderByComparator<Region> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -2391,13 +2357,11 @@ public class RegionPersistenceImpl
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of regions
 	 */
 	@Override
 	public List<Region> findAll(
-		int start, int end, OrderByComparator<Region> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Region> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2407,23 +2371,16 @@ public class RegionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Region> list = null;
-
-		if (useFinderCache) {
-			list = (List<Region>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<Region> list = (List<Region>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2470,14 +2427,10 @@ public class RegionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

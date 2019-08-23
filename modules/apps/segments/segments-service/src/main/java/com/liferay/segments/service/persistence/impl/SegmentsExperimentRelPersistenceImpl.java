@@ -135,19 +135,23 @@ public class SegmentsExperimentRelPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsExperimentId(long, int, int, OrderByComparator)}
 	 * @param segmentsExperimentId the segments experiment ID
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
+	@Deprecated
 	@Override
 	public List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
+		OrderByComparator<SegmentsExperimentRel> orderByComparator,
+		boolean useFinderCache) {
 
 		return findBySegmentsExperimentId(
-			segmentsExperimentId, start, end, orderByComparator, true);
+			segmentsExperimentId, start, end, orderByComparator);
 	}
 
 	/**
@@ -161,14 +165,12 @@ public class SegmentsExperimentRelPersistenceImpl
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
 	@Override
 	public List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -178,35 +180,28 @@ public class SegmentsExperimentRelPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindBySegmentsExperimentId;
-				finderArgs = new Object[] {segmentsExperimentId};
-			}
+			finderPath = _finderPathWithoutPaginationFindBySegmentsExperimentId;
+			finderArgs = new Object[] {segmentsExperimentId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindBySegmentsExperimentId;
 			finderArgs = new Object[] {
 				segmentsExperimentId, start, end, orderByComparator
 			};
 		}
 
-		List<SegmentsExperimentRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<SegmentsExperimentRel>)finderCache.getResult(
+		List<SegmentsExperimentRel> list =
+			(List<SegmentsExperimentRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (SegmentsExperimentRel segmentsExperimentRel : list) {
-					if ((segmentsExperimentId !=
-							segmentsExperimentRel.getSegmentsExperimentId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (SegmentsExperimentRel segmentsExperimentRel : list) {
+				if ((segmentsExperimentId !=
+						segmentsExperimentRel.getSegmentsExperimentId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -263,14 +258,10 @@ public class SegmentsExperimentRelPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -672,17 +663,21 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByS_S(long,long)}
 	 * @param segmentsExperimentId the segments experiment ID
 	 * @param segmentsExperienceId the segments experience ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
 	 */
+	@Deprecated
 	@Override
 	public SegmentsExperimentRel fetchByS_S(
-		long segmentsExperimentId, long segmentsExperienceId) {
+		long segmentsExperimentId, long segmentsExperienceId,
+		boolean useFinderCache) {
 
-		return fetchByS_S(segmentsExperimentId, segmentsExperienceId, true);
+		return fetchByS_S(segmentsExperimentId, segmentsExperienceId);
 	}
 
 	/**
@@ -695,23 +690,14 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Override
 	public SegmentsExperimentRel fetchByS_S(
-		long segmentsExperimentId, long segmentsExperienceId,
-		boolean useFinderCache) {
+		long segmentsExperimentId, long segmentsExperienceId) {
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			segmentsExperimentId, segmentsExperienceId
+		};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				segmentsExperimentId, segmentsExperienceId
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByS_S, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByS_S, finderArgs, this);
 
 		if (result instanceof SegmentsExperimentRel) {
 			SegmentsExperimentRel segmentsExperimentRel =
@@ -753,10 +739,8 @@ public class SegmentsExperimentRelPersistenceImpl
 				List<SegmentsExperimentRel> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByS_S, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByS_S, finderArgs, list);
 				}
 				else {
 					SegmentsExperimentRel segmentsExperimentRel = list.get(0);
@@ -767,9 +751,7 @@ public class SegmentsExperimentRelPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByS_S, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByS_S, finderArgs);
 
 				throw processException(e);
 			}
@@ -1347,17 +1329,21 @@ public class SegmentsExperimentRelPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
+	@Deprecated
 	@Override
 	public List<SegmentsExperimentRel> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
+		OrderByComparator<SegmentsExperimentRel> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1370,14 +1356,12 @@ public class SegmentsExperimentRelPersistenceImpl
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
 	@Override
 	public List<SegmentsExperimentRel> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1387,23 +1371,17 @@ public class SegmentsExperimentRelPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SegmentsExperimentRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<SegmentsExperimentRel>)finderCache.getResult(
+		List<SegmentsExperimentRel> list =
+			(List<SegmentsExperimentRel>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1451,14 +1429,10 @@ public class SegmentsExperimentRelPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

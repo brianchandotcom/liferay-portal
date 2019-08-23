@@ -125,18 +125,22 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -150,14 +154,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -169,30 +171,24 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if (!uuid.equals(dlFileVersion.getUuid())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if (!uuid.equals(dlFileVersion.getUuid())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -259,14 +255,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -678,15 +670,20 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the document library file version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
+	@Deprecated
 	@Override
-	public DLFileVersion fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public DLFileVersion fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -698,23 +695,13 @@ public class DLFileVersionPersistenceImpl
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	@Override
-	public DLFileVersion fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
+	public DLFileVersion fetchByUUID_G(String uuid, long groupId) {
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof DLFileVersion) {
 			DLFileVersion dlFileVersion = (DLFileVersion)result;
@@ -764,10 +751,8 @@ public class DLFileVersionPersistenceImpl
 				List<DLFileVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					DLFileVersion dlFileVersion = list.get(0);
@@ -778,10 +763,8 @@ public class DLFileVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -937,20 +920,23 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -965,14 +951,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -984,34 +968,28 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if (!uuid.equals(dlFileVersion.getUuid()) ||
-						(companyId != dlFileVersion.getCompanyId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if (!uuid.equals(dlFileVersion.getUuid()) ||
+					(companyId != dlFileVersion.getCompanyId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1082,14 +1060,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1537,18 +1511,22 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1562,14 +1540,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1579,32 +1555,26 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((companyId != dlFileVersion.getCompanyId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((companyId != dlFileVersion.getCompanyId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1660,14 +1630,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2054,19 +2020,22 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFileEntryId(long, int, int, OrderByComparator)}
 	 * @param fileEntryId the file entry ID
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByFileEntryId(
-			fileEntryId, start, end, orderByComparator, true);
+		return findByFileEntryId(fileEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2080,14 +2049,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2097,32 +2064,26 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByFileEntryId;
-				finderArgs = new Object[] {fileEntryId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByFileEntryId;
+			finderArgs = new Object[] {fileEntryId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByFileEntryId;
 			finderArgs = new Object[] {
 				fileEntryId, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((fileEntryId != dlFileVersion.getFileEntryId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((fileEntryId != dlFileVersion.getFileEntryId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2178,14 +2139,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2574,18 +2531,22 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByMimeType(String, int, int, OrderByComparator)}
 	 * @param mimeType the mime type
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByMimeType(
 		String mimeType, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByMimeType(mimeType, start, end, orderByComparator, true);
+		return findByMimeType(mimeType, start, end, orderByComparator);
 	}
 
 	/**
@@ -2599,14 +2560,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByMimeType(
 		String mimeType, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		mimeType = Objects.toString(mimeType, "");
 
@@ -2618,30 +2577,24 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByMimeType;
-				finderArgs = new Object[] {mimeType};
-			}
+			finderPath = _finderPathWithoutPaginationFindByMimeType;
+			finderArgs = new Object[] {mimeType};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByMimeType;
 			finderArgs = new Object[] {mimeType, start, end, orderByComparator};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if (!mimeType.equals(dlFileVersion.getMimeType())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if (!mimeType.equals(dlFileVersion.getMimeType())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2708,14 +2661,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3132,20 +3081,23 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_NotS(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_NotS(
-			companyId, status, start, end, orderByComparator, true);
+		return findByC_NotS(companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -3160,14 +3112,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3178,21 +3128,18 @@ public class DLFileVersionPersistenceImpl
 			companyId, status, start, end, orderByComparator
 		};
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((companyId != dlFileVersion.getCompanyId()) ||
-						(status == dlFileVersion.getStatus())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((companyId != dlFileVersion.getCompanyId()) ||
+					(status == dlFileVersion.getStatus())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3252,14 +3199,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3677,15 +3620,20 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library file version where fileEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByF_V(long,String)}
 	 * @param fileEntryId the file entry ID
 	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
+	@Deprecated
 	@Override
-	public DLFileVersion fetchByF_V(long fileEntryId, String version) {
-		return fetchByF_V(fileEntryId, version, true);
+	public DLFileVersion fetchByF_V(
+		long fileEntryId, String version, boolean useFinderCache) {
+
+		return fetchByF_V(fileEntryId, version);
 	}
 
 	/**
@@ -3697,23 +3645,13 @@ public class DLFileVersionPersistenceImpl
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
 	 */
 	@Override
-	public DLFileVersion fetchByF_V(
-		long fileEntryId, String version, boolean useFinderCache) {
-
+	public DLFileVersion fetchByF_V(long fileEntryId, String version) {
 		version = Objects.toString(version, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {fileEntryId, version};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {fileEntryId, version};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByF_V, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByF_V, finderArgs, this);
 
 		if (result instanceof DLFileVersion) {
 			DLFileVersion dlFileVersion = (DLFileVersion)result;
@@ -3763,10 +3701,8 @@ public class DLFileVersionPersistenceImpl
 				List<DLFileVersion> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByF_V, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByF_V, finderArgs, list);
 				}
 				else {
 					DLFileVersion dlFileVersion = list.get(0);
@@ -3777,10 +3713,7 @@ public class DLFileVersionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByF_V, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByF_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -3936,20 +3869,23 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_S(long,int, int, int, OrderByComparator)}
 	 * @param fileEntryId the file entry ID
 	 * @param status the status
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByF_S(
 		long fileEntryId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByF_S(
-			fileEntryId, status, start, end, orderByComparator, true);
+		return findByF_S(fileEntryId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -3964,14 +3900,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByF_S(
 		long fileEntryId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3981,34 +3915,28 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByF_S;
-				finderArgs = new Object[] {fileEntryId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByF_S;
+			finderArgs = new Object[] {fileEntryId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByF_S;
 			finderArgs = new Object[] {
 				fileEntryId, status, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((fileEntryId != dlFileVersion.getFileEntryId()) ||
-						(status != dlFileVersion.getStatus())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((fileEntryId != dlFileVersion.getFileEntryId()) ||
+					(status != dlFileVersion.getStatus())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4068,14 +3996,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4501,21 +4425,25 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_F_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param status the status
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_F_S(
-			groupId, folderId, status, start, end, orderByComparator, true);
+			groupId, folderId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -4531,14 +4459,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByG_F_S(
 		long groupId, long folderId, int status, int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4548,35 +4474,29 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_F_S;
-				finderArgs = new Object[] {groupId, folderId, status};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_F_S;
+			finderArgs = new Object[] {groupId, folderId, status};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_F_S;
 			finderArgs = new Object[] {
 				groupId, folderId, status, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((groupId != dlFileVersion.getGroupId()) ||
-						(folderId != dlFileVersion.getFolderId()) ||
-						(status != dlFileVersion.getStatus())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((groupId != dlFileVersion.getGroupId()) ||
+					(folderId != dlFileVersion.getFolderId()) ||
+					(status != dlFileVersion.getStatus())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4640,14 +4560,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5101,6 +5017,7 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_F_T_V(long,long,String,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param folderId the folder ID
 	 * @param title the title
@@ -5108,16 +5025,18 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findByG_F_T_V(
 		long groupId, long folderId, String title, String version, int start,
-		int end, OrderByComparator<DLFileVersion> orderByComparator) {
+		int end, OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByG_F_T_V(
-			groupId, folderId, title, version, start, end, orderByComparator,
-			true);
+			groupId, folderId, title, version, start, end, orderByComparator);
 	}
 
 	/**
@@ -5134,14 +5053,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findByG_F_T_V(
 		long groupId, long folderId, String title, String version, int start,
-		int end, OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<DLFileVersion> orderByComparator) {
 
 		title = Objects.toString(title, "");
 		version = Objects.toString(version, "");
@@ -5154,36 +5071,30 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_F_T_V;
-				finderArgs = new Object[] {groupId, folderId, title, version};
-			}
+			finderPath = _finderPathWithoutPaginationFindByG_F_T_V;
+			finderArgs = new Object[] {groupId, folderId, title, version};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByG_F_T_V;
 			finderArgs = new Object[] {
 				groupId, folderId, title, version, start, end, orderByComparator
 			};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (DLFileVersion dlFileVersion : list) {
-					if ((groupId != dlFileVersion.getGroupId()) ||
-						(folderId != dlFileVersion.getFolderId()) ||
-						!title.equals(dlFileVersion.getTitle()) ||
-						!version.equals(dlFileVersion.getVersion())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((groupId != dlFileVersion.getGroupId()) ||
+					(folderId != dlFileVersion.getFolderId()) ||
+					!title.equals(dlFileVersion.getTitle()) ||
+					!version.equals(dlFileVersion.getVersion())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5273,14 +5184,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6482,17 +6389,20 @@ public class DLFileVersionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file versions
 	 */
+	@Deprecated
 	@Override
 	public List<DLFileVersion> findAll(
-		int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
+		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -6505,13 +6415,12 @@ public class DLFileVersionPersistenceImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file versions
 	 */
 	@Override
 	public List<DLFileVersion> findAll(
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<DLFileVersion> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6521,23 +6430,17 @@ public class DLFileVersionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DLFileVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLFileVersion>)FinderCacheUtil.getResult(
+		List<DLFileVersion> list =
+			(List<DLFileVersion>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -6584,14 +6487,10 @@ public class DLFileVersionPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

@@ -17,6 +17,7 @@ package com.liferay.chat.service.persistence;
 import com.liferay.chat.exception.NoSuchStatusException;
 import com.liferay.chat.model.Status;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -50,12 +51,15 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	public Status findByUserId(long userId) throws NoSuchStatusException;
 
 	/**
-	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUserId(long)}
 	 * @param userId the user ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
-	public Status fetchByUserId(long userId);
+	@Deprecated
+	public Status fetchByUserId(long userId, boolean useFinderCache);
 
 	/**
 	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -64,7 +68,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
-	public Status fetchByUserId(long userId, boolean useFinderCache);
+	public Status fetchByUserId(long userId);
 
 	/**
 	 * Removes the status where userId = &#63; from the database.
@@ -112,16 +116,18 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByModifiedDate(long, int, int, OrderByComparator)}
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
+	@Deprecated
 	public java.util.List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the statuses where modifiedDate = &#63;.
@@ -134,14 +140,11 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63;.
@@ -152,9 +155,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @throws NoSuchStatusException if a matching status could not be found
 	 */
 	public Status findByModifiedDate_First(
-			long modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			long modifiedDate, OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -165,9 +166,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @return the first matching status, or <code>null</code> if a matching status could not be found
 	 */
 	public Status fetchByModifiedDate_First(
-		long modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		long modifiedDate, OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the last status in the ordered set where modifiedDate = &#63;.
@@ -178,9 +177,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @throws NoSuchStatusException if a matching status could not be found
 	 */
 	public Status findByModifiedDate_Last(
-			long modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			long modifiedDate, OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -191,9 +188,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @return the last matching status, or <code>null</code> if a matching status could not be found
 	 */
 	public Status fetchByModifiedDate_Last(
-		long modifiedDate,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		long modifiedDate, OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where modifiedDate = &#63;.
@@ -206,8 +201,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status[] findByModifiedDate_PrevAndNext(
 			long statusId, long modifiedDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -255,16 +249,18 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOnline(boolean, int, int, OrderByComparator)}
 	 * @param online the online
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
+	@Deprecated
 	public java.util.List<Status> findByOnline(
 		boolean online, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the statuses where online = &#63;.
@@ -277,14 +273,11 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByOnline(
 		boolean online, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the first status in the ordered set where online = &#63;.
@@ -295,9 +288,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @throws NoSuchStatusException if a matching status could not be found
 	 */
 	public Status findByOnline_First(
-			boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			boolean online, OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -308,9 +299,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @return the first matching status, or <code>null</code> if a matching status could not be found
 	 */
 	public Status fetchByOnline_First(
-		boolean online,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		boolean online, OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the last status in the ordered set where online = &#63;.
@@ -321,9 +310,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @throws NoSuchStatusException if a matching status could not be found
 	 */
 	public Status findByOnline_Last(
-			boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			boolean online, OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -334,9 +321,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @return the last matching status, or <code>null</code> if a matching status could not be found
 	 */
 	public Status fetchByOnline_Last(
-		boolean online,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		boolean online, OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where online = &#63;.
@@ -349,8 +334,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status[] findByOnline_PrevAndNext(
 			long statusId, boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -400,17 +384,19 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_O(long,boolean, int, int, OrderByComparator)}
 	 * @param modifiedDate the modified date
 	 * @param online the online
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
+	@Deprecated
 	public java.util.List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the statuses where modifiedDate = &#63; and online = &#63;.
@@ -424,14 +410,11 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public java.util.List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63; and online = &#63;.
@@ -444,8 +427,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status findByM_O_First(
 			long modifiedDate, boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -458,8 +440,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status fetchByM_O_First(
 		long modifiedDate, boolean online,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the last status in the ordered set where modifiedDate = &#63; and online = &#63;.
@@ -472,8 +453,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status findByM_O_Last(
 			long modifiedDate, boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -486,8 +466,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status fetchByM_O_Last(
 		long modifiedDate, boolean online,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where modifiedDate = &#63; and online = &#63;.
@@ -501,8 +480,7 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 */
 	public Status[] findByM_O_PrevAndNext(
 			long statusId, long modifiedDate, boolean online,
-			com.liferay.portal.kernel.util.OrderByComparator<Status>
-				orderByComparator)
+			OrderByComparator<Status> orderByComparator)
 		throws NoSuchStatusException;
 
 	/**
@@ -599,15 +577,17 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
+	@Deprecated
 	public java.util.List<Status> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator);
+		int start, int end, OrderByComparator<Status> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the statuses.
@@ -619,14 +599,10 @@ public interface StatusPersistence extends BasePersistence<Status> {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
 	public java.util.List<Status> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Status>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Status> orderByComparator);
 
 	/**
 	 * Removes all the statuses from the database.

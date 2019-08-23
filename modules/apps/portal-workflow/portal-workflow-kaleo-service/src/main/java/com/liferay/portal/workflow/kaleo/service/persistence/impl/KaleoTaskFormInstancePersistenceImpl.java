@@ -133,18 +133,22 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -158,14 +162,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -175,32 +177,26 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((companyId != kaleoTaskFormInstance.getCompanyId())) {
-						list = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
+				if ((companyId != kaleoTaskFormInstance.getCompanyId())) {
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -256,14 +252,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -663,19 +655,23 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoDefinitionVersionId(long, int, int, OrderByComparator)}
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, orderByComparator, true);
+			kaleoDefinitionVersionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -689,14 +685,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -706,14 +700,11 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
-				finderArgs = new Object[] {kaleoDefinitionVersionId};
-			}
+			finderPath =
+				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+			finderArgs = new Object[] {kaleoDefinitionVersionId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath =
 				_finderPathWithPaginationFindByKaleoDefinitionVersionId;
 			finderArgs = new Object[] {
@@ -721,22 +712,18 @@ public class KaleoTaskFormInstancePersistenceImpl
 			};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoDefinitionVersionId !=
-							kaleoTaskFormInstance.
-								getKaleoDefinitionVersionId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
+				if ((kaleoDefinitionVersionId !=
+						kaleoTaskFormInstance.getKaleoDefinitionVersionId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -793,14 +780,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1205,19 +1188,23 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoInstanceId(long, int, int, OrderByComparator)}
 	 * @param kaleoInstanceId the kaleo instance ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByKaleoInstanceId(
-			kaleoInstanceId, start, end, orderByComparator, true);
+			kaleoInstanceId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1231,14 +1218,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1248,34 +1233,28 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByKaleoInstanceId;
-				finderArgs = new Object[] {kaleoInstanceId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByKaleoInstanceId;
+			finderArgs = new Object[] {kaleoInstanceId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByKaleoInstanceId;
 			finderArgs = new Object[] {
 				kaleoInstanceId, start, end, orderByComparator
 			};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoInstanceId !=
-							kaleoTaskFormInstance.getKaleoInstanceId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
+				if ((kaleoInstanceId !=
+						kaleoTaskFormInstance.getKaleoInstanceId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1331,14 +1310,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1735,19 +1710,22 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoTaskId(long, int, int, OrderByComparator)}
 	 * @param kaleoTaskId the kaleo task ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByKaleoTaskId(
-			kaleoTaskId, start, end, orderByComparator, true);
+		return findByKaleoTaskId(kaleoTaskId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1761,14 +1739,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1778,34 +1754,26 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByKaleoTaskId;
-				finderArgs = new Object[] {kaleoTaskId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByKaleoTaskId;
+			finderArgs = new Object[] {kaleoTaskId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByKaleoTaskId;
 			finderArgs = new Object[] {
 				kaleoTaskId, start, end, orderByComparator
 			};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoTaskId !=
-							kaleoTaskFormInstance.getKaleoTaskId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
+				if ((kaleoTaskId != kaleoTaskFormInstance.getKaleoTaskId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1861,14 +1829,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2268,19 +2232,23 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoTaskInstanceTokenId(long, int, int, OrderByComparator)}
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByKaleoTaskInstanceTokenId(
-			kaleoTaskInstanceTokenId, start, end, orderByComparator, true);
+			kaleoTaskInstanceTokenId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2294,14 +2262,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2311,14 +2277,11 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
-				finderArgs = new Object[] {kaleoTaskInstanceTokenId};
-			}
+			finderPath =
+				_finderPathWithoutPaginationFindByKaleoTaskInstanceTokenId;
+			finderArgs = new Object[] {kaleoTaskInstanceTokenId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath =
 				_finderPathWithPaginationFindByKaleoTaskInstanceTokenId;
 			finderArgs = new Object[] {
@@ -2326,22 +2289,18 @@ public class KaleoTaskFormInstancePersistenceImpl
 			};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-			if ((list != null) && !list.isEmpty()) {
-				for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
-					if ((kaleoTaskInstanceTokenId !=
-							kaleoTaskFormInstance.
-								getKaleoTaskInstanceTokenId())) {
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskFormInstance kaleoTaskFormInstance : list) {
+				if ((kaleoTaskInstanceTokenId !=
+						kaleoTaskFormInstance.getKaleoTaskInstanceTokenId())) {
 
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2398,14 +2357,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2804,14 +2759,19 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKaleoTaskFormId(long)}
 	 * @param kaleoTaskFormId the kaleo task form ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
 	 */
+	@Deprecated
 	@Override
-	public KaleoTaskFormInstance fetchByKaleoTaskFormId(long kaleoTaskFormId) {
-		return fetchByKaleoTaskFormId(kaleoTaskFormId, true);
+	public KaleoTaskFormInstance fetchByKaleoTaskFormId(
+		long kaleoTaskFormId, boolean useFinderCache) {
+
+		return fetchByKaleoTaskFormId(kaleoTaskFormId);
 	}
 
 	/**
@@ -2822,21 +2782,11 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @return the matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
 	 */
 	@Override
-	public KaleoTaskFormInstance fetchByKaleoTaskFormId(
-		long kaleoTaskFormId, boolean useFinderCache) {
+	public KaleoTaskFormInstance fetchByKaleoTaskFormId(long kaleoTaskFormId) {
+		Object[] finderArgs = new Object[] {kaleoTaskFormId};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {kaleoTaskFormId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByKaleoTaskFormId, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByKaleoTaskFormId, finderArgs, this);
 
 		if (result instanceof KaleoTaskFormInstance) {
 			KaleoTaskFormInstance kaleoTaskFormInstance =
@@ -2872,21 +2822,14 @@ public class KaleoTaskFormInstancePersistenceImpl
 				List<KaleoTaskFormInstance> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByKaleoTaskFormId, finderArgs,
-							list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByKaleoTaskFormId, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {kaleoTaskFormId};
-							}
-
 							_log.warn(
 								"KaleoTaskFormInstancePersistenceImpl.fetchByKaleoTaskFormId(long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2902,10 +2845,8 @@ public class KaleoTaskFormInstancePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByKaleoTaskFormId, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathFetchByKaleoTaskFormId, finderArgs);
 
 				throw processException(e);
 			}
@@ -3590,17 +3531,21 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task form instances
 	 */
+	@Deprecated
 	@Override
 	public List<KaleoTaskFormInstance> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -3613,14 +3558,12 @@ public class KaleoTaskFormInstancePersistenceImpl
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task form instances
 	 */
 	@Override
 	public List<KaleoTaskFormInstance> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTaskFormInstance> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3630,23 +3573,17 @@ public class KaleoTaskFormInstancePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<KaleoTaskFormInstance> list = null;
-
-		if (useFinderCache) {
-			list = (List<KaleoTaskFormInstance>)finderCache.getResult(
+		List<KaleoTaskFormInstance> list =
+			(List<KaleoTaskFormInstance>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3694,14 +3631,10 @@ public class KaleoTaskFormInstancePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

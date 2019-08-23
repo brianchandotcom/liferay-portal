@@ -15,6 +15,7 @@
 package com.liferay.segments.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.exception.NoSuchEntryRelException;
 import com.liferay.segments.model.SegmentsEntryRel;
 
@@ -72,16 +73,19 @@ public interface SegmentsEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsEntryId(long, int, int, OrderByComparator)}
 	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
+	@Deprecated
 	public java.util.List<SegmentsEntryRel> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the segments entry rels where segmentsEntryId = &#63;.
@@ -94,14 +98,11 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where segmentsEntryId = &#63;.
@@ -113,8 +114,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findBySegmentsEntryId_First(
 			long segmentsEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -126,8 +126,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchBySegmentsEntryId_First(
 		long segmentsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last segments entry rel in the ordered set where segmentsEntryId = &#63;.
@@ -139,8 +138,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findBySegmentsEntryId_Last(
 			long segmentsEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -152,8 +150,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchBySegmentsEntryId_Last(
 		long segmentsEntryId,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where segmentsEntryId = &#63;.
@@ -166,8 +163,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel[] findBySegmentsEntryId_PrevAndNext(
 			long segmentsEntryRelId, long segmentsEntryId,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -218,17 +214,20 @@ public interface SegmentsEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCN_CPK(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
+	@Deprecated
 	public java.util.List<SegmentsEntryRel> findByCN_CPK(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the segments entry rels where classNameId = &#63; and classPK = &#63;.
@@ -242,14 +241,11 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findByCN_CPK(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -262,8 +258,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findByCN_CPK_First(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -276,8 +271,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchByCN_CPK_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -290,8 +284,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findByCN_CPK_Last(
 			long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -304,8 +297,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchByCN_CPK_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -319,8 +311,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel[] findByCN_CPK_PrevAndNext(
 			long segmentsEntryRelId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -375,18 +366,21 @@ public interface SegmentsEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_CN_CPK(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
+	@Deprecated
 	public java.util.List<SegmentsEntryRel> findByG_CN_CPK(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the segments entry rels where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -401,14 +395,11 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findByG_CN_CPK(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the first segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -422,8 +413,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findByG_CN_CPK_First(
 			long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -437,8 +427,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchByG_CN_CPK_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -452,8 +441,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel findByG_CN_CPK_Last(
 			long groupId, long classNameId, long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -467,8 +455,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel fetchByG_CN_CPK_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Returns the segments entry rels before and after the current segments entry rel in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -483,9 +470,7 @@ public interface SegmentsEntryRelPersistence
 	 */
 	public SegmentsEntryRel[] findByG_CN_CPK_PrevAndNext(
 			long segmentsEntryRelId, long groupId, long classNameId,
-			long classPK,
-			com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-				orderByComparator)
+			long classPK, OrderByComparator<SegmentsEntryRel> orderByComparator)
 		throws NoSuchEntryRelException;
 
 	/**
@@ -521,15 +506,19 @@ public interface SegmentsEntryRelPersistence
 		throws NoSuchEntryRelException;
 
 	/**
-	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByS_CN_CPK(long,long,long)}
 	 * @param segmentsEntryId the segments entry ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
 	 */
+	@Deprecated
 	public SegmentsEntryRel fetchByS_CN_CPK(
-		long segmentsEntryId, long classNameId, long classPK);
+		long segmentsEntryId, long classNameId, long classPK,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -541,8 +530,7 @@ public interface SegmentsEntryRelPersistence
 	 * @return the matching segments entry rel, or <code>null</code> if a matching segments entry rel could not be found
 	 */
 	public SegmentsEntryRel fetchByS_CN_CPK(
-		long segmentsEntryId, long classNameId, long classPK,
-		boolean useFinderCache);
+		long segmentsEntryId, long classNameId, long classPK);
 
 	/**
 	 * Removes the segments entry rel where segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -646,15 +634,18 @@ public interface SegmentsEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments entry rels
 	 */
+	@Deprecated
 	public java.util.List<SegmentsEntryRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator);
+		OrderByComparator<SegmentsEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the segments entry rels.
@@ -666,14 +657,11 @@ public interface SegmentsEntryRelPersistence
 	 * @param start the lower bound of the range of segments entry rels
 	 * @param end the upper bound of the range of segments entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments entry rels
 	 */
 	public java.util.List<SegmentsEntryRel> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntryRel>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SegmentsEntryRel> orderByComparator);
 
 	/**
 	 * Removes all the segments entry rels from the database.

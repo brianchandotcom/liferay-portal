@@ -156,17 +156,21 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -180,15 +184,13 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -303,14 +305,19 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	@Deprecated
+	public static DLFolder fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -321,10 +328,8 @@ public class DLFolderUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	public static DLFolder fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -389,19 +394,22 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -416,15 +424,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -573,18 +580,21 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,15 +608,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -819,18 +828,21 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -844,15 +856,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, useFinderCache);
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -990,18 +1001,21 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRepositoryId(long, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByRepositoryId(
 		long repositoryId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByRepositoryId(
-			repositoryId, start, end, orderByComparator);
+			repositoryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1015,15 +1029,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByRepositoryId(
 		long repositoryId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByRepositoryId(
-			repositoryId, start, end, orderByComparator, useFinderCache);
+			repositoryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1163,19 +1176,23 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByG_P(
-			groupId, parentFolderId, start, end, orderByComparator);
+			groupId, parentFolderId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1190,16 +1207,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByG_P(
-			groupId, parentFolderId, start, end, orderByComparator,
-			useFinderCache);
+			groupId, parentFolderId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1436,19 +1451,22 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_NotS(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_NotS(
-			companyId, status, start, end, orderByComparator);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1463,15 +1481,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByC_NotS(
-			companyId, status, start, end, orderByComparator, useFinderCache);
+			companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1601,14 +1618,20 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where repositoryId = &#63; and mountPoint = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByR_M(long,boolean)}
 	 * @param repositoryId the repository ID
 	 * @param mountPoint the mount point
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByR_M(long repositoryId, boolean mountPoint) {
-		return getPersistence().fetchByR_M(repositoryId, mountPoint);
+	@Deprecated
+	public static DLFolder fetchByR_M(
+		long repositoryId, boolean mountPoint, boolean useFinderCache) {
+
+		return getPersistence().fetchByR_M(
+			repositoryId, mountPoint, useFinderCache);
 	}
 
 	/**
@@ -1619,11 +1642,8 @@ public class DLFolderUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
-	public static DLFolder fetchByR_M(
-		long repositoryId, boolean mountPoint, boolean useFinderCache) {
-
-		return getPersistence().fetchByR_M(
-			repositoryId, mountPoint, useFinderCache);
+	public static DLFolder fetchByR_M(long repositoryId, boolean mountPoint) {
+		return getPersistence().fetchByR_M(repositoryId, mountPoint);
 	}
 
 	/**
@@ -1691,19 +1711,23 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_P(long,long, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param parentFolderId the parent folder ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByR_P(
 		long repositoryId, long parentFolderId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByR_P(
-			repositoryId, parentFolderId, start, end, orderByComparator);
+			repositoryId, parentFolderId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1718,16 +1742,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByR_P(
 		long repositoryId, long parentFolderId, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByR_P(
-			repositoryId, parentFolderId, start, end, orderByComparator,
-			useFinderCache);
+			repositoryId, parentFolderId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1878,19 +1900,23 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByP_N(long,String, int, int, OrderByComparator)}
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByP_N(
 		long parentFolderId, String name, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator) {
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByP_N(
-			parentFolderId, name, start, end, orderByComparator);
+			parentFolderId, name, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1905,16 +1931,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByP_N(
 		long parentFolderId, String name, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByP_N(
-			parentFolderId, name, start, end, orderByComparator,
-			useFinderCache);
+			parentFolderId, name, start, end, orderByComparator);
 	}
 
 	/**
@@ -2072,20 +2096,25 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_M_P(long,boolean,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param mountPoint the mount point
 	 * @param parentFolderId the parent folder ID
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByG_M_P(
 		long groupId, boolean mountPoint, long parentFolderId, int start,
-		int end, OrderByComparator<DLFolder> orderByComparator) {
+		int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_M_P(
-			groupId, mountPoint, parentFolderId, start, end, orderByComparator);
+			groupId, mountPoint, parentFolderId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2101,17 +2130,14 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByG_M_P(
 		long groupId, boolean mountPoint, long parentFolderId, int start,
-		int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByG_M_P(
-			groupId, mountPoint, parentFolderId, start, end, orderByComparator,
-			useFinderCache);
+			groupId, mountPoint, parentFolderId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2351,17 +2377,22 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the document library folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_N(long,long,String)}
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
+	@Deprecated
 	public static DLFolder fetchByG_P_N(
-		long groupId, long parentFolderId, String name) {
+		long groupId, long parentFolderId, String name,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
+		return getPersistence().fetchByG_P_N(
+			groupId, parentFolderId, name, useFinderCache);
 	}
 
 	/**
@@ -2374,11 +2405,9 @@ public class DLFolderUtil {
 	 * @return the matching document library folder, or <code>null</code> if a matching document library folder could not be found
 	 */
 	public static DLFolder fetchByG_P_N(
-		long groupId, long parentFolderId, String name,
-		boolean useFinderCache) {
+		long groupId, long parentFolderId, String name) {
 
-		return getPersistence().fetchByG_P_N(
-			groupId, parentFolderId, name, useFinderCache);
+		return getPersistence().fetchByG_P_N(groupId, parentFolderId, name);
 	}
 
 	/**
@@ -2457,6 +2486,7 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_C_P_NotS(long,long,long,int, int, int, OrderByComparator)}
 	 * @param folderId the folder ID
 	 * @param companyId the company ID
 	 * @param parentFolderId the parent folder ID
@@ -2464,15 +2494,18 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end,
-			orderByComparator);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2489,17 +2522,15 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByF_C_P_NotS(
 			folderId, companyId, parentFolderId, status, start, end,
-			orderByComparator, useFinderCache);
+			orderByComparator);
 	}
 
 	/**
@@ -2657,6 +2688,7 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_M_P_H(long,boolean,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param mountPoint the mount point
 	 * @param parentFolderId the parent folder ID
@@ -2664,15 +2696,18 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByG_M_P_H(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_M_P_H(
 			groupId, mountPoint, parentFolderId, hidden, start, end,
-			orderByComparator);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2689,17 +2724,15 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByG_M_P_H(
 		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByG_M_P_H(
 			groupId, mountPoint, parentFolderId, hidden, start, end,
-			orderByComparator, useFinderCache);
+			orderByComparator);
 	}
 
 	/**
@@ -2985,6 +3018,7 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_M_T_H(long,boolean,String,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param mountPoint the mount point
 	 * @param treePath the tree path
@@ -2992,15 +3026,18 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByG_M_T_H(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_M_T_H(
 			groupId, mountPoint, treePath, hidden, start, end,
-			orderByComparator);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3017,17 +3054,15 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByG_M_T_H(
 		long groupId, boolean mountPoint, String treePath, boolean hidden,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByG_M_T_H(
 			groupId, mountPoint, treePath, hidden, start, end,
-			orderByComparator, useFinderCache);
+			orderByComparator);
 	}
 
 	/**
@@ -3308,6 +3343,7 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_H_S(long,long,boolean,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentFolderId the parent folder ID
 	 * @param hidden the hidden
@@ -3315,15 +3351,18 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_P_H_S(
 			groupId, parentFolderId, hidden, status, start, end,
-			orderByComparator);
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3340,17 +3379,15 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library folders
 	 */
 	public static List<DLFolder> findByG_P_H_S(
 		long groupId, long parentFolderId, boolean hidden, int status,
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 
 		return getPersistence().findByG_P_H_S(
 			groupId, parentFolderId, hidden, status, start, end,
-			orderByComparator, useFinderCache);
+			orderByComparator);
 	}
 
 	/**
@@ -3637,6 +3674,36 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_M_P_H_S(long,boolean,long,boolean,int, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param mountPoint the mount point
+	 * @param parentFolderId the parent folder ID
+	 * @param hidden the hidden
+	 * @param status the status
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library folders
+	 */
+	@Deprecated
+	public static List<DLFolder> findByG_M_P_H_S(
+		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
+		int status, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByG_M_P_H_S(
+			groupId, mountPoint, parentFolderId, hidden, status, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param mountPoint the mount point
 	 * @param parentFolderId the parent folder ID
@@ -3655,34 +3722,6 @@ public class DLFolderUtil {
 		return getPersistence().findByG_M_P_H_S(
 			groupId, mountPoint, parentFolderId, hidden, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63; and hidden = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param mountPoint the mount point
-	 * @param parentFolderId the parent folder ID
-	 * @param hidden the hidden
-	 * @param status the status
-	 * @param start the lower bound of the range of document library folders
-	 * @param end the upper bound of the range of document library folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching document library folders
-	 */
-	public static List<DLFolder> findByG_M_P_H_S(
-		long groupId, boolean mountPoint, long parentFolderId, boolean hidden,
-		int status, int start, int end,
-		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByG_M_P_H_S(
-			groupId, mountPoint, parentFolderId, hidden, status, start, end,
-			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4046,15 +4085,20 @@ public class DLFolderUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library folders
 	 */
+	@Deprecated
 	public static List<DLFolder> findAll(
-		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4067,15 +4111,12 @@ public class DLFolderUtil {
 	 * @param start the lower bound of the range of document library folders
 	 * @param end the upper bound of the range of document library folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library folders
 	 */
 	public static List<DLFolder> findAll(
-		int start, int end, OrderByComparator<DLFolder> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLFolder> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**

@@ -136,18 +136,22 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid(uuid, start, end, orderByComparator, true);
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -161,14 +165,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -180,30 +182,23 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if (!uuid.equals(organization.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if (!uuid.equals(organization.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -270,14 +265,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1111,20 +1102,23 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1139,14 +1133,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1158,34 +1150,27 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if (!uuid.equals(organization.getUuid()) ||
+					(companyId != organization.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if (!uuid.equals(organization.getUuid()) ||
-						(companyId != organization.getCompanyId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1256,14 +1241,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2149,18 +2130,22 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
+		return findByCompanyId(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -2174,14 +2159,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2191,32 +2174,25 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByCompanyId;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2272,14 +2248,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3041,18 +3013,22 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLocations(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByLocations(
 		long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByLocations(companyId, start, end, orderByComparator, true);
+		return findByLocations(companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -3066,14 +3042,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByLocations(
 		long companyId, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3083,32 +3057,25 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByLocations;
-				finderArgs = new Object[] {companyId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByLocations;
+			finderArgs = new Object[] {companyId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByLocations;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -3164,14 +3131,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3938,21 +3901,24 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByC_P(
 		long companyId, long parentOrganizationId, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_P(
-			companyId, parentOrganizationId, start, end, orderByComparator,
-			true);
+			companyId, parentOrganizationId, start, end, orderByComparator);
 	}
 
 	/**
@@ -3967,14 +3933,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByC_P(
 		long companyId, long parentOrganizationId, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3984,35 +3948,28 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_P;
-				finderArgs = new Object[] {companyId, parentOrganizationId};
-			}
+			finderPath = _finderPathWithoutPaginationFindByC_P;
+			finderArgs = new Object[] {companyId, parentOrganizationId};
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindByC_P;
 			finderArgs = new Object[] {
 				companyId, parentOrganizationId, start, end, orderByComparator
 			};
 		}
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId()) ||
+					(parentOrganizationId !=
+						organization.getParentOrganizationId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId()) ||
-						(parentOrganizationId !=
-							organization.getParentOrganizationId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -4072,14 +4029,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4901,20 +4854,23 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_T(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByC_T(
 		long companyId, String treePath, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_T(
-			companyId, treePath, start, end, orderByComparator, true);
+		return findByC_T(companyId, treePath, start, end, orderByComparator);
 	}
 
 	/**
@@ -4929,14 +4885,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByC_T(
 		long companyId, String treePath, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		treePath = Objects.toString(treePath, "");
 
@@ -4949,23 +4903,19 @@ public class OrganizationPersistenceImpl
 			companyId, treePath, start, end, orderByComparator
 		};
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId()) ||
+					!StringUtil.wildcardMatches(
+						organization.getTreePath(), treePath, '_', '%', '\\',
+						true)) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							organization.getTreePath(), treePath, '_', '%',
-							'\\', true)) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -5036,14 +4986,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5925,15 +5871,20 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the organization where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the organization where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_N(long,String)}
 	 * @param companyId the company ID
 	 * @param name the name
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
+	@Deprecated
 	@Override
-	public Organization fetchByC_N(long companyId, String name) {
-		return fetchByC_N(companyId, name, true);
+	public Organization fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
+		return fetchByC_N(companyId, name);
 	}
 
 	/**
@@ -5945,23 +5896,13 @@ public class OrganizationPersistenceImpl
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
 	@Override
-	public Organization fetchByC_N(
-		long companyId, String name, boolean useFinderCache) {
-
+	public Organization fetchByC_N(long companyId, String name) {
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId, name};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_N, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_N, finderArgs, this);
 
 		if (result instanceof Organization) {
 			Organization organization = (Organization)result;
@@ -6011,10 +5952,8 @@ public class OrganizationPersistenceImpl
 				List<Organization> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_N, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_N, finderArgs, list);
 				}
 				else {
 					Organization organization = list.get(0);
@@ -6025,10 +5964,7 @@ public class OrganizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_N, finderArgs);
-				}
+				FinderCacheUtil.removeResult(_finderPathFetchByC_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -6183,20 +6119,23 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LikeN(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByC_LikeN(
 		long companyId, String name, int start, int end,
-		OrderByComparator<Organization> orderByComparator) {
+		OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findByC_LikeN(
-			companyId, name, start, end, orderByComparator, true);
+		return findByC_LikeN(companyId, name, start, end, orderByComparator);
 	}
 
 	/**
@@ -6211,14 +6150,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByC_LikeN(
 		long companyId, String name, int start, int end,
-		OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Organization> orderByComparator) {
 
 		name = Objects.toString(name, "");
 
@@ -6231,23 +6168,18 @@ public class OrganizationPersistenceImpl
 			companyId, name, start, end, orderByComparator
 		};
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId()) ||
+					!StringUtil.wildcardMatches(
+						organization.getName(), name, '_', '%', '\\', false)) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							organization.getName(), name, '_', '%', '\\',
-							false)) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -6318,14 +6250,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7214,22 +7142,26 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByO_C_P(long,long,long, int, int, OrderByComparator)}
 	 * @param organizationId the organization ID
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
-		int start, int end, OrderByComparator<Organization> orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByO_C_P(
 			organizationId, companyId, parentOrganizationId, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -7245,14 +7177,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByO_C_P(
 		long organizationId, long companyId, long parentOrganizationId,
-		int start, int end, OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7264,23 +7194,19 @@ public class OrganizationPersistenceImpl
 			orderByComparator
 		};
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((organizationId >= organization.getOrganizationId()) ||
+					(companyId != organization.getCompanyId()) ||
+					(parentOrganizationId !=
+						organization.getParentOrganizationId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((organizationId >= organization.getOrganizationId()) ||
-						(companyId != organization.getCompanyId()) ||
-						(parentOrganizationId !=
-							organization.getParentOrganizationId())) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -7344,14 +7270,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7859,22 +7781,26 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P_LikeN(long,long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @param name the name
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByC_P_LikeN(
 		long companyId, long parentOrganizationId, String name, int start,
-		int end, OrderByComparator<Organization> orderByComparator) {
+		int end, OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
 		return findByC_P_LikeN(
 			companyId, parentOrganizationId, name, start, end,
-			orderByComparator, true);
+			orderByComparator);
 	}
 
 	/**
@@ -7890,14 +7816,12 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching organizations
 	 */
 	@Override
 	public List<Organization> findByC_P_LikeN(
 		long companyId, long parentOrganizationId, String name, int start,
-		int end, OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<Organization> orderByComparator) {
 
 		name = Objects.toString(name, "");
 
@@ -7910,25 +7834,20 @@ public class OrganizationPersistenceImpl
 			companyId, parentOrganizationId, name, start, end, orderByComparator
 		};
 
-		List<Organization> list = null;
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (Organization organization : list) {
+				if ((companyId != organization.getCompanyId()) ||
+					(parentOrganizationId !=
+						organization.getParentOrganizationId()) ||
+					!StringUtil.wildcardMatches(
+						organization.getName(), name, '_', '%', '\\', false)) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (Organization organization : list) {
-					if ((companyId != organization.getCompanyId()) ||
-						(parentOrganizationId !=
-							organization.getParentOrganizationId()) ||
-						!StringUtil.wildcardMatches(
-							organization.getName(), name, '_', '%', '\\',
-							false)) {
+					list = null;
 
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -8003,14 +7922,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8952,17 +8867,20 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the organization where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the organization where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_ERC(long,String)}
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
 	 */
+	@Deprecated
 	@Override
 	public Organization fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+		long companyId, String externalReferenceCode, boolean useFinderCache) {
 
-		return fetchByC_ERC(companyId, externalReferenceCode, true);
+		return fetchByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**
@@ -8975,22 +8893,14 @@ public class OrganizationPersistenceImpl
 	 */
 	@Override
 	public Organization fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+		long companyId, String externalReferenceCode) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {companyId, externalReferenceCode};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, externalReferenceCode};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByC_ERC, finderArgs, this);
-		}
+		Object result = FinderCacheUtil.getResult(
+			_finderPathFetchByC_ERC, finderArgs, this);
 
 		if (result instanceof Organization) {
 			Organization organization = (Organization)result;
@@ -9042,22 +8952,14 @@ public class OrganizationPersistenceImpl
 				List<Organization> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByC_ERC, finderArgs, list);
-					}
+					FinderCacheUtil.putResult(
+						_finderPathFetchByC_ERC, finderArgs, list);
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, externalReferenceCode
-								};
-							}
-
 							_log.warn(
 								"OrganizationPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -9073,10 +8975,8 @@ public class OrganizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_ERC, finderArgs);
-				}
+				FinderCacheUtil.removeResult(
+					_finderPathFetchByC_ERC, finderArgs);
 
 				throw processException(e);
 			}
@@ -9811,16 +9711,20 @@ public class OrganizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OrganizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of organizations
 	 */
+	@Deprecated
 	@Override
 	public List<Organization> findAll(
-		int start, int end, OrderByComparator<Organization> orderByComparator) {
+		int start, int end, OrderByComparator<Organization> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -9833,13 +9737,11 @@ public class OrganizationPersistenceImpl
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of organizations
 	 */
 	@Override
 	public List<Organization> findAll(
-		int start, int end, OrderByComparator<Organization> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Organization> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -9849,23 +9751,16 @@ public class OrganizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Organization> list = null;
-
-		if (useFinderCache) {
-			list = (List<Organization>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-		}
+		List<Organization> list = (List<Organization>)FinderCacheUtil.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
@@ -9912,14 +9807,10 @@ public class OrganizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

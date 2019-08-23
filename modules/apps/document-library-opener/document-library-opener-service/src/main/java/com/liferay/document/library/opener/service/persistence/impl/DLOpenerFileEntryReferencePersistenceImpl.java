@@ -132,14 +132,19 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByFileEntryId(long)}
 	 * @param fileEntryId the file entry ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
+	@Deprecated
 	@Override
-	public DLOpenerFileEntryReference fetchByFileEntryId(long fileEntryId) {
-		return fetchByFileEntryId(fileEntryId, true);
+	public DLOpenerFileEntryReference fetchByFileEntryId(
+		long fileEntryId, boolean useFinderCache) {
+
+		return fetchByFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -150,21 +155,11 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
 	@Override
-	public DLOpenerFileEntryReference fetchByFileEntryId(
-		long fileEntryId, boolean useFinderCache) {
+	public DLOpenerFileEntryReference fetchByFileEntryId(long fileEntryId) {
+		Object[] finderArgs = new Object[] {fileEntryId};
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {fileEntryId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByFileEntryId, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByFileEntryId, finderArgs, this);
 
 		if (result instanceof DLOpenerFileEntryReference) {
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
@@ -198,10 +193,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				List<DLOpenerFileEntryReference> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByFileEntryId, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByFileEntryId, finderArgs, list);
 				}
 				else {
 					DLOpenerFileEntryReference dlOpenerFileEntryReference =
@@ -213,10 +206,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByFileEntryId, finderArgs);
-				}
+				finderCache.removeResult(
+					_finderPathFetchByFileEntryId, finderArgs);
 
 				throw processException(e);
 			}
@@ -346,17 +337,20 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByR_F(String,long)}
 	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
+	@Deprecated
 	@Override
 	public DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId) {
+		String referenceType, long fileEntryId, boolean useFinderCache) {
 
-		return fetchByR_F(referenceType, fileEntryId, true);
+		return fetchByR_F(referenceType, fileEntryId);
 	}
 
 	/**
@@ -369,22 +363,14 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 */
 	@Override
 	public DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId, boolean useFinderCache) {
+		String referenceType, long fileEntryId) {
 
 		referenceType = Objects.toString(referenceType, "");
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {referenceType, fileEntryId};
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {referenceType, fileEntryId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByR_F, finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByR_F, finderArgs, this);
 
 		if (result instanceof DLOpenerFileEntryReference) {
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
@@ -437,10 +423,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				List<DLOpenerFileEntryReference> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByR_F, finderArgs, list);
-					}
+					finderCache.putResult(
+						_finderPathFetchByR_F, finderArgs, list);
 				}
 				else {
 					DLOpenerFileEntryReference dlOpenerFileEntryReference =
@@ -452,9 +436,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByR_F, finderArgs);
-				}
+				finderCache.removeResult(_finderPathFetchByR_F, finderArgs);
 
 				throw processException(e);
 			}
@@ -1066,17 +1048,21 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of dl opener file entry references
 	 * @param end the upper bound of the range of dl opener file entry references (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl opener file entry references
 	 */
+	@Deprecated
 	@Override
 	public List<DLOpenerFileEntryReference> findAll(
 		int start, int end,
-		OrderByComparator<DLOpenerFileEntryReference> orderByComparator) {
+		OrderByComparator<DLOpenerFileEntryReference> orderByComparator,
+		boolean useFinderCache) {
 
-		return findAll(start, end, orderByComparator, true);
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1089,14 +1075,12 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 * @param start the lower bound of the range of dl opener file entry references
 	 * @param end the upper bound of the range of dl opener file entry references (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl opener file entry references
 	 */
 	@Override
 	public List<DLOpenerFileEntryReference> findAll(
 		int start, int end,
-		OrderByComparator<DLOpenerFileEntryReference> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLOpenerFileEntryReference> orderByComparator) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1106,23 +1090,17 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
+			finderPath = _finderPathWithoutPaginationFindAll;
+			finderArgs = FINDER_ARGS_EMPTY;
 		}
-		else if (useFinderCache) {
+		else {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DLOpenerFileEntryReference> list = null;
-
-		if (useFinderCache) {
-			list = (List<DLOpenerFileEntryReference>)finderCache.getResult(
+		List<DLOpenerFileEntryReference> list =
+			(List<DLOpenerFileEntryReference>)finderCache.getResult(
 				finderPath, finderArgs, this);
-		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1170,14 +1148,10 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}

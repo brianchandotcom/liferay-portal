@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchThreadFlagException;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,16 +71,19 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
+	@Deprecated
 	public java.util.List<MBThreadFlag> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards thread flags where uuid = &#63;.
@@ -92,14 +96,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
 	public java.util.List<MBThreadFlag> findByUuid(
 		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the first message boards thread flag in the ordered set where uuid = &#63;.
@@ -110,9 +111,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByUuid_First(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -123,9 +122,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByUuid_First(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		String uuid, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where uuid = &#63;.
@@ -136,9 +133,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByUuid_Last(
-			String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			String uuid, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -149,9 +144,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByUuid_Last(
-		String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		String uuid, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63;.
@@ -164,8 +157,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag[] findByUuid_PrevAndNext(
 			long threadFlagId, String uuid,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -195,13 +187,17 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 		throws NoSuchThreadFlagException;
 
 	/**
-	 * Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
-	public MBThreadFlag fetchByUUID_G(String uuid, long groupId);
+	@Deprecated
+	public MBThreadFlag fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Returns the message boards thread flag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -211,8 +207,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
-	public MBThreadFlag fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public MBThreadFlag fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Removes the message boards thread flag where uuid = &#63; and groupId = &#63; from the database.
@@ -266,17 +261,20 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
+	@Deprecated
 	public java.util.List<MBThreadFlag> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards thread flags where uuid = &#63; and companyId = &#63;.
@@ -290,14 +288,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
 	public java.util.List<MBThreadFlag> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the first message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -310,8 +305,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag findByUuid_C_First(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -324,8 +318,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag fetchByUuid_C_First(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -338,8 +331,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag findByUuid_C_Last(
 			String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -352,8 +344,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag fetchByUuid_C_Last(
 		String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -367,8 +358,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag[] findByUuid_C_PrevAndNext(
 			long threadFlagId, String uuid, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -418,16 +408,19 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
+	@Deprecated
 	public java.util.List<MBThreadFlag> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards thread flags where userId = &#63;.
@@ -440,14 +433,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
 	public java.util.List<MBThreadFlag> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the first message boards thread flag in the ordered set where userId = &#63;.
@@ -458,9 +448,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByUserId_First(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			long userId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -471,9 +459,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		long userId, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where userId = &#63;.
@@ -484,9 +470,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByUserId_Last(
-			long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			long userId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -497,9 +481,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		long userId, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63;.
@@ -512,8 +494,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag[] findByUserId_PrevAndNext(
 			long threadFlagId, long userId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -561,16 +542,19 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByThreadId(long, int, int, OrderByComparator)}
 	 * @param threadId the thread ID
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
+	@Deprecated
 	public java.util.List<MBThreadFlag> findByThreadId(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards thread flags where threadId = &#63;.
@@ -583,14 +567,11 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards thread flags
 	 */
 	public java.util.List<MBThreadFlag> findByThreadId(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the first message boards thread flag in the ordered set where threadId = &#63;.
@@ -601,9 +582,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByThreadId_First(
-			long threadId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -614,9 +593,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByThreadId_First(
-		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		long threadId, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the last message boards thread flag in the ordered set where threadId = &#63;.
@@ -627,9 +604,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag findByThreadId_Last(
-			long threadId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			long threadId, OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -640,9 +615,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
 	public MBThreadFlag fetchByThreadId_Last(
-		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		long threadId, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where threadId = &#63;.
@@ -655,8 +628,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 */
 	public MBThreadFlag[] findByThreadId_PrevAndNext(
 			long threadFlagId, long threadId,
-			com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-				orderByComparator)
+			OrderByComparator<MBThreadFlag> orderByComparator)
 		throws NoSuchThreadFlagException;
 
 	/**
@@ -686,13 +658,17 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 		throws NoSuchThreadFlagException;
 
 	/**
-	 * Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_T(long,long)}
 	 * @param userId the user ID
 	 * @param threadId the thread ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
-	public MBThreadFlag fetchByU_T(long userId, long threadId);
+	@Deprecated
+	public MBThreadFlag fetchByU_T(
+		long userId, long threadId, boolean useFinderCache);
 
 	/**
 	 * Returns the message boards thread flag where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -702,8 +678,7 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
 	 */
-	public MBThreadFlag fetchByU_T(
-		long userId, long threadId, boolean useFinderCache);
+	public MBThreadFlag fetchByU_T(long userId, long threadId);
 
 	/**
 	 * Removes the message boards thread flag where userId = &#63; and threadId = &#63; from the database.
@@ -803,15 +778,17 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards thread flags
 	 */
+	@Deprecated
 	public java.util.List<MBThreadFlag> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator);
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the message boards thread flags.
@@ -823,14 +800,10 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	 * @param start the lower bound of the range of message boards thread flags
 	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards thread flags
 	 */
 	public java.util.List<MBThreadFlag> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThreadFlag>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
 	 * Removes all the message boards thread flags from the database.

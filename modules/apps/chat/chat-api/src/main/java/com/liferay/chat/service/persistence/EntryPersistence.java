@@ -17,6 +17,7 @@ package com.liferay.chat.service.persistence;
 import com.liferay.chat.exception.NoSuchEntryException;
 import com.liferay.chat.model.Entry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,16 +71,18 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByCreateDate(
 		long createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where createDate = &#63;.
@@ -92,14 +95,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByCreateDate(
 		long createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where createDate = &#63;.
@@ -110,9 +110,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByCreateDate_First(
-			long createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long createDate, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -123,9 +121,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the first matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByCreateDate_First(
-		long createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long createDate, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where createDate = &#63;.
@@ -136,9 +132,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByCreateDate_Last(
-			long createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long createDate, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -149,9 +143,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByCreateDate_Last(
-		long createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long createDate, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where createDate = &#63;.
@@ -164,8 +156,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByCreateDate_PrevAndNext(
 			long entryId, long createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -213,16 +204,18 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFromUserId(long, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByFromUserId(
 		long fromUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where fromUserId = &#63;.
@@ -235,14 +228,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByFromUserId(
 		long fromUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where fromUserId = &#63;.
@@ -253,9 +243,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByFromUserId_First(
-			long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long fromUserId, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -266,9 +254,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the first matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByFromUserId_First(
-		long fromUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long fromUserId, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where fromUserId = &#63;.
@@ -279,9 +265,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByFromUserId_Last(
-			long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long fromUserId, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -292,9 +276,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByFromUserId_Last(
-		long fromUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long fromUserId, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where fromUserId = &#63;.
@@ -307,8 +289,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByFromUserId_PrevAndNext(
 			long entryId, long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -356,16 +337,18 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByToUserId(long, int, int, OrderByComparator)}
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByToUserId(
 		long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where toUserId = &#63;.
@@ -378,14 +361,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByToUserId(
 		long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where toUserId = &#63;.
@@ -396,9 +376,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByToUserId_First(
-			long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long toUserId, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -409,9 +387,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the first matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByToUserId_First(
-		long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long toUserId, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where toUserId = &#63;.
@@ -422,9 +398,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @throws NoSuchEntryException if a matching entry could not be found
 	 */
 	public Entry findByToUserId_Last(
-			long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			long toUserId, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -435,9 +409,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @return the last matching entry, or <code>null</code> if a matching entry could not be found
 	 */
 	public Entry fetchByToUserId_Last(
-		long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		long toUserId, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where toUserId = &#63;.
@@ -450,8 +422,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByToUserId_PrevAndNext(
 			long entryId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -501,17 +472,19 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_F(long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param fromUserId the from user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByC_F(
 		long createDate, long fromUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where createDate = &#63; and fromUserId = &#63;.
@@ -525,14 +498,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByC_F(
 		long createDate, long fromUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where createDate = &#63; and fromUserId = &#63;.
@@ -545,8 +515,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_F_First(
 			long createDate, long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -559,8 +528,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_F_First(
 		long createDate, long fromUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where createDate = &#63; and fromUserId = &#63;.
@@ -573,8 +541,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_F_Last(
 			long createDate, long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -587,8 +554,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_F_Last(
 		long createDate, long fromUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where createDate = &#63; and fromUserId = &#63;.
@@ -602,8 +568,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByC_F_PrevAndNext(
 			long entryId, long createDate, long fromUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -655,17 +620,19 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_T(long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByC_T(
 		long createDate, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where createDate = &#63; and toUserId = &#63;.
@@ -679,14 +646,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByC_T(
 		long createDate, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where createDate = &#63; and toUserId = &#63;.
@@ -699,8 +663,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_T_First(
 			long createDate, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -713,8 +676,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_T_First(
 		long createDate, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where createDate = &#63; and toUserId = &#63;.
@@ -727,8 +689,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_T_Last(
 			long createDate, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -741,8 +702,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_T_Last(
 		long createDate, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where createDate = &#63; and toUserId = &#63;.
@@ -756,8 +716,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByC_T_PrevAndNext(
 			long entryId, long createDate, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -809,17 +768,19 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_T(long,long, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByF_T(
 		long fromUserId, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where fromUserId = &#63; and toUserId = &#63;.
@@ -833,14 +794,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByF_T(
 		long fromUserId, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where fromUserId = &#63; and toUserId = &#63;.
@@ -853,8 +811,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByF_T_First(
 			long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -867,8 +824,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByF_T_First(
 		long fromUserId, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where fromUserId = &#63; and toUserId = &#63;.
@@ -881,8 +837,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByF_T_Last(
 			long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -895,8 +850,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByF_T_Last(
 		long fromUserId, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where fromUserId = &#63; and toUserId = &#63;.
@@ -910,8 +864,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByF_T_PrevAndNext(
 			long entryId, long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -966,18 +919,20 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_F_T(long,long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByC_F_T(
 		long createDate, long fromUserId, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -992,14 +947,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByC_F_T(
 		long createDate, long fromUserId, long toUserId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -1013,8 +965,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_F_T_First(
 			long createDate, long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1028,8 +979,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_F_T_First(
 		long createDate, long fromUserId, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -1043,8 +993,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByC_F_T_Last(
 			long createDate, long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1058,8 +1007,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByC_F_T_Last(
 		long createDate, long fromUserId, long toUserId,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where createDate = &#63; and fromUserId = &#63; and toUserId = &#63;.
@@ -1074,8 +1022,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByC_F_T_PrevAndNext(
 			long entryId, long createDate, long fromUserId, long toUserId,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1132,18 +1079,20 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_T_C(long,long,String, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param content the content
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findByF_T_C(
 		long fromUserId, long toUserId, String content, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1158,14 +1107,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public java.util.List<Entry> findByF_T_C(
 		long fromUserId, long toUserId, String content, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the first entry in the ordered set where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1179,8 +1125,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByF_T_C_First(
 			long fromUserId, long toUserId, String content,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1194,8 +1139,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByF_T_C_First(
 		long fromUserId, long toUserId, String content,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the last entry in the ordered set where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1209,8 +1153,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry findByF_T_C_Last(
 			long fromUserId, long toUserId, String content,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1224,8 +1167,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry fetchByF_T_C_Last(
 		long fromUserId, long toUserId, String content,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Returns the entries before and after the current entry in the ordered set where fromUserId = &#63; and toUserId = &#63; and content = &#63;.
@@ -1240,8 +1182,7 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 */
 	public Entry[] findByF_T_C_PrevAndNext(
 			long entryId, long fromUserId, long toUserId, String content,
-			com.liferay.portal.kernel.util.OrderByComparator<Entry>
-				orderByComparator)
+			OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -1340,15 +1281,17 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of entries
 	 */
+	@Deprecated
 	public java.util.List<Entry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator);
+		int start, int end, OrderByComparator<Entry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the entries.
@@ -1360,14 +1303,10 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of entries
 	 */
 	public java.util.List<Entry> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Entry>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<Entry> orderByComparator);
 
 	/**
 	 * Removes all the entries from the database.

@@ -614,15 +614,63 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
+
+		final Project project = executePackageManagerTask.getProject();
+
+		executePackageManagerTask.setNodeModulesDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					if (nodeExtension.isUseNpm()) {
+						return project.file("node_modules");
+					}
+
+					File scriptFile = executePackageManagerTask.getScriptFile();
+
+					return new File(scriptFile.getParent(), "node_modules");
+				}
+
+			});
+
+		executePackageManagerTask.setScriptFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File nodeDir = nodeExtension.getNodeDir();
+
+					if (nodeDir == null) {
+						return null;
+					}
+
+					if (nodeExtension.isUseNpm()) {
+						File npmDir = NodePluginUtil.getNpmDir(nodeDir);
+
+						return new File(npmDir, "bin/npm-cli.js");
+					}
+
+					return nodeExtension.getYarnScriptFile();
+				}
+
+			});
+
+		executePackageManagerTask.setUseNpm(
+			new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					return nodeExtension.isUseNpm();
+				}
+
+			});
 	}
 
 	private void _configureTaskExecutePackageManagerArgs(
 		ExecutePackageManagerTask executePackageManagerTask,
 		NodeExtension nodeExtension) {
 
-		if (!NodePluginUtil.isYarnScriptFile(
-				executePackageManagerTask.getScriptFile())) {
-
+		if (nodeExtension.isUseNpm()) {
 			executePackageManagerTask.args(nodeExtension.getNpmArgs());
 		}
 	}

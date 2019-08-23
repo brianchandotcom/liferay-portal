@@ -41,40 +41,4 @@ public class NodePluginUtil {
 		return new File(nodeModulesDir, "npm");
 	}
 
-	public static File getNpmScriptFile(File nodeDir) {
-		return new File(getNpmDir(nodeDir), "bin/npm-cli.js");
-	}
-
-	public static File getYarnScriptFile(File projectDir) {
-		File dir = projectDir;
-
-		while (true) {
-			File[] files = FileUtil.getFiles(dir, "yarn-", ".js");
-
-			if ((files != null) && (files.length > 0)) {
-				return files[0];
-			}
-
-			dir = dir.getParentFile();
-
-			if (dir == null) {
-				return null;
-			}
-		}
-	}
-
-	public static boolean isYarnScriptFile(File file) {
-		if (file == null) {
-			return false;
-		}
-
-		String fileName = file.getName();
-
-		if (!fileName.startsWith("yarn-") || !fileName.endsWith(".js")) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

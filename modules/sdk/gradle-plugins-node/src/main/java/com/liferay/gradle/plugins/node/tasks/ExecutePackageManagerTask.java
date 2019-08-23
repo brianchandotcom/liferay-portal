@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -76,52 +75,6 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 				}
 
 			});
-
-		setNodeModulesDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File scriptFile = getScriptFile();
-
-					if (NodePluginUtil.isYarnScriptFile(scriptFile)) {
-						return new File(scriptFile.getParent(), "node_modules");
-					}
-
-					Project project = getProject();
-
-					return project.file("node_modules");
-				}
-
-			});
-
-		setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File nodeDir = getNodeDir();
-
-					if (nodeDir == null) {
-						return null;
-					}
-
-					Project project = getProject();
-
-					if (!FileUtil.exists(project, "package-lock.json")) {
-						File dir = project.getProjectDir();
-
-						File scriptFile = NodePluginUtil.getYarnScriptFile(dir);
-
-						if (scriptFile != null) {
-							return scriptFile;
-						}
-					}
-
-					return NodePluginUtil.getNpmScriptFile(nodeDir);
-				}
-
-			});
 	}
 
 	@Override
@@ -171,6 +124,10 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 		return _progress;
 	}
 
+	public boolean isUseNpm() {
+		return GradleUtil.toBoolean(_useNpm);
+	}
+
 	public void setCacheConcurrent(Object cacheConcurrent) {
 		_cacheConcurrent = cacheConcurrent;
 	}
@@ -199,6 +156,10 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 		_registry = registry;
 	}
 
+	public void setUseNpm(Object useNpm) {
+		_useNpm = useNpm;
+	}
+
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
@@ -213,7 +174,7 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 			completeArgs.add(registry);
 		}
 
-		if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+		if (!isUseNpm()) {
 			return completeArgs;
 		}
 
@@ -244,5 +205,6 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 	private boolean _production;
 	private boolean _progress = true;
 	private Object _registry;
+	private Object _useNpm;
 
 }

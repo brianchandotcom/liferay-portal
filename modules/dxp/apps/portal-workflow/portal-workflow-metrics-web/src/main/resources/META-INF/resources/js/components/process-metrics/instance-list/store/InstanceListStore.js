@@ -23,6 +23,7 @@ const reduceFilters = (filterItems, paramKey) =>
 const useInstanceListData = (page, pageSize, processId, query) => {
 	const [instanceId, setInstanceId] = useState();
 	const [items, setItems] = useState([]);
+	const [searching, setSearching] = useState();
 	const [totalCount, setTotalCount] = useState();
 
 	const {client, setTitle} = useContext(AppContext);
@@ -38,6 +39,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	const filters = getFiltersParam(query);
 
 	const getInstancesRequestURL = () => {
+		setSearching(false);
+
 		let baseURL = `/processes/${processId}/instances?page=${page}&pageSize=${pageSize}`;
 
 		const selectedProcessStatuses = getSelectedProcessStatuses(
@@ -56,6 +59,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		);
 
 		if (selectedProcessStatuses && selectedProcessStatuses.length) {
+			setSearching(true);
+
 			baseURL += reduceFilters(
 				selectedProcessStatuses,
 				filterConstants.processStatus
@@ -63,6 +68,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		}
 
 		if (selectedProcessSteps && selectedProcessSteps.length) {
+			setSearching(true);
+
 			baseURL += reduceFilters(
 				selectedProcessSteps,
 				filterConstants.processStep
@@ -70,6 +77,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 		}
 
 		if (selectedSLAStatuses && selectedSLAStatuses.length) {
+			setSearching(true);
+
 			baseURL += reduceFilters(
 				selectedSLAStatuses,
 				filterConstants.slaStatus
@@ -80,6 +89,8 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 			isCompletedStatusSelected(filters[filterConstants.processStatus]) &&
 			selectedTimeRange
 		) {
+			setSearching(true);
+
 			baseURL += `&${
 				filterConstants.timeRangeDateEnd
 			}=${selectedTimeRange.dateEnd.toISOString()}`;
@@ -133,6 +144,7 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 	return {
 		instanceId,
 		items,
+		searching,
 		setInstanceId,
 		totalCount
 	};

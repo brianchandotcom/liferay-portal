@@ -14,6 +14,7 @@
 		"@clayui/table": "3.0.0-milestone.2",
 		"classnames": "^2.2.6",
 		"frontend-js-react-web": "^2.0.0",
+		"frontend-js-web": "^4.0.0",
 		"lodash.omit": "^4.5.0",
 		"moment": "^2.24.0",
 		"prop-types": "^15.7.2",

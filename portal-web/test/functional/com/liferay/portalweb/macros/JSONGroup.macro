@@ -2,6 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a group"
 	macro _addGroup {
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		if (isSet(groupDescription)) {
 			var groupDescriptionEncoded = URLUtil.encodeUTF8("${groupDescription}");
@@ -12,14 +13,9 @@ definition {
 			var groupDescriptionMap = "{}";
 		}
 
-		if (isSet(groupName)) {
-			var groupNameEncoded = URLUtil.encodeUTF8("${groupName}");
+		var groupNameEncoded = URLUtil.encodeUTF8("${groupName}");
 
-			var groupNameMap = '''{"en_US":"${groupNameEncoded}"}''';
-		}
-		else {
-			fail("Please set 'groupName'.");
-		}
+		var groupNameMap = '''{"en_US":"${groupNameEncoded}"}''';
 
 		if (isSet(parentGroupName)) {
 			var parentGroupId = JSONGroup._getSiteIdByGroupName(groupName = "${parentGroupName}");
@@ -59,17 +55,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to assign a user a role"
 	macro _assignGroupRoleToUser {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(roleId))) {
-			fail("Please set 'roleId'.");
-		}
-
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -100,13 +86,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a user to a group"
 	macro _assignUserToGroup {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -132,9 +112,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to delete a group"
 	macro _deleteGroup {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId}");
 
 		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
 
@@ -154,9 +132,7 @@ definition {
 
 	@summary = "Get the groupId from any existing group by using groupKey"
 	macro _getGroupIdByGroupKey {
-		if (!(isSet(groupKey))) {
-			fail("Please set 'groupKey'.");
-		}
+		Variables.assertDefined(parameterList = "${groupKey}");
 
 		if (!(isSet(site))) {
 			var site = "true";
@@ -189,9 +165,7 @@ definition {
 
 	@summary = "Get the groupId from any existing site by using groupName"
 	macro _getGroupIdByName {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -217,9 +191,7 @@ definition {
 
 	@summary = "Get the groupName from any group by using groupId"
 	macro _getGroupName {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -236,9 +208,7 @@ definition {
 
 	@summary = "Get the groupId from any existing parent or child site by using groupName"
 	macro _getSiteIdByGroupName {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -271,13 +241,7 @@ definition {
 
 	@summary = "Add a child site to a valid site."
 	macro addChildSite {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(parentGroupName))) {
-			fail("Please set 'parentGroupKey'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
 
 		JSONGroup._addGroup(
 			groupDescription = "${groupDescription}",
@@ -287,9 +251,7 @@ definition {
 
 	@summary = "Add a basic site"
 	macro addGroup {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		JSONGroup._addGroup(
 			groupDescription = "${groupDescription}",
@@ -297,17 +259,7 @@ definition {
 	}
 
 	macro assignGroupRoleToUser {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(roleTitle))) {
-			fail("Please set 'roleTitle'.");
-		}
-
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -322,13 +274,7 @@ definition {
 	}
 
 	macro assignUserToGroup {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -341,9 +287,7 @@ definition {
 
 	@summary = "Delete a valid group using its groupName"
 	macro deleteGroupByName {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 

@@ -1,27 +1,11 @@
 definition {
 
 	macro _addUser {
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
-		if (isSet(userFirstName)) {
-			var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
-		}
-		else {
-			fail("Please set 'userFirstName'.");
-		}
+		var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
 
-		if (isSet(userLastName)) {
-			var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
-		}
-		else {
-			fail("Please set 'userLastName'.");
-		}
-
-		if (!(isSet(userScreenName))) {
-			fail("Please set 'userScreenName'.");
-		}
+		var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -97,9 +81,7 @@ definition {
 	}
 
 	macro _deleteUser {
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${userId}");
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
@@ -171,21 +153,7 @@ definition {
 	}
 
 	macro addUser {
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
-
-		if (!(isSet(userFirstName))) {
-			fail("Please set 'userFirstName'.");
-		}
-
-		if (!(isSet(userLastName))) {
-			fail("Please set 'userLastName'.");
-		}
-
-		if (!(isSet(userScreenName))) {
-			fail("Please set 'userScreenName'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		JSONUser._addUser(
 			userEmailAddress = "${userEmailAddress}",
@@ -195,13 +163,7 @@ definition {
 	}
 
 	macro addUserToSite {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress},${userScreenName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -218,9 +180,7 @@ definition {
 	}
 
 	macro deleteUserByEmailAddress {
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
 
@@ -228,17 +188,13 @@ definition {
 	}
 
 	macro deleteUserByUserId {
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${userId}");
 
 		JSONUser._deleteUser(userId = "${userId}");
 	}
 
 	macro getUserEmailAddress {
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${userId}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -254,9 +210,7 @@ definition {
 	}
 
 	macro getUserFirstName {
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${userId}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -272,9 +226,7 @@ definition {
 	}
 
 	macro getUserIdByEmailAddress {
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -290,9 +242,7 @@ definition {
 	}
 
 	macro setFirstPassword {
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		if (!(isSet(newPassword))) {
 			var newPassword = "test";
@@ -329,9 +279,7 @@ definition {
 	}
 
 	macro tearDownByFirstName {
-		if (!(isSet(userFirstName))) {
-			fail("Please set 'userFirstName'.");
-		}
+		Variables.assertDefined(parameterList = "${userFirstName}");
 
 		var companyId = JSONCompany.getCompanyId();
 

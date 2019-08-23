@@ -56,13 +56,7 @@ definition {
 
 	@summary = "Get the collectionId from a collection by using collectionName and groupId"
 	macro _getCollectionIdByName {
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${collectionName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -138,9 +132,7 @@ definition {
 			fail("Please set 'groupKey or groupName to get groupId'.");
 		}
 
-		if (!(isSet(name))) {
-			fail("Please set 'name'.");
-		}
+		Variables.assertDefined(parameterList = "${name}");
 
 		JSONFragment._addFragmentCollection(
 			groupId = "${groupId}",
@@ -159,23 +151,12 @@ definition {
 			fail("Please set 'groupKey or groupName to get groupId'.");
 		}
 
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-		else {
-			var collectionId = JSONFragment._getCollectionIdByName(
-				collectionName = "${collectionName}",
-				groupId = "${groupId}"
-			);
-		}
+		Variables.assertDefined(parameterList = "${collectionName},${name}");
 
-		if (!(isSet(collectionId))) {
-			fail("Please set 'collectionId'.");
-		}
-
-		if (!(isSet(name))) {
-			fail("Please set 'name'.");
-		}
+		var collectionId = JSONFragment._getCollectionIdByName(
+			collectionName = "${collectionName}",
+			groupId = "${groupId}"
+		);
 
 		JSONFragment._addSection(
 			collectionId = "${collectionId}",
@@ -189,13 +170,7 @@ definition {
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
 	macro assertFragmentCollectionInGroup {
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${collectionName},${groupName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -214,13 +189,7 @@ definition {
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
 	macro assertFragmentCollectionNotInGroup {
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${collectionName},${groupName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -239,17 +208,7 @@ definition {
 
 	@summary = "Assert that a fragment exists in a fragmentCollection given its collectionName, fragmentName, and groupName"
 	macro assertFragmentInGroup {
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-
-		if (!(isSet(fragmentName))) {
-			fail("Please set 'fragmentName'.");
-		}
-
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName},${groupName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -274,17 +233,7 @@ definition {
 
 	@summary = "Assert that a fragment does not exist in a group given its fragmentName"
 	macro assertFragmentNotInGroup {
-		if (!(isSet(collectionName))) {
-			fail("Please set 'collectionName'.");
-		}
-
-		if (!(isSet(fragmentName))) {
-			fail("Please set 'fragmentName'.");
-		}
-
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName},${groupName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 

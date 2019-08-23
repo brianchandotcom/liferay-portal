@@ -1,12 +1,9 @@
 definition {
 
 	macro _addOrganization {
-		if (isSet(organizationName)) {
-			var organizationNameEncoded = URLUtil.encodeUTF8("${organizationName}");
-		}
-		else {
-			fail("Please set 'organizationName'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationName}");
+
+		var organizationNameEncoded = URLUtil.encodeUTF8("${organizationName}");
 
 		if (!(isSet(organizationSite))) {
 			var organizationSite = "false";
@@ -37,13 +34,7 @@ definition {
 	}
 
 	macro _assignUserToOrganization {
-		if (!(isSet(organizationId))) {
-			fail("Please set 'organizationId'.");
-		}
-
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -68,9 +59,7 @@ definition {
 	}
 
 	macro _deleteOrganization {
-		if (!(isSet(organizationId))) {
-			fail("Please set 'organizationId'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -90,9 +79,7 @@ definition {
 	}
 
 	macro addOrganization {
-		if (!(isSet(organizationName))) {
-			fail("Please set 'organizationName'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationName}");
 
 		JSONOrganization._addOrganization(
 			organizationName = "${organizationName}",
@@ -100,13 +87,7 @@ definition {
 	}
 
 	macro assignUserToOrganization {
-		if (!(isSet(organizationName))) {
-			fail("Please set 'organizationName'.");
-		}
-
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(
 			organizationName = "${organizationName}"
@@ -120,9 +101,7 @@ definition {
 	}
 
 	macro deleteOrganizationByName {
-		if (!(isSet(organizationName))) {
-			fail("Please set 'organizationName'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(
 			organizationName = "${organizationName}"
@@ -132,9 +111,7 @@ definition {
 	}
 
 	macro getOrganizationIdByName {
-		if (!(isSet(organizationName))) {
-			fail("Please set 'organizationName'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationName}");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -152,9 +129,7 @@ definition {
 	}
 
 	macro getOrganizationName {
-		if (!(isSet(organizationId))) {
-			fail("Please set 'organizationId'.");
-		}
+		Variables.assertDefined(parameterList = "${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

@@ -1,9 +1,7 @@
 definition {
 
 	macro _addAssetCategoryIds {
-		if ((!(isSet(JSON))) || (!(isSet(assetCategoryIds)))) {
-			fail("Error, 'JSON' and 'assetCategoryNames' must all be set.");
-		}
+		Variables.assertDefined(parameterList = "${JSON},${assetCategoryIds}");
 
 		var JSON = JSONUtil2._addJSONArray(
 			JSON = "${JSON}",
@@ -18,9 +16,7 @@ definition {
 	}
 
 	macro _addAssetTagNames {
-		if ((!(isSet(JSON))) || (!(isSet(assetTagNames)))) {
-			fail("Error, 'JSON' and 'assetTagNames' must all be set.");
-		}
+		Variables.assertDefined(parameterList = "${JSON},${assetTagName}");
 
 		var JSON = JSONUtil2._addJSONArray(
 			JSON = "${JSON}",
@@ -35,9 +31,7 @@ definition {
 	}
 
 	macro _addGuestPermissions {
-		if ((!(isSet(JSON))) || (!(isSet(addGuestPermissions)))) {
-			fail("Error, 'JSON' and 'addGuestPermissions' must all be set.");
-		}
+		Variables.assertDefined(parameterList = "${JSON},${addGuestPermissions}");
 
 		if (!(("${addGuestPermissions}" == "true") || ("${addGuestPermissions}" == "false"))) {
 			fail("Invalid addGuestPermissions: '${addGuestPermissions}' specified. Allowed values are 'true' or 'false'.");
@@ -53,9 +47,7 @@ definition {
 
 	@summary = "See WorkflowConstants.java for available actions"
 	macro _addWorkflowAction {
-		if ((!(isSet(JSON))) || (!(isSet(workflowAction)))) {
-			fail("Error, 'JSON' and 'workflowAction' must all be set.");
-		}
+		Variables.assertDefined(parameterList = "${JSON},${workflowAction}");
 
 		if ("${workflowAction}" == "DRAFT") {
 			var workflowActionNumber = "2";

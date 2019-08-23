@@ -206,11 +206,9 @@ definition {
 
 	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
 	macro addFolder {
-		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
+		Variables.assertDefined(parameterList = "${folderName}");
 
-		if (!(isSet(folderName))) {
-			fail("Please set 'folderName'.");
-		}
+		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
 
 		JSONWebcontent._addFolder(
 			folderName = "${folderName}",
@@ -219,11 +217,9 @@ definition {
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
 	macro addWebContent {
-		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
+		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
-		if (!(isSet(content))) {
-			fail("Please set 'content.'");
-		}
+		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontent._getFolderIdByFolderName(
@@ -239,10 +235,6 @@ definition {
 				workflowAction = "${workflowAction}");
 		}
 
-		if (!(isSet(title))) {
-			fail("Please set 'title.'");
-		}
-
 		JSONWebcontent._addWebContent(
 			content = "${content}",
 			description = "${description}",
@@ -253,9 +245,7 @@ definition {
 	}
 
 	macro getWebContentIdByURLTitle {
-		if (!(isSet(urlTitle))) {
-			fail("Please set 'urlTitle'.");
-		}
+		Variables.assertDefined(parameterList = "${urlTitle}");
 
 		var groupId = JSONWebcontent._getGroupId(groupName = "${groupName}");
 		var portalURL = JSONCompany.getPortalURL();

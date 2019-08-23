@@ -1,6 +1,7 @@
 definition {
 
 	macro _addRole {
+		Variables.assertDefined(parameterList = "${roleTitle}");
 
 		if (isSet(roleDescription)) {
 			var roleDescriptionEncoded = URLUtil.encodeUTF8("${roleDescription}");
@@ -9,13 +10,6 @@ definition {
 		}
 		else {
 			var roleDescriptionMap = "{}";
-		}
-
-		if (isSet(roleTitle)) {
-			var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
-		}
-		else {
-			fail("Please set 'roleTitle'.");
 		}
 
 		if (isSet(roleKey)) {
@@ -72,13 +66,7 @@ definition {
 	}
 
 	macro _assignRoleToUser {
-		if (!(isSet(roleId))) {
-			fail("Please set 'roleId'.");
-		}
-
-		if (!(isSet(userId))) {
-			fail("Please set 'userId'.");
-		}
+		Variables.assertDefined(parameterList = "${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -103,9 +91,7 @@ definition {
 	}
 
 	macro addOrganizationRole {
-		if (!(isSet(roleTitle))) {
-			fail("Please set 'roleTitle'.");
-		}
+		Variables.assertDefined(parameterList = "${roleTitle}");
 
 		JSONRole._addRole(
 			roleDescription = "${roleDescription}",
@@ -115,9 +101,7 @@ definition {
 	}
 
 	macro addRegularRole {
-		if (!(isSet(roleTitle))) {
-			fail("Please set 'roleTitle'.");
-		}
+		Variables.assertDefined(parameterList = "${roleTitle}");
 
 		JSONRole._addRole(
 			roleDescription = "${roleDescription}",
@@ -127,9 +111,7 @@ definition {
 	}
 
 	macro addSiteRole {
-		if (!(isSet(roleTitle))) {
-			fail("Please set 'roleTitle'.");
-		}
+		Variables.assertDefined(parameterList = "${roleTitle}");
 
 		JSONRole._addRole(
 			roleDescription = "${roleDescription}",
@@ -139,13 +121,7 @@ definition {
 	}
 
 	macro assignRoleToUser {
-		if (!(isSet(roleTitle))) {
-			fail("Please set 'roleTitle'.");
-		}
-
-		if (!(isSet(userEmailAddress))) {
-			fail("Please set 'userEmailAddress'.");
-		}
+		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
 		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
 
@@ -157,13 +133,11 @@ definition {
 	}
 
 	macro getRoleIdByName {
-		if (isSet(roleTitle)) {
-			var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
-			var roleTitleEncoded = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
-		}
-		else {
-			fail("Please set 'roleTitle'.");
-		}
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
+
+		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+
+		var roleTitleEncoded = StringUtil.replace("${roleTitleEncoded}", "+", "%20");
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -179,9 +153,7 @@ definition {
 	}
 
 	macro getRoleName {
-		if (!(isSet(roleId))) {
-			fail("Please set 'roleId'.");
-		}
+		Variables.assertDefined(parameterList = "${roleId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

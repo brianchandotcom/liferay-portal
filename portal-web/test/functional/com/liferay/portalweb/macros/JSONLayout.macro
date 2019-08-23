@@ -42,13 +42,7 @@ definition {
 
 	@summary = "Get the layoutId from a layout by using groupId and layoutName"
 	macro _getLayoutIdByName {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
 
 		if (!("${privateLayout}" == "true")) {
 			var privateLayout = "false";
@@ -78,13 +72,7 @@ definition {
 
 	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
 	macro _getTypeSettingsByName {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
 
 		if (!("${privateLayout}" == "true")) {
 			var privateLayout = "false";
@@ -114,13 +102,7 @@ definition {
 
 	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
 	macro addPrivateLayout {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		if (!(isSet(type))) {
 			var type = "portlet";
@@ -138,13 +120,7 @@ definition {
 
 	@summary = "Add a private site page or private child site page to an existing site via groupName"
 	macro addPrivateLayoutByGroupName {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		if (!(isSet(type))) {
 			var type = "portlet";
@@ -162,13 +138,7 @@ definition {
 
 	@summary = "Add a public site page  or public child site page to an existing site or child site via groupKey"
 	macro addPublicLayout {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		if (!(isSet(type))) {
 			var type = "portlet";
@@ -186,13 +156,7 @@ definition {
 
 	@summary = "Add a public site page or public child site page to an existing site via groupName"
 	macro addPublicLayoutByGroupName {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		if (!(isSet(type))) {
 			var type = "portlet";
@@ -214,17 +178,7 @@ definition {
 			var column = "1";
 		}
 
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
-
-		if (!(isSet(widgetName))) {
-			fail("Please set 'widgetName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -256,17 +210,7 @@ definition {
 			var column = "1";
 		}
 
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
-
-		if (!(isSet(widgetName))) {
-			fail("Please set 'widgetName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -293,17 +237,7 @@ definition {
 	}
 
 	macro updateLayoutTemplateOfPublicLayout {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(layoutName))) {
-			fail("Please set 'layoutName'.");
-		}
-
-		if (!(isSet(layoutTemplate))) {
-			fail("layoutTemplate not set.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 

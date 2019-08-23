@@ -6,9 +6,7 @@ definition {
 			var column = "1";
 		}
 
-		if (!(isSet(typeSettings))) {
-			fail("Please set 'typeSettings'");
-		}
+		Variables.assertDefined(parameterList = "${typeSettings}");
 
 		var widget = JSONTypeSettingsUtil._generateWidget(
 			widgetName = "${widgetName}");
@@ -26,9 +24,7 @@ definition {
 
 	@summary = "Generates a Widget to be used in typeSettings"
 	macro _generateWidget {
-		if (!(isSet(widgetName))) {
-			fail("Please set 'widgetName'.");
-		}
+		Variables.assertDefined(parameterList = "${widgetName}");
 
 		if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";

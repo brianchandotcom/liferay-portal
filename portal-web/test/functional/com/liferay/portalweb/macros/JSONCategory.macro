@@ -79,17 +79,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to get categoryId"
 	macro _getCategoryIdByName {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(categoryName))) {
-			fail("Please set 'categoryName'.");
-		}
-
-		if (!(isSet(vocabularyId))) {
-			fail("Please set 'vocabularyId'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -122,13 +112,7 @@ definition {
 
 	@summary = "Get the categoryId from any categoryby using groupId and vocabularyName"
 	macro _getVocabularyIdByName {
-		if (!(isSet(groupId))) {
-			fail("Please set 'groupId'.");
-		}
-
-		if (!(isSet(vocabularyName))) {
-			fail("Please set 'vocabularyName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -154,18 +138,12 @@ definition {
 
 	@summary = "Add a basic category"
 	macro addCategory {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
 			A = "${title}",
 			B = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
-
-		if (!(isSet(vocabularyName))) {
-			fail("Please set 'vocabularyName'.");
-		}
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 
@@ -185,17 +163,7 @@ definition {
 
 	@summary = "Add a basic subcategory"
 	macro addSubcategory {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(parentCategoryName))) {
-			fail("Please set 'parentCategoryName'.");
-		}
-
-		if (!(isSet(vocabularyName))) {
-			fail("Please set 'vocabularyName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${parentCategoryName},${vocabularyName}");
 
 		JSONUtil2._exclusiveOrCheck(
 			A = "${title}",
@@ -225,9 +193,7 @@ definition {
 
 	@summary = "Add a basic vocabulary"
 	macro addVocabulary {
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName}");
 
 		JSONUtil2._exclusiveOrCheck(
 			A = "${title}",
@@ -246,17 +212,7 @@ definition {
 
 	@summary = "Get the categoryId from any category by using categoryName, groupId, and vocabularyId"
 	macro getCategoryId {
-		if (!(isSet(categoryName))) {
-			fail("Please set 'categoryName'.");
-		}
-
-		if (!(isSet(groupName))) {
-			fail("Please set 'groupName'.");
-		}
-
-		if (!(isSet(vocabularyName))) {
-			fail("Please set 'vocabularyName'.");
-		}
+		Variables.assertDefined(parameterList = "${groupName},${categoryName},${vocabularyName}");
 
 		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
 

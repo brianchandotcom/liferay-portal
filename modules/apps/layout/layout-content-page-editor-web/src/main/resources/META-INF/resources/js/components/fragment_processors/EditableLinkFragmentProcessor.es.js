@@ -35,18 +35,14 @@ function getFloatingToolbarButtons(editableValues) {
 
 	buttons.push(linkButton);
 
+	const editButton = {...FLOATING_TOOLBAR_BUTTONS.edit};
+
 	if (editableValues.mappedField || editableValues.fieldId) {
-		const textPropertiesButton = {
-			...FLOATING_TOOLBAR_BUTTONS.textProperties
-		};
-
-		textPropertiesButton.cssClass =
+		editButton.cssClass =
 			'fragments-editor__floating-toolbar--mapped-field disabled fragments-editor__floating-toolbar--disabled';
-
-		buttons.push(textPropertiesButton);
-	} else {
-		buttons.push(FLOATING_TOOLBAR_BUTTONS.edit);
 	}
+
+	buttons.push(editButton);
 
 	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
 

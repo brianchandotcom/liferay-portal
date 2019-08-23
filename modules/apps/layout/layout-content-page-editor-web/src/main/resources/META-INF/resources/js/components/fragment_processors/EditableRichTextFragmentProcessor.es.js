@@ -53,18 +53,16 @@ function destroy() {
 function getFloatingToolbarButtons(editableValues) {
 	const buttons = [];
 
+	const editButton = {...FLOATING_TOOLBAR_BUTTONS.edit};
+
 	if (editableValues.mappedField || editableValues.fieldId) {
-		const textPropertiesButton = FLOATING_TOOLBAR_BUTTONS.textProperties;
-
-		textPropertiesButton.cssClass =
+		editButton.cssClass =
 			'disabled fragments-editor__floating-toolbar--disabled fragments-editor__floating-toolbar--mapped-field';
-
-		buttons.push(textPropertiesButton);
-	} else {
-		buttons.push(FLOATING_TOOLBAR_BUTTONS.edit);
 	}
 
-	const mapButton = Object.assign({}, FLOATING_TOOLBAR_BUTTONS.map);
+	buttons.push(editButton);
+
+	const mapButton = {...FLOATING_TOOLBAR_BUTTONS.map};
 
 	if (editableValues.fieldId || editableValues.mappedField) {
 		mapButton.cssClass = 'fragments-editor__floating-toolbar--mapped-field';

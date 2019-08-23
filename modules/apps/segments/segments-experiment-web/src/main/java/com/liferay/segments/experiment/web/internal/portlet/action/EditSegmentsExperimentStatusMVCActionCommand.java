@@ -34,13 +34,16 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
 import javax.servlet.http.HttpServletResponse;
-import java.util.concurrent.Callable;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sarai Díaz
@@ -64,8 +67,8 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Callable<JSONObject> callable = new EditSegmentsExperimentCallable(
-			actionRequest);
+		Callable<JSONObject> callable =
+			new EditSegmentsExperimentStatusCallable(actionRequest);
 
 		JSONObject jsonObject = null;
 
@@ -93,7 +96,8 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private JSONObject _editSegmentsExperiment(ActionRequest actionRequest)
+	private JSONObject _editSegmentsExperimentStatus(
+			ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -123,15 +127,17 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
 
-	private class EditSegmentsExperimentCallable
+	private class EditSegmentsExperimentStatusCallable
 		implements Callable<JSONObject> {
 
 		@Override
 		public JSONObject call() throws Exception {
-			return _editSegmentsExperiment(_actionRequest);
+			return _editSegmentsExperimentStatus(_actionRequest);
 		}
 
-		private EditSegmentsExperimentCallable(ActionRequest actionRequest) {
+		private EditSegmentsExperimentStatusCallable(
+			ActionRequest actionRequest) {
+
 			_actionRequest = actionRequest;
 		}
 

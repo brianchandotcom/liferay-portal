@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentRelNameException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -69,8 +71,115 @@ public class SegmentsExperimentRelLocalServiceTest {
 	}
 
 	@Test
+	public void testAddSegmentsExperimentRel() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull(segmentsExperimentRel);
+
+		Assert.assertEquals(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperimentRel.getSegmentsExperimentId());
+
+		Assert.assertEquals(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			segmentsExperimentRel.getSegmentsExperimentKey());
+
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceId(),
+			segmentsExperimentRel.getSegmentsExperienceId());
+
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceKey(),
+			segmentsExperimentRel.getSegmentsExperienceKey());
+
+		Assert.assertEquals(
+			segmentsExperience.getName(LocaleUtil.getDefault()),
+			segmentsExperimentRel.getName(LocaleUtil.getDefault()));
+	}
+
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testAddSegmentsExperimentRelWithLockedExperiment()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	@Test
 	public void testDeleteSegmentsExperimentRel() throws Exception {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				segmentsExperience.getSegmentsExperienceId(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.deleteSegmentsExperimentRel(
+			segmentsExperimentRel);
+
+		Assert.assertNull(
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId()));
+	}
+
+	@Test
+	public void testDeleteSegmentsExperimentRels() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience segmentsExperience = _addSegmentsExperience();
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		segmentsExperience = _addSegmentsExperience();
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentRelLocalService.deleteSegmentsExperimentRels(
+			segmentsExperiment.getSegmentsExperimentId());
+
+		List<SegmentsExperimentRel> segmentsExperimentRels =
+			_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
+				segmentsExperiment.getSegmentsExperimentId());
+
+		Assert.assertTrue(segmentsExperimentRels.isEmpty());
+	}
+
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testDeleteSegmentsExperimentRelWithLockedExperiment()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
 
@@ -166,6 +275,27 @@ public class SegmentsExperimentRelLocalServiceTest {
 		Assert.assertEquals(
 			name,
 			updatedSegmentsExperimentRel.getName(LocaleUtil.getDefault()));
+	}
+
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testUpdateSegmentsExperimentRelWithLockedExperiment()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		_segmentsExperimentLocalService.updateSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentKey(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				segmentsExperiment.getSegmentsExperienceId());
+
+		_segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
+			segmentsExperimentRel.getSegmentsExperimentRelId(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	private SegmentsExperience _addSegmentsExperience() throws Exception {

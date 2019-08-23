@@ -6933,10 +6933,10 @@ public class JournalArticleLocalServiceImpl
 
 			// Subscriptions
 
-			if (article.equals(
-					getOldestArticle(
-						article.getGroupId(), article.getArticleId()))) {
+			JournalArticle oldestArticle = getOldestArticle(
+				article.getGroupId(), article.getArticleId());
 
+			if (article.equals(oldestArticle)) {
 				action = "add";
 			}
 		}

@@ -21,3 +21,13 @@
 	module="js/Overview.es"
 	templateNamespace="com.liferay.change.tracking.change.lists.web.Overview.render"
 />
+
+<script>
+	function <portlet:namespace/>checkoutCollection(url, message) {
+		var confirmationDisabled = <%= !changeListsDisplayContext.isCheckoutCtCollectionConfirmationEnabled() %>;
+
+		if (confirmationDisabled || confirm(message)) {
+			Liferay.Util.navigate(url);
+		}
+	}
+</script>

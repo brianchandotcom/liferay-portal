@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import dom from 'metal-dom';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -21,7 +22,8 @@ import Carousel from './Carousel.es';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
-		links: PropTypes.string,
+		headerTitle: PropTypes.string.isRequired,
+		links: PropTypes.string.isRequired,
 		selector: PropTypes.string
 	};
 
@@ -47,19 +49,37 @@ class ItemSelectorPreview extends Component {
 		});
 	}
 
+	handleAdd = () => {
+		//TODO
+		this.setState({openViewer: false});
+	};
+
+	handleClose = () => {
+		this.setState({openViewer: false});
+	};
+
 	render() {
 		const {openViewer, selectedItemIndex, items} = this.state;
+
+		const spritemap =
+			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
 		return (
 			<div className="item-selector-preview">
 				{openViewer && (
 					<>
-						<Header headerTitle="Images" />
-						<Carousel
-							items={items}
-							startIndex={selectedItemIndex}
-							circular={true}
-						/>
+						<ClayIconSpriteContext.Provider value={spritemap}>
+							<Header
+								handleAdd={this.handleAdd}
+								handleClose={this.handleClose}
+								headerTitle={this.props.headerTitle}
+							/>
+							<Carousel
+								items={items}
+								startIndex={selectedItemIndex}
+								circular={true}
+							/>
+						</ClayIconSpriteContext.Provider>
 					</>
 				)}
 			</div>

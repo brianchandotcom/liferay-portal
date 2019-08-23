@@ -53,6 +53,12 @@ class DataLayoutBuilder extends Component {
 	}
 	}
 
+	getFieldTypes() {
+		const {fieldTypes} = this.props;
+
+		return fieldTypes;
+	}
+
 	render() {
 		const {
 			context,

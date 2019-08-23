@@ -149,6 +149,42 @@ that may or may not be enforced with a unique index at the database level. Case
 	 * <#include "range_comment.ftl">
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBy${entityFinder.name}(<#list entityColumns as entityColumn>${entityColumn.type},</#list> int, int, OrderByComparator)}
+	<#list entityColumns as entityColumn>
+	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+	</#list>
+	 * @param start the lower bound of the range of ${entity.humanNames}
+	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ${entity.humanNames}
+	 */
+	@Deprecated
+	@Override
+	public List<${entity.name}> findBy${entityFinder.name}(
+
+	<#list entityColumns as entityColumn>
+		${entityColumn.type} ${entityColumn.name},
+	</#list>
+
+	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
+
+		return findBy${entityFinder.name}(
+
+		<#list entityColumns as entityColumn>
+			${entityColumn.name},
+		</#list>
+
+		start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}.
+	 *
+	 * <p>
+	 * <#include "range_comment.ftl">
+	 * </p>
+	 *
 	<#list entityColumns as entityColumn>
 	 * @param ${entityColumn.name} the ${entityColumn.humanName}
 	</#list>
@@ -165,39 +201,6 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-		return findBy${entityFinder.name}(
-
-		<#list entityColumns as entityColumn>
-			${entityColumn.name},
-		</#list>
-
-		start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param start the lower bound of the range of ${entity.humanNames}
-	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ${entity.humanNames}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
-
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name},
-	</#list>
-
-	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
 		<#list entityColumns as entityColumn>
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
@@ -211,25 +214,22 @@ that may or may not be enforced with a unique index at the database level. Case
 		<#if !entityFinder.hasCustomComparator()>
 			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 				pagination = false;
+				finderPath = _finderPathWithoutPaginationFindBy${entityFinder.name};
+				finderArgs = new Object[] {
+					<#list entityColumns as entityColumn>
+						<#if stringUtil.equals(entityColumn.type, "Date")>
+							_getTime(${entityColumn.name})
+						<#else>
+							${entityColumn.name}
+						</#if>
 
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindBy${entityFinder.name};
-					finderArgs = new Object[] {
-						<#list entityColumns as entityColumn>
-							<#if stringUtil.equals(entityColumn.type, "Date")>
-								_getTime(${entityColumn.name})
-							<#else>
-								${entityColumn.name}
-							</#if>
-
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					};
-				}
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				};
 			}
-			else if (useFinderCache) {
+			else {
 		</#if>
 
 		finderPath = _finderPathWithPaginationFindBy${entityFinder.name};
@@ -249,26 +249,22 @@ that may or may not be enforced with a unique index at the database level. Case
 			}
 		</#if>
 
-		List<${entity.name}> list = null;
+		List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (${entity.name} ${entity.varName} : list) {
+				if (
+					<#list entityColumns as entityColumn>
+						<#include "persistence_impl_finder_field_comparator.ftl">
 
-			if ((list != null) && !list.isEmpty()) {
-				for (${entity.name} ${entity.varName} : list) {
-					if (
-						<#list entityColumns as entityColumn>
-							<#include "persistence_impl_finder_field_comparator.ftl">
+						<#if entityColumn_has_next>
+							||
+						</#if>
+					</#list>
+				) {
+					list = null;
 
-							<#if entityColumn_has_next>
-								||
-							</#if>
-						</#list>
-					) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -306,14 +302,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					${finderCache}.putResult(finderPath, finderArgs, list);
-				}
+				${finderCache}.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					${finderCache}.removeResult(finderPath, finderArgs);
-				}
+				${finderCache}.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1464,6 +1456,50 @@ that may or may not be enforced with a unique index at the database level. Case
 	}
 
 	/**
+	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}, optionally using the finder cache.
+	 *
+	 * <p>
+	 * <#include "range_comment.ftl">
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBy${entityFinder.name}(<#list entityColumns as entityColumn>${entityColumn.type},</#list> int, int, OrderByComparator)}
+	<#list entityColumns as entityColumn>
+	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+	</#list>
+	 * @param start the lower bound of the range of ${entity.humanNames}
+	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ${entity.humanNames}
+	 */
+	@Deprecated
+	@Override
+	public List<${entity.name}> findBy${entityFinder.name}(
+
+	<#list entityColumns as entityColumn>
+		<#if entityColumn.hasArrayableOperator()>
+			${entityColumn.type}[] ${entityColumn.names},
+		<#else>
+			${entityColumn.type} ${entityColumn.name},
+		</#if>
+	</#list>
+
+	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
+
+		return findBy${entityFinder.name}(
+
+		<#list entityColumns as entityColumn>
+			<#if entityColumn.hasArrayableOperator()>
+				${entityColumn.names},
+			<#else>
+				${entityColumn.name},
+			</#if>
+		</#list>
+
+		start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(true)}.
 	 *
 	 * <p>
@@ -1494,47 +1530,6 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-		return findBy${entityFinder.name}(
-
-		<#list entityColumns as entityColumn>
-			<#if entityColumn.hasArrayableOperator()>
-				${entityColumn.names},
-			<#else>
-				${entityColumn.name},
-			</#if>
-		</#list>
-
-		start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}, optionally using the finder cache.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param start the lower bound of the range of ${entity.humanNames}
-	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ${entity.humanNames}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
-
-	<#list entityColumns as entityColumn>
-		<#if entityColumn.hasArrayableOperator()>
-			${entityColumn.type}[] ${entityColumn.names},
-		<#else>
-			${entityColumn.type} ${entityColumn.name},
-		</#if>
-	</#list>
-
-	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
 		<#list entityColumns as entityColumn>
 			<#if entityColumn.hasArrayableOperator()>
 				if (${entityColumn.names} == null) {
@@ -1626,25 +1621,23 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 			pagination = false;
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					<#list entityColumns as entityColumn>
-						<#if entityColumn.hasArrayableOperator()>
-							StringUtil.merge(${entityColumn.names})
-						<#elseif stringUtil.equals(entityColumn.type, "Date")>
-							_getTime(${entityColumn.name})
-						<#else>
-							${entityColumn.name}
-						</#if>
+			finderArgs = new Object[] {
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						StringUtil.merge(${entityColumn.names})
+					<#elseif stringUtil.equals(entityColumn.type, "Date")>
+						_getTime(${entityColumn.name})
+					<#else>
+						${entityColumn.name}
+					</#if>
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
-				};
-			}
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
@@ -1660,30 +1653,26 @@ that may or may not be enforced with a unique index at the database level. Case
 			};
 		}
 
-		List<${entity.name}> list = null;
+		List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (${entity.name} ${entity.varName} : list) {
+				if (
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							!ArrayUtil.contains(${entityColumn.names}, ${entity.varName}.get${entityColumn.methodName}())
+						<#else>
+							<#include "persistence_impl_finder_field_comparator.ftl">
+						</#if>
 
-			if ((list != null) && !list.isEmpty()) {
-				for (${entity.name} ${entity.varName} : list) {
-					if (
-						<#list entityColumns as entityColumn>
-							<#if entityColumn.hasArrayableOperator()>
-								!ArrayUtil.contains(${entityColumn.names}, ${entity.varName}.get${entityColumn.methodName}())
-							<#else>
-								<#include "persistence_impl_finder_field_comparator.ftl">
-							</#if>
+						<#if entityColumn_has_next>
+							||
+						</#if>
+					</#list>
+				) {
+					list = null;
 
-							<#if entityColumn_has_next>
-								||
-							</#if>
-						</#list>
-					) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1723,14 +1712,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
-				}
+				${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
-				}
+				${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 
 				throw processException(e);
 			}
@@ -1835,6 +1820,49 @@ that may or may not be enforced with a unique index at the database level. Case
 	}
 
 	/**
+	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}, optionally using the finder cache.
+	 *
+	 * <p>
+	 * <#include "range_comment.ftl">
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBy${entityFinder.name}(<#list entityColumns as entityColumn>${entityColumn.type}<#if entityColumn.hasArrayableOperator()>[]</#if>,</#list> int, int, OrderByComparator)}
+	<#list entityColumns as entityColumn>
+	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+	</#list>
+	 * @param start the lower bound of the range of ${entity.humanNames}
+	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ${entity.humanNames}
+	 */
+	@Deprecated
+	@Override
+	public List<${entity.name}> findBy${entityFinder.name}(
+
+	<#list entityColumns as entityColumn>
+		<#if entityColumn.hasArrayableOperator()>
+			${entityColumn.type}[] ${entityColumn.names},
+		<#else>
+			${entityColumn.type} ${entityColumn.name},
+		</#if>
+	</#list>
+
+	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
+		return findBy${entityFinder.name}(
+
+		<#list entityColumns as entityColumn>
+			<#if entityColumn.hasArrayableOperator()>
+				${entityColumn.names},
+			<#else>
+				${entityColumn.name},
+			</#if>
+		</#list>
+
+		start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(true)}.
 	 *
 	 * <p>
@@ -1865,47 +1893,6 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-		return findBy${entityFinder.name}(
-
-		<#list entityColumns as entityColumn>
-			<#if entityColumn.hasArrayableOperator()>
-				${entityColumn.names},
-			<#else>
-				${entityColumn.name},
-			</#if>
-		</#list>
-
-		start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}, optionally using the finder cache.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param start the lower bound of the range of ${entity.humanNames}
-	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ${entity.humanNames}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
-
-	<#list entityColumns as entityColumn>
-		<#if entityColumn.hasArrayableOperator()>
-			${entityColumn.type}[] ${entityColumn.names},
-		<#else>
-			${entityColumn.type} ${entityColumn.name},
-		</#if>
-	</#list>
-
-	int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
 		<#list entityColumns as entityColumn>
 			<#if entityColumn.hasArrayableOperator()>
 				if (${entityColumn.names} == null) {
@@ -1993,24 +1980,21 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 			pagination = false;
+			finderArgs = new Object[] {
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						StringUtil.merge(${entityColumn.names})
+					<#else>
+						${entityColumn.name}
+					</#if>
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					<#list entityColumns as entityColumn>
-						<#if entityColumn.hasArrayableOperator()>
-							StringUtil.merge(${entityColumn.names})
-						<#else>
-							${entityColumn.name}
-						</#if>
-
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
-				};
-			}
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+			};
 		}
-		else if (useFinderCache) {
+		else {
 			finderArgs = new Object[] {
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
@@ -2024,30 +2008,26 @@ that may or may not be enforced with a unique index at the database level. Case
 			};
 		}
 
-		List<${entity.name}> list = null;
+		List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
 
-		if (useFinderCache) {
-			list = (List<${entity.name}>)${finderCache}.getResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (${entity.name} ${entity.varName} : list) {
+				if (
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							!ArrayUtil.contains(${entityColumn.names}, ${entity.varName}.get${entityColumn.methodName}())
+						<#else>
+							<#include "persistence_impl_finder_field_comparator.ftl">
+						</#if>
 
-			if ((list != null) && !list.isEmpty()) {
-				for (${entity.name} ${entity.varName} : list) {
-					if (
-						<#list entityColumns as entityColumn>
-							<#if entityColumn.hasArrayableOperator()>
-								!ArrayUtil.contains(${entityColumn.names}, ${entity.varName}.get${entityColumn.methodName}())
-							<#else>
-								<#include "persistence_impl_finder_field_comparator.ftl">
-							</#if>
+						<#if entityColumn_has_next>
+							||
+						</#if>
+					</#list>
+				) {
+					list = null;
 
-							<#if entityColumn_has_next>
-								||
-							</#if>
-						</#list>
-					) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2107,14 +2087,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				cacheResult(list);
 
-				if (useFinderCache) {
-					${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
-				}
+				${finderCache}.putResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs, list);
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
-				}
+				${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
 
 				throw processException(e);
 			}
@@ -2245,32 +2221,35 @@ that may or may not be enforced with a unique index at the database level. Case
 	}
 
 	/**
-	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBy${entityFinder.name}(<#list entityColumns as entityColumn>${entityColumn.type}<#if entityColumn_has_next>,</#if></#list>)}
 	<#list entityColumns as entityColumn>
 	 * @param ${entityColumn.name} the ${entityColumn.humanName}
 	</#list>
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
 	 */
+	@Deprecated
 	@Override
 	public ${entity.name} fetchBy${entityFinder.name}(
 
 	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name}
-
-		<#if entityColumn_has_next>
-			,
-		</#if>
+		${entityColumn.type} ${entityColumn.name},
 	</#list>
 
-	) {
+	boolean useFinderCache) {
 		return fetchBy${entityFinder.name}(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.name}
+
+			<#if entityColumn_has_next>
+				,
+			</#if>
 		</#list>
 
-		true);
+		);
 	}
 
 	/**
@@ -2288,39 +2267,33 @@ that may or may not be enforced with a unique index at the database level. Case
 	<#list entityColumns as entityColumn>
 		${entityColumn.type} ${entityColumn.name}
 
-		,
+		<#if entityColumn_has_next>
+			,
+		</#if>
 	</#list>
 
-	boolean useFinderCache) {
+	) {
 		<#list entityColumns as entityColumn>
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 			</#if>
 		</#list>
 
-		Object[] finderArgs = null;
+		Object[] finderArgs = new Object[] {
+			<#list entityColumns as entityColumn>
+				<#if stringUtil.equals(entityColumn.type, "Date")>
+					_getTime(${entityColumn.name})
+				<#else>
+					${entityColumn.name}
+				</#if>
 
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				<#list entityColumns as entityColumn>
-					<#if stringUtil.equals(entityColumn.type, "Date")>
-						_getTime(${entityColumn.name})
-					<#else>
-						${entityColumn.name}
-					</#if>
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
+		};
 
-					<#if entityColumn_has_next>
-						,
-					</#if>
-				</#list>
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = ${finderCache}.getResult(_finderPathFetchBy${entityFinder.name}, finderArgs, this);
-		}
+		Object result = ${finderCache}.getResult(_finderPathFetchBy${entityFinder.name}, finderArgs, this);
 
 		if (result instanceof ${entity.name}) {
 			${entity.name} ${entity.varName} = (${entity.name})result;
@@ -2369,9 +2342,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				List<${entity.name}> list = q.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
-						${finderCache}.putResult(_finderPathFetchBy${entityFinder.name}, finderArgs, list);
-					}
+					${finderCache}.putResult(_finderPathFetchBy${entityFinder.name}, finderArgs, list);
 				}
 				else {
 					<#if !entityFinder.isUnique()>
@@ -2379,22 +2350,6 @@ that may or may not be enforced with a unique index at the database level. Case
 							Collections.sort(list, Collections.reverseOrder());
 
 							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										<#list entityColumns as entityColumn>
-											<#if stringUtil.equals(entityColumn.type, "Date")>
-												_getTime(${entityColumn.name})
-											<#else>
-												${entityColumn.name}
-											</#if>
-
-											<#if entityColumn_has_next>
-												,
-											</#if>
-										</#list>
-									};
-								}
-
 								_log.warn("${entity.name}PersistenceImpl.fetchBy${entityFinder.name}(<#list entityColumns as entityColumn>${entityColumn.type}, </#list>boolean) with parameters (" + StringUtil.merge(finderArgs) + ") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 							}
 						}
@@ -2408,9 +2363,7 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 			catch (Exception e) {
-				if (useFinderCache) {
-					${finderCache}.removeResult(_finderPathFetchBy${entityFinder.name}, finderArgs);
-				}
+				${finderCache}.removeResult(_finderPathFetchBy${entityFinder.name}, finderArgs);
 
 				throw processException(e);
 			}

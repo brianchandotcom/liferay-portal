@@ -14,6 +14,7 @@ configurations {
 
 dependencies {
 	compileOnly group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-6"
+	compileOnly group: "com.liferay", name: "org.springframework.orm", version: "4.3.22.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
@@ -23,7 +24,6 @@ dependencies {
 	compileOnly group: "org.springframework", name: "spring-beans", version: "4.3.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-context", version: "4.3.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-core", version: "4.3.22.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-orm", version: "4.3.22.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-tx", version: "4.3.22.RELEASE"
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

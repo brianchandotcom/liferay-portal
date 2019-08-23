@@ -1560,6 +1560,9 @@ components:
             type: object
 info:
     description: ""
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
     title: "Headless Delivery"
     version: v1.0
 openapi: 3.0.1

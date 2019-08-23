@@ -14,9 +14,13 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,6 +35,9 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -95,8 +102,29 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					fragmentEntryLink.getRendererKey(), serviceContext);
 
 			jsonObject.put(
+				"configuration", duplicateFragmentEntryLink.getConfiguration()
+			).put(
+				"defaultConfigurationValues",
+				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
+					duplicateFragmentEntryLink.getConfiguration())
+			).put(
+				"editableValues", duplicateFragmentEntryLink.getEditableValues()
+			).put(
 				"fragmentEntryLinkId",
-				duplicateFragmentEntryLink.getFragmentEntryLinkId());
+				duplicateFragmentEntryLink.getFragmentEntryLinkId()
+			);
+
+			FragmentEntry fragmentEntry = _getFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId(),
+				fragmentEntryLink.getRendererKey(), serviceContext);
+
+			if (fragmentEntry != null) {
+				jsonObject.put(
+					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
+				).put(
+					"name", fragmentEntry.getName()
+				);
+			}
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 		}
@@ -120,7 +148,38 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 		return jsonObject;
 	}
 
+	private FragmentEntry _getContributedFragmentEntry(
+		String fragmentEntryKey, Locale locale) {
+
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		return fragmentEntries.get(fragmentEntryKey);
+	}
+
+	private FragmentEntry _getFragmentEntry(
+		long fragmentEntryId, String rendererKey,
+		ServiceContext serviceContext) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		return _getContributedFragmentEntry(
+			rendererKey, serviceContext.getLocale());
+	}
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
+
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

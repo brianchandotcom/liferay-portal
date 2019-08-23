@@ -19,9 +19,17 @@
 <%
 LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
+String defaultRobots = RobotsUtil.getRobots(layoutsAdminDisplayContext.getSelLayoutSet(), request.isSecure());
+
 String virtualHostName = PortalUtil.getVirtualHostname(layoutSet);
 
-String defaultRobots = RobotsUtil.getRobots(layoutsAdminDisplayContext.getSelLayoutSet(), request.isSecure());
+Group scopeGroup = themeDisplay.getScopeGroup();
+
+if (Validator.isNull(virtualHostName) && scopeGroup.isStagingGroup()) {
+	Group liveGroup = scopeGroup.getLiveGroup();
+
+	virtualHostName = PortalUtil.getVirtualHostname(layoutSet.isPrivateLayout() ? liveGroup.getPrivateLayoutSet() : liveGroup.getPublicLayoutSet());
+}
 
 String robots = ParamUtil.getString(request, "robots", defaultRobots);
 %>

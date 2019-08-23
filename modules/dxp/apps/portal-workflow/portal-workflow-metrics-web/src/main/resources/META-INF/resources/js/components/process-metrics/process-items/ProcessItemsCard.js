@@ -47,9 +47,15 @@ ProcessItemsCard.Body = ({completed = false, processId, timeRange}) => {
 		setError(null);
 		setLoading(true);
 
+		const isValidDate = date => date && !isNaN(date);
+
 		let urlRequest = `/processes/${processId}?completed=${completed}`;
 
-		if (timeRange && timeRange.dateEnd && timeRange.dateStart) {
+		if (
+			timeRange &&
+			isValidDate(timeRange.dateEnd) &&
+			isValidDate(timeRange.dateStart)
+		) {
 			const {dateEnd, dateStart} = timeRange;
 
 			urlRequest += `&dateEnd=${dateEnd.toISOString()}&dateStart=${dateStart.toISOString()}`;

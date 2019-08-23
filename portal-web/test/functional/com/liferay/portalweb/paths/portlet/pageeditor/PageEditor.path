@@ -110,6 +110,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_REPLY_RESOLVED_COMMENTS_ENTRY</td>
+	<td>xpath=(//article[contains(@class,'fragment-comment--reply') and contains(@class,'fragment-comment--resolved')]//div/p[contains(.,'${key_commentReply}')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_RESOLVED_COMMENTS_ENTRY</td>
+	<td>//article[contains(@class,'fragment-comment--resolved')]//div/p[contains(.,'${key_fragmentComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[normalize-space()='${key_collectionName}']</td>
 	<td></td>
@@ -142,6 +152,16 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECTION_TITLE</td>
 	<td>//div[contains(@class,'sidebar-section')]//h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL</td>
+	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'Show Resolved Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_DISABLED</td>
+	<td>//input[contains(@class,'custom-control-input')][@disabled='']</td>
 	<td></td>
 </tr>
 <tr>

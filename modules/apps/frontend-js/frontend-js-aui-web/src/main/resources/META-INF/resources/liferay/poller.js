@@ -161,15 +161,19 @@ AUI.add(
 
 				var requestStr = JSON.stringify([_metaData]);
 
-				A.io(_getReceiveUrl(), {
-					data: {
-						pollerRequest: requestStr
-					},
-					method: A.config.io.method,
-					on: {
-						success: _processResponse
-					}
-				});
+				const body = new URLSearchParams();
+				body.append('pollerRequest', requestStr);
+
+				Liferay.Util.fetch(_getReceiveUrl(), {
+					body,
+					method: 'POST'
+				})
+					.then(response => {
+						return response.text();
+					})
+					.then(responseText => {
+						_processResponse(null, {responseText});
+					});
 			}
 		};
 
@@ -201,15 +205,17 @@ AUI.add(
 
 				var requestStr = JSON.stringify([_metaData].concat(data));
 
-				A.io(_getSendUrl(), {
-					data: {
-						pollerRequest: requestStr
-					},
-					method: A.config.io.method,
-					on: {
-						complete: _sendComplete
-					}
-				});
+				const body = new URLSearchParams();
+				body.append('pollerRequest', requestStr);
+
+				Liferay.Util.fetch(_getSendUrl(), {
+					body,
+					method: 'POST'
+				})
+					.then(response => {
+						return response.text();
+					})
+					.then(_sendComplete);
 			}
 		};
 
@@ -373,6 +379,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'io', 'json']
+		requires: ['aui-base', 'json']
 	}
 );

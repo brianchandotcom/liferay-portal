@@ -113,7 +113,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -301,14 +300,15 @@ public class ContentPageEditorDisplayContext {
 			"languageId", themeDisplay.getLanguageId()
 		).put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
-		).put(
-			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		);
 
 		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
 			_groupId, classNameId, classPK, getSegmentsExperienceId());
 
 		soyContext.put(
+			"mappedAssetEntries",
+			_getMappedAssetEntriesSoyContexts(assetEntries)
+		).put(
 			"mappedContents",
 			MappedContentUtil.getMappedContentsJSONArray(
 				assetEntries, themeDisplay.getURLCurrent(), request)
@@ -1246,132 +1246,27 @@ public class ContentPageEditorDisplayContext {
 		return lookAndFeelURL.toString();
 	}
 
-	private Set<SoyContext> _getMappedAssetEntriesSoyContexts()
-		throws Exception {
+	private Set<SoyContext> _getMappedAssetEntriesSoyContexts(
+		Set<AssetEntry> assetEntries) {
 
 		Set<SoyContext> mappedAssetEntriesSoyContexts = new HashSet<>();
 
-		Set<Long> mappedClassPKs = new HashSet<>();
+		for (AssetEntry assetEntry : assetEntries) {
+			SoyContext mappedAssetEntrySoyContext =
+				SoyContextFactoryUtil.createSoyContext();
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), classNameId, classPK);
+			mappedAssetEntrySoyContext.put(
+				"classNameId", assetEntry.getClassNameId()
+			).put(
+				"classPK", assetEntry.getClassPK()
+			).put(
+				"title", assetEntry.getTitle(themeDisplay.getLocale())
+			);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
-			Iterator<String> keysIterator = editableValuesJSONObject.keys();
-
-			while (keysIterator.hasNext()) {
-				String key = keysIterator.next();
-
-				JSONObject editableProcessorJSONObject =
-					editableValuesJSONObject.getJSONObject(key);
-
-				if (editableProcessorJSONObject == null) {
-					continue;
-				}
-
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
-
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
-
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					if (editableJSONObject == null) {
-						continue;
-					}
-
-					JSONObject configJSONObject =
-						editableJSONObject.getJSONObject("config");
-
-					if ((configJSONObject != null) &&
-						(configJSONObject.length() > 0)) {
-
-						SoyContext mappedAssetEntrySoyContext =
-							_getMappedAssetEntrySoyContexts(
-								configJSONObject, mappedClassPKs);
-
-						if (mappedAssetEntrySoyContext != null) {
-							mappedAssetEntriesSoyContexts.add(
-								mappedAssetEntrySoyContext);
-						}
-					}
-
-					SoyContext mappedAssetEntrySoyContext =
-						_getMappedAssetEntrySoyContexts(
-							editableJSONObject, mappedClassPKs);
-
-					if (mappedAssetEntrySoyContext == null) {
-						continue;
-					}
-
-					mappedAssetEntriesSoyContexts.add(
-						mappedAssetEntrySoyContext);
-				}
-			}
+			mappedAssetEntriesSoyContexts.add(mappedAssetEntrySoyContext);
 		}
-
-		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			_getLayoutData());
-
-		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
-			"structure");
-
-		Iterator<JSONObject> iteratorStructure = structureJSONArray.iterator();
-
-		iteratorStructure.forEachRemaining(
-			structureJSONObject -> {
-				JSONObject configJSONObject = structureJSONObject.getJSONObject(
-					"config");
-
-				if (configJSONObject != null) {
-					JSONObject backgroundImageJSONObject =
-						configJSONObject.getJSONObject("backgroundImage");
-
-					if (backgroundImageJSONObject != null) {
-						SoyContext mappedAssetEntrySoyContext =
-							_getMappedAssetEntrySoyContexts(
-								backgroundImageJSONObject, mappedClassPKs);
-
-						if (mappedAssetEntrySoyContext != null) {
-							mappedAssetEntriesSoyContexts.add(
-								mappedAssetEntrySoyContext);
-						}
-					}
-				}
-			});
 
 		return mappedAssetEntriesSoyContexts;
-	}
-
-	private SoyContext _getMappedAssetEntrySoyContexts(
-		JSONObject jsonObject, Set<Long> mappedClassPKs) {
-
-		AssetEntry assetEntry = MappedContentUtil.getAssetEntry(
-			jsonObject, mappedClassPKs);
-
-		if (assetEntry == null) {
-			return null;
-		}
-
-		SoyContext mappedAssetEntrySoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		mappedAssetEntrySoyContext.put(
-			"classNameId", assetEntry.getClassNameId()
-		).put(
-			"classPK", assetEntry.getClassPK()
-		).put(
-			"title", assetEntry.getTitle(themeDisplay.getLocale())
-		);
-
-		return mappedAssetEntrySoyContext;
 	}
 
 	private String _getPortletCategoryTitle(PortletCategory portletCategory) {

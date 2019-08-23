@@ -139,16 +139,12 @@ public class MappedContentUtil {
 	}
 
 	public static JSONArray getMappedContentsJSONArray(
-		String backURL, long groupId, HttpServletRequest httpServletRequest,
-		long layoutClassNameId, long layoutClassPK, long segmentsExperienceId) {
+		Set<AssetEntry> assetEntries, String backURL,
+		HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
-			Set<AssetEntry> assetEntries = getMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK,
-				segmentsExperienceId);
-
 			for (AssetEntry assetEntry : assetEntries) {
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(

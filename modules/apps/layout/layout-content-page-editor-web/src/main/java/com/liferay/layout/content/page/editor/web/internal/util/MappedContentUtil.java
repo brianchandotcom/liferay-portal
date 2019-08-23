@@ -25,6 +25,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -120,13 +122,14 @@ public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
 		String backURL, long groupId, HttpServletRequest httpServletRequest,
-		long layoutClassNameId, long layoutClassPK) {
+		long layoutClassNameId, long layoutClassPK, long segmentsExperienceId) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
 			Set<AssetEntry> assetEntries = _getMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK);
+				groupId, layoutClassNameId, layoutClassPK,
+				segmentsExperienceId);
 
 			for (AssetEntry assetEntry : assetEntries) {
 				mappedContentsJSONArray.put(
@@ -196,12 +199,11 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK)
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
-
-		Set<Long> mappedClassPKs = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -294,12 +296,65 @@ public class MappedContentUtil {
 		);
 	}
 
-	private static Set<AssetEntry> _getMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK)
+	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			long segmentsExperienceId, Set<Long> mappedClassPKs)
 		throws PortalException {
 
-		return _getFragmentEntryLinksMappedAssetEntries(
-			groupId, layoutClassNameId, layoutClassPK);
+		Set<AssetEntry> assetEntries = new HashSet<>();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, layoutClassNameId, layoutClassPK, true);
+
+		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
+			"structure");
+
+		Iterator<JSONObject> iteratorStructure = structureJSONArray.iterator();
+
+		iteratorStructure.forEachRemaining(
+			structureJSONObject -> {
+				JSONObject configJSONObject = structureJSONObject.getJSONObject(
+					"config");
+
+				if (configJSONObject != null) {
+					JSONObject backgroundImageJSONObject =
+						configJSONObject.getJSONObject("backgroundImage");
+
+					if (backgroundImageJSONObject != null) {
+						AssetEntry assetEntry = getAssetEntry(
+							backgroundImageJSONObject, mappedClassPKs);
+
+						if (assetEntry != null) {
+							assetEntries.add(assetEntry);
+						}
+					}
+				}
+			});
+
+		return assetEntries;
+	}
+
+	private static Set<AssetEntry> _getMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			long segmentsExperienceId)
+		throws PortalException {
+
+		Set<Long> mappedClassPKs = new HashSet<>();
+
+		Set<AssetEntry> assetEntries = _getFragmentEntryLinksMappedAssetEntries(
+			groupId, layoutClassNameId, layoutClassPK, mappedClassPKs);
+
+		assetEntries.addAll(
+			_getLayoutMappedAssetEntries(
+				groupId, layoutClassNameId, layoutClassPK, segmentsExperienceId,
+				mappedClassPKs));
+
+		return assetEntries;
 	}
 
 	private static JSONObject _getMappedContentJSONObject(

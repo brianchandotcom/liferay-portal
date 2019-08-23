@@ -29,28 +29,28 @@ class DataLayoutBuilder extends Component {
 		const {localizable} = this.props;
 
 		if (localizable) {
-		const dependencies = [this._getTranslationManager()];
+			const dependencies = [this._getTranslationManager()];
 
-		Promise.all(dependencies).then(results => {
-			const translationManager = results[0];
+			Promise.all(dependencies).then(results => {
+				const translationManager = results[0];
 
-			if (translationManager) {
-				translationManager.on('availableLocalesChange', event => {
-					this.props.availableLanguageIds = event.newVal.map(
-						({id}) => id
-					);
-				});
+				if (translationManager) {
+					translationManager.on('availableLocalesChange', event => {
+						this.props.availableLanguageIds = event.newVal.map(
+							({id}) => id
+						);
+					});
 
-				translationManager.on('editingLocaleChange', event => {
-					this.props.editingLanguageId = event.newVal;
-				});
+					translationManager.on('editingLocaleChange', event => {
+						this.props.editingLanguageId = event.newVal;
+					});
 
-				translationManager.on('deleteAvailableLocale', event => {
-					layoutProvider.emit('languageIdDeleted', event);
-				});
-			}
-		});
-	}
+					translationManager.on('deleteAvailableLocale', event => {
+						layoutProvider.emit('languageIdDeleted', event);
+					});
+				}
+			});
+		}
 	}
 
 	getFieldTypes() {
@@ -303,6 +303,7 @@ class DataLayoutBuilder extends Component {
 
 DataLayoutBuilder.PROPS = {
 	availableLanguageIds: Config.array(),
+	componentId: Config.string(),
 	context: Config.shapeOf({
 		pages: Config.arrayOf(pageStructure),
 		paginationMode: Config.string(),

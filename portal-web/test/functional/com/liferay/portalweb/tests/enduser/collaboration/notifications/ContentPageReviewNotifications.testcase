@@ -1,0 +1,194 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property custom.properties = "default.layout.template.id=1_column";
+	property testray.main.component.name = "Content Page Review";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Import test fragments from dependencies folder") {
+			FragmentsAdmin.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
+
+		task ("Enable Content Page Comments at the instance level") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Pages",
+				configurationName = "Content Page Editor",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "Comments Enabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add second user with administrator permissions") {
+			JSONUser.addUser(
+				userEmailAddress = "user2@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "user2");
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.editPasswordCP(
+				password = "password",
+				userEmailAddress = "user2@liferay.com",
+				userScreenName = "user2");
+
+			ProductMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Administrator",
+				userScreenName = "user2");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This case ensures that the user is notified when someone comments on their content page fragment."
+	@priority = "5"
+	test ViewComment {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewComment";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment by User 2",
+			fragmentName = "Title",
+			position = "1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			contentBody = "Comment by User 2",
+			fragmentName = "Title",
+			user = "userfn userln");
+
+		Notifications.navigateToContent(contentBody = "Comment by User 2");
+
+		PageEditor.viewComment(fragmentComment = "Comment by User 2");
+	}
+
+	@description = "This case ensures that a user is notified when a reply is added to their comment."
+	@priority = "5"
+	test ViewCommentReply {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentReply";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Title");
+
+		PageEditor.addComment(
+			content = "Lorem ipsum dolor sit amet",
+			fragmentClass = "header",
+			fragmentComment = "Comment By User 1",
+			fragmentName = "Title",
+			position = "1");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "user2@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Comments");
+
+		Click(
+			key_content = "Lorem ipsum dolor sit amet",
+			key_fragmentClass = "header",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.replyToComment(commentReply = "Reply from User 2");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		Notifications.viewBadgeCount(
+			activePanel = "Notifications",
+			notificationCount = "1");
+
+		Notifications.gotoNotifications();
+
+		Notifications.viewNewComment(
+			contentBody = "Reply from User 2",
+			fragmentName = "Title",
+			user = "userfn userln");
+
+		Notifications.navigateToContent(contentBody = "Reply from User 2");
+
+		PageEditor.viewCommentReply(
+			commentReply = "Reply from User 2",
+			user = "userfn userln");
+	}
+
+}

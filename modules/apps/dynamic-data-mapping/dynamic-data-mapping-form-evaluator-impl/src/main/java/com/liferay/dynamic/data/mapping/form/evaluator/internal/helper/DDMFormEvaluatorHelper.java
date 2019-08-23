@@ -444,11 +444,11 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey =
 			entry.getKey();
 
-		if (!isFieldVisible(ddmFormEvaluatorFieldContextKey)) {
+		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 
-		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
+		if (!isFieldVisible(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 

@@ -17,6 +17,11 @@ import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import {InitialSegmentsVariantType, SegmentsExperimentType} from '../types.es';
 
+const STATUS_DRAFT = 0;
+const STATUS_PAUSED = 5;
+const STATUS_RUNNING = 1;
+const STATUS_TERMINATED = 6;
+
 function SegmentsExperimentsActions({
 	onEditSegmentsExperimentStatus,
 	segmentsExperiment,
@@ -89,11 +94,6 @@ function SegmentsExperimentsActions({
 		</>
 	);
 }
-
-const STATUS_DRAFT = 0;
-const STATUS_PAUSED = 5;
-const STATUS_RUNNING = 1;
-const STATUS_TERMINATED = 6;
 
 SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,

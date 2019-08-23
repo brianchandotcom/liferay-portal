@@ -28,6 +28,19 @@ import {
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 
+const _statusToType = status => STATUS_TO_TYPE[status];
+
+const STATUS_TO_TYPE = {
+	0: 'secondary',
+	1: 'primary',
+	2: 'success',
+	3: 'success',
+	4: 'primary',
+	5: 'warning',
+	6: 'danger',
+	7: 'warning'
+};
+
 function SegmentsExperiments({
 	onCreateSegmentsExperiment,
 	onEditSegmentsExperiment,
@@ -176,19 +189,6 @@ function SegmentsExperiments({
 		onEditSegmentsExperiment();
 	}
 }
-
-const _statusToType = status => STATUS_TO_TYPE[status];
-
-const STATUS_TO_TYPE = {
-	0: 'secondary',
-	1: 'primary',
-	2: 'success',
-	3: 'success',
-	4: 'primary',
-	5: 'warning',
-	6: 'danger',
-	7: 'warning'
-};
 
 SegmentsExperiments.propTypes = {
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,

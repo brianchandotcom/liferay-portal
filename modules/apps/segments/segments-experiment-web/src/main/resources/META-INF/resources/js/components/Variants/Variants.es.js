@@ -56,6 +56,7 @@ function Variants({
 			{editable && (
 				<ClayButton
 					className="mb-3"
+					data-testid="create-variant"
 					displayType="secondary"
 					onClick={() => setCreatingVariant(!creatingVariant)}
 					small

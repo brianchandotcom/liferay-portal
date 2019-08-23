@@ -81,6 +81,7 @@ function SegmentsExperiments({
 						{segmentsExperiment.editable && (
 							<ClayDropDown
 								active={dropdown}
+								data-testid="segments-experiments-drop-down"
 								onActiveChange={setDropdown}
 								trigger={
 									<ClayButton

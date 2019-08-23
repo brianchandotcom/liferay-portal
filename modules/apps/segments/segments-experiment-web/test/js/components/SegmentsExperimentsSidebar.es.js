@@ -171,9 +171,30 @@ describe('SegmentsExperimentsSidebar', () => {
 		const cancelButton = getByText('cancel');
 		expect(cancelButton).not.toBe(null);
 	});
+
+	it('renders experiment status label', () => {
+		const {getByText} = _renderSegmentsExperimentsSidebarComponent({
+			initialSegmentsExperiment: segmentsExperiment
+		});
+
+		const statusLabel = getByText(segmentsExperiment.status.label);
+		expect(statusLabel).not.toBe(null);
+	});
+
+	it("renders experiment without actions when it's not editable", () => {
+		segmentsExperiment.editable = false;
+
+		const {queryByTestId} = _renderSegmentsExperimentsSidebarComponent({
+			initialSegmentsExperiment: segmentsExperiment
+		});
+
+		expect(queryByTestId('segments-experiments-drop-down')).toBe(null);
+
+		segmentsExperiment.editable = true;
+	});
 });
 
-describe('Variants ', () => {
+describe('Variants', () => {
 	afterEach(cleanup);
 
 	it('renders no variants message', () => {
@@ -241,14 +262,12 @@ describe('Variants ', () => {
 		});
 
 		const button = getByText('create-variant');
-
 		expect(button).not.toBe(null);
 
 		userEvent.click(button);
 
 		waitForElement(() => getByText('create-new-variant')).then(() => {
 			const variantNameInput = getByLabelText('name');
-
 			expect(variantNameInput.value).toBe('');
 
 			userEvent.type(variantNameInput, 'Variant Name').then(() => {
@@ -277,5 +296,17 @@ describe('Variants ', () => {
 				);
 			});
 		});
+	});
+
+	it("renders variants without create variant button when it's not editable", () => {
+		segmentsExperiment.editable = false;
+
+		const {queryByTestId} = _renderSegmentsExperimentsSidebarComponent({
+			initialSegmentsExperiment: segmentsExperiment
+		});
+
+		expect(queryByTestId('create-variant')).toBe(null);
+
+		segmentsExperiment.editable = true;
 	});
 });

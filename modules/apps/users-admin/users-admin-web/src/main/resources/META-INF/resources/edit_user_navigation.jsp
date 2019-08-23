@@ -27,7 +27,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
 
 if (selUser != null) {
-	PortalUtil.setPageSubtitle(selUser.getFullName(), request);
+	PortalUtil.setPageSubtitle(HtmlUtil.escape(selUser.getFullName()), request);
 }
 
 long selUserId = (selUser != null) ? selUser.getUserId() : 0;
@@ -45,7 +45,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 
-	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
+	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", HtmlUtil.escape(selUser.getFullName()), false));
 }
 %>
 

@@ -53,6 +53,7 @@ export const UPDATE_ROW_COLUMNS_NUMBER_SUCCESS =
 	'UPDATE_ROW_COLUMNS_NUMBER_SUCCESS';
 
 export const ADD_FRAGMENT_ENTRY_LINK = 'addFragmentEntryLink';
+export const DUPLICATE_FRAGMENT_ENTRY_LINK = 'duplicateFragmentEntryLink';
 export const DELETE_FRAGMENT_ENTRY_LINK_COMMENT =
 	'DELETE_FRAGMENT_ENTRY_LINK_COMMENT';
 export const ADD_PORTLET = 'addPortlet';

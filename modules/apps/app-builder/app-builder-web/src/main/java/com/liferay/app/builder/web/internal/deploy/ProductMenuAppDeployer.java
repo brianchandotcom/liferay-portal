@@ -104,17 +104,14 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private ServiceRegistration<?> _deployAppPanelApp(
 		String portletName, String panelCategoryKey) {
 
-		Dictionary<String, Object> properties =
+		return _bundleContext.registerService(
+			PanelApp.class, new ProductMenuAppPanelApp(portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("panel.app.order:Integer", 100);
 					put("panel.category.key", panelCategoryKey);
 				}
-			};
-
-		return _bundleContext.registerService(
-			PanelApp.class, new ProductMenuAppPanelApp(portletName),
-			properties);
+			});
 	}
 
 	private ServiceRegistration<?> _deployAppPanelCategory(
@@ -138,7 +135,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private ServiceRegistration<?> _deployAppPortlet(
 		String appName, String portletName) {
 
-		Dictionary<String, Object> properties =
+		return _bundleContext.registerService(
+			Portlet.class, new ProductMenuAppPortlet(),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("com.liferay.portlet.add-default-resource", true);
@@ -157,10 +155,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 						"administrator,guest,power-user,user ");
 					put("javax.portlet.supports.mime-type", "text/html ");
 				}
-			};
-
-		return _bundleContext.registerService(
-			Portlet.class, new ProductMenuAppPortlet(), properties);
+			});
 	}
 
 	private String _getPanelCategoryKey(long appId) {

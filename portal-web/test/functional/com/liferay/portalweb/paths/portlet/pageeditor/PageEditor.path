@@ -105,6 +105,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_AUTHOR</td>
+	<td>xpath=(//article[contains(@class,'reply') and contains(.,'${key_commentReply}')]//strong[contains(@class,'portal-tooltip')])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
 	<td>//div[contains(@class,'fragments-editor-sidebar-section')]//a[normalize-space()='${key_collectionName}']</td>
 	<td></td>

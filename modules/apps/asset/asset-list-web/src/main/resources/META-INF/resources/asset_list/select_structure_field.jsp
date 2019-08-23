@@ -146,11 +146,9 @@ portletURL.setParameter("eventName", eventName);
 				body: data,
 				method: 'POST'
 			}
-		)
-		.then(function(response) {
+		).then(function(response) {
 			return response.json();
-		})
-		.then(function(response) {
+		}).then(function(response) {
 			var message = A.one('#<portlet:namespace />message');
 
 			if (response.success) {

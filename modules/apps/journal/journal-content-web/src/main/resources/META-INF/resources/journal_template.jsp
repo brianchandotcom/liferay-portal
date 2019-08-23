@@ -126,16 +126,13 @@ AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRende
 							body: data,
 							method: 'POST'
 						}
-					)
-					.then(function(response) {
+					).then(function(response) {
 						return response.text();
-					})
-					.then(function(response) {
+					}).then(function(response) {
 						templatePreview.plug(A.Plugin.ParseContent);
 
 						templatePreview.setContent(response);
-					})
-					.catch(function() {
+					}).catch(function() {
 						templatePreview.html('<div class="alert alert-danger hidden"><liferay-ui:message key="an-unexpected-error-occurred" /></div>');
 					});
 

@@ -19,10 +19,12 @@ import com.liferay.petra.xml.Dom4jUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xml.SAXReaderFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import javax.xml.transform.Transformer;
@@ -66,15 +69,28 @@ public class SPDXBuilder {
 			xmls = bufferedReader.readLine();
 		}
 
-		new SPDXBuilder(StringUtil.split(xmls), args[0]);
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
+		String rdfFileName = ArgumentsUtil.getString(
+			arguments, "rdf.file", null);
+		String licenseReportPropertiesFileName = ArgumentsUtil.getString(
+			arguments, "license.report.properties.file", null);
+
+		new SPDXBuilder(
+			StringUtil.split(xmls), rdfFileName,
+			licenseReportPropertiesFileName);
 	}
 
-	public SPDXBuilder(String[] xmls, String rdf) {
+	public SPDXBuilder(
+		String[] xmls, String rdfFileName,
+		String licenseReportPropertiesFileName) {
+
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
-			Document document = _getDocument(xmls, rdf);
-			File rdfFile = new File(rdf);
+			Document document = _getDocument(
+				xmls, rdfFileName, licenseReportPropertiesFileName);
+			File rdfFile = new File(rdfFileName);
 
 			_write(
 				new File(rdfFile.getParentFile(), "versions-spdx.xml"),
@@ -104,7 +120,9 @@ public class SPDXBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Element> _createLibraryElements(Element packageElement) {
+	private List<Element> _createLibraryElements(
+		Element packageElement, Properties licenseProperties) {
+
 		List<Element> libraryElements = new ArrayList<>();
 
 		String downloadLocation = packageElement.elementText(
@@ -149,7 +167,8 @@ public class SPDXBuilder {
 				element.addText(downloadLocation);
 			}
 
-			String licenseName = _getLicenseName(packageElement);
+			String licenseName = _getLicenseName(
+				packageElement, fileName, licenseProperties);
 
 			if (licenseName != null) {
 				Element licensesElement = libraryElement.addElement("licenses");
@@ -160,7 +179,8 @@ public class SPDXBuilder {
 
 				element.addText(licenseName);
 
-				String licenseURL = _getLicenseURL(packageElement);
+				String licenseURL = _getLicenseURL(
+					packageElement, fileName, licenseProperties);
 
 				if (licenseURL != null) {
 					element = licenseElement.addElement("license-url");
@@ -188,7 +208,11 @@ public class SPDXBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Document _getDocument(String[] xmls, String rdf) throws Exception {
+	private Document _getDocument(
+			String[] xmls, String rdfFileName,
+			String licenseReportPropertiesFileName)
+		throws Exception {
+
 		Comparator<String> comparator = String.CASE_INSENSITIVE_ORDER;
 
 		Map<String, Element> libraryElementMap = new TreeMap<>(comparator);
@@ -209,7 +233,10 @@ public class SPDXBuilder {
 			}
 		}
 
-		Document spdxDocument = saxReader.read(new File(rdf));
+		Properties licenseProperties = _getLicenseProperties(
+			licenseReportPropertiesFileName);
+
+		Document spdxDocument = saxReader.read(new File(rdfFileName));
 
 		Element spdxRootElement = spdxDocument.getRootElement();
 
@@ -230,7 +257,7 @@ public class SPDXBuilder {
 				_getQName("Package"));
 
 			List<Element> libraryElements = _createLibraryElements(
-				packageElement);
+				packageElement, licenseProperties);
 
 			for (Element libraryElement : libraryElements) {
 				String key = _getKey("spdx", libraryElement);
@@ -280,7 +307,15 @@ public class SPDXBuilder {
 		return sb.toString();
 	}
 
-	private String _getLicenseName(Element packageElement) {
+	private String _getLicenseName(
+		Element packageElement, String fileName, Properties licenseProperties) {
+
+		String key = "license.name[" + fileName + "]";
+
+		if (licenseProperties.containsKey(key)) {
+			return licenseProperties.getProperty(key);
+		}
+
 		Element licenseConcludedElement = packageElement.element(
 			_getQName("licenseConcluded"));
 
@@ -302,7 +337,34 @@ public class SPDXBuilder {
 		return null;
 	}
 
-	private String _getLicenseURL(Element packageElement) {
+	private Properties _getLicenseProperties(
+			String licenseReportPropertiesFileName)
+		throws IOException {
+
+		Properties licenseProperties = new Properties();
+
+		if (Validator.isNull(licenseReportPropertiesFileName)) {
+			return licenseProperties;
+		}
+
+		File file = new File(licenseReportPropertiesFileName);
+
+		if (file.exists()) {
+			licenseProperties.load(new FileInputStream(file));
+		}
+
+		return licenseProperties;
+	}
+
+	private String _getLicenseURL(
+		Element packageElement, String fileName, Properties licenseProperties) {
+
+		String key = "license.url[" + fileName + "]";
+
+		if (licenseProperties.containsKey(key)) {
+			return licenseProperties.getProperty(key);
+		}
+
 		Element licenseConcludedElement = packageElement.element(
 			_getQName("licenseConcluded"));
 

@@ -15,7 +15,6 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 
 import java.util.List;
 
@@ -37,11 +36,11 @@ public class PackageRunTask extends ExecutePackageManagerTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
-			completeArgs.add("run");
+		if (isUseNpm()) {
+			completeArgs.add("run-script");
 		}
 		else {
-			completeArgs.add("run-script");
+			completeArgs.add("run");
 		}
 
 		completeArgs.add(getScriptName());

@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.internal.util.FileUtil;
 import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.internal.util.NodePluginUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
@@ -78,7 +77,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 						return false;
 					}
 
-					if (NodePluginUtil.isYarnScriptFile(getScriptFile())) {
+					if (!isUseNpm()) {
 						return false;
 					}
 
@@ -264,17 +263,12 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 
-		if (!NodePluginUtil.isYarnScriptFile(getScriptFile())) {
-			if (_npmCacheVerify) {
-				completeArgs.add("cache");
-				completeArgs.add("verify");
-			}
-			else if (isUseNpmCI() && (getPackageLockJsonFile() != null)) {
-				completeArgs.add("ci");
-			}
-			else {
-				completeArgs.add("install");
-			}
+		if (_npmCacheVerify) {
+			completeArgs.add("cache");
+			completeArgs.add("verify");
+		}
+		else if (isUseNpmCI() && (getPackageLockJsonFile() != null)) {
+			completeArgs.add("ci");
 		}
 		else {
 			completeArgs.add("install");

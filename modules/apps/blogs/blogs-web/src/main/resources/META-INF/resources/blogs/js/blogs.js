@@ -549,78 +549,74 @@ AUI.add(
 								data[item.attr('name')] = item.val();
 							});
 
-							A.io.request(instance.get('editEntryURL'), {
-								data: data,
-								dataType: 'JSON',
-								on: {
-									failure: function() {
-										instance._updateStatus(
-											strings.saveDraftError
-										);
-									},
-									start: function() {
-										Liferay.Util.toggleDisabled(
-											instance.one('#publishButton'),
-											true
-										);
+							Liferay.Util.toggleDisabled(
+								instance.one('#publishButton'),
+								true
+							);
 
-										instance._updateStatus(
-											strings.saveDraftMessage
-										);
-									},
-									success: function(event, id, obj) {
-										instance._oldContent = content;
-										instance._oldSubtitle = subtitle;
-										instance._oldTitle = title;
+							instance._updateStatus(strings.saveDraftMessage);
 
-										var message = this.get('responseData');
+							const body = new URLSearchParams(data);
 
-										if (message) {
-											instance
-												.one('#coverImageFileEntryId')
-												.val(
-													message.coverImageFileEntryId
-												);
+							Liferay.Util.fetch(instance.get('editEntryURL'), {
+								body,
+								method: 'POST'
+							})
+								.then(response => {
+									return response.json();
+								})
+								.then(data => {
+									instance._oldContent = content;
+									instance._oldSubtitle = subtitle;
+									instance._oldTitle = title;
 
-											instance
-												.one('#entryId')
-												.val(message.entryId);
+									var message = data;
 
-											if (message.content) {
-												instance._updateContentImages(
-													message.content,
-													message.attributeDataImageId
-												);
-											}
+									if (message) {
+										instance
+											.one('#coverImageFileEntryId')
+											.val(message.coverImageFileEntryId);
 
-											if (saveStatus) {
-												var entry = instance.get(
-													'entry'
-												);
+										instance
+											.one('#entryId')
+											.val(message.entryId);
 
-												var saveText =
-													entry && entry.pending
-														? strings.savedAtMessage
-														: strings.savedDraftAtMessage;
-
-												var now = saveText.replace(
-													/\{0\}/gim,
-													new Date().toString()
-												);
-
-												instance._updateStatus(now);
-											}
-										} else {
-											saveStatus.hide();
+										if (message.content) {
+											instance._updateContentImages(
+												message.content,
+												message.attributeDataImageId
+											);
 										}
 
-										Liferay.Util.toggleDisabled(
-											instance.one('#publishButton'),
-											false
-										);
+										if (saveStatus) {
+											var entry = instance.get('entry');
+
+											var saveText =
+												entry && entry.pending
+													? strings.savedAtMessage
+													: strings.savedDraftAtMessage;
+
+											var now = saveText.replace(
+												/\{0\}/gim,
+												new Date().toString()
+											);
+
+											instance._updateStatus(now);
+										}
+									} else {
+										saveStatus.hide();
 									}
-								}
-							});
+
+									Liferay.Util.toggleDisabled(
+										instance.one('#publishButton'),
+										false
+									);
+								})
+								.catch(err => {
+									instance._updateStatus(
+										strings.saveDraftError
+									);
+								});
 						}
 					} else {
 						instance

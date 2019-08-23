@@ -387,6 +387,18 @@ definition {
 		}
 	}
 
+	macro viewCommentReply {
+		AssertTextEquals(
+			key_commentReply = "${commentReply}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY",
+			value1 = "${commentReply}");
+
+		AssertTextEquals(
+			key_commentReply = "${commentReply}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_AUTHOR",
+			value1 = "${user}");
+	}
+
 	macro viewEditorEmpty {
 		AssertElementPresent(locator1 = "PageEditor#EMPTY_MESSAGE");
 	}

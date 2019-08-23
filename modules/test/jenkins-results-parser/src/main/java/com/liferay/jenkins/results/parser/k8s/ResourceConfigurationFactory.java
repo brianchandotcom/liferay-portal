@@ -345,25 +345,25 @@ public class ResourceConfigurationFactory {
 	}
 
 	private static V1Volume _newSSHSecretVolume() {
-		V1SecretVolumeSource secretVolumeSource = new V1SecretVolumeSource();
+		V1SecretVolumeSource v1SecretVolumeSource = new V1SecretVolumeSource();
 
-		secretVolumeSource.secretName("ssh-secret");
+		v1SecretVolumeSource.secretName("ssh-secret");
 
 		V1Volume v1Volume = new V1Volume();
 
-		v1Volume.setSecret(secretVolumeSource);
+		v1Volume.setSecret(v1SecretVolumeSource);
 		v1Volume.setName("ssh-secret");
 
 		return v1Volume;
 	}
 
 	private static V1VolumeMount _newSSHSecretVolumeMount() {
-		V1VolumeMount sshSecretVolumeMount = new V1VolumeMount();
+		V1VolumeMount v1VolumeMount = new V1VolumeMount();
 
-		sshSecretVolumeMount.setMountPath("/mnt/ssh-secret-volume");
-		sshSecretVolumeMount.setName("ssh-secret");
+		v1VolumeMount.setMountPath("/mnt/ssh-secret-volume");
+		v1VolumeMount.setName("ssh-secret");
 
-		return sshSecretVolumeMount;
+		return v1VolumeMount;
 	}
 
 	private static Pod _newSybaseConfigurationPod(

@@ -43,6 +43,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AssertOnChangesDisplayedInTheActiveChangeList {
 		ChangeList.addNewChangeList(
@@ -100,6 +101,7 @@ definition {
 			contentType = "Web Content");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AssertOnChangesDisplayedOnOverview {
 		ChangeList.addNewChangeList(
@@ -182,6 +184,7 @@ definition {
 		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "1");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertOnStructureContentType {
 		ChangeList.addNewChangeList(
@@ -215,6 +218,7 @@ definition {
 			contentType = "Dynamic Data Mapping Structure");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertOnTemplateContentType {
 		ChangeList.addNewChangeList(
@@ -241,12 +245,14 @@ definition {
 			contentType = "Dynamic Data Mapping Template");
 	}
 
+	@ignore = "true"
 	@priority = "3"
 	test CancelChangeListCreation {
 		ChangeList.cancelChangeListCreation();
 	}
 
 	@description = "Create New Change List"
+	@ignore = "true"
 	@priority = "5"
 	test CreateNewChangeListAndActivate {
 		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewChangeListAndActivate";
@@ -292,6 +298,7 @@ definition {
 			value1 = "No change list has been published yet.");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test CreateNewChangeListExistingName {
 		ChangeList.addNewChangeList(
@@ -313,6 +320,7 @@ definition {
 	}
 
 	@description = "Try to create new change list with too long name"
+	@ignore = "true"
 	@priority = "3"
 	test CreateNewChangeListWithLongName {
 		ChangeList.addNewChangeList(
@@ -323,6 +331,7 @@ definition {
 	}
 
 	@description = "Try to create new change list with empty string name"
+	@ignore = "true"
 	@priority = "3"
 	test CreateNewChangeListWithNoName {
 		ChangeList.addNewChangeList(
@@ -333,6 +342,7 @@ definition {
 	}
 
 	@description = "Try to create new change list with empty string in the description"
+	@ignore = "true"
 	@priority = "3"
 	test CreateNewChangeListWithSpaceInTheDescription {
 		ChangeList.addNewChangeList(
@@ -344,6 +354,7 @@ definition {
 			value1 = "Change List Name");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test DeleteChangeListFromOverviewScreen {
 		ChangeList.addNewChangeList(

@@ -20,6 +20,7 @@ definition {
 	}
 
 	@description = "Change list cannot be enabled when staging is turned on"
+	@ignore = "true"
 	@priority = "5"
 	test CannotEnableChangeListWhenStagingIsTurnedOn {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -40,6 +41,7 @@ definition {
 	}
 
 	@description = "Check Supported Content Types"
+	@ignore = "true"
 	@priority = "4"
 	test CheckSupportedContentTypes {
 		ProductMenu.gotoPortlet(
@@ -58,6 +60,7 @@ definition {
 	}
 
 	@description = "Enable Change List and go to Overview"
+	@ignore = "true"
 	@priority = "5"
 	test EnableChangeListAndGoToOverview {
 		property portal.acceptance = "true";
@@ -102,6 +105,7 @@ definition {
 	}
 
 	@description = "Enable and Disable Change List"
+	@ignore = "true"
 	@priority = "5"
 	test EnableDisableChangeList {
 		ProductMenu.gotoPortlet(

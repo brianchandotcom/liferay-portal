@@ -45,6 +45,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test AssertOnActiveStatus {
 		ChangeList.selectChangeList(changeListName = "Select Change List");
@@ -58,6 +59,7 @@ definition {
 			value1 = "Active");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test AssertOnChangesDisplayedOnSelectChangeList {
 		ProductMenu.gotoPortlet(
@@ -127,6 +129,7 @@ definition {
 		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "1");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test EmptyChangeListDeletion {
 		ChangeList.selectChangeList(changeListName = "Select Change List");
@@ -138,6 +141,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test MakeActiveAnotherChangeList {
 		ProductMenu.gotoPortlet(
@@ -184,6 +188,7 @@ definition {
 			value1 = "Active");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test SwitchActiveChangeList {
 		ProductMenu.gotoPortlet(
@@ -206,6 +211,7 @@ definition {
 			value1 = "Change List Name");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test WorkOnProduction {
 		ChangeList.workOnProduction(changeListConfirmEnabled = "true");

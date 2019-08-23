@@ -34,6 +34,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ViewChangeListIconAtWebContentCreatedBeforeActiveChangeList {
 		ProductMenu.gotoPortlet(
@@ -98,6 +99,7 @@ definition {
 			locator1 = "ChangeList#CHECK_CIRCLE");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewChangeListInformationOnWebContentHistoryDeletion {
 		ProductMenu.gotoPortlet(
@@ -151,6 +153,7 @@ definition {
 		ChangeList.viewDeletedItemCounter(nbrOfDeletedItems = "0");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test ViewChangeListOverviewScreenFromWebContentHistory {
 		ProductMenu.gotoPortlet(

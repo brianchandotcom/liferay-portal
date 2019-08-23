@@ -406,11 +406,25 @@ public class ChangeListsDisplayContext {
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));
 
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:");
+				sb.append(_renderResponse.getNamespace());
+				sb.append("checkoutCollection('");
+				sb.append(checkoutURL.toString());
+				sb.append("','");
+				sb.append(
+					LanguageUtil.format(
+						_httpServletRequest,
+						"do-you-want-to-switch-to-x-change-list",
+						ctCollection.getName(), false));
+				sb.append("');");
+
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonArray.put(
 					jsonObject.put(
-						"checkoutURL", checkoutURL.toString()
+						"checkoutURL", sb.toString()
 					).put(
 						"label", ctCollection.getName()
 					));

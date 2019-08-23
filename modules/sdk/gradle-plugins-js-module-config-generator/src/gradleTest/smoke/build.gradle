@@ -7,6 +7,10 @@ configJSModules {
 	include "**/*.js"
 }
 
+node {
+	useNpm = true
+}
+
 runGradleTest {
 	dependsOn classes
 

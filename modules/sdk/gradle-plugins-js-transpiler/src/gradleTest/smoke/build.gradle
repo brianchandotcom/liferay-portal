@@ -7,6 +7,10 @@ dependencies {
 	jsCompile group: "com.liferay", name: "com.liferay.frontend.js.web", version: "1.0.20"
 }
 
+node {
+	useNpm = true
+}
+
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"

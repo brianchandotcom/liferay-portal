@@ -4,6 +4,10 @@ apply plugin: "com.liferay.gulp"
 
 task runGradleTest
 
+node {
+	useNpm = true
+}
+
 runGradleTest {
 	dependsOn gulpHello
 

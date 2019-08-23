@@ -5,6 +5,7 @@ task runGradleTest
 
 node {
 	nodeVersion = "8.9.0"
+	useNpm = true
 }
 
 runGradleTest {

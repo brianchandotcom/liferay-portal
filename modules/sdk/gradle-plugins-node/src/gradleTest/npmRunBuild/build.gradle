@@ -6,6 +6,10 @@ apply plugin: "java"
 
 task runGradleTest
 
+node {
+	useNpm = true
+}
+
 runGradleTest {
 	dependsOn jar
 

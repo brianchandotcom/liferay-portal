@@ -442,15 +442,24 @@ public class ChangeListsDisplayContext {
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb;
 
-		sb.append("javascript:");
-		sb.append(_renderResponse.getNamespace());
-		sb.append("checkoutCollection('");
-		sb.append(checkoutURL.toString());
-		sb.append("','");
-		sb.append(confirmationMessage);
-		sb.append("');");
+		if (isCheckoutCtCollectionConfirmationEnabled()) {
+			sb = new StringBundler(5);
+
+			sb.append("javascript:confirm('");
+			sb.append(confirmationMessage);
+			sb.append("') && Liferay.Util.navigate('");
+			sb.append(checkoutURL.toString());
+			sb.append("')");
+		}
+		else {
+			sb = new StringBundler(3);
+
+			sb.append("javascript:Liferay.Util.navigate('");
+			sb.append(checkoutURL.toString());
+			sb.append("');");
+		}
 
 		return sb.toString();
 	}

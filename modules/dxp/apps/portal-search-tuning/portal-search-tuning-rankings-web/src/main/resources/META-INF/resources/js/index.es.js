@@ -10,22 +10,17 @@
  */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import ResultsRankingForm from './components/ResultsRankingForm.es';
 import ThemeContext from './ThemeContext.es';
-import {ClayIconSpriteContext} from '@clayui/icon';
+import {render} from 'frontend-js-react-web';
 
 export default function(id, props, context) {
-	// LPS-100378
-	// eslint-disable-next-line liferay-portal/no-react-dom-render
-	ReactDOM.render(
-		<ClayIconSpriteContext.Provider value={context.spritemap}>
-			<ThemeContext.Provider value={context}>
-				<div className="results-rankings-root">
-					<ResultsRankingForm {...props} />
-				</div>
-			</ThemeContext.Provider>
-		</ClayIconSpriteContext.Provider>,
+	render(
+		<ThemeContext.Provider value={context}>
+			<div className="results-rankings-root">
+				<ResultsRankingForm {...props} />
+			</div>
+		</ThemeContext.Provider>,
 		document.getElementById(id)
 	);
 }

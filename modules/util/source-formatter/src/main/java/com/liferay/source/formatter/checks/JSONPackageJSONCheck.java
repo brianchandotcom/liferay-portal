@@ -141,9 +141,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		JSONObject dependenciesJSONObject = jsonObject.getJSONObject(
 			"dependencies");
 
-		List<String> enforceMinorReleaseRangePackageNames = getAttributeValues(
-			_ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES, absolutePath);
-
 		Iterator<String> keys = dependenciesJSONObject.keys();
 
 		while (keys.hasNext()) {
@@ -163,16 +160,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 						"\"", dependencyName, "\": \"", actualVersion, "\""),
 					StringBundler.concat(
 						"\"", dependencyName, "\": \"", expectedVersion, "\""));
-			}
-
-			if (!actualVersion.startsWith(StringPool.CARET) &&
-				enforceMinorReleaseRangePackageNames.contains(dependencyName)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Version for '", dependencyName,
-						"' should start with '^'"));
 			}
 		}
 
@@ -250,9 +237,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		return _expectedDependencyVersionsMap;
 	}
-
-	private static final String _ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES =
-		"enforceMinorReleaseRangeDependencyNames";
 
 	private static final String[] _INTERNAL_LINKED_WORKSPACES_ = {
 		"adaptive-media-web",

@@ -11,12 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from "react";
 
 const Arrow = ({ direction, clickFunction, glyph }) => (
-  <button className={`slide-arrow ${direction}`} onClick={clickFunction}>
-    {glyph}
-  </button>
+  	<ClayButton
+		borderless
+		displayType="secondary"
+		monospaced
+		onClick={clickFunction}
+		size="lg"
+	>
+		<ClayIcon symbol={`angle-${direction}`} />
+	</ClayButton>
 );
 
 export default Arrow;

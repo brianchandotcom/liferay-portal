@@ -1,0 +1,16 @@
+.item-selector-preview {
+	&.fullscreen {
+		background-color: #272833;
+		height: 100%;
+		left: 0;
+		position: fixed;
+		text-align: center;
+		top: 0;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.footer {
+		background-color: #30313F;
+	}
+}

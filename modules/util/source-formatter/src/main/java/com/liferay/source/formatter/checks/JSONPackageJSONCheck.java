@@ -227,6 +227,10 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 				absolutePath, "metal(-.*)?"));
 		_expectedDependencyVersionsMap.putAll(
 			_getDependencyVersionsMap(
+				"modules/apps/frontend-js/frontend-js-react-web/package.json",
+				absolutePath, ".*"));
+		_expectedDependencyVersionsMap.putAll(
+			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-spa-web/package.json",
 				absolutePath, "senna"));
 		_expectedDependencyVersionsMap.putAll(
@@ -234,6 +238,11 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 				"modules/apps/frontend-taglib/frontend-taglib-clay" +
 					"/package.json",
 				absolutePath, "clay-.*"));
+		_expectedDependencyVersionsMap.putAll(
+			_getDependencyVersionsMap(
+				"modules/apps/frontend-taglib/frontend-taglib-clay" +
+					"/package.json",
+				absolutePath, "@clayui/.*"));
 
 		return _expectedDependencyVersionsMap;
 	}

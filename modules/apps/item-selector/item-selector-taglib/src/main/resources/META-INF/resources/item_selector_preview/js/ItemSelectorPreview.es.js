@@ -65,9 +65,9 @@ class ItemSelectorPreview extends Component {
 			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
 		return (
-			<div className="item-selector-preview">
+			<>
 				{openViewer && (
-					<>
+					<div className="fullscreen item-selector-preview">
 						<ClayIconSpriteContext.Provider value={spritemap}>
 							<Header
 								handleAdd={this.handleAdd}
@@ -80,9 +80,9 @@ class ItemSelectorPreview extends Component {
 								circular={true}
 							/>
 						</ClayIconSpriteContext.Provider>
-					</>
+					</div>
 				)}
-			</div>
+			</>
 		);
 	}
 }

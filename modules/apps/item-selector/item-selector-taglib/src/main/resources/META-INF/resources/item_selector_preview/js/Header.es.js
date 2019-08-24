@@ -18,7 +18,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Header = ({handleAdd, handleClose, headerTitle}) => (
-	<div className="nav-bar">
+	<div className="navigation-bar navigation-bar-light">
 		<ClayButton
 			borderless
 			displayType="secondary"

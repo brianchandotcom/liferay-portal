@@ -38,9 +38,16 @@ class ItemSelectorPreview extends Component {
 			selectedItemIndex: 0
 		};
 
+		const selector = this.props.selector;
+
 		items.forEach((item, index) => {
-			//TODO tener en cuenta el "selector"
-			item.addEventListener('click', e => {
+			let cliclableItem = item;
+
+			if (selector) {
+				cliclableItem = item.querySelector(selector);
+			}
+
+			cliclableItem.addEventListener('click', e => {
 				this.setState({
 					openViewer: true,
 					selectedItemIndex: index

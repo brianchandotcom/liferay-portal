@@ -71,7 +71,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			<ItemSelectorPreview
 				headerTitle = {this.closeCaption}
 				links = ".item-preview"
-				selector = ".item-preview a"
+				selector = ".card-body"
 			/>,
 			this.rootNode.appendChild(document.createElement('div'))
 		);

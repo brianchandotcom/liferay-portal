@@ -324,7 +324,7 @@ public class MappedContentUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return JSONUtil.put(
+		JSONObject mappedContentJSONObject = JSONUtil.put(
 			"actions",
 			_getActionsJSONObject(
 				assetEntry, themeDisplay, httpServletRequest, backURL)
@@ -334,10 +334,22 @@ public class MappedContentUtil {
 			"classNameId", assetEntry.getClassNameId()
 		).put(
 			"classPK", assetEntry.getClassPK()
-		).put(
-			"name",
-			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), assetEntry.getClassName())
+		);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntry.getClassName());
+
+		String name = ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), assetEntry.getClassName());
+
+		if (assetEntry.getClassTypeId() > 0) {
+			name = assetRendererFactory.getTypeName(
+				themeDisplay.getLocale(), assetEntry.getClassTypeId());
+		}
+
+		return mappedContentJSONObject.put(
+			"name", name
 		).put(
 			"status", _getStatusJSONObject(assetEntry)
 		).put(

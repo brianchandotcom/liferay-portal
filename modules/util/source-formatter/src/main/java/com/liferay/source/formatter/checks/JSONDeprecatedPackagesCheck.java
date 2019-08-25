@@ -59,7 +59,7 @@ public class JSONDeprecatedPackagesCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _DEPRECATED_PACKAGE_NAMES = {
-		"liferay-module-config-generator", "metal-cli"
+		"@clayui/checkbox", "liferay-module-config-generator", "metal-cli"
 	};
 
 }

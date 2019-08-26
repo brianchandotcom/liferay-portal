@@ -23,7 +23,6 @@ import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {updateFragmentEntryLinkCommentAction} from '../../../actions/updateFragmentEntryLinkComment.es';
 import {updateFragmentEntryLinkCommentReplyAction} from '../../../actions/updateFragmentEntryLinkCommentReply.es';
 import FragmentComment from './FragmentComment.es';
-import useSelector from '../../../store/hooks/useSelector.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
@@ -31,9 +30,7 @@ import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 
 const FragmentComments = props => {
-	const fragmentEntryLink = useSelector(
-		state => state.fragmentEntryLinks[props.fragmentEntryLinkId]
-	);
+	const fragmentEntryLink = props.fragmentEntryLink;
 	const getComments = useGetComments();
 	const fragmentEntryLinkComments = getComments(fragmentEntryLink);
 	const dispatch = useDispatch();
@@ -63,19 +60,23 @@ const FragmentComments = props => {
 			<ShowResolvedCommentsToggle />
 
 			<div
-				data-fragments-editor-item-id={props.fragmentEntryLinkId}
+				data-fragments-editor-item-id={
+					fragmentEntryLink.fragmentEntryLinkId
+				}
 				data-fragments-editor-item-type={
 					FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 				}
 			>
 				<AddCommentForm
-					fragmentEntryLinkId={props.fragmentEntryLinkId}
+					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 				/>
 
 				{[...fragmentEntryLinkComments].reverse().map(comment => (
 					<FragmentComment
 						comment={comment}
-						fragmentEntryLinkId={props.fragmentEntryLinkId}
+						fragmentEntryLinkId={
+							fragmentEntryLink.fragmentEntryLinkId
+						}
 						key={comment.commentId}
 						onDelete={deleteComment}
 						onEdit={editComment}
@@ -88,7 +89,7 @@ const FragmentComments = props => {
 };
 
 FragmentComments.propTypes = {
-	fragmentEntryLinkId: PropTypes.string.isRequired
+	fragmentEntryLink: PropTypes.object.isRequired
 };
 
 const getActions = (dispatch, ownProps) => ({
@@ -99,21 +100,21 @@ const getActions = (dispatch, ownProps) => ({
 	deleteComment: comment =>
 		dispatch(
 			deleteFragmentEntryLinkCommentAction(
-				ownProps.fragmentEntryLinkId,
+				ownProps.fragmentEntryLink.fragmentEntryLinkId,
 				comment
 			)
 		),
 	editComment: comment =>
 		dispatch(
 			updateFragmentEntryLinkCommentAction(
-				ownProps.fragmentEntryLinkId,
+				ownProps.fragmentEntryLink.fragmentEntryLinkId,
 				comment
 			)
 		),
 	editCommentReply: parentCommentId => comment =>
 		dispatch(
 			updateFragmentEntryLinkCommentReplyAction(
-				ownProps.fragmentEntryLinkId,
+				ownProps.fragmentEntryLink.fragmentEntryLinkId,
 				parentCommentId,
 				comment
 			)

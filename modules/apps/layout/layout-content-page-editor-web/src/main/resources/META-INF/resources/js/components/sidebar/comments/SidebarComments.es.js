@@ -24,7 +24,6 @@ const SidebarComments = () => {
 	const activeItemId = useSelector(state => state.activeItemId);
 	const activeItemType = useSelector(state => state.activeItemType);
 	const structure = useSelector(state => state.layoutData.structure);
-
 	const activeFragmentEntryLink = getItemPath(
 		activeItemId,
 		activeItemType,
@@ -33,13 +32,14 @@ const SidebarComments = () => {
 		activeItem =>
 			activeItem.itemType === FRAGMENTS_EDITOR_ITEM_TYPES.fragment
 	);
+	const fragmentEntryLink = useSelector(state =>
+		activeFragmentEntryLink
+			? state.fragmentEntryLinks[activeFragmentEntryLink.itemId]
+			: null
+	);
 
-	if (activeFragmentEntryLink) {
-		return (
-			<FragmentComments
-				fragmentEntryLinkId={activeFragmentEntryLink.itemId}
-			/>
-		);
+	if (fragmentEntryLink) {
+		return <FragmentComments fragmentEntryLink={fragmentEntryLink} />;
 	}
 
 	return <FragmentEntryLinksWithComments />;

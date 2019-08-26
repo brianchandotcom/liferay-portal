@@ -178,34 +178,33 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 			var currentTarget = event.currentTarget;
 
-			A.io.request(
+			Liferay.Util.fetch(
 				currentTarget.attr('href'),
 				{
-					dataType: 'JSON',
-					on: {
-						success: function() {
-							var responseData = this.get('responseData');
+					method: 'POST'
+				}
+			)
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(response) {
+				if (response.success) {
+					var notificationContainer = currentTarget.ancestor('li.list-group-item');
 
-							if (responseData.success) {
-								var notificationContainer = currentTarget.ancestor('li.list-group-item');
+					if (notificationContainer) {
+						var markAsReadURL = notificationContainer.one('a').attr('href');
 
-								if (notificationContainer) {
-									var markAsReadURL = notificationContainer.one('a').attr('href');
+						form.attr('method', 'post');
 
-									form.attr('method', 'post');
+						submitForm(form, markAsReadURL);
 
-									submitForm(form, markAsReadURL);
-
-									notificationContainer.remove();
-								}
-							}
-							else {
-								getNotice().show();
-							}
-						}
+						notificationContainer.remove();
 					}
 				}
-			);
+				else {
+					getNotice().show();
+				}
+			});
 		},
 		'.user-notification-action'
 	);

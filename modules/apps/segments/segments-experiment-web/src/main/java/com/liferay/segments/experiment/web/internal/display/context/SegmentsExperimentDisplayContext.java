@@ -122,6 +122,11 @@ public class SegmentsExperimentDisplayContext {
 			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 	}
 
+	public String getEditSegmentsVariantSplitURL() {
+		return _getSegmentsExperimentActionURL(
+			"/edit_segments_experiment_rel_split");
+	}
+
 	public String getEditSegmentsVariantURL() {
 		return _getSegmentsExperimentActionURL("/edit_segments_experiment_rel");
 	}

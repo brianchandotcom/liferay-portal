@@ -29,6 +29,7 @@ import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -61,7 +62,13 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 			schema.validate(new JSONObject(configuration));
 		}
 		catch (Exception e) {
-			if (e instanceof ValidationException) {
+			if (e instanceof JSONException) {
+				JSONException jsonException = (JSONException)e;
+
+				throw new FragmentEntryConfigurationException(
+					jsonException.getMessage(), jsonException);
+			}
+			else if (e instanceof ValidationException) {
 				ValidationException validationException =
 					(ValidationException)e;
 

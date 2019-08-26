@@ -28,6 +28,9 @@ import com.liferay.bulk.rest.client.pagination.Page;
 import com.liferay.bulk.rest.client.resource.v1_0.KeywordResource;
 import com.liferay.bulk.rest.client.serdes.v1_0.KeywordSerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -48,6 +51,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -194,6 +199,11 @@ public abstract class BaseKeywordResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	protected Keyword testGraphQLKeyword_addKeyword() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -242,6 +252,25 @@ public abstract class BaseKeywordResourceTestCase {
 		}
 	}
 
+	protected void assertEqualsJSONArray(
+		List<Keyword> keywords, JSONArray jsonArray) {
+
+		for (Keyword keyword : keywords) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(keyword, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + keyword, contains);
+		}
+	}
+
 	protected void assertValid(Keyword keyword) {
 		boolean valid = true;
 
@@ -285,6 +314,20 @@ public abstract class BaseKeywordResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
@@ -310,6 +353,26 @@ public abstract class BaseKeywordResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(Keyword keyword, JSONObject jsonObject) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("name", fieldName)) {
+				if (!Objects.equals(
+						keyword.getName(),
+						(String)jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -377,6 +440,23 @@ public abstract class BaseKeywordResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Keyword randomKeyword() throws Exception {
 		return new Keyword() {
 			{
@@ -399,6 +479,60 @@ public abstract class BaseKeywordResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseKeywordResourceTestCase.class);

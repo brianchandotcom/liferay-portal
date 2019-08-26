@@ -23,12 +23,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.change.tracking.rest.client.dto.v1_0.Collection;
+import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Settings;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.rest.client.pagination.Page;
 import com.liferay.change.tracking.rest.client.resource.v1_0.SettingsResource;
 import com.liferay.change.tracking.rest.client.serdes.v1_0.SettingsSerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -49,7 +53,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -209,6 +215,11 @@ public abstract class BaseSettingsResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	protected Settings testGraphQLSettings_addSettings() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -254,6 +265,25 @@ public abstract class BaseSettingsResourceTestCase {
 
 			Assert.assertTrue(
 				settingses2 + " does not contain " + settings1, contains);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<Settings> settingses, JSONArray jsonArray) {
+
+		for (Settings settings : settingses) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(settings, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + settings, contains);
 		}
 	}
 
@@ -360,6 +390,20 @@ public abstract class BaseSettingsResourceTestCase {
 
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
 	protected String[] getIgnoredEntityFieldNames() {
@@ -470,6 +514,77 @@ public abstract class BaseSettingsResourceTestCase {
 		return true;
 	}
 
+	protected boolean equalsJSONObject(
+		Settings settings, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("changeTrackingAllowed", fieldName)) {
+				if (!Objects.equals(
+						settings.getChangeTrackingAllowed(),
+						(Boolean)jsonObject.getBoolean(
+							"changeTrackingAllowed"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("changeTrackingEnabled", fieldName)) {
+				if (!Objects.equals(
+						settings.getChangeTrackingEnabled(),
+						(Boolean)jsonObject.getBoolean(
+							"changeTrackingEnabled"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"checkoutCTCollectionConfirmationEnabled", fieldName)) {
+
+				if (!Objects.equals(
+						settings.getCheckoutCTCollectionConfirmationEnabled(),
+						(Boolean)jsonObject.getBoolean(
+							"checkoutCTCollectionConfirmationEnabled"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("companyId", fieldName)) {
+				if (!Objects.equals(
+						settings.getCompanyId(),
+						(Long)jsonObject.getLong("companyId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("userId", fieldName)) {
+				if (!Objects.equals(
+						settings.getUserId(),
+						(Long)jsonObject.getLong("userId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -559,6 +674,23 @@ public abstract class BaseSettingsResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Settings randomSettings() throws Exception {
 		return new Settings() {
 			{
@@ -586,6 +718,60 @@ public abstract class BaseSettingsResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSettingsResourceTestCase.class);

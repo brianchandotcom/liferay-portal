@@ -3,6 +3,8 @@ definition {
 	macro _addRole {
 		Variables.assertDefined(parameterList = "${roleTitle}");
 
+		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+
 		if (isSet(roleDescription)) {
 			var roleDescriptionEncoded = URLUtil.encodeUTF8("${roleDescription}");
 

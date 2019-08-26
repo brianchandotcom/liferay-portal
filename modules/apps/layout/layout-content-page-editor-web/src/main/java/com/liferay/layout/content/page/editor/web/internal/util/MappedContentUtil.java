@@ -104,6 +104,14 @@ public class MappedContentUtil {
 		return null;
 	}
 
+	public static Set<AssetEntry> getFragmentEntryLinkMappedAssetEntries(
+			FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		return _getFragmentEntryLinkMappedAssetEntries(
+			fragmentEntryLink, new HashSet<>());
+	}
+
 	public static Set<AssetEntry> getMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK)
 		throws PortalException {
@@ -201,6 +209,68 @@ public class MappedContentUtil {
 		return jsonObject;
 	}
 
+	private static Set<AssetEntry> _getFragmentEntryLinkMappedAssetEntries(
+			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs)
+		throws PortalException {
+
+		Set<AssetEntry> assetEntries = new HashSet<>();
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		Iterator<String> keysIterator = editableValuesJSONObject.keys();
+
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
+
+			JSONObject editableProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(key);
+
+			if (editableProcessorJSONObject == null) {
+				continue;
+			}
+
+			Iterator<String> editableKeysIterator =
+				editableProcessorJSONObject.keys();
+
+			while (editableKeysIterator.hasNext()) {
+				String editableKey = editableKeysIterator.next();
+
+				JSONObject editableJSONObject =
+					editableProcessorJSONObject.getJSONObject(editableKey);
+
+				if (editableJSONObject == null) {
+					continue;
+				}
+
+				JSONObject configJSONObject = editableJSONObject.getJSONObject(
+					"config");
+
+				if ((configJSONObject != null) &&
+					(configJSONObject.length() > 0)) {
+
+					AssetEntry assetEntry = getAssetEntry(
+						configJSONObject, mappedClassPKs);
+
+					if (assetEntry != null) {
+						assetEntries.add(assetEntry);
+					}
+				}
+
+				AssetEntry assetEntry = getAssetEntry(
+					editableJSONObject, mappedClassPKs);
+
+				if (assetEntry == null) {
+					continue;
+				}
+
+				assetEntries.add(assetEntry);
+			}
+		}
+
+		return assetEntries;
+	}
+
 	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK,
 			Set<Long> mappedClassPKs)
@@ -213,59 +283,9 @@ public class MappedContentUtil {
 				groupId, layoutClassNameId, layoutClassPK);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
-			Iterator<String> keysIterator = editableValuesJSONObject.keys();
-
-			while (keysIterator.hasNext()) {
-				String key = keysIterator.next();
-
-				JSONObject editableProcessorJSONObject =
-					editableValuesJSONObject.getJSONObject(key);
-
-				if (editableProcessorJSONObject == null) {
-					continue;
-				}
-
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
-
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
-
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					if (editableJSONObject == null) {
-						continue;
-					}
-
-					JSONObject configJSONObject =
-						editableJSONObject.getJSONObject("config");
-
-					if ((configJSONObject != null) &&
-						(configJSONObject.length() > 0)) {
-
-						AssetEntry assetEntry = getAssetEntry(
-							configJSONObject, mappedClassPKs);
-
-						if (assetEntry != null) {
-							assetEntries.add(assetEntry);
-						}
-					}
-
-					AssetEntry assetEntry = getAssetEntry(
-						editableJSONObject, mappedClassPKs);
-
-					if (assetEntry == null) {
-						continue;
-					}
-
-					assetEntries.add(assetEntry);
-				}
-			}
+			assetEntries.addAll(
+				_getFragmentEntryLinkMappedAssetEntries(
+					fragmentEntryLink, mappedClassPKs));
 		}
 
 		return assetEntries;

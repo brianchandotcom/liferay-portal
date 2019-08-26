@@ -81,15 +81,19 @@ const Editor = props => {
 			});
 
 		return () => {
-			if (ready) {
-				newEditor.destroy();
-				setEditor(null);
-			} else {
-				instanceReadyEventHandler.removeListener();
-
-				newEditor.get('nativeEditor').once('instanceReady', () => {
+			try {
+				if (ready) {
 					newEditor.destroy();
-				});
+					setEditor(null);
+				} else {
+					instanceReadyEventHandler.removeListener();
+
+					newEditor.get('nativeEditor').once('instanceReady', () => {
+						newEditor.destroy();
+					});
+				}
+			} catch (err) {
+				console.log(err);
 			}
 		};
 	}, [autoFocus, editorConfig]);

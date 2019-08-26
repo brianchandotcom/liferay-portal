@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
@@ -60,7 +61,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -778,23 +781,35 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return _hasUserPermissionImpl(group, name, primKey, roleIds, actionId);
 	}
 
-	protected long[] invokeRoleContributors(long[] roleIds, long groupId)
-		throws PortalException {
-
+	protected long[] invokeRoleContributors(long[] roleIds, long groupId) {
 		if (_roleContributors.length == 0) {
 			return roleIds;
 		}
 
-		UserBag userBag = getUserBag();
-
-		RoleCollectionImpl roleCollectionImpl = new RoleCollectionImpl(
-			roleIds, groupId, this);
-
-		for (RoleContributor roleContributor : _roleContributors) {
-			roleContributor.contribute(user, userBag, roleCollectionImpl);
+		if (_contributedRoleIds == null) {
+			_contributedRoleIds = new HashMap<>();
 		}
 
-		return roleCollectionImpl.getRoleIds();
+		return _contributedRoleIds.computeIfAbsent(
+			groupId,
+			key -> {
+				try {
+					UserBag userBag = getUserBag();
+
+					RoleCollectionImpl roleCollectionImpl =
+						new RoleCollectionImpl(roleIds, groupId, this);
+
+					for (RoleContributor roleContributor : _roleContributors) {
+						roleContributor.contribute(
+							user, userBag, roleCollectionImpl);
+					}
+
+					return roleCollectionImpl.getRoleIds();
+				}
+				catch (PortalException pe) {
+					return ReflectionUtil.throwException(pe);
+				}
+			});
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
@@ -1559,6 +1574,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);
 
+	private Map<Long, long[]> _contributedRoleIds;
 	private long _guestGroupId;
 	private RoleContributor[] _roleContributors;
 

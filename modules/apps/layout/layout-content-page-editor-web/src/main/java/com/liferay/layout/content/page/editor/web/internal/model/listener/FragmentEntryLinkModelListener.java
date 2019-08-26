@@ -263,29 +263,30 @@ public class FragmentEntryLinkModelListener
 		FragmentEntryLink fragmentEntryLink, String editableKey,
 		String mappedField) {
 
-		if (mappedField.startsWith(
+		if (!mappedField.startsWith(
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
-			String ddmTemplateKey = mappedField.substring(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
-
-			DDMTemplate ddmTemplate = _ddmTemplateManager.fetchTemplate(
-				fragmentEntryLink.getGroupId(),
-				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
-
-			if (ddmTemplate == null) {
-				return;
-			}
-
-			String compositeClassName =
-				ResourceActionsUtil.getCompositeModelName(
-					FragmentEntryLink.class.getName(), editableKey);
-
-			_ddmTemplateLinkLocalService.updateTemplateLink(
-				_portal.getClassNameId(compositeClassName),
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				ddmTemplate.getTemplateId());
+			return;
 		}
+
+		String ddmTemplateKey = mappedField.substring(
+			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
+
+		DDMTemplate ddmTemplate = _ddmTemplateManager.fetchTemplate(
+			fragmentEntryLink.getGroupId(),
+			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
+
+		if (ddmTemplate == null) {
+			return;
+		}
+
+		String compositeClassName = ResourceActionsUtil.getCompositeModelName(
+			FragmentEntryLink.class.getName(), editableKey);
+
+		_ddmTemplateLinkLocalService.updateTemplateLink(
+			_portal.getClassNameId(compositeClassName),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			ddmTemplate.getTemplateId());
 	}
 
 	@Reference

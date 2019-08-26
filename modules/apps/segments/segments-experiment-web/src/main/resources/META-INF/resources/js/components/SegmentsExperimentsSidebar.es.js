@@ -283,11 +283,22 @@ function SegmentsExperimentsSidebar({
 		};
 
 		segmentsExperimentsUtil.deleteVariant(body).then(() => {
-			setVariants(
-				variants.filter(
-					variant => variant.segmentsExperimentRelId !== variantId
-				)
-			);
+			let variantExperienceId = null;
+
+			const newVariants = variants.filter(variant => {
+				if (variant.segmentsExperimentRelId !== variantId) return true;
+
+				variantExperienceId = variant.segmentsExperienceId;
+				return false;
+			});
+
+			if (variantExperienceId === initialSelectedSegmentsExperienceId) {
+				navigateToExperience(
+					initialSegmentsExperiment.segmentsExperienceId
+				);
+			} else {
+				setVariants(newVariants);
+			}
 		});
 	}
 

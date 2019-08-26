@@ -127,7 +127,10 @@ public class ChangeListsDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
-			"urlCheckoutProduction", _getCheckoutProductionURL()
+			"urlCheckoutProduction",
+			_getCheckoutURL(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
+				true)
 		).put(
 			"urlCollectionsBase",
 			_themeDisplay.getPortalURL() +
@@ -428,12 +431,6 @@ public class ChangeListsDisplayContext {
 		return jsonArray;
 	}
 
-	private String _getCheckoutProductionURL() {
-		return _getCheckoutURL(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
-			true);
-	}
-
 	private String _getCheckoutURL(
 		long ctCollectionId, String confirmationMessageArg,
 		boolean translateArg) {
@@ -448,11 +445,9 @@ public class ChangeListsDisplayContext {
 		checkoutURL.setParameter(
 			"ctCollectionId", String.valueOf(ctCollectionId));
 
-		StringBundler sb;
+		StringBundler sb = new StringBundler(5);
 
 		if (_confirmationEnabled) {
-			sb = new StringBundler(5);
-
 			sb.append("javascript:confirm('");
 			sb.append(
 				LanguageUtil.format(
@@ -460,14 +455,12 @@ public class ChangeListsDisplayContext {
 					"do-you-want-to-switch-to-x-change-list",
 					confirmationMessageArg, translateArg));
 			sb.append("') && Liferay.Util.navigate('");
-			sb.append(checkoutURL.toString());
+			sb.append(checkoutURL);
 			sb.append("')");
 		}
 		else {
-			sb = new StringBundler(3);
-
 			sb.append("javascript:Liferay.Util.navigate('");
-			sb.append(checkoutURL.toString());
+			sb.append(checkoutURL);
 			sb.append("');");
 		}
 

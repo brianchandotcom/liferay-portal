@@ -70,6 +70,16 @@ class FloatingToolbarLinkPanel extends PortletBase {
 			MAPPING_SOURCE_TYPE_IDS
 		);
 
+		const structureMappingSet =
+			this._selectedSourceTypeId === MAPPING_SOURCE_TYPE_IDS.content ||
+			nextState.selectedMappingTypes.type !== undefined;
+
+		nextState = setIn(
+			nextState,
+			['_structureMappingSet'],
+			structureMappingSet
+		);
+
 		if (
 			nextState.mappingFieldsURL &&
 			nextState.selectedMappingTypes &&

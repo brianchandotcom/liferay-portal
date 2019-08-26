@@ -72,12 +72,7 @@ public class OAuth2Manager {
 		AccessToken accessToken = accessTokenOptional.get();
 
 		if (!accessToken.isValid()) {
-			if (accessToken.getRefreshToken() != null) {
-				return Optional.of(
-					refreshOAuth2AccessToken(companyId, userId, accessToken));
-			}
-
-			return Optional.empty();
+			return refreshOAuth2AccessToken(companyId, userId, accessToken);
 		}
 
 		return Optional.of(accessToken);
@@ -97,9 +92,13 @@ public class OAuth2Manager {
 		}
 	}
 
-	public AccessToken refreshOAuth2AccessToken(
+	public Optional<AccessToken> refreshOAuth2AccessToken(
 			long companyId, long userId, AccessToken accessToken)
 		throws PortalException {
+
+		if (accessToken.getRefreshToken() == null) {
+			return Optional.empty();
+		}
 
 		try (OAuth20Service oAuth20Service = _createOAuth20Service(
 				companyId, null)) {
@@ -110,7 +109,7 @@ public class OAuth2Manager {
 
 			_accessTokenStore.add(companyId, userId, newAccessToken);
 
-			return newAccessToken;
+			return Optional.of(newAccessToken);
 		}
 		catch (ExecutionException | InterruptedException | IOException e) {
 			throw new PortalException(e);

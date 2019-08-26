@@ -113,6 +113,14 @@ public class MappedContentUtil {
 			fragmentEntryLink, new HashSet<>());
 	}
 
+	public static Set<AssetEntry> getLayoutMappedAssetEntries(
+			LayoutPageTemplateStructure layoutPageTemplateStructure)
+		throws PortalException {
+
+		return _getLayoutMappedAssetEntries(
+			layoutPageTemplateStructure, new HashSet<>());
+	}
+
 	public static Set<AssetEntry> getMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK)
 		throws PortalException {
@@ -305,16 +313,11 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK,
+			LayoutPageTemplateStructure layoutPageTemplateStructure,
 			Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					groupId, layoutClassNameId, layoutClassPK, true);
 
 		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
 			layoutPageTemplateStructure.getData(
@@ -346,6 +349,20 @@ public class MappedContentUtil {
 			});
 
 		return assetEntries;
+	}
+
+	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			Set<Long> mappedClassPKs)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, layoutClassNameId, layoutClassPK, true);
+
+		return _getLayoutMappedAssetEntries(
+			layoutPageTemplateStructure, mappedClassPKs);
 	}
 
 	private static JSONObject _getMappedContentJSONObject(

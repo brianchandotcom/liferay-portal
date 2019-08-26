@@ -225,23 +225,20 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 	</div>
 </div>
 
-<aui:script use="aui-io-request,aui-modal,liferay-form,node,node-event-simulate">
+<aui:script use="aui-modal,liferay-form,node,node-event-simulate">
 	<portlet:namespace />generateRandomSecret = function() {
-		var io = A.io.request(
+		Liferay.Util.fetch(
 			'<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/admin/generate_random_secret" />',
 			{
-				dataType: 'string',
-				on: {
-					complete: function(event, id, obj) {
-						var responseText = obj.responseText;
-
-						var newClientSecretField = A.one('#<portlet:namespace />newClientSecret');
-
-						<portlet:namespace />updateComponent(newClientSecretField, responseText);
-					}
-				}
+				method: 'POST'
 			}
-		);
+		).then(function(response) {
+			return response.text();
+		}).then(function(response) {
+			var newClientSecretField = A.one('#<portlet:namespace />newClientSecret');
+
+			<portlet:namespace />updateComponent(newClientSecretField, response);
+		});
 	}
 
 	<portlet:namespace />getSelectedClientProfile = function() {

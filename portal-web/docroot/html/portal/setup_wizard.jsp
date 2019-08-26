@@ -89,6 +89,8 @@
 										<aui:button name="changeLanguageButton" value="change" />
 									</div>
 								</aui:field-wrapper>
+
+								<aui:input label="time-zone" name="companyTimeZoneId" type="timeZone" value="<%= PropsValues.COMPANY_DEFAULT_TIME_ZONE %>" />
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="col-md-6">

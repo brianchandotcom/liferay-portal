@@ -79,17 +79,20 @@ public class SetupWizardSampleDataUtil {
 			_log.info("Adding sample data");
 		}
 
-		Company company = updateCompany(
-			CompanyLocalServiceUtil.getCompanyById(companyId), companyName,
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
+
+		User defaultUser = company.getDefaultUser();
+
+		company = updateCompany(
+			company, companyName,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			defaultUser.getTimeZoneId());
 
 		User adminUser = updateAdminUser(
 			company, LocaleUtil.getDefault(),
 			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
 			adminUserEmailAddress, adminUserFirstName, adminUserLastName,
 			resetPassword);
-
-		User defaultUser = company.getDefaultUser();
 
 		Account account = company.getAccount();
 
@@ -218,7 +221,8 @@ public class SetupWizardSampleDataUtil {
 	}
 
 	public static Company updateCompany(
-			Company company, String companyName, String languageId)
+			Company company, String companyName, String languageId,
+			String timeZoneId)
 		throws Exception {
 
 		Account account = company.getAccount();
@@ -228,11 +232,8 @@ public class SetupWizardSampleDataUtil {
 
 		AccountLocalServiceUtil.updateAccount(account);
 
-		User defaultUser = company.getDefaultUser();
-
-		defaultUser.setLanguageId(languageId);
-
-		UserLocalServiceUtil.updateUser(defaultUser);
+		CompanyLocalServiceUtil.updateDisplay(
+			company.getCompanyId(), languageId, timeZoneId);
 
 		return company;
 	}

@@ -304,7 +304,7 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
-			_groupId, classNameId, classPK, getSegmentsExperienceId());
+			_groupId, classNameId, classPK);
 
 		soyContext.put(
 			"mappedAssetEntries",

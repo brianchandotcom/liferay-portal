@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.HashSet;
@@ -104,8 +105,7 @@ public class MappedContentUtil {
 	}
 
 	public static Set<AssetEntry> getMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK,
-			long segmentsExperienceId)
+			long groupId, long layoutClassNameId, long layoutClassPK)
 		throws PortalException {
 
 		Set<Long> mappedClassPKs = new HashSet<>();
@@ -115,8 +115,7 @@ public class MappedContentUtil {
 
 		assetEntries.addAll(
 			_getLayoutMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK, segmentsExperienceId,
-				mappedClassPKs));
+				groupId, layoutClassNameId, layoutClassPK, mappedClassPKs));
 
 		return assetEntries;
 	}
@@ -274,7 +273,7 @@ public class MappedContentUtil {
 
 	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
 			long groupId, long layoutClassNameId, long layoutClassPK,
-			long segmentsExperienceId, Set<Long> mappedClassPKs)
+			Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
@@ -285,7 +284,8 @@ public class MappedContentUtil {
 					groupId, layoutClassNameId, layoutClassPK, true);
 
 		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
 			"structure");

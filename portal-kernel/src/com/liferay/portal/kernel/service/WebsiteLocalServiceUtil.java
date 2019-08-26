@@ -40,6 +40,17 @@ public class WebsiteLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.Website addWebsite(
 			long userId, String className, long classPK, String url,
+			long typeId, boolean primary, boolean validateURL,
+			ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addWebsite(
+			userId, className, classPK, url, typeId, primary, validateURL,
+			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.model.Website addWebsite(
+			long userId, String className, long classPK, String url,
 			long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

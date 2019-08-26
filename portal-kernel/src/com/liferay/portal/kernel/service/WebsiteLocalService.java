@@ -64,6 +64,12 @@ public interface WebsiteLocalService
 	 */
 	public Website addWebsite(
 			long userId, String className, long classPK, String url,
+			long typeId, boolean primary, boolean validateURL,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Website addWebsite(
+			long userId, String className, long classPK, String url,
 			long typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 

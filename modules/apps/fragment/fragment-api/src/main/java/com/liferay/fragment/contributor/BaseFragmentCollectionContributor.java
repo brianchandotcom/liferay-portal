@@ -18,9 +18,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.io.StreamUtil;
@@ -193,8 +191,6 @@ public abstract class BaseFragmentCollectionContributor
 					continue;
 				}
 
-				_updateFragmentEntryLinks(fragmentEntry);
-
 				List<FragmentEntry> fragmentEntryList =
 					_fragmentEntries.computeIfAbsent(
 						fragmentEntry.getType(), type -> new ArrayList<>());
@@ -208,9 +204,6 @@ public abstract class BaseFragmentCollectionContributor
 			}
 		}
 	}
-
-	@Reference
-	protected FragmentEntryLinkLocalService fragmentEntryLinkLocalService;
 
 	@Reference
 	protected FragmentEntryLocalService fragmentEntryLocalService;
@@ -364,23 +357,6 @@ public abstract class BaseFragmentCollectionContributor
 					LocaleUtil.fromLanguageId(languageId),
 					LanguageUtil.get(resourceBundle, name, name));
 			}
-		}
-	}
-
-	private void _updateFragmentEntryLinks(FragmentEntry fragmentEntry) {
-		List<FragmentEntryLink> fragmentEntryLinks =
-			fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				fragmentEntry.getFragmentEntryKey());
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLink.setCss(fragmentEntry.getCss());
-			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
-			fragmentEntryLink.setJs(fragmentEntry.getJs());
-			fragmentEntryLink.setConfiguration(
-				fragmentEntry.getConfiguration());
-
-			fragmentEntryLinkLocalService.updateFragmentEntryLink(
-				fragmentEntryLink);
 		}
 	}
 

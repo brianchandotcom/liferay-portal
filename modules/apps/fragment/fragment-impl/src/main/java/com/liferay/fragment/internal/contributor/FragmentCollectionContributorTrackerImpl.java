@@ -18,6 +18,8 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
@@ -157,6 +159,8 @@ public class FragmentCollectionContributorTrackerImpl
 			_populateFragmentEntries(
 				_fragmentEntries, fragmentCollectionContributor);
 		}
+
+		_updateFragmentEntryLinks(fragmentCollectionContributor);
 	}
 
 	protected void unsetFragmentCollectionContributor(
@@ -210,6 +214,31 @@ public class FragmentCollectionContributorTrackerImpl
 		}
 	}
 
+	private void _updateFragmentEntryLinks(
+		FragmentCollectionContributor fragmentCollectionContributor) {
+
+		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(type)) {
+
+				List<FragmentEntryLink> fragmentEntryLinks =
+					_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+						fragmentEntry.getFragmentEntryKey());
+
+				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					fragmentEntryLink.setCss(fragmentEntry.getCss());
+					fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+					fragmentEntryLink.setJs(fragmentEntry.getJs());
+					fragmentEntryLink.setConfiguration(
+						fragmentEntry.getConfiguration());
+
+					_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+						fragmentEntryLink);
+				}
+			}
+		}
+	}
+
 	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {
 		FragmentConstants.TYPE_COMPONENT, FragmentConstants.TYPE_SECTION
 	};
@@ -217,5 +246,8 @@ public class FragmentCollectionContributorTrackerImpl
 	private final Map<String, FragmentCollectionContributor>
 		_fragmentCollectionContributorsMap = new ConcurrentHashMap<>();
 	private volatile Map<String, FragmentEntry> _fragmentEntries;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 }

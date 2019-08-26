@@ -45,7 +45,7 @@ public class RoleCollectionImpl implements RoleCollection {
 	}
 
 	@Override
-	public boolean addAll(long[] roleIds) throws PortalException {
+	public boolean addAllRoleIds(long[] roleIds) throws PortalException {
 		boolean changed = false;
 
 		for (long roleId : roleIds) {

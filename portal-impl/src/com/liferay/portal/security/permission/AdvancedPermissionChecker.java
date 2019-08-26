@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
@@ -59,14 +57,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -80,14 +74,9 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class AdvancedPermissionChecker extends BasePermissionChecker {
 
-	public AdvancedPermissionChecker() {
-		_roleContributors = ServiceTrackerCollections.openList(
-			RoleContributor.class);
-	}
-
 	@Override
 	public AdvancedPermissionChecker clone() {
-		return new AdvancedPermissionChecker(_roleContributors);
+		return new AdvancedPermissionChecker();
 	}
 
 	@Override
@@ -289,6 +278,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	@Override
+	public void init(User user, RoleContributor[] roleContributors) {
+		init(user);
+
+		_roleContributors = roleContributors;
 	}
 
 	@Override
@@ -786,26 +782,20 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			long[] roleIds, long userId, long groupId)
 		throws PortalException {
 
-		if (_roleContributors.isEmpty()) {
+		if (_roleContributors.length == 0) {
 			return roleIds;
 		}
 
-		Map<RoleCollectionKey, long[]> cache = _roleIdsThreadLocal.get();
+		RoleCollectionImpl roleCollection = new RoleCollectionImpl(
+			RoleLocalServiceUtil.getRoles(roleIds), groupId, this,
+			RoleLocalServiceUtil.getService());
 
-		return cache.computeIfAbsent(
-			new RoleCollectionKey(groupId, userId),
-			key -> {
-				RoleCollectionImpl roleCollection = new RoleCollectionImpl(
-					_getRoles(roleIds), groupId, this,
-					RoleLocalServiceUtil.getService());
+		for (RoleContributor roleContributor : _roleContributors) {
+			roleContributor.contribute(roleCollection);
+		}
 
-				for (RoleContributor roleContributor : _roleContributors) {
-					roleContributor.contribute(roleCollection);
-				}
-
-				return ListUtil.toLongArray(
-					roleCollection.getRoleList(), Role::getRoleId);
-			});
+		return ListUtil.toLongArray(
+			roleCollection.getRoleList(), Role::getRoleId);
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
@@ -1341,21 +1331,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
-	private AdvancedPermissionChecker(
-		ServiceTrackerList<RoleContributor> roleContributors) {
-
-		_roleContributors = roleContributors;
-	}
-
-	private List<Role> _getRoles(long[] roleIds) {
-		try {
-			return RoleLocalServiceUtil.getRoles(roleIds);
-		}
-		catch (PortalException pe) {
-			return ReflectionUtil.throwException(pe);
-		}
-	}
-
 	private boolean _hasGuestPermission(
 		Group group, String name, String primKey, String actionId) {
 
@@ -1586,61 +1561,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);
 
-	private static final ThreadLocal<Map<RoleCollectionKey, long[]>>
-		_roleIdsThreadLocal = new CentralizedThreadLocal<>(
-			AdvancedPermissionChecker.class + "._roleIdsThreadLocal",
-			HashMap::new, true);
-
+	private RoleContributor[] _roleContributors;
 	private long _guestGroupId;
-	private final ServiceTrackerList<RoleContributor> _roleContributors;
-
-	private static class RoleCollectionKey {
-
-		public RoleCollectionKey(long groupId, long userId) {
-			_groupId = groupId;
-			_userId = userId;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
-			}
-
-			if (obj == null) {
-				return false;
-			}
-
-			if (getClass() != obj.getClass()) {
-				return false;
-			}
-
-			RoleCollectionKey other = (RoleCollectionKey)obj;
-
-			if (_groupId != other._groupId) {
-				return false;
-			}
-
-			if (_userId != other._userId) {
-				return false;
-			}
-
-			return true;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + (int)(_groupId ^ (_groupId >>> 32));
-			result = prime * result + (int)(_userId ^ (_userId >>> 32));
-
-			return result;
-		}
-
-		private final long _groupId;
-		private final long _userId;
-
-	}
 
 }

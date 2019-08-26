@@ -149,6 +149,10 @@ public interface PermissionChecker extends Cloneable {
 	 */
 	public void init(User user);
 
+	public default void init(User user, RoleContributor[] roleContributors) {
+		init(user);
+	}
+
 	/**
 	 * Returns <code>true</code> if guest permissions will be used in permission
 	 * checks.

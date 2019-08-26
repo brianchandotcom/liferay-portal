@@ -33,6 +33,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -58,6 +60,18 @@ public class KnowledgeBaseAttachmentResourceTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, null, serviceContext);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteKnowledgeBaseAttachment() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetKnowledgeBaseAttachment() {
 	}
 
 	@Override

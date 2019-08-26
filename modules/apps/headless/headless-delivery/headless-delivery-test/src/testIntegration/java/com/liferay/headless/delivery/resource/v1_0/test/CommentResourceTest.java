@@ -113,6 +113,11 @@ public class CommentResourceTest extends BaseCommentResourceTestCase {
 	}
 
 	@Override
+	protected Comment testGraphQLComment_addComment() throws Exception {
+		return testGetComment_addComment();
+	}
+
+	@Override
 	protected Comment testPutComment_addComment() throws Exception {
 		BlogsEntry blogsEntry = _addBlogsEntry();
 

@@ -20,6 +20,8 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -159,6 +162,56 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	public void testGetUserAccountsPageWithSortString() throws Exception {
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMyUserAccount() {
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetUserAccountsPage() throws Exception {
+		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
+		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"userAccounts",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 3);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
+			"userAccounts");
+
+		Assert.assertEquals(3, userAccountsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(userAccount1, userAccount2),
+			userAccountsJSONObject.getJSONArray("items"));
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"familyName", "givenName"};
@@ -232,6 +285,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Override
 	protected Long testGetWebSiteUserAccountsPage_getWebSiteId() {
 		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected UserAccount testGraphQLUserAccount_addUserAccount()
+		throws Exception {
+
+		return testGetMyUserAccount_addUserAccount();
 	}
 
 	private UserAccount _addUserAccount(UserAccount userAccount)

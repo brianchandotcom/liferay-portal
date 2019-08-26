@@ -80,6 +80,30 @@ public class DataRecordCollectionResourceTest
 		_testGetSiteDataRecordCollectionsPage("description", "π€†", "π€† name");
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDataRecordCollection() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDataRecordCollection() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataRecordCollection() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataRecordCollectionsPage() {
+	}
+
 	@Override
 	@Test
 	public void testPostDataDefinitionDataRecordCollection() throws Exception {

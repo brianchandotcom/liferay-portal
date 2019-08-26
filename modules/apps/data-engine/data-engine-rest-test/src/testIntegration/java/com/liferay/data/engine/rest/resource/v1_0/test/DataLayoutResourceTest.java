@@ -91,6 +91,30 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		_testGetSiteDataLayoutPage("π€†", "π€† layout");
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDataLayout() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDataLayout() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataLayout() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataLayoutsPage() {
+	}
+
 	@Override
 	@Test
 	public void testPostDataDefinitionDataLayout() throws Exception {

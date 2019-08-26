@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,6 +39,30 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class BlogPostingImageResourceTest
 	extends BaseBlogPostingImageResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteBlogPostingImage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetBlogPostingImage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteBlogPostingImagesPage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteBlogPostingImage() {
+	}
 
 	@Test
 	public void testPostSiteBlogPostingImageRollback() throws Exception {

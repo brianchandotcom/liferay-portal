@@ -33,6 +33,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -62,6 +64,18 @@ public class WikiPageAttachmentResourceTest
 			wikiNode.getNodeId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteWikiPageAttachment() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetWikiPageAttachment() {
 	}
 
 	@Override

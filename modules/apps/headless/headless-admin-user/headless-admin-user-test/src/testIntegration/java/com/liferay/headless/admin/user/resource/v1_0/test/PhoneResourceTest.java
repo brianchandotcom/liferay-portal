@@ -103,6 +103,11 @@ public class PhoneResourceTest extends BasePhoneResourceTestCase {
 		return _user.getUserId();
 	}
 
+	@Override
+	protected Phone testGraphQLPhone_addPhone() throws Exception {
+		return testGetPhone_addPhone();
+	}
+
 	private Phone _addPhone(
 			Phone phone, String className, long classPK, String listTypeId)
 		throws Exception {

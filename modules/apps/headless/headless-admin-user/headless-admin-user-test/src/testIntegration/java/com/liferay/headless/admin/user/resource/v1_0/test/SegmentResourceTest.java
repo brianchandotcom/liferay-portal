@@ -175,6 +175,12 @@ public class SegmentResourceTest extends BaseSegmentResourceTestCase {
 		return _user.getUserId();
 	}
 
+	@Override
+	protected Segment testGraphQLSegment_addSegment() throws Exception {
+		return testGetSiteSegmentsPage_addSegment(
+			testGroup.getGroupId(), randomSegment());
+	}
+
 	private Segment _addSegment(Long siteId, Segment segment)
 		throws PortalException {
 

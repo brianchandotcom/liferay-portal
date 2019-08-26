@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,6 +39,30 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class DocumentResourceTest extends BaseDocumentResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDocument() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDocument() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDocumentsPage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteDocument() {
+	}
 
 	@Override
 	protected void assertValid(

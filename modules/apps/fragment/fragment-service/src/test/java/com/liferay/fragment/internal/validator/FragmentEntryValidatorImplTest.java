@@ -18,6 +18,8 @@ import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.FileImpl;
 
+import org.hamcrest.core.StringStartsWith;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,8 +43,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: required key [cssClass] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: required key [cssClass] " +
+					"not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -56,8 +59,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: required key [rgbValue] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: required key [rgbValue] " +
+					"not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -71,8 +75,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: unsupported is not a valid enum value");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: unsupported is not a " +
+					"valid enum value"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -86,8 +91,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
+					"permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -100,8 +106,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: extraneous key [extra] " +
+					"is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -115,8 +122,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
+					"permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -130,8 +138,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: required key [className] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: required key " +
+					"[className] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -145,8 +154,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: required key [classPK] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: required key [classPK] " +
+					"not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -160,8 +170,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/defaultValue: extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/defaultValue: extraneous key [extra] " +
+					"is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -175,8 +186,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
+					"permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -190,8 +202,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions: extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/typeOptions: extraneous key [extra] " +
+					"is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -205,8 +218,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/name: expected minLength: 1, actual: 0");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/name: expected minLength: 1, actual: " +
+					"0"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_name_empty.json"));
@@ -218,8 +232,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"required key [name] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: required key [name] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_name_missing.json"));
@@ -231,8 +245,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/name: string [a_b-c.d?e] does not match pattern");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/name: string [a_b-c.d?e] does not " +
+					"match pattern"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_name_non_alphanumeric.json"));
@@ -244,8 +259,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/name: string [a b] does not match pattern");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/name: string [a b] does not match " +
+					"pattern"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_name_with_space.json"));
@@ -257,8 +273,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/dataType: unsupported is not a valid enum value");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/dataType: unsupported is not a valid " +
+					"enum value"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -272,8 +289,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"required key [defaultValue] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: required key [defaultValue] not " +
+					"found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -287,8 +305,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
+					"permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_select_extra_properties.json"));
@@ -300,8 +319,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions: extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/typeOptions: extraneous key [extra] " +
+					"is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -315,8 +335,8 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"required key [typeOptions] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: required key [typeOptions] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -329,9 +349,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions/validValues/0: extraneous key [extra] is not " +
-					"permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/typeOptions/validValues/0: extraneous " +
+					"key [extra] is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -345,8 +365,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions: required key [validValues] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/typeOptions: required key " +
+					"[validValues] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -360,8 +381,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/typeOptions/validValues/0: required key [value] not found");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/typeOptions/validValues/0: required " +
+					"key [value] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -375,7 +397,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: extraneous key [extra] is not permitted");
+			new StringStartsWith("extraneous key [extra] is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_sets_extra_properties.json"));
@@ -387,7 +409,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: required key [fieldSets] not found");
+			new StringStartsWith("required key [fieldSets] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_sets_missing.json"));
@@ -399,8 +421,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0" +
-				"/dataType: unsupported is not a valid enum value");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0/dataType: unsupported is not a valid " +
+					"enum value"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read(
@@ -413,8 +436,9 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			"#: only 1 subschema matches out of 2\n#/fieldSets/0/fields/0: " +
-				"extraneous key [extra] is not permitted");
+			new StringStartsWith(
+				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
+					"permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_text_extra_properties.json"));

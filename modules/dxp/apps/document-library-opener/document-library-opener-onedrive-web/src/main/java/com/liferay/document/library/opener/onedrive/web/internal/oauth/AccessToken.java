@@ -35,9 +35,10 @@ public class AccessToken {
 			expiresIn = 0;
 		}
 
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime localDateTime = LocalDateTime.now();
 
-		_expirationDate = now.plus(expiresIn, ChronoUnit.SECONDS);
+		_expirationLocalDateTime = localDateTime.plus(
+			expiresIn, ChronoUnit.SECONDS);
 
 		_oAuth2AccessToken = oAuth2AccessToken;
 	}
@@ -51,16 +52,16 @@ public class AccessToken {
 	}
 
 	public boolean isValid() {
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime localDateTime = LocalDateTime.now();
 
-		if (now.isBefore(_expirationDate)) {
+		if (localDateTime.isBefore(_expirationLocalDateTime)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private final LocalDateTime _expirationDate;
+	private final LocalDateTime _expirationLocalDateTime;
 	private final OAuth2AccessToken _oAuth2AccessToken;
 
 }

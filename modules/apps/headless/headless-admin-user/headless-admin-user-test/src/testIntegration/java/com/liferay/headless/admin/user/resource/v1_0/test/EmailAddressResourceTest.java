@@ -105,6 +105,13 @@ public class EmailAddressResourceTest extends BaseEmailAddressResourceTestCase {
 		return _user.getUserId();
 	}
 
+	@Override
+	protected EmailAddress testGraphQLEmailAddress_addEmailAddress()
+		throws Exception {
+
+		return testGetEmailAddress_addEmailAddress();
+	}
+
 	private EmailAddress _addEmailAddress(
 			EmailAddress emailAddress, String className, long classPK,
 			String listTypeId)

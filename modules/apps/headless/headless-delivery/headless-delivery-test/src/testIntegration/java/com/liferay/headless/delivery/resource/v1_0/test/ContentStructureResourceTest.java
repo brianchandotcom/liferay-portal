@@ -70,6 +70,13 @@ public class ContentStructureResourceTest
 				contentStructure.getName()));
 	}
 
+	@Override
+	protected ContentStructure testGraphQLContentStructure_addContentStructure()
+		throws Exception {
+
+		return testGetContentStructure_addContentStructure();
+	}
+
 	private DDMStructure _addDDMStructure(Group group, String name)
 		throws Exception {
 

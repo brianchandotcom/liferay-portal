@@ -28,6 +28,10 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.EmailAddressResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.EmailAddressSerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -48,7 +52,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -201,6 +207,33 @@ public abstract class BaseEmailAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetEmailAddress() throws Exception {
+		EmailAddress emailAddress = testGraphQLEmailAddress_addEmailAddress();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"emailAddress",
+				new HashMap<String, Object>() {
+					{
+						put("emailAddressId", emailAddress.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				emailAddress, dataJSONObject.getJSONObject("emailAddress")));
+	}
+
+	@Test
 	public void testGetOrganizationEmailAddressesPage() throws Exception {
 		Page<EmailAddress> page =
 			emailAddressResource.getOrganizationEmailAddressesPage(
@@ -341,6 +374,13 @@ public abstract class BaseEmailAddressResourceTestCase {
 		return null;
 	}
 
+	protected EmailAddress testGraphQLEmailAddress_addEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -368,6 +408,25 @@ public abstract class BaseEmailAddressResourceTestCase {
 			EmailAddress emailAddress2 = emailAddresses2.get(i);
 
 			assertEquals(emailAddress1, emailAddress2);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<EmailAddress> emailAddresses, JSONArray jsonArray) {
+
+		for (EmailAddress emailAddress : emailAddresses) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(emailAddress, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + emailAddress, contains);
 		}
 	}
 
@@ -461,6 +520,20 @@ public abstract class BaseEmailAddressResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected boolean equals(
 		EmailAddress emailAddress1, EmailAddress emailAddress2) {
 
@@ -516,6 +589,60 @@ public abstract class BaseEmailAddressResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(
+		EmailAddress emailAddress, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("emailAddress", fieldName)) {
+				if (!Objects.equals(
+						emailAddress.getEmailAddress(),
+						(String)jsonObject.getString("emailAddress"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						emailAddress.getId(), (Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("primary", fieldName)) {
+				if (!Objects.equals(
+						emailAddress.getPrimary(),
+						(Boolean)jsonObject.getBoolean("primary"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", fieldName)) {
+				if (!Objects.equals(
+						emailAddress.getType(),
+						(String)jsonObject.getString("type"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -601,6 +728,23 @@ public abstract class BaseEmailAddressResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected EmailAddress randomEmailAddress() throws Exception {
 		return new EmailAddress() {
 			{
@@ -647,5 +791,59 @@ public abstract class BaseEmailAddressResourceTestCase {
 	@Inject
 	private com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource
 		_emailAddressResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

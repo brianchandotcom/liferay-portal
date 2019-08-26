@@ -30,6 +30,10 @@ import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.UserAccountSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -52,9 +56,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -225,6 +231,33 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetMyUserAccount() throws Exception {
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"myUserAccount",
+				new HashMap<String, Object>() {
+					{
+						put("userAccountId", userAccount.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				userAccount, dataJSONObject.getJSONObject("myUserAccount")));
 	}
 
 	@Test
@@ -736,6 +769,58 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetUserAccountsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"userAccounts",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject userAccountsJSONObject = dataJSONObject.getJSONObject(
+			"userAccounts");
+
+		Assert.assertEquals(0, userAccountsJSONObject.get("totalCount"));
+
+		UserAccount userAccount1 = testGraphQLUserAccount_addUserAccount();
+		UserAccount userAccount2 = testGraphQLUserAccount_addUserAccount();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		userAccountsJSONObject = dataJSONObject.getJSONObject("userAccounts");
+
+		Assert.assertEquals(2, userAccountsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(userAccount1, userAccount2),
+			userAccountsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testGetUserAccount() throws Exception {
 		UserAccount postUserAccount = testGetUserAccount_addUserAccount();
 
@@ -749,6 +834,33 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected UserAccount testGetUserAccount_addUserAccount() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserAccount() throws Exception {
+		UserAccount userAccount = testGraphQLUserAccount_addUserAccount();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"userAccount",
+				new HashMap<String, Object>() {
+					{
+						put("userAccountId", userAccount.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				userAccount, dataJSONObject.getJSONObject("userAccount")));
 	}
 
 	@Test
@@ -1035,6 +1147,13 @@ public abstract class BaseUserAccountResourceTestCase {
 		return null;
 	}
 
+	protected UserAccount testGraphQLUserAccount_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -1061,6 +1180,25 @@ public abstract class BaseUserAccountResourceTestCase {
 			UserAccount userAccount2 = userAccounts2.get(i);
 
 			assertEquals(userAccount1, userAccount2);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<UserAccount> userAccounts, JSONArray jsonArray) {
+
+		for (UserAccount userAccount : userAccounts) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(userAccount, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + userAccount, contains);
 		}
 	}
 
@@ -1290,6 +1428,20 @@ public abstract class BaseUserAccountResourceTestCase {
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
 	protected boolean equals(
@@ -1548,6 +1700,159 @@ public abstract class BaseUserAccountResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(
+		UserAccount userAccount, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("additionalName", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getAdditionalName(),
+						(String)jsonObject.getString("additionalName"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("alternateName", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getAlternateName(),
+						(String)jsonObject.getString("alternateName"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dashboardURL", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getDashboardURL(),
+						(String)jsonObject.getString("dashboardURL"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("emailAddress", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getEmailAddress(),
+						(String)jsonObject.getString("emailAddress"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("familyName", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getFamilyName(),
+						(String)jsonObject.getString("familyName"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("givenName", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getGivenName(),
+						(String)jsonObject.getString("givenName"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("honorificPrefix", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getHonorificPrefix(),
+						(String)jsonObject.getString("honorificPrefix"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("honorificSuffix", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getHonorificSuffix(),
+						(String)jsonObject.getString("honorificSuffix"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getId(), (Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("image", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getImage(),
+						(String)jsonObject.getString("image"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("jobTitle", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getJobTitle(),
+						(String)jsonObject.getString("jobTitle"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getName(),
+						(String)jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("profileURL", fieldName)) {
+				if (!Objects.equals(
+						userAccount.getProfileURL(),
+						(String)jsonObject.getString("profileURL"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -1834,6 +2139,23 @@ public abstract class BaseUserAccountResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected UserAccount randomUserAccount() throws Exception {
 		return new UserAccount() {
 			{
@@ -1892,5 +2214,59 @@ public abstract class BaseUserAccountResourceTestCase {
 	@Inject
 	private com.liferay.headless.admin.user.resource.v1_0.UserAccountResource
 		_userAccountResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

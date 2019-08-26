@@ -23,6 +23,8 @@ definition {
 			var roleKeyMap = "{}";
 		}
 
+		var roleTitleEncoded = URLUtil.encodeUTF8("${roleTitle}");
+
 		if ("${roleType}" == "regular") {
 			var roleTypeId = "1";
 		}

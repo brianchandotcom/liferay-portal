@@ -61,7 +61,8 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.events.ServicePreActionLogic;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Sort;
@@ -82,7 +83,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
@@ -97,6 +97,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.net.URI;
@@ -298,19 +299,9 @@ public class StructuredContentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		EventsProcessorUtil.process(
-			PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
-			PropsValues.SERVLET_SERVICE_EVENTS_PRE, contextHttpServletRequest,
-			new DummyHttpServletResponse());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)contextHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		themeDisplay.setScopeGroupId(journalArticle.getGroupId());
-		themeDisplay.setSiteGroupId(journalArticle.getGroupId());
-
 		DDMTemplate ddmTemplate = _ddmTemplateService.getTemplate(templateId);
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(journalArticle);
 
 		JournalArticleDisplay journalArticleDisplay =
 			_journalContent.getDisplay(
@@ -656,6 +647,14 @@ public class StructuredContentResourceImpl
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
+	private File _getLARFile(String defaultUserPrivateLayoutsLar) {
+		if (defaultUserPrivateLayoutsLar == null) {
+			return null;
+		}
+
+		return new File(defaultUserPrivateLayoutsLar);
+	}
+
 	private List<DDMFormField> _getRootDDMFormFields(
 		DDMStructure ddmStructure) {
 
@@ -717,6 +716,36 @@ public class StructuredContentResourceImpl
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)),
 			sorts);
+	}
+
+	private ThemeDisplay _getThemeDisplay(JournalArticle journalArticle)
+		throws Exception {
+
+		DummyHttpServletResponse dummyHttpServletResponse =
+			new DummyHttpServletResponse();
+
+		ServicePreActionLogic servicePreActionLogic =
+			new ServicePreActionLogic();
+
+		servicePreActionLogic.servicePre(
+			false, _getLARFile(PropsValues.DEFAULT_USER_PRIVATE_LAYOUTS_LAR),
+			_getLARFile(PropsValues.DEFAULT_USER_PUBLIC_LAYOUTS_LAR),
+			contextHttpServletRequest, dummyHttpServletResponse);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, dummyHttpServletResponse);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setScopeGroupId(journalArticle.getGroupId());
+		themeDisplay.setSiteGroupId(journalArticle.getGroupId());
+
+		return themeDisplay;
 	}
 
 	private Fields _toFields(

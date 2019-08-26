@@ -22,13 +22,13 @@ public class GitRepositoryArchivesDirResourceMonitor
 
 	public GitRepositoryArchivesDirResourceMonitor(String etcdServerURL) {
 		super(
-			etcdServerURL, _ETCD_DIR_NAME,
+			etcdServerURL, _NAME_ETCD_DIR,
 			getAllowedResourceConnections(
-				_ETCD_DIR_NAME, _DEFAULT_ALLOWED_RESOURCE_CONNECTIONS));
+				_NAME_ETCD_DIR, _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT));
 	}
 
-	private static final Integer _DEFAULT_ALLOWED_RESOURCE_CONNECTIONS = 5;
+	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 5;
 
-	private static final String _ETCD_DIR_NAME = "git_repository_archives_dir";
+	private static final String _NAME_ETCD_DIR = "git_repository_archives_dir";
 
 }

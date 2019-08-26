@@ -24,13 +24,13 @@ public class K8sNodeReadWriteResourceMonitor
 		String etcdServerURL, String k8sNodeName) {
 
 		super(
-			etcdServerURL, _ETCD_BASE_DIR_NAME + "_" + k8sNodeName,
+			etcdServerURL, _NAME_ETCD_BASE_DIR + "_" + k8sNodeName,
 			getAllowedResourceConnections(
-				_ETCD_BASE_DIR_NAME, _DEFAULT_ALLOWED_RESOURCE_CONNECTIONS));
+				_NAME_ETCD_BASE_DIR, _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT));
 	}
 
-	private static final Integer _DEFAULT_ALLOWED_RESOURCE_CONNECTIONS = 3;
+	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 3;
 
-	private static final String _ETCD_BASE_DIR_NAME = "k8s_node";
+	private static final String _NAME_ETCD_BASE_DIR = "k8s_node";
 
 }

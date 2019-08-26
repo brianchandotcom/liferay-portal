@@ -35,6 +35,10 @@
 		width: $sidebarWidth - $sidebarButtonsWidth;
 		will-change: transform;
 		z-index: $sidebarSectionZIndex;
+
+		&__card-image {
+			border-bottom: solid thin rgba(0, 0, 0, 0.125);
+		}
 	}
 
 	&--collapsed {

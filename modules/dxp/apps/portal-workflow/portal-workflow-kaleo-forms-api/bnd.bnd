@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.portal.workflow.kaleo.forms.exception,\
 	com.liferay.portal.workflow.kaleo.forms.model,\
 	com.liferay.portal.workflow.kaleo.forms.service,\
+	com.liferay.portal.workflow.kaleo.forms.service.permission,\
 	com.liferay.portal.workflow.kaleo.forms.service.persistence,\
 	com.liferay.portal.workflow.kaleo.forms.util.comparator

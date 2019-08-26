@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -48,6 +49,7 @@ import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -105,8 +107,7 @@ public class MappedContentUtil {
 	}
 
 	public static Set<AssetEntry> getFragmentEntryLinkMappedAssetEntries(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
+		FragmentEntryLink fragmentEntryLink) {
 
 		return _getFragmentEntryLinkMappedAssetEntries(
 			fragmentEntryLink, new HashSet<>());
@@ -210,13 +211,26 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getFragmentEntryLinkMappedAssetEntries(
-			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs)
-		throws PortalException {
+		FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
+
+		JSONObject editableValuesJSONObject = null;
+
+		try {
+			editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create JSON object from " +
+						fragmentEntryLink.getEditableValues(),
+					jsone);
+			}
+
+			return Collections.emptySet();
+		}
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			fragmentEntryLink.getEditableValues());
 
 		Iterator<String> keysIterator = editableValuesJSONObject.keys();
 
@@ -272,9 +286,8 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK,
-			Set<Long> mappedClassPKs)
-		throws PortalException {
+		long groupId, long layoutClassNameId, long layoutClassPK,
+		Set<Long> mappedClassPKs) {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
 

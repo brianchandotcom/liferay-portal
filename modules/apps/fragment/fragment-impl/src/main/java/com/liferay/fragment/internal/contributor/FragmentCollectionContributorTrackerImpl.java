@@ -18,6 +18,8 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
@@ -32,10 +34,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Jürgen Kappler
@@ -157,6 +162,8 @@ public class FragmentCollectionContributorTrackerImpl
 			_populateFragmentEntries(
 				_fragmentEntries, fragmentCollectionContributor);
 		}
+
+		_updateFragmentEntryLinks(fragmentCollectionContributor);
 	}
 
 	protected void unsetFragmentCollectionContributor(
@@ -210,9 +217,56 @@ public class FragmentCollectionContributorTrackerImpl
 		}
 	}
 
+	private void _updateFragmentEntryLinks(
+		FragmentCollectionContributor fragmentCollectionContributor) {
+
+		FragmentEntryLinkLocalService fragmentEntryLinkLocalService =
+			_serviceTracker.getService();
+
+		for (int type : _SUPPORTED_FRAGMENT_TYPES) {
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries(type)) {
+
+				List<FragmentEntryLink> fragmentEntryLinks =
+					fragmentEntryLinkLocalService.getFragmentEntryLinks(
+						fragmentEntry.getFragmentEntryKey());
+
+				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					fragmentEntryLink.setCss(fragmentEntry.getCss());
+					fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+					fragmentEntryLink.setJs(fragmentEntry.getJs());
+					fragmentEntryLink.setConfiguration(
+						fragmentEntry.getConfiguration());
+
+					fragmentEntryLinkLocalService.updateFragmentEntryLink(
+						fragmentEntryLink);
+				}
+			}
+		}
+	}
+
 	private static final int[] _SUPPORTED_FRAGMENT_TYPES = {
 		FragmentConstants.TYPE_COMPONENT, FragmentConstants.TYPE_SECTION
 	};
+
+	private static final ServiceTracker
+		<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService>
+			_serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			FragmentEntryLinkLocalService.class);
+
+		ServiceTracker
+			<FragmentEntryLinkLocalService, FragmentEntryLinkLocalService>
+				serviceTracker = new ServiceTracker<>(
+					bundle.getBundleContext(),
+					FragmentEntryLinkLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 
 	private final Map<String, FragmentCollectionContributor>
 		_fragmentCollectionContributorsMap = new ConcurrentHashMap<>();

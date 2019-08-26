@@ -15,6 +15,8 @@ import SynonymSetsForm from './components/SynonymSetsForm.es';
 import ThemeContext from './ThemeContext.es';
 
 export default function(id, props, context) {
+	// LPS-100378
+	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
 		<ThemeContext.Provider value={context}>
 			<div className="synonym-sets-root">

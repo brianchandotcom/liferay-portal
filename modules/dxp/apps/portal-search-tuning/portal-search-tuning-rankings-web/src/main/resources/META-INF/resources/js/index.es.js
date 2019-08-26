@@ -16,6 +16,8 @@ import ThemeContext from './ThemeContext.es';
 import {ClayIconSpriteContext} from '@clayui/icon';
 
 export default function(id, props, context) {
+	// LPS-100378
+	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={context.spritemap}>
 			<ThemeContext.Provider value={context}>

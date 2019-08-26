@@ -17,7 +17,6 @@
 	},
 	"jest": {
 		"moduleNameMapper": {
-			"(.*)\\.soy$": "$1.soy.js",
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
 		},
 		"modulePathIgnorePatterns": [

@@ -24,6 +24,7 @@ import {
 } from '../types.es';
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
+import {navigateToExperience} from '../util/navigation.es';
 
 function SegmentsExperimentsSidebar({
 	initialGoals,
@@ -236,16 +237,7 @@ function SegmentsExperimentsSidebar({
 	}
 
 	function _handleSelectSegmentsExperience(segmentsExperienceId) {
-		const currentUrl = new URL(window.location.href);
-		const urlQueryString = currentUrl.search;
-		const urlSearchParams = new URLSearchParams(urlQueryString);
-
-		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
-		currentUrl.search = urlSearchParams.toString();
-
-		const newUrl = currentUrl.toString();
-
-		Liferay.Util.navigate(newUrl);
+		navigateToExperience(segmentsExperienceId);
 	}
 
 	function _handleVariantCreation(name) {

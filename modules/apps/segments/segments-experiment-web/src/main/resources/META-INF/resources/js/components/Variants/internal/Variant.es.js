@@ -19,6 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayButton from '@clayui/button';
 import SegmentsExperimentsContext from '../../../context.es';
+import {navigateToExperience} from '../../../util/navigation.es';
 
 function Variant({
 	active,
@@ -118,31 +119,11 @@ function Variant({
 	}
 
 	function _handleEditVariantContent() {
-		const currentUrl = new URL(editVariantLayoutURL);
-		const urlQueryString = currentUrl.search;
-		const urlSearchParams = new URLSearchParams(urlQueryString);
-
-		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
-
-		currentUrl.search = urlSearchParams.toString();
-
-		const newUrl = currentUrl.toString();
-
-		Liferay.Util.navigate(newUrl);
+		navigateToExperience(segmentsExperienceId, editVariantLayoutURL);
 	}
 
 	function _handleVariantNavigation() {
-		const currentUrl = new URL(window.location.href);
-		const urlQueryString = currentUrl.search;
-		const urlSearchParams = new URLSearchParams(urlQueryString);
-
-		urlSearchParams.set('segmentsExperienceId', segmentsExperienceId);
-
-		currentUrl.search = urlSearchParams.toString();
-
-		const newUrl = currentUrl.toString();
-
-		Liferay.Util.navigate(newUrl);
+		navigateToExperience(segmentsExperienceId);
 	}
 }
 

@@ -36,6 +36,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -197,8 +198,10 @@ public class AssetEntryUsagesDisplayContext {
 	public String getAssetEntryUsageWhereLabel(AssetEntryUsage assetEntryUsage)
 		throws PortalException {
 
-		if (assetEntryUsage.getContainerType() != PortalUtil.getClassNameId(
-				FragmentEntryLink.class)) {
+		if ((assetEntryUsage.getContainerType() != PortalUtil.getClassNameId(
+				FragmentEntryLink.class)) &&
+			(assetEntryUsage.getContainerType() != PortalUtil.getClassNameId(
+				LayoutPageTemplateStructure.class))) {
 
 			String portletTitle = PortalUtil.getPortletTitle(
 				PortletIdCodec.decodePortletName(
@@ -209,21 +212,35 @@ public class AssetEntryUsagesDisplayContext {
 				_resourceBundle, "x-widget", portletTitle);
 		}
 
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLink(
-				GetterUtil.getLong(assetEntryUsage.getContainerKey()));
+		if (assetEntryUsage.getContainerType() == PortalUtil.getClassNameId(
+				FragmentEntryLink.class)) {
 
-		String name = _getFragmentEntryName(fragmentEntryLink);
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.getFragmentEntryLink(
+					GetterUtil.getLong(assetEntryUsage.getContainerKey()));
 
-		if (Validator.isNull(name)) {
-			return StringPool.BLANK;
+			String name = _getFragmentEntryName(fragmentEntryLink);
+
+			if (Validator.isNull(name)) {
+				return StringPool.BLANK;
+			}
+
+			if (_getType(fragmentEntryLink) ==
+					FragmentConstants.TYPE_COMPONENT) {
+
+				return LanguageUtil.format(_resourceBundle, "x-element", name);
+			}
+
+			return LanguageUtil.format(_resourceBundle, "x-section", name);
 		}
 
-		if (_getType(fragmentEntryLink) == FragmentConstants.TYPE_COMPONENT) {
-			return LanguageUtil.format(_resourceBundle, "x-element", name);
+		if (assetEntryUsage.getContainerType() == PortalUtil.getClassNameId(
+				LayoutPageTemplateStructure.class)) {
+
+			return LanguageUtil.get(_resourceBundle, "section");
 		}
 
-		return LanguageUtil.format(_resourceBundle, "x-section", name);
+		return StringPool.BLANK;
 	}
 
 	public int getDisplayPagesUsageCount() {

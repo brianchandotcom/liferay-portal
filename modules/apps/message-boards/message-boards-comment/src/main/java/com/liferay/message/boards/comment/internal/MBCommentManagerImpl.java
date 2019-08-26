@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -185,21 +186,9 @@ public class MBCommentManagerImpl implements CommentManager {
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
 
-		MBMessage rootMBMessage = _mbMessageLocalService.addDiscussionMessage(
-			rootDiscussionComment.getUserId(),
-			rootDiscussionComment.getUserName(),
-			rootDiscussionComment.getGroupId(),
-			rootDiscussionComment.getClassName(), newClassPK,
-			WorkflowConstants.ACTION_PUBLISH);
-
-		rootMBMessage.setCreateDate(rootDiscussionComment.getCreateDate());
-		rootMBMessage.setModifiedDate(rootDiscussionComment.getModifiedDate());
-
-		_mbMessageLocalService.updateMBMessage(rootMBMessage);
-
 		List<Subscription> subscriptions =
 			_subscriptionLocalService.getSubscriptions(
-				rootMBMessage.getCompanyId(),
+				CompanyThreadLocal.getCompanyId(),
 				MBUtil.getSubscriptionClassName(
 					rootDiscussionComment.getClassName()),
 				rootDiscussionComment.getClassPK());
@@ -210,42 +199,46 @@ public class MBCommentManagerImpl implements CommentManager {
 				rootDiscussionComment.getClassName(), newClassPK);
 		}
 
-		if (rootDiscussionComment.getDescendantCommentsCount() <= 0) {
-			return null;
-		}
+		List<Comment> parentComments = getRootComments(
+			rootDiscussionComment.getClassName(),
+			rootDiscussionComment.getClassPK(), WorkflowConstants.STATUS_ANY, 0,
+			getRootCommentsCount(
+				rootDiscussionComment.getClassName(),
+				rootDiscussionComment.getClassPK(),
+				WorkflowConstants.STATUS_ANY));
 
-		List<DiscussionComment> parentComments =
-			rootDiscussionComment.getDescendantComments();
-
-		for (DiscussionComment parentComment : parentComments) {
+		for (Comment parentComment : parentComments) {
 			MBMessage parentMBMessage = _mbMessageLocalService.getMBMessage(
 				parentComment.getCommentId());
 
 			ServiceContext serviceContext = serviceContextFunction.apply(
 				MBMessage.class.getName());
 
-			MBMessage discussionMBMessage =
-				_mbMessageLocalService.addDiscussionMessage(
-					parentMBMessage.getUserId(), parentMBMessage.getUserName(),
-					parentMBMessage.getGroupId(),
-					parentMBMessage.getClassName(), newClassPK,
-					rootMBMessage.getThreadId(), rootMBMessage.getMessageId(),
-					String.valueOf(Math.random()), parentMBMessage.getBody(),
-					serviceContext);
+			long newParentCommentId = addComment(
+				parentComment.getUserId(), parentComment.getGroupId(),
+				parentComment.getClassName(), newClassPK,
+				parentComment.getBody(), serviceContextFunction);
 
-			if (parentComment.getDescendantCommentsCount() > 0) {
-				List<DiscussionComment> childComments =
-					parentComment.getDescendantComments();
+			MBMessage newParentMBMessage =
+				_mbMessageLocalService.fetchMBMessage(newParentCommentId);
 
-				for (DiscussionComment childComment : childComments) {
+			int childCommentsCount = getChildCommentsCount(
+				parentComment.getCommentId(), WorkflowConstants.STATUS_ANY);
+
+			if (childCommentsCount > 0) {
+				List<Comment> childComments = getChildComments(
+					parentComment.getCommentId(), WorkflowConstants.STATUS_ANY,
+					0, childCommentsCount);
+
+				for (Comment childComment : childComments) {
 					MBMessage childMBMessage =
 						_mbMessageLocalService.addDiscussionMessage(
 							childComment.getUserId(),
 							childComment.getUserName(),
 							childComment.getGroupId(),
 							childComment.getClassName(), newClassPK,
-							discussionMBMessage.getThreadId(),
-							discussionMBMessage.getMessageId(),
+							newParentMBMessage.getThreadId(),
+							newParentMBMessage.getMessageId(),
 							String.valueOf(Math.random()),
 							childComment.getBody(), serviceContext);
 
@@ -257,12 +250,12 @@ public class MBCommentManagerImpl implements CommentManager {
 				}
 			}
 
-			discussionMBMessage.setCreateDate(parentMBMessage.getCreateDate());
-			discussionMBMessage.setModifiedDate(
+			newParentMBMessage.setCreateDate(parentMBMessage.getCreateDate());
+			newParentMBMessage.setModifiedDate(
 				parentMBMessage.getModifiedDate());
-			discussionMBMessage.setStatus(parentMBMessage.getStatus());
+			newParentMBMessage.setStatus(parentMBMessage.getStatus());
 
-			_mbMessageLocalService.updateMBMessage(discussionMBMessage);
+			_mbMessageLocalService.updateMBMessage(newParentMBMessage);
 		}
 
 		return getDiscussion(

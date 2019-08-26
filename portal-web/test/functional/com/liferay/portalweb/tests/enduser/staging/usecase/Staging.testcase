@@ -3865,10 +3865,9 @@ definition {
 		var keywordsParameterName = StringUtil.extractLast("${portalURL}", "?");
 		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");
 
-		if ("${keywordsParameter}" == "query") {
-			SelectFrame(value1 = "relative=top");
-		}
-		else {
+		echo("## Keywords Parameter: ${keywordsParameter}");
+
+		if (!("${keywordsParameter}" == "query")) {
 			fail("Invalid keywords parameter.");
 		}
 	}

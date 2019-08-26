@@ -110,6 +110,13 @@ public class PostalAddressResourceTest
 		return _user.getUserId();
 	}
 
+	@Override
+	protected PostalAddress testGraphQLPostalAddress_addPostalAddress()
+		throws Exception {
+
+		return testGetPostalAddress_addPostalAddress();
+	}
+
 	private PostalAddress _addPostalAddress(
 			PostalAddress postalAddress, String className, long classPK,
 			String listTypeId)

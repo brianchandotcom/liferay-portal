@@ -32,6 +32,8 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -56,6 +58,18 @@ public class MessageBoardAttachmentResourceTest
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_mbThread = mbMessage.getThread();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteMessageBoardAttachment() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetMessageBoardAttachment() {
 	}
 
 	@Override

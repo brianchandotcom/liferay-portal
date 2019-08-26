@@ -83,6 +83,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return _addUserOrganization(_user.getUserId(), organization);
 	}
 
+	@Override
+	protected Organization testGraphQLOrganization_addOrganization()
+		throws Exception {
+
+		return testGetOrganization_addOrganization();
+	}
+
 	private com.liferay.portal.kernel.model.Organization _addOrganization(
 			Organization organization, long parentOrganizationId)
 		throws PortalException {

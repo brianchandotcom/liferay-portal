@@ -20,6 +20,8 @@ import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUt
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -35,6 +37,18 @@ public class DataListViewResourceTest extends BaseDataListViewResourceTestCase {
 		_ddmStructure = DataDefinitionTestUtil.addDDMStructure(testGroup);
 		_irrelevantDDMStructure = DataDefinitionTestUtil.addDDMStructure(
 			irrelevantGroup);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDataListView() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDataListView() {
 	}
 
 	@Override

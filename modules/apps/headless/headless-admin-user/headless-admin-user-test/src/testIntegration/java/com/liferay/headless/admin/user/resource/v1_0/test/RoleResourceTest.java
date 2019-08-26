@@ -36,6 +36,7 @@ import java.util.Locale;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -86,6 +87,12 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		assertValid(page);
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetRolesPage() {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"name"};
@@ -106,6 +113,11 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	@Override
 	protected Role testGetRole_addRole() throws Exception {
 		return _addRole(randomRole());
+	}
+
+	@Override
+	protected Role testGraphQLRole_addRole() throws Exception {
+		return testGetRole_addRole();
 	}
 
 	private Role _addRole(Role role) throws Exception {

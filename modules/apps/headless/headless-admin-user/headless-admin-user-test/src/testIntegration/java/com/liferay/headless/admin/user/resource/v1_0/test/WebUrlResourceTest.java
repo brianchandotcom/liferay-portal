@@ -102,6 +102,11 @@ public class WebUrlResourceTest extends BaseWebUrlResourceTestCase {
 			ListTypeConstants.CONTACT_WEBSITE);
 	}
 
+	@Override
+	protected WebUrl testGraphQLWebUrl_addWebUrl() throws Exception {
+		return testGetWebUrl_addWebUrl();
+	}
+
 	private WebUrl _addWebUrl(
 			WebUrl webUrl, String className, long classPK, String listTypeId)
 		throws Exception {

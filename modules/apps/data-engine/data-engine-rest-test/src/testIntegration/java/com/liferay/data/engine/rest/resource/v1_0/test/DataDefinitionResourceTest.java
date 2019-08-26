@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -73,6 +74,36 @@ public class DataDefinitionResourceTest
 			"description", "nam", "definition name");
 		_testGetSiteDataDefinitionsPage("description", "π€†", "π€† name");
 		_testGetSiteDataDefinitionsPage("π€† description", "π€†", "name");
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteDataDefinition() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetDataDefinition() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataDefinition() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteDataDefinitionsPage() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostSiteDataDefinition() {
 	}
 
 	@Override

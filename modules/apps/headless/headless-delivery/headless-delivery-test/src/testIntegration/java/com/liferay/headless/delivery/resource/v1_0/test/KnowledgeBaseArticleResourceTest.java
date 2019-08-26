@@ -53,7 +53,7 @@ public class KnowledgeBaseArticleResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"description", "title"};
+		return new String[] {"articleBody", "description", "title"};
 	}
 
 	@Override

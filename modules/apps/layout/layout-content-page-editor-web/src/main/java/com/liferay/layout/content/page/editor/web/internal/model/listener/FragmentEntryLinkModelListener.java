@@ -76,69 +76,9 @@ public class FragmentEntryLinkModelListener
 	public void onAfterUpdate(FragmentEntryLink fragmentEntryLink)
 		throws ModelListenerException {
 
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(FragmentEntryLink.class),
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			fragmentEntryLink.getClassPK());
+		_updateAssetEntryUsage(fragmentEntryLink);
 
-		_ddmTemplateLinkLocalService.deleteTemplateLink(
-			_portal.getClassNameId(FragmentEntryLink.class),
-			fragmentEntryLink.getFragmentEntryLinkId());
-
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
-
-			Iterator<String> keysIterator = jsonObject.keys();
-
-			while (keysIterator.hasNext()) {
-				String key = keysIterator.next();
-
-				JSONObject editableProcessorJSONObject =
-					jsonObject.getJSONObject(key);
-
-				if (editableProcessorJSONObject == null) {
-					continue;
-				}
-
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
-
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
-
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					if (editableJSONObject == null) {
-						continue;
-					}
-
-					String fieldId = editableJSONObject.getString("fieldId");
-
-					String mappedField = editableJSONObject.getString(
-						"mappedField", fieldId);
-
-					if (Validator.isNotNull(mappedField)) {
-						_updateDDMTemplateLink(
-							fragmentEntryLink, editableKey, mappedField);
-					}
-
-					long classPK = GetterUtil.getLong(
-						editableJSONObject.getLong("classPK"));
-					long classNameId = GetterUtil.getLong(
-						editableJSONObject.getLong("classNameId"));
-
-					if ((classPK > 0) && (classNameId > 0)) {
-						_updateAssetEntryUsage(
-							fragmentEntryLink, classNameId, classPK);
-					}
-				}
-			}
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
-		}
+		_updateDDMTemplateLink(fragmentEntryLink);
 	}
 
 	private void _deleteDDMTemplateLinks(FragmentEntryLink fragmentEntryLink)
@@ -180,6 +120,58 @@ public class FragmentEntryLinkModelListener
 		}
 	}
 
+	private void _updateAssetEntryUsage(FragmentEntryLink fragmentEntryLink) {
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+			_portal.getClassNameId(FragmentEntryLink.class),
+			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+			fragmentEntryLink.getClassPK());
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			Iterator<String> keysIterator = jsonObject.keys();
+
+			while (keysIterator.hasNext()) {
+				String key = keysIterator.next();
+
+				JSONObject editableProcessorJSONObject =
+					jsonObject.getJSONObject(key);
+
+				if (editableProcessorJSONObject == null) {
+					continue;
+				}
+
+				Iterator<String> editableKeysIterator =
+					editableProcessorJSONObject.keys();
+
+				while (editableKeysIterator.hasNext()) {
+					String editableKey = editableKeysIterator.next();
+
+					JSONObject editableJSONObject =
+						editableProcessorJSONObject.getJSONObject(editableKey);
+
+					if (editableJSONObject == null) {
+						continue;
+					}
+
+					long classPK = GetterUtil.getLong(
+						editableJSONObject.getLong("classPK"));
+					long classNameId = GetterUtil.getLong(
+						editableJSONObject.getLong("classNameId"));
+
+					if ((classPK > 0) && (classNameId > 0)) {
+						_updateAssetEntryUsage(
+							fragmentEntryLink, classNameId, classPK);
+					}
+				}
+			}
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
+	}
+
 	private void _updateAssetEntryUsage(
 		FragmentEntryLink fragmentEntryLink, long classNameId, long classPK) {
 
@@ -212,6 +204,59 @@ public class FragmentEntryLinkModelListener
 			_portal.getClassNameId(FragmentEntryLink.class),
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 			fragmentEntryLink.getClassPK(), serviceContext);
+	}
+
+	private void _updateDDMTemplateLink(FragmentEntryLink fragmentEntryLink) {
+		_ddmTemplateLinkLocalService.deleteTemplateLink(
+			_portal.getClassNameId(FragmentEntryLink.class),
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				fragmentEntryLink.getEditableValues());
+
+			Iterator<String> keysIterator = jsonObject.keys();
+
+			while (keysIterator.hasNext()) {
+				String key = keysIterator.next();
+
+				JSONObject editableProcessorJSONObject =
+					jsonObject.getJSONObject(key);
+
+				if (editableProcessorJSONObject == null) {
+					continue;
+				}
+
+				Iterator<String> editableKeysIterator =
+					editableProcessorJSONObject.keys();
+
+				while (editableKeysIterator.hasNext()) {
+					String editableKey = editableKeysIterator.next();
+
+					JSONObject editableJSONObject =
+						editableProcessorJSONObject.getJSONObject(editableKey);
+
+					if (editableJSONObject == null) {
+						continue;
+					}
+
+					String fieldId = editableJSONObject.getString("fieldId");
+
+					String mappedField = editableJSONObject.getString(
+						"mappedField", fieldId);
+
+					if (Validator.isNull(mappedField)) {
+						continue;
+					}
+
+					_updateDDMTemplateLink(
+						fragmentEntryLink, editableKey, mappedField);
+				}
+			}
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
 	}
 
 	private void _updateDDMTemplateLink(

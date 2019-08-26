@@ -17,14 +17,9 @@ package com.liferay.account.admin.web.internal.action;
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -33,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -79,9 +73,9 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest);
 
-			_addWebsite(
+			_websiteLocalService.addWebsite(
 				themeDisplay.getUserId(), AccountEntry.class.getName(),
-				accountEntry.getAccountEntryId(), website, 0, true,
+				accountEntry.getAccountEntryId(), website, 0L, true, false,
 				serviceContext);
 		}
 
@@ -118,42 +112,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _addWebsite(
-			long userId, String className, long classPK, String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = _userLocalService.fetchUser(userId);
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
-		long websiteId = _counterLocalService.increment();
-
-		Website website = _websiteLocalService.createWebsite(websiteId);
-
-		website.setUuid(serviceContext.getUuid());
-		website.setCompanyId(user.getCompanyId());
-		website.setUserId(user.getUserId());
-		website.setUserName(user.getFullName());
-		website.setClassNameId(classNameId);
-		website.setClassPK(classPK);
-		website.setUrl(url);
-		website.setTypeId(typeId);
-		website.setPrimary(primary);
-
-		_websiteLocalService.updateWebsite(website);
-	}
-
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CounterLocalService _counterLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

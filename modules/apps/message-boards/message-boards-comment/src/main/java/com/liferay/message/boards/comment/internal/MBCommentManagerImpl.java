@@ -24,6 +24,7 @@ import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.util.MBUtil;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -43,6 +44,8 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.subscription.model.Subscription;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -194,19 +197,17 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		_mbMessageLocalService.updateMBMessage(rootMBMessage);
 
-		if (_targetLayout.isSystem()) {
+		List<Subscription> subscriptions =
+			_subscriptionLocalService.getSubscriptions(
+				rootMBMessage.getCompanyId(),
+				MBUtil.getSubscriptionClassName(
+					rootDiscussionComment.getClassName()),
+				rootDiscussionComment.getClassPK());
+
+		for (Subscription subscription : subscriptions) {
 			subscribeDiscussion(
-				_targetLayout.getUserId(), _targetLayout.getGroupId(),
+				subscription.getUserId(), subscription.getGroupId(),
 				rootDiscussionComment.getClassName(), newClassPK);
-
-			if (_targetLayout.getUserId() !=
-					rootDiscussionComment.getUserId()) {
-
-				subscribeDiscussion(
-					rootDiscussionComment.getUserId(),
-					_targetLayout.getGroupId(),
-					rootDiscussionComment.getClassName(), newClassPK);
-			}
 		}
 
 		if (rootDiscussionComment.getDescendantCommentsCount() <= 0) {
@@ -520,5 +521,8 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

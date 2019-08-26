@@ -128,7 +128,7 @@ public class ChangeListsDisplayContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"urlCheckoutProduction",
-			_getCheckoutURL(
+			getCheckoutURL(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
 				true)
 		).put(
@@ -171,6 +171,42 @@ public class ChangeListsDisplayContext {
 		soyContext.put("urlSelectProduction", portletURL.toString());
 
 		return soyContext;
+	}
+
+	public String getCheckoutURL(
+		long ctCollectionId, String confirmationMessageArg,
+		boolean translateArg) {
+
+		PortletURL checkoutURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.ACTION_PHASE);
+
+		checkoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
+
+		checkoutURL.setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId));
+
+		StringBundler sb = new StringBundler(5);
+
+		if (_confirmationEnabled) {
+			sb.append("javascript:confirm('");
+			sb.append(
+				LanguageUtil.format(
+					_httpServletRequest,
+					"do-you-want-to-switch-to-x-change-list",
+					confirmationMessageArg, translateArg));
+			sb.append("') && Liferay.Util.navigate('");
+			sb.append(checkoutURL);
+			sb.append("')");
+		}
+		else {
+			sb.append("javascript:Liferay.Util.navigate('");
+			sb.append(checkoutURL);
+			sb.append("');");
+		}
+
+		return sb.toString();
 	}
 
 	public String getConfirmationMessage(String ctCollectionName) {
@@ -415,7 +451,7 @@ public class ChangeListsDisplayContext {
 				jsonArray.put(
 					jsonObject.put(
 						"checkoutURL",
-						_getCheckoutURL(
+						getCheckoutURL(
 							ctCollection.getCtCollectionId(),
 							ctCollection.getName(), false)
 					).put(
@@ -429,42 +465,6 @@ public class ChangeListsDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private String _getCheckoutURL(
-		long ctCollectionId, String confirmationMessageArg,
-		boolean translateArg) {
-
-		PortletURL checkoutURL = PortletURLFactoryUtil.create(
-			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
-			PortletRequest.ACTION_PHASE);
-
-		checkoutURL.setParameter(
-			ActionRequest.ACTION_NAME, "/change_lists/checkout_ct_collection");
-
-		checkoutURL.setParameter(
-			"ctCollectionId", String.valueOf(ctCollectionId));
-
-		StringBundler sb = new StringBundler(5);
-
-		if (_confirmationEnabled) {
-			sb.append("javascript:confirm('");
-			sb.append(
-				LanguageUtil.format(
-					_httpServletRequest,
-					"do-you-want-to-switch-to-x-change-list",
-					confirmationMessageArg, translateArg));
-			sb.append("') && Liferay.Util.navigate('");
-			sb.append(checkoutURL);
-			sb.append("')");
-		}
-		else {
-			sb.append("javascript:Liferay.Util.navigate('");
-			sb.append(checkoutURL);
-			sb.append("');");
-		}
-
-		return sb.toString();
 	}
 
 	private JSONArray _getCTEntriesJSONArray() throws Exception {

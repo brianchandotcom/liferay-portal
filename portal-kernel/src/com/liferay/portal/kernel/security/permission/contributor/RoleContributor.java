@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.permission;
+package com.liferay.portal.kernel.security.permission.contributor;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.UserBag;
 
 /**
  * RoleContributors are invoked during permission checking allowing the roles

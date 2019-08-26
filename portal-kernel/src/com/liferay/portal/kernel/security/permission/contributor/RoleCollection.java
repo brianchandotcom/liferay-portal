@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.security.permission;
+package com.liferay.portal.kernel.security.permission.contributor;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * RoleCollection is used as the argument to {@link
@@ -25,6 +27,7 @@ package com.liferay.portal.kernel.security.permission;
  *
  * @review
  */
+@ProviderType
 public interface RoleCollection {
 
 	/**

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.permission;
+package com.liferay.portal.security.permission.contributor;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.RoleCollection;
+import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -70,6 +70,28 @@ public class RoleCollectionImpl implements RoleCollection {
 		return _roleIds.clone();
 	}
 
+	public long[] getRoleIds() {
+		if ((_addedRoleIds == null) && (_removedRoleIds == null)) {
+			return _roleIds;
+		}
+
+		Set<Long> rolesIds = SetUtil.fromArray(_roleIds);
+
+		if (_addedRoleIds != null) {
+			rolesIds.addAll(_addedRoleIds);
+		}
+
+		if (_removedRoleIds != null) {
+			rolesIds.removeAll(_removedRoleIds);
+		}
+
+		long[] roleIdsArray = ArrayUtil.toLongArray(rolesIds);
+
+		Arrays.sort(roleIdsArray);
+
+		return roleIdsArray;
+	}
+
 	@Override
 	public boolean hasRoleId(long roleId) {
 		if ((_addedRoleIds != null) && _addedRoleIds.contains(roleId)) {
@@ -109,28 +131,6 @@ public class RoleCollectionImpl implements RoleCollection {
 		_removedRoleIds.add(roleId);
 
 		return true;
-	}
-
-	protected long[] getRoleIds() {
-		if ((_addedRoleIds == null) && (_removedRoleIds == null)) {
-			return _roleIds;
-		}
-
-		Set<Long> rolesIds = SetUtil.fromArray(_roleIds);
-
-		if (_addedRoleIds != null) {
-			rolesIds.addAll(_addedRoleIds);
-		}
-
-		if (_removedRoleIds != null) {
-			rolesIds.removeAll(_removedRoleIds);
-		}
-
-		long[] roleIdsArray = ArrayUtil.toLongArray(rolesIds);
-
-		Arrays.sort(roleIdsArray);
-
-		return roleIdsArray;
 	}
 
 	private Set<Long> _addedRoleIds;

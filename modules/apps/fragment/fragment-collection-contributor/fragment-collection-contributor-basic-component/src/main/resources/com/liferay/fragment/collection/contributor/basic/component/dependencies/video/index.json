@@ -1,0 +1,38 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"label": "Width",
+					"name": "width",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"label": "Height",
+					"name": "height",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "Autoplay",
+					"name": "autoPlay",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Loop",
+					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": false,
+					"label": "Hide controls",
+					"name": "hideControls",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

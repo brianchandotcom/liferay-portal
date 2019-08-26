@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -25,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -40,6 +42,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
@@ -51,6 +55,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -60,6 +66,35 @@ import javax.servlet.http.HttpServletRequest;
  * @author Víctor Galán
  */
 public class MappedContentUtil {
+
+	public static Set<AssetEntry> getAssetEntries(
+		Set<MappedContent> mappedContents) {
+
+		Set<AssetEntry> assetEntries = new HashSet<>();
+
+		for (MappedContent mappedContent : mappedContents) {
+			long classNameId = mappedContent.getClassNameId();
+			long classPK = mappedContent.getClassPK();
+
+			try {
+				AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
+					PortalUtil.getClassName(classNameId), classPK);
+
+				assetEntries.add(assetEntry);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Unable to get asset entry for class name ID ",
+							classNameId, " with primary key ", classPK),
+						pe);
+				}
+			}
+		}
+
+		return assetEntries;
+	}
 
 	public static MappedContent getMappedContent(JSONObject jsonObject) {
 		if ((jsonObject == null) || !jsonObject.has("classNameId") ||
@@ -100,20 +135,26 @@ public class MappedContentUtil {
 	}
 
 	public static JSONArray getMappedContentsJSONArray(
-		Set<AssetEntry> assetEntries, String backURL,
+		Set<MappedContent> mappedContents, String backURL,
 		long[] allowedClassNameIds, HttpServletRequest httpServletRequest) {
+
+		Stream<MappedContent> stream = mappedContents.stream();
+
+		Set<MappedContent> filteredMappedContents = stream.filter(
+			mappedContent ->
+				ArrayUtil.contains(
+					allowedClassNameIds, mappedContent.getClassNameId()) &&
+						Validator.isNotNull(mappedContent.getFieldId())
+		).collect(
+			Collectors.toSet()
+		);
+
+		Set<AssetEntry> assetEntries = getAssetEntries(filteredMappedContents);
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
 			for (AssetEntry assetEntry : assetEntries) {
-				if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
-					!ArrayUtil.contains(
-						allowedClassNameIds, assetEntry.getClassNameId())) {
-
-					continue;
-				}
-
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
 						assetEntry, backURL, httpServletRequest));

@@ -303,16 +303,16 @@ public class ContentPageEditorDisplayContext {
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 		);
 
-		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
-			_groupId, classNameId, classPK);
+		Set<MappedContentUtil.MappedContent> mappedContents =
+			MappedContentUtil.getMappedContents(_groupId, classNameId, classPK);
 
 		soyContext.put(
 			"mappedAssetEntries",
-			_getMappedAssetEntriesSoyContexts(assetEntries)
+			_getMappedAssetEntriesSoyContexts(mappedContents)
 		).put(
 			"mappedContents",
 			MappedContentUtil.getMappedContentsJSONArray(
-				assetEntries, themeDisplay.getURLCurrent(),
+				mappedContents, themeDisplay.getURLCurrent(),
 				new long[] {PortalUtil.getClassNameId(JournalArticle.class)},
 				request)
 		).put(
@@ -1250,7 +1250,10 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private Set<SoyContext> _getMappedAssetEntriesSoyContexts(
-		Set<AssetEntry> assetEntries) {
+		Set<MappedContentUtil.MappedContent> mappedContents) {
+
+		Set<AssetEntry> assetEntries = MappedContentUtil.getAssetEntries(
+			mappedContents);
 
 		Set<SoyContext> mappedAssetEntriesSoyContexts = new HashSet<>();
 

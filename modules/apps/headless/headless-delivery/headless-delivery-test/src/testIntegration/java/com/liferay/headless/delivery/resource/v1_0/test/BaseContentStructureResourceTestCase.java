@@ -30,6 +30,10 @@ import com.liferay.headless.delivery.client.resource.v1_0.ContentStructureResour
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentStructureSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -52,9 +56,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -209,6 +215,35 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetContentStructure() throws Exception {
+		ContentStructure contentStructure =
+			testGraphQLContentStructure_addContentStructure();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"contentStructure",
+				new HashMap<String, Object>() {
+					{
+						put("contentStructureId", contentStructure.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				contentStructure,
+				dataJSONObject.getJSONObject("contentStructure")));
 	}
 
 	@Test
@@ -508,6 +543,69 @@ public abstract class BaseContentStructureResourceTestCase {
 		return irrelevantGroup.getGroupId();
 	}
 
+	@Test
+	public void testGraphQLGetSiteContentStructuresPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"contentStructures",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject contentStructuresJSONObject = dataJSONObject.getJSONObject(
+			"contentStructures");
+
+		Assert.assertEquals(0, contentStructuresJSONObject.get("totalCount"));
+
+		ContentStructure contentStructure1 =
+			testGraphQLContentStructure_addContentStructure();
+		ContentStructure contentStructure2 =
+			testGraphQLContentStructure_addContentStructure();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		contentStructuresJSONObject = dataJSONObject.getJSONObject(
+			"contentStructures");
+
+		Assert.assertEquals(2, contentStructuresJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(contentStructure1, contentStructure2),
+			contentStructuresJSONObject.getJSONArray("items"));
+	}
+
+	protected ContentStructure testGraphQLContentStructure_addContentStructure()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -537,6 +635,25 @@ public abstract class BaseContentStructureResourceTestCase {
 			ContentStructure contentStructure2 = contentStructures2.get(i);
 
 			assertEquals(contentStructure1, contentStructure2);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<ContentStructure> contentStructures, JSONArray jsonArray) {
+
+		for (ContentStructure contentStructure : contentStructures) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(contentStructure, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + contentStructure, contains);
 		}
 	}
 
@@ -666,6 +783,20 @@ public abstract class BaseContentStructureResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected boolean equals(
 		ContentStructure contentStructure1,
 		ContentStructure contentStructure2) {
@@ -777,6 +908,61 @@ public abstract class BaseContentStructureResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(
+		ContentStructure contentStructure, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("description", fieldName)) {
+				if (!Objects.equals(
+						contentStructure.getDescription(),
+						(String)jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						contentStructure.getId(),
+						(Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", fieldName)) {
+				if (!Objects.equals(
+						contentStructure.getName(),
+						(String)jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("siteId", fieldName)) {
+				if (!Objects.equals(
+						contentStructure.getSiteId(),
+						(Long)jsonObject.getLong("siteId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -946,6 +1132,23 @@ public abstract class BaseContentStructureResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected ContentStructure randomContentStructure() throws Exception {
 		return new ContentStructure() {
 			{
@@ -1000,5 +1203,59 @@ public abstract class BaseContentStructureResourceTestCase {
 	@Inject
 	private com.liferay.headless.delivery.resource.v1_0.ContentStructureResource
 		_contentStructureResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

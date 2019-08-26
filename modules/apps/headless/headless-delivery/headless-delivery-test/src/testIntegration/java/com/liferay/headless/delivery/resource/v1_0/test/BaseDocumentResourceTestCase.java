@@ -31,6 +31,11 @@ import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONDeserializer;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,6 +49,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -55,9 +62,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -71,6 +80,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -528,6 +538,52 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteDocument() throws Exception {
+		Document document = testGraphQLDocument_addDocument();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteDocument",
+				new HashMap<String, Object>() {
+					{
+						put("documentId", document.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(dataJSONObject.getBoolean("deleteDocument"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"document",
+					new HashMap<String, Object>() {
+						{
+							put("documentId", document.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
+	}
+
+	@Test
 	public void testGetDocument() throws Exception {
 		Document postDocument = testGetDocument_addDocument();
 
@@ -541,6 +597,33 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testGetDocument_addDocument() throws Exception {
 		return documentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testGraphQLGetDocument() throws Exception {
+		Document document = testGraphQLDocument_addDocument();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"document",
+				new HashMap<String, Object>() {
+					{
+						put("documentId", document.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				document, dataJSONObject.getJSONObject("document")));
 	}
 
 	@Test
@@ -885,6 +968,59 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteDocumentsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"documents",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject documentsJSONObject = dataJSONObject.getJSONObject(
+			"documents");
+
+		Assert.assertEquals(0, documentsJSONObject.get("totalCount"));
+
+		Document document1 = testGraphQLDocument_addDocument();
+		Document document2 = testGraphQLDocument_addDocument();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		documentsJSONObject = dataJSONObject.getJSONObject("documents");
+
+		Assert.assertEquals(2, documentsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(document1, document2),
+			documentsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testPostSiteDocument() throws Exception {
 		Document randomDocument = randomDocument();
 
@@ -905,6 +1041,19 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return documentResource.postSiteDocument(
 			testGetSiteDocumentsPage_getSiteId(), document, multipartFiles);
+	}
+
+	@Test
+	public void testGraphQLPostSiteDocument() throws Exception {
+		Document randomDocument = randomDocument();
+
+		Document document = testGraphQLDocument_addDocument(randomDocument);
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				randomDocument,
+				JSONFactoryUtil.createJSONObject(
+					JSONFactoryUtil.serialize(document))));
 	}
 
 	@Test
@@ -955,6 +1104,193 @@ public abstract class BaseDocumentResourceTestCase {
 		return documentResource.postDocumentMyRating(documentId, rating);
 	}
 
+	protected Document testGraphQLDocument_addDocument() throws Exception {
+		return testGraphQLDocument_addDocument(randomDocument());
+	}
+
+	protected Document testGraphQLDocument_addDocument(Document document)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder("{");
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("contentUrl", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getContentUrl();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("description", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getDescription();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("documentFolderId", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getDocumentFolderId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getEncodingFormat();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("fileExtension", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getFileExtension();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getId();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("sizeInBytes", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getSizeInBytes();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+
+			if (Objects.equals("title", additionalAssertFieldName)) {
+				sb.append(additionalAssertFieldName);
+				sb.append(": ");
+
+				Object value = document.getTitle();
+
+				if (value instanceof String) {
+					sb.append("\"");
+					sb.append(value);
+					sb.append("\"");
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"createSiteDocument",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", testGroup.getGroupId());
+						put("document", sb.toString());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONDeserializer<Document> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		String object = invoke(graphQLField.toString());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		return jsonDeserializer.deserialize(
+			String.valueOf(dataJSONObject.getJSONObject("createSiteDocument")),
+			Document.class);
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -985,6 +1321,25 @@ public abstract class BaseDocumentResourceTestCase {
 	protected void assertEquals(Rating rating1, Rating rating2) {
 		Assert.assertTrue(
 			rating1 + " does not equal " + rating2, equals(rating1, rating2));
+	}
+
+	protected void assertEqualsJSONArray(
+		List<Document> documents, JSONArray jsonArray) {
+
+		for (Document document : documents) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(document, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + document, contains);
+		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -1267,6 +1622,20 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
 	protected boolean equals(Document document1, Document document2) {
@@ -1585,6 +1954,104 @@ public abstract class BaseDocumentResourceTestCase {
 		return true;
 	}
 
+	protected boolean equalsJSONObject(
+		Document document, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("contentUrl", fieldName)) {
+				if (!Objects.equals(
+						document.getContentUrl(),
+						(String)jsonObject.getString("contentUrl"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", fieldName)) {
+				if (!Objects.equals(
+						document.getDescription(),
+						(String)jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("documentFolderId", fieldName)) {
+				if (!Objects.equals(
+						document.getDocumentFolderId(),
+						(Long)jsonObject.getLong("documentFolderId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", fieldName)) {
+				if (!Objects.equals(
+						document.getEncodingFormat(),
+						(String)jsonObject.getString("encodingFormat"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileExtension", fieldName)) {
+				if (!Objects.equals(
+						document.getFileExtension(),
+						(String)jsonObject.getString("fileExtension"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						document.getId(), (Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sizeInBytes", fieldName)) {
+				if (!Objects.equals(
+						document.getSizeInBytes(),
+						(Long)jsonObject.getLong("sizeInBytes"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", fieldName)) {
+				if (!Objects.equals(
+						document.getTitle(),
+						(String)jsonObject.getString("title"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -1811,6 +2278,23 @@ public abstract class BaseDocumentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Document randomDocument() throws Exception {
 		return new Document() {
 			{
@@ -1876,5 +2360,59 @@ public abstract class BaseDocumentResourceTestCase {
 	@Inject
 	private com.liferay.headless.delivery.resource.v1_0.DocumentResource
 		_documentResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

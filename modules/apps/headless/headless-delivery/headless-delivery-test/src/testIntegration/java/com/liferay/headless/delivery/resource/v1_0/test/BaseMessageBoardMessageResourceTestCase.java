@@ -31,6 +31,10 @@ import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardMessageRes
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardMessageSerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,6 +48,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -53,9 +59,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -69,6 +77,7 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -224,6 +233,58 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteMessageBoardMessage() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteMessageBoardMessage",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"messageBoardMessageId",
+							messageBoardMessage.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			dataJSONObject.getBoolean("deleteMessageBoardMessage"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"messageBoardMessage",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"messageBoardMessageId",
+								messageBoardMessage.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
+	}
+
+	@Test
 	public void testGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
 			testGetMessageBoardMessage_addMessageBoardMessage();
@@ -242,6 +303,37 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetMessageBoardMessage() throws Exception {
+		MessageBoardMessage messageBoardMessage =
+			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"messageBoardMessage",
+				new HashMap<String, Object>() {
+					{
+						put(
+							"messageBoardMessageId",
+							messageBoardMessage.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				messageBoardMessage,
+				dataJSONObject.getJSONObject("messageBoardMessage")));
 	}
 
 	@Test
@@ -1122,6 +1214,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageId, rating);
 	}
 
+	protected MessageBoardMessage
+			testGraphQLMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -1159,6 +1259,26 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	protected void assertEquals(Rating rating1, Rating rating2) {
 		Assert.assertTrue(
 			rating1 + " does not equal " + rating2, equals(rating1, rating2));
+	}
+
+	protected void assertEqualsJSONArray(
+		List<MessageBoardMessage> messageBoardMessages, JSONArray jsonArray) {
+
+		for (MessageBoardMessage messageBoardMessage : messageBoardMessages) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(messageBoardMessage, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + messageBoardMessage,
+				contains);
+		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -1430,6 +1550,20 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
 	protected boolean equals(
@@ -1740,6 +1874,105 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		return true;
 	}
 
+	protected boolean equalsJSONObject(
+		MessageBoardMessage messageBoardMessage, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("anonymous", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getAnonymous(),
+						(Boolean)jsonObject.getBoolean("anonymous"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("articleBody", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getArticleBody(),
+						(String)jsonObject.getString("articleBody"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getEncodingFormat(),
+						(String)jsonObject.getString("encodingFormat"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("headline", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getHeadline(),
+						(String)jsonObject.getString("headline"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getId(),
+						(Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("messageBoardThreadId", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getMessageBoardThreadId(),
+						(Long)jsonObject.getLong("messageBoardThreadId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("showAsAnswer", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getShowAsAnswer(),
+						(Boolean)jsonObject.getBoolean("showAsAnswer"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("siteId", fieldName)) {
+				if (!Objects.equals(
+						messageBoardMessage.getSiteId(),
+						(Long)jsonObject.getLong("siteId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -1952,6 +2185,23 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected MessageBoardMessage randomMessageBoardMessage() throws Exception {
 		return new MessageBoardMessage() {
 			{
@@ -2026,5 +2276,59 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	private
 		com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource
 			_messageBoardMessageResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

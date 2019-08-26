@@ -31,6 +31,10 @@ import com.liferay.headless.form.client.pagination.Pagination;
 import com.liferay.headless.form.client.resource.v1_0.FormResource;
 import com.liferay.headless.form.client.serdes.v1_0.FormSerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -51,7 +55,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -204,6 +210,32 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetForm() throws Exception {
+		Form form = testGraphQLForm_addForm();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"form",
+				new HashMap<String, Object>() {
+					{
+						put("formId", form.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(form, dataJSONObject.getJSONObject("form")));
+	}
+
+	@Test
 	public void testGetSiteFormsPage() throws Exception {
 		Page<Form> page = formResource.getSiteFormsPage(
 			testGetSiteFormsPage_getSiteId(), Pagination.of(1, 2));
@@ -289,6 +321,57 @@ public abstract class BaseFormResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetSiteFormsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"forms",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+						put("siteId", testGroup.getGroupId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject formsJSONObject = dataJSONObject.getJSONObject("forms");
+
+		Assert.assertEquals(0, formsJSONObject.get("totalCount"));
+
+		Form form1 = testGraphQLForm_addForm();
+		Form form2 = testGraphQLForm_addForm();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		formsJSONObject = dataJSONObject.getJSONObject("forms");
+
+		Assert.assertEquals(2, formsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(form1, form2), formsJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testPostFormEvaluateContext() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -296,6 +379,11 @@ public abstract class BaseFormResourceTestCase {
 	@Test
 	public void testPostFormFormDocument() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected Form testGraphQLForm_addForm() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -336,6 +424,25 @@ public abstract class BaseFormResourceTestCase {
 		Assert.assertTrue(
 			formDocument1 + " does not equal " + formDocument2,
 			equals(formDocument1, formDocument2));
+	}
+
+	protected void assertEqualsJSONArray(
+		List<Form> forms, JSONArray jsonArray) {
+
+		for (Form form : forms) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(form, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + form, contains);
+		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -635,6 +742,20 @@ public abstract class BaseFormResourceTestCase {
 
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
 	protected boolean equals(Form form1, Form form2) {
@@ -976,6 +1097,78 @@ public abstract class BaseFormResourceTestCase {
 		return true;
 	}
 
+	protected boolean equalsJSONObject(Form form, JSONObject jsonObject) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("defaultLanguage", fieldName)) {
+				if (!Objects.equals(
+						form.getDefaultLanguage(),
+						(String)jsonObject.getString("defaultLanguage"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("description", fieldName)) {
+				if (!Objects.equals(
+						form.getDescription(),
+						(String)jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						form.getId(), (Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", fieldName)) {
+				if (!Objects.equals(
+						form.getName(), (String)jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("siteId", fieldName)) {
+				if (!Objects.equals(
+						form.getSiteId(), (Long)jsonObject.getLong("siteId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("structureId", fieldName)) {
+				if (!Objects.equals(
+						form.getStructureId(),
+						(Long)jsonObject.getLong("structureId"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -1187,6 +1380,23 @@ public abstract class BaseFormResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Form randomForm() throws Exception {
 		return new Form() {
 			{
@@ -1265,5 +1475,59 @@ public abstract class BaseFormResourceTestCase {
 
 	@Inject
 	private com.liferay.headless.form.resource.v1_0.FormResource _formResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

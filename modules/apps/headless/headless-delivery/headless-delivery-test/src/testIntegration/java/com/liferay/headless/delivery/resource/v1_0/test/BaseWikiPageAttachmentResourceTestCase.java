@@ -28,6 +28,10 @@ import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.resource.v1_0.WikiPageAttachmentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageAttachmentSerDes;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -40,6 +44,8 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -50,7 +56,9 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,6 +70,7 @@ import javax.annotation.Generated;
 import javax.ws.rs.core.MultivaluedHashMap;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.log4j.Level;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -219,6 +228,56 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLDeleteWikiPageAttachment() throws Exception {
+		WikiPageAttachment wikiPageAttachment =
+			testGraphQLWikiPageAttachment_addWikiPageAttachment();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"mutation",
+			new GraphQLField(
+				"deleteWikiPageAttachment",
+				new HashMap<String, Object>() {
+					{
+						put("wikiPageAttachmentId", wikiPageAttachment.getId());
+					}
+				}));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			dataJSONObject.getBoolean("deleteWikiPageAttachment"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			graphQLField = new GraphQLField(
+				"query",
+				new GraphQLField(
+					"wikiPageAttachment",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"wikiPageAttachmentId",
+								wikiPageAttachment.getId());
+						}
+					},
+					new GraphQLField("id")));
+
+			jsonObject = JSONFactoryUtil.createJSONObject(
+				invoke(graphQLField.toString()));
+
+			JSONArray errorsJSONArray = jsonObject.getJSONArray("errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
+	}
+
+	@Test
 	public void testGetWikiPageAttachment() throws Exception {
 		WikiPageAttachment postWikiPageAttachment =
 			testGetWikiPageAttachment_addWikiPageAttachment();
@@ -237,6 +296,35 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetWikiPageAttachment() throws Exception {
+		WikiPageAttachment wikiPageAttachment =
+			testGraphQLWikiPageAttachment_addWikiPageAttachment();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"wikiPageAttachment",
+				new HashMap<String, Object>() {
+					{
+						put("wikiPageAttachmentId", wikiPageAttachment.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				wikiPageAttachment,
+				dataJSONObject.getJSONObject("wikiPageAttachment")));
 	}
 
 	@Test
@@ -345,6 +433,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			wikiPageAttachment, multipartFiles);
 	}
 
+	protected WikiPageAttachment
+			testGraphQLWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertHttpResponseStatusCode(
 		int expectedHttpResponseStatusCode,
 		HttpInvoker.HttpResponse actualHttpResponse) {
@@ -376,6 +472,26 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				i);
 
 			assertEquals(wikiPageAttachment1, wikiPageAttachment2);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<WikiPageAttachment> wikiPageAttachments, JSONArray jsonArray) {
+
+		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(wikiPageAttachment, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + wikiPageAttachment,
+				contains);
 		}
 	}
 
@@ -499,6 +615,20 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected boolean equals(
 		WikiPageAttachment wikiPageAttachment1,
 		WikiPageAttachment wikiPageAttachment2) {
@@ -579,6 +709,83 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(
+		WikiPageAttachment wikiPageAttachment, JSONObject jsonObject) {
+
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("contentUrl", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getContentUrl(),
+						(String)jsonObject.getString("contentUrl"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("encodingFormat", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getEncodingFormat(),
+						(String)jsonObject.getString("encodingFormat"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileExtension", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getFileExtension(),
+						(String)jsonObject.getString("fileExtension"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getId(),
+						(Long)jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("sizeInBytes", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getSizeInBytes(),
+						(Long)jsonObject.getLong("sizeInBytes"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", fieldName)) {
+				if (!Objects.equals(
+						wikiPageAttachment.getTitle(),
+						(String)jsonObject.getString("title"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -686,6 +893,23 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected WikiPageAttachment randomWikiPageAttachment() throws Exception {
 		return new WikiPageAttachment() {
 			{
@@ -740,5 +964,59 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	private
 		com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource
 			_wikiPageAttachmentResource;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 }

@@ -1134,7 +1134,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				assertEqualsJSONArray(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), ${schemaVarNames}JSONObject.getJSONArray("items"));
 			}
-
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
@@ -1321,22 +1320,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#list>
 
-	protected void assertEqualsJSONArray(List<${schemaName}> ${schemaVarNames}, JSONArray jsonArray) {
-		for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
-			boolean contains = false;
-
-			for (Object object : jsonArray) {
-				if (equalsJSONObject(${schemaVarName}, (JSONObject)object)) {
-					contains = true;
-
-					break;
-				}
-			}
-
-			Assert.assertTrue(jsonArray + " does not contain " + ${schemaVarName}, contains);
-		}
-	}
-
 	protected void assertEqualsIgnoringOrder(List<${schemaName}> ${schemaVarNames}1, List<${schemaName}> ${schemaVarNames}2) {
 		Assert.assertEquals(${schemaVarNames}1.size(), ${schemaVarNames}2.size());
 
@@ -1352,6 +1335,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			Assert.assertTrue(${schemaVarNames}2 + " does not contain " + ${schemaVarName}1, contains);
+		}
+	}
+
+	protected void assertEqualsJSONArray(List<${schemaName}> ${schemaVarNames}, JSONArray jsonArray) {
+		for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(${schemaVarName}, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(jsonArray + " does not contain " + ${schemaVarName}, contains);
 		}
 	}
 
@@ -1508,10 +1507,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#list>
 
-	protected String[] getIgnoredEntityFieldNames() {
-		return new String[0];
-	}
-
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
@@ -1522,6 +1517,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 
 		return graphQLFields;
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
 	}
 
 	protected boolean equals(${schemaName} ${schemaVarName}1, ${schemaName} ${schemaVarName}2) {

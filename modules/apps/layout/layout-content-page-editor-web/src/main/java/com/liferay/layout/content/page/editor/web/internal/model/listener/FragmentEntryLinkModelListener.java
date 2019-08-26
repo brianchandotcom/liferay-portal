@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,13 +34,13 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -126,84 +127,34 @@ public class FragmentEntryLinkModelListener
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 			fragmentEntryLink.getClassPK());
 
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fragmentEntryLink.getEditableValues());
+		Set<AssetEntry> assetEntries =
+			MappedContentUtil.getFragmentEntryLinkMappedAssetEntries(
+				fragmentEntryLink);
 
-			Iterator<String> keysIterator = jsonObject.keys();
+		for (AssetEntry assetEntry : assetEntries) {
+			AssetEntryUsage assetEntryUsage =
+				_assetEntryUsageLocalService.fetchAssetEntryUsage(
+					assetEntry.getEntryId(),
+					_portal.getClassNameId(FragmentEntryLink.class),
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+					fragmentEntryLink.getClassPK());
 
-			while (keysIterator.hasNext()) {
-				String key = keysIterator.next();
-
-				JSONObject editableProcessorJSONObject =
-					jsonObject.getJSONObject(key);
-
-				if (editableProcessorJSONObject == null) {
-					continue;
-				}
-
-				Iterator<String> editableKeysIterator =
-					editableProcessorJSONObject.keys();
-
-				while (editableKeysIterator.hasNext()) {
-					String editableKey = editableKeysIterator.next();
-
-					JSONObject editableJSONObject =
-						editableProcessorJSONObject.getJSONObject(editableKey);
-
-					if (editableJSONObject == null) {
-						continue;
-					}
-
-					long classPK = GetterUtil.getLong(
-						editableJSONObject.getLong("classPK"));
-					long classNameId = GetterUtil.getLong(
-						editableJSONObject.getLong("classNameId"));
-
-					if ((classPK > 0) && (classNameId > 0)) {
-						_updateAssetEntryUsage(
-							fragmentEntryLink, classNameId, classPK);
-					}
-				}
+			if (assetEntryUsage != null) {
+				continue;
 			}
-		}
-		catch (PortalException pe) {
-			throw new ModelListenerException(pe);
-		}
-	}
 
-	private void _updateAssetEntryUsage(
-		FragmentEntryLink fragmentEntryLink, long classNameId, long classPK) {
+			ServiceContext serviceContext = Optional.ofNullable(
+				ServiceContextThreadLocal.getServiceContext()
+			).orElse(
+				new ServiceContext()
+			);
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			classNameId, classPK);
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		AssetEntryUsage assetEntryUsage =
-			_assetEntryUsageLocalService.fetchAssetEntryUsage(
-				assetEntry.getEntryId(),
+			_assetEntryUsageLocalService.addAssetEntryUsage(
+				fragmentEntryLink.getGroupId(), assetEntry.getEntryId(),
 				_portal.getClassNameId(FragmentEntryLink.class),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-				fragmentEntryLink.getClassPK());
-
-		if (assetEntryUsage != null) {
-			return;
+				fragmentEntryLink.getClassPK(), serviceContext);
 		}
-
-		ServiceContext serviceContext = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).orElse(
-			new ServiceContext()
-		);
-
-		_assetEntryUsageLocalService.addAssetEntryUsage(
-			fragmentEntryLink.getGroupId(), assetEntry.getEntryId(),
-			_portal.getClassNameId(FragmentEntryLink.class),
-			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
-			fragmentEntryLink.getClassPK(), serviceContext);
 	}
 
 	private void _updateDDMTemplateLink(FragmentEntryLink fragmentEntryLink) {

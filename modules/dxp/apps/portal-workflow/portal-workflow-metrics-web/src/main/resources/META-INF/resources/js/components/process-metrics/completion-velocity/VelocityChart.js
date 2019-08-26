@@ -1,18 +1,24 @@
-import {
-	formatMonthDate,
-	formatWeekDateWithYear,
-	formatXAxisDate,
-	getAxisMeasuresFromData,
-	getXAxisIntervals
-} from '../../../shared/util/chart';
-import {HOURS, MONTHS, WEEKS} from '../../../shared/util/chart-constants';
-import React, {useContext} from 'react';
 import LineChart from '@clayui/charts';
 import moment from '../../../shared/util/moment';
 import {TimeRangeContext} from '../filter/store/TimeRangeStore';
 import TooltipChart from '../../../shared/components/chart/TooltipChart';
 import {VelocityDataContext} from './store/VelocityDataStore';
 import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
+import React, {useContext} from 'react';
+import {
+	HOURS,
+	MONTHS,
+	WEEKS,
+	YEARS
+} from '../../../shared/util/chart-constants';
+import {
+	formatMonthDate,
+	formatWeekDateWithYear,
+	formatXAxisDate,
+	formatYearDate,
+	getAxisMeasuresFromData,
+	getXAxisIntervals
+} from '../../../shared/util/chart';
 
 const VelocityChart = () => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
@@ -145,6 +151,8 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 			return formatWeekDateWithYear(date, timeRange);
 		} else if (unitKey === MONTHS) {
 			return formatMonthDate(date, timeRange);
+		} else if (unitKey === YEARS) {
+			return formatYearDate(date, timeRange);
 		}
 		return dateUTC.format('ddd, MMM D');
 	};

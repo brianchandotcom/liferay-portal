@@ -116,6 +116,28 @@ export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
 	return currentDate.format('MMM D');
 };
 
+export const formatYearDate = (date, timeRange) => {
+	const currentDate = moment.utc(date);
+	const dateEnd = moment.utc(timeRange.dateEnd);
+	const dateStart = moment.utc(timeRange.dateStart);
+
+	let firstDayOfYear = currentDate.clone().startOf('year');
+	let lastDayOfYear = currentDate.clone().endOf('year');
+
+	if (currentDate.isSame(dateStart, 'year')) {
+		firstDayOfYear = currentDate.clone();
+	} else if (currentDate.isSame(dateEnd, 'year')) {
+		lastDayOfYear = dateEnd.clone();
+	}
+
+	if (firstDayOfYear.isSame(lastDayOfYear, 'day')) {
+		return firstDayOfYear.format('MMM D, YYYY');
+	}
+	return `${firstDayOfYear.format('MMM D')}-${lastDayOfYear.format(
+		'MMM D, YYYY'
+	)}`;
+};
+
 export const getAxisMeasures = value => {
 	const numChars = Math.floor(value).toString().length;
 	const decOrder = Math.pow(10, numChars - 1);

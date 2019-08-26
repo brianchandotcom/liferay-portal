@@ -72,7 +72,7 @@ public class OAuth2Manager {
 		AccessToken accessToken = accessTokenOptional.get();
 
 		if (!accessToken.isValid()) {
-			return refreshOAuth2AccessToken(companyId, userId, accessToken);
+			return _refreshOAuth2AccessToken(companyId, userId, accessToken);
 		}
 
 		return Optional.of(accessToken);
@@ -89,30 +89,6 @@ public class OAuth2Manager {
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);
-		}
-	}
-
-	public Optional<AccessToken> refreshOAuth2AccessToken(
-			long companyId, long userId, AccessToken accessToken)
-		throws PortalException {
-
-		if (accessToken.getRefreshToken() == null) {
-			return Optional.empty();
-		}
-
-		try (OAuth20Service oAuth20Service = _createOAuth20Service(
-				companyId, null)) {
-
-			AccessToken newAccessToken = new AccessToken(
-				oAuth20Service.refreshAccessToken(
-					accessToken.getRefreshToken()));
-
-			_accessTokenStore.add(companyId, userId, newAccessToken);
-
-			return Optional.of(newAccessToken);
-		}
-		catch (ExecutionException | InterruptedException | IOException e) {
-			throw new PortalException(e);
 		}
 	}
 
@@ -168,6 +144,30 @@ public class OAuth2Manager {
 	private String _getRedirectURI(String portalURL) {
 		return portalURL + Portal.PATH_MODULE +
 			"/document_library/onedrive/oauth2";
+	}
+
+	private Optional<AccessToken> _refreshOAuth2AccessToken(
+			long companyId, long userId, AccessToken accessToken)
+		throws PortalException {
+
+		if (accessToken.getRefreshToken() == null) {
+			return Optional.empty();
+		}
+
+		try (OAuth20Service oAuth20Service = _createOAuth20Service(
+				companyId, null)) {
+
+			AccessToken newAccessToken = new AccessToken(
+				oAuth20Service.refreshAccessToken(
+					accessToken.getRefreshToken()));
+
+			_accessTokenStore.add(companyId, userId, newAccessToken);
+
+			return Optional.of(newAccessToken);
+		}
+		catch (ExecutionException | InterruptedException | IOException e) {
+			throw new PortalException(e);
+		}
 	}
 
 	private final AccessTokenStore _accessTokenStore = new AccessTokenStore();

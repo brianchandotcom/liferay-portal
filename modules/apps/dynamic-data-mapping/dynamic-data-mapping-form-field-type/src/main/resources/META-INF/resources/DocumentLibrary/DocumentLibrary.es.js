@@ -67,18 +67,18 @@ class DocumentLibrary extends Component {
 		};
 
 		const documentLibrarySelectorParameters = {
+			'0_json': JSON.stringify(criterionJSON),
+			'1_json': JSON.stringify(criterionJSON),
+			'2_json': JSON.stringify(uploadCriterionJSON),
 			criteria:
 				'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
 			doAsGroupId: themeDisplay.getScopeGroupId(),
 			itemSelectedEventName: `${portletNamespace}selectDocumentLibrary`,
-			refererGroupId: themeDisplay.getScopeGroupId(),
-			'0_json': JSON.stringify(criterionJSON),
-			'1_json': JSON.stringify(criterionJSON),
-			'2_json': JSON.stringify(uploadCriterionJSON),
 			p_p_auth: itemSelectorAuthToken,
 			p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 			p_p_mode: 'view',
-			p_p_state: 'pop_up'
+			p_p_state: 'pop_up',
+			refererGroupId: themeDisplay.getScopeGroupId()
 		};
 
 		const documentLibrarySelectorURL = createPortletURL(

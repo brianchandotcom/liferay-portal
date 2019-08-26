@@ -1543,7 +1543,7 @@ definition {
 			title = "organic",
 			vocabularyName = "Fruit Vocabulary");
 
-		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
+		var liferaySiteId = JSONGroupAPI._getSiteIdByGroupName(groupName = "Guest");
 		var portalURL = PropsUtil.get("portal.url");
 		var webContentFolderName1 = "WC Folder Name 1";
 
@@ -1609,7 +1609,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "New Site");
 
-		var newSiteId = JSONGroup._getSiteIdByGroupName(groupName = "New Site");
+		var newSiteId = JSONGroupAPI._getSiteIdByGroupName(groupName = "New Site");
 
 		SitePages.openPagesAdmin(siteURLKey = "New Site");
 

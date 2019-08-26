@@ -393,7 +393,7 @@ definition {
 			groupName = "Guest",
 			urlTitle = "wc-title");
 
-		var liferaySiteId = JSONGroup._getSiteIdByGroupName(groupName = "Guest");
+		var liferaySiteId = JSONGroupAPI._getSiteIdByGroupName(groupName = "Guest");
 
 		var deleteCurl = '''
 			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/journal.journalarticle/delete-article \

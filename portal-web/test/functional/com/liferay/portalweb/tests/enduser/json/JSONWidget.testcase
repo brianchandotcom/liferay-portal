@@ -90,14 +90,14 @@ definition {
 				layoutName = "Test Page Name",
 				layoutTemplate = "${layoutTemplate}");
 
-			var groupId = JSONGroup._getGroupIdByName(groupName = "Test Site Name");
+			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name");
 
-			var typeSettings = JSONLayout._getTypeSettingsByName(
+			var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
 				groupId = "${groupId}",
 				layoutName = "Test Page Name",
 				privateLayout = "false");
 
-			var layoutTemplateId = JSONTypeSettingsUtil._getLayoutTemplateId(
+			var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(
 				layoutTemplate = "${layoutTemplate}");
 
 			if (!(contains("${typeSettings}","${layoutTemplateId}"))) {

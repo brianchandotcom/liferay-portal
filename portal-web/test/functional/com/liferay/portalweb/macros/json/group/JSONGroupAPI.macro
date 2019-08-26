@@ -18,7 +18,7 @@ definition {
 		var groupNameMap = '''{"en_US":"${groupNameEncoded}"}''';
 
 		if (isSet(parentGroupName)) {
-			var parentGroupId = JSONGroup._getSiteIdByGroupName(groupName = "${parentGroupName}");
+			var parentGroupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${parentGroupName}");
 		}
 		else {
 			var parentGroupId = "0";
@@ -67,7 +67,7 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
 
@@ -97,7 +97,7 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
@@ -114,7 +114,7 @@ definition {
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = "${groupId}");
 
-		var groupName = JSONGroup._getGroupName(groupId = "${groupId}");
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		echo("## Deleting a 'Group' with the following info using JSONWS:");
 
@@ -237,61 +237,6 @@ definition {
 		}
 
 		return "${groupId}";
-	}
-
-	@summary = "Add a child site to a valid site."
-	macro addChildSite {
-		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
-
-		JSONGroup._addGroup(
-			groupDescription = "${groupDescription}",
-			groupName = "${groupName}",
-			parentGroupName = "${parentGroupName}");
-	}
-
-	@summary = "Add a basic site"
-	macro addGroup {
-		Variables.assertDefined(parameterList = "${groupName}");
-
-		JSONGroup._addGroup(
-			groupDescription = "${groupDescription}",
-			groupName = "${groupName}");
-	}
-
-	macro assignGroupRoleToUser {
-		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userEmailAddress}");
-
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-
-		var roleId = JSONRole.getRoleIdByName(roleTitle = "${roleTitle}");
-
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
-
-		JSONGroup._assignGroupRoleToUser(
-			groupId = "${groupId}",
-			roleId = "${roleId}",
-			userId = "${userId}");
-	}
-
-	macro assignUserToGroup {
-		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
-
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-
-		var userId = JSONUser.getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
-
-		JSONGroup._assignUserToGroup(
-			groupId = "${groupId}",
-			userId = "${userId}");
-	}
-
-	@summary = "Delete a valid group using its groupName"
-	macro deleteGroupByName {
-		Variables.assertDefined(parameterList = "${groupName}");
-
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
-
-		JSONGroup._deleteGroup(groupId = "${groupId}");
 	}
 
 }

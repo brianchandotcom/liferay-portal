@@ -30,7 +30,7 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a MB thread"
 	macro addMessage {
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

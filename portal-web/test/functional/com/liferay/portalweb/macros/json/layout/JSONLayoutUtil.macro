@@ -8,7 +8,7 @@ definition {
 
 		Variables.assertDefined(parameterList = "${typeSettings}");
 
-		var widget = JSONTypeSettingsUtil._generateWidget(
+		var widget = JSONLayoutUtil._generateWidget(
 			widgetName = "${widgetName}");
 
 		if (contains("${typeSettings}","column-${column}=")) {
@@ -173,7 +173,7 @@ definition {
 			fail("layoutTemplateId not set.");
 		}
 
-		var layoutTemplateId = JSONTypeSettingsUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
+		var layoutTemplateId = JSONLayoutUtil._getLayoutTemplateId(layoutTemplate = "${layoutTemplate}");
 
 		var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(layout-template-id=).*","$1${layoutTemplateId}");
 

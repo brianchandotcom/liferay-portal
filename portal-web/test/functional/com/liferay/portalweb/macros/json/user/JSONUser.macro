@@ -165,7 +165,7 @@ definition {
 	macro addUserToSite {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

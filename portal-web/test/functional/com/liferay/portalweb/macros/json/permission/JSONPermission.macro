@@ -19,7 +19,7 @@ definition {
 			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
 		}
 
-		var groupId = JSONGroup._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/resourcepermission/${method} \

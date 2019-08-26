@@ -1,0 +1,103 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a layout"
+	macro _addLayout {
+		if (isSet(parentLayoutName)) {
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "${privateLayout}"
+			);
+		}
+		else {
+			var parentLayoutId = "0";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/add-layout \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout} \
+				-d parentLayoutId=${parentLayoutId} \
+				-d name=${layoutName} \
+				-d title= \
+				-d description= \
+				-d type=${type} \
+				-d hidden=false \
+				-d friendlyURL=
+		''';
+
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
+
+		echo("## Adding a 'Layout' with the following info using JSONWS:");
+
+		echo("## * Group Name: ${groupName}");
+
+		echo("## * Layout Name: ${layoutName}");
+
+		var layoutId = JSONCurlUtil.post("${curl}", "$['layoutId']");
+	}
+
+	@summary = "Get the layoutId from a layout by using groupId and layoutName"
+	macro _getLayoutIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
+
+		if (!("${privateLayout}" == "true")) {
+			var privateLayout = "false";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+		var layoutId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['layoutId']");
+		var layoutId = StringUtil.replace("${layoutId}", "[&quot;", "");
+		var layoutId = StringUtil.replace("${layoutId}", "&quot;]", "");
+
+		if ("${layoutId}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+		else {
+			echo("FOUND. Returning layoutId: ${groupId}");
+		}
+
+		return "${layoutId}";
+	}
+
+	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
+	macro _getTypeSettingsByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
+
+		if (!("${privateLayout}" == "true")) {
+			var privateLayout = "false";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+		var typeSettings = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
+		var typeSettings = StringUtil.replace("${typeSettings}", "[&quot;", "");
+		var typeSettings = StringUtil.replace("${typeSettings}", "&quot;]", "");
+
+		if ("${typeSettings}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+		else {
+			echo("FOUND. Returning typeSettings: ${typeSettings}");
+		}
+
+		return "${typeSettings}";
+	}
+
+}

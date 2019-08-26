@@ -110,20 +110,6 @@ definition {
 		}
 	}
 
-	macro _getScopeGroupId {
-		var javaScript = '''
-		var groupId = Liferay.ThemeDisplay.getScopeGroupId();
-
-		return groupId;
-		''';
-
-		var groupId = selenium.getEval("${javaScript}");
-
-		echo("## * groupId: ${groupId}");
-
-		return "${groupId}";
-	}
-
 	@summary = "Checks if a JSON Array exists inside JSON"
 	macro _isJSONArrayPresent {
 		var temp = RegexUtil.replace("${JSON}","\"(${key})\"\s*:\s*\[.*?\]","1");

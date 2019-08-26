@@ -1,0 +1,165 @@
+definition {
+
+	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
+	macro addPrivateLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
+		var groupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${groupName}");
+
+		JSONLayoutAPI._addLayout(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true",
+			type = "${type}");
+	}
+
+	@summary = "Add a private site page or private child site page to an existing site via groupName"
+	macro addPrivateLayoutByGroupName {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		JSONLayoutAPI._addLayout(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true",
+			type = "${type}");
+	}
+
+	@summary = "Add a public site page  or public child site page to an existing site or child site via groupKey"
+	macro addPublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
+		var groupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${groupName}");
+
+		JSONLayoutAPI._addLayout(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false",
+			type = "${type}");
+	}
+
+	@summary = "Add a public site page or public child site page to an existing site via groupName"
+	macro addPublicLayoutByGroupName {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		JSONLayoutAPI._addLayout(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false",
+			type = "${type}");
+	}
+
+	@summary = "Add a widget to a private layout via widgetName"
+	macro addWidgetToPrivateLayout {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true");
+
+		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "true");
+
+		var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
+			column = "${column}",
+			widgetName = "${widgetName}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayoutUtil._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "true",
+			typeSettings = "${typeSettings}");
+	}
+
+	@summary = "Add a widget to a public layout via widgetName"
+	macro addWidgetToPublicLayout {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
+			column = "${column}",
+			widgetName = "${widgetName}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayoutUtil._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
+	}
+
+	macro updateLayoutTemplateOfPublicLayout {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "false");
+
+		var typeSettings = JSONLayoutUtil._updateLayoutTemplateId(
+			layoutTemplate = "${layoutTemplate}",
+			typeSettings = "${typeSettings}");
+
+		JSONLayoutUtil._updateTypeSettings(
+			groupId = "${groupId}",
+			layoutId = "${layoutId}",
+			privateLayout = "false",
+			typeSettings = "${typeSettings}");
+	}
+
+}

@@ -1,0 +1,107 @@
+definition {
+
+	@summary = "Add a localized WC Article via JSON using the Basic Web Content Structure with Title: '${title}' or '${titleMap}', Content: '${content}' or '${contentMap}', and Site Name: ${groupName}. The mapped inputs should be inputted in a format the same as 'en_US:Title,es_ES:Titulo'"
+	macro addBasicWebContentLocalized {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		JSONUtil2._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none.");
+
+		JSONUtil2._exclusiveOrCheck(
+			A = "${content}",
+			B = "${contentMap}",
+			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");
+
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
+		JSONWebcontentAPI._addWebContent(
+			content = "${content}",
+			contentMap = "${contentMap}",
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			serviceContext = "${serviceContext}",
+			title = "${title}",
+			titleMap = "${titleMap}");
+	}
+
+	@summary = "Add a WC Folder with Folder Name '${folderName}' to the Site '${groupName}'"
+	macro addFolder {
+		Variables.assertDefined(parameterList = "${folderName},${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		JSONWebcontentAPI._addFolder(
+			folderName = "${folderName}",
+			groupId = "${groupId}");
+	}
+
+	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
+	macro addWebContent {
+		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+
+		if (isSet(folderName)) {
+			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
+				folderName = "${folderName}",
+				groupId = "${groupId}");
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
+		JSONWebcontentAPI._addWebContent(
+			content = "${content}",
+			description = "${description}",
+			folderId = "${folderId}",
+			groupId = "${groupId}",
+			serviceContext = "${serviceContext}",
+			title = "${title}");
+	}
+
+	macro getWebContentIdByURLTitle {
+		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d urlTitle='${urlTitle}'
+		''';
+
+		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
+		var articleId = StringUtil.replace("${articleId}", "[&quot;", "");
+		var articleId = StringUtil.replace("${articleId}", "&quot;]", "");
+
+		echo("## * articleId: ${articleId}");
+
+		return "${articleId}";
+	}
+
+}

@@ -1,0 +1,122 @@
+definition {
+
+	@summary = "Helper function to add a WC Folder via JSON"
+	macro _addFolder {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d parentFolderId=${parentFolderId} \
+				-d name=${folderName} \
+				-d description=''
+		''';
+
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
+
+		echo("## Create a 'Web Content Folder' with the following info using JSONWS:");
+
+		echo("## * Group Name: ${groupName}");
+
+		echo("## * Parent Folder Id: ${folderId}");
+
+		echo("## * Name: ${folderName}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to add a WC Article via JSON"
+	macro _addWebContent {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(contentMap)) {
+			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
+		}
+		else {
+			var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
+		}
+
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = "{}";
+		}
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/add-article \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d folderId=${folderId} \
+				-d titleMap=${titleMap} \
+				-d descriptionMap=${descriptionMap} \
+				-d content=${contentXML} \
+				-d ddmStructureKey=BASIC-WEB-CONTENT \
+				-d ddmTemplateKey=BASIC-WEB-CONTENT \
+				-d serviceContext=${serviceContext}
+		''';
+
+		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
+
+		echo("## Create a 'Web Content' with the following info using JSONWS:");
+
+		echo("## * Group Name: ${groupName}");
+
+		echo("## * Folder Id: ${folderId}");
+
+		echo("## * Title: ${title}");
+
+		echo("## * Description: ${description}");
+
+		echo("## * Content: ${content}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
+	macro _getFolderIdByFolderName {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalfolder/get-folders \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
+		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
+		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
+
+		echo("## Searching for 'folderId' for the folder '${folderName}' using JSONWS:");
+
+		echo("## * folderId: ${folderId}");
+
+		if ("${folderId}" == "[]") {
+			fail("FAIL. Cannot find folder.");
+		}
+		else {
+			return "${folderId}";
+		}
+	}
+
+}

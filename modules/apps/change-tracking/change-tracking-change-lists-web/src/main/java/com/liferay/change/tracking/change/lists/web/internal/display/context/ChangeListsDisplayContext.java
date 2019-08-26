@@ -92,6 +92,26 @@ public class ChangeListsDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				_themeDisplay.getCompanyId(), 0);
+
+		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		boolean confirmationEnabled = false;
+
+		if (ctPreferences != null) {
+			ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
+				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
+
+			if (ctPreferences != null) {
+				ctCollectionId = ctPreferences.getCtCollectionId();
+				confirmationEnabled = ctPreferences.isConfirmationEnabled();
+			}
+		}
+
+		_ctCollectionId = ctCollectionId;
+		_confirmationEnabled = confirmationEnabled;
 	}
 
 	public SoyContext getChangeListsContext() throws Exception {
@@ -374,15 +394,7 @@ public class ChangeListsDisplayContext {
 	}
 
 	public boolean isCheckoutCtCollectionConfirmationEnabled() {
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
-
-		if (ctPreferences == null) {
-			return true;
-		}
-
-		return ctPreferences.isConfirmationEnabled();
+		return _confirmationEnabled;
 	}
 
 	private JSONArray _getChangeListsDropdownMenuJSONArray() {
@@ -393,10 +405,8 @@ public class ChangeListsDisplayContext {
 				_themeDisplay.getCompanyId(), WorkflowConstants.STATUS_DRAFT, 0,
 				6, _modifiedDateDescendingOrderByComparator);
 
-		long ctCollectionId = _getCTCollectionId();
-
 		for (CTCollection ctCollection : ctCollections) {
-			if (ctCollection.getCtCollectionId() != ctCollectionId) {
+			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonArray.put(
@@ -444,7 +454,7 @@ public class ChangeListsDisplayContext {
 
 		StringBundler sb;
 
-		if (isCheckoutCtCollectionConfirmationEnabled()) {
+		if (_confirmationEnabled) {
 			sb = new StringBundler(5);
 
 			sb.append("javascript:confirm('");
@@ -464,34 +474,13 @@ public class ChangeListsDisplayContext {
 		return sb.toString();
 	}
 
-	private long _getCTCollectionId() {
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				_themeDisplay.getCompanyId(), 0);
-
-		if (ctPreferences == null) {
-			return CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		}
-
-		ctPreferences = _ctPreferencesLocalService.fetchCTPreferences(
-			_themeDisplay.getCompanyId(), _themeDisplay.getUserId());
-
-		if (ctPreferences == null) {
-			return CTConstants.CT_COLLECTION_ID_PRODUCTION;
-		}
-
-		return ctPreferences.getCtCollectionId();
-	}
-
 	private JSONArray _getCTEntriesJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		long ctCollectionId = _getCTCollectionId();
-
-		if (ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+		if (_ctCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 			for (CTEntry ctEntry :
 					_ctEntryLocalService.getCTCollectionCTEntries(
-						ctCollectionId)) {
+						_ctCollectionId)) {
 
 				jsonArray.put(_getCTEntryJSONObject(ctEntry));
 			}
@@ -713,6 +702,8 @@ public class ChangeListsDisplayContext {
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", "modifiedDate", false);
 
+	private final boolean _confirmationEnabled;
+	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTEngineManager _ctEngineManager;
 	private final CTEntryLocalService _ctEntryLocalService;

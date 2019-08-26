@@ -41,12 +41,11 @@ import java.io.OutputStream;
 
 import java.net.URL;
 
-import java.nio.file.FileVisitOption;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,13 +58,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiPredicate;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -289,12 +285,12 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Path overrideDirPath = _deploymentDirPath.resolve("override");
 
-		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar", true);
+		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar", true, false);
 
 		removalPendingBundles.addAll(
 			_uninstallOrphanOverridingJars(bundleContext, jarFiles));
 
-		List<File> warFiles = _scanFiles(overrideDirPath, ".war", true);
+		List<File> warFiles = _scanFiles(overrideDirPath, ".war", true, false);
 
 		_uninstallOrphanOverridingWars(bundleContext, warFiles);
 
@@ -331,7 +327,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		lpkgBundleTrackerCustomizer.cleanTrackedBundles(
 			_lpkgBundleTracker.getBundles());
 
-		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg", false);
+		List<File> lpkgFiles = _scanFiles(
+			_deploymentDirPath, ".lpkg", false, true);
 
 		if (lpkgFiles.isEmpty()) {
 			return;
@@ -568,48 +565,48 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	}
 
 	private List<File> _scanFiles(
-			Path dirPath, String extension, boolean checkFileName)
+			Path dirPath, String extension, boolean checkFileName,
+			boolean recursive)
 		throws IOException {
 
 		if (Files.notExists(dirPath)) {
 			return Collections.emptyList();
 		}
 
-		BiPredicate<Path, BasicFileAttributes> matcher = (path, attributes) -> {
-			if (attributes.isDirectory()) {
-				return false;
-			}
+		List<File> files = new ArrayList<>();
 
-			String pathName = StringUtil.toLowerCase(
-				String.valueOf(path.getFileName()));
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
 
-			if (!pathName.endsWith(extension)) {
-				return false;
-			}
+			for (Path path : directoryStream) {
+				String pathName = StringUtil.toLowerCase(
+					String.valueOf(path.getFileName()));
 
-			if (checkFileName && !_isValid(pathName)) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Override file " + path +
-							" has an invalid name and will be ignored");
+				if (!pathName.endsWith(extension)) {
+					if (recursive && Files.isDirectory(path)) {
+						files.addAll(
+							_scanFiles(
+								path, extension, checkFileName, recursive));
+					}
+
+					continue;
 				}
 
-				return false;
+				if (checkFileName && !_isValid(pathName)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Override file " + path +
+								" has an invalid name and will be ignored");
+					}
+
+					continue;
+				}
+
+				files.add(path.toFile());
 			}
-
-			return true;
-		};
-
-		try (Stream<Path> stream = Files.find(
-				dirPath, Integer.MAX_VALUE, matcher,
-				FileVisitOption.FOLLOW_LINKS)) {
-
-			return stream.map(
-				Path::toFile
-			).collect(
-				Collectors.toList()
-			);
 		}
+
+		return files;
 	}
 
 	private Set<String> _toFileNames(List<File> jarFiles, List<File> warFiles) {

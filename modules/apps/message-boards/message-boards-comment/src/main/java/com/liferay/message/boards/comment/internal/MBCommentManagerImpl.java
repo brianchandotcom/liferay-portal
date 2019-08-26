@@ -167,11 +167,9 @@ public class MBCommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		Discussion newDiscussion = getDiscussion(
-			userId, groupId, className, newClassPK, serviceContextFunction);
-
-		DiscussionComment newRootDiscussionComment =
-			newDiscussion.getRootDiscussionComment();
+		MBMessage rootMBMessage = _copyRootMessage(
+			userId, groupId, className, classPK, newClassPK,
+			serviceContextFunction);
 
 		List<Comment> parentComments = getRootComments(
 			className, classPK, WorkflowConstants.STATUS_ANY, 0,
@@ -180,8 +178,8 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		for (Comment parentComment : parentComments) {
 			_duplicateComment(
-				parentComment, newRootDiscussionComment.getCommentId(),
-				newClassPK, serviceContextFunction);
+				parentComment, rootMBMessage.getMessageId(), newClassPK,
+				serviceContextFunction);
 		}
 
 		List<Subscription> subscriptions =
@@ -195,7 +193,8 @@ public class MBCommentManagerImpl implements CommentManager {
 				newClassPK);
 		}
 
-		return newDiscussion;
+		return getDiscussion(
+			userId, groupId, className, newClassPK, serviceContextFunction);
 	}
 
 	@Override
@@ -447,6 +446,31 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		return new MBDiscussionCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
+	}
+
+	private MBMessage _copyRootMessage(
+			long userId, long groupId, String className, long classPK,
+			long newClassPK,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		Discussion discussion = getDiscussion(
+			userId, groupId, className, classPK, serviceContextFunction);
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		MBMessage rootMBMessage = _mbMessageLocalService.addDiscussionMessage(
+			rootDiscussionComment.getUserId(),
+			rootDiscussionComment.getUserName(),
+			rootDiscussionComment.getGroupId(),
+			rootDiscussionComment.getClassName(), newClassPK,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		rootMBMessage.setCreateDate(rootDiscussionComment.getCreateDate());
+		rootMBMessage.setModifiedDate(rootDiscussionComment.getModifiedDate());
+
+		return _mbMessageLocalService.updateMBMessage(rootMBMessage);
 	}
 
 	private void _duplicateComment(

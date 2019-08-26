@@ -110,6 +110,23 @@ public class SegmentsExperimentRelServiceImpl
 
 	@Override
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentRelId, double split)
+		throws PortalException {
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+				segmentsExperimentRelId);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(),
+			segmentsExperimentRel.getSegmentsExperimentId(), ActionKeys.UPDATE);
+
+		return segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
+			segmentsExperimentRelId, split);
+	}
+
+	@Override
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, String name,
 			ServiceContext serviceContext)
 		throws PortalException {

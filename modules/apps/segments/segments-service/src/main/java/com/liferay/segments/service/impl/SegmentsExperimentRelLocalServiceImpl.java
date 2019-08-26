@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.segments.exception.SegmentsExperimentRelNameException;
+import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -138,6 +139,22 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 	@Override
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentRelId, double split)
+		throws PortalException {
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelPersistence.findByPrimaryKey(
+				segmentsExperimentRelId);
+
+		_validateSegmentsExperimentRelSplit(split);
+
+		segmentsExperimentRel.setSplit(split);
+
+		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+	}
+
+	@Override
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -161,6 +178,15 @@ public class SegmentsExperimentRelLocalServiceImpl
 			segmentsExperience);
 
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+	}
+
+	private void _validateSegmentsExperimentRelSplit(double split)
+		throws PortalException {
+
+		if ((split > 1) || (split < 0)) {
+			throw new SegmentsExperimentRelSplitException(
+				"Split " + split + " is not a value between 0 and 1");
+		}
 	}
 
 	@Reference

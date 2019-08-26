@@ -102,13 +102,17 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					fragmentEntryLink.getRendererKey(), serviceContext);
 
 			jsonObject.put(
-				"configuration", duplicateFragmentEntryLink.getConfiguration()
+				"configuration",
+				JSONFactoryUtil.createJSONObject(
+					duplicateFragmentEntryLink.getConfiguration())
 			).put(
 				"defaultConfigurationValues",
 				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
 					duplicateFragmentEntryLink.getConfiguration())
 			).put(
-				"editableValues", duplicateFragmentEntryLink.getEditableValues()
+				"editableValues",
+				JSONFactoryUtil.createJSONObject(
+					duplicateFragmentEntryLink.getEditableValues())
 			).put(
 				"fragmentEntryLinkId",
 				duplicateFragmentEntryLink.getFragmentEntryLinkId()

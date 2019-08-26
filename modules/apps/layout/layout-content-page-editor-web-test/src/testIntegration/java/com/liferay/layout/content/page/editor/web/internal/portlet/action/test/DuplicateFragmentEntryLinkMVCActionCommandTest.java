@@ -19,6 +19,8 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -53,11 +55,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionParameters;
@@ -71,10 +77,12 @@ import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import javax.xml.namespace.QName;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -103,6 +111,95 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 		_group = GroupTestUtil.addGroup();
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 		_layout = LayoutTestUtil.addLayout(_group);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			FragmentRenderer.class, new TestFragmentRenderer());
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testDuplicateDynamicFragment() throws Exception {
+		TestFragmentRenderer testFragmentRenderer = new TestFragmentRenderer();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		FragmentEntryLink originalFragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				PortalUtil.getClassNameId(Layout.class.getName()),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, testFragmentRenderer.getConfiguration(null),
+				StringPool.BLANK, StringPool.BLANK, 0,
+				testFragmentRenderer.getKey(), serviceContext);
+
+		ActionRequest actionRequest = _getMockHttpServletRequest(
+			originalFragmentEntryLink.getFragmentEntryLinkId());
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_duplicateFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
+
+		Assert.assertNotNull(jsonObject);
+
+		Assert.assertTrue(jsonObject.has("configuration"));
+		Assert.assertTrue(jsonObject.has("editableValues"));
+		Assert.assertTrue(jsonObject.has("fragmentEntryKey"));
+		Assert.assertTrue(jsonObject.has("fragmentEntryLinkId"));
+		Assert.assertTrue(jsonObject.has("name"));
+
+		Assert.assertEquals(
+			testFragmentRenderer.getKey(),
+			jsonObject.getString("fragmentEntryKey"));
+		Assert.assertEquals(
+			testFragmentRenderer.getLabel(null), jsonObject.getString("name"));
+
+		FragmentEntryLink persistedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				jsonObject.getLong("fragmentEntryLinkId"));
+
+		Assert.assertNotNull(persistedFragmentEntryLink);
+
+		Assert.assertNotEquals(
+			originalFragmentEntryLink.getFragmentEntryLinkId(),
+			persistedFragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			originalFragmentEntryLink.getClassNameId(),
+			persistedFragmentEntryLink.getClassNameId());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getClassPK(),
+			persistedFragmentEntryLink.getClassPK());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getConfiguration(),
+			persistedFragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getCss(),
+			persistedFragmentEntryLink.getCss());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getEditableValues(),
+			persistedFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getFragmentEntryId(),
+			persistedFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getHtml(),
+			persistedFragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getJs(),
+			persistedFragmentEntryLink.getJs());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getNamespace(),
+			persistedFragmentEntryLink.getNamespace());
+		Assert.assertEquals(
+			originalFragmentEntryLink.getRendererKey(),
+			persistedFragmentEntryLink.getRendererKey());
 	}
 
 	@Test
@@ -272,6 +369,8 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 	)
 	private MVCActionCommand _mvcActionCommand;
 
+	private ServiceRegistration<FragmentRenderer> _serviceRegistration;
+
 	private static class MockLiferayPortletConfig
 		extends MockPortletConfig implements LiferayPortletConfig {
 
@@ -432,6 +531,39 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 
 		private final MockHttpServletRequest _mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+	}
+
+	private static class TestFragmentRenderer implements FragmentRenderer {
+
+		@Override
+		public String getCollectionKey() {
+			return "test-collection";
+		}
+
+		@Override
+		public String getConfiguration(
+			FragmentRendererContext fragmentRendererContext) {
+
+			return "{fieldSets: []}";
+		}
+
+		@Override
+		public String getKey() {
+			return "test-key";
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return "test-label";
+		}
+
+		@Override
+		public void render(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse) {
+		}
 
 	}
 

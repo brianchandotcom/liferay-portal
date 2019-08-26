@@ -42,14 +42,6 @@ definition {
 				-d active=true
 		''';
 
-		echo("## Adding a 'Group' with the following info using JSONWS:");
-
-		if (isSet(groupDescription)) {
-			echo("## * Group Description: ${groupDescription}");
-		}
-
-		echo("## * Group Name: ${groupName}");
-
 		var groupId = JSONCurlUtil.post("${curl}", "$['groupId']");
 	}
 
@@ -73,14 +65,6 @@ definition {
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		echo("## Assign a 'Group Role' to a 'User' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Role Name: ${roleTitle}");
-
-		echo("## * User Email Address: ${userEmailAddress}");
-
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}
 
@@ -101,12 +85,6 @@ definition {
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		echo("## Assigning a 'User' to an 'Group' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * User Email Address: ${userEmailAddress}");
-
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}
 
@@ -116,10 +94,6 @@ definition {
 
 		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
-		echo("## Deleting a 'Group' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -127,6 +101,7 @@ definition {
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
 		''';
+
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}
 
@@ -147,17 +122,12 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		echo("${curl}', '$.[?(@[\'groupKey\'] == \'${groupKey}\')][\'groupId\']");
-
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
 		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
 		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
-		}
-		else {
-			echo("FOUND. Returning groupId: ${groupId}");
 		}
 
 		return "${groupId}";
@@ -182,9 +152,6 @@ definition {
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
 		}
-		else {
-			echo("FOUND. Returning groupId: ${groupId}");
-		}
 
 		return "${groupId}";
 	}
@@ -201,6 +168,7 @@ definition {
 			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
 				-u test@liferay.com:test
 		''';
+
 		var groupName = JSONCurlUtil.get("${curl}", "$['nameCurrentValue']");
 
 		return "${groupName}";
@@ -221,19 +189,12 @@ definition {
 				-d groupKey=${groupName}
 		''';
 
-		echo("## Searching for a 'Group Id' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
 		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['groupKey'] == '${groupName}')]['groupId']");
 		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
 		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
-		}
-		else {
-			echo("FOUND. Returning groupId: ${groupId}");
 		}
 
 		return "${groupId}";

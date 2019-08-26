@@ -99,8 +99,6 @@ definition {
 		var articleId = StringUtil.replace("${articleId}", "[&quot;", "");
 		var articleId = StringUtil.replace("${articleId}", "&quot;]", "");
 
-		echo("## * articleId: ${articleId}");
-
 		return "${articleId}";
 	}
 

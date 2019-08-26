@@ -41,18 +41,6 @@ definition {
 				-d sendEmail=true
 		''';
 
-		echo("## Adding a 'User' with the following info using JSONWS:");
-
-		echo("## * Company ID: ${companyId}");
-
-		echo("## * Email Address: ${userEmailAddress}");
-
-		echo("## * First Name: ${userFirstName}");
-
-		echo("## * Last Name: ${userLastName}");
-
-		echo("## * Screen Name: ${userScreenName}");
-
 		var userId = JSONCurlUtil.post("${curl}", "$['userId']");
 	}
 
@@ -66,16 +54,12 @@ definition {
 				-u test@liferay.com:test
 		''';
 
-		echo("## Agreeing to Terms of Use for user ${userId}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl1}");
 
 		var curl2 = '''
 			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
 				-u test@liferay.com:test
 		''';
-
-		echo("## Answering Password Reminder for ${userId}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl2}");
 	}
@@ -93,10 +77,6 @@ definition {
 				-d userId=${userId}
 		''';
 
-		echo("## Deleting a 'User' with the following info using JSONWS:");
-
-		echo("## * Email Address: ${userEmailAddress}");
-
 		var temporary = JSONCurlUtil.post("${curl}", "");
 	}
 
@@ -113,8 +93,6 @@ definition {
 		var passwordPolicyId = JSONCurlUtil.post("${curl1}", "$.[?(@['name'] == 'Default Password Policy')]['passwordPolicyId']");
 		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "[&quot;", "");
 		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "&quot;]", "");
-
-		echo("## Default Password Policy ID: ${passwordPolicyId}");
 
 		var curl2 = '''
 			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
@@ -146,8 +124,6 @@ definition {
 				-d resetFailureCount=600 \
 				-d resetTicketMaxAge=86400
 		''';
-
-		echo("## Disabling Change Required Password Policy");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl2}");
 	}
@@ -264,8 +240,6 @@ definition {
 				-d password2='${newPassword}' \
 				-d passwordReset=${requireReset}
 		''';
-
-		echo("## Updating password for ${userEmailAddress} to '${newPassword}'");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 

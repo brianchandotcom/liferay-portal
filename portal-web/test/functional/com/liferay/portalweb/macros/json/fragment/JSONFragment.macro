@@ -62,9 +62,6 @@ definition {
 		if ("${collectionNameResult}" == "[]") {
 			fail("The collection ${collectionName} was not found.");
 		}
-		else {
-			echo("The collection ${collectionName} was found.");
-		}
 	}
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
@@ -78,10 +75,7 @@ definition {
 			groupId = "${groupId}"
 		);
 
-		if ("${collectionNameResult}" == "[]") {
-			echo("The collection ${collectionName} was not found.");
-		}
-		else {
+		if (!("${collectionNameResult}" == "[]")) {
 			fail("The collection ${collectionName} was found.");
 		}
 	}
@@ -106,9 +100,6 @@ definition {
 		if ("${fragmentNameResult}" == "[]") {
 			fail("The fragment ${fragmentName} was not found.");
 		}
-		else {
-			echo("The fragment ${fragmentName} was found.");
-		}
 	}
 
 	@summary = "Assert that a fragment does not exist in a group given its fragmentName"
@@ -128,10 +119,7 @@ definition {
 			groupId = "${groupId}"
 		);
 
-		if ("${fragmentNameResult}" == "[]") {
-			echo("The fragment ${fragmentName} was not found.");
-		}
-		else {
+		if (!("${fragmentNameResult}" == "[]")) {
 			fail("The fragment ${fragmentName} was found.");
 		}
 	}

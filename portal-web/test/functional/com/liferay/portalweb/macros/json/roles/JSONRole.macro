@@ -52,20 +52,6 @@ definition {
 				-d subtype=
 		''';
 
-		echo("## Adding a 'Role' with the following info using JSONWS:");
-
-		if (isSet(roleDescription)) {
-			echo("## * Role Description: ${roleDescription}");
-		}
-
-		echo("## * Role Name: ${roleTitle}");
-
-		if (isSet(roleKey)) {
-			echo("## * Role Title: ${roleKey}");
-		}
-
-		echo("## * Role Type: ${roleType}");
-
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}
 
@@ -84,12 +70,6 @@ definition {
 		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
-
-		echo("## Assigning a 'User' to a 'Role' with the following info using JSONWS:");
-
-		echo("## * Role Name: ${roleTitle}");
-
-		echo("## * User Email Address: ${userEmailAddress}");
 
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}

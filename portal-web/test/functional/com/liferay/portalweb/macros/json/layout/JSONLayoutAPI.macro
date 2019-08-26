@@ -29,14 +29,6 @@ definition {
 				-d friendlyURL=
 		''';
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
-		echo("## Adding a 'Layout' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Layout Name: ${layoutName}");
-
 		var layoutId = JSONCurlUtil.post("${curl}", "$['layoutId']");
 	}
 
@@ -62,9 +54,6 @@ definition {
 
 		if ("${layoutId}" == "[]") {
 			fail("FAIL. Cannot find layout.");
-		}
-		else {
-			echo("FOUND. Returning layoutId: ${groupId}");
 		}
 
 		return "${layoutId}";
@@ -92,9 +81,6 @@ definition {
 
 		if ("${typeSettings}" == "[]") {
 			fail("FAIL. Cannot find layout.");
-		}
-		else {
-			echo("FOUND. Returning typeSettings: ${typeSettings}");
 		}
 
 		return "${typeSettings}";

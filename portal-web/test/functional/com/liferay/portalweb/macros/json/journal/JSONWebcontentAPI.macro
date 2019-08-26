@@ -19,14 +19,6 @@ definition {
 
 		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
-		echo("## Create a 'Web Content Folder' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Parent Folder Id: ${folderId}");
-
-		echo("## * Name: ${folderName}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
@@ -78,18 +70,6 @@ definition {
 
 		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
-		echo("## Create a 'Web Content' with the following info using JSONWS:");
-
-		echo("## * Group Name: ${groupName}");
-
-		echo("## * Folder Id: ${folderId}");
-
-		echo("## * Title: ${title}");
-
-		echo("## * Description: ${description}");
-
-		echo("## * Content: ${content}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
@@ -106,10 +86,6 @@ definition {
 		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
 		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
 		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
-
-		echo("## Searching for 'folderId' for the folder '${folderName}' using JSONWS:");
-
-		echo("## * folderId: ${folderId}");
 
 		if ("${folderId}" == "[]") {
 			fail("FAIL. Cannot find folder.");

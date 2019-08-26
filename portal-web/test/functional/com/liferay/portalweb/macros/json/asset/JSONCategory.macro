@@ -103,9 +103,6 @@ definition {
 		if ("${categoryId}" == "[]") {
 			fail("FAIL. Cannot find category.");
 		}
-		else {
-			echo("FOUND. Returning categoryId: ${categoryId}");
-		}
 
 		return "${categoryId}";
 	}
@@ -128,9 +125,6 @@ definition {
 
 		if ("${vocabularyId}" == "[]") {
 			fail("FAIL. Cannot find vocabulary.");
-		}
-		else {
-			echo("FOUND. Returning vocabularyId: ${vocabualryId}");
 		}
 
 		return "${vocabularyId}";

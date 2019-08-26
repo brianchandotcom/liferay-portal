@@ -78,9 +78,6 @@ definition {
 		if ("${collectionId}" == "[]") {
 			fail("FAIL. Cannot find collection.");
 		}
-		else {
-			echo("FOUND. Returning collectionId: ${collectionId}");
-		}
 
 		return "${collectionId}";
 	}

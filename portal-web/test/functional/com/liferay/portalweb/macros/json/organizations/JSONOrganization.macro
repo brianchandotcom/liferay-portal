@@ -24,12 +24,6 @@ definition {
 				-d site=${organizationSite}
 		''';
 
-		echo("## Adding a 'Organization' with the following info using jsonws:");
-
-		echo("## * Organization Name: ${organizationName}");
-
-		echo("## * Organization Site: ${organizationSite}");
-
 		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
 	}
 
@@ -49,12 +43,6 @@ definition {
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		echo("## Assigning a 'User' to an 'Organization' with the following info using JSONWS:");
-
-		echo("## * Organization Name: ${organizationName}");
-
-		echo("## * User Email Address: ${userEmailAddress}");
-
 		var temp = JSONCurlUtil.post("${curl}", "$");
 	}
 
@@ -70,10 +58,6 @@ definition {
 		''';
 
 		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
-
-		echo("## Deleting an 'Organization' with the following info using JSONWS:");
-
-		echo("## * Organization Name: ${organizationName}");
 
 		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
 	}

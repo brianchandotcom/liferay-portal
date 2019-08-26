@@ -17,9 +17,9 @@ package com.liferay.saml.persistence.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.saml.persistence.internal.util.SamlConfigurationUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.service.base.SamlSpAuthRequestLocalServiceBaseImpl;
-import com.liferay.saml.persistence.service.util.SamlConfigurationUtil;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
 
 import java.util.Date;

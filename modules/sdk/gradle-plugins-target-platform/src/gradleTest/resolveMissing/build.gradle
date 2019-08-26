@@ -36,8 +36,8 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 
 	targetPlatformBoms group: "com.liferay.portal", name: "release.portal.bom", version: "7.1.3"

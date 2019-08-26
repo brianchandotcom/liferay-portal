@@ -4,8 +4,8 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compileOnly group: "jstl", name: "jstl"
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 

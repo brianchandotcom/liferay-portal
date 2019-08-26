@@ -347,7 +347,7 @@
 						r[2] === undefined
 							? options && options.defaultImageText
 								? options.defaultImageText
-								: ''
+								: ' '
 							: r[2].replace(/~(.)/g, '$1');
 					node.appendChild(img);
 				}

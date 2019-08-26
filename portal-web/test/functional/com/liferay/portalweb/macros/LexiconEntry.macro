@@ -100,6 +100,12 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro gotoVerticalEllipsisMenuItemNoError {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
 	macro gotoEntry {
 		if (IsElementPresent(locator1 = "Icon#DISPLAY_STYLE_ACTIVE", key_displayStyle = "cards")) {
 			AssertClick(

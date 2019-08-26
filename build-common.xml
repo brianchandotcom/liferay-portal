@@ -1707,7 +1707,6 @@ rerun your task.
 	</macrodef>
 
 	<macrodef name="test-cmd">
-		<attribute name="junit.forkmode" />
 		<attribute name="test.includes" />
 		<attribute name="test.type" />
 		<attribute default="" name="test.excludes" />
@@ -1735,7 +1734,7 @@ rerun your task.
 				<available file="test/${current.test.dir}" type="dir" />
 				<then>
 					<junit-cmd
-						forkmode="@{junit.forkmode}"
+						forkmode="perTest"
 						junit.jvm.override="@{junit.jvm.override}"
 						junit.jvm.override.version="@{junit.jvm.override.version}"
 						test.type="@{test.type}"
@@ -2277,7 +2276,6 @@ rerun your task.
 		/>
 
 		<test-cmd
-			junit.forkmode="perTest"
 			junit.jvm.override="${junit.jvm.override}"
 			junit.jvm.override.version="${junit.jvm.override.version}"
 			test.includes="**/${test.class}.class"
@@ -2328,7 +2326,6 @@ rerun your task.
 			</or>
 			<then>
 				<test-cmd
-					junit.forkmode="perTest"
 					junit.jvm.override="${junit.jvm.override}"
 					junit.jvm.override.version="${junit.jvm.override.version}"
 					test.includes="${test.classes}"
@@ -2442,7 +2439,6 @@ rerun your task.
 		/>
 
 		<test-cmd
-			junit.forkmode="perTest"
 			test.includes="**/${test.package.dir}/*Test.class"
 			test.type="unit"
 		/>
@@ -2454,7 +2450,6 @@ rerun your task.
 		/>
 
 		<test-cmd
-			junit.forkmode="perTest"
 			test.includes="**/*Test.class"
 			test.type="unit"
 		/>

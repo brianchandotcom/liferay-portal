@@ -186,19 +186,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
 
-		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(
-				CompanyThreadLocal.getCompanyId(),
-				MBUtil.getSubscriptionClassName(
-					rootDiscussionComment.getClassName()),
-				rootDiscussionComment.getClassPK());
-
-		for (Subscription subscription : subscriptions) {
-			subscribeDiscussion(
-				subscription.getUserId(), subscription.getGroupId(),
-				rootDiscussionComment.getClassName(), newClassPK);
-		}
-
 		List<Comment> parentComments = getRootComments(
 			rootDiscussionComment.getClassName(),
 			rootDiscussionComment.getClassPK(), WorkflowConstants.STATUS_ANY, 0,
@@ -256,6 +243,19 @@ public class MBCommentManagerImpl implements CommentManager {
 			newParentMBMessage.setStatus(parentMBMessage.getStatus());
 
 			_mbMessageLocalService.updateMBMessage(newParentMBMessage);
+		}
+
+		List<Subscription> subscriptions =
+			_subscriptionLocalService.getSubscriptions(
+				CompanyThreadLocal.getCompanyId(),
+				MBUtil.getSubscriptionClassName(
+					rootDiscussionComment.getClassName()),
+				rootDiscussionComment.getClassPK());
+
+		for (Subscription subscription : subscriptions) {
+			subscribeDiscussion(
+				subscription.getUserId(), subscription.getGroupId(),
+				rootDiscussionComment.getClassName(), newClassPK);
 		}
 
 		return getDiscussion(

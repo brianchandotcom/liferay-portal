@@ -129,7 +129,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	</aui:script>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated">
+<aui:script use="aui-base,aui-io-plugin-deprecated,aui-loading-mask-deprecated,io">
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(

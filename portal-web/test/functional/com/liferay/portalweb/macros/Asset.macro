@@ -40,7 +40,7 @@ definition {
 		if (isSet(noAutocomplete)) {
 			Type.sendKeys(
 				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
-				value1 = "${userEmailAddress}");
+				value1 = "${userEmailAddress},");
 		}
 		else {
 			Type.sendKeys(

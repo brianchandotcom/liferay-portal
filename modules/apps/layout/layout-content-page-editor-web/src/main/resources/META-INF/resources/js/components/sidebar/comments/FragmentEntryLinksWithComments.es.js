@@ -13,26 +13,32 @@
  */
 
 import React from 'react';
-import useDispatch from '../../../store/hooks/useDispatch.es';
+
+import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
+import {getLayoutDataFragmentEntryLinkIds} from '../../../utils/LayoutDataList.es';
+import {NoCommentsMessage} from './NoCommentsMessage.es';
 import {
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_HOVERED_ITEM
 } from '../../../actions/actions.es';
-import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
-import SidebarHeader from '../SidebarHeader.es';
+import useDispatch from '../../../store/hooks/useDispatch.es';
+import useGetComments from '../../../store/hooks/useGetComments.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
-import useGetComments from '../../../store/hooks/useGetComments.es';
-import {NoCommentsMessage} from './NoCommentsMessage.es';
+import SidebarHeader from '../SidebarHeader.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();
 	const getComments = useGetComments();
 
 	const fragmentEntryLinksWithComments = useSelector(state =>
-		Object.values(state.fragmentEntryLinks).filter(
-			fragmentEntryLink => getComments(fragmentEntryLink).length
-		)
+		getLayoutDataFragmentEntryLinkIds(state.layoutData)
+			.map(
+				fragmentEntryLinkId =>
+					state.fragmentEntryLinks[fragmentEntryLinkId]
+			)
+			.filter(fragmentEntryLink => fragmentEntryLink)
+			.filter(fragmentEntryLink => getComments(fragmentEntryLink).length)
 	);
 
 	const setActiveFragmentEntryLink = fragmentEntryLinkId => () => {

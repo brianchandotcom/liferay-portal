@@ -16,16 +16,12 @@ package com.liferay.account.admin.web.internal.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Albert Lee
@@ -45,23 +41,7 @@ public class EditAccountMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			_portal.getSelectedUser(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-
-			throw new PortletException(e);
-		}
-
 		return "/edit_account.jsp";
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

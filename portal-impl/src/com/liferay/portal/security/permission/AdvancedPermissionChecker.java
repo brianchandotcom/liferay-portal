@@ -121,7 +121,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
 		try {
-			return invokeRoleContributors(
+			return _applyRoleContributors(
 				doGetRoleIds(userId, groupId), groupId);
 		}
 		catch (Exception e) {
@@ -782,37 +782,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return _hasUserPermissionImpl(group, name, primKey, roleIds, actionId);
 	}
 
-	protected long[] invokeRoleContributors(long[] roleIds, long groupId) {
-		if (_roleContributors.length == 0) {
-			return roleIds;
-		}
-
-		if (_contributedRoleIds == null) {
-			_contributedRoleIds = new HashMap<>();
-		}
-
-		return _contributedRoleIds.computeIfAbsent(
-			groupId,
-			key -> {
-				try {
-					UserBag userBag = getUserBag();
-
-					RoleCollectionImpl roleCollectionImpl =
-						new RoleCollectionImpl(roleIds, groupId, this);
-
-					for (RoleContributor roleContributor : _roleContributors) {
-						roleContributor.contribute(
-							user, userBag, roleCollectionImpl);
-					}
-
-					return roleCollectionImpl.getRoleIds();
-				}
-				catch (PortalException pe) {
-					return ReflectionUtil.throwException(pe);
-				}
-			});
-	}
-
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1346,6 +1315,37 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
+	private long[] _applyRoleContributors(long[] roleIds, long groupId) {
+		if (_roleContributors.length == 0) {
+			return roleIds;
+		}
+
+		if (_contributedRoleIds == null) {
+			_contributedRoleIds = new HashMap<>();
+		}
+
+		return _contributedRoleIds.computeIfAbsent(
+			groupId,
+			key -> {
+				try {
+					UserBag userBag = getUserBag();
+
+					RoleCollectionImpl roleCollectionImpl =
+						new RoleCollectionImpl(roleIds, groupId, this);
+
+					for (RoleContributor roleContributor : _roleContributors) {
+						roleContributor.contribute(
+							user, userBag, roleCollectionImpl);
+					}
+
+					return roleCollectionImpl.getRoleIds();
+				}
+				catch (PortalException pe) {
+					return ReflectionUtil.throwException(pe);
+				}
+			});
+	}
+
 	private boolean _hasGuestPermission(
 		Group group, String name, String primKey, String actionId) {
 
@@ -1398,7 +1398,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return ResourceLocalServiceUtil.hasUserPermissions(
 				defaultUserId, groupId, resources, actionId,
-				invokeRoleContributors(getGuestUserRoleIds(), groupId));
+				_applyRoleContributors(getGuestUserRoleIds(), groupId));
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			throw new IllegalArgumentException(

@@ -167,18 +167,18 @@ public class MBCommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		MBMessage rootMBMessage = _copyRootMessage(
+		MBMessage newRootMBMessage = _copyRootMessage(
 			userId, groupId, className, classPK, newClassPK,
 			serviceContextFunction);
 
-		List<Comment> parentComments = getRootComments(
+		List<Comment> rootComments = getRootComments(
 			className, classPK, WorkflowConstants.STATUS_ANY, 0,
 			getRootCommentsCount(
 				className, classPK, WorkflowConstants.STATUS_ANY));
 
-		for (Comment parentComment : parentComments) {
+		for (Comment rootComment : rootComments) {
 			_duplicateComment(
-				parentComment, rootMBMessage.getMessageId(), newClassPK,
+				rootComment, newRootMBMessage.getMessageId(), newClassPK,
 				serviceContextFunction);
 		}
 

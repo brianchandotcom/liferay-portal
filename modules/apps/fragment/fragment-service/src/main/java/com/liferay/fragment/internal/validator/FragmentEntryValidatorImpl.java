@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.everit.json.schema.Schema;
@@ -69,9 +70,22 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 				List<String> messages = validationException.getAllMessages();
 
 				if (!messages.isEmpty()) {
-					errorMessage =
-						errorMessage + StringPool.NEW_LINE +
-							StringUtil.merge(messages, StringPool.NEW_LINE);
+					List<String> formattedMessages = new ArrayList<>();
+
+					messages.forEach(
+						message -> {
+							if (message.startsWith("#: ")) {
+								message = message.substring(3);
+							}
+							else if (message.startsWith("#")) {
+								message = message.substring(1);
+							}
+
+							formattedMessages.add(message);
+						});
+
+					errorMessage = StringUtil.merge(
+						formattedMessages, StringPool.NEW_LINE);
 				}
 
 				throw new FragmentEntryConfigurationException(errorMessage, e);

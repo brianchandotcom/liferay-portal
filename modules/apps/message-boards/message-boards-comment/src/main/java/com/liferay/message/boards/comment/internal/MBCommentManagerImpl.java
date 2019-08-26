@@ -174,20 +174,10 @@ public class MBCommentManagerImpl implements CommentManager {
 			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 	}
 
-	public void duplicateDisscussion(
-			long oldFragmentEntryLinkId, long newFragmentEntryLinkId)
+	public Discussion duplicateDisscussion(
+			long userId, Discussion discussion, long newClassPK,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
-
-		if (!_commentManager.hasDiscussion(
-				FragmentEntryLink.class.getName(), oldFragmentEntryLinkId)) {
-
-			return;
-		}
-
-		Discussion discussion = _commentManager.getDiscussion(
-			_targetLayout.getUserId(), _targetLayout.getGroupId(),
-			FragmentEntryLink.class.getName(), oldFragmentEntryLinkId,
-			className -> _serviceContext);
 
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
@@ -196,7 +186,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			rootDiscussionComment.getUserId(),
 			rootDiscussionComment.getUserName(),
 			rootDiscussionComment.getGroupId(),
-			rootDiscussionComment.getClassName(), newFragmentEntryLinkId,
+			rootDiscussionComment.getClassName(), newClassPK,
 			WorkflowConstants.ACTION_PUBLISH);
 
 		rootMBMessage.setCreateDate(rootDiscussionComment.getCreateDate());
@@ -205,22 +195,22 @@ public class MBCommentManagerImpl implements CommentManager {
 		_mbMessageLocalService.updateMBMessage(rootMBMessage);
 
 		if (_targetLayout.isSystem()) {
-			_commentManager.subscribeDiscussion(
+			subscribeDiscussion(
 				_targetLayout.getUserId(), _targetLayout.getGroupId(),
-				FragmentEntryLink.class.getName(), newFragmentEntryLinkId);
+				rootDiscussionComment.getClassName(), newClassPK);
 
 			if (_targetLayout.getUserId() !=
 					rootDiscussionComment.getUserId()) {
 
-				_commentManager.subscribeDiscussion(
+				subscribeDiscussion(
 					rootDiscussionComment.getUserId(),
 					_targetLayout.getGroupId(),
-					FragmentEntryLink.class.getName(), newFragmentEntryLinkId);
+					rootDiscussionComment.getClassName(), newClassPK);
 			}
 		}
 
 		if (rootDiscussionComment.getDescendantCommentsCount() <= 0) {
-			return;
+			return null;
 		}
 
 		List<DiscussionComment> parentComments =
@@ -230,14 +220,17 @@ public class MBCommentManagerImpl implements CommentManager {
 			MBMessage parentMBMessage = _mbMessageLocalService.getMBMessage(
 				parentComment.getCommentId());
 
+			ServiceContext serviceContext = serviceContextFunction.apply(
+				MBMessage.class.getName());
+
 			MBMessage discussionMBMessage =
 				_mbMessageLocalService.addDiscussionMessage(
 					parentMBMessage.getUserId(), parentMBMessage.getUserName(),
 					parentMBMessage.getGroupId(),
-					parentMBMessage.getClassName(), newFragmentEntryLinkId,
+					parentMBMessage.getClassName(), newClassPK,
 					rootMBMessage.getThreadId(), rootMBMessage.getMessageId(),
 					String.valueOf(Math.random()), parentMBMessage.getBody(),
-					_serviceContext);
+					serviceContext);
 
 			if (parentComment.getDescendantCommentsCount() > 0) {
 				List<DiscussionComment> childComments =
@@ -249,11 +242,11 @@ public class MBCommentManagerImpl implements CommentManager {
 							childComment.getUserId(),
 							childComment.getUserName(),
 							childComment.getGroupId(),
-							childComment.getClassName(), newFragmentEntryLinkId,
+							childComment.getClassName(), newClassPK,
 							discussionMBMessage.getThreadId(),
 							discussionMBMessage.getMessageId(),
 							String.valueOf(Math.random()),
-							childComment.getBody(), _serviceContext);
+							childComment.getBody(), serviceContext);
 
 					childMBMessage.setCreateDate(childComment.getCreateDate());
 					childMBMessage.setModifiedDate(
@@ -270,6 +263,11 @@ public class MBCommentManagerImpl implements CommentManager {
 
 			_mbMessageLocalService.updateMBMessage(discussionMBMessage);
 		}
+
+		return getDiscussion(
+			userId, rootDiscussionComment.getGroupId(),
+			rootDiscussionComment.getClassName(), newClassPK,
+			serviceContextFunction);
 	}
 
 	@Override

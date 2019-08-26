@@ -251,11 +251,8 @@ public class RESTBuilder {
 				}
 
 				if (Validator.isNotNull(_configYAML.getTestDir())) {
-					_createBaseGraphQLTestCaseFile(
-						context, escapedVersion, schemaName);
 					_createBaseResourceTestCaseFile(
 						context, escapedVersion, schemaName);
-					_createGraphQLTestFile(context, escapedVersion, schemaName);
 					_createResourceTestFile(
 						context, escapedVersion, schemaName);
 				}
@@ -333,36 +330,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "application", context));
-	}
-
-	private void _createBaseGraphQLTestCaseFile(
-			Map<String, Object> context, String escapedVersion,
-			String schemaName)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getTestDir());
-		sb.append("/");
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		sb.append(apiPackagePath.replace('.', '/'));
-
-		sb.append("/graphql/");
-		sb.append(escapedVersion);
-		sb.append("/test/Base");
-		sb.append(schemaName);
-		sb.append("GraphQLTestCase.java");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, "base_graphql_test_case", context));
 	}
 
 	private void _createBaseResourceImplFile(
@@ -802,40 +769,6 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "graphql_servlet_data", context));
-	}
-
-	private void _createGraphQLTestFile(
-			Map<String, Object> context, String escapedVersion,
-			String schemaName)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_configYAML.getTestDir());
-		sb.append("/");
-
-		String apiPackagePath = _configYAML.getApiPackagePath();
-
-		sb.append(apiPackagePath.replace('.', '/'));
-
-		sb.append("/graphql/");
-		sb.append(escapedVersion);
-		sb.append("/test/");
-		sb.append(schemaName);
-		sb.append("GraphQLTest.java");
-
-		File file = new File(sb.toString());
-
-		_files.add(file);
-
-		if (file.exists()) {
-			return;
-		}
-
-		FileUtil.write(
-			file,
-			FreeMarkerUtil.processTemplate(
-				_copyrightFile, "graphql_test", context));
 	}
 
 	private void _createOpenAPIResourceFile(

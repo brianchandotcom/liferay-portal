@@ -759,11 +759,15 @@ function _duplicateFragment(
 			originalFragmentEntryLinkId
 		);
 
+		const position = fragmentColumn.fragmentEntryLinkIds.indexOf(
+			originalFragmentEntryLinkId
+		);
+
 		nextData = _addFragmentToColumn(
 			layoutData,
 			fragmentEntryLink.fragmentEntryLinkId,
 			fragmentColumn.columnId,
-			fragmentColumn.fragmentEntryLinkIds.length
+			position + 1
 		);
 	} else {
 		const position =

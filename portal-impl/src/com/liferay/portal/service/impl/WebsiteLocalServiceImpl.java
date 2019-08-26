@@ -35,14 +35,18 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 	@Override
 	public Website addWebsite(
 			long userId, String className, long classPK, String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long typeId, boolean primary, boolean validateURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		validate(
-			0, user.getCompanyId(), classNameId, classPK, url, typeId, primary);
+		if (validateURL) {
+			validate(
+				0, user.getCompanyId(), classNameId, classPK, url, typeId,
+				primary);
+		}
 
 		long websiteId = counterLocalService.increment();
 
@@ -61,6 +65,17 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		websitePersistence.update(website);
 
 		return website;
+	}
+
+	@Override
+	public Website addWebsite(
+			long userId, String className, long classPK, String url,
+			long typeId, boolean primary, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addWebsite(
+			userId, className, classPK, url, typeId, primary, true,
+			serviceContext);
 	}
 
 	@Override

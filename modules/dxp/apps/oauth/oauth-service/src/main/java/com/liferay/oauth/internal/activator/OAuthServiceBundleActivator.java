@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.oauth.service.activator;
+package com.liferay.oauth.internal.activator;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;

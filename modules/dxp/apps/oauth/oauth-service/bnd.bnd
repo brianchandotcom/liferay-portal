@@ -1,4 +1,4 @@
-Bundle-Activator: com.liferay.oauth.service.activator.OAuthServiceBundleActivator
+Bundle-Activator: com.liferay.oauth.internal.activator.OAuthServiceBundleActivator
 Bundle-Name: Liferay OAuth Service
 Bundle-SymbolicName: com.liferay.oauth.service
 Bundle-Version: 4.0.0

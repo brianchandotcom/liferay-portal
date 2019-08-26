@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.oauth.service.upgrade;
+package com.liferay.oauth.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

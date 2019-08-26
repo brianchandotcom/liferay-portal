@@ -244,8 +244,6 @@ public class ResourceConfigurationFactory {
 
 		V1ObjectMeta v1ObjectMeta = _newConfigurationMetaData(hostname);
 
-		String serviceName = "database";
-
 		v1ObjectMeta.putLabelsItem("app", dockerBaseImageName);
 
 		v1Pod.setMetadata(v1ObjectMeta);
@@ -268,7 +266,7 @@ public class ResourceConfigurationFactory {
 
 		v1PodSpec.setAffinity(_newConfigurationAffinity());
 		v1PodSpec.setHostname(hostname.toLowerCase());
-		v1PodSpec.setSubdomain(serviceName);
+		v1PodSpec.setSubdomain("database");
 		v1PodSpec.setVolumes(new ArrayList<>(v1Volumes));
 
 		v1Pod.setSpec(v1PodSpec);

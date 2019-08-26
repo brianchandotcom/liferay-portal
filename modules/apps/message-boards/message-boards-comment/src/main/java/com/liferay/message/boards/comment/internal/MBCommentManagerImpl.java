@@ -160,25 +160,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			WorkflowConstants.ACTION_PUBLISH);
 	}
 
-	@Override
-	public void deleteComment(long commentId) throws PortalException {
-		_mbMessageLocalService.deleteDiscussionMessage(commentId);
-	}
-
-	@Override
-	public void deleteDiscussion(String className, long classPK)
-		throws PortalException {
-
-		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
-	}
-
-	@Override
-	public void deleteGroupComments(long groupId) throws PortalException {
-		_mbThreadLocalService.deleteThreads(
-			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-	}
-
-	public Discussion duplicateDisscussion(
+	public Discussion copyDiscussion(
 			long userId, Discussion discussion, long newClassPK,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -222,6 +204,24 @@ public class MBCommentManagerImpl implements CommentManager {
 		}
 
 		return newDiscussion;
+	}
+
+	@Override
+	public void deleteComment(long commentId) throws PortalException {
+		_mbMessageLocalService.deleteDiscussionMessage(commentId);
+	}
+
+	@Override
+	public void deleteDiscussion(String className, long classPK)
+		throws PortalException {
+
+		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+	}
+
+	@Override
+	public void deleteGroupComments(long groupId) throws PortalException {
+		_mbThreadLocalService.deleteThreads(
+			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 	}
 
 	@Override

@@ -564,4 +564,33 @@ definition {
 		PageEditor.viewComment(fragmentComment = "Static Text fragment comment 1");
 	}
 
+	@description = "This case ensures that multiple replies can be added and viewed in a comment."
+	@priority = "4"
+	test ViewMultipleReplies {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleReplies";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Collection Name",
+			fragmentName = "Static Text");
+
+		PageEditor.addComment(
+			content = "This is static text.",
+			fragmentClass = "static-text",
+			fragmentComment = "This is a fragment comment.",
+			fragmentName = "Static Text",
+			position = "1");
+
+		for (var commentReplyNumber : list "1,2,3,4,5") {
+			PageEditor.replyToComment(commentReply = "Fragment Comment ${commentReplyNumber}");
+
+			PageEditor.viewCommentReply(
+				commentReply = "Fragment Comment ${commentReplyNumber}",
+				user = "Test Test");
+		}
+	}
+
 }

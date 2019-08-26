@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
@@ -165,6 +166,12 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put(
 				"configuration", JSONFactoryUtil.createJSONObject(configuration)
 			).put(
+				"content",
+				_fragmentRendererController.render(
+					defaultFragmentRendererContext,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse))
+			).put(
 				"defaultConfigurationValues",
 				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
 					configuration)
@@ -251,6 +258,9 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private class AddFragmentEntryLinkCallable
 		implements Callable<FragmentEntryLink> {

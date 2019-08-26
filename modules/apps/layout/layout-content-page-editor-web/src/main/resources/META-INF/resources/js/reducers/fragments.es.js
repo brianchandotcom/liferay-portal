@@ -257,18 +257,7 @@ function addFragmentEntryLinkReducer(state, action) {
 					nextState.segmentsExperienceId
 				);
 			})
-			.then(() =>
-				getFragmentEntryLinkContent(
-					nextState.renderFragmentEntryURL,
-					fragmentEntryLink,
-					nextState.portletNamespace,
-					nextState.segmentsExperienceId ||
-						nextState.defaultSegmentsExperienceId
-				)
-			)
-			.then(response => {
-				fragmentEntryLink = response;
-
+			.then(() => {
 				nextState = setIn(
 					nextState,
 					[
@@ -677,7 +666,7 @@ function _addFragmentEntryLink(
 			return {
 				config: {},
 				configuration: response.configuration,
-				content: '',
+				content: response.content,
 				defaultConfigurationValues: response.defaultConfigurationValues,
 				editableValues: response.editableValues,
 				fragmentEntryKey,

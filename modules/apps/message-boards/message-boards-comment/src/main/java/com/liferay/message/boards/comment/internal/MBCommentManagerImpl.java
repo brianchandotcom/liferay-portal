@@ -161,28 +161,21 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	public Discussion copyDiscussion(
-			long userId, Discussion discussion, long newClassPK,
+			long userId, long groupId, String className, long classPK,
+			long newClassPK,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		DiscussionComment rootDiscussionComment =
-			discussion.getRootDiscussionComment();
-
 		Discussion newDiscussion = getDiscussion(
-			userId, rootDiscussionComment.getGroupId(),
-			rootDiscussionComment.getClassName(), newClassPK,
-			serviceContextFunction);
+			userId, groupId, className, newClassPK, serviceContextFunction);
 
 		DiscussionComment newRootDiscussionComment =
 			newDiscussion.getRootDiscussionComment();
 
 		List<Comment> parentComments = getRootComments(
-			rootDiscussionComment.getClassName(),
-			rootDiscussionComment.getClassPK(), WorkflowConstants.STATUS_ANY, 0,
+			className, classPK, WorkflowConstants.STATUS_ANY, 0,
 			getRootCommentsCount(
-				rootDiscussionComment.getClassName(),
-				rootDiscussionComment.getClassPK(),
-				WorkflowConstants.STATUS_ANY));
+				className, classPK, WorkflowConstants.STATUS_ANY));
 
 		for (Comment parentComment : parentComments) {
 			_duplicateComment(
@@ -193,14 +186,12 @@ public class MBCommentManagerImpl implements CommentManager {
 		List<Subscription> subscriptions =
 			_subscriptionLocalService.getSubscriptions(
 				CompanyThreadLocal.getCompanyId(),
-				MBUtil.getSubscriptionClassName(
-					rootDiscussionComment.getClassName()),
-				rootDiscussionComment.getClassPK());
+				MBUtil.getSubscriptionClassName(className), classPK);
 
 		for (Subscription subscription : subscriptions) {
 			subscribeDiscussion(
-				subscription.getUserId(), subscription.getGroupId(),
-				rootDiscussionComment.getClassName(), newClassPK);
+				subscription.getUserId(), subscription.getGroupId(), className,
+				newClassPK);
 		}
 
 		return newDiscussion;

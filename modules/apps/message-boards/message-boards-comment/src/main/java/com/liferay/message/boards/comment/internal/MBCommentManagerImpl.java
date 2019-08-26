@@ -174,6 +174,104 @@ public class MBCommentManagerImpl implements CommentManager {
 			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 	}
 
+	public void duplicateDisscussion(
+			long oldFragmentEntryLinkId, long newFragmentEntryLinkId)
+		throws PortalException {
+
+		if (!_commentManager.hasDiscussion(
+				FragmentEntryLink.class.getName(), oldFragmentEntryLinkId)) {
+
+			return;
+		}
+
+		Discussion discussion = _commentManager.getDiscussion(
+			_targetLayout.getUserId(), _targetLayout.getGroupId(),
+			FragmentEntryLink.class.getName(), oldFragmentEntryLinkId,
+			className -> _serviceContext);
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		MBMessage rootMBMessage = _mbMessageLocalService.addDiscussionMessage(
+			rootDiscussionComment.getUserId(),
+			rootDiscussionComment.getUserName(),
+			rootDiscussionComment.getGroupId(),
+			rootDiscussionComment.getClassName(), newFragmentEntryLinkId,
+			WorkflowConstants.ACTION_PUBLISH);
+
+		rootMBMessage.setCreateDate(rootDiscussionComment.getCreateDate());
+		rootMBMessage.setModifiedDate(rootDiscussionComment.getModifiedDate());
+
+		_mbMessageLocalService.updateMBMessage(rootMBMessage);
+
+		if (_targetLayout.isSystem()) {
+			_commentManager.subscribeDiscussion(
+				_targetLayout.getUserId(), _targetLayout.getGroupId(),
+				FragmentEntryLink.class.getName(), newFragmentEntryLinkId);
+
+			if (_targetLayout.getUserId() !=
+					rootDiscussionComment.getUserId()) {
+
+				_commentManager.subscribeDiscussion(
+					rootDiscussionComment.getUserId(),
+					_targetLayout.getGroupId(),
+					FragmentEntryLink.class.getName(), newFragmentEntryLinkId);
+			}
+		}
+
+		if (rootDiscussionComment.getDescendantCommentsCount() <= 0) {
+			return;
+		}
+
+		List<DiscussionComment> parentComments =
+			rootDiscussionComment.getDescendantComments();
+
+		for (DiscussionComment parentComment : parentComments) {
+			MBMessage parentMBMessage = _mbMessageLocalService.getMBMessage(
+				parentComment.getCommentId());
+
+			MBMessage discussionMBMessage =
+				_mbMessageLocalService.addDiscussionMessage(
+					parentMBMessage.getUserId(), parentMBMessage.getUserName(),
+					parentMBMessage.getGroupId(),
+					parentMBMessage.getClassName(), newFragmentEntryLinkId,
+					rootMBMessage.getThreadId(), rootMBMessage.getMessageId(),
+					String.valueOf(Math.random()), parentMBMessage.getBody(),
+					_serviceContext);
+
+			if (parentComment.getDescendantCommentsCount() > 0) {
+				List<DiscussionComment> childComments =
+					parentComment.getDescendantComments();
+
+				for (DiscussionComment childComment : childComments) {
+					MBMessage childMBMessage =
+						_mbMessageLocalService.addDiscussionMessage(
+							childComment.getUserId(),
+							childComment.getUserName(),
+							childComment.getGroupId(),
+							childComment.getClassName(), newFragmentEntryLinkId,
+							discussionMBMessage.getThreadId(),
+							discussionMBMessage.getMessageId(),
+							String.valueOf(Math.random()),
+							childComment.getBody(), _serviceContext);
+
+					childMBMessage.setCreateDate(childComment.getCreateDate());
+					childMBMessage.setModifiedDate(
+						childComment.getModifiedDate());
+
+					_mbMessageLocalService.updateMBMessage(childMBMessage);
+				}
+			}
+
+			discussionMBMessage.setCreateDate(parentMBMessage.getCreateDate());
+			discussionMBMessage.setModifiedDate(
+				parentMBMessage.getModifiedDate());
+			discussionMBMessage.setStatus(parentMBMessage.getStatus());
+
+			_mbMessageLocalService.updateMBMessage(discussionMBMessage);
+		}
+	}
+
 	@Override
 	public Comment fetchComment(long commentId) {
 		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(commentId);

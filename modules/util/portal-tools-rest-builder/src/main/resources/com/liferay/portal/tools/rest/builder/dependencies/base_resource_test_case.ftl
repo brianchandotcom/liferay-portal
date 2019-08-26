@@ -667,7 +667,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							EntityField.Type.STRING,
 							(entityField, ${schemaVarName}1, ${schemaVarName}2) -> {
 
-								Class clazz = ${schemaVarName}1.getClass();
+								Class<?> clazz = ${schemaVarName}1.getClass();
 
 								Method method = clazz.getMethod( "get" + StringUtil.upperCaseFirstLetter(entityField.getName()));
 
@@ -1773,23 +1773,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected Company testCompany;
 	protected Group testGroup;
 
-	private static final Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceTestCase.class);
-
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value) throws IllegalAccessException, InvocationTargetException {
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
-	private static DateFormat _dateFormat;
-
-	@Inject
-	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
-
 	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
@@ -1843,5 +1826,22 @@ public abstract class Base${schemaName}ResourceTestCase {
 		private final Map<String, Object> _parameterMap;
 
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceTestCase.class);
+
+	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+
+		@Override
+		public void copyProperty(Object bean, String name, Object value) throws IllegalAccessException, InvocationTargetException {
+			if (value != null) {
+				super.copyProperty(bean, name, value);
+			}
+		}
+
+	};
+	private static DateFormat _dateFormat;
+
+	@Inject
+	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
 
 }

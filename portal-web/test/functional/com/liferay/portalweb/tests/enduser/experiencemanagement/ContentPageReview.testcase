@@ -433,6 +433,13 @@ definition {
 			fragmentName = "Title",
 			openComment = "true");
 
+		var fragmentComment = "Title fragment comment";
+		if (!(IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY"))) {
+			Click(
+				key_fragmentName = "Title",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING");
+		}
+
 		PageEditor.viewComment(fragmentComment = "Title fragment comment");
 	}
 

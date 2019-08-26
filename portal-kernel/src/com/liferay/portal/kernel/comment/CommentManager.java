@@ -52,6 +52,12 @@ public interface CommentManager {
 			String userName)
 		throws PortalException;
 
+	public Discussion copyDiscussion(
+			long userId, long groupId, String className, long classPK,
+			long newClassPK,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException;
+
 	public void deleteComment(long commentId) throws PortalException;
 
 	public void deleteDiscussion(String className, long classPK)

@@ -160,6 +160,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			WorkflowConstants.ACTION_PUBLISH);
 	}
 
+	@Override
 	public Discussion copyDiscussion(
 			long userId, long groupId, String className, long classPK,
 			long newClassPK,

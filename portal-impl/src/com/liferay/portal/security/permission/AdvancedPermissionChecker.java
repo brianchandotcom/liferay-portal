@@ -118,7 +118,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	public long[] getRoleIds(long userId, long groupId) {
 		try {
 			return invokeRoleContributors(
-				doGetRoleIds(userId, groupId), userId, groupId);
+				doGetRoleIds(userId, groupId), groupId);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -778,20 +778,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return _hasUserPermissionImpl(group, name, primKey, roleIds, actionId);
 	}
 
-	protected long[] invokeRoleContributors(
-			long[] roleIds, long userId, long groupId)
+	protected long[] invokeRoleContributors(long[] roleIds, long groupId)
 		throws PortalException {
 
 		if (_roleContributors.length == 0) {
 			return roleIds;
 		}
 
+		UserBag userBag = getUserBag();
+
 		RoleCollectionImpl roleCollection = new RoleCollectionImpl(
 			RoleLocalServiceUtil.getRoles(roleIds), groupId, this,
 			RoleLocalServiceUtil.getService());
 
 		for (RoleContributor roleContributor : _roleContributors) {
-			roleContributor.contribute(roleCollection);
+			roleContributor.contribute(user, userBag, roleCollection);
 		}
 
 		return ListUtil.toLongArray(
@@ -1383,8 +1384,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return ResourceLocalServiceUtil.hasUserPermissions(
 				defaultUserId, groupId, resources, actionId,
-				invokeRoleContributors(
-					getGuestUserRoleIds(), defaultUserId, groupId));
+				invokeRoleContributors(getGuestUserRoleIds(), groupId));
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			throw new IllegalArgumentException(
@@ -1561,7 +1561,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);
 
-	private RoleContributor[] _roleContributors;
 	private long _guestGroupId;
+	private RoleContributor[] _roleContributors;
 
 }

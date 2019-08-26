@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.security.permission;
 
+import com.liferay.portal.kernel.model.User;
+
 /**
  * RoleContributors are invoked during permission checking allowing the roles
  * calculated from persisted assignment and inheritance to be altered
@@ -26,11 +28,7 @@ package com.liferay.portal.kernel.security.permission;
  */
 public interface RoleContributor {
 
-	/**
-	 * Contribute to the collection of user roles.
-	 *
-	 * @param roleCollection the managed collection of roles
-	 */
-	public void contribute(RoleCollection roleCollection);
+	public void contribute(
+		User user, UserBag userBag, RoleCollection roleCollection);
 
 }

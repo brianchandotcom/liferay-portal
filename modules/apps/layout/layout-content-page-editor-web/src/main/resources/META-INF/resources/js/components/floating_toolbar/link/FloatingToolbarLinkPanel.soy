@@ -36,6 +36,7 @@
 		id: string,
 		label: string
 	]>}
+	{@param? _structureMappingSet: bool}
 	{@param? _targetTypes: ?}
 	{@param? assetBrowserLinks: list<[
 		href: string,
@@ -95,7 +96,7 @@
 						value="{$item.editableValues.config ? $item.editableValues.config.href : ''}"
 					>
 				</div>
-			{elseif $_sourceTypes}
+			{elseif $_structureMappingSet}
 				{call .linkMapping}
 					{param assetBrowserLinks: $assetBrowserLinks /}
 					{param fieldId: $item.editableValues.config.mappedField or $item.editableValues.config.fieldId /}
@@ -117,7 +118,7 @@
 				<p class="mb-0 sheet-text">{msg desc=""}you-must-previously-set-the-mapping-for-this-display-page-template-in-order-to-select-a-content-field{/msg}</p>
 			{/if}
 
-			{if $_targetTypes and ($_sourceTypes or $linkType == 'manual')}
+			{if $_targetTypes and ($_structureMappingSet or $linkType == 'manual')}
 				<div class="form-group">
 					<label for="floatingToolbarLinkTargetPanelOption">
 						{msg desc=""}target{/msg}

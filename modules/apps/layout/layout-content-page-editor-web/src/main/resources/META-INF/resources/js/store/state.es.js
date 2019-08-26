@@ -740,8 +740,7 @@ const INITIAL_STATE = {
 		Config.shapeOf({
 			icon: Config.string(),
 			label: Config.string(),
-			sidebarPanelId: Config.string(),
-			type: Config.oneOf(['button', 'separator'])
+			sidebarPanelId: Config.string()
 		})
 	).value([]),
 

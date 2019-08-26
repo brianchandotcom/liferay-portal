@@ -58,7 +58,7 @@
 		<div class="fragments-editor-sidebar-sections-buttons" role="group">
 			{if $sidebarPanels}
 				{foreach $sidebarPanel in $sidebarPanels}
-					{if $sidebarPanel.type == 'separator'}
+					{if $sidebarPanel.sidebarPanelId == 'separator'}
 						<hr>
 					{else}
 						{let $sectionButtonClasses kind="text"}

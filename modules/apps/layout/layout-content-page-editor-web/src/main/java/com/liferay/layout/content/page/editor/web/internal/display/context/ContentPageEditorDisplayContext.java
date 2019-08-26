@@ -478,7 +478,7 @@ public class ContentPageEditorDisplayContext {
 		if (!pageIsDisplayPage) {
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("type", "separator");
+			availableSoyContext.put("sidebarPanelId", "separator");
 
 			soyContexts.add(availableSoyContext);
 
@@ -510,7 +510,7 @@ public class ContentPageEditorDisplayContext {
 		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("type", "separator");
+			availableSoyContext.put("sidebarPanelId", "separator");
 
 			soyContexts.add(availableSoyContext);
 
@@ -532,7 +532,7 @@ public class ContentPageEditorDisplayContext {
 
 			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("type", "separator");
+			availableSoyContext.put("sidebarPanelId", "separator");
 
 			soyContexts.add(availableSoyContext);
 

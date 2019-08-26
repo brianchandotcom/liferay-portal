@@ -859,9 +859,10 @@ AUI.add(
 
 					if (instance.get('repeatable')) {
 						instance.renderRepeatableUI();
-						instance.syncLabel(instance.get('displayLocale'));
 						instance.syncRepeatablelUI();
 					}
+
+					instance.syncLabel(instance.get('displayLocale'));
 
 					instance.syncValueUI();
 

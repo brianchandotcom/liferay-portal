@@ -21,7 +21,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
-import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -272,18 +273,22 @@ public class LayoutPageTemplateEntryServiceTest {
 				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry1 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(), null,
-				RandomTestUtil.randomString(), 0,
+			FragmentEntryLocalServiceUtil.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
 				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(), null,
-				RandomTestUtil.randomString(), 0,
+			FragmentEntryLocalServiceUtil.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
 				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -377,18 +382,22 @@ public class LayoutPageTemplateEntryServiceTest {
 				StringPool.BLANK, serviceContext);
 
 		FragmentEntry fragmentEntry1 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(), null,
-				RandomTestUtil.randomString(), 0,
+			FragmentEntryLocalServiceUtil.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
 				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		FragmentEntry fragmentEntry2 =
-			FragmentEntryServiceUtil.addFragmentEntry(
-				_group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(), null,
-				RandomTestUtil.randomString(), 0,
+			FragmentEntryLocalServiceUtil.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
 				FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 

@@ -184,6 +184,7 @@ AUI.add(
 		requires: [
 			'aui-io-plugin-deprecated',
 			'aui-io-request',
+			'io',
 			'liferay-portlet-base',
 			'querystring-parse'
 		]

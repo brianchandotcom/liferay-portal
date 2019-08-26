@@ -18,6 +18,8 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
@@ -122,13 +124,27 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getRendererKey(), serviceContext);
 
+			String fragmentEntryKey;
+			String name;
+
 			if (fragmentEntry != null) {
-				jsonObject.put(
-					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
-				).put(
-					"name", fragmentEntry.getName()
-				);
+				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
+				name = fragmentEntry.getName();
 			}
+			else {
+				FragmentRenderer fragmentRenderer =
+					_fragmentRendererTracker.getFragmentRenderer(
+						fragmentEntryLink.getRendererKey());
+
+				fragmentEntryKey = fragmentRenderer.getKey();
+				name = fragmentRenderer.getLabel(serviceContext.getLocale());
+			}
+
+			jsonObject.put(
+				"fragmentEntryKey", fragmentEntryKey
+			).put(
+				"name", name
+			);
 
 			SessionMessages.add(actionRequest, "fragmentEntryLinkDuplicated");
 		}
@@ -185,5 +201,8 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererTracker _fragmentRendererTracker;
 
 }

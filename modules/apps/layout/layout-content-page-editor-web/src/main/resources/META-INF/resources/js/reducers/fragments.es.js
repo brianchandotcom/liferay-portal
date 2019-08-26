@@ -303,7 +303,11 @@ function duplicateFragmentEntryLinkReducer(state, action) {
 		duplicateFragmentEntryLink(action.fragmentEntryLinkId)
 			.then(response => response.json())
 			.then(response => {
-				const fragmentEntryLink = setIn(response, ['content'], '');
+				const fragmentEntryLink = setIn(
+					response,
+					['content'],
+					action.content
+				);
 
 				let nextData = nextState.layoutData;
 

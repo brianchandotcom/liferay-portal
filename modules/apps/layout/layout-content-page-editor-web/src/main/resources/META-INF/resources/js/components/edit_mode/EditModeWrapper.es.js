@@ -210,7 +210,7 @@ class EditModeWrapper extends Component {
 	 */
 	_toggleWrapperPadding() {
 		const sidebarPanel = this.sidebarPanels.find(
-			panel => panel.sidebarPanelId === this.sidebarPanelId
+			panel => panel.sidebarPanelId === this.selectedSidebarPanelId
 		);
 
 		const wrapper = document.getElementById('wrapper');

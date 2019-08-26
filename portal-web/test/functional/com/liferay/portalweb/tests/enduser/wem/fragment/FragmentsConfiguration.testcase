@@ -10,22 +10,6 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Page Fragments",
-			configurationName = "Page Fragments",
-			configurationScope = "Virtual Instance Scope");
-
-		FormFields.enableCheckbox(fieldName = "enableConfiguration");
-
-		SystemSettings.saveConfiguration();
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONFragment.addFragmentCollection(

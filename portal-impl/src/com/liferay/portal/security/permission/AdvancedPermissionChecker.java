@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.RoleContributor;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -56,10 +59,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -73,9 +80,14 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class AdvancedPermissionChecker extends BasePermissionChecker {
 
+	public AdvancedPermissionChecker() {
+		_roleContributors = ServiceTrackerCollections.openList(
+			RoleContributor.class);
+	}
+
 	@Override
 	public AdvancedPermissionChecker clone() {
-		return new AdvancedPermissionChecker();
+		return new AdvancedPermissionChecker(_roleContributors);
 	}
 
 	@Override
@@ -116,7 +128,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
 		try {
-			return doGetRoleIds(userId, groupId);
+			return invokeRoleContributors(
+				doGetRoleIds(userId, groupId), userId, groupId);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -769,6 +782,32 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		return _hasUserPermissionImpl(group, name, primKey, roleIds, actionId);
 	}
 
+	protected long[] invokeRoleContributors(
+			long[] roleIds, long userId, long groupId)
+		throws PortalException {
+
+		if (_roleContributors.isEmpty()) {
+			return roleIds;
+		}
+
+		Map<RoleCollectionKey, long[]> cache = _roleIdsThreadLocal.get();
+
+		return cache.computeIfAbsent(
+			new RoleCollectionKey(groupId, userId),
+			key -> {
+				RoleCollectionImpl roleCollection = new RoleCollectionImpl(
+					_getRoles(roleIds), groupId, this,
+					RoleLocalServiceUtil.getService());
+
+				for (RoleContributor roleContributor : _roleContributors) {
+					roleContributor.contribute(roleCollection);
+				}
+
+				return ListUtil.toLongArray(
+					roleCollection.getRoleList(), Role::getRoleId);
+			});
+	}
+
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
 		if (!signedIn) {
 			return false;
@@ -1302,6 +1341,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";
 
+	private AdvancedPermissionChecker(
+		ServiceTrackerList<RoleContributor> roleContributors) {
+
+		_roleContributors = roleContributors;
+	}
+
+	private List<Role> _getRoles(long[] roleIds) {
+		try {
+			return RoleLocalServiceUtil.getRoles(roleIds);
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
+	}
+
 	private boolean _hasGuestPermission(
 		Group group, String name, String primKey, String actionId) {
 
@@ -1354,7 +1408,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			return ResourceLocalServiceUtil.hasUserPermissions(
 				defaultUserId, groupId, resources, actionId,
-				getGuestUserRoleIds());
+				invokeRoleContributors(
+					getGuestUserRoleIds(), defaultUserId, groupId));
 		}
 		catch (NoSuchResourcePermissionException nsrpe) {
 			throw new IllegalArgumentException(
@@ -1531,6 +1586,61 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedPermissionChecker.class);
 
+	private static final ThreadLocal<Map<RoleCollectionKey, long[]>>
+		_roleIdsThreadLocal = new CentralizedThreadLocal<>(
+			AdvancedPermissionChecker.class + "._roleIdsThreadLocal",
+			HashMap::new, true);
+
 	private long _guestGroupId;
+	private final ServiceTrackerList<RoleContributor> _roleContributors;
+
+	private static class RoleCollectionKey {
+
+		public RoleCollectionKey(long groupId, long userId) {
+			_groupId = groupId;
+			_userId = userId;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj == null) {
+				return false;
+			}
+
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+
+			RoleCollectionKey other = (RoleCollectionKey)obj;
+
+			if (_groupId != other._groupId) {
+				return false;
+			}
+
+			if (_userId != other._userId) {
+				return false;
+			}
+
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (int)(_groupId ^ (_groupId >>> 32));
+			result = prime * result + (int)(_userId ^ (_userId >>> 32));
+
+			return result;
+		}
+
+		private final long _groupId;
+		private final long _userId;
+
+	}
 
 }

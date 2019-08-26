@@ -8,6 +8,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:message-boards:message-boards-service")
+	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:petra:petra-string")
 

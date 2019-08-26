@@ -208,6 +208,7 @@ class FragmentEntryLink extends Component {
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
 			.dispatch({
+				content: this.content,
 				fragmentEntryLinkId: this.fragmentEntryLinkId,
 				fragmentEntryLinkRowType: this.rowType,
 				type: DUPLICATE_FRAGMENT_ENTRY_LINK

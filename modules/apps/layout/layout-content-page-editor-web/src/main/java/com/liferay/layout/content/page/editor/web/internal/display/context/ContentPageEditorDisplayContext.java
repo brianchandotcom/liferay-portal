@@ -16,7 +16,6 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
@@ -73,7 +72,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -229,11 +227,6 @@ public class ContentPageEditorDisplayContext {
 			);
 		}
 
-		FragmentServiceConfiguration fragmentServiceConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				FragmentServiceConfiguration.class,
-				themeDisplay.getCompanyId());
-
 		soyContext.put(
 			"editFragmentEntryLinkCommentURL",
 			getFragmentEntryActionURL(
@@ -249,9 +242,6 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"elements",
 			_getFragmentCollectionsSoyContexts(FragmentConstants.TYPE_COMPONENT)
-		).put(
-			"enableConfiguration",
-			fragmentServiceConfiguration.enableConfiguration()
 		).put(
 			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
 		);

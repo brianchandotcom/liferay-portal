@@ -2,11 +2,14 @@ Bundle-Name: Liferay Portal Reports Engine Console API
 Bundle-SymbolicName: com.liferay.portal.reports.engine.console.api
 Bundle-Version: 5.0.0
 Export-Package:\
+	com.liferay.portal.reports.engine.console.configuration,\
 	com.liferay.portal.reports.engine.console.constants,\
 	com.liferay.portal.reports.engine.console.exception,\
 	com.liferay.portal.reports.engine.console.model,\
 	com.liferay.portal.reports.engine.console.service,\
+	com.liferay.portal.reports.engine.console.service.permission,\
 	com.liferay.portal.reports.engine.console.service.persistence,\
 	com.liferay.portal.reports.engine.console.status,\
+	com.liferay.portal.reports.engine.console.util,\
 	com.liferay.portal.reports.engine.console.util.comparator
 Liferay-Releng-Module-Group-Title: Reports Engine Console

@@ -14,17 +14,11 @@
 
 package com.liferay.portal.kernel.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Role;
-
-import java.util.List;
-import java.util.function.Predicate;
-
 /**
  * RoleCollection is used as the argument to {@link
- * RoleContributor#contribute(RoleCollection)}. It holds the managed collection
- * of roles starting with the <em>initial</em> set calculated from persisted
- * role assignment and role inheritance.
+ * RoleContributor#contribute(User, UserBag, RoleCollection)}. It holds the
+ * managed collection of roleIds starting with the <em>initial</em> set
+ * calculated from persisted role assignment and role inheritance.
  *
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
@@ -34,22 +28,12 @@ import java.util.function.Predicate;
 public interface RoleCollection {
 
 	/**
-	 * Add an array of roleIds to the collection.
-	 *
-	 * @param  roleIds array of roleIds to add to the collection
-	 * @return true if the collection was modified by this invocation
-	 * @throws PortalException if any roleId results in a failed role lookup
-	 */
-	public boolean addAllRoleIds(long[] roleIds) throws PortalException;
-
-	/**
 	 * Add a roleId to the collection.
 	 *
 	 * @param  roleId to add to the collection
 	 * @return true if the roleId was added to the collection
-	 * @throws PortalException
 	 */
-	public boolean addRoleId(long roleId) throws PortalException;
+	public boolean addRoleId(long roleId);
 
 	/**
 	 * Get the companyId of the Company being checked.
@@ -72,14 +56,7 @@ public interface RoleCollection {
 	 * @return the initial set of roles calculated from persisted assignment
 	 *         and inheritance
 	 */
-	public List<Role> getInitialRoles();
-
-	/**
-	 * Get the userId of the User currently being permission checked.
-	 *
-	 * @return the userId of the User currently being permission checked
-	 */
-	public long getUserId();
+	public long[] getInitialRoleIds();
 
 	/**
 	 * Check if a Role is already in the collection by roleId.
@@ -97,13 +74,6 @@ public interface RoleCollection {
 	 */
 	public boolean isSignedIn();
 
-	/**
-	 * Remove Roles matching a predicate from the collection.
-	 *
-	 * @param  predicate used to determine if any Roles should be removed from
-	 *         the collection
-	 * @return true if the removal was successful
-	 */
-	public boolean removeIf(Predicate<Role> predicate);
+	public boolean removeRoleId(long roleId);
 
 }

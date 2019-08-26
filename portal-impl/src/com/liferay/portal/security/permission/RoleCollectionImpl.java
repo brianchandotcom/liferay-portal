@@ -14,18 +14,14 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.RoleCollection;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Raymond Augé
@@ -33,31 +29,30 @@ import java.util.stream.Stream;
 public class RoleCollectionImpl implements RoleCollection {
 
 	public RoleCollectionImpl(
-		Collection<Role> roles, long groupId,
-		PermissionChecker permissionChecker,
-		RoleLocalService roleLocalService) {
+		long[] roleIds, long groupId, PermissionChecker permissionChecker) {
 
-		_roles = new ArrayList<>(roles);
+		_roleIds = roleIds;
 		_groupId = groupId;
 		_permissionChecker = permissionChecker;
-		_roleLocalService = roleLocalService;
-		_initialRoles = new ArrayList<>(roles);
 	}
 
 	@Override
-	public boolean addAllRoleIds(long[] roleIds) throws PortalException {
-		boolean changed = false;
-
-		for (long roleId : roleIds) {
-			changed = changed | addRoleId(roleId);
+	public boolean addRoleId(long roleId) {
+		if (hasRoleId(roleId)) {
+			return false;
 		}
 
-		return changed;
-	}
+		if (_addedRoleIds == null) {
+			_addedRoleIds = new HashSet<>();
+		}
 
-	@Override
-	public boolean addRoleId(long roleId) throws PortalException {
-		return _roles.add(_roleLocalService.getRole(roleId));
+		if (_removedRoleIds != null) {
+			_removedRoleIds.remove(roleId);
+		}
+
+		_addedRoleIds.add(roleId);
+
+		return true;
 	}
 
 	@Override
@@ -71,20 +66,21 @@ public class RoleCollectionImpl implements RoleCollection {
 	}
 
 	@Override
-	public List<Role> getInitialRoles() {
-		return ListUtil.toList(_initialRoles, role -> (Role)role.clone());
-	}
-
-	@Override
-	public long getUserId() {
-		return _permissionChecker.getUserId();
+	public long[] getInitialRoleIds() {
+		return _roleIds.clone();
 	}
 
 	@Override
 	public boolean hasRoleId(long roleId) {
-		Stream<Role> stream = _roles.stream();
+		if ((_addedRoleIds != null) && _addedRoleIds.contains(roleId)) {
+			return true;
+		}
 
-		if (stream.anyMatch(role -> role.getRoleId() == roleId)) {
+		if ((_removedRoleIds != null) && _removedRoleIds.contains(roleId)) {
+			return false;
+		}
+
+		if (Arrays.binarySearch(_roleIds, roleId) >= 0) {
 			return true;
 		}
 
@@ -97,18 +93,50 @@ public class RoleCollectionImpl implements RoleCollection {
 	}
 
 	@Override
-	public boolean removeIf(Predicate<Role> predicate) {
-		return _roles.removeIf(role -> predicate.test((Role)role.clone()));
+	public boolean removeRoleId(long roleId) {
+		if (!hasRoleId(roleId)) {
+			return false;
+		}
+
+		if (_addedRoleIds != null) {
+			_addedRoleIds.remove(roleId);
+		}
+
+		if (_removedRoleIds == null) {
+			_removedRoleIds = new HashSet<>();
+		}
+
+		_removedRoleIds.add(roleId);
+
+		return true;
 	}
 
-	protected List<Role> getRoleList() {
-		return _roles;
+	protected long[] getRoleIds() {
+		if ((_addedRoleIds == null) && (_removedRoleIds == null)) {
+			return _roleIds;
+		}
+
+		Set<Long> rolesIds = SetUtil.fromArray(_roleIds);
+
+		if (_addedRoleIds != null) {
+			rolesIds.addAll(_addedRoleIds);
+		}
+
+		if (_removedRoleIds != null) {
+			rolesIds.removeAll(_removedRoleIds);
+		}
+
+		long[] roleIdsArray = ArrayUtil.toLongArray(rolesIds);
+
+		Arrays.sort(roleIdsArray);
+
+		return roleIdsArray;
 	}
 
+	private Set<Long> _addedRoleIds;
 	private final long _groupId;
-	private final List<Role> _initialRoles;
 	private final PermissionChecker _permissionChecker;
-	private final RoleLocalService _roleLocalService;
-	private final List<Role> _roles;
+	private Set<Long> _removedRoleIds;
+	private final long[] _roleIds;
 
 }

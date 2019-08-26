@@ -787,16 +787,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		UserBag userBag = getUserBag();
 
-		RoleCollectionImpl roleCollection = new RoleCollectionImpl(
-			RoleLocalServiceUtil.getRoles(roleIds), groupId, this,
-			RoleLocalServiceUtil.getService());
+		RoleCollectionImpl roleCollectionImpl = new RoleCollectionImpl(
+			roleIds, groupId, this);
 
 		for (RoleContributor roleContributor : _roleContributors) {
-			roleContributor.contribute(user, userBag, roleCollection);
+			roleContributor.contribute(user, userBag, roleCollectionImpl);
 		}
 
-		return ListUtil.toLongArray(
-			roleCollection.getRoleList(), Role::getRoleId);
+		return roleCollectionImpl.getRoleIds();
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {

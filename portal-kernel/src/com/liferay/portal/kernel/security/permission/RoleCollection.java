@@ -37,10 +37,10 @@ public interface RoleCollection {
 	 * Add an array of roleIds to the collection.
 	 *
 	 * @param  roleIds array of roleIds to add to the collection
-	 * @return true if all rolesIds were added to the collection
+	 * @return true if the collection was modified by this invocation
 	 * @throws PortalException if any roleId results in a failed role lookup
 	 */
-	public boolean addAll(long[] roleIds) throws PortalException;
+	public boolean addAllRoleIds(long[] roleIds) throws PortalException;
 
 	/**
 	 * Add a roleId to the collection.

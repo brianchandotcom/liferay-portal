@@ -71,33 +71,32 @@ public class SPDXBuilder {
 
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String rdfFileName = ArgumentsUtil.getString(
+		String spdxFileName = ArgumentsUtil.getString(
 			arguments, "spdx.file", null);
 		String licenseOverridePropertiesFileName = ArgumentsUtil.getString(
 			arguments, "license.report.override.properties.file", null);
 
 		new SPDXBuilder(
-			StringUtil.split(xmls), rdfFileName,
-			licenseOverridePropertiesFileName);
+			StringUtil.split(xmls), new File(spdxFileName),
+			_getLicenseOverrideProperties(licenseOverridePropertiesFileName));
 	}
 
 	public SPDXBuilder(
-		String[] xmls, String rdfFileName,
-		String licenseOverridePropertiesFileName) {
+		String[] xmls, File spdxFile,
+		Properties licenseProperties) {
 
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
 			Document document = _getDocument(
-				xmls, rdfFileName, licenseOverridePropertiesFileName);
-			File rdfFile = new File(rdfFileName);
+				xmls, spdxFile, licenseProperties);
 
 			_write(
-				new File(rdfFile.getParentFile(), "versions-spdx.xml"),
+				new File(spdxFile.getParentFile(), "versions-spdx.xml"),
 				Dom4jUtil.toString(document));
 
 			_write(
-				new File(rdfFile.getParentFile(), "versions-spdx.csv"),
+				new File(spdxFile.getParentFile(), "versions-spdx.csv"),
 				_toCSV(document));
 
 			TransformerFactory transformerFactory =
@@ -105,10 +104,10 @@ public class SPDXBuilder {
 
 			Transformer transformer = transformerFactory.newTransformer(
 				new StreamSource(
-					new File(rdfFile.getParentFile(), "versions.xsl")));
+					new File(spdxFile.getParentFile(), "versions.xsl")));
 
 			File versionHtmlFile = new File(
-				rdfFile.getParentFile(), "versions-spdx.html");
+				spdxFile.getParentFile(), "versions-spdx.html");
 
 			transformer.transform(
 				new DocumentSource(document),
@@ -209,8 +208,8 @@ public class SPDXBuilder {
 
 	@SuppressWarnings("unchecked")
 	private Document _getDocument(
-			String[] xmls, String rdfFileName,
-			String licenseOverridePropertiesFile)
+			String[] xmls, File spdxFile,
+			Properties licenseOverrideProperties)
 		throws Exception {
 
 		Comparator<String> comparator = String.CASE_INSENSITIVE_ORDER;
@@ -233,10 +232,7 @@ public class SPDXBuilder {
 			}
 		}
 
-		Properties licenseOverrideProperties = _getLicenseOverrideProperties(
-			licenseOverridePropertiesFile);
-
-		Document spdxDocument = saxReader.read(new File(rdfFileName));
+		Document spdxDocument = saxReader.read(spdxFile);
 
 		Element spdxRootElement = spdxDocument.getRootElement();
 
@@ -337,7 +333,7 @@ public class SPDXBuilder {
 		return null;
 	}
 
-	private Properties _getLicenseOverrideProperties(
+	private static Properties _getLicenseOverrideProperties(
 			String licenseOverridePropertiesFileName)
 		throws IOException {
 

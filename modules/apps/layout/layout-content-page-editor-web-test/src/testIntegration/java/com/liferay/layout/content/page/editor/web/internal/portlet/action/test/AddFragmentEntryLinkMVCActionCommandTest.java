@@ -21,11 +21,11 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.web.internal.portlet.action.test.util.MockLiferayPortletRequest;
+import com.liferay.layout.content.page.editor.web.internal.portlet.action.test.util.TestFragmentRenderer;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,12 +57,10 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -317,39 +315,6 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
 			return new MockHttpServletRequest();
-		}
-
-	}
-
-	private static class TestFragmentRenderer implements FragmentRenderer {
-
-		@Override
-		public String getCollectionKey() {
-			return "test-collection";
-		}
-
-		@Override
-		public String getConfiguration(
-			FragmentRendererContext fragmentRendererContext) {
-
-			return "{fieldSets: []}";
-		}
-
-		@Override
-		public String getKey() {
-			return "test-key";
-		}
-
-		@Override
-		public String getLabel(Locale locale) {
-			return "test-label";
-		}
-
-		@Override
-		public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse) {
 		}
 
 	}

@@ -248,7 +248,7 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY");
 	}
 
-	@description = "This case ensures a user can reopen a comment already marked as resolved after publishing a content page."
+	@description = "This case ensures a user can reopen a resolved comment after publishing a content page."
 	@priority = "4"
 	test ReopenResolvedComment {
 		property test.name.skip.portal.instance = "ContentPageReview#ReopenResolvedComment";

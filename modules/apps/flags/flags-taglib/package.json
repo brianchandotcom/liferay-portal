@@ -14,14 +14,6 @@
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},
-	"jest": {
-		"setupFilesAfterEnv": [
-			"<rootDir>/test/react/js/setup.js"
-		],
-		"testPathIgnorePatterns": [
-			"<rootDir>/test/react/js/setup.js"
-		]
-	},
 	"main": "react/js/index.es.js",
 	"name": "flags-taglib",
 	"private": true,

@@ -12,6 +12,7 @@
 import React from 'react';
 import PageToolbar from '../../../src/main/resources/META-INF/resources/js/components/PageToolbar.es';
 import {render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('PageToolbar', () => {
 	it('disables the save button', () => {
@@ -23,7 +24,7 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('Save')).toHaveAttribute('disabled');
+		expect(getByText('save')).toHaveAttribute('disabled');
 	});
 
 	it('enables the save button', () => {
@@ -35,6 +36,6 @@ describe('PageToolbar', () => {
 			/>
 		);
 
-		expect(getByText('Save')).not.toHaveAttribute('disabled');
+		expect(getByText('save')).not.toHaveAttribute('disabled');
 	});
 });

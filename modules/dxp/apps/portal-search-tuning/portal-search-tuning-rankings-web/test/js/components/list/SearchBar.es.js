@@ -14,14 +14,21 @@ import SearchBar from '../../../../src/main/resources/META-INF/resources/js/comp
 import {fireEvent, render} from '@testing-library/react';
 import {FETCH_SEARCH_DOCUMENTS_URL, getMockResultsData} from '../../mock-data';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
+import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
+	() => ({
+		getPluralMessage: jest.fn(),
+		sub: (key, args) => [key, args]
+	})
+);
 
 const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents
 );
-
-const DROPDOWN_TOGGLE_ID = 'dropdown-toggle';
 
 describe('SearchBar', () => {
 	it('has an add result button when onAddResultSubmit is defined', () => {
@@ -39,7 +46,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('Add Result')).not.toBeNull();
+		expect(queryByText('add-result')).not.toBeNull();
 	});
 
 	it('does not have an add result button when onAddResultSubmit is not defined', () => {
@@ -57,7 +64,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('Add Result')).toBeNull();
+		expect(queryByText('add-result')).toBeNull();
 	});
 
 	it('shows what is selected using selectedIds', () => {
@@ -75,12 +82,13 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		expect(queryByText('2 of 3 Items Selected')).not.toBeNull();
-		expect(queryByText('Add Result')).toBeNull();
+		expect(queryByText('2', {exact: false})).not.toBeNull();
+		expect(queryByText('3', {exact: false})).not.toBeNull();
+		expect(queryByText('add-result')).toBeNull();
 	});
 
 	it('shows the dropdown when clicked on', () => {
-		const {container, getByTestId} = render(
+		const {container, getByTitle} = render(
 			<SearchBar
 				dataMap={DATA_MAP}
 				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
@@ -94,7 +102,7 @@ describe('SearchBar', () => {
 			/>
 		);
 
-		fireEvent.click(getByTestId(DROPDOWN_TOGGLE_ID));
+		fireEvent.click(getByTitle('toggle-dropdown'));
 
 		expect(container.querySelector('.dropdown-menu')).toHaveClass('show');
 	});
@@ -115,6 +123,6 @@ describe('SearchBar', () => {
 		);
 
 		expect(queryByText('Items Selected')).toBeNull();
-		expect(queryByText('Add Result')).not.toBeNull();
+		expect(queryByText('add-result')).not.toBeNull();
 	});
 });

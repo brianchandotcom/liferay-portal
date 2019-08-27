@@ -102,7 +102,6 @@ class ItemDropdown extends Component {
 					aria-expanded="false"
 					aria-haspopup="true"
 					className="btn-outline-borderless component-action dropdown-toggle"
-					data-testid="dropdown-toggle"
 					data-toggle="dropdown"
 					onClick={this._handleDropdownToggle}
 					title={Liferay.Language.get('toggle-dropdown')}

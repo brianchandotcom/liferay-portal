@@ -13,6 +13,14 @@ import ItemDragPreview from '../../../../src/main/resources/META-INF/resources/j
 import React from 'react';
 import {render} from '@testing-library/react';
 import {mockDocument} from '../../mock-data';
+import '@testing-library/jest-dom/extend-expect';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
+	() => ({
+		sub: (key, args) => [key, args]
+	})
+);
 
 // Mock pinned document since only pinned results can be dragged.
 

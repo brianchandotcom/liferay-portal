@@ -12,6 +12,15 @@
 import React from 'react';
 import Item from '../../../../src/main/resources/META-INF/resources/js/components/list/Item.es';
 import {fireEvent, render, within} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
+	() => ({
+		getPluralMessage: jest.fn(),
+		sub: (key, args) => [key, args]
+	})
+);
 
 /* eslint-disable no-unused-vars */
 jest.mock('react-dnd', () => ({
@@ -20,73 +29,62 @@ jest.mock('react-dnd', () => ({
 }));
 /* eslint-enable no-unused-vars */
 
-const DROPDOWN_TOGGLE_ID = 'dropdown-toggle';
+const HIDE_BUTTON_LABEL = 'hide-result';
 
-const HIDE_BUTTON_LABEL = 'Hide Result';
+const UNPIN_BUTTON_LABEL = 'unpin-result';
 
-const UNPIN_BUTTON_LABEL = 'Unpin Result';
+const onBlurFn = jest.fn();
+const onClickHideFn = jest.fn();
+const onClickPinFn = jest.fn();
+const onFocusFn = jest.fn();
+
+function renderTestItem() {
+	return render(
+		<Item
+			addedResult={false}
+			author={'Test Test'}
+			clicks={289}
+			date={'Apr 18 2018, 11:04 AM'}
+			description={
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
+			}
+			extension={''}
+			hidden={false}
+			id={101}
+			index={1}
+			key={101}
+			onBlur={onBlurFn}
+			onClickHide={onClickHideFn}
+			onClickPin={onClickPinFn}
+			onDragHover={jest.fn()}
+			onFocus={onFocusFn}
+			onMove={jest.fn()}
+			onRemoveSelect={jest.fn()}
+			onSelect={jest.fn()}
+			pinned={true}
+			reorder={true}
+			selected={true}
+			title={'This is a Web Content Example'}
+			type={'Web Content'}
+		/>
+	);
+}
 
 describe('Item', () => {
-	it('shows the dropdown when clicked on', () => {
-		const {container, getByTestId} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-		fireEvent.click(getByTestId(DROPDOWN_TOGGLE_ID));
+	it('shows the dropdown when clicked on', () => {
+		const {container, getByTitle} = renderTestItem();
+
+		fireEvent.click(getByTitle('toggle-dropdown'));
 
 		expect(container.querySelector('.dropdown-menu')).toHaveClass('show');
 	});
 
 	it('shows the appropriate subtext', () => {
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {container} = renderTestItem();
 
 		const subtitles = container.querySelectorAll('.list-group-subtext');
 
@@ -97,32 +95,7 @@ describe('Item', () => {
 	});
 
 	it('shows the appropriate title', () => {
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {container} = renderTestItem();
 
 		expect(
 			container.querySelector('.text-truncate-inline')
@@ -130,32 +103,7 @@ describe('Item', () => {
 	});
 
 	it('shows the appropriate description', () => {
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {container} = renderTestItem();
 
 		expect(
 			container.querySelector('.list-item-description')
@@ -165,222 +113,48 @@ describe('Item', () => {
 	});
 
 	it('shows the appropriate view count', () => {
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {getByText} = renderTestItem();
 
-		expect(container.querySelector('.click-count')).toHaveTextContent(
-			'289'
-		);
+		expect(getByText('289', {exact: false})).toBeInTheDocument();
 	});
 
 	it('calls the onClickHide function when its button gets clicked on', () => {
-		const onClickHide = jest.fn();
-
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={onClickHide}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {container} = renderTestItem();
 
 		fireEvent.click(within(container).getByTitle(HIDE_BUTTON_LABEL));
 
-		expect(onClickHide.mock.calls.length).toBe(1);
+		expect(onClickHideFn.mock.calls.length).toBe(1);
 	});
 
 	it('calls the onClickPin function when its button gets clicked on', () => {
-		const onClickPin = jest.fn();
-
-		const {container} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onClickHide={jest.fn()}
-				onClickPin={onClickPin}
-				onDragHover={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {container} = renderTestItem();
 
 		fireEvent.click(within(container).getByTitle(UNPIN_BUTTON_LABEL));
 
-		expect(onClickPin.mock.calls.length).toBe(1);
+		expect(onClickPinFn.mock.calls.length).toBe(1);
 	});
 
 	it('calls the onFocus event when focused', () => {
-		const onFocus = jest.fn();
-
-		const {getByTestId} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				focus={false}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onBlur={jest.fn()}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onFocus={onFocus}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				reorder={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {getByTestId} = renderTestItem();
 
 		fireEvent.focus(getByTestId('101'));
 
-		expect(onFocus.mock.calls.length).toBe(1);
+		expect(onFocusFn.mock.calls.length).toBe(1);
 	});
 
 	it('calls the onBlur event when un-focused', () => {
-		const onBlur = jest.fn();
-
-		const {getByTestId} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				focus={false}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onBlur={onBlur}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onFocus={jest.fn()}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				reorder={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		const {getByTestId} = renderTestItem();
 
 		fireEvent.blur(getByTestId('101'));
 
-		expect(onBlur.mock.calls.length).toBe(1);
+		expect(onBlurFn.mock.calls.length).toBe(1);
 	});
 
-	it('calls the onFocus event when a button within is focused', () => {
-		const onFocus = jest.fn();
+	it('does not call onFocus when a button within is focused', () => {
+		const {getByTitle} = renderTestItem();
 
-		const {getByTitle} = render(
-			<Item
-				addedResult={false}
-				author={'Test Test'}
-				clicks={289}
-				date={'Apr 18 2018, 11:04 AM'}
-				description={
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-				}
-				extension={''}
-				focus={false}
-				hidden={false}
-				id={101}
-				index={1}
-				key={101}
-				onBlur={jest.fn()}
-				onClickHide={jest.fn()}
-				onClickPin={jest.fn()}
-				onDragHover={jest.fn()}
-				onFocus={onFocus}
-				onMove={jest.fn()}
-				onRemoveSelect={jest.fn()}
-				onSelect={jest.fn()}
-				pinned={true}
-				reorder={true}
-				selected={true}
-				title={'This is a Web Content Example'}
-				type={'Web Content'}
-			/>
-		);
+		fireEvent.focus(getByTitle('unpin-result'));
 
-		fireEvent.focus(getByTitle('Unpin Result'));
-
-		expect(onFocus.mock.calls.length).toBe(0);
+		expect(onFocusFn.mock.calls.length).toBe(0);
 	});
 });

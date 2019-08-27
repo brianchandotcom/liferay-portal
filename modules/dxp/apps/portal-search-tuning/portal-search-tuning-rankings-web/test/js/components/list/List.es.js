@@ -11,11 +11,25 @@
 
 import React from 'react';
 import List from '../../../../src/main/resources/META-INF/resources/js/components/list/List.es';
-import {fireEvent, render} from '@testing-library/react';
+import {
+	fireEvent,
+	getByLabelText,
+	getByText,
+	render
+} from '@testing-library/react';
 import {getMockResultsData} from '../../mock-data';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
+import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
+	() => ({
+		getPluralMessage: jest.fn(),
+		sub: (key, args) => [key, args]
+	})
+);
 
 const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents
@@ -48,7 +62,7 @@ describe('List', () => {
 		);
 	});
 
-	it('has no loading icon', () => {
+	it('has no loading icon when dataLoading is false', () => {
 		const {container} = render(
 			<List
 				dataLoading={false}
@@ -64,7 +78,7 @@ describe('List', () => {
 		expect(container.querySelector('.load-more-button')).not.toBeNull();
 	});
 
-	it('has a loading icon', () => {
+	it('has a loading icon when dataLoading is true', () => {
 		const {container} = render(
 			<List
 				dataLoading={true}
@@ -83,7 +97,7 @@ describe('List', () => {
 	it('calls the onLoadResults function when the loading button is clicked', () => {
 		const mockLoad = jest.fn();
 
-		const {container} = render(
+		const {getByText} = render(
 			<List
 				dataLoading={false}
 				dataMap={DATA_MAP}
@@ -95,7 +109,7 @@ describe('List', () => {
 			/>
 		);
 
-		const loadButton = container.querySelector('.load-more-button');
+		const loadButton = getByText('load-more-results');
 
 		fireEvent.click(loadButton);
 
@@ -105,7 +119,7 @@ describe('List', () => {
 	it('updates the selected ids', () => {
 		const mockLoad = jest.fn();
 
-		const {getByTestId, queryByText} = render(
+		const {container, getByTestId} = render(
 			<List
 				dataLoading={false}
 				dataMap={DATA_MAP}
@@ -117,14 +131,15 @@ describe('List', () => {
 			/>
 		);
 
-		fireEvent.click(
-			getByTestId('102').querySelector('.custom-control-input')
-		);
-		fireEvent.click(
-			getByTestId('104').querySelector('.custom-control-input')
-		);
+		fireEvent.click(getByLabelText(getByTestId('102'), 'select'));
+		fireEvent.click(getByLabelText(getByTestId('104'), 'select'));
 
-		expect(queryByText('2 of 3 Items Selected')).toBeInTheDocument();
+		const navbar = getByText(container, 'x-of-x-items-selected', {
+			exact: false
+		});
+
+		expect(getByText(navbar, '2', {exact: false})).toBeInTheDocument();
+		expect(getByText(navbar, '3', {exact: false})).toBeInTheDocument();
 	});
 
 	it('updates the selected ids back', () => {
@@ -149,7 +164,7 @@ describe('List', () => {
 			getByTestId('102').querySelector('.custom-control-input')
 		);
 
-		expect(queryByText('Items Selected')).not.toBeInTheDocument();
+		expect(queryByText('items-selected')).not.toBeInTheDocument();
 	});
 
 	it('focuses on the id', () => {

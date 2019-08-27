@@ -24,7 +24,7 @@ describe('FilterInput', () => {
 			/>
 		);
 
-		const input = getByPlaceholderText('Contains Text');
+		const input = getByPlaceholderText('contains-text');
 
 		expect(input.value).toEqual('test');
 	});
@@ -41,7 +41,7 @@ describe('FilterInput', () => {
 			/>
 		);
 
-		const input = queryByPlaceholderText('Contains Text');
+		const input = queryByPlaceholderText('contains-text');
 
 		fireEvent.change(input, {target: {value: 'a'}});
 
@@ -60,7 +60,7 @@ describe('FilterInput', () => {
 			/>
 		);
 
-		const input = queryByPlaceholderText('Contains Text');
+		const input = queryByPlaceholderText('contains-text');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 

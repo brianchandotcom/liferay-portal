@@ -22,6 +22,7 @@ import {
 	FETCH_SEARCH_DOCUMENTS_URL,
 	FETCH_VISIBLE_DOCUMENTS_URL
 } from '../mock-data';
+import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
@@ -33,9 +34,9 @@ const HIDDEN_IDS_ADDED_INPUT_SELECTOR = '#hiddenIdsAdded';
 
 const HIDDEN_IDS_REMOVED_INPUT_SELECTOR = '#hiddenIdsRemoved';
 
-const HIDE_BUTTON_LABEL = 'Hide Result';
+const HIDE_BUTTON_LABEL = 'hide-result';
 
-const SHOW_BUTTON_LABEL = 'Show Result';
+const SHOW_BUTTON_LABEL = 'show-result';
 
 describe('ResultsRankingForm', () => {
 	it('renders the results ranking form', () => {
@@ -84,7 +85,7 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Hidden'));
+		fireEvent.click(getByText('hidden'));
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
@@ -186,86 +187,6 @@ describe('ResultsRankingForm', () => {
 		expect(input.getAttribute('value')).not.toEqual('one');
 	});
 
-	xit('updates the pinnedAdded', async () => {
-		const {container, getByTestId} = render(
-			<ResultsRankingForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
-
-		fireEvent.click(getByTestId('109').querySelector('.result-pin button'));
-
-		expect(container.querySelector('#pinnedAdded').value).toEqual('109');
-	});
-
-	xit('updates the pinnedAdded back', async () => {
-		const {container, getByTestId} = render(
-			<ResultsRankingForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
-
-		fireEvent.click(getByTestId('109').querySelector('.result-pin button'));
-
-		fireEvent.click(getByTestId('109').querySelector('.result-pin button'));
-
-		expect(container.querySelector('#pinnedAdded').value).toEqual('');
-	});
-
-	xit('updates the pinnedRemoved', async () => {
-		const {container, getByTestId} = render(
-			<ResultsRankingForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
-
-		fireEvent.click(getByTestId('100').querySelector('.result-pin button'));
-
-		expect(container.querySelector('#pinnedRemoved').value).toEqual('100');
-	});
-
-	xit('updates the pinnedRemoved back', async () => {
-		const {container, getByTestId} = render(
-			<ResultsRankingForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
-
-		fireEvent.click(getByTestId('100').querySelector('.result-pin button'));
-
-		fireEvent.click(getByTestId('100').querySelector('.result-pin button'));
-
-		expect(container.querySelector('#pinnedRemoved').value).toEqual('');
-	});
-
 	it('updates the hiddenAdded', async () => {
 		const {container, getByTestId} = render(
 			<ResultsRankingForm
@@ -307,7 +228,7 @@ describe('ResultsRankingForm', () => {
 			within(getByTestId('105')).getByTitle(HIDE_BUTTON_LABEL)
 		);
 
-		fireEvent.click(getByText('Hidden'));
+		fireEvent.click(getByText('hidden'));
 
 		fireEvent.click(
 			within(getByTestId('105')).getByTitle(SHOW_BUTTON_LABEL)
@@ -330,7 +251,7 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Hidden'));
+		fireEvent.click(getByText('hidden'));
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
@@ -355,7 +276,7 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Hidden'));
+		fireEvent.click(getByText('hidden'));
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
@@ -363,7 +284,7 @@ describe('ResultsRankingForm', () => {
 			within(getByTestId('200')).getByTitle(SHOW_BUTTON_LABEL)
 		);
 
-		fireEvent.click(getByText('Visible'));
+		fireEvent.click(getByText('visible'));
 
 		fireEvent.click(
 			within(getByTestId('200')).getByTitle(HIDE_BUTTON_LABEL)
@@ -372,45 +293,6 @@ describe('ResultsRankingForm', () => {
 		expect(
 			container.querySelector(HIDDEN_IDS_REMOVED_INPUT_SELECTOR).value
 		).toEqual('');
-	});
-
-	xit('updates the pinnedRemoved from hiding a result', async () => {
-		const {container, getByTestId, getByText} = render(
-			<ResultsRankingForm
-				cancelUrl="cancel"
-				fetchDocumentsHiddenUrl={FETCH_HIDDEN_DOCUMENTS_URL}
-				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
-				fetchDocumentsVisibleUrl={FETCH_VISIBLE_DOCUMENTS_URL}
-				formName={FORM_NAME}
-				searchQuery=""
-			/>
-		);
-
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
-
-		fireEvent.click(
-			getByTestId('100').querySelector('.result-hide button')
-		);
-
-		expect(container.querySelector('#pinnedRemoved').value).toEqual('100');
-
-		expect(
-			container.querySelector(HIDDEN_IDS_ADDED_INPUT_SELECTOR).value
-		).toEqual('100');
-
-		fireEvent.click(getByText('Hidden'));
-
-		fireEvent.click(
-			getByTestId('100').querySelector('.result-hide button')
-		);
-
-		expect(container.querySelector('#pinnedRemoved').value).toEqual('100');
-
-		expect(
-			container.querySelector(HIDDEN_IDS_ADDED_INPUT_SELECTOR).value
-		).toEqual('');
-
-		expect(getByText('Publish')).not.toHaveAttribute('disabled');
 	});
 
 	it('fetches more results after clicking on load more button', async () => {

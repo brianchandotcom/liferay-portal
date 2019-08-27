@@ -13,11 +13,9 @@ import React from 'react';
 import ItemDropdown from '../../../../src/main/resources/META-INF/resources/js/components/list/ItemDropdown.es';
 import {fireEvent, render} from '@testing-library/react';
 
-const DROPDOWN_TOGGLE_ID = 'dropdown-toggle';
-
 describe('ItemDropdown', () => {
-	it('has option to unpin visible', () => {
-		const {queryByText} = render(
+	it('has option to unpin a visible and pinned item', () => {
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				onClickHide={jest.fn()}
@@ -26,12 +24,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Unpin Result')).not.toBeNull();
-		expect(queryByText('Unpin Results')).toBeNull();
+		expect(getByText('unpin-result')).not.toBeNull();
 	});
 
 	it('has option to unpin multiple visible', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				itemCount={2}
@@ -41,11 +38,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Unpin Results')).not.toBeNull();
+		expect(getByText('unpin-results')).not.toBeNull();
 	});
 
 	it('has option to pin visible', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				onClickHide={jest.fn()}
@@ -54,12 +51,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Pin Result')).not.toBeNull();
-		expect(queryByText('Pin Results')).toBeNull();
+		expect(getByText('pin-result')).not.toBeNull();
 	});
 
 	it('has option to unpin multiple visible', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				itemCount={2}
@@ -69,11 +65,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Pin Results')).not.toBeNull();
+		expect(getByText('pin-results')).not.toBeNull();
 	});
 
 	it('has option to hide visible', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				onClickHide={jest.fn()}
@@ -82,12 +78,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Hide Result')).not.toBeNull();
-		expect(queryByText('Hide Results')).toBeNull();
+		expect(getByText('hide-result')).not.toBeNull();
 	});
 
 	it('has option to hide multiple visible', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={false}
 				itemCount={2}
@@ -97,11 +92,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Hide Results')).not.toBeNull();
+		expect(getByText('hide-results')).not.toBeNull();
 	});
 
 	it('has option to show hidden', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={true}
 				onClickHide={jest.fn()}
@@ -110,12 +105,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Show Result')).not.toBeNull();
-		expect(queryByText('Show Results')).toBeNull();
+		expect(getByText('show-result')).not.toBeNull();
 	});
 
 	it('has option to show multiple hidden', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={true}
 				itemCount={2}
@@ -125,11 +119,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Show Results')).not.toBeNull();
+		expect(getByText('show-results')).not.toBeNull();
 	});
 
 	it('has option to pin hidden', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={true}
 				onClickHide={jest.fn()}
@@ -138,12 +132,11 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Pin Result')).not.toBeNull();
-		expect(queryByText('Pin Results')).toBeNull();
+		expect(getByText('pin-result')).not.toBeNull();
 	});
 
 	it('has option to pin multiple hidden', () => {
-		const {queryByText} = render(
+		const {getByText} = render(
 			<ItemDropdown
 				hidden={true}
 				itemCount={2}
@@ -153,20 +146,19 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		expect(queryByText('Pin Results')).not.toBeNull();
+		expect(getByText('pin-results')).not.toBeNull();
 	});
 
 	it('does not have option to show/hide when onClickHide is missing', () => {
 		const {queryByText} = render(
 			<ItemDropdown hidden={false} onClickPin={jest.fn()} pinned={true} />
 		);
-
-		expect(queryByText('Show Result')).toBeNull();
-		expect(queryByText('Hide Result')).toBeNull();
+		expect(queryByText('show-result')).toBeNull();
+		expect(queryByText('hide-result')).toBeNull();
 	});
 
-	it('shows the dropdown when clicked on', () => {
-		const {container, getByTestId} = render(
+	it('shows the dropdown buttons when clicked on', () => {
+		const {getByText, getByTitle} = render(
 			<ItemDropdown
 				hidden={false}
 				onClickHide={jest.fn()}
@@ -175,9 +167,10 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		fireEvent.click(getByTestId(DROPDOWN_TOGGLE_ID));
+		fireEvent.click(getByTitle('toggle-dropdown'));
 
-		expect(container.querySelector('.dropdown-menu')).toHaveClass('show');
+		expect(getByText('pin-result')).not.toBeNull();
+		expect(getByText('hide-result')).not.toBeNull();
 	});
 
 	it('calls the onClickHide function when it gets clicked on', () => {
@@ -192,7 +185,7 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Hide Result'));
+		fireEvent.click(getByText('hide-result'));
 
 		expect(onClickHide.mock.calls.length).toBe(1);
 	});
@@ -209,7 +202,7 @@ describe('ItemDropdown', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Pin Result'));
+		fireEvent.click(getByText('pin-result'));
 
 		expect(onClickPin.mock.calls.length).toBe(1);
 	});

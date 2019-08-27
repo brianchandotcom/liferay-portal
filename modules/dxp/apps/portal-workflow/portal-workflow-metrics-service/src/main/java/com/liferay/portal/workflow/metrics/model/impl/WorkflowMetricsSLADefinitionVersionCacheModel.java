@@ -18,7 +18,7 @@ import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
+import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -30,14 +30,14 @@ import java.util.Date;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The cache model class for representing WorkflowMetricsSLADefinition in entity cache.
+ * The cache model class for representing WorkflowMetricsSLADefinitionVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionCacheModel
-	implements CacheModel<WorkflowMetricsSLADefinition>, Externalizable,
+public class WorkflowMetricsSLADefinitionVersionCacheModel
+	implements CacheModel<WorkflowMetricsSLADefinitionVersion>, Externalizable,
 			   MVCCModel {
 
 	@Override
@@ -46,19 +46,19 @@ public class WorkflowMetricsSLADefinitionCacheModel
 			return true;
 		}
 
-		if (!(obj instanceof WorkflowMetricsSLADefinitionCacheModel)) {
+		if (!(obj instanceof WorkflowMetricsSLADefinitionVersionCacheModel)) {
 			return false;
 		}
 
-		WorkflowMetricsSLADefinitionCacheModel
-			workflowMetricsSLADefinitionCacheModel =
-				(WorkflowMetricsSLADefinitionCacheModel)obj;
+		WorkflowMetricsSLADefinitionVersionCacheModel
+			workflowMetricsSLADefinitionVersionCacheModel =
+				(WorkflowMetricsSLADefinitionVersionCacheModel)obj;
 
-		if ((workflowMetricsSLADefinitionId ==
-				workflowMetricsSLADefinitionCacheModel.
-					workflowMetricsSLADefinitionId) &&
+		if ((workflowMetricsSLADefinitionVersionId ==
+				workflowMetricsSLADefinitionVersionCacheModel.
+					workflowMetricsSLADefinitionVersionId) &&
 			(mvccVersion ==
-				workflowMetricsSLADefinitionCacheModel.mvccVersion)) {
+				workflowMetricsSLADefinitionVersionCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -68,7 +68,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, workflowMetricsSLADefinitionId);
+		int hashCode = HashUtil.hash(0, workflowMetricsSLADefinitionVersionId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -85,14 +85,14 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", workflowMetricsSLADefinitionId=");
-		sb.append(workflowMetricsSLADefinitionId);
+		sb.append(", workflowMetricsSLADefinitionVersionId=");
+		sb.append(workflowMetricsSLADefinitionVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -125,6 +125,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		sb.append(stopNodeKeys);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", workflowMetricsSLADefinitionId=");
+		sb.append(workflowMetricsSLADefinitionId);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -139,130 +141,139 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	}
 
 	@Override
-	public WorkflowMetricsSLADefinition toEntityModel() {
-		WorkflowMetricsSLADefinitionImpl workflowMetricsSLADefinitionImpl =
-			new WorkflowMetricsSLADefinitionImpl();
+	public WorkflowMetricsSLADefinitionVersion toEntityModel() {
+		WorkflowMetricsSLADefinitionVersionImpl
+			workflowMetricsSLADefinitionVersionImpl =
+				new WorkflowMetricsSLADefinitionVersionImpl();
 
-		workflowMetricsSLADefinitionImpl.setMvccVersion(mvccVersion);
+		workflowMetricsSLADefinitionVersionImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
-			workflowMetricsSLADefinitionImpl.setUuid("");
+			workflowMetricsSLADefinitionVersionImpl.setUuid("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setUuid(uuid);
+			workflowMetricsSLADefinitionVersionImpl.setUuid(uuid);
 		}
 
-		workflowMetricsSLADefinitionImpl.setWorkflowMetricsSLADefinitionId(
-			workflowMetricsSLADefinitionId);
-		workflowMetricsSLADefinitionImpl.setGroupId(groupId);
-		workflowMetricsSLADefinitionImpl.setCompanyId(companyId);
-		workflowMetricsSLADefinitionImpl.setUserId(userId);
+		workflowMetricsSLADefinitionVersionImpl.
+			setWorkflowMetricsSLADefinitionVersionId(
+				workflowMetricsSLADefinitionVersionId);
+		workflowMetricsSLADefinitionVersionImpl.setGroupId(groupId);
+		workflowMetricsSLADefinitionVersionImpl.setCompanyId(companyId);
+		workflowMetricsSLADefinitionVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			workflowMetricsSLADefinitionImpl.setUserName("");
+			workflowMetricsSLADefinitionVersionImpl.setUserName("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setUserName(userName);
+			workflowMetricsSLADefinitionVersionImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			workflowMetricsSLADefinitionImpl.setCreateDate(null);
+			workflowMetricsSLADefinitionVersionImpl.setCreateDate(null);
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setCreateDate(
+			workflowMetricsSLADefinitionVersionImpl.setCreateDate(
 				new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			workflowMetricsSLADefinitionImpl.setModifiedDate(null);
+			workflowMetricsSLADefinitionVersionImpl.setModifiedDate(null);
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setModifiedDate(
+			workflowMetricsSLADefinitionVersionImpl.setModifiedDate(
 				new Date(modifiedDate));
 		}
 
 		if (calendarKey == null) {
-			workflowMetricsSLADefinitionImpl.setCalendarKey("");
+			workflowMetricsSLADefinitionVersionImpl.setCalendarKey("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setCalendarKey(calendarKey);
+			workflowMetricsSLADefinitionVersionImpl.setCalendarKey(calendarKey);
 		}
 
 		if (description == null) {
-			workflowMetricsSLADefinitionImpl.setDescription("");
+			workflowMetricsSLADefinitionVersionImpl.setDescription("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setDescription(description);
+			workflowMetricsSLADefinitionVersionImpl.setDescription(description);
 		}
 
-		workflowMetricsSLADefinitionImpl.setDuration(duration);
+		workflowMetricsSLADefinitionVersionImpl.setDuration(duration);
 
 		if (name == null) {
-			workflowMetricsSLADefinitionImpl.setName("");
+			workflowMetricsSLADefinitionVersionImpl.setName("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setName(name);
+			workflowMetricsSLADefinitionVersionImpl.setName(name);
 		}
 
 		if (pauseNodeKeys == null) {
-			workflowMetricsSLADefinitionImpl.setPauseNodeKeys("");
+			workflowMetricsSLADefinitionVersionImpl.setPauseNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setPauseNodeKeys(pauseNodeKeys);
+			workflowMetricsSLADefinitionVersionImpl.setPauseNodeKeys(
+				pauseNodeKeys);
 		}
 
-		workflowMetricsSLADefinitionImpl.setProcessId(processId);
+		workflowMetricsSLADefinitionVersionImpl.setProcessId(processId);
 
 		if (processVersion == null) {
-			workflowMetricsSLADefinitionImpl.setProcessVersion("");
+			workflowMetricsSLADefinitionVersionImpl.setProcessVersion("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setProcessVersion(processVersion);
+			workflowMetricsSLADefinitionVersionImpl.setProcessVersion(
+				processVersion);
 		}
 
 		if (startNodeKeys == null) {
-			workflowMetricsSLADefinitionImpl.setStartNodeKeys("");
+			workflowMetricsSLADefinitionVersionImpl.setStartNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStartNodeKeys(startNodeKeys);
+			workflowMetricsSLADefinitionVersionImpl.setStartNodeKeys(
+				startNodeKeys);
 		}
 
 		if (stopNodeKeys == null) {
-			workflowMetricsSLADefinitionImpl.setStopNodeKeys("");
+			workflowMetricsSLADefinitionVersionImpl.setStopNodeKeys("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStopNodeKeys(stopNodeKeys);
+			workflowMetricsSLADefinitionVersionImpl.setStopNodeKeys(
+				stopNodeKeys);
 		}
 
 		if (version == null) {
-			workflowMetricsSLADefinitionImpl.setVersion("");
+			workflowMetricsSLADefinitionVersionImpl.setVersion("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setVersion(version);
+			workflowMetricsSLADefinitionVersionImpl.setVersion(version);
 		}
 
-		workflowMetricsSLADefinitionImpl.setStatus(status);
-		workflowMetricsSLADefinitionImpl.setStatusByUserId(statusByUserId);
+		workflowMetricsSLADefinitionVersionImpl.
+			setWorkflowMetricsSLADefinitionId(workflowMetricsSLADefinitionId);
+		workflowMetricsSLADefinitionVersionImpl.setStatus(status);
+		workflowMetricsSLADefinitionVersionImpl.setStatusByUserId(
+			statusByUserId);
 
 		if (statusByUserName == null) {
-			workflowMetricsSLADefinitionImpl.setStatusByUserName("");
+			workflowMetricsSLADefinitionVersionImpl.setStatusByUserName("");
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStatusByUserName(
+			workflowMetricsSLADefinitionVersionImpl.setStatusByUserName(
 				statusByUserName);
 		}
 
 		if (statusDate == Long.MIN_VALUE) {
-			workflowMetricsSLADefinitionImpl.setStatusDate(null);
+			workflowMetricsSLADefinitionVersionImpl.setStatusDate(null);
 		}
 		else {
-			workflowMetricsSLADefinitionImpl.setStatusDate(
+			workflowMetricsSLADefinitionVersionImpl.setStatusDate(
 				new Date(statusDate));
 		}
 
-		workflowMetricsSLADefinitionImpl.resetOriginalValues();
+		workflowMetricsSLADefinitionVersionImpl.resetOriginalValues();
 
-		return workflowMetricsSLADefinitionImpl;
+		return workflowMetricsSLADefinitionVersionImpl;
 	}
 
 	@Override
@@ -270,7 +281,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
-		workflowMetricsSLADefinitionId = objectInput.readLong();
+		workflowMetricsSLADefinitionVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -293,6 +304,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 		stopNodeKeys = objectInput.readUTF();
 		version = objectInput.readUTF();
 
+		workflowMetricsSLADefinitionId = objectInput.readLong();
+
 		status = objectInput.readInt();
 
 		statusByUserId = objectInput.readLong();
@@ -311,7 +324,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(workflowMetricsSLADefinitionId);
+		objectOutput.writeLong(workflowMetricsSLADefinitionVersionId);
 
 		objectOutput.writeLong(groupId);
 
@@ -389,6 +402,8 @@ public class WorkflowMetricsSLADefinitionCacheModel
 			objectOutput.writeUTF(version);
 		}
 
+		objectOutput.writeLong(workflowMetricsSLADefinitionId);
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -405,7 +420,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 
 	public long mvccVersion;
 	public String uuid;
-	public long workflowMetricsSLADefinitionId;
+	public long workflowMetricsSLADefinitionVersionId;
 	public long groupId;
 	public long companyId;
 	public long userId;
@@ -422,6 +437,7 @@ public class WorkflowMetricsSLADefinitionCacheModel
 	public String startNodeKeys;
 	public String stopNodeKeys;
 	public String version;
+	public long workflowMetricsSLADefinitionId;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

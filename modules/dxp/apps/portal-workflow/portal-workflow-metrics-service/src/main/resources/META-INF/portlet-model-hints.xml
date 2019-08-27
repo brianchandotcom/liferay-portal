@@ -11,19 +11,49 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field name="calendarKey" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="duration" type="long" />
-		<field name="calendarKey" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="pauseNodeKeys" type="String" />
 		<field name="processId" type="long" />
 		<field name="processVersion" type="String" />
-		<field name="pauseNodeKeys" type="String" />
 		<field name="startNodeKeys" type="String" />
 		<field name="stopNodeKeys" type="String" />
+		<field name="version" type="String" />
 		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
+	<model name="com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="workflowMetricsSLADefinitionVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="calendarKey" type="String" />
+		<field name="description" type="String" />
+		<field name="duration" type="long" />
+		<field name="name" type="String" />
+		<field name="pauseNodeKeys" type="String" />
+		<field name="processId" type="long" />
+		<field name="processVersion" type="String" />
+		<field name="startNodeKeys" type="String" />
+		<field name="stopNodeKeys" type="String" />
+		<field name="version" type="String" />
+		<field name="workflowMetricsSLADefinitionId" type="long" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

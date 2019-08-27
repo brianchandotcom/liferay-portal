@@ -60,16 +60,20 @@ public class WorkflowMetricsSLADefinitionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
+		attributes.put("calendarKey", getCalendarKey());
 		attributes.put("description", getDescription());
 		attributes.put("duration", getDuration());
-		attributes.put("calendarKey", getCalendarKey());
+		attributes.put("name", getName());
+		attributes.put("pauseNodeKeys", getPauseNodeKeys());
 		attributes.put("processId", getProcessId());
 		attributes.put("processVersion", getProcessVersion());
-		attributes.put("pauseNodeKeys", getPauseNodeKeys());
 		attributes.put("startNodeKeys", getStartNodeKeys());
 		attributes.put("stopNodeKeys", getStopNodeKeys());
+		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -131,10 +135,10 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
+		String calendarKey = (String)attributes.get("calendarKey");
 
-		if (name != null) {
-			setName(name);
+		if (calendarKey != null) {
+			setCalendarKey(calendarKey);
 		}
 
 		String description = (String)attributes.get("description");
@@ -149,10 +153,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setDuration(duration);
 		}
 
-		String calendarKey = (String)attributes.get("calendarKey");
+		String name = (String)attributes.get("name");
 
-		if (calendarKey != null) {
-			setCalendarKey(calendarKey);
+		if (name != null) {
+			setName(name);
+		}
+
+		String pauseNodeKeys = (String)attributes.get("pauseNodeKeys");
+
+		if (pauseNodeKeys != null) {
+			setPauseNodeKeys(pauseNodeKeys);
 		}
 
 		Long processId = (Long)attributes.get("processId");
@@ -167,12 +177,6 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setProcessVersion(processVersion);
 		}
 
-		String pauseNodeKeys = (String)attributes.get("pauseNodeKeys");
-
-		if (pauseNodeKeys != null) {
-			setPauseNodeKeys(pauseNodeKeys);
-		}
-
 		String startNodeKeys = (String)attributes.get("startNodeKeys");
 
 		if (startNodeKeys != null) {
@@ -185,10 +189,34 @@ public class WorkflowMetricsSLADefinitionWrapper
 			setStopNodeKeys(stopNodeKeys);
 		}
 
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -343,6 +371,46 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Returns the status by user ID of this workflow metrics sla definition.
+	 *
+	 * @return the status by user ID of this workflow metrics sla definition
+	 */
+	@Override
+	public long getStatusByUserId() {
+		return model.getStatusByUserId();
+	}
+
+	/**
+	 * Returns the status by user name of this workflow metrics sla definition.
+	 *
+	 * @return the status by user name of this workflow metrics sla definition
+	 */
+	@Override
+	public String getStatusByUserName() {
+		return model.getStatusByUserName();
+	}
+
+	/**
+	 * Returns the status by user uuid of this workflow metrics sla definition.
+	 *
+	 * @return the status by user uuid of this workflow metrics sla definition
+	 */
+	@Override
+	public String getStatusByUserUuid() {
+		return model.getStatusByUserUuid();
+	}
+
+	/**
+	 * Returns the status date of this workflow metrics sla definition.
+	 *
+	 * @return the status date of this workflow metrics sla definition
+	 */
+	@Override
+	public Date getStatusDate() {
+		return model.getStatusDate();
+	}
+
+	/**
 	 * Returns the stop node keys of this workflow metrics sla definition.
 	 *
 	 * @return the stop node keys of this workflow metrics sla definition
@@ -393,6 +461,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Returns the version of this workflow metrics sla definition.
+	 *
+	 * @return the version of this workflow metrics sla definition
+	 */
+	@Override
+	public String getVersion() {
+		return model.getVersion();
+	}
+
+	/**
 	 * Returns the workflow metrics sla definition ID of this workflow metrics sla definition.
 	 *
 	 * @return the workflow metrics sla definition ID of this workflow metrics sla definition
@@ -400,6 +478,86 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public long getWorkflowMetricsSLADefinitionId() {
 		return model.getWorkflowMetricsSLADefinitionId();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is approved.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved() {
+		return model.isApproved();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is denied.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied() {
+		return model.isDenied();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is a draft.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft() {
+		return model.isDraft();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is expired.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired() {
+		return model.isExpired();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is inactive.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive() {
+		return model.isInactive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is incomplete.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete() {
+		return model.isIncomplete();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is pending.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending() {
+		return model.isPending();
+	}
+
+	/**
+	 * Returns <code>true</code> if this workflow metrics sla definition is scheduled.
+	 *
+	 * @return <code>true</code> if this workflow metrics sla definition is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled() {
+		return model.isScheduled();
 	}
 
 	@Override
@@ -558,6 +716,46 @@ public class WorkflowMetricsSLADefinitionWrapper
 	}
 
 	/**
+	 * Sets the status by user ID of this workflow metrics sla definition.
+	 *
+	 * @param statusByUserId the status by user ID of this workflow metrics sla definition
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		model.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	 * Sets the status by user name of this workflow metrics sla definition.
+	 *
+	 * @param statusByUserName the status by user name of this workflow metrics sla definition
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		model.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	 * Sets the status by user uuid of this workflow metrics sla definition.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this workflow metrics sla definition
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		model.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	 * Sets the status date of this workflow metrics sla definition.
+	 *
+	 * @param statusDate the status date of this workflow metrics sla definition
+	 */
+	@Override
+	public void setStatusDate(Date statusDate) {
+		model.setStatusDate(statusDate);
+	}
+
+	/**
 	 * Sets the stop node keys of this workflow metrics sla definition.
 	 *
 	 * @param stopNodeKeys the stop node keys of this workflow metrics sla definition
@@ -605,6 +803,16 @@ public class WorkflowMetricsSLADefinitionWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets the version of this workflow metrics sla definition.
+	 *
+	 * @param version the version of this workflow metrics sla definition
+	 */
+	@Override
+	public void setVersion(String version) {
+		model.setVersion(version);
 	}
 
 	/**

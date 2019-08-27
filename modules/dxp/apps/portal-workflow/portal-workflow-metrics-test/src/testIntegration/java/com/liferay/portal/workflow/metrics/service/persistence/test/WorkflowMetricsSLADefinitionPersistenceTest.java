@@ -150,22 +150,22 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		newWorkflowMetricsSLADefinition.setModifiedDate(
 			RandomTestUtil.nextDate());
 
-		newWorkflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
+		newWorkflowMetricsSLADefinition.setCalendarKey(
+			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLADefinition.setDescription(
 			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
-		newWorkflowMetricsSLADefinition.setCalendarKey(
+		newWorkflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
+
+		newWorkflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
 		newWorkflowMetricsSLADefinition.setProcessVersion(
-			RandomTestUtil.randomString());
-
-		newWorkflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
 		newWorkflowMetricsSLADefinition.setStartNodeKeys(
@@ -174,7 +174,19 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		newWorkflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
 
+		newWorkflowMetricsSLADefinition.setVersion(
+			RandomTestUtil.randomString());
+
 		newWorkflowMetricsSLADefinition.setStatus(RandomTestUtil.nextInt());
+
+		newWorkflowMetricsSLADefinition.setStatusByUserId(
+			RandomTestUtil.nextLong());
+
+		newWorkflowMetricsSLADefinition.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		newWorkflowMetricsSLADefinition.setStatusDate(
+			RandomTestUtil.nextDate());
 
 		_workflowMetricsSLADefinitions.add(
 			_persistence.update(newWorkflowMetricsSLADefinition));
@@ -217,8 +229,8 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			Time.getShortTimestamp(
 				newWorkflowMetricsSLADefinition.getModifiedDate()));
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getName(),
-			newWorkflowMetricsSLADefinition.getName());
+			existingWorkflowMetricsSLADefinition.getCalendarKey(),
+			newWorkflowMetricsSLADefinition.getCalendarKey());
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getDescription(),
 			newWorkflowMetricsSLADefinition.getDescription());
@@ -226,8 +238,11 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			existingWorkflowMetricsSLADefinition.getDuration(),
 			newWorkflowMetricsSLADefinition.getDuration());
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getCalendarKey(),
-			newWorkflowMetricsSLADefinition.getCalendarKey());
+			existingWorkflowMetricsSLADefinition.getName(),
+			newWorkflowMetricsSLADefinition.getName());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getPauseNodeKeys(),
+			newWorkflowMetricsSLADefinition.getPauseNodeKeys());
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getProcessId(),
 			newWorkflowMetricsSLADefinition.getProcessId());
@@ -235,17 +250,28 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 			existingWorkflowMetricsSLADefinition.getProcessVersion(),
 			newWorkflowMetricsSLADefinition.getProcessVersion());
 		Assert.assertEquals(
-			existingWorkflowMetricsSLADefinition.getPauseNodeKeys(),
-			newWorkflowMetricsSLADefinition.getPauseNodeKeys());
-		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getStartNodeKeys(),
 			newWorkflowMetricsSLADefinition.getStartNodeKeys());
 		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getStopNodeKeys(),
 			newWorkflowMetricsSLADefinition.getStopNodeKeys());
 		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getVersion(),
+			newWorkflowMetricsSLADefinition.getVersion());
+		Assert.assertEquals(
 			existingWorkflowMetricsSLADefinition.getStatus(),
 			newWorkflowMetricsSLADefinition.getStatus());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getStatusByUserId(),
+			newWorkflowMetricsSLADefinition.getStatusByUserId());
+		Assert.assertEquals(
+			existingWorkflowMetricsSLADefinition.getStatusByUserName(),
+			newWorkflowMetricsSLADefinition.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingWorkflowMetricsSLADefinition.getStatusDate()),
+			Time.getShortTimestamp(
+				newWorkflowMetricsSLADefinition.getStatusDate()));
 	}
 
 	@Test
@@ -352,13 +378,14 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"WorkflowMetricsSLADefinition", "mvccVersion", true, "uuid", true,
+			"WMSLADefinition", "mvccVersion", true, "uuid", true,
 			"workflowMetricsSLADefinitionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "duration", true,
-			"calendarKey", true, "processId", true, "processVersion", true,
-			"pauseNodeKeys", true, "startNodeKeys", true, "stopNodeKeys", true,
-			"status", true);
+			true, "modifiedDate", true, "calendarKey", true, "duration", true,
+			"name", true, "pauseNodeKeys", true, "processId", true,
+			"processVersion", true, "startNodeKeys", true, "stopNodeKeys", true,
+			"version", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -673,22 +700,22 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		workflowMetricsSLADefinition.setModifiedDate(RandomTestUtil.nextDate());
 
-		workflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
+		workflowMetricsSLADefinition.setCalendarKey(
+			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setDescription(
 			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setDuration(RandomTestUtil.nextLong());
 
-		workflowMetricsSLADefinition.setCalendarKey(
+		workflowMetricsSLADefinition.setName(RandomTestUtil.randomString());
+
+		workflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setProcessId(RandomTestUtil.nextLong());
 
 		workflowMetricsSLADefinition.setProcessVersion(
-			RandomTestUtil.randomString());
-
-		workflowMetricsSLADefinition.setPauseNodeKeys(
 			RandomTestUtil.randomString());
 
 		workflowMetricsSLADefinition.setStartNodeKeys(
@@ -697,7 +724,17 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		workflowMetricsSLADefinition.setStopNodeKeys(
 			RandomTestUtil.randomString());
 
+		workflowMetricsSLADefinition.setVersion(RandomTestUtil.randomString());
+
 		workflowMetricsSLADefinition.setStatus(RandomTestUtil.nextInt());
+
+		workflowMetricsSLADefinition.setStatusByUserId(
+			RandomTestUtil.nextLong());
+
+		workflowMetricsSLADefinition.setStatusByUserName(
+			RandomTestUtil.randomString());
+
+		workflowMetricsSLADefinition.setStatusDate(RandomTestUtil.nextDate());
 
 		_workflowMetricsSLADefinitions.add(
 			_persistence.update(workflowMetricsSLADefinition));

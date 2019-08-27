@@ -42,15 +42,15 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	public static
 		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
 				addWorkflowMetricsSLADefinition(
-					String name, String description, long duration,
-					String calendarKey, long processId, String[] pauseNodeKeys,
+					String calendarKey, String description, long duration,
+					String name, String[] pauseNodeKeys, long processId,
 					String[] startNodeKeys, String[] stopNodeKeys,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addWorkflowMetricsSLADefinition(
-			name, description, duration, calendarKey, processId, pauseNodeKeys,
+			calendarKey, description, duration, name, pauseNodeKeys, processId,
 			startNodeKeys, stopNodeKeys, serviceContext);
 	}
 
@@ -449,8 +449,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 	public static
 		com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition
 				updateWorkflowMetricsSLADefinition(
-					long workflowMetricsSLADefinitionId, String name,
-					String description, long duration, String calendarKey,
+					long workflowMetricsSLADefinitionId, String calendarKey,
+					String description, long duration, String name,
 					String[] pauseNodeKeys, String[] startNodeKeys,
 					String[] stopNodeKeys, int status,
 					com.liferay.portal.kernel.service.ServiceContext
@@ -458,8 +458,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceUtil {
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateWorkflowMetricsSLADefinition(
-			workflowMetricsSLADefinitionId, name, description, duration,
-			calendarKey, pauseNodeKeys, startNodeKeys, stopNodeKeys, status,
+			workflowMetricsSLADefinitionId, calendarKey, description, duration,
+			name, pauseNodeKeys, startNodeKeys, stopNodeKeys, status,
 			serviceContext);
 	}
 

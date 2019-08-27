@@ -4195,6 +4195,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put(
+			"workflowMetricsSLADefinitionId", "wmSLADefinitionId");
 
 		setDBColumnNames(dbColumnNames);
 	}
@@ -5061,7 +5063,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 	@Override
 	protected String getPKDBName() {
-		return "workflowMetricsSLADefinitionId";
+		return "wmSLADefinitionId";
 	}
 
 	@Override
@@ -5340,6 +5342,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		WorkflowMetricsSLADefinitionPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid"});
+		new String[] {"uuid", "workflowMetricsSLADefinitionId"});
 
 }

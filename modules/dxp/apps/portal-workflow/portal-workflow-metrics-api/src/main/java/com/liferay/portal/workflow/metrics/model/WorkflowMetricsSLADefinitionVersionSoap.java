@@ -29,18 +29,18 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public class WorkflowMetricsSLADefinitionSoap implements Serializable {
+public class WorkflowMetricsSLADefinitionVersionSoap implements Serializable {
 
-	public static WorkflowMetricsSLADefinitionSoap toSoapModel(
-		WorkflowMetricsSLADefinition model) {
+	public static WorkflowMetricsSLADefinitionVersionSoap toSoapModel(
+		WorkflowMetricsSLADefinitionVersion model) {
 
-		WorkflowMetricsSLADefinitionSoap soapModel =
-			new WorkflowMetricsSLADefinitionSoap();
+		WorkflowMetricsSLADefinitionVersionSoap soapModel =
+			new WorkflowMetricsSLADefinitionVersionSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setWorkflowMetricsSLADefinitionId(
-			model.getWorkflowMetricsSLADefinitionId());
+		soapModel.setWorkflowMetricsSLADefinitionVersionId(
+			model.getWorkflowMetricsSLADefinitionVersionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -57,6 +57,8 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		soapModel.setStartNodeKeys(model.getStartNodeKeys());
 		soapModel.setStopNodeKeys(model.getStopNodeKeys());
 		soapModel.setVersion(model.getVersion());
+		soapModel.setWorkflowMetricsSLADefinitionId(
+			model.getWorkflowMetricsSLADefinitionId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -65,11 +67,11 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static WorkflowMetricsSLADefinitionSoap[] toSoapModels(
-		WorkflowMetricsSLADefinition[] models) {
+	public static WorkflowMetricsSLADefinitionVersionSoap[] toSoapModels(
+		WorkflowMetricsSLADefinitionVersion[] models) {
 
-		WorkflowMetricsSLADefinitionSoap[] soapModels =
-			new WorkflowMetricsSLADefinitionSoap[models.length];
+		WorkflowMetricsSLADefinitionVersionSoap[] soapModels =
+			new WorkflowMetricsSLADefinitionVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -78,17 +80,17 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static WorkflowMetricsSLADefinitionSoap[][] toSoapModels(
-		WorkflowMetricsSLADefinition[][] models) {
+	public static WorkflowMetricsSLADefinitionVersionSoap[][] toSoapModels(
+		WorkflowMetricsSLADefinitionVersion[][] models) {
 
-		WorkflowMetricsSLADefinitionSoap[][] soapModels = null;
+		WorkflowMetricsSLADefinitionVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new WorkflowMetricsSLADefinitionSoap
+			soapModels = new WorkflowMetricsSLADefinitionVersionSoap
 				[models.length][models[0].length];
 		}
 		else {
-			soapModels = new WorkflowMetricsSLADefinitionSoap[0][0];
+			soapModels = new WorkflowMetricsSLADefinitionVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -98,29 +100,30 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static WorkflowMetricsSLADefinitionSoap[] toSoapModels(
-		List<WorkflowMetricsSLADefinition> models) {
+	public static WorkflowMetricsSLADefinitionVersionSoap[] toSoapModels(
+		List<WorkflowMetricsSLADefinitionVersion> models) {
 
-		List<WorkflowMetricsSLADefinitionSoap> soapModels =
-			new ArrayList<WorkflowMetricsSLADefinitionSoap>(models.size());
+		List<WorkflowMetricsSLADefinitionVersionSoap> soapModels =
+			new ArrayList<WorkflowMetricsSLADefinitionVersionSoap>(
+				models.size());
 
-		for (WorkflowMetricsSLADefinition model : models) {
+		for (WorkflowMetricsSLADefinitionVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
 		return soapModels.toArray(
-			new WorkflowMetricsSLADefinitionSoap[soapModels.size()]);
+			new WorkflowMetricsSLADefinitionVersionSoap[soapModels.size()]);
 	}
 
-	public WorkflowMetricsSLADefinitionSoap() {
+	public WorkflowMetricsSLADefinitionVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _workflowMetricsSLADefinitionId;
+		return _workflowMetricsSLADefinitionVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setWorkflowMetricsSLADefinitionId(pk);
+		setWorkflowMetricsSLADefinitionVersionId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -139,14 +142,15 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getWorkflowMetricsSLADefinitionId() {
-		return _workflowMetricsSLADefinitionId;
+	public long getWorkflowMetricsSLADefinitionVersionId() {
+		return _workflowMetricsSLADefinitionVersionId;
 	}
 
-	public void setWorkflowMetricsSLADefinitionId(
-		long workflowMetricsSLADefinitionId) {
+	public void setWorkflowMetricsSLADefinitionVersionId(
+		long workflowMetricsSLADefinitionVersionId) {
 
-		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
+		_workflowMetricsSLADefinitionVersionId =
+			workflowMetricsSLADefinitionVersionId;
 	}
 
 	public long getGroupId() {
@@ -277,6 +281,16 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 		_version = version;
 	}
 
+	public long getWorkflowMetricsSLADefinitionId() {
+		return _workflowMetricsSLADefinitionId;
+	}
+
+	public void setWorkflowMetricsSLADefinitionId(
+		long workflowMetricsSLADefinitionId) {
+
+		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -311,7 +325,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
-	private long _workflowMetricsSLADefinitionId;
+	private long _workflowMetricsSLADefinitionVersionId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -328,6 +342,7 @@ public class WorkflowMetricsSLADefinitionSoap implements Serializable {
 	private String _startNodeKeys;
 	private String _stopNodeKeys;
 	private String _version;
+	private long _workflowMetricsSLADefinitionId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

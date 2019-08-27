@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Accessor;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model interface for the WorkflowMetricsSLADefinition service. Represents a row in the &quot;WorkflowMetricsSLADefinition&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the WorkflowMetricsSLADefinition service. Represents a row in the &quot;WMSLADefinition&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowMetricsSLADefinitionModel

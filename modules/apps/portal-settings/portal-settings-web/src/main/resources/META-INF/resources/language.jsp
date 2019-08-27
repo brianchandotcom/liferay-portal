@@ -129,30 +129,6 @@
 		);
 	}
 
-	const form = document.getElementById('<portlet:namespace />fm');
-
-	form.addEventListener(
-		'submit',
-		function(event) {
-			event.preventDefault();
-
-			<portlet:namespace />saveCompany();
-		}
-	);
-
-	function <portlet:namespace />saveCompany() {
-		<portlet:namespace />saveLocales();
-
-		Liferay.Util.postForm(
-			form,
-			{
-				data: {
-					'<%= Constants.CMD %>': '<%= Constants.UPDATE %>'
-				}
-			}
-		);
-	}
-
 	function <portlet:namespace />saveLocales() {
 		var form = document.<portlet:namespace />fm;
 
@@ -168,4 +144,8 @@
 		}
 	}
 
+	Liferay.after(
+		['form:registered', 'inputmoveboxes:moveItem', 'inputmoveboxes:orderItem'],
+		<portlet:namespace />saveLocales
+	);
 </aui:script>

@@ -84,6 +84,21 @@
 							}
 						]
 					}
+				},
+				{
+					"defaultValue": "light",
+					"name": "footerAppliedStyle",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "dark"
+							},
+							{
+								"value": "light"
+							}
+						]
+					}
 				}
 			],
 			"label": "Body"

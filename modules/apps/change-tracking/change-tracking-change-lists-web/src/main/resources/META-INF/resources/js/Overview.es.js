@@ -116,7 +116,6 @@ class Overview extends PortletBase {
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
-		const userSettings = requestResult[2];
 
 		this.activeCTCollectionId = activeCollection[0].ctCollectionId;
 
@@ -185,11 +184,6 @@ class Overview extends PortletBase {
 		} else {
 			this.productionFound = false;
 		}
-
-		if (userSettings) {
-			this.checkoutConfirmationEnabled =
-				userSettings.checkoutCTCollectionConfirmationEnabled;
-		}
 	}
 
 	_render() {
@@ -201,11 +195,7 @@ class Overview extends PortletBase {
 			Liferay.ThemeDisplay.getUserId() +
 			'&type=active';
 
-		const urls = [
-			urlActiveCollection,
-			this.urlProductionInformation,
-			this.urlUserSettings
-		];
+		const urls = [urlActiveCollection, this.urlProductionInformation];
 
 		this.initialFetch = false;
 
@@ -323,16 +313,6 @@ Overview.STATE = {
 	}),
 
 	/**
-	 * Checkout confirmation is enabled.
-	 *
-	 * @default true
-	 * @instance
-	 * @memberOf Overview
-	 * @type {boolean}
-	 */
-	checkoutConfirmationEnabled: Config.bool().value(true),
-
-	/**
 	 * Active change list card description.
 	 *
 	 * @default undefined
@@ -431,17 +411,6 @@ Overview.STATE = {
 	urlActiveCollectionPublish: Config.string().required(),
 
 	/**
-	 * The URL for the REST service to the change entries.
-	 * @default
-	 * @instance
-	 * @memberOf Overview
-	 * @type {string}
-	 */
-	urlChangeEntries: Config.string(),
-
-	urlChangeListsHistory: Config.string().required(),
-
-	/**
 	 * URL to check out production.
 	 *
 	 * @default undefined
@@ -489,17 +458,7 @@ Overview.STATE = {
 	 * @memberOf Overview
 	 * @type {string}
 	 */
-	urlSelectProduction: Config.string(),
-
-	/**
-	 * URL for the REST service to the user settings.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberOf Overview
-	 * @type {string}
-	 */
-	urlUserSettings: Config.string()
+	urlSelectProduction: Config.string()
 };
 
 Soy.register(Overview, templates);

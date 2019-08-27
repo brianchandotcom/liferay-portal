@@ -147,22 +147,9 @@ public class ChangeListsDisplayContext {
 				_themeDisplay.getCompanyId(), "&type=published-latest")
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
-		).put(
-			"urlUserSettings",
-			StringBundler.concat(
-				_themeDisplay.getPortalURL(),
-				"/o/change-tracking-legacy/configurations/",
-				_themeDisplay.getCompanyId(), "/user/",
-				_themeDisplay.getUserId())
 		);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			_renderRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,
-			PortletRequest.RENDER_PHASE);
-
-		soyContext.put("urlChangeListsHistory", portletURL.toString());
-
-		portletURL = PortletURLFactoryUtil.create(
 			_renderRequest, CTPortletKeys.CHANGE_LISTS,
 			PortletRequest.RENDER_PHASE);
 

@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -22,16 +23,30 @@ import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Hugo Huijser
@@ -51,7 +66,92 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		content = _fixConvertedKeys(content);
 		content = _fixGitLiferayPortalBranch(content);
 
-		return _formatSourceFormatterProperties(fileName, content);
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		content = _addMissingInternalLinkedWorkspaceNames(content, properties);
+
+		//return content;
+
+		return _formatSourceFormatterProperties(fileName, content, properties);
+	}
+
+	private String _addMissingInternalLinkedWorkspaceNames(
+			String content, Properties properties)
+		throws IOException {
+
+		String key =
+			"source.check.json.package.json.check.internalLinkedWorkspaceNames";
+
+		String propertyValue = properties.getProperty(key);
+
+		if (propertyValue == null) {
+			return content;
+		}
+
+		String[] propertyValues = StringUtil.split(propertyValue);
+
+		final Set<String> missingWorkspaces = new TreeSet<>(
+			Collections.reverseOrder());
+
+		File modulesAppsDir = new File(getPortalDir(), "modules/apps");
+
+		Files.walkFileTree(
+			modulesAppsDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					Path packageJSONPath = dirPath.resolve("package.json");
+
+					if (Files.exists(packageJSONPath)) {
+						try {
+							String packageJSONcontent = FileUtil.read(
+								packageJSONPath.toFile());
+
+							JSONObject jsonObject = new JSONObject(
+								packageJSONcontent);
+
+							if (jsonObject.isNull("name")) {
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+
+							String name = jsonObject.getString("name");
+
+							if (!ArrayUtil.contains(propertyValues, name)) {
+								missingWorkspaces.add(name);
+							}
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+						catch (Exception e) {
+						}
+					}
+
+					if (Files.exists(dirPath.resolve("build")) ||
+						Files.exists(dirPath.resolve("classes")) ||
+						Files.exists(dirPath.resolve("src"))) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		for (String missingWorkspace : missingWorkspaces) {
+			content = StringUtil.replaceFirst(
+				content, key + "=\\\n",
+				StringBundler.concat(
+					key, "=\\\n", StringPool.FOUR_SPACES,
+					StringPool.FOUR_SPACES, missingWorkspace, ",\\\n"));
+		}
+
+		return content;
 	}
 
 	private String _fixConvertedKeys(String content) {
@@ -74,7 +174,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 	}
 
 	private String _formatSourceFormatterProperties(
-			String fileName, String content)
+			String fileName, String content, Properties properties)
 		throws IOException {
 
 		int level = ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
@@ -82,10 +182,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		if (isPortalSource()) {
 			level = ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 		}
-
-		Properties properties = new Properties();
-
-		properties.load(new StringReader(content));
 
 		Enumeration<String> enu =
 			(Enumeration<String>)properties.propertyNames();

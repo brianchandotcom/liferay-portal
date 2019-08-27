@@ -167,6 +167,10 @@ public class MBCommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
+		if (!hasDiscussion(className, classPK)) {
+			return null;
+		}
+
 		MBMessage newRootMBMessage = _copyRootMessage(
 			userId, groupId, className, classPK, newClassPK,
 			serviceContextFunction);

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,7 +68,16 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		long logoId = ParamUtil.getInteger(actionRequest, "logoId");
-		int status = ParamUtil.getInteger(actionRequest, "status");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		int status;
+
+		if (active) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+		else {
+			status = WorkflowConstants.STATUS_INACTIVE;
+		}
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,

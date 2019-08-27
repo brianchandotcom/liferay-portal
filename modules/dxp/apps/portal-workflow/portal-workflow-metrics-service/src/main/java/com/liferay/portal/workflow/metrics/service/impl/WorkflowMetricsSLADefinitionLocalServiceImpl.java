@@ -69,8 +69,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition(
-			String name, String description, long duration, String calendarKey,
-			long processId, String[] pauseNodeKeys, String[] startNodeKeys,
+			String calendarKey, String description, long duration, String name,
+			String[] pauseNodeKeys, long processId, String[] startNodeKeys,
 			String[] stopNodeKeys, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -100,14 +100,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setCreateDate(now);
 		workflowMetricsSLADefinition.setModifiedDate(now);
 
-		workflowMetricsSLADefinition.setName(name);
+		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
-		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
-		workflowMetricsSLADefinition.setProcessId(processId);
-		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
+		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(pauseNodeKeys));
+		workflowMetricsSLADefinition.setProcessId(processId);
+		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setStartNodeKeys(
 			StringUtil.merge(startNodeKeys));
 		workflowMetricsSLADefinition.setStopNodeKeys(
@@ -221,8 +221,8 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 
 	@Override
 	public WorkflowMetricsSLADefinition updateWorkflowMetricsSLADefinition(
-			long workflowMetricsSLADefinitionId, String name,
-			String description, long duration, String calendarKey,
+			long workflowMetricsSLADefinitionId, String calendarKey,
+			String description, long duration, String name,
 			String[] pauseNodeKeys, String[] startNodeKeys,
 			String[] stopNodeKeys, int status, ServiceContext serviceContext)
 		throws PortalException {
@@ -241,19 +241,31 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			workflowMetricsSLADefinition.getProcessId(), latestProcessVersion,
 			name, duration, pauseNodeKeys, startNodeKeys, stopNodeKeys);
 
-		workflowMetricsSLADefinition.setModifiedDate(new Date());
-		workflowMetricsSLADefinition.setName(name);
+		Date now = new Date();
+
+		workflowMetricsSLADefinition.setModifiedDate(
+			serviceContext.getModifiedDate(now));
+
+		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
-		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
-		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
+		workflowMetricsSLADefinition.setName(name);
 		workflowMetricsSLADefinition.setPauseNodeKeys(
 			StringUtil.merge(pauseNodeKeys));
+		workflowMetricsSLADefinition.setProcessVersion(latestProcessVersion);
 		workflowMetricsSLADefinition.setStartNodeKeys(
 			StringUtil.merge(startNodeKeys));
 		workflowMetricsSLADefinition.setStopNodeKeys(
 			StringUtil.merge(stopNodeKeys));
 		workflowMetricsSLADefinition.setStatus(status);
+
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+
+		workflowMetricsSLADefinition.setStatusByUserId(user.getUserId());
+		workflowMetricsSLADefinition.setStatusByUserName(user.getFullName());
+
+		workflowMetricsSLADefinition.setStatusDate(
+			serviceContext.getModifiedDate(now));
 
 		workflowMetricsSLADefinitionPersistence.update(
 			workflowMetricsSLADefinition);

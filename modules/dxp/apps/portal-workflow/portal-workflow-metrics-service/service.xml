@@ -23,13 +23,13 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
+		<column name="calendarKey" type="String" />
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
-		<column name="calendarKey" type="String" />
+		<column name="name" type="String" />
+		<column name="pauseNodeKeys" type="String" />
 		<column name="processId" type="long" />
 		<column name="processVersion" type="String" />
-		<column name="pauseNodeKeys" type="String" />
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
 		<column name="version" type="String" />
@@ -91,17 +91,17 @@
 
 		<!-- Other fields -->
 
-		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
-		<column name="version" type="String" />
-		<column name="name" type="String" />
+		<column name="calendarKey" type="String" />
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
-		<column name="calendarKey" type="String" />
+		<column name="name" type="String" />
+		<column name="pauseNodeKeys" type="String" />
 		<column name="processId" type="long" />
 		<column name="processVersion" type="String" />
-		<column name="pauseNodeKeys" type="String" />
 		<column name="startNodeKeys" type="String" />
 		<column name="stopNodeKeys" type="String" />
+		<column name="version" type="String" />
+		<column db-name="wmSLADefinitionId" name="workflowMetricsSLADefinitionId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

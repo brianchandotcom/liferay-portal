@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "^4.0.0",
+		"frontend-js-web": "*",
 		"metal-state": "2.16.8"
 	},
 	"name": "site-teams-web",

@@ -618,7 +618,7 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperiment.getSegmentsExperimentId(),
 				segmentsExperiment.getName(),
 				segmentsExperiment.getDescription(),
-				SegmentsExperimentConstants.Goal.SCROLL_DEPTH.getLabel(),
+				SegmentsExperimentConstants.Goal.MAX_SCROLL_DEPTH.getLabel(),
 				StringPool.BLANK);
 
 		UnicodeProperties typeSettingsProperties =
@@ -627,7 +627,7 @@ public class SegmentsExperimentLocalServiceTest {
 		String goal = typeSettingsProperties.getProperty("goal");
 
 		Assert.assertEquals(
-			SegmentsExperimentConstants.Goal.SCROLL_DEPTH.getLabel(), goal);
+			SegmentsExperimentConstants.Goal.MAX_SCROLL_DEPTH.getLabel(), goal);
 	}
 
 	@Test

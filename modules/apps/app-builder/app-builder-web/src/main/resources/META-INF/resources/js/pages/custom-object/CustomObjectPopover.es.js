@@ -51,6 +51,8 @@ const CustomObjectPopover = ({
 	useEffect(() => {
 		if (visible) {
 			nameInputRef.current.focus();
+		} else {
+			nameInputRef.current.value = '';
 		}
 	}, [alignElement, nameInputRef, visible]);
 

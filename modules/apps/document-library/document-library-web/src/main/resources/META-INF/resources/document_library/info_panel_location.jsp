@@ -36,14 +36,9 @@ long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_
 		viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
 		%>
 
-		<clay:sticker
-			icon="folder"
-			size="sm"
-			style="secondary"
-		/>
-
 		<clay:link
 			href="<%= viewFolderURL.toString() %>"
+			icon="folder"
 			label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : parentFolder.getName() %>'
 			style="secondary"
 		/>

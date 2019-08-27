@@ -265,7 +265,7 @@ public class MBMailingListLocalServiceImpl
 
 		String groupName = getSchedulerGroupName(mailingList);
 
-		SchedulerEngineHelperUtil.unschedule(groupName, StorageType.PERSISTED);
+		SchedulerEngineHelperUtil.delete(groupName, StorageType.PERSISTED);
 	}
 
 	protected void validate(

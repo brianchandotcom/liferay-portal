@@ -361,11 +361,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
 						viewFolderURL.setParameter("redirect", currentURL);
 
-						Folder folder = fileEntry.getFolder();
+						Folder parentFolder = fileEntry.getFolder();
 
-						long folderId = (folder == null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : folder.getFolderId();
+						long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : parentFolder.getFolderId();
 
-						viewFolderURL.setParameter("folderId", String.valueOf(folderId));
+						viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
 						%>
 
 						<clay:sticker
@@ -376,7 +376,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						<clay:link
 							href="<%= viewFolderURL.toString() %>"
-							label='<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : folder.getName() %>'
+							label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : parentFolder.getName() %>'
 							style="secondary"
 						/>
 					</dd>

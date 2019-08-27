@@ -50,6 +50,15 @@ public class SegmentsExperimentServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
+			deleteSegmentsExperiment(String segmentsExperimentKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.deleteSegmentsExperiment(
+			segmentsExperimentKey);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
 			fetchSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
 				int[] statuses)

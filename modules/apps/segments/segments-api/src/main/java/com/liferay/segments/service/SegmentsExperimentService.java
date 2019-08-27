@@ -58,6 +58,10 @@ public interface SegmentsExperimentService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public SegmentsExperiment deleteSegmentsExperiment(
+			String segmentsExperimentKey)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,

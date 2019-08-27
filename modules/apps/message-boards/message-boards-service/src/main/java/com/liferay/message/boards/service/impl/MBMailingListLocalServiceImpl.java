@@ -28,6 +28,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -212,7 +213,18 @@ public class MBMailingListLocalServiceImpl
 		// Scheduler
 
 		if (active) {
-			scheduleMailingList(mailingList);
+			boolean forceSync = ProxyModeThreadLocal.isForceSync();
+
+			ProxyModeThreadLocal.setForceSync(true);
+
+			try {
+				unscheduleMailingList(mailingList);
+
+				scheduleMailingList(mailingList);
+			}
+			finally {
+				ProxyModeThreadLocal.setForceSync(forceSync);
+			}
 		}
 		else {
 			unscheduleMailingList(mailingList);

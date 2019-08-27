@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import ClayForm from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import {toggleShowResolvedComments} from '../../../actions/toggleShowResolvedComments.es';
@@ -33,7 +33,7 @@ const ShowResolvedCommentsToggle = () => {
 
 	return (
 		<div className="pb-3 px-3">
-			<ClayForm.Checkbox
+			<ClayCheckbox
 				checked={showResolvedComments}
 				disabled={!showResolvedComments && !hasResolvedComments}
 				label={Liferay.Language.get('show-resolved-comments')}

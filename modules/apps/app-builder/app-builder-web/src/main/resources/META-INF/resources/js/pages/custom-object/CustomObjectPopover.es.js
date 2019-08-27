@@ -13,7 +13,7 @@
  */
 
 import React, {useEffect, useRef, useState} from 'react';
-import ClayForm from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import Button from '../../components/button/Button.es';
 import Popover from '../../components/popover/Popover.es';
@@ -106,7 +106,7 @@ const CustomObjectPopover = ({
 						)}
 					</div>
 
-					<ClayForm.Checkbox
+					<ClayCheckbox
 						aria-label={Liferay.Language.get(
 							'continue-and-create-form-view'
 						)}

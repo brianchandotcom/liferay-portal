@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -139,19 +138,12 @@ public class MappedContentUtil {
 
 	public static JSONArray getMappedContentsJSONArray(
 		Set<AssetEntry> assetEntries, String backURL,
-		long[] allowedClassNameIds, HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
 			for (AssetEntry assetEntry : assetEntries) {
-				if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
-					!ArrayUtil.contains(
-						allowedClassNameIds, assetEntry.getClassNameId())) {
-
-					continue;
-				}
-
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
 						assetEntry, backURL, httpServletRequest));

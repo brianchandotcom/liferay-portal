@@ -17,17 +17,8 @@
 		"object-hash": "^1.3.0"
 	},
 	"jest": {
-		"moduleNameMapper": {
-			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/admin/js/$1.js"
-		},
 		"modulePathIgnorePatterns": [
-			"/build/",
-			"/classes/",
-			"/__fixtures__/",
 			"/__mock__/"
-		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
 		],
 		"setupFilesAfterEnv": [
 			"<rootDir>jest-setup-after-env.config.js"

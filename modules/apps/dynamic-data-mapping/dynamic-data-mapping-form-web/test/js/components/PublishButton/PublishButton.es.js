@@ -12,7 +12,7 @@
  * details.
  */
 
-import PublishButton from 'source/components/PublishButton/PublishButton.es';
+import PublishButton from '../../../../src/main/resources/META-INF/resources/admin/js/components/PublishButton/PublishButton.es';
 
 const formInstanceId = '12345';
 const namespace = 'portlet_namespace';

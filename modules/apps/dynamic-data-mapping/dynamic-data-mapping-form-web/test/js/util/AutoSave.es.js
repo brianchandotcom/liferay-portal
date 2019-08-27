@@ -12,7 +12,7 @@
  * details.
  */
 
-import AutoSave from 'source/util/AutoSave.es';
+import AutoSave from '../../../src/main/resources/META-INF/resources/admin/js/util/AutoSave.es';
 import {dom} from 'metal-dom';
 
 const AUTOSAVE_INTERVAL = 2;

@@ -12,7 +12,7 @@
  * details.
  */
 
-import Select from 'source/Select/Select.es';
+import Select from '../../../src/main/resources/META-INF/resources/Select/Select.es';
 
 let component;
 const spritemap = 'icons.svg';

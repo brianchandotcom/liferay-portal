@@ -12,7 +12,7 @@
  * details.
  */
 
-import Grid from 'source/Grid/Grid.es';
+import Grid from '../../../src/main/resources/META-INF/resources/Grid/Grid.es';
 
 let component;
 const spritemap = 'icons.svg';

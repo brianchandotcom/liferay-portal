@@ -12,7 +12,7 @@
  * details.
  */
 
-import Tooltip from 'source/components/Tooltip/Tooltip.es';
+import Tooltip from '../../../src/main/resources/META-INF/resources/components/Tooltip/Tooltip.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 let component;

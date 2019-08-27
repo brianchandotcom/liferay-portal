@@ -12,7 +12,7 @@
  * details.
  */
 
-import DocumentLibrary from 'source/DocumentLibrary/DocumentLibrary.es';
+import DocumentLibrary from '../../../src/main/resources/META-INF/resources/DocumentLibrary/DocumentLibrary.es';
 
 let component;
 const spritemap = 'icons.svg';

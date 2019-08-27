@@ -1,16 +1,3 @@
-window.Liferay = {
-	AUI: {
-		getDateFormat: () => '%d/%m/%Y'
-	},
-	Language: {
-		get: key => key
-	},
-	ThemeDisplay: {
-		getLanguageId: () => 'en_US',
-		getPathThemeImages: () => ''
-	}
-};
-
 window.AlloyEditor = {
 	Selections: [
 		{

@@ -20,12 +20,7 @@
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
 		},
 		"modulePathIgnorePatterns": [
-			"/__fixtures__/",
-			"/__mock__/",
-			"/classes/"
-		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
+			"/__mock__/"
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"

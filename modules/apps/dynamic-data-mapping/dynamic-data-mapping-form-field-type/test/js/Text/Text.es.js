@@ -12,7 +12,7 @@
  * details.
  */
 
-import Text from 'source/Text/Text.es';
+import Text from '../../../src/main/resources/META-INF/resources/Text/Text.es';
 
 let component;
 const spritemap = 'icons.svg';

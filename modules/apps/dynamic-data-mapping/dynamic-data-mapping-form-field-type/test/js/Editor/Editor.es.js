@@ -12,7 +12,7 @@
  * details.
  */
 
-import Editor from 'source/Editor/Editor.es';
+import Editor from '../../../src/main/resources/META-INF/resources/Editor/Editor.es';
 
 let component;
 const spritemap = 'icons.svg';

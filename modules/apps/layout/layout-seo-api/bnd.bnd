@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Layout SEO API
+Bundle-SymbolicName: com.liferay.layout.seo.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.layout.seo.exception,\
+	com.liferay.layout.seo.model,\
+	com.liferay.layout.seo.service,\
+	com.liferay.layout.seo.service.persistence

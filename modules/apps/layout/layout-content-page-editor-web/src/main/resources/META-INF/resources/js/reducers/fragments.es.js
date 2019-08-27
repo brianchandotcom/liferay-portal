@@ -34,10 +34,7 @@ import {
 	getFragmentColumn,
 	getFragmentRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
-import {
-	duplicateFragmentEntryLink,
-	updatePageEditorLayoutData
-} from '../utils/FragmentsEditorFetchUtils.es';
+import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -288,54 +285,25 @@ function addFragmentEntryLinkReducer(state, action) {
 function duplicateFragmentEntryLinkReducer(state, action) {
 	let nextState = state;
 
-	return new Promise(resolve => {
-		duplicateFragmentEntryLink(action.fragmentEntryLinkId)
-			.then(response => {
-				const fragmentEntryLink = setIn(
-					response,
-					['content'],
-					action.content
-				);
+	const {fragmentEntryLink} = action;
+	let nextData = nextState.layoutData;
 
-				let nextData = nextState.layoutData;
+	nextData = _duplicateFragment(
+		action.fragmentEntryLinkId,
+		fragmentEntryLink,
+		action.fragmentEntryLinkRowType,
+		nextData
+	);
 
-				nextData = _duplicateFragment(
-					action.fragmentEntryLinkId,
-					fragmentEntryLink,
-					action.fragmentEntryLinkRowType,
-					nextData
-				);
+	nextState = setIn(nextState, ['layoutData'], nextData);
 
-				updatePageEditorLayoutData(
-					nextData,
-					nextState.segmentsExperienceId
-				)
-					.then(response => {
-						if (response.error) {
-							throw response.error;
-						}
+	nextState = setIn(
+		nextState,
+		['fragmentEntryLinks', fragmentEntryLink.fragmentEntryLinkId],
+		fragmentEntryLink
+	);
 
-						nextState = setIn(nextState, ['layoutData'], nextData);
-
-						nextState = setIn(
-							nextState,
-							[
-								'fragmentEntryLinks',
-								fragmentEntryLink.fragmentEntryLinkId
-							],
-							fragmentEntryLink
-						);
-
-						resolve(nextState);
-					})
-					.catch(() => {
-						resolve(nextState);
-					});
-			})
-			.catch(() => {
-				resolve(nextState);
-			});
-	});
+	return nextState;
 }
 
 /**

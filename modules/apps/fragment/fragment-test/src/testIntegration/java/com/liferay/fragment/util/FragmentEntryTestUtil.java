@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -150,7 +151,10 @@ public class FragmentEntryTestUtil {
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			fragmentCollectionId, name, type, WorkflowConstants.STATUS_APPROVED,
+			fragmentCollection.getFragmentCollectionId(),
+			StringUtil.randomString(), name, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			"{fieldSets: []}", 0, type, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 
@@ -168,7 +172,10 @@ public class FragmentEntryTestUtil {
 
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			fragmentCollectionId, name, type, WorkflowConstants.STATUS_APPROVED,
+			fragmentCollection.getFragmentCollectionId(),
+			StringUtil.randomString(), name, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			"{fieldSets: []}", 0, type, WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 	}
 

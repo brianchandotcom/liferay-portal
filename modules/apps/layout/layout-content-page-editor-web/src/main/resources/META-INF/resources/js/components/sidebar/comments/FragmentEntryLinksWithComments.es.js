@@ -17,15 +17,13 @@ import React from 'react';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../../utils/constants';
 import {getLayoutDataFragmentEntryLinkIds} from '../../../utils/LayoutDataList.es';
 import {NoCommentsMessage} from './NoCommentsMessage.es';
-import {
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_HOVERED_ITEM
-} from '../../../actions/actions.es';
+import {UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 import useSelector from '../../../store/hooks/useSelector.es';
 import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
 import SidebarHeader from '../SidebarHeader.es';
+import {updateActiveItemAction} from '../../../actions/updateActiveItem.es';
 
 const FragmentEntryLinksWithComments = () => {
 	const dispatch = useDispatch();
@@ -42,11 +40,12 @@ const FragmentEntryLinksWithComments = () => {
 	);
 
 	const setActiveFragmentEntryLink = fragmentEntryLinkId => () => {
-		dispatch({
-			activeItemId: fragmentEntryLinkId,
-			activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-			type: UPDATE_ACTIVE_ITEM
-		});
+		dispatch(
+			updateActiveItemAction(
+				fragmentEntryLinkId,
+				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+			)
+		);
 
 		const fragmentEntryLinkElement = document.querySelector(
 			`.fragment-entry-link-list [data-fragments-editor-item-id="${fragmentEntryLinkId}"][data-fragments-editor-item-type="${FRAGMENTS_EDITOR_ITEM_TYPES.fragment}"]`

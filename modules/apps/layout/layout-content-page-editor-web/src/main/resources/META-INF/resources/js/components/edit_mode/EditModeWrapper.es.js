@@ -16,10 +16,8 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import {FRAGMENTS_EDITOR_ITEM_TYPES} from '../../utils/constants';
 import getConnectedComponent from '../../store/ConnectedComponent.es';
-import {
-	UPDATE_ACTIVE_ITEM,
-	UPDATE_SELECTED_SIDEBAR_PANEL_ID
-} from '../../actions/actions.es';
+import {UPDATE_SELECTED_SIDEBAR_PANEL_ID} from '../../actions/actions.es';
+import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 
 const WRAPPER_CLASSES = {
 	default: 'fragment-entry-link-list-wrapper',
@@ -88,11 +86,9 @@ class EditModeWrapper extends Component {
 		const activeItemType = this._url.searchParams.get('activeItemType');
 
 		if (activeItemId && activeItemType) {
-			this.store.dispatch({
-				activeItemId,
-				activeItemType,
-				type: UPDATE_ACTIVE_ITEM
-			});
+			this.store.dispatch(
+				updateActiveItemAction(activeItemId, activeItemType)
+			);
 		}
 	}
 

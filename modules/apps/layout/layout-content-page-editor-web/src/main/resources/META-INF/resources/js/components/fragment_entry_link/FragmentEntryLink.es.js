@@ -27,7 +27,6 @@ import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 import {
 	MOVE_FRAGMENT_ENTRY_LINK,
-	UPDATE_ACTIVE_ITEM,
 	UPDATE_SELECTED_SIDEBAR_PANEL_ID
 } from '../../actions/actions.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';
@@ -54,6 +53,7 @@ import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import {removeFragmentEntryLinkAction} from '../../actions/removeFragmentEntryLinks.es';
 import {duplicateFragmentEntryLinkAction} from '../../actions/duplicateFragmentEntryLink.es';
+import {updateActiveItemAction} from '../../actions/updateActiveItem.es';
 
 /**
  * FragmentEntryLink
@@ -337,11 +337,12 @@ class FragmentEntryLink extends Component {
 	 * @review
 	 */
 	_handleFragmentCommentsButtonClick() {
-		this.store.dispatch({
-			activeItemId: this.fragmentEntryLinkId,
-			activeItemType: FRAGMENTS_EDITOR_ITEM_TYPES.fragment,
-			type: UPDATE_ACTIVE_ITEM
-		});
+		this.store.dispatch(
+			updateActiveItemAction(
+				this.fragmentEntryLinkId,
+				FRAGMENTS_EDITOR_ITEM_TYPES.fragment
+			)
+		);
 
 		this.store.dispatch({
 			type: UPDATE_SELECTED_SIDEBAR_PANEL_ID,

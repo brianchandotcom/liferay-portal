@@ -66,6 +66,26 @@ public class SegmentsExperimentRelModelListener
 	}
 
 	@Override
+	public void onAfterRemove(SegmentsExperimentRel segmentsExperimentRel)
+		throws ModelListenerException {
+
+		try {
+			_asahSegmentsExperimentProcessor.processUpdateSegmentsExperimentRel(
+				segmentsExperimentRel.getSegmentsExperimentKey(),
+				_segmentsExperimentRelLocalService.getSegmentsExperimentRels(
+					segmentsExperimentRel.getSegmentsExperimentId()));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to remove segments experiment rel " +
+						segmentsExperimentRel.getSegmentsExperimentRelId(),
+					e);
+			}
+		}
+	}
+
+	@Override
 	public void onAfterUpdate(SegmentsExperimentRel segmentsExperimentRel)
 		throws ModelListenerException {
 

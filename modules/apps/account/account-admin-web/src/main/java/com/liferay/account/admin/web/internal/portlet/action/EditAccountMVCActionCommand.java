@@ -99,6 +99,15 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.ADD)) {
 				addAccountEntry(actionRequest);
 			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				updateAccountEntry(actionRequest);
+			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
 		}
 		catch (Exception e) {
 			String mvcPath = "/edit_account.jsp";

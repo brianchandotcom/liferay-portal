@@ -351,7 +351,7 @@ public class MappedContentUtil {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					groupId, layoutClassNameId, layoutClassPK, true);
+					groupId, layoutClassNameId, layoutClassPK, false);
 
 		return _getLayoutMappedAssetEntries(
 			layoutPageTemplateStructure, mappedClassPKs);

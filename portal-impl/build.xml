@@ -141,7 +141,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="-Dbuild.profile=portal" />
 			<arg value="-Dlicense.report.enabled=true" />
 			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
-			<arg value="-Dlicense.report.override.properties.file=${project.dir}/lib/license.properties" />
+			<arg value="-Dlicense.report.override.properties.file=${project.dir}/lib/license-override.properties" />
 		</gradle-execute>
 
 		<pathconvert pathsep="," property="modules.lib.versions.files">
@@ -175,7 +175,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				>
 					<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 					<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-					<arg value="license.report.override.properties.file=${project.dir}/lib/license.properties" />
+					<arg value="license.report.override.properties.file=${project.dir}/lib/license-override.properties" />
 					<arg value="rdf.file=${project.dir}/lib/spdx.rdf" />
 				</java>
 			</then>

@@ -60,7 +60,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "display-page";
+		return "content-display";
 	}
 
 	@Override

@@ -26,7 +26,6 @@ import {
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 import {
-	DUPLICATE_FRAGMENT_ENTRY_LINK,
 	MOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_SELECTED_SIDEBAR_PANEL_ID
@@ -54,6 +53,7 @@ import {
 import {prefixSegmentsExperienceId} from '../../utils/prefixSegmentsExperienceId.es';
 import {shouldUpdatePureComponent} from '../../utils/FragmentsEditorComponentUtils.es';
 import {removeFragmentEntryLinkAction} from '../../actions/removeFragmentEntryLinks.es';
+import {duplicateFragmentEntryLinkAction} from '../../actions/duplicateFragmentEntryLink.es';
 
 /**
  * FragmentEntryLink
@@ -207,12 +207,13 @@ class FragmentEntryLink extends Component {
 	_duplicateFragmentEntryLink() {
 		this.store
 			.dispatch(enableSavingChangesStatusAction())
-			.dispatch({
-				content: this.content,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				fragmentEntryLinkRowType: this.rowType,
-				type: DUPLICATE_FRAGMENT_ENTRY_LINK
-			})
+			.dispatch(
+				duplicateFragmentEntryLinkAction(
+					this.fragmentEntryLinkId,
+					this.rowType,
+					this.content
+				)
+			)
 			.dispatch(updateLastSaveDateAction())
 			.dispatch(disableSavingChangesStatusAction());
 	}

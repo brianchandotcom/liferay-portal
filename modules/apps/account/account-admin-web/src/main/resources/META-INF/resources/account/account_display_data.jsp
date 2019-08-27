@@ -16,6 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
+
+AccountEntry accountEntry = null;
+
+if (accountEntryId > 0) {
+	accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryId);
+}
+%>
+
 <div class="sheet-section">
 	<h3 class="sheet-subtitle">
 		<%= LanguageUtil.get(request, "account-display-data") %>
@@ -24,7 +34,7 @@
 	<aui:row>
 		<aui:col width="<%= 50 %>">
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input label="account-name" name="name" required="<%= true %>" type="text" />
+				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountEntry != null) ? accountEntry.getName() : StringPool.BLANK %>" />
 			</aui:field-wrapper>
 		</aui:col>
 
@@ -40,7 +50,7 @@
 	</aui:row>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input name="description" type="textarea" />
+		<aui:input name="description" type="textarea" value="<%= (accountEntry != null) ? accountEntry.getDescription() : StringPool.BLANK %>" />
 	</aui:field-wrapper>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">

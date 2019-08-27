@@ -168,8 +168,25 @@ public class SegmentsExperienceServiceTest {
 		}
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testDeleteSegmentsExperienceWithoutDeletePermission()
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				_classNameId, _classPK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperienceService.deleteSegmentsExperience(
+				segmentsExperience.getSegmentsExperienceId());
+		}
+	}
+
 	@Test
-	public void testDeleteSegmentsExperienceWithDeletePermissionAndWithUpdateLayoutPermission()
+	public void testDeleteSegmentsExperienceWithoutDeletePermissionAndWithUpdateLayoutPermission()
 		throws Exception {
 
 		SegmentsExperience segmentsExperience =
@@ -181,23 +198,6 @@ public class SegmentsExperienceServiceTest {
 			_group.getCompanyId(), Layout.class.getName(),
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			_role.getRoleId(), ActionKeys.UPDATE);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, PermissionCheckerFactoryUtil.create(_user))) {
-
-			_segmentsExperienceService.deleteSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId());
-		}
-	}
-
-	@Test(expected = PrincipalException.MustHavePermission.class)
-	public void testDeleteSegmentsExperienceWithoutDeletePermission()
-		throws Exception {
-
-		SegmentsExperience segmentsExperience =
-			SegmentsTestUtil.addSegmentsExperience(
-				_classNameId, _classPK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {

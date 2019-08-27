@@ -111,6 +111,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
+	duplicateFragment: {
+		icon: 'paste',
+		id: 'duplicate_fragment',
+		panelId: 'duplicate_fragment',
+		title: Liferay.Language.get('duplicate-fragment'),
+		type: 'panel'
+	},
+
 	edit: {
 		icon: 'pencil',
 		id: 'edit',

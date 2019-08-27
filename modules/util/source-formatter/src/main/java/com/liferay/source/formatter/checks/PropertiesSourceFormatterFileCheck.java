@@ -72,8 +72,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		content = _addMissingInternalLinkedWorkspaceNames(content, properties);
 
-		//return content;
-
 		return _formatSourceFormatterProperties(fileName, content, properties);
 	}
 

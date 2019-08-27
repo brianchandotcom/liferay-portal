@@ -12,7 +12,7 @@
  * details.
  */
 
-import ShareFormPopover from 'source/components/ShareFormPopover/ShareFormPopover.es';
+import ShareFormPopover from '../../../../src/main/resources/META-INF/resources/admin/js/components/ShareFormPopover/ShareFormPopover.es';
 
 const spritemap = 'spritemap';
 const url = 'publish/url';

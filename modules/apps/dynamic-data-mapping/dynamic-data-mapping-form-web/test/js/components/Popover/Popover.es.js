@@ -12,7 +12,7 @@
  * details.
  */
 
-import Popover from 'source/components/Popover/Popover.es';
+import Popover from '../../../../src/main/resources/META-INF/resources/admin/js/components/Popover/Popover.es';
 import {dom as MetalTestUtil} from 'metal-dom';
 
 const props = {

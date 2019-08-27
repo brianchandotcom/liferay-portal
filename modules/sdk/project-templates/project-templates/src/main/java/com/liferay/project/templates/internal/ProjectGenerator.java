@@ -32,10 +32,6 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -77,7 +73,8 @@ public class ProjectGenerator {
 			projectTemplatesArgs.setTemplate("mvc-portlet");
 		}
 
-		File templateFile = _getTemplateFile(projectTemplatesArgs);
+		File templateFile = ProjectTemplatesUtil.getTemplateFile(
+			projectTemplatesArgs);
 
 		String liferayVersions = FileUtil.getManifestProperty(
 			templateFile, "Liferay-Versions");
@@ -191,57 +188,6 @@ public class ProjectGenerator {
 		}
 
 		return archetypeGenerationResult;
-	}
-
-	private static File _getTemplateFile(
-			ProjectTemplatesArgs projectTemplatesArgs)
-		throws Exception {
-
-		String template = projectTemplatesArgs.getTemplate();
-		String templateVersion = projectTemplatesArgs.getTemplateVersion();
-
-		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
-			if (!archetypesDir.isDirectory()) {
-				continue;
-			}
-
-			Path archetypesDirPath = archetypesDir.toPath();
-
-			try (DirectoryStream<Path> directoryStream =
-					Files.newDirectoryStream(
-						archetypesDirPath, "*.project.templates.*")) {
-
-				for (Path path : directoryStream) {
-					String fileName = String.valueOf(path.getFileName());
-
-					String templateName = ProjectTemplatesUtil.getTemplateName(
-						fileName);
-
-					if (templateName.equals(template)) {
-						File templateFile = path.toFile();
-
-						if (templateVersion != null) {
-							String bundleVersion = FileUtil.getManifestProperty(
-								templateFile, "Bundle-Version");
-
-							if (templateVersion.equals(bundleVersion)) {
-								return templateFile;
-							}
-
-							continue;
-						}
-
-						return templateFile;
-					}
-				}
-			}
-		}
-
-		String artifactId =
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
-				template.replace('-', '.');
-
-		return ProjectTemplatesUtil.getArchetypeFile(artifactId);
 	}
 
 	private static boolean _isInVersionRange(

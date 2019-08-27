@@ -96,6 +96,10 @@ public class ProjectTemplatesArgs {
 		return _packageName;
 	}
 
+	public ProjectTemplatesArgsExt getProjectTemplatesArgsExt() {
+		return _projectTemplatesArgsExt;
+	}
+
 	public String getService() {
 		return _service;
 	}
@@ -208,6 +212,12 @@ public class ProjectTemplatesArgs {
 
 	public void setPackageName(String packageName) {
 		_packageName = packageName;
+	}
+
+	public void setProjectTemplatesArgsExt(
+		ProjectTemplatesArgsExt projectTemplatesArgsExt) {
+
+		_projectTemplatesArgsExt = projectTemplatesArgsExt;
 	}
 
 	public void setService(String service) {
@@ -363,6 +373,8 @@ public class ProjectTemplatesArgs {
 		names = "--package-name"
 	)
 	private String _packageName;
+
+	private ProjectTemplatesArgsExt _projectTemplatesArgsExt;
 
 	@Parameter(
 		description = "If a new DS component is generated, provide the name of the service to be implemented.",

@@ -25,6 +25,11 @@ import com.liferay.project.templates.internal.util.Validator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,6 +43,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.jar.Attributes;
@@ -173,7 +179,38 @@ public class ProjectTemplates {
 	public static void main(String[] args) throws Exception {
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
-		JCommander jCommander = new JCommander(projectTemplatesArgs);
+		JCommander.Builder builder = JCommander.newBuilder();
+
+		builder.addObject(projectTemplatesArgs);
+
+		JCommander jCommander = builder.build();
+
+		jCommander.parseWithoutValidation(args);
+		jCommander.setAcceptUnknownOptions(true);
+
+		File templateFile = ProjectTemplatesUtil.getTemplateFile(
+			projectTemplatesArgs);
+
+		ProjectTemplatesArgsExt projectTemplatesArgsExt =
+			_getProjectTemplateArgsExt(
+				projectTemplatesArgs.getTemplate(), templateFile);
+
+		builder = JCommander.newBuilder();
+
+		projectTemplatesArgs = new ProjectTemplatesArgs();
+
+		builder = builder.addObject(projectTemplatesArgs);
+
+		if (projectTemplatesArgsExt != null) {
+			builder = builder.addObject(projectTemplatesArgsExt);
+		}
+
+		jCommander = builder.build();
+
+		if (projectTemplatesArgsExt != null) {
+			projectTemplatesArgs.setProjectTemplatesArgsExt(
+				projectTemplatesArgsExt);
+		}
 
 		try {
 			Path jarPath = FileUtil.getJarPath();
@@ -265,6 +302,37 @@ public class ProjectTemplates {
 		if (!projectTemplatesArgs.isMaven()) {
 			FileUtil.deleteFiles(templateDirPath, "pom.xml");
 		}
+	}
+
+	private static ProjectTemplatesArgsExt _getProjectTemplateArgsExt(
+			String templateName, File archetypeFile)
+		throws MalformedURLException {
+
+		if (archetypeFile == null) {
+			return null;
+		}
+
+		URI uri = archetypeFile.toURI();
+
+		URLClassLoader urlClassLoader = new URLClassLoader(
+			new URL[] {uri.toURL()});
+
+		ServiceLoader<ProjectTemplatesArgsExt> serviceLoader =
+			ServiceLoader.load(ProjectTemplatesArgsExt.class, urlClassLoader);
+
+		Iterator<ProjectTemplatesArgsExt> iterator = serviceLoader.iterator();
+
+		while (iterator.hasNext()) {
+			ProjectTemplatesArgsExt projectTemplatesArgsExt = iterator.next();
+
+			if (templateName.equals(
+					projectTemplatesArgsExt.getTemplateName())) {
+
+				return projectTemplatesArgsExt;
+			}
+		}
+
+		return null;
 	}
 
 	private static void _printHelp(

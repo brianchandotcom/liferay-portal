@@ -14,10 +14,15 @@
 
 package com.liferay.project.templates.internal.util;
 
+import com.liferay.project.templates.FileUtil;
+import com.liferay.project.templates.ProjectTemplates;
+import com.liferay.project.templates.ProjectTemplatesArgs;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -168,6 +173,56 @@ public class ProjectTemplatesUtil {
 		}
 
 		return projectTemplateJarVersionsProperties;
+	}
+
+	public static File getTemplateFile(
+			ProjectTemplatesArgs projectTemplatesArgs)
+		throws Exception {
+
+		String template = projectTemplatesArgs.getTemplate();
+		String templateVersion = projectTemplatesArgs.getTemplateVersion();
+
+		for (File archetypesDir : projectTemplatesArgs.getArchetypesDirs()) {
+			if (!archetypesDir.isDirectory()) {
+				continue;
+			}
+
+			Path archetypesDirPath = archetypesDir.toPath();
+
+			try (DirectoryStream<Path> directoryStream =
+					Files.newDirectoryStream(
+						archetypesDirPath, "*.project.templates.*")) {
+
+				for (Path path : directoryStream) {
+					String fileName = String.valueOf(path.getFileName());
+
+					String templateName = getTemplateName(fileName);
+
+					if (templateName.equals(template)) {
+						File templateFile = path.toFile();
+
+						if (templateVersion != null) {
+							String bundleVersion = FileUtil.getManifestProperty(
+								templateFile, "Bundle-Version");
+
+							if (templateVersion.equals(bundleVersion)) {
+								return templateFile;
+							}
+
+							continue;
+						}
+
+						return templateFile;
+					}
+				}
+			}
+		}
+
+		String artifactId =
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
+				template.replace('-', '.');
+
+		return getArchetypeFile(artifactId);
 	}
 
 	public static String getTemplateName(String name) {

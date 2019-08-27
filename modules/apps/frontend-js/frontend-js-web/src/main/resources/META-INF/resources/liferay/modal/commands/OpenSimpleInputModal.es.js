@@ -12,6 +12,7 @@
  * details.
  */
 
+import navigate from '../../util/navigate.es';
 import SimpleInputModal from '../components/SimpleInputModal.es';
 
 /**
@@ -115,7 +116,7 @@ function openSimpleInputModal({
 
 	function handleSimpleInputModalSubmission(serverResponseContent) {
 		if (serverResponseContent.redirectURL) {
-			Liferay.Util.navigate(serverResponseContent.redirectURL, {
+			navigate(serverResponseContent.redirectURL, {
 				beforeScreenFlip: handleSimpleInputModalDisposal.bind(this)
 			});
 		} else {

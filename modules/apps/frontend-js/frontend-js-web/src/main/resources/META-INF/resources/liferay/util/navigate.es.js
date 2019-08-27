@@ -23,7 +23,7 @@
  */
 
 export default function(url, listeners) {
-	if (Liferay.SPA) {
+	if (Liferay.SPA && Liferay.SPA.app && Liferay.SPA.app.canNavigate(url)) {
 		Liferay.SPA.app.navigate(url);
 
 		if (listeners) {

@@ -28,20 +28,20 @@
 	</div>
 
 	<c:if test="<%= persistState %>">
-		<aui:script position="auto" use="io-request,liferay-store,parse-content">
+		<aui:script position="auto" use="io-request,parse-content">
 			var collapse = $('#<%= id %>');
 
 			collapse.on(
 				'hidden.bs.collapse',
 				function(event) {
-					Liferay.Store('<%= PanelCategory.class.getName() %><%= id %>', 'closed');
+					Liferay.Util.Session.set('<%= PanelCategory.class.getName() %><%= id %>', 'closed');
 				}
 			);
 
 			collapse.on(
 				'shown.bs.collapse',
 				function(event) {
-					Liferay.Store('<%= PanelCategory.class.getName() %><%= id %>', 'open');
+					Liferay.Util.Session.set('<%= PanelCategory.class.getName() %><%= id %>', 'open');
 				}
 			);
 		</aui:script>

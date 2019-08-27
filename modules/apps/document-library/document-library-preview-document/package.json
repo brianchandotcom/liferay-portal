@@ -10,24 +10,11 @@
 		"metal-state": "2.16.8"
 	},
 	"jest": {
-		"globals": {
-			"Liferay": {}
-		},
 		"moduleNameMapper": {
 			"(.+/DocumentPreviewer\\.soy)": "$1.js"
 		},
-		"setupFilesAfterEnv": [
-			"<rootDir>/test/setup/index.js"
-		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
-		],
-		"testPathIgnorePatterns": [
-			"<rootDir>/test/setup/",
-			"<rootDir>/node_modules/"
-		],
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
 		]
 	},
 	"name": "document-library-preview-document",

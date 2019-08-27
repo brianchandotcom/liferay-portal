@@ -1,0 +1,131 @@
+definition {
+
+	macro _addUser {
+		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
+
+		var userFirstNameEncoded = URLUtil.encodeUTF8("${userFirstName}");
+
+		var userLastNameEncoded = URLUtil.encodeUTF8("${userLastName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-user \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d autoPassword=true \
+				-d password1=test \
+				-d password2=test \
+				-d autoScreenName=false \
+				-d screenName=${userScreenName} \
+				-d emailAddress=${userEmailAddress} \
+				-d facebookId=0 \
+				-d openId= \
+				-d locale= \
+				-d firstName=${userFirstNameEncoded} \
+				-d middleName= \
+				-d lastName=${userLastNameEncoded} \
+				-d prefixId=0 \
+				-d suffixId=0 \
+				-d male=true \
+				-d birthdayMonth=4 \
+				-d birthdayDay=31 \
+				-d birthdayYear=1986 \
+				-d jobTitle= \
+				-d groupIds= \
+				-d organizationIds= \
+				-d roleIds= \
+				-d userGroupIds= \
+				-d sendEmail=true
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _agreeToTermsAndAnswerReminderQuery {
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _deleteUser {
+		Variables.assertDefined(parameterList = "${userId}");
+
+		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/delete-user \
+				-u test@liferay.com:test \
+				-d userId=${userId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _disablePasswordChangeRequired {
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/passwordpolicy/search/company-id/${companyId}/name/default/start/0/end/1/-obc \
+				-u test@liferay.com:test
+		''';
+
+		var passwordPolicyId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == 'Default Password Policy')]['passwordPolicyId']");
+		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "[&quot;", "");
+		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "&quot;]", "");
+
+		var curl = '''
+			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \
+				-u test@liferay.com:test \
+				-d passwordPolicyId=${passwordPolicyId} \
+				-d name='Default Password Policy' \
+				-d description='Default Password Policy' \
+				-d changeable=true \
+				-d changeRequired=false \
+				-d minAge=0 \
+				-d checkSyntax=false \
+				-d allowDictionaryWords=true \
+				-d minAlphanumeric=0 \
+				-d minLength=6 \
+				-d minLowerCase=0 \
+				-d minNumbers=1 \
+				-d minSymbols=0 \
+				-d minUpperCase=1 \
+				-d regex="(?=.{4})(?:[a-zA-Z0-9]*)" \
+				-d history=false \
+				-d historyCount=6 \
+				-d expireable=false \
+				-d maxAge=8640000 \
+				-d warningTime=86400 \
+				-d graceLimit=0 \
+				-d lockout=false \
+				-d maxFailure=3 \
+				-d lockoutDuration=0 \
+				-d resetFailureCount=600 \
+				-d resetTicketMaxAge=86400
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

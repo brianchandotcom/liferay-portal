@@ -1,0 +1,73 @@
+definition {
+
+	macro _addRole {
+		Variables.assertDefined(parameterList = "${roleTitle}");
+
+		if (isSet(roleDescription)) {
+			var roleDescriptionEncoded = URLUtil.encodeUTF8("${roleDescription}");
+
+			var roleDescriptionMap = '''{"en_US":"${roleDescriptionEncoded}"}''';
+		}
+		else {
+			var roleDescriptionMap = "{}";
+		}
+
+		if (isSet(roleKey)) {
+			var roleKeyEncoded = URLUtil.encodeUTF8("${roleKey}");
+
+			var roleKeyMap = '''{"en_US":"${roleKeyEncoded}"}''';
+		}
+		else {
+			var roleKeyMap = "{}";
+		}
+
+		if ("${roleType}" == "regular") {
+			var roleTypeId = "1";
+		}
+		else if ("${roleType}" == "site") {
+			var roleTypeId = "2";
+		}
+		else if ("${roleType}" == "organization") {
+			var roleTypeId = "3";
+		}
+		else {
+			fail("Invalid 'roleType', '${roleType}' must be 'regular/site/organization'.");
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/role/add-role \
+				-u test@liferay.com:test \
+				-d className=com.liferay.portal.kernel.model.Role \
+				-d classPK=0 \
+				-d name=${roleTitleEncoded} \
+				-d titleMap=${roleKeyMap} \
+				-d descriptionMap=${roleDescriptionMap} \
+				-d type=${roleTypeId} \
+				-d subtype=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _assignRoleToUser {
+		Variables.assertDefined(parameterList = "${roleId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-role-users \
+				-u test@liferay.com:test \
+				-d roleId=${roleId} \
+				-d userIds=${userId}
+		''';
+
+		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
+
+		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

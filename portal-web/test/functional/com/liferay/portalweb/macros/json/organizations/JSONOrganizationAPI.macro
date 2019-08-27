@@ -1,0 +1,59 @@
+definition {
+
+	macro _addOrganization {
+		Variables.assertDefined(parameterList = "${organizationName}");
+
+		var organizationNameEncoded = URLUtil.encodeUTF8("${organizationName}");
+
+		if (!(isSet(organizationSite))) {
+			var organizationSite = "false";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/add-organization \
+				-u test@liferay.com:test \
+				-d parentOrganizationId=0 \
+				-d name=${organizationNameEncoded} \
+				-d type=organization \
+				-d regionId=0 \
+				-d countryId=0 \
+				-d statusId=12017 \
+				-d comments= \
+				-d site=${organizationSite}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _assignUserToOrganization {
+		Variables.assertDefined(parameterList = "${organizationId},${userId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/add-organization-users \
+				-u test@liferay.com:test \
+				-d organizationId=${organizationId} \
+				-d userIds=${userId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	macro _deleteOrganization {
+		Variables.assertDefined(parameterList = "${organizationId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/delete-organization \
+				-u test@liferay.com:test \
+				-d organizationId=${organizationId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

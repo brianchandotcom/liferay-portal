@@ -211,55 +211,55 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 	const diffMap = {
 		[TODAY]: () => {
 			return {
-				index: 4,
+				offset: 4,
 				padLeft: 0,
-				padRight: lengthKeys
+				padRight: 0
 			};
 		},
 		[YESTERDAY]: () => {
 			return {
-				index: 6,
+				offset: 6,
 				padLeft: 0,
-				padRight: lengthKeys
+				padRight: 0
 			};
 		},
 		[LAST_7_DAYS]: () => {
 			return {
-				index: 1,
+				offset: 1,
 				padLeft: 0,
-				padRight: lengthKeys
+				padRight: 0
 			};
 		},
 		[LAST_30_DAYS]: type => {
 			if (type === DAYS) {
 				return {
-					index: 6,
+					offset: 6,
 					padLeft: 0,
 					padRight: diffRightDays < 2 ? diffRightDays + 2 : 0
 				};
 			}
 			return {
-				index: 1,
+				offset: 1,
 				padLeft: 0,
-				padRight: lengthKeys
+				padRight: 0
 			};
 		},
 		[LAST_90_DAYS]: type => {
 			if (type === DAYS) {
 				return {
-					index: 11,
+					offset: 11,
 					padLeft: 0,
-					padRight: lengthKeys - 3
+					padRight: 3
 				};
 			} else if (type === WEEKS) {
 				return {
-					index: 2,
+					offset: 2,
 					padLeft: 0,
 					padRight: 0
 				};
 			}
 			return {
-				index: 1,
+				offset: 1,
 				padLeft: 0,
 				padRight: 0
 			};
@@ -267,13 +267,13 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 		[LAST_180_DAYS]: type => {
 			if (type === WEEKS) {
 				return {
-					index: 4,
+					offset: 4,
 					padLeft: 0,
 					padRight: 3
 				};
 			}
 			return {
-				index: 1,
+				offset: 1,
 				padLeft: diffLeftDays < 14 ? 1 : 0,
 				padRight: 0
 			};
@@ -282,13 +282,13 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 			if (type === WEEKS) {
 				const lengthWeek = lengthKeys === 52 ? 5 : 6;
 				return {
-					index: parseInt(lengthKeys / lengthWeek),
+					offset: parseInt(lengthKeys / lengthWeek),
 					padLeft: 0,
-					padRight: 5
+					padRight: 6
 				};
 			} else if (type === YEARS) {
 				return {
-					index: lengthKeys > 12 ? parseInt(lengthKeys / 6) : 1,
+					offset: lengthKeys > 12 ? parseInt(lengthKeys / 6) : 1,
 					padLeft:
 						(lengthKeys > 12 && diffLeftMonths < 7) ||
 						diffLeftMonths < 2
@@ -298,7 +298,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 				};
 			}
 			return {
-				index: parseInt(lengthKeys / 5),
+				offset: parseInt(lengthKeys / 5),
 				padLeft: 0,
 				padRight: 0
 			};
@@ -312,7 +312,7 @@ export const getXAxisIntervals = (timeRange, keys, type) => {
 		(key, index) =>
 			index === 0 ||
 			index === lengthKeys - 1 ||
-			(index % diffIndex.index === 0 &&
+			(index % diffIndex.offset === 0 &&
 				index > diffIndex.padLeft &&
 				index < lengthKeys - diffIndex.padRight + 1)
 	);

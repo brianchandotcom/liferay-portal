@@ -28,9 +28,7 @@ const SidebarMappedContents = () => {
 
 	return (
 		<>
-			<SidebarHeader>
-				{Liferay.Language.get('mapped-contents')}
-			</SidebarHeader>
+			<SidebarHeader>{Liferay.Language.get('contents')}</SidebarHeader>
 
 			{view}
 		</>

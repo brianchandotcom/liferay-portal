@@ -494,9 +494,9 @@ public class ContentPageEditorDisplayContext {
 			availableSoyContext.put(
 				"icon", "list-ul"
 			).put(
-				"label", LanguageUtil.get(resourceBundle, "mapped-contents")
+				"label", LanguageUtil.get(resourceBundle, "contents")
 			).put(
-				"sidebarPanelId", "mapped-contents"
+				"sidebarPanelId", "contents"
 			);
 
 			soyContexts.add(availableSoyContext);

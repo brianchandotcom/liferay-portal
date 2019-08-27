@@ -23,6 +23,10 @@ import {removeFragmentEntryLinksAction} from './removeFragmentEntryLinks.es';
 import {updateWidgetsAction} from './updateWidgets.es';
 import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es';
 
+/**
+ * Removes a row of the layout data structure
+ * @param {number} rowId
+ */
 function removeRowAction(rowId) {
 	return function(dispatch, getState) {
 		const state = getState();

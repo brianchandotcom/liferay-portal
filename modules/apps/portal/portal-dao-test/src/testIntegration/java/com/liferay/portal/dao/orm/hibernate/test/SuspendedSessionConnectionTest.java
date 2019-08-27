@@ -88,15 +88,12 @@ public class SuspendedSessionConnectionTest {
 		TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.REQUIRES_NEW);
-		builder.setRollbackForClasses(Exception.class);
 
 		_innerTransactionConfig = builder.build();
 
 		builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.SUPPORTS);
-		builder.setReadOnly(true);
-		builder.setRollbackForClasses(Exception.class);
 
 		_outerTransactionConfig = builder.build();
 	}

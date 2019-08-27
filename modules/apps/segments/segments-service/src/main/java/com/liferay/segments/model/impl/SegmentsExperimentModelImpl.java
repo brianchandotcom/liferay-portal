@@ -116,7 +116,7 @@ public class SegmentsExperimentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperiment (uuid_ VARCHAR(75) null,segmentsExperimentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceId LONG,segmentsExperimentKey VARCHAR(75) null,classNameId LONG,classPK LONG,name VARCHAR(75) null,description VARCHAR(75) null,typeSettings TEXT null,status INTEGER)";
+		"create table SegmentsExperiment (uuid_ VARCHAR(75) null,segmentsExperimentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceId LONG,segmentsExperimentKey VARCHAR(75) null,classNameId LONG,classPK LONG,name VARCHAR(75) null,description STRING null,typeSettings TEXT null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperiment";
 

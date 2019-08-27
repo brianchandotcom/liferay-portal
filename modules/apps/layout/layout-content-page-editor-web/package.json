@@ -24,11 +24,6 @@
 		"react": "16.9.0",
 		"react-dom": "16.9.0"
 	},
-	"jest": {
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
-		]
-	},
 	"name": "layout-content-page-editor-web",
 	"optionalDependencies": {
 		"fsevents": "^1.2.7"

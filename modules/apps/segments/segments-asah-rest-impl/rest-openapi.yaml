@@ -34,6 +34,21 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    "/experiments/{experimentId}":
+        delete:
+            operationId: deleteExperiment
+            parameters:
+                - in: path
+                  name: experimentId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                    description: ""
+            tags: ["Experiment"]
     "/experiments/{experimentId}/status":
         post:
             operationId: postExperimentStatus

@@ -19,13 +19,6 @@ import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete} from '../../utils/client.es';
 
-const EMPTY_STATE = {
-	description: Liferay.Language.get(
-		'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
-	),
-	title: Liferay.Language.get('there-are-no-form-views-yet')
-};
-
 export default ({
 	match: {
 		params: {dataDefinitionId}
@@ -35,9 +28,9 @@ export default ({
 
 	const getItemURL = item =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
-				dataDefinitionId,
-				dataLayoutId: item.id,
-				mvcRenderCommandName: '/edit_form_view'
+			dataDefinitionId,
+			dataLayoutId: item.id,
+			mvcRenderCommandName: '/edit_form_view'
 		});
 
 	const handleEditItem = item => {
@@ -94,7 +87,20 @@ export default ({
 				/>
 			)}
 			columns={COLUMNS}
-			emptyState={EMPTY_STATE}
+			emptyState={{
+				button: () => (
+					<Button
+						displayType="secondary"
+						onClick={() => Liferay.Util.navigate(addURL)}
+					>
+						{Liferay.Language.get('new-form-view')}
+					</Button>
+				),
+				description: Liferay.Language.get(
+					'create-one-or-more-forms-to-display-the-data-held-in-your-data-object'
+				),
+				title: Liferay.Language.get('there-are-no-form-views-yet')
+			}}
 			endpoint={`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`}
 			formatter={items =>
 				items.map(item => ({

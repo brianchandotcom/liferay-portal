@@ -338,16 +338,11 @@ definition {
 			password = "test",
 			userEmailAddress = "userea5@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		ProductMenuHelper.expandPanel(panel = "Control Panel");
 
-		var key_siteName = "Site Name";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Sites#SITE_TABLE_NAME_UNVIEWABLE",
-			value1 = "Site Name");
+		AssertElementNotPresent(
+			key_category = "Sites",
+			locator1 = "ProductMenu#CATEGORY");
 
 		User.logoutUserPG();
 
@@ -394,16 +389,11 @@ definition {
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		ProductMenuHelper.expandPanel(panel = "Control Panel");
 
-		var key_siteName = "Site Name";
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Sites#SITE_TABLE_NAME",
-			value1 = "Site Name");
+		AssertElementNotPresent(
+			key_category = "Sites",
+			locator1 = "ProductMenu#CATEGORY");
 
 		User.logoutUserPG();
 

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY</td>
+	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_COLLAPSED</td>
 	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='false']</td>
 	<td></td>

@@ -363,7 +363,9 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						Folder folder = fileEntry.getFolder();
 
-						viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+						long folderId = (folder == null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : folder.getFolderId();
+
+						viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 						%>
 
 						<clay:sticker
@@ -374,7 +376,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 						<clay:link
 							href="<%= viewFolderURL.toString() %>"
-							label="<%= folder.getName() %>"
+							label='<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : folder.getName() %>'
 							style="secondary"
 						/>
 					</dd>

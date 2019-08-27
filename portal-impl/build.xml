@@ -176,7 +176,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
 					<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 					<arg value="license.report.override.properties.file=${project.dir}/lib/license-override.properties" />
-					<arg value="rdf.file=${project.dir}/lib/spdx.rdf" />
+					<arg value="spdx.file=${project.dir}/lib/spdx.rdf" />
 				</java>
 			</then>
 		</if>

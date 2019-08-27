@@ -72,7 +72,7 @@ public class SPDXBuilder {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String rdfFileName = ArgumentsUtil.getString(
-			arguments, "rdf.file", null);
+			arguments, "spdx.file", null);
 		String licenseReportPropertiesFileName = ArgumentsUtil.getString(
 			arguments, "license.report.override.properties.file", null);
 

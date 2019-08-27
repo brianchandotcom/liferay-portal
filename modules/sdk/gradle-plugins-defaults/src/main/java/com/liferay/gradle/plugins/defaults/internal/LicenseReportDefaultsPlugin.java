@@ -150,7 +150,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 		public BaseLicenseReportConfigurator(Project project) {
 			this.project = project;
 
-			_licenseOverridePropertiesFile = _getLicenseOverridePropertiesFile();
+			_licenseOverridePropertiesFile =
+				_getLicenseOverridePropertiesFile();
 		}
 
 		@Override

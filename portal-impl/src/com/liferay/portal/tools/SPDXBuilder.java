@@ -80,10 +80,12 @@ public class SPDXBuilder {
 		Properties licenseOverrideProperties = new Properties();
 
 		if (Validator.isNotNull(licenseOverridePropertiesFileName)) {
-			File licenseOverridePropertiesfile = new File(licenseOverridePropertiesFileName);
+			File licenseOverridePropertiesfile = new File(
+				licenseOverridePropertiesFileName);
 
 			if (licenseOverridePropertiesfile.exists()) {
-				licenseOverrideProperties.load(new FileInputStream(licenseOverridePropertiesfile));
+				licenseOverrideProperties.load(
+					new FileInputStream(licenseOverridePropertiesfile));
 			}
 		}
 
@@ -93,8 +95,7 @@ public class SPDXBuilder {
 	}
 
 	public SPDXBuilder(
-		String[] xmls, File spdxFile,
-		Properties licenseOverrideProperties) {
+		String[] xmls, File spdxFile, Properties licenseOverrideProperties) {
 
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
@@ -219,8 +220,7 @@ public class SPDXBuilder {
 
 	@SuppressWarnings("unchecked")
 	private Document _getDocument(
-			String[] xmls, File spdxFile,
-			Properties licenseOverrideProperties)
+			String[] xmls, File spdxFile, Properties licenseOverrideProperties)
 		throws Exception {
 
 		Comparator<String> comparator = String.CASE_INSENSITIVE_ORDER;

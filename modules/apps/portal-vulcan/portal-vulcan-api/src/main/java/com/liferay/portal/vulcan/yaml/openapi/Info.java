@@ -23,6 +23,10 @@ public class Info {
 		return _description;
 	}
 
+	public License getLicense() {
+		return _license;
+	}
+
 	public String getTitle() {
 		return _title;
 	}
@@ -35,6 +39,10 @@ public class Info {
 		_description = description;
 	}
 
+	public void setLicense(License license) {
+		_license = license;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -44,6 +52,7 @@ public class Info {
 	}
 
 	private String _description;
+	private License _license;
 	private String _title;
 	private String _version;
 

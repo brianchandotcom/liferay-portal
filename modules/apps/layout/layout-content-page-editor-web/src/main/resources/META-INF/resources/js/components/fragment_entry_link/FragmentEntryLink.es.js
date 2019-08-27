@@ -18,9 +18,15 @@ import {Config} from 'metal-state';
 
 import '../floating_toolbar/fragment_configuration/FloatingToolbarFragmentConfigurationPanel.es';
 import './FragmentEntryLinkContent.es';
+import {
+	disableSavingChangesStatusAction,
+	enableSavingChangesStatusAction,
+	updateLastSaveDateAction
+} from '../../actions/saveChanges.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import templates from './FragmentEntryLink.soy';
 import {
+	DUPLICATE_FRAGMENT_ENTRY_LINK,
 	MOVE_FRAGMENT_ENTRY_LINK,
 	UPDATE_ACTIVE_ITEM,
 	UPDATE_SELECTED_SIDEBAR_PANEL_ID
@@ -84,6 +90,15 @@ class FragmentEntryLink extends Component {
 				sidebarPanel => sidebarPanel.sidebarPanelId === 'comments'
 			)
 		};
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	created() {
+		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
+			this
+		);
 	}
 
 	/**
@@ -163,6 +178,9 @@ class FragmentEntryLink extends Component {
 		const config = {
 			anchorElement: this.element,
 			buttons: this._getFloatingToolbarButtons(),
+			events: {
+				buttonClicked: this._handleFloatingToolbarButtonClicked
+			},
 			item: {
 				configuration: this._configuration,
 				configurationValues: this._configurationValues,
@@ -180,6 +198,23 @@ class FragmentEntryLink extends Component {
 		} else {
 			this._floatingToolbar = new FloatingToolbar(config);
 		}
+	}
+
+	/**
+	 * Duplicate this fragmentEntryLink
+	 * @private
+	 */
+	_duplicateFragmentEntryLink() {
+		this.store
+			.dispatch(enableSavingChangesStatusAction())
+			.dispatch({
+				content: this.content,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				fragmentEntryLinkRowType: this.rowType,
+				type: DUPLICATE_FRAGMENT_ENTRY_LINK
+			})
+			.dispatch(updateLastSaveDateAction())
+			.dispatch(disableSavingChangesStatusAction());
 	}
 
 	/**
@@ -202,11 +237,40 @@ class FragmentEntryLink extends Component {
 	_getFloatingToolbarButtons() {
 		const buttons = [];
 
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.removeFragment);
+
+		buttons.push(FLOATING_TOOLBAR_BUTTONS.duplicateFragment);
+
 		if (this._shouldShowConfigPanel()) {
 			buttons.push(FLOATING_TOOLBAR_BUTTONS.fragmentConfiguration);
 		}
 
 		return buttons;
+	}
+
+	/**
+	 * Callback executed when an floating toolbar button is clicked
+	 * @param {Event} event
+	 * @param {Object} data
+	 * @private
+	 */
+	_handleFloatingToolbarButtonClicked(event, data) {
+		const {panelId} = data;
+
+		if (panelId === FLOATING_TOOLBAR_BUTTONS.removeFragment.panelId) {
+			event.preventDefault();
+
+			removeItem(
+				this.store,
+				removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
+			);
+		} else if (
+			panelId === FLOATING_TOOLBAR_BUTTONS.duplicateFragment.panelId
+		) {
+			event.preventDefault();
+
+			this._duplicateFragmentEntryLink();
+		}
 	}
 
 	/**
@@ -415,6 +479,7 @@ const ConnectedFragmentEntryLink = getConnectedComponent(FragmentEntryLink, [
 	'dropTargetItemId',
 	'dropTargetItemType',
 	'dropTargetBorder',
+	'duplicateFragmentEntryLinkURL',
 	'enableConfiguration',
 	'fragmentEditorEnabled',
 	'fragmentEntryLinks',

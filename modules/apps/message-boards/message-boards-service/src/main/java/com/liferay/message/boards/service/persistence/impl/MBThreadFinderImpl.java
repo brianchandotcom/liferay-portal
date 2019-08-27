@@ -30,19 +30,22 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
+@Component(service = MBThreadFinder.class)
 public class MBThreadFinderImpl
 	extends MBThreadFinderBaseImpl implements MBThreadFinder {
 
@@ -558,7 +561,7 @@ public class MBThreadFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBThread.class));
+			qPos.add(_portal.getClassNameId(MBThread.class));
 
 			return q.list(true);
 		}
@@ -736,7 +739,7 @@ public class MBThreadFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBThread.class.getName()));
+			qPos.add(_portal.getClassNameId(MBThread.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -960,7 +963,7 @@ public class MBThreadFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBThread.class.getName()));
+			qPos.add(_portal.getClassNameId(MBThread.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -1026,7 +1029,7 @@ public class MBThreadFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBThread.class.getName()));
+			qPos.add(_portal.getClassNameId(MBThread.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -1163,7 +1166,7 @@ public class MBThreadFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBThread.class.getName()));
+			qPos.add(_portal.getClassNameId(MBThread.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -1202,7 +1205,10 @@ public class MBThreadFinderImpl
 
 	private static final String _USER_ID_SQL = "AND (MBMessage.userId = ?)";
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private Portal _portal;
 
 }

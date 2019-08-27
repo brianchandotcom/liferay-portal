@@ -26,14 +26,10 @@ import com.liferay.app.builder.web.internal.portlet.ProductMenuAppPortlet;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Dictionary;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.Portlet;
@@ -60,17 +56,22 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void deploy(long appId) throws Exception {
+		String portletName = _getPortletName(appId);
+		String panelCategoryKey = _getPanelCategoryKey(appId);
+
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
 
 		String appName = appBuilderApp.getName(
 			LocaleThreadLocal.getDefaultLocale());
 
-		_deployAppPortlet(appId, appName);
-
-		_deployAppPanelApp(appId);
-
-		_deployAppPanelCategory(appId, appName);
+		_serviceRegistrationsMap.computeIfAbsent(
+			appId,
+			key -> new ServiceRegistration<?>[] {
+				_deployAppPanelApp(portletName, panelCategoryKey),
+				_deployAppPanelCategory(appName, panelCategoryKey),
+				_deployAppPortlet(appName, portletName)
+			});
 
 		appBuilderApp.setStatus(
 			AppBuilderAppConstants.Status.DEPLOYED.getValue());
@@ -80,8 +81,8 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 	@Override
 	public void undeploy(long appId) throws Exception {
-		List<ServiceRegistration> serviceRegistrations =
-			_serviceRegistrationsMap.get(appId);
+		ServiceRegistration<?>[] serviceRegistrations =
+			_serviceRegistrationsMap.remove(appId);
 
 		if (serviceRegistrations == null) {
 			return;
@@ -90,8 +91,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		for (ServiceRegistration serviceRegistration : serviceRegistrations) {
 			serviceRegistration.unregister();
 		}
-
-		_serviceRegistrationsMap.remove(appId);
 
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(appId);
@@ -102,84 +101,61 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
-	private void _addServiceRegistration(
-		long appId, ServiceRegistration serviceRegistration) {
+	private ServiceRegistration<?> _deployAppPanelApp(
+		String portletName, String panelCategoryKey) {
 
-		List<ServiceRegistration> serviceRegistrations =
-			_serviceRegistrationsMap.get(appId);
-
-		if (serviceRegistrations == null) {
-			_serviceRegistrationsMap.put(
-				appId, new ArrayList<>(Arrays.asList(serviceRegistration)));
-		}
-		else {
-			serviceRegistrations.add(serviceRegistration);
-		}
+		return _bundleContext.registerService(
+			PanelApp.class, new ProductMenuAppPanelApp(portletName),
+			new HashMapDictionary<String, Object>() {
+				{
+					put("panel.app.order:Integer", 100);
+					put("panel.category.key", panelCategoryKey);
+				}
+			});
 	}
 
-	private void _deployAppPanelApp(long appId) {
-		com.liferay.portal.kernel.model.Portlet portlet =
-			_portletLocalService.getPortletById(_getPortletName(appId));
+	private ServiceRegistration<?> _deployAppPanelCategory(
+		String appName, String panelCategoryKey) {
 
-		ProductMenuAppPanelApp productMenuAppPanelApp =
-			new ProductMenuAppPanelApp(portlet);
+		Dictionary<String, Object> properties =
+			new HashMapDictionary<String, Object>() {
+				{
+					put("key", panelCategoryKey);
+					put("label", appName);
+					put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
+					put("panel.category.order:Integer", 600);
+				}
+			};
 
-		Dictionary properties = new HashMapDictionary() {
-			{
-				put("panel.app.order:Integer", 100);
-				put("panel.category.key", _getPanelCategoryKey(appId));
-			}
-		};
-
-		_addServiceRegistration(
-			appId,
-			_bundleContext.registerService(
-				PanelApp.class, productMenuAppPanelApp, properties));
+		return _bundleContext.registerService(
+			PanelCategory.class, new ProductMenuAppPanelCategory(properties),
+			properties);
 	}
 
-	private void _deployAppPanelCategory(long appId, String appName) {
-		Dictionary properties = new HashMapDictionary() {
-			{
-				put("key", _getPanelCategoryKey(appId));
-				put("label", appName);
-				put("panel.category.key", PanelCategoryKeys.CONTROL_PANEL);
-				put("panel.category.order:Integer", 600);
-			}
-		};
+	private ServiceRegistration<?> _deployAppPortlet(
+		String appName, String portletName) {
 
-		_addServiceRegistration(
-			appId,
-			_bundleContext.registerService(
-				PanelCategory.class,
-				new ProductMenuAppPanelCategory(properties), properties));
-	}
-
-	private void _deployAppPortlet(long appId, String appName) {
-		_addServiceRegistration(
-			appId,
-			_bundleContext.registerService(
-				Portlet.class, new ProductMenuAppPortlet(),
-				new HashMapDictionary() {
-					{
-						put("com.liferay.portlet.add-default-resource", true);
-						put(
-							"com.liferay.portlet.display-category",
-							"category.hidden");
-						put("com.liferay.portlet.use-default-template", "true");
-						put("javax.portlet.display-name", appName);
-						put("javax.portlet.name", _getPortletName(appId));
-						put(
-							"javax.portlet.init-param.template-path",
-							"/META-INF/resources/");
-						put(
-							"javax.portlet.init-param.view-template",
-							"/view.jsp");
-						put(
-							"javax.portlet.security-role-ref",
-							"administrator,guest,power-user,user ");
-						put("javax.portlet.supports.mime-type", "text/html ");
-					}
-				}));
+		return _bundleContext.registerService(
+			Portlet.class, new ProductMenuAppPortlet(),
+			new HashMapDictionary<String, Object>() {
+				{
+					put("com.liferay.portlet.add-default-resource", true);
+					put(
+						"com.liferay.portlet.display-category",
+						"category.hidden");
+					put("com.liferay.portlet.use-default-template", "true");
+					put("javax.portlet.display-name", appName);
+					put("javax.portlet.name", portletName);
+					put(
+						"javax.portlet.init-param.template-path",
+						"/META-INF/resources/");
+					put("javax.portlet.init-param.view-template", "/view.jsp");
+					put(
+						"javax.portlet.security-role-ref",
+						"administrator,guest,power-user,user ");
+					put("javax.portlet.supports.mime-type", "text/html ");
+				}
+			});
 	}
 
 	private String _getPanelCategoryKey(long appId) {
@@ -195,11 +171,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private PortletLocalService _portletLocalService;
-
-	private final ConcurrentHashMap<Long, List<ServiceRegistration>>
+	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
 		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

@@ -234,10 +234,10 @@ public class SegmentsExperimentLocalServiceWrapper
 	public com.liferay.segments.model.SegmentsExperiment
 		fetchSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
-			int status) {
+			int[] statuses) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, status);
+			segmentsExperienceId, classNameId, classPK, statuses);
 	}
 
 	@Override
@@ -455,10 +455,11 @@ public class SegmentsExperimentLocalServiceWrapper
 
 	@Override
 	public boolean hasSegmentsExperiment(
-		long segmentsExperienceId, long classNameId, long classPK, int status) {
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] statuses) {
 
 		return _segmentsExperimentLocalService.hasSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, status);
+			segmentsExperienceId, classNameId, classPK, statuses);
 	}
 
 	@Override

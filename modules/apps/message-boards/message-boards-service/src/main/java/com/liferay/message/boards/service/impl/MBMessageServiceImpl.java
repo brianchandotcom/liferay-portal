@@ -23,13 +23,16 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
+import com.liferay.message.boards.service.MBCategoryLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
+import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -39,7 +42,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,10 +49,9 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
@@ -70,11 +71,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  * @author Shuyang Zhou
  */
+@Component(
+	property = {
+		"json.web.service.context.name=mb",
+		"json.web.service.context.path=MBMessage"
+	},
+	service = AopService.class
+)
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
@@ -158,7 +169,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryLocalService.getCategory(categoryId);
+		MBCategory category = _mbCategoryLocalService.getCategory(categoryId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -195,7 +206,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), parentMessageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), parentMessage.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -238,7 +249,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -370,7 +381,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		String name = StringPool.BLANK;
 		String description = StringPool.BLANK;
 
-		MBCategory category = mbCategoryLocalService.fetchMBCategory(
+		MBCategory category = _mbCategoryLocalService.fetchMBCategory(
 			categoryId);
 
 		if (category == null) {
@@ -646,7 +657,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		List<MBMessage> messages = new ArrayList<>();
 
-		MBThread thread = mbThreadLocalService.getThread(threadId);
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
 		if (_messageModelResourcePermission.contains(
 				getPermissionChecker(), thread.getRootMessageId(),
@@ -778,7 +789,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), messageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -804,7 +815,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
 
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
 			priority = thread.getPriority();
@@ -845,7 +856,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), messageId, ActionKeys.UPDATE);
 		}
 
-		if (LockManagerUtil.isLocked(
+		if (_lockManager.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			StringBundler sb = new StringBundler(4);
@@ -871,7 +882,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				message.getGroupId(), message.getCategoryId(),
 				ActionKeys.UPDATE_THREAD_PRIORITY)) {
 
-			MBThread thread = mbThreadLocalService.getThread(
+			MBThread thread = _mbThreadLocalService.getThread(
 				message.getThreadId());
 
 			priority = thread.getPriority();
@@ -929,7 +940,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			SyndEntry syndEntry = _syndModelFactory.createSyndEntry();
 
 			if (!message.isAnonymous()) {
-				String author = PortalUtil.getUserName(message);
+				String author = _portal.getUserName(message);
 
 				syndEntry.setAuthor(author);
 			}
@@ -994,21 +1005,33 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return _rssExporter.export(syndFeed);
 	}
 
-	private static volatile ModelResourcePermission<MBCategory>
-		_categoryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MBCategoryServiceImpl.class, "_categoryModelResourcePermission",
-				MBCategory.class);
-	private static volatile ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				MBMessageServiceImpl.class, "_messageModelResourcePermission",
-				MBMessage.class);
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_categoryModelResourcePermission;
 
-	@ServiceReference(type = RSSExporter.class)
+	@Reference
+	private LockManager _lockManager;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
+	)
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
 	private RSSExporter _rssExporter;
 
-	@ServiceReference(type = SyndModelFactory.class)
+	@Reference
 	private SyndModelFactory _syndModelFactory;
 
 }

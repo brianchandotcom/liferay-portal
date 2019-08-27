@@ -52,16 +52,26 @@ public class AccountDisplay {
 		return _statusLabel;
 	}
 
+	public String getStatusLabelStyle() {
+		return _statusLabelStyle;
+	}
+
 	public String getWebsite() {
 		return _website;
 	}
 
+	public boolean isActive() {
+		return _active;
+	}
+
 	private AccountDisplay(AccountEntry accountEntry) {
 		_accountId = accountEntry.getAccountEntryId();
+		_active = _isActive(accountEntry);
 		_description = accountEntry.getDescription();
 		_name = accountEntry.getName();
 		_parentAccountName = _getParentAccountName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
+		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
 		_website = _getWebsite(accountEntry);
 	}
 
@@ -97,6 +107,20 @@ public class AccountDisplay {
 		return StringPool.BLANK;
 	}
 
+	private String _getStatusLabelStyle(AccountEntry accountEntry) {
+		int status = accountEntry.getStatus();
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return "success";
+		}
+
+		if (status == WorkflowConstants.STATUS_INACTIVE) {
+			return "secondary";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private String _getWebsite(AccountEntry accountEntry) {
 		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
 			accountEntry.getCompanyId(), AccountEntry.class.getName(),
@@ -111,11 +135,23 @@ public class AccountDisplay {
 		return website.getUrl();
 	}
 
+	private boolean _isActive(AccountEntry accountEntry) {
+		int status = accountEntry.getStatus();
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final long _accountId;
+	private final boolean _active;
 	private final String _description;
 	private final String _name;
 	private final String _parentAccountName;
 	private final String _statusLabel;
+	private final String _statusLabelStyle;
 	private final String _website;
 
 }

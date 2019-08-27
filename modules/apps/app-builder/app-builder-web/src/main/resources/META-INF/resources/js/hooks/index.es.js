@@ -13,6 +13,6 @@
  */
 
 import useKeyDown from './useKeyDown.es';
-import useTitle from './useTitle.es';
+import useSidebarContent from './useSidebarContent.es';
 
-export {useKeyDown, useTitle};
+export {useKeyDown, useSidebarContent};

@@ -27,7 +27,6 @@ import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -40,10 +39,9 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -52,10 +50,14 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  * @author Sergio González
  */
+@Component(service = MBCategoryFinder.class)
 public class MBCategoryFinderImpl
 	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
@@ -282,7 +284,7 @@ public class MBCategoryFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
+			qPos.add(_portal.getClassNameId(MBCategory.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -541,7 +543,7 @@ public class MBCategoryFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
+			qPos.add(_portal.getClassNameId(MBCategory.class.getName()));
 			qPos.add(groupId);
 			qPos.add(userId);
 
@@ -718,19 +720,22 @@ public class MBCategoryFinderImpl
 		return _customSQL.appendCriteria(sql, "AND (MBCategory.status = ?)");
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
-	@ServiceReference(type = GroupLocalService.class)
+	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@BeanReference(type = MBMessageLocalService.class)
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
-	@BeanReference(type = MBThreadLocalService.class)
+	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
 
-	@ServiceReference(type = SubscriptionLocalService.class)
+	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

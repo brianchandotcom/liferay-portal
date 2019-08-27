@@ -148,6 +148,7 @@ function SegmentsExperimentsSidebar({
 
 				setSegmentsExperiment({
 					description: segmentsExperiment.description,
+					editable: segmentsExperiment.editable,
 					goal: segmentsExperiment.goal,
 					name: segmentsExperiment.name,
 					segmentsEntryName: segmentsExperiment.segmentsEntryName,
@@ -162,6 +163,7 @@ function SegmentsExperimentsSidebar({
 				setCreationModal({
 					active: true,
 					description: segmentsExperiment.description,
+					editable: segmentsExperiment.editable,
 					error: Liferay.Language.get('create-test-error'),
 					name: segmentsExperiment.name,
 					segmentsEntryName: segmentsExperiment.segmentsEntryName,
@@ -175,6 +177,7 @@ function SegmentsExperimentsSidebar({
 		setEditionModal({
 			active: true,
 			description: segmentsExperiment.description,
+			editable: segmentsExperiment.editable,
 			goal: segmentsExperiment.goal,
 			name: segmentsExperiment.name,
 			segmentsEntryName: segmentsExperiment.segmentsEntryName,
@@ -204,6 +207,7 @@ function SegmentsExperimentsSidebar({
 
 				setSegmentsExperiment({
 					description: segmentsExperiment.description,
+					editable: segmentsExperiment.editable,
 					goal: segmentsExperiment.goal,
 					name: segmentsExperiment.name,
 					segmentsEntryName: segmentsExperiment.segmentsEntryName,
@@ -218,6 +222,7 @@ function SegmentsExperimentsSidebar({
 				setEditionModal({
 					active: true,
 					description: segmentsExperiment.description,
+					editable: segmentsExperiment.editable,
 					error: Liferay.Language.get('edit-test-error'),
 					name: segmentsExperiment.name,
 					segmentsEntryName: segmentsExperiment.segmentsEntryName,

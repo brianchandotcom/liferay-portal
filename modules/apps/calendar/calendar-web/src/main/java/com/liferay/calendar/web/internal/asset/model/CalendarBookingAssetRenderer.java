@@ -171,6 +171,9 @@ public class CalendarBookingAssetRenderer
 
 			portletURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
 			portletURL.setParameter(
+				"returnToFullPageURL",
+				PortalUtil.getCurrentURL(liferayPortletRequest));
+			portletURL.setParameter(
 				"calendarBookingId",
 				String.valueOf(_calendarBooking.getCalendarBookingId()));
 			portletURL.setWindowState(WindowState.MAXIMIZED);

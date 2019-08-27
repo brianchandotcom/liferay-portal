@@ -270,7 +270,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Record set
 
-		ddlRecordSetPersistence.remove(recordSet);
+		super.deleteDDLRecordSet(recordSet);
 
 		// Resources
 

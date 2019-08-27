@@ -19,11 +19,9 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
-import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,32 +30,16 @@ import java.util.Comparator;
 public class MBMessageDisplayImpl implements MBMessageDisplay {
 
 	public MBMessageDisplayImpl(
-		long userId, MBMessage message, MBMessage parentMessage,
-		MBCategory category, MBThread thread, int status,
-		MBMessageLocalService messageLocalService,
-		Comparator<MBMessage> comparator) {
+		MBMessage message, MBMessage parentMessage, List<MBMessage> messages,
+		MBCategory category, MBThread thread, int discussionMessagesCount) {
 
 		_message = message;
 		_parentMessage = parentMessage;
 		_category = category;
 		_thread = thread;
+		_discussionMessagesCount = discussionMessagesCount;
 
-		_treeWalker = new MBTreeWalkerImpl(
-			userId, message.getThreadId(), status, messageLocalService,
-			comparator);
-
-		int dicussionMessagesCount = 0;
-
-		if (message.isDiscussion() &&
-			(PropsValues.DISCUSSION_MAX_COMMENTS > 0)) {
-
-			dicussionMessagesCount =
-				messageLocalService.getDiscussionMessagesCount(
-					message.getClassName(), message.getClassPK(),
-					WorkflowConstants.STATUS_APPROVED);
-		}
-
-		_discussionMessagesCount = dicussionMessagesCount;
+		_treeWalker = new MBTreeWalkerImpl(messages);
 	}
 
 	@Override

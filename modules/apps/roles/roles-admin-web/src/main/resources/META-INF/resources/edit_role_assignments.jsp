@@ -107,7 +107,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	<portlet:param name="tabs1" value="assignees" />
 </portlet:actionURL>
 
-<aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
+<aui:script use="liferay-item-selector-dialog">
 	var form = document.<portlet:namespace />fm;
 
 	var addAssignees = function(event) {
@@ -119,9 +119,12 @@ renderResponse.setTitle(role.getTitle(locale));
 						var selectedItem = event.newVal;
 
 						if (selectedItem) {
-							var assignmentsRedirect = Liferay.PortletURL.createURL('<%= portletURL.toString() %>');
-
-							assignmentsRedirect.setParameter('tabs2', selectedItem.type);
+							var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
+								'<%= portletURL.toString() %>',
+								{
+									'tabs2': selectedItem.type
+								}
+							);
 
 							var data = {
 								redirect: assignmentsRedirect.toString()

@@ -18,6 +18,7 @@ import {withRouter} from 'react-router-dom';
 import CustomObjectPopover from './CustomObjectPopover.es';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import ListView from '../../components/list-view/ListView.es';
 import {useKeyDown} from '../../hooks/index.es';
 import {confirmDelete} from '../../utils/client.es';
@@ -145,6 +146,15 @@ export default withRouter(({history}) => {
 
 	return (
 		<>
+			<ControlMenu
+				title={Liferay.Language.get(
+					'javax.portlet.title.com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet'
+				)}
+				tooltip={Liferay.Language.get(
+					'javax.portlet.description.com_liferay_app_builder_web_internal_portlet_CustomObjectsPortlet'
+				)}
+			/>
+
 			<ListView
 				actions={ACTIONS}
 				addButton={() => (

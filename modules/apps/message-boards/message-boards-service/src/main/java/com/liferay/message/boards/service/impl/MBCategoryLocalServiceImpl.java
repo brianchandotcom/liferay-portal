@@ -22,8 +22,10 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.service.MBMailingListLocalService;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -48,10 +49,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
+@Component(
+	property = "model.class.name=com.liferay.message.boards.model.MBCategory",
+	service = AopService.class
+)
 public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
@@ -238,7 +246,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		// Threads
 
-		mbThreadLocalService.deleteThreads(
+		_mbThreadLocalService.deleteThreads(
 			category.getGroupId(), category.getCategoryId(),
 			includeTrashedEntries);
 
@@ -834,7 +842,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
+		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -852,13 +860,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int messageCount = mbMessageLocalService.getCategoryMessagesCount(
+		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		mbCategory.setMessageCount(messageCount);
 
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
+		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -897,7 +905,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			return null;
 		}
 
-		int threadCount = mbThreadLocalService.getCategoryThreadsCount(
+		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
 			mbCategory.getGroupId(), mbCategory.getCategoryId(),
 			WorkflowConstants.STATUS_APPROVED);
 
@@ -976,7 +984,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			mergeCategories(category, toCategoryId);
 		}
 
-		List<MBThread> threads = mbThreadLocalService.getThreads(
+		List<MBThread> threads = _mbThreadLocalService.getThreads(
 			fromCategory.getGroupId(), fromCategory.getCategoryId(),
 			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -986,9 +994,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			thread.setCategoryId(toCategoryId);
 
-			mbThreadLocalService.updateMBThread(thread);
+			_mbThreadLocalService.updateMBThread(thread);
 
-			List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 				thread.getThreadId(), WorkflowConstants.STATUS_ANY, null);
 
 			for (MBMessage message : messages) {
@@ -997,7 +1005,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				message.setCategoryId(toCategoryId);
 
-				mbMessageLocalService.updateMBMessage(message);
+				_mbMessageLocalService.updateMBMessage(message);
 
 				// Indexer
 
@@ -1040,7 +1048,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				mbThreadLocalService.updateMBThread(thread);
+				_mbThreadLocalService.updateMBThread(thread);
 
 				// Trash
 
@@ -1052,7 +1060,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				// Threads
 
-				mbThreadLocalService.moveDependentsToTrash(
+				_mbThreadLocalService.moveDependentsToTrash(
 					thread.getGroupId(), thread.getThreadId(), trashEntryId);
 
 				// Indexer
@@ -1124,11 +1132,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(oldStatus);
 
-				mbThreadLocalService.updateMBThread(thread);
+				_mbThreadLocalService.updateMBThread(thread);
 
 				// Threads
 
-				mbThreadLocalService.restoreDependentsFromTrash(
+				_mbThreadLocalService.restoreDependentsFromTrash(
 					thread.getGroupId(), thread.getThreadId());
 
 				// Trash
@@ -1208,10 +1216,16 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 	}
 
-	@BeanReference(type = MBMailingListLocalService.class)
+	@Reference
 	private MBMailingListLocalService _mbMailingListLocalService;
 
-	@ServiceReference(type = SubscriptionLocalService.class)
+	@Reference
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;
 
 }

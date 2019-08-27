@@ -16,6 +16,7 @@ import PropTypes from 'prop-types';
 
 const SegmentsExperimentType = PropTypes.shape({
 	description: PropTypes.string,
+	editable: PropTypes.bool.isRequired,
 	goal: SegmentsExperimentGoal,
 	name: PropTypes.string.isRequired,
 	segmentsEntryName: PropTypes.string.isRequired,

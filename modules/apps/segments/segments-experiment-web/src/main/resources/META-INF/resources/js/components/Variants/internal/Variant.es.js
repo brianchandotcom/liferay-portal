@@ -23,6 +23,7 @@ import SegmentsExperimentsContext from '../../../context.es';
 function Variant({
 	active,
 	control = false,
+	editable,
 	name,
 	onVariantDeletion,
 	onVariantEdition,
@@ -56,7 +57,7 @@ function Variant({
 				</ClayList.ItemTitle>
 			</ClayList.ItemField>
 
-			{!control && (
+			{!control && editable && (
 				<>
 					<ClayList.ItemField>
 						<ClayButton
@@ -148,6 +149,7 @@ function Variant({
 Variant.propTypes = {
 	active: PropTypes.bool.isRequired,
 	control: PropTypes.bool.isRequired,
+	editable: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,

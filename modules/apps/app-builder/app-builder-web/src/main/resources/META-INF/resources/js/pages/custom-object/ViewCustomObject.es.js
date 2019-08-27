@@ -18,9 +18,9 @@ import CustomObjectNavigationBar from './CustomObjectNavigationBar.es';
 import ListApps from '../app/ListApps.es';
 import EditFormView from '../form-view/EditFormView.es';
 import ListFormViews from '../form-view/ListFormViews.es';
-import {useTitle} from '../../hooks/index.es';
 import EditTableView from '../table-view/EditTableView.es';
 import ListTableViews from '../table-view/ListTableViews.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import {getItem} from '../../utils/client.es';
 
 export default ({
@@ -36,8 +36,6 @@ export default ({
 			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
 		).then(dataDefinition => setTitle(dataDefinition.name.en_US));
 	}, [dataDefinitionId]);
-
-	useTitle(title);
 
 	return (
 		<Switch>
@@ -61,6 +59,7 @@ export default ({
 				path={path}
 				render={() => (
 					<>
+						<ControlMenu backURL="/" title={title} />
 						<CustomObjectNavigationBar />
 
 						<Switch>

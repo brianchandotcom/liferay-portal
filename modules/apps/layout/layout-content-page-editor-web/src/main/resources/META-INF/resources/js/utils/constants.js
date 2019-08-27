@@ -103,11 +103,20 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel'
 	},
 
+
 	content: {
 		icon: 'bolt',
 		id: 'content',
 		panelId: 'content',
 		title: Liferay.Language.get('content'),
+  	type: 'panel'
+	},
+
+	duplicateFragment: {
+		icon: 'paste',
+		id: 'duplicate_fragment',
+		panelId: 'duplicate_fragment',
+		title: Liferay.Language.get('duplicate-fragment'),
 		type: 'panel'
 	},
 
@@ -163,6 +172,14 @@ export const FLOATING_TOOLBAR_BUTTONS = {
 		id: 'mapping',
 		panelId: 'mapping',
 		title: Liferay.Language.get('map'),
+		type: 'panel'
+	},
+
+	removeFragment: {
+		icon: 'times-circle',
+		id: 'remove_fragment',
+		panelId: 'remove_fragment',
+		title: Liferay.Language.get('remove-fragment'),
 		type: 'panel'
 	},
 

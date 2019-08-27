@@ -15,17 +15,14 @@
 package com.liferay.app.builder.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
-import com.liferay.portal.kernel.model.Portlet;
 
 /**
  * @author Jeyvison Nascimento
  */
 public class ProductMenuAppPanelApp extends BasePanelApp {
 
-	public ProductMenuAppPanelApp(Portlet portlet) {
-		_portletId = portlet.getPortletId();
-
-		setPortlet(portlet);
+	public ProductMenuAppPanelApp(String portletId) {
+		_portletId = portletId;
 	}
 
 	@Override

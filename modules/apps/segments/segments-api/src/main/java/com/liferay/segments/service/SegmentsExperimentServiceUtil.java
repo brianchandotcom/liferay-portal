@@ -54,11 +54,11 @@ public class SegmentsExperimentServiceUtil {
 	public static com.liferay.segments.model.SegmentsExperiment
 			fetchSegmentsExperiment(
 				long segmentsExperienceId, long classNameId, long classPK,
-				int status)
+				int[] statuses)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().fetchSegmentsExperiment(
-			segmentsExperienceId, classNameId, classPK, status);
+			segmentsExperienceId, classNameId, classPK, statuses);
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment

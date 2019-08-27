@@ -14,6 +14,7 @@
 
 export const segmentsExperiment = {
 	description: 'Experiment 1 description',
+	editable: true,
 	goal: {
 		label: 'Time On Page',
 		target: '',

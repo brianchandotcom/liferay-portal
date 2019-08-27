@@ -19,7 +19,7 @@ import {addItem, getItem, updateItem} from '../../utils/client.es';
 import UpperToolbar, {
 	UpperToolbarItem
 } from '../../components/upper-toolbar/UpperToolbar.es';
-import useSidebarContent from '../../hooks/useSidebarContent.es';
+import {useSidebarContent} from '../../hooks/index.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import {AppContext} from '../../AppContext.es';
 

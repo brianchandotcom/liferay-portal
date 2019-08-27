@@ -93,6 +93,18 @@ function addStructuredContent(ddmFormValues, ddmStructureId, title) {
 }
 
 /**
+ * @param {string} fragmentEntryLinkId
+ * @return {Promise<Response>}
+ */
+function duplicateFragmentEntryLink(fragmentEntryLinkId) {
+	const state = _store.getState();
+
+	return _fetch(state.duplicateFragmentEntryLinkURL, {
+		fragmentEntryLinkId
+	});
+}
+
+/**
  * @param {object} fragmentEntryLinks
  * @return {Promise<Response>}
  */
@@ -294,6 +306,7 @@ export {
 	addSegmentsExperience,
 	addStructuredContent,
 	deleteFragmentEntryLinkComment,
+	duplicateFragmentEntryLink,
 	editFragmentEntryLinks,
 	editFragmentEntryLinkComment,
 	getAssetFieldValue,

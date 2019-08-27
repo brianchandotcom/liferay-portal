@@ -239,6 +239,9 @@ public interface AppBuilderAppLocalService
 	public List<AppBuilderApp> getAppBuilderApps(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderApps(long companyId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);

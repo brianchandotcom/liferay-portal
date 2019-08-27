@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.source.formatter.BNDSettings;
+import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 
@@ -38,13 +39,6 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 			String fileContent)
 		throws IOException {
 
-		if (!absolutePath.contains("-web/src/") ||
-			absolutePath.contains("/test/") ||
-			absolutePath.contains("/testIntegration/")) {
-
-			return javaTerm.getContent();
-		}
-
 		JavaClass javaClass = (JavaClass)javaTerm;
 
 		if (javaClass.hasAnnotation("Deprecated")) {
@@ -53,7 +47,24 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 
 		String packageName = javaClass.getPackageName();
 
-		if ((packageName == null) || packageName.contains(".internal.") ||
+		if (packageName == null) {
+			return javaClass.getContent();
+		}
+
+		if (packageName.contains(".impl.") || packageName.endsWith(".impl")) {
+			_checkImplPackageName(fileName, packageName);
+
+			return javaClass.getContent();
+		}
+
+		if (!absolutePath.contains("-web/src/") ||
+			absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/")) {
+
+			return javaTerm.getContent();
+		}
+
+		if (packageName.contains(".internal.") ||
 			packageName.endsWith(".internal")) {
 
 			return javaClass.getContent();
@@ -80,6 +91,28 @@ public class JavaInternalPackageCheck extends BaseJavaTermCheck {
 	@Override
 	protected String[] getCheckableJavaTermNames() {
 		return new String[] {JAVA_CLASS};
+	}
+
+	private void _checkImplPackageName(String fileName, String packageName)
+		throws IOException {
+
+		BNDSettings bndSettings = getBNDSettings(fileName);
+
+		if (bndSettings == null) {
+			return;
+		}
+
+		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+			bndSettings.getContent(), "Bundle-SymbolicName");
+
+		if (bundleSymbolicName.endsWith(".impl") &&
+			packageName.contains(bundleSymbolicName)) {
+
+			addMessage(
+				fileName,
+				"Use 'internal' instead of 'impl' in package '" + packageName +
+					"'");
+		}
 	}
 
 }

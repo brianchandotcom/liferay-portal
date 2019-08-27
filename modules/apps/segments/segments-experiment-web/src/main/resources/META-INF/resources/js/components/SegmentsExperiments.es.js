@@ -77,30 +77,33 @@ function SegmentsExperiments({
 						<h3 className="mb-0 text-dark text-truncate">
 							{segmentsExperiment.name}
 						</h3>
-						<ClayDropDown
-							active={dropdown}
-							onActiveChange={setDropdown}
-							trigger={
-								<ClayButton
-									aria-label={Liferay.Language.get(
-										'show-actions'
-									)}
-									borderless
-									displayType="secondary"
-									small={true}
-								>
-									<ClayIcon symbol="ellipsis-v" />
-								</ClayButton>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item
-									onClick={_handleEditExperiment}
-								>
-									{Liferay.Language.get('edit')}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
+
+						{segmentsExperiment.editable && (
+							<ClayDropDown
+								active={dropdown}
+								onActiveChange={setDropdown}
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'show-actions'
+										)}
+										borderless
+										displayType="secondary"
+										small={true}
+									>
+										<ClayIcon symbol="ellipsis-v" />
+									</ClayButton>
+								}
+							>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item
+										onClick={_handleEditExperiment}
+									>
+										{Liferay.Language.get('edit')}
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						)}
 					</div>
 
 					<ClayLabel
@@ -116,6 +119,7 @@ function SegmentsExperiments({
 					/>
 
 					<Variants
+						editable={segmentsExperiment.editable}
 						onVariantCreation={onVariantCreation}
 						onVariantDeletion={onVariantDeletion}
 						onVariantEdition={onVariantEdition}

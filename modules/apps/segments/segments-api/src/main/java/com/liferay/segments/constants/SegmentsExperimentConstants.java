@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Eduardo García
@@ -74,8 +75,8 @@ public class SegmentsExperimentConstants {
 
 	public enum Status {
 
-		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", true),
-		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true) {
+		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", false, true),
+		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -85,7 +86,7 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_NO_WINNER(
-			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner",
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner", false,
 			true) {
 
 			@Override
@@ -95,7 +96,7 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_WINNER_DECLARED(
-			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", true) {
+			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -103,7 +104,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		PAUSED(STATUS_PAUSED, "PAUSED", "paused", true) {
+		PAUSED(STATUS_PAUSED, "PAUSED", "paused", false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -111,7 +112,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		RUNNING(STATUS_RUNNING, "RUNNING", "running", true) {
+		RUNNING(STATUS_RUNNING, "RUNNING", "running", false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -123,7 +124,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", true) {
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -131,7 +132,17 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true);
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", false, true);
+
+		public static int[] exclusiveStates() {
+			Stream<Status> stream = Arrays.stream(Status.values());
+
+			return stream.filter(
+				Status::isExclusive
+			).mapToInt(
+				Status::getValue
+			).toArray();
+		}
 
 		public static Optional<Status> parse(int value) {
 			for (Status status : values()) {
@@ -201,6 +212,10 @@ public class SegmentsExperimentConstants {
 			return _value;
 		}
 
+		public boolean isEditable() {
+			return _editable;
+		}
+
 		public boolean isExclusive() {
 			return _exclusive;
 		}
@@ -215,14 +230,17 @@ public class SegmentsExperimentConstants {
 		}
 
 		private Status(
-			int value, String stringValue, String label, boolean exclusive) {
+			int value, String stringValue, String label, boolean editable,
+			boolean exclusive) {
 
 			_value = value;
 			_stringValue = stringValue;
 			_label = label;
+			_editable = editable;
 			_exclusive = exclusive;
 		}
 
+		private final boolean _editable;
 		private final boolean _exclusive;
 		private final String _label;
 		private final String _stringValue;

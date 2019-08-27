@@ -16,7 +16,9 @@ package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MBMessageFinderBaseImpl extends BasePersistenceImpl<MBMessage> {
+public abstract class MBMessageFinderBaseImpl
+	extends BasePersistenceImpl<MBMessage> {
 
 	public MBMessageFinderBaseImpl() {
 		setModelClass(MBMessage.class);
@@ -43,33 +50,49 @@ public class MBMessageFinderBaseImpl extends BasePersistenceImpl<MBMessage> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getMBMessagePersistence().getBadColumnNames();
+		return mbMessagePersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the message-boards message persistence.
-	 *
-	 * @return the message-boards message persistence
-	 */
-	public MBMessagePersistence getMBMessagePersistence() {
-		return mbMessagePersistence;
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the message-boards message persistence.
-	 *
-	 * @param mbMessagePersistence the message-boards message persistence
-	 */
-	public void setMBMessagePersistence(
-		MBMessagePersistence mbMessagePersistence) {
-
-		this.mbMessagePersistence = mbMessagePersistence;
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = MBMessagePersistence.class)
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected MBMessagePersistence mbMessagePersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(MBPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

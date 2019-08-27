@@ -18,11 +18,11 @@ import EditTableViewTabColumns from './EditTableViewTabColumns.es';
 import Button from '../../components/button/Button.es';
 import {Loading} from '../../components/loading/Loading.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
-import {useTitle} from '../../hooks/index.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
 import UpperToolbar, {
 	UpperToolbarItem
 } from '../../components/upper-toolbar/UpperToolbar.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 
 const {Body} = Sidebar;
 
@@ -42,8 +42,6 @@ export default ({
 	if (dataListViewId) {
 		title = Liferay.Language.get('edit-table-view');
 	}
-
-	useTitle(title);
 
 	const onChange = event => {
 		const name = event.target.value;
@@ -133,54 +131,64 @@ export default ({
 	const {name: {en_US: dataListViewName = ''} = {}} = dataListView || {};
 
 	return (
-		<Loading isLoading={dataDefinition === null}>
-			<form
-				onSubmit={event => {
-					event.preventDefault();
+		<>
+			<ControlMenu backURL="../" title={title} />
 
-					handleSubmit();
-				}}
-			>
-				<UpperToolbar>
-					<UpperToolbarItem expand={true}>
-						<div className="input-group">
-							<div className="input-group-item">
-								<input
-									aria-label={Liferay.Language.get(
-										'untitled-table-view'
-									)}
-									className="form-control form-control-inline"
-									onChange={onChange}
-									placeholder={Liferay.Language.get(
-										'untitled-table-view'
-									)}
-									type="text"
-									value={dataListViewName}
-								/>
+			<Loading isLoading={dataDefinition === null}>
+				<form
+					onSubmit={event => {
+						event.preventDefault();
+
+						handleSubmit();
+					}}
+				>
+					<UpperToolbar>
+						<UpperToolbarItem expand={true}>
+							<div className="input-group">
+								<div className="input-group-item">
+									<input
+										aria-label={Liferay.Language.get(
+											'untitled-table-view'
+										)}
+										className="form-control form-control-inline"
+										onChange={onChange}
+										placeholder={Liferay.Language.get(
+											'untitled-table-view'
+										)}
+										type="text"
+										value={dataListViewName}
+									/>
+								</div>
 							</div>
-						</div>
-					</UpperToolbarItem>
-					<UpperToolbarItem>
-						<Button
-							className="mr-3"
-							displayType="secondary"
-							onClick={() => history.goBack()}
-							small
-						>
-							{Liferay.Language.get('cancel')}
-						</Button>
-						<Button className="mr-3" onClick={handleSubmit} small>
-							{Liferay.Language.get('save')}
-						</Button>
-					</UpperToolbarItem>
-				</UpperToolbar>
-			</form>
-			<Sidebar onSearch={() => {}}>
-				<Body>
-					<EditTableViewTabs />
-					<EditTableViewTabColumns columns={dataDefinitionFields} />
-				</Body>
-			</Sidebar>
-		</Loading>
+						</UpperToolbarItem>
+						<UpperToolbarItem>
+							<Button
+								className="mr-3"
+								displayType="secondary"
+								onClick={() => history.goBack()}
+								small
+							>
+								{Liferay.Language.get('cancel')}
+							</Button>
+							<Button
+								className="mr-3"
+								onClick={handleSubmit}
+								small
+							>
+								{Liferay.Language.get('save')}
+							</Button>
+						</UpperToolbarItem>
+					</UpperToolbar>
+				</form>
+				<Sidebar onSearch={() => {}}>
+					<Body>
+						<EditTableViewTabs />
+						<EditTableViewTabColumns
+							columns={dataDefinitionFields}
+						/>
+					</Body>
+				</Sidebar>
+			</Loading>
+		</>
 	);
 };

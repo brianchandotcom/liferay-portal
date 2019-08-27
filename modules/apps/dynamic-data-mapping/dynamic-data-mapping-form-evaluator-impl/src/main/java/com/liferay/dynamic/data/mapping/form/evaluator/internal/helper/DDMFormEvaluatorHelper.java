@@ -389,6 +389,19 @@ public class DDMFormEvaluatorHelper {
 		return false;
 	}
 
+	protected boolean isFieldVisible(
+		DDMFormEvaluatorFieldContextKey ddmFormFieldContextKey) {
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			_ddmFormFieldsPropertyChanges.get(ddmFormFieldContextKey);
+
+		if (ddmFormFieldPropertyChanges == null) {
+			return true;
+		}
+
+		return GetterUtil.get(ddmFormFieldPropertyChanges.get("visible"), true);
+	}
+
 	protected void setRequiredErrorMessage(
 		DDMFormEvaluatorFieldContextKey fieldContextKey) {
 
@@ -432,6 +445,10 @@ public class DDMFormEvaluatorHelper {
 			entry.getKey();
 
 		if (isFieldEmpty(ddmFormEvaluatorFieldContextKey)) {
+			return;
+		}
+
+		if (!isFieldVisible(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 

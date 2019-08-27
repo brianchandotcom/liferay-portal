@@ -34,7 +34,10 @@ import {
 	getFragmentColumn,
 	getFragmentRowIndex
 } from '../utils/FragmentsEditorGetUtils.es';
-import {updatePageEditorLayoutData} from '../utils/FragmentsEditorFetchUtils.es';
+import {
+	duplicateFragmentEntryLink,
+	updatePageEditorLayoutData
+} from '../utils/FragmentsEditorFetchUtils.es';
 
 /**
  * Adds a fragment at the corresponding container in the layout
@@ -254,18 +257,7 @@ function addFragmentEntryLinkReducer(state, action) {
 					nextState.segmentsExperienceId
 				);
 			})
-			.then(() =>
-				getFragmentEntryLinkContent(
-					nextState.renderFragmentEntryURL,
-					fragmentEntryLink,
-					nextState.portletNamespace,
-					nextState.segmentsExperienceId ||
-						nextState.defaultSegmentsExperienceId
-				)
-			)
-			.then(response => {
-				fragmentEntryLink = response;
-
+			.then(() => {
 				nextState = setIn(
 					nextState,
 					[
@@ -278,6 +270,68 @@ function addFragmentEntryLinkReducer(state, action) {
 				nextState = setIn(nextState, ['layoutData'], nextData);
 
 				resolve(nextState);
+			})
+			.catch(() => {
+				resolve(nextState);
+			});
+	});
+}
+
+/**
+ * @param {object} state
+ * @param {object} action
+ * @param {string} action.fragmentEntryLinkId
+ * @param {string} action.fragmentEntryLinkRowType
+ * @return {object}
+ * @review
+ */
+function duplicateFragmentEntryLinkReducer(state, action) {
+	let nextState = state;
+
+	return new Promise(resolve => {
+		duplicateFragmentEntryLink(action.fragmentEntryLinkId)
+			.then(response => response.json())
+			.then(response => {
+				const fragmentEntryLink = setIn(
+					response,
+					['content'],
+					action.content
+				);
+
+				let nextData = nextState.layoutData;
+
+				nextData = _duplicateFragment(
+					action.fragmentEntryLinkId,
+					fragmentEntryLink,
+					action.fragmentEntryLinkRowType,
+					nextData
+				);
+
+				updatePageEditorLayoutData(
+					nextData,
+					nextState.segmentsExperienceId
+				)
+					.then(response => {
+						if (response.error) {
+							throw response.error;
+						}
+
+						nextState = setIn(nextState, ['layoutData'], nextData);
+
+						nextState = setIn(
+							nextState,
+							[
+								'fragmentEntryLinks',
+								fragmentEntryLink.fragmentEntryLinkId
+							],
+							fragmentEntryLink
+						);
+
+						resolve(nextState);
+					})
+					.catch(() => {
+						resolve(nextState);
+					});
 			})
 			.catch(() => {
 				resolve(nextState);
@@ -612,9 +666,9 @@ function _addFragmentEntryLink(
 			return {
 				config: {},
 				configuration: response.configuration,
-				content: '',
+				content: response.content,
 				defaultConfigurationValues: response.defaultConfigurationValues,
-				editableValues: JSON.parse(response.editableValues),
+				editableValues: response.editableValues,
 				fragmentEntryKey,
 				fragmentEntryLinkId: response.fragmentEntryLinkId,
 				name: fragmentName
@@ -679,6 +733,58 @@ function _addSingleFragmentRow(
 		[fragmentEntryLinkId],
 		fragmentEntryLinkRowType
 	);
+}
+
+/**
+ * Duplicate a fragment inside layoutData
+ * @param {string} originalFragmentEntryLinkId
+ * @param {object} fragmentEntryLink
+ * @param {string} fragmentEntryLinkRowType
+ * @param {object} layoutData
+ * @private
+ * @return {object}
+ * @review
+ */
+function _duplicateFragment(
+	originalFragmentEntryLinkId,
+	fragmentEntryLink,
+	fragmentEntryLinkRowType,
+	layoutData
+) {
+	let nextData = layoutData;
+
+	if (fragmentEntryLinkRowType === FRAGMENTS_EDITOR_ROW_TYPES.componentRow) {
+		const fragmentColumn = getFragmentColumn(
+			layoutData.structure,
+			originalFragmentEntryLinkId
+		);
+
+		const position = fragmentColumn.fragmentEntryLinkIds.indexOf(
+			originalFragmentEntryLinkId
+		);
+
+		nextData = _addFragmentToColumn(
+			layoutData,
+			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentColumn.columnId,
+			position + 1
+		);
+	} else {
+		const position =
+			getFragmentRowIndex(
+				layoutData.structure,
+				originalFragmentEntryLinkId
+			) + 1;
+
+		nextData = _addSingleFragmentRow(
+			layoutData,
+			fragmentEntryLink.fragmentEntryLinkId,
+			fragmentEntryLinkRowType,
+			position
+		);
+	}
+
+	return nextData;
 }
 
 /**
@@ -768,6 +874,7 @@ export {
 	addFragment,
 	addFragmentEntryLinkReducer,
 	deleteFragmentEntryLinkCommentReducer,
+	duplicateFragmentEntryLinkReducer,
 	getFragmentEntryLinkContent,
 	moveFragmentEntryLinkReducer,
 	removeFragmentEntryLinkReducer,

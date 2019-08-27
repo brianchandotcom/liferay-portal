@@ -100,7 +100,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			fetchSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperienceId,
-				long classNameId, long classPK, int status)
+				long classNameId, long classPK, int[] statuses)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -109,7 +109,8 @@ public class SegmentsExperimentServiceHttp {
 				_fetchSegmentsExperimentParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperienceId, classNameId, classPK, status);
+				methodKey, segmentsExperienceId, classNameId, classPK,
+				statuses);
 
 			Object returnObj = null;
 
@@ -384,7 +385,7 @@ public class SegmentsExperimentServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes1 =
-		new Class[] {long.class, long.class, long.class, int.class};
+		new Class[] {long.class, long.class, long.class, int[].class};
 	private static final Class<?>[] _fetchSegmentsExperimentParameterTypes2 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]

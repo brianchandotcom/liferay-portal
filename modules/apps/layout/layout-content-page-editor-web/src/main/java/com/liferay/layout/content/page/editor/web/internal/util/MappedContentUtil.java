@@ -23,8 +23,9 @@ import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -37,12 +38,14 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.HashSet;
@@ -59,17 +62,79 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MappedContentUtil {
 
+	public static AssetEntry getAssetEntry(
+		JSONObject jsonObject, Set<Long> mappedClassPKs) {
+
+		if (!jsonObject.has("classNameId") || !jsonObject.has("classPK")) {
+			return null;
+		}
+
+		long classPK = jsonObject.getLong("classPK");
+
+		if (classPK <= 0) {
+			return null;
+		}
+
+		if (mappedClassPKs.contains(classPK)) {
+			return null;
+		}
+
+		mappedClassPKs.add(classPK);
+
+		long classNameId = jsonObject.getLong("classNameId");
+
+		if (classNameId <= 0) {
+			return null;
+		}
+
+		try {
+			return AssetEntryServiceUtil.getEntry(
+				PortalUtil.getClassName(classNameId), classPK);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get asset entry for class name ID ",
+						classNameId, " with primary key ", classPK),
+					pe);
+			}
+		}
+
+		return null;
+	}
+
+	public static Set<AssetEntry> getMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK)
+		throws PortalException {
+
+		Set<Long> mappedClassPKs = new HashSet<>();
+
+		Set<AssetEntry> assetEntries = _getFragmentEntryLinksMappedAssetEntries(
+			groupId, layoutClassNameId, layoutClassPK, mappedClassPKs);
+
+		assetEntries.addAll(
+			_getLayoutMappedAssetEntries(
+				groupId, layoutClassNameId, layoutClassPK, mappedClassPKs));
+
+		return assetEntries;
+	}
+
 	public static JSONArray getMappedContentsJSONArray(
-		String backURL, long groupId, HttpServletRequest httpServletRequest,
-		long layoutClassNameId, long layoutClassPK) {
+		Set<AssetEntry> assetEntries, String backURL,
+		long[] allowedClassNameIds, HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		try {
-			Set<AssetEntry> assetEntries = _getMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK);
-
 			for (AssetEntry assetEntry : assetEntries) {
+				if (ArrayUtil.isNotEmpty(allowedClassNameIds) &&
+					!ArrayUtil.contains(
+						allowedClassNameIds, assetEntry.getClassNameId())) {
+
+					continue;
+				}
+
 				mappedContentsJSONArray.put(
 					_getMappedContentJSONObject(
 						assetEntry, backURL, httpServletRequest));
@@ -136,35 +201,12 @@ public class MappedContentUtil {
 		return jsonObject;
 	}
 
-	private static JSONObject _getJournalArticleStatusJSONObject(long classPK)
-		throws PortalException {
-
-		JournalArticle journalArticle =
-			JournalArticleServiceUtil.getLatestArticle(classPK);
-
-		journalArticle = JournalArticleServiceUtil.getLatestArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			WorkflowConstants.STATUS_ANY);
-
-		return JSONUtil.put(
-			"hasApprovedVersion",
-			!journalArticle.isApproved() && journalArticle.hasApprovedVersion()
-		).put(
-			"label",
-			WorkflowConstants.getStatusLabel(journalArticle.getStatus())
-		).put(
-			"style",
-			LabelItem.getStyleFromWorkflowStatus(journalArticle.getStatus())
-		);
-	}
-
-	private static Set<AssetEntry> _getMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK)
+	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
-
-		Set<Long> mappedClassPKs = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
@@ -200,32 +242,22 @@ public class MappedContentUtil {
 						continue;
 					}
 
-					if (!editableJSONObject.has("classNameId") ||
-						!editableJSONObject.has("classPK") ||
-						!editableJSONObject.has("fieldId")) {
+					JSONObject configJSONObject =
+						editableJSONObject.getJSONObject("config");
 
-						continue;
+					if ((configJSONObject != null) &&
+						(configJSONObject.length() > 0)) {
+
+						AssetEntry assetEntry = getAssetEntry(
+							configJSONObject, mappedClassPKs);
+
+						if (assetEntry != null) {
+							assetEntries.add(assetEntry);
+						}
 					}
 
-					long classPK = editableJSONObject.getLong("classPK");
-
-					if (mappedClassPKs.contains(classPK)) {
-						continue;
-					}
-
-					mappedClassPKs.add(classPK);
-
-					long classNameId = editableJSONObject.getLong(
-						"classNameId");
-
-					if (classNameId != PortalUtil.getClassNameId(
-							JournalArticle.class)) {
-
-						continue;
-					}
-
-					AssetEntry assetEntry = AssetEntryServiceUtil.getEntry(
-						PortalUtil.getClassName(classNameId), classPK);
+					AssetEntry assetEntry = getAssetEntry(
+						editableJSONObject, mappedClassPKs);
 
 					if (assetEntry == null) {
 						continue;
@@ -239,6 +271,50 @@ public class MappedContentUtil {
 		return assetEntries;
 	}
 
+	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
+			long groupId, long layoutClassNameId, long layoutClassPK,
+			Set<Long> mappedClassPKs)
+		throws PortalException {
+
+		Set<AssetEntry> assetEntries = new HashSet<>();
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					groupId, layoutClassNameId, layoutClassPK, true);
+
+		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
+
+		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
+			"structure");
+
+		Iterator<JSONObject> iteratorStructure = structureJSONArray.iterator();
+
+		iteratorStructure.forEachRemaining(
+			structureJSONObject -> {
+				JSONObject configJSONObject = structureJSONObject.getJSONObject(
+					"config");
+
+				if (configJSONObject != null) {
+					JSONObject backgroundImageJSONObject =
+						configJSONObject.getJSONObject("backgroundImage");
+
+					if (backgroundImageJSONObject != null) {
+						AssetEntry assetEntry = getAssetEntry(
+							backgroundImageJSONObject, mappedClassPKs);
+
+						if (assetEntry != null) {
+							assetEntries.add(assetEntry);
+						}
+					}
+				}
+			});
+
+		return assetEntries;
+	}
+
 	private static JSONObject _getMappedContentJSONObject(
 			AssetEntry assetEntry, String backURL,
 			HttpServletRequest httpServletRequest)
@@ -248,7 +324,7 @@ public class MappedContentUtil {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return JSONUtil.put(
+		JSONObject mappedContentJSONObject = JSONUtil.put(
 			"actions",
 			_getActionsJSONObject(
 				assetEntry, themeDisplay, httpServletRequest, backURL)
@@ -258,19 +334,68 @@ public class MappedContentUtil {
 			"classNameId", assetEntry.getClassNameId()
 		).put(
 			"classPK", assetEntry.getClassPK()
+		);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				assetEntry.getClassName());
+
+		String name = ResourceActionsUtil.getModelResource(
+			themeDisplay.getLocale(), assetEntry.getClassName());
+
+		if (assetEntry.getClassTypeId() > 0) {
+			name = assetRendererFactory.getTypeName(
+				themeDisplay.getLocale(), assetEntry.getClassTypeId());
+		}
+
+		return mappedContentJSONObject.put(
+			"name", name
 		).put(
-			"name",
-			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(), assetEntry.getClassName())
-		).put(
-			"status",
-			_getJournalArticleStatusJSONObject(assetEntry.getClassPK())
+			"status", _getStatusJSONObject(assetEntry)
 		).put(
 			"title", assetEntry.getTitle(themeDisplay.getLocale())
 		).put(
 			"usagesCount",
 			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
 				assetEntry.getEntryId())
+		);
+	}
+
+	private static JSONObject _getStatusJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			assetEntry.getAssetRendererFactory();
+
+		AssetRenderer latestAssetRenderer =
+			assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+
+		boolean hasApprovedVersion = false;
+
+		if (latestAssetRenderer.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) {
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK(),
+				AssetRendererFactory.TYPE_LATEST_APPROVED);
+
+			if (assetRenderer.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
+				hasApprovedVersion = true;
+			}
+		}
+
+		return JSONUtil.put(
+			"hasApprovedVersion", hasApprovedVersion
+		).put(
+			"label",
+			WorkflowConstants.getStatusLabel(latestAssetRenderer.getStatus())
+		).put(
+			"style",
+			LabelItem.getStyleFromWorkflowStatus(
+				latestAssetRenderer.getStatus())
 		);
 	}
 

@@ -16,13 +16,10 @@ package com.liferay.message.boards.model.impl;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBTreeWalker;
-import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,34 +29,12 @@ import java.util.Map;
  */
 public class MBTreeWalkerImpl implements MBTreeWalker {
 
-	public MBTreeWalkerImpl(
-		long threadId, int status, MBMessageLocalService messageLocalService,
-		Comparator<MBMessage> comparator) {
-
-		this(0, threadId, status, messageLocalService, comparator);
-	}
-
-	public MBTreeWalkerImpl(
-		long userId, long threadId, int status,
-		MBMessageLocalService messageLocalService,
-		Comparator<MBMessage> comparator) {
-
+	public MBTreeWalkerImpl(List<MBMessage> messages) {
 		_messageIdsMap = new HashMap<>();
 
-		List<MBMessage> messages = null;
 		MBMessage rootMessage = null;
 
 		try {
-			if (userId > 0) {
-				messages = messageLocalService.getThreadMessages(
-					userId, threadId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, comparator);
-			}
-			else {
-				messages = messageLocalService.getThreadMessages(
-					threadId, status, comparator);
-			}
-
 			for (int i = 0; i < messages.size(); i++) {
 				MBMessage curMessage = messages.get(i);
 

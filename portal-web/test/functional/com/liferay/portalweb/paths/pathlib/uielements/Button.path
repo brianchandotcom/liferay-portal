@@ -474,6 +474,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REOPEN</td>
+	<td>//button/span[*[name()='svg'][contains(@class,'lexicon-icon-check-circle-full')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLACE_CERTIFICATE</td>
 	<td>//button[contains(@onclick,'${key_certificateUsage}')]/span[contains(.,'Replace Certificate')]</td>
 	<td></td>
@@ -486,6 +491,11 @@
 <tr>
 	<td>REPLY_AS</td>
 	<td>//button[contains(.,'Reply as...')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPLY_DISABLED</td>
+	<td>//button[contains(.,'Reply')][@disabled='']</td>
 	<td></td>
 </tr>
 <tr>

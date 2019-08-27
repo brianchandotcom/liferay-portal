@@ -16,7 +16,9 @@ package com.liferay.message.boards.service.persistence.impl;
 
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class MBThreadFinderBaseImpl extends BasePersistenceImpl<MBThread> {
+public abstract class MBThreadFinderBaseImpl
+	extends BasePersistenceImpl<MBThread> {
 
 	public MBThreadFinderBaseImpl() {
 		setModelClass(MBThread.class);
@@ -43,33 +50,49 @@ public class MBThreadFinderBaseImpl extends BasePersistenceImpl<MBThread> {
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getMBThreadPersistence().getBadColumnNames();
+		return mbThreadPersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the message boards thread persistence.
-	 *
-	 * @return the message boards thread persistence
-	 */
-	public MBThreadPersistence getMBThreadPersistence() {
-		return mbThreadPersistence;
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the message boards thread persistence.
-	 *
-	 * @param mbThreadPersistence the message boards thread persistence
-	 */
-	public void setMBThreadPersistence(
-		MBThreadPersistence mbThreadPersistence) {
-
-		this.mbThreadPersistence = mbThreadPersistence;
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = MBThreadPersistence.class)
+	@Override
+	@Reference(
+		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected MBThreadPersistence mbThreadPersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(MBPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

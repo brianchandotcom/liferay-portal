@@ -36,6 +36,7 @@ import com.liferay.portal.vulcan.yaml.openapi.Components;
 import com.liferay.portal.vulcan.yaml.openapi.Content;
 import com.liferay.portal.vulcan.yaml.openapi.Info;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
+import com.liferay.portal.vulcan.yaml.openapi.License;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Operation;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
@@ -60,6 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * @author Peter Shin
@@ -284,7 +286,9 @@ public class RESTBuilder {
 	private void _checkOpenAPIYAMLFile(FreeMarkerTool freeMarkerTool, File file)
 		throws Exception {
 
-		String s = _fixOpenAPIPathParameters(FileUtil.read(file));
+		String s = _fixOpenAPILicense(FileUtil.read(file));
+
+		s = _fixOpenAPIPathParameters(s);
 
 		if (_configYAML.isForcePredictableSchemaPropertyName()) {
 			s = _fixOpenAPISchemaPropertyNames(freeMarkerTool, s);
@@ -1090,6 +1094,112 @@ public class RESTBuilder {
 		}
 
 		return s;
+	}
+
+	private String _fixOpenAPILicense(String s) {
+		String licenseName = _configYAML.getLicenseName();
+		String licenseURL = _configYAML.getLicenseURL();
+
+		StringBuilder licenseSB = new StringBuilder();
+
+		licenseSB.append("        name: \"");
+		licenseSB.append(licenseName);
+		licenseSB.append("\"\n");
+		licenseSB.append("        url: \"");
+		licenseSB.append(licenseURL);
+		licenseSB.append("\"");
+
+		OpenAPIYAML openAPIYAML = YAMLUtil.loadOpenAPIYAML(s);
+
+		Info info = openAPIYAML.getInfo();
+
+		if (info == null) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("info:\n");
+			sb.append(licenseSB.toString());
+			sb.append('\n');
+			sb.append(s);
+
+			return sb.toString();
+		}
+
+		License license = info.getLicense();
+
+		if ((license != null) && licenseName.equals(license.getName()) &&
+			licenseURL.equals(license.getUrl())) {
+
+			return s;
+		}
+
+		int x = s.indexOf("\ninfo:");
+
+		int y = s.indexOf('\n', x + 1);
+
+		String line = s.substring(y + 1, s.indexOf("\n", y + 1));
+
+		String leadingWhiteSpace = line.replaceAll("^(\\s+).+", "$1");
+
+		Map<String, String> fieldMap = new TreeMap<>();
+
+		String fieldName = "";
+		String fieldValue = "";
+
+		while (line.matches("^" + leadingWhiteSpace + ".*")) {
+			if (line.matches("^" + leadingWhiteSpace + "\\w.*")) {
+				if (Validator.isNotNull(fieldName)) {
+					fieldMap.put(fieldName, fieldValue);
+
+					fieldValue = "";
+				}
+
+				fieldName = line.replaceAll("^\\s+(\\w+):.*", "$1");
+				fieldValue = line.replaceAll("^\\s+\\w+:\\s*(.*)\\s*", "$1");
+			}
+			else if (Validator.isNull(fieldValue)) {
+				fieldValue = line;
+			}
+			else {
+				fieldValue = fieldValue + '\n' + line;
+			}
+
+			line = s.substring(y + 1, s.indexOf("\n", y + 1));
+
+			y = s.indexOf('\n', y + 1);
+		}
+
+		if (Validator.isNull(fieldName)) {
+			return s;
+		}
+
+		fieldMap.put(fieldName, fieldValue);
+
+		fieldMap.put("license", licenseSB.toString());
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(s.substring(0, s.indexOf('\n', x + 1) + 1));
+
+		for (Map.Entry<String, String> entry : fieldMap.entrySet()) {
+			sb.append(leadingWhiteSpace);
+			sb.append(entry.getKey());
+
+			String value = entry.getValue();
+
+			if (value.matches("(?s)^\\s*\\w+:.*")) {
+				sb.append(":\n");
+			}
+			else {
+				sb.append(": ");
+			}
+
+			sb.append(value);
+			sb.append('\n');
+		}
+
+		sb.append(s.substring(s.lastIndexOf('\n', y - 1) + 1));
+
+		return sb.toString();
 	}
 
 	private String _fixOpenAPIOperationIds(

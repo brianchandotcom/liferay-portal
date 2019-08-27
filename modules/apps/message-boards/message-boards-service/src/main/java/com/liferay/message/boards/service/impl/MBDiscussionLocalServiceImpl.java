@@ -17,19 +17,26 @@ package com.liferay.message.boards.service.impl;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.message.boards.util.MBUtil;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	property = "model.class.name=com.liferay.message.boards.model.MBDiscussion",
+	service = AopService.class
+)
 public class MBDiscussionLocalServiceImpl
 	extends MBDiscussionLocalServiceBaseImpl {
 
@@ -42,7 +49,7 @@ public class MBDiscussionLocalServiceImpl
 		Group group = groupLocalService.getGroup(groupId);
 
 		User user = userLocalService.fetchUser(
-			PortalUtil.getValidUserId(group.getCompanyId(), userId));
+			_portal.getValidUserId(group.getCompanyId(), userId));
 
 		long discussionId = counterLocalService.increment();
 
@@ -116,7 +123,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		subscriptionLocalService.addSubscription(
+		_subscriptionLocalService.addSubscription(
 			userId, groupId, MBUtil.getSubscriptionClassName(className),
 			classPK);
 	}
@@ -126,11 +133,14 @@ public class MBDiscussionLocalServiceImpl
 			long userId, String className, long classPK)
 		throws PortalException {
 
-		subscriptionLocalService.deleteSubscription(
+		_subscriptionLocalService.deleteSubscription(
 			userId, MBUtil.getSubscriptionClassName(className), classPK);
 	}
 
-	@ServiceReference(type = SubscriptionLocalService.class)
-	protected SubscriptionLocalService subscriptionLocalService;
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

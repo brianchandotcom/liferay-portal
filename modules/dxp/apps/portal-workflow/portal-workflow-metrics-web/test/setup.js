@@ -11,7 +11,7 @@ const languageMap = {
 	'hours-abbreviation': 'h',
 	'minutes-abbreviation': 'min',
 	'mmm-dd': 'MMM DD',
-	'mmm-dd-hh-a': 'MMM DD, hh A',
+	'mmm-dd-hh-mm': 'MMM DD, HH:mm',
 	'mmm-dd-hh-mm-a': 'MMM DD, hh:mm A',
 	'mmm-dd-lt': 'MMM DD, LT',
 	'mmm-dd-yyyy': 'MMM DD, YYYY',

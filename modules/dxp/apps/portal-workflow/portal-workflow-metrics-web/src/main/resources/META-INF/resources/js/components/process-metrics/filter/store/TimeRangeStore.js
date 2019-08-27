@@ -14,7 +14,7 @@ import {usePrevious} from '../../../../shared/util/hooks';
 import {useRouter} from '../../../../shared/components/router/useRouter';
 
 const useTimeRange = timeRangeKeys => {
-	const {client} = useContext(AppContext);
+	const {client, isAmPm} = useContext(AppContext);
 	const {
 		location: {search}
 	} = useRouter();
@@ -42,7 +42,7 @@ const useTimeRange = timeRangeKeys => {
 							active: timeRangeKeys.includes(itemKey),
 							dateEnd: new Date(item.dateEnd),
 							dateStart: new Date(item.dateStart),
-							description: formatTimeRange(item),
+							description: formatTimeRange(item, isAmPm),
 							key: itemKey
 						};
 					})

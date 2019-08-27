@@ -23,6 +23,7 @@ export default class AppComponent extends React.Component {
 			companyId: props.companyId,
 			defaultDelta: props.defaultDelta,
 			deltas: props.deltas,
+			isAmPm: props.isAmPm,
 			maxPages: props.maxPages,
 			namespace: props.namespace,
 			setStatus: this.setStatus.bind(this),

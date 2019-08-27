@@ -67,6 +67,31 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 								<ul class="nav nav-stacked">
 
 									<%
+									for (FragmentCollectionContributor fragmentCollectionContributor : fragmentCollectionContributors) {
+									%>
+
+										<li class="nav-item">
+
+											<%
+											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
+
+											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
+											fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
+											%>
+
+											<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+												<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
+
+												<liferay-ui:icon
+													icon="lock"
+													markupView="lexicon"
+												/>
+											</a>
+										</li>
+
+									<%
+									}
+
 									for (FragmentCollection fragmentCollection : fragmentCollections) {
 									%>
 
@@ -88,31 +113,6 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 														markupView="lexicon"
 													/>
 												</c:if>
-											</a>
-										</li>
-
-									<%
-									}
-
-									for (FragmentCollectionContributor fragmentCollectionContributor : fragmentCollectionContributors) {
-									%>
-
-										<li class="nav-item">
-
-											<%
-											PortletURL fragmentCollectionURL = renderResponse.createRenderURL();
-
-											fragmentCollectionURL.setParameter("mvcRenderCommandName", "/fragment/view");
-											fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
-											%>
-
-											<a class="nav-link truncate-text <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-												<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
-
-												<liferay-ui:icon
-													icon="lock"
-													markupView="lexicon"
-												/>
 											</a>
 										</li>
 

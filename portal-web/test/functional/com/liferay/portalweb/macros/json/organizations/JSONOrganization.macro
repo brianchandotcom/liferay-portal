@@ -24,7 +24,7 @@ definition {
 				-d site=${organizationSite}
 		''';
 
-		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro _assignUserToOrganization {
@@ -39,11 +39,7 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
-
-		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
-
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro _deleteOrganization {
@@ -57,9 +53,7 @@ definition {
 				-d organizationId=${organizationId}
 		''';
 
-		var organizationName = JSONOrganization.getOrganizationName(organizationId = "${organizationId}");
-
-		var organizationId = JSONCurlUtil.post("${curl}", "$['organizationId']");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro addOrganization {

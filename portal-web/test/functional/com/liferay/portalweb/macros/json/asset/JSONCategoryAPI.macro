@@ -1,10 +1,10 @@
 definition {
 
-@summary = "Directly calls the JSON WS API to add a category"
+	@summary = "Directly calls the JSON WS API to add a category"
 	macro _addCategory {
-		var portalURL = JSONCompany.getPortalURL();
+		Variables.assertDefined(parameterList = "${groupId}");
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
+		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(parentCategoryId))) {
 			var parentCategoryId = "0";
@@ -45,8 +45,6 @@ definition {
 	macro _addVocabulary {
 		var portalURL = JSONCompany.getPortalURL();
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
 		if (isSet(titleMap)) {
 			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
 		}
@@ -82,8 +80,6 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${categoryName},${vocabularyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetcategory/get-vocabulary-categories \

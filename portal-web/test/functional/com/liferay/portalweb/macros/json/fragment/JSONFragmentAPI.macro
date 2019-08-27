@@ -60,8 +60,6 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmentcollection/get-fragment-collections \
 			-u test@liferay.com:test \

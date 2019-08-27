@@ -29,7 +29,7 @@ definition {
 				-d friendlyURL=
 		''';
 
-		var layoutId = JSONCurlUtil.post("${curl}", "$['layoutId']");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Get the layoutId from a layout by using groupId and layoutName"

@@ -42,7 +42,7 @@ definition {
 				-d active=true
 		''';
 
-		var groupId = JSONCurlUtil.post("${curl}", "$['groupId']");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Directly calls the JSON WS API to assign a user a role"
@@ -59,13 +59,7 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
-		var roleTitle = JSONRole.getRoleName(roleId = "${roleId}");
-
-		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
-
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Directly calls the JSON WS API to add a user to a group"
@@ -81,18 +75,12 @@ definition {
 				-d userIds=${userId}
 		''';
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
-		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
-
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Directly calls the JSON WS API to delete a group"
 	macro _deleteGroup {
 		Variables.assertDefined(parameterList = "${groupId}");
-
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -102,7 +90,7 @@ definition {
 				-d groupId=${groupId}
 		''';
 
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	@summary = "Get the groupId from any existing group by using groupKey"

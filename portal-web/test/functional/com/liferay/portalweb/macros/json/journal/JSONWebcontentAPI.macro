@@ -17,8 +17,6 @@ definition {
 				-d description=''
 		''';
 
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
-
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
@@ -67,8 +65,6 @@ definition {
 				-d ddmTemplateKey=BASIC-WEB-CONTENT \
 				-d serviceContext=${serviceContext}
 		''';
-
-		var groupName = JSONGroupAPI._getGroupName(groupId = "${groupId}");
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}

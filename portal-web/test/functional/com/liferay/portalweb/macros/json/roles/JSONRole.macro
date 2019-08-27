@@ -52,7 +52,7 @@ definition {
 				-d subtype=
 		''';
 
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro _assignRoleToUser {
@@ -71,7 +71,7 @@ definition {
 
 		var userEmailAddress = JSONUser.getUserEmailAddress(userId = "${userId}");
 
-		var temp = JSONCurlUtil.post("${curl}", "$");
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
 	macro addOrganizationRole {

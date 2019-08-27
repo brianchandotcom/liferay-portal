@@ -15,6 +15,7 @@
 package com.liferay.saml.persistence.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saml.persistence.exception.NoSuchSpMessageException;
 import com.liferay.saml.persistence.model.SamlSpMessage;
 
@@ -74,16 +75,19 @@ public interface SamlSpMessagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpMessageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByExpirationDate(Date, int, int, OrderByComparator)}
 	 * @param expirationDate the expiration date
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp messages
 	 */
+	@Deprecated
 	public java.util.List<SamlSpMessage> findByExpirationDate(
 		Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator);
+		OrderByComparator<SamlSpMessage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the saml sp messages where expirationDate &lt; &#63;.
@@ -96,14 +100,11 @@ public interface SamlSpMessagePersistence
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp messages
 	 */
 	public java.util.List<SamlSpMessage> findByExpirationDate(
 		Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SamlSpMessage> orderByComparator);
 
 	/**
 	 * Returns the first saml sp message in the ordered set where expirationDate &lt; &#63;.
@@ -115,8 +116,7 @@ public interface SamlSpMessagePersistence
 	 */
 	public SamlSpMessage findByExpirationDate_First(
 			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-				orderByComparator)
+			OrderByComparator<SamlSpMessage> orderByComparator)
 		throws NoSuchSpMessageException;
 
 	/**
@@ -128,8 +128,7 @@ public interface SamlSpMessagePersistence
 	 */
 	public SamlSpMessage fetchByExpirationDate_First(
 		Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator);
+		OrderByComparator<SamlSpMessage> orderByComparator);
 
 	/**
 	 * Returns the last saml sp message in the ordered set where expirationDate &lt; &#63;.
@@ -141,8 +140,7 @@ public interface SamlSpMessagePersistence
 	 */
 	public SamlSpMessage findByExpirationDate_Last(
 			Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-				orderByComparator)
+			OrderByComparator<SamlSpMessage> orderByComparator)
 		throws NoSuchSpMessageException;
 
 	/**
@@ -154,8 +152,7 @@ public interface SamlSpMessagePersistence
 	 */
 	public SamlSpMessage fetchByExpirationDate_Last(
 		Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator);
+		OrderByComparator<SamlSpMessage> orderByComparator);
 
 	/**
 	 * Returns the saml sp messages before and after the current saml sp message in the ordered set where expirationDate &lt; &#63;.
@@ -168,8 +165,7 @@ public interface SamlSpMessagePersistence
 	 */
 	public SamlSpMessage[] findByExpirationDate_PrevAndNext(
 			long samlSpMessageId, Date expirationDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-				orderByComparator)
+			OrderByComparator<SamlSpMessage> orderByComparator)
 		throws NoSuchSpMessageException;
 
 	/**
@@ -200,14 +196,18 @@ public interface SamlSpMessagePersistence
 		throws NoSuchSpMessageException;
 
 	/**
-	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySIEI_SIRK(String,String)}
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlIdpResponseKey the saml idp response key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	 */
+	@Deprecated
 	public SamlSpMessage fetchBySIEI_SIRK(
-		String samlIdpEntityId, String samlIdpResponseKey);
+		String samlIdpEntityId, String samlIdpResponseKey,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -218,8 +218,7 @@ public interface SamlSpMessagePersistence
 	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
 	 */
 	public SamlSpMessage fetchBySIEI_SIRK(
-		String samlIdpEntityId, String samlIdpResponseKey,
-		boolean useFinderCache);
+		String samlIdpEntityId, String samlIdpResponseKey);
 
 	/**
 	 * Removes the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; from the database.
@@ -321,15 +320,17 @@ public interface SamlSpMessagePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpMessageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp messages
 	 */
+	@Deprecated
 	public java.util.List<SamlSpMessage> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator);
+		int start, int end, OrderByComparator<SamlSpMessage> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the saml sp messages.
@@ -341,14 +342,10 @@ public interface SamlSpMessagePersistence
 	 * @param start the lower bound of the range of saml sp messages
 	 * @param end the upper bound of the range of saml sp messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp messages
 	 */
 	public java.util.List<SamlSpMessage> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlSpMessage>
-			orderByComparator,
-		boolean useFinderCache);
+		int start, int end, OrderByComparator<SamlSpMessage> orderByComparator);
 
 	/**
 	 * Removes all the saml sp messages from the database.

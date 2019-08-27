@@ -15,6 +15,7 @@
 package com.liferay.saml.persistence.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saml.persistence.exception.NoSuchIdpSpSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 
@@ -73,16 +74,19 @@ public interface SamlIdpSpSessionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(Date, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
+	@Deprecated
 	public java.util.List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the saml idp sp sessions where createDate &lt; &#63;.
@@ -95,14 +99,11 @@ public interface SamlIdpSpSessionPersistence
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	public java.util.List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the first saml idp sp session in the ordered set where createDate &lt; &#63;.
@@ -114,8 +115,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession findByCreateDate_First(
 			Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -126,9 +126,7 @@ public interface SamlIdpSpSessionPersistence
 	 * @return the first matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	public SamlIdpSpSession fetchByCreateDate_First(
-		Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		Date createDate, OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the last saml idp sp session in the ordered set where createDate &lt; &#63;.
@@ -140,8 +138,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession findByCreateDate_Last(
 			Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -152,9 +149,7 @@ public interface SamlIdpSpSessionPersistence
 	 * @return the last matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	public SamlIdpSpSession fetchByCreateDate_Last(
-		Date createDate,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		Date createDate, OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where createDate &lt; &#63;.
@@ -167,8 +162,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession[] findByCreateDate_PrevAndNext(
 			long samlIdpSpSessionId, Date createDate,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -217,16 +211,19 @@ public interface SamlIdpSpSessionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySamlIdpSsoSessionId(long, int, int, OrderByComparator)}
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
+	@Deprecated
 	public java.util.List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
@@ -239,14 +236,11 @@ public interface SamlIdpSpSessionPersistence
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	public java.util.List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the first saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
@@ -258,8 +252,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession findBySamlIdpSsoSessionId_First(
 			long samlIdpSsoSessionId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -271,8 +264,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession fetchBySamlIdpSsoSessionId_First(
 		long samlIdpSsoSessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the last saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
@@ -284,8 +276,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession findBySamlIdpSsoSessionId_Last(
 			long samlIdpSsoSessionId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -297,8 +288,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession fetchBySamlIdpSsoSessionId_Last(
 		long samlIdpSsoSessionId,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Returns the saml idp sp sessions before and after the current saml idp sp session in the ordered set where samlIdpSsoSessionId = &#63;.
@@ -311,8 +301,7 @@ public interface SamlIdpSpSessionPersistence
 	 */
 	public SamlIdpSpSession[] findBySamlIdpSsoSessionId_PrevAndNext(
 			long samlIdpSpSessionId, long samlIdpSsoSessionId,
-			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-				orderByComparator)
+			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException;
 
 	/**
@@ -343,14 +332,18 @@ public interface SamlIdpSpSessionPersistence
 		throws NoSuchIdpSpSessionException;
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySISSI_SSEI(long,String)}
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param samlSpEntityId the saml sp entity ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
+	@Deprecated
 	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId);
+		long samlIdpSsoSessionId, String samlSpEntityId,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -361,8 +354,7 @@ public interface SamlIdpSpSessionPersistence
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId,
-		boolean useFinderCache);
+		long samlIdpSsoSessionId, String samlSpEntityId);
 
 	/**
 	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; from the database.
@@ -464,15 +456,18 @@ public interface SamlIdpSpSessionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
+	@Deprecated
 	public java.util.List<SamlIdpSpSession> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator);
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the saml idp sp sessions.
@@ -484,14 +479,11 @@ public interface SamlIdpSpSessionPersistence
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
 	public java.util.List<SamlIdpSpSession> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSpSession>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<SamlIdpSpSession> orderByComparator);
 
 	/**
 	 * Removes all the saml idp sp sessions from the database.

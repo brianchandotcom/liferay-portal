@@ -139,15 +139,19 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySamlSpSessionKey(String)}
 	 * @param samlSpSessionKey the saml sp session key
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
+	@Deprecated
 	public static SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey) {
+		String samlSpSessionKey, boolean useFinderCache) {
 
-		return getPersistence().fetchBySamlSpSessionKey(samlSpSessionKey);
+		return getPersistence().fetchBySamlSpSessionKey(
+			samlSpSessionKey, useFinderCache);
 	}
 
 	/**
@@ -158,10 +162,9 @@ public class SamlSpSessionUtil {
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
 	public static SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey, boolean useFinderCache) {
+		String samlSpSessionKey) {
 
-		return getPersistence().fetchBySamlSpSessionKey(
-			samlSpSessionKey, useFinderCache);
+		return getPersistence().fetchBySamlSpSessionKey(samlSpSessionKey);
 	}
 
 	/**
@@ -201,13 +204,18 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where jSessionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByJSessionId(String)}
 	 * @param jSessionId the j session ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchByJSessionId(String jSessionId) {
-		return getPersistence().fetchByJSessionId(jSessionId);
+	@Deprecated
+	public static SamlSpSession fetchByJSessionId(
+		String jSessionId, boolean useFinderCache) {
+
+		return getPersistence().fetchByJSessionId(jSessionId, useFinderCache);
 	}
 
 	/**
@@ -217,10 +225,8 @@ public class SamlSpSessionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchByJSessionId(
-		String jSessionId, boolean useFinderCache) {
-
-		return getPersistence().fetchByJSessionId(jSessionId, useFinderCache);
+	public static SamlSpSession fetchByJSessionId(String jSessionId) {
+		return getPersistence().fetchByJSessionId(jSessionId);
 	}
 
 	/**
@@ -280,18 +286,22 @@ public class SamlSpSessionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNameIdValue(String, int, int, OrderByComparator)}
 	 * @param nameIdValue the name ID value
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp sessions
 	 */
+	@Deprecated
 	public static List<SamlSpSession> findByNameIdValue(
 		String nameIdValue, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator) {
+		OrderByComparator<SamlSpSession> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByNameIdValue(
-			nameIdValue, start, end, orderByComparator);
+			nameIdValue, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -305,16 +315,14 @@ public class SamlSpSessionUtil {
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp sessions
 	 */
 	public static List<SamlSpSession> findByNameIdValue(
 		String nameIdValue, int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlSpSession> orderByComparator) {
 
 		return getPersistence().findByNameIdValue(
-			nameIdValue, start, end, orderByComparator, useFinderCache);
+			nameIdValue, start, end, orderByComparator);
 	}
 
 	/**
@@ -432,13 +440,19 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml sp session where sessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySessionIndex(String)}
 	 * @param sessionIndex the session index
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchBySessionIndex(String sessionIndex) {
-		return getPersistence().fetchBySessionIndex(sessionIndex);
+	@Deprecated
+	public static SamlSpSession fetchBySessionIndex(
+		String sessionIndex, boolean useFinderCache) {
+
+		return getPersistence().fetchBySessionIndex(
+			sessionIndex, useFinderCache);
 	}
 
 	/**
@@ -448,11 +462,8 @@ public class SamlSpSessionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
 	 */
-	public static SamlSpSession fetchBySessionIndex(
-		String sessionIndex, boolean useFinderCache) {
-
-		return getPersistence().fetchBySessionIndex(
-			sessionIndex, useFinderCache);
+	public static SamlSpSession fetchBySessionIndex(String sessionIndex) {
+		return getPersistence().fetchBySessionIndex(sessionIndex);
 	}
 
 	/**
@@ -576,16 +587,20 @@ public class SamlSpSessionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp sessions
 	 */
+	@Deprecated
 	public static List<SamlSpSession> findAll(
-		int start, int end,
-		OrderByComparator<SamlSpSession> orderByComparator) {
+		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -598,15 +613,13 @@ public class SamlSpSessionUtil {
 	 * @param start the lower bound of the range of saml sp sessions
 	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp sessions
 	 */
 	public static List<SamlSpSession> findAll(
-		int start, int end, OrderByComparator<SamlSpSession> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**

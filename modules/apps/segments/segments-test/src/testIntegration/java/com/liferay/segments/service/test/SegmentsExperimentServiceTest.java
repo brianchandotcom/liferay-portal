@@ -120,6 +120,59 @@ public class SegmentsExperimentServiceTest {
 	}
 
 	@Test
+	public void testDeleteSegmentsExperimentWithDeletePermission()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(),
+			"com.liferay.segments.model.SegmentsExperiment",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(), ActionKeys.DELETE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperimentService.deleteSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentKey());
+		}
+	}
+
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	public void testDeleteSegmentsExperimentWithoutDeletePermission()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperimentService.deleteSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentKey());
+		}
+	}
+
+	@Test
+	public void testDeleteSegmentsExperimentWithoutDeletePermissionAndWithUpdateLayoutPermission()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		ResourcePermissionLocalServiceUtil.addResourcePermission(
+			_group.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			_role.getRoleId(), ActionKeys.UPDATE);
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
+
+			_segmentsExperimentService.deleteSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentKey());
+		}
+	}
+
+	@Test
 	public void testGetSegmentsExperimentsWithoutViewPermission()
 		throws Exception {
 

@@ -845,6 +845,7 @@
 
 		<condition property="module.dirs.null">
 			<or>
+				<available file="${app.dir}/.lfrbuild-releng-ignore" />
 				<equals arg1="${app.module.dirs}" arg2="" />
 				<not>
 					<isset property="app.module.dirs" />

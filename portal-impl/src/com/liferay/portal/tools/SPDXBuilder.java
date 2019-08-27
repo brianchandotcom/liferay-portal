@@ -73,23 +73,34 @@ public class SPDXBuilder {
 
 		String spdxFileName = ArgumentsUtil.getString(
 			arguments, "spdx.file", null);
+
 		String licenseOverridePropertiesFileName = ArgumentsUtil.getString(
 			arguments, "license.report.override.properties.file", null);
 
+		Properties licenseOverrideProperties = new Properties();
+
+		if (Validator.isNotNull(licenseOverridePropertiesFileName)) {
+			File licenseOverridePropertiesfile = new File(licenseOverridePropertiesFileName);
+
+			if (licenseOverridePropertiesfile.exists()) {
+				licenseOverrideProperties.load(new FileInputStream(licenseOverridePropertiesfile));
+			}
+		}
+
 		new SPDXBuilder(
 			StringUtil.split(xmls), new File(spdxFileName),
-			_getLicenseOverrideProperties(licenseOverridePropertiesFileName));
+			licenseOverrideProperties);
 	}
 
 	public SPDXBuilder(
 		String[] xmls, File spdxFile,
-		Properties licenseProperties) {
+		Properties licenseOverrideProperties) {
 
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
 			Document document = _getDocument(
-				xmls, spdxFile, licenseProperties);
+				xmls, spdxFile, licenseOverrideProperties);
 
 			_write(
 				new File(spdxFile.getParentFile(), "versions-spdx.xml"),
@@ -331,25 +342,6 @@ public class SPDXBuilder {
 		}
 
 		return null;
-	}
-
-	private static Properties _getLicenseOverrideProperties(
-			String licenseOverridePropertiesFileName)
-		throws IOException {
-
-		Properties licenseProperties = new Properties();
-
-		if (Validator.isNull(licenseOverridePropertiesFileName)) {
-			return licenseProperties;
-		}
-
-		File file = new File(licenseOverridePropertiesFileName);
-
-		if (file.exists()) {
-			licenseProperties.load(new FileInputStream(file));
-		}
-
-		return licenseProperties;
 	}
 
 	private String _getLicenseURL(

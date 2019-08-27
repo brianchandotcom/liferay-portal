@@ -75,8 +75,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 		<liferay-util:include page="/repository_entry_browser/search_info.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<div class="message-container"></div>
-
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");
 
@@ -472,8 +470,8 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 	</c:if>
 </div>
 
-<aui:script require='<%= npmResolvedPackageName + "/repository_entry_browser/js/ItemSelectorRepositoryEntryBrowser.es as ItemSelectorRepositoryEntryBrowser" %>'>
-	var itemSelector = new ItemSelectorRepositoryEntryBrowser.default(
+<aui:script use="liferay-item-selector-repository-entry-browser">
+	new Liferay.ItemSelectorRepositoryEntryBrowser(
 		{
 			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 
@@ -493,9 +491,12 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 			</c:if>
 
 			maxFileSize: '<%= maxFileSize %>',
-
+			on: {
+				selectedItem: function(event) {
+					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+				}
+			},
 			rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
-
 			validExtensions: '<%= ListUtil.isEmpty(extensions) ? "*" : StringUtil.merge(extensions) %>'
 
 			<c:if test="<%= uploadURL != null %>">
@@ -509,13 +510,6 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 				, uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(returnType) %>',
 				uploadItemURL: '<%= uploadURL.toString() %>'
 			</c:if>
-		}
-	);
-
-	itemSelector.on(
-		'selectedItem',
-		function(event) {
-			Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
 		}
 	);
 </aui:script>

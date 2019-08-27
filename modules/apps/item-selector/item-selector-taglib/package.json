@@ -1,12 +1,4 @@
 {
-	"dependencies": {
-		"clay-alert": "2.17.0",
-		"frontend-js-web": "^4.0.0",
-		"metal-component": "2.16.8",
-		"metal-dom": "2.16.8",
-		"metal-events": "2.16.8",
-		"metal-state": "2.16.8"
-	},
 	"name": "item-selector-taglib",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

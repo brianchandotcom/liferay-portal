@@ -3,6 +3,7 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 apply plugin: "com.liferay.patcher"
 
 task deployJar(type: Copy)
+task jarPatched(type: Zip)
 task patch(type: PatchTask)
 
 sourceCompatibility = "1.6"
@@ -28,6 +29,20 @@ deployJar {
 	rename {
 		"spring-orm.jar"
 	}
+}
+
+jar {
+	setActions([])
+
+	dependsOn jarPatched
+}
+
+jarPatched {
+	archiveName = jar.archiveName
+	destinationDir = jar.destinationDir
+	duplicatesStrategy = "exclude"
+
+	from copyPatchOriginalLibClasses
 }
 
 javadoc {

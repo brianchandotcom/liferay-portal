@@ -20,9 +20,7 @@
 			"source/(.*)": "<rootDir>/src/main/resources/META-INF/resources/$1.js"
 		},
 		"modulePathIgnorePatterns": [
-			"/__fixtures__/",
-			"/__mock__/",
-			"/classes/"
+			"/__mock__/"
 		],
 		"setupFiles": [
 			"<rootDir>/jest-setup.config.js"

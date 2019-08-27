@@ -12,7 +12,7 @@
  * details.
  */
 
-import Paragraph from 'source/Paragraph/Paragraph.es';
+import Paragraph from '../../../src/main/resources/META-INF/resources/Paragraph/Paragraph.es';
 
 let component;
 const spritemap = 'icons.svg';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import DatePicker from 'source/DatePicker/DatePicker.es';
+import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
 import dom from 'metal-dom';
 
 let component;

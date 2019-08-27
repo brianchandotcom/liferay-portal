@@ -12,7 +12,7 @@
  * details.
  */
 
-import Numeric from 'source/Numeric/Numeric.es';
+import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric.es';
 import {dom} from 'metal-dom';
 
 let component;

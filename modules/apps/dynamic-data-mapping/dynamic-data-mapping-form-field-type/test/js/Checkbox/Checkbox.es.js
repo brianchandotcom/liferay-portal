@@ -12,7 +12,7 @@
  * details.
  */
 
-import Checkbox from 'source/Checkbox/Checkbox.es';
+import Checkbox from '../../../src/main/resources/META-INF/resources/Checkbox/Checkbox.es';
 
 let component;
 const spritemap = 'icons.svg';

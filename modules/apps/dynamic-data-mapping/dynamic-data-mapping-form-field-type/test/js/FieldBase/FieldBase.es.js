@@ -12,7 +12,7 @@
  * details.
  */
 
-import FieldBase from 'source/FieldBase/FieldBase.es';
+import FieldBase from '../../../src/main/resources/META-INF/resources/FieldBase/FieldBase.es';
 
 let component;
 const spritemap = 'icons.svg';

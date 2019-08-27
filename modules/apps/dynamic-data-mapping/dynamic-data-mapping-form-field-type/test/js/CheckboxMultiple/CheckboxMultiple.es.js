@@ -12,7 +12,7 @@
  * details.
  */
 
-import CheckboxMultiple from 'source/CheckboxMultiple/CheckboxMultiple.es';
+import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/CheckboxMultiple/CheckboxMultiple.es';
 
 let component;
 const spritemap = 'icons.svg';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import KeyValue from 'source/KeyValue/KeyValue.es';
+import KeyValue from '../../../src/main/resources/META-INF/resources/KeyValue/KeyValue.es';
 
 let component;
 const spritemap = 'icons.svg';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import Radio from 'source/Radio/Radio.es';
+import Radio from '../../../src/main/resources/META-INF/resources/Radio/Radio.es';
 
 let component;
 const spritemap = 'icons.svg';

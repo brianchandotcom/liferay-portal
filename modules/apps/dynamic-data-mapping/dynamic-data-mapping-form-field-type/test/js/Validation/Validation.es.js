@@ -12,7 +12,7 @@
  * details.
  */
 
-import Validation from 'source/Validation/Validation.es';
+import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation.es';
 
 let component;
 const spritemap = 'icons.svg';

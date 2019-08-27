@@ -12,7 +12,7 @@
  * details.
  */
 
-import Options from 'source/Options/Options.es';
+import Options from '../../../src/main/resources/META-INF/resources/Options/Options.es';
 
 let component;
 const spritemap = 'icons.svg';

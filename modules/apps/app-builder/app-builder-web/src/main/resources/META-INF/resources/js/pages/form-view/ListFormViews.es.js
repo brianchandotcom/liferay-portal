@@ -33,17 +33,17 @@ export default ({
 }) => {
 	const {basePortletURL} = useContext(AppContext);
 
-	const handleEditItem = item => {
-		const editUrl = Liferay.Util.PortletURL.createRenderURL(
-			basePortletURL,
-			{
+	const getItemURL = item =>
+		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
 				dataDefinitionId,
 				dataLayoutId: item.id,
 				mvcRenderCommandName: '/edit_form_view'
-			}
-		);
+		});
 
-		Liferay.Util.navigate(editUrl);
+	const handleEditItem = item => {
+		const itemURL = getItemURL(item);
+
+		Liferay.Util.navigate(itemURL);
 	};
 
 	const ACTIONS = [
@@ -60,8 +60,7 @@ export default ({
 	const COLUMNS = [
 		{
 			key: 'name',
-			link: () => 'javascript:;',
-			onClick: handleEditItem,
+			link: getItemURL,
 			sortable: true,
 			value: Liferay.Language.get('name')
 		},

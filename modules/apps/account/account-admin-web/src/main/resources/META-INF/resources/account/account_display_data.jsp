@@ -19,10 +19,12 @@
 <%
 long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
 
-AccountEntry accountEntry = null;
+AccountDisplay accountDisplay = null;
 
 if (accountEntryId > 0) {
-	accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryId);
+	AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryId);
+
+	accountDisplay = AccountDisplay.of(accountEntry);
 }
 %>
 
@@ -34,26 +36,27 @@ if (accountEntryId > 0) {
 	<aui:row>
 		<aui:col width="<%= 50 %>">
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountEntry != null) ? accountEntry.getName() : StringPool.BLANK %>" />
+				<aui:input label="account-name" name="name" required="<%= true %>" type="text" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getName() %>" />
 			</aui:field-wrapper>
 		</aui:col>
 
 		<aui:col width="<%= 40 %>">
 			<div class="text-center">
 				<liferay-ui:logo-selector
-					currentLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-					defaultLogo="<%= true %>"
+					currentLogoURL='<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountDisplay.getLogoURL(themeDisplay) %>'
+					defaultLogo="<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
+					tempImageFileName="<%= String.valueOf(accountEntryId) %>"
 				/>
 			</div>
 		</aui:col>
 	</aui:row>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input name="description" type="textarea" value="<%= (accountEntry != null) ? accountEntry.getDescription() : StringPool.BLANK %>" />
+		<aui:input name="description" type="textarea" value="<%= (accountDisplay == null) ? StringPool.BLANK : accountDisplay.getDescription() %>" />
 	</aui:field-wrapper>
 
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= true %>" />
+		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= (accountDisplay == null) ? true : accountDisplay.isActive() %>" />
 	</aui:field-wrapper>
 </div>

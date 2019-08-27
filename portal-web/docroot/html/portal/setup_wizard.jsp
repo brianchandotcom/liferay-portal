@@ -239,7 +239,7 @@
 						</aui:button-row>
 					</aui:form>
 
-					<aui:script use="aui-base,aui-io-request,aui-loading-mask-deprecated,io">
+					<aui:script use="aui-base,aui-loading-mask-deprecated,io">
 						var adminEmailAddress = A.one('#<portlet:namespace />adminEmailAddress');
 						var adminFirstName = A.one('#<portlet:namespace />adminFirstName');
 						var adminLastName = A.one('#<portlet:namespace />adminLastName');
@@ -360,37 +360,38 @@
 									else {
 										command.val('<%= Constants.TEST %>');
 
-										A.io.request(
+										var body = new URLSearchParams(new FormData(document.fm));
+
+										startInstall();
+
+										Liferay.Util.fetch(
 											setupForm.get('action'),
 											{
-												after: {
-													failure: function(event, id, obj) {
-														loadingMask.hide();
+												body: body,
+												method: 'POST'
+											}
+										).then(
+											function(response) {
+												return response.json();
+											}
+										).then(
+											function(responseData) {
+												command.val('<%= Constants.UPDATE %>');
 
-														updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>');
-													},
-													success: function(event, id, obj) {
-														command.val('<%= Constants.UPDATE %>');
+												if (!responseData.success) {
+													updateMessage(responseData.message);
 
-														var responseData = this.get('responseData');
-
-														if (!responseData.success) {
-															updateMessage(responseData.message);
-
-															loadingMask.hide();
-														}
-														else {
-															submitForm(document.fm);
-														}
-													}
-												},
-												dataType: 'JSON',
-												form: {
-													id: document.fm
-												},
-												on: {
-													start: startInstall
+													loadingMask.hide();
 												}
+												else {
+													submitForm(document.fm);
+												}
+											}
+										).catch(
+											function() {
+												loadingMask.hide();
+
+												updateMessage('<%= UnicodeLanguageUtil.get(request, "an-unexpected-error-occurred-while-connecting-to-the-database") %>');
 											}
 										);
 									}

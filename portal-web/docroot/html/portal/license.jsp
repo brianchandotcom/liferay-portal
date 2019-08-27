@@ -452,38 +452,36 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 							var A = AUI();
 
-							A.io.request(
-								url,
-								{
-									data: {
-										clusterNodeId: clusterNodeId,
-										<%= Constants.CMD %>: cmd
-									},
-									dataType: 'JSON',
-									on: {
-										failure: function() {
-											var errorMessage = A.Lang.sub('<liferay-ui:message key="error-contacting-x" />', [ip]);
+							var body = new URLSearchParams({
+								clusterNodeId: clusterNodeId,
+								<%= Constants.CMD %>: cmd
+							});
 
-											if (port != '-1') {
-												errorMessage += ':' + port;
-											}
+							Liferay.Util.fetch(url, {
+								body: body,
+								method: 'POST'
+							}).then(
+								function(response) {
+									return response.json();
+								}
+							).then(
+								function(data) {
+									A.one('#node_' + clusterNodeId + '_' + cmd).html('');
+									success(data);
+								}
+							).catch(
+								function() {
+									var errorMessage = A.Lang.sub('<liferay-ui:message key="error-contacting-x" />', [ip]);
 
-											A.one('#node_' + clusterNodeId + '_' + cmd).html('<div class="alert alert-danger">' + errorMessage + '</div>');
-										},
-										success: function(event, id, obj) {
-											var instance = this;
-
-											var message = instance.get('responseData');
-
-											A.one('#node_' + clusterNodeId + '_' + cmd).html('');
-
-											success(message);
-										}
+									if (port != '-1') {
+										errorMessage += ':' + port;
 									}
+
+									A.one('#node_' + clusterNodeId + '_' + cmd).html('<div class="alert alert-danger">' + errorMessage + '</div>');
 								}
 							);
 						},
-						['aui-base', 'aui-io-request']
+						['aui-base']
 					);
 
 					<%

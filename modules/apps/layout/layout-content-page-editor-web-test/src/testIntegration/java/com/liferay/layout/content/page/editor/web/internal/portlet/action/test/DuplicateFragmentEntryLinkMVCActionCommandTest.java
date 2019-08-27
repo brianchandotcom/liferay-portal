@@ -136,7 +136,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				PortalUtil.getClassNameId(Layout.class.getName()),
 				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, testFragmentRenderer.getConfiguration(null),
+				StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0,
 				testFragmentRenderer.getKey(), serviceContext);
 
@@ -155,6 +155,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 		Assert.assertTrue(jsonObject.has("fragmentEntryLinkId"));
 		Assert.assertTrue(jsonObject.has("name"));
 
+		Assert.assertEquals(
+			testFragmentRenderer.getConfiguration(null),
+			jsonObject.getString("configuration"));
 		Assert.assertEquals(
 			testFragmentRenderer.getKey(),
 			jsonObject.getString("fragmentEntryKey"));
@@ -219,7 +222,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 				fragmentCollection.getFragmentCollectionId(),
 				StringUtil.randomString(), StringUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), "{fieldSets: []}", 0,
+				RandomTestUtil.randomString(), "{\"fieldSets\":[]}", 0,
 				FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -546,7 +549,7 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 		public String getConfiguration(
 			FragmentRendererContext fragmentRendererContext) {
 
-			return "{fieldSets: []}";
+			return "{\"fieldSets\":[]}";
 		}
 
 		@Override

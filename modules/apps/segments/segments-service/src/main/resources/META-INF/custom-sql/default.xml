@@ -14,7 +14,7 @@
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
 				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status IN ([$SEGMENTS_EXPERIMENT_STATUS$]))
+				(SegmentsExperiment.status IN ([$STATUSES$]))
 
 		]]>
 	</sql>
@@ -31,7 +31,7 @@
 				(SegmentsExperimentRel.segmentsExperienceId = ?) AND
 				(SegmentsExperiment.classNameId = ?) AND
 				(SegmentsExperiment.classPK = ?) AND
-				(SegmentsExperiment.status IN ([$SEGMENTS_EXPERIMENT_STATUS$]))
+				(SegmentsExperiment.status IN ([$STATUSES$]))
 		]]>
 	</sql>
 </custom-sql>

@@ -139,8 +139,7 @@ public class SegmentsExperimentFinderImpl
 			}
 		}
 
-		return StringUtil.replace(
-			sql, "[$SEGMENTS_EXPERIMENT_STATUS$]", sb.toString());
+		return StringUtil.replace(sql, "[$STATUSES$]", sb.toString());
 	}
 
 	@Reference

@@ -17,6 +17,8 @@ package com.liferay.account.admin.web.internal.display;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
@@ -34,6 +36,23 @@ public class AccountDisplay {
 
 	public String getDescription() {
 		return _description;
+	}
+
+	public long getLogoId() {
+		return _logoId;
+	}
+
+	public String getLogoURL(ThemeDisplay themeDisplay) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(themeDisplay.getPathImage());
+		sb.append("/account_entry_logo?img_id=");
+		sb.append(String.valueOf(_logoId));
+		sb.append("&t=");
+		sb.append("/account_entry_logo?img_id=");
+		sb.append(WebServerServletTokenUtil.getToken(_logoId));
+
+		return sb.toString();
 	}
 
 	public String getName() {
@@ -60,6 +79,7 @@ public class AccountDisplay {
 		_accountId = accountEntry.getAccountEntryId();
 		_active = _isActive(accountEntry);
 		_description = accountEntry.getDescription();
+		_logoId = accountEntry.getLogoId();
 		_name = accountEntry.getName();
 		_parentAccountName = _getParentAccountName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
@@ -125,6 +145,7 @@ public class AccountDisplay {
 	private final long _accountId;
 	private final boolean _active;
 	private final String _description;
+	private final long _logoId;
 	private final String _name;
 	private final String _parentAccountName;
 	private final String _statusLabel;

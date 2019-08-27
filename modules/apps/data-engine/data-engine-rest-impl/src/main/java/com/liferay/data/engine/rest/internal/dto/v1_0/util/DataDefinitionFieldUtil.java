@@ -98,7 +98,7 @@ public class DataDefinitionFieldUtil {
 				TransformUtil.transform(
 					dataDefinitionField.getNestedDataDefinitionFields(),
 					DataDefinitionFieldUtil::toSPIDataDefinitionField,
-					DataDefinitionField.class));
+					SPIDataDefinitionField.class));
 		}
 
 		spiDataDefinitionField.setRepeatable(

@@ -17,15 +17,20 @@ package com.liferay.account.admin.web.internal.portlet.action;
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -56,7 +61,16 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "parentAccountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		long logoId = ParamUtil.getInteger(actionRequest, "logoId");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
 
 		int status = 0;
 
@@ -71,7 +85,7 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			logoId, status);
+			logoBytes, status);
 	}
 
 	@Override
@@ -102,7 +116,49 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	protected void updateAccountEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long accountEntryId = ParamUtil.getLong(
+			actionRequest, "accountEntryId");
+
+		long parentAccountEntryId = ParamUtil.getInteger(
+			actionRequest, "parentAccountEntryId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		int status = 0;
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		if (active) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+		else {
+			status = WorkflowConstants.STATUS_INACTIVE;
+		}
+
+		_accountEntryLocalService.updateAccountEntry(
+			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
+			logoBytes, status);
+
+	}
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 }

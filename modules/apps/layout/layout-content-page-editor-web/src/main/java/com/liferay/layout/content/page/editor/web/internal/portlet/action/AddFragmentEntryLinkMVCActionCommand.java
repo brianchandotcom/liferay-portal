@@ -121,6 +121,33 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				fragmentEntryKey, serviceContext);
 		}
 
+		return fragmentEntryLink;
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = _processAddFragmentEntryLink(
+			actionRequest, actionResponse);
+
+		hideDefaultSuccessMessage(actionRequest);
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
+	}
+
+	protected void updateLayoutPageTemplateStructure(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
@@ -130,14 +157,34 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 			updateLayoutPageTemplateStructure(
 				serviceContext.getScopeGroupId(), classNameId, classPK,
 				segmentsExperienceId, data);
-
-		return fragmentEntryLink;
 	}
 
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+	private FragmentEntry _getContributedFragmentEntry(
+		String fragmentEntryKey, Locale locale) {
+
+		Map<String, FragmentEntry> fragmentEntries =
+			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
+
+		return fragmentEntries.get(fragmentEntryKey);
+	}
+
+	private FragmentEntry _getFragmentEntry(
+		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				groupId, fragmentEntryKey);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		return _getContributedFragmentEntry(
+			fragmentEntryKey, serviceContext.getLocale());
+	}
+
+	private JSONObject _processAddFragmentEntryLink(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -202,34 +249,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 				LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
-
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
-	}
-
-	private FragmentEntry _getContributedFragmentEntry(
-		String fragmentEntryKey, Locale locale) {
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries(locale);
-
-		return fragmentEntries.get(fragmentEntryKey);
-	}
-
-	private FragmentEntry _getFragmentEntry(
-		long groupId, String fragmentEntryKey, ServiceContext serviceContext) {
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return fragmentEntry;
-		}
-
-		return _getContributedFragmentEntry(
-			fragmentEntryKey, serviceContext.getLocale());
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -267,7 +287,12 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public FragmentEntryLink call() throws Exception {
-			return addFragmentEntryLink(_actionRequest);
+			FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
+				_actionRequest);
+
+			updateLayoutPageTemplateStructure(_actionRequest);
+
+			return fragmentEntryLink;
 		}
 
 		private AddFragmentEntryLinkCallable(ActionRequest actionRequest) {

@@ -14,6 +14,7 @@
 
 package com.liferay.comment.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 	id = "com.liferay.comment.configuration.CommentGroupServiceConfiguration",
 	localization = "content/Language", name = "discussion-configuration-name"
 )
+@ProviderType
 public interface CommentGroupServiceConfiguration {
 
 	@Meta.AD(

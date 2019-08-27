@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -216,10 +217,22 @@ public class FragmentDisplayContext {
 	}
 
 	public List<FragmentCollectionContributor>
-		getFragmentCollectionContributors() {
+		getFragmentCollectionContributors(Locale locale) {
 
-		return _fragmentCollectionContributorTracker.
-			getFragmentCollectionContributors();
+		List<FragmentCollectionContributor> fragmentCollectionContributors =
+			_fragmentCollectionContributorTracker.
+				getFragmentCollectionContributors();
+
+		Collections.sort(
+			fragmentCollectionContributors,
+			(fragmentCollectionContributor1, fragmentCollectionContributor2) -> {
+				String name1 = fragmentCollectionContributor1.getName(locale);
+				String name2 = fragmentCollectionContributor2.getName(locale);
+
+				return name1.compareTo(name2);
+			});
+
+		return fragmentCollectionContributors;
 	}
 
 	public long getFragmentCollectionId() {

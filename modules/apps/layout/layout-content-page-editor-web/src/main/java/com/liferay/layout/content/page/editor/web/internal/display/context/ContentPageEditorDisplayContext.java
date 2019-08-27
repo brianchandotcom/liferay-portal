@@ -858,6 +858,17 @@ public class ContentPageEditorDisplayContext {
 			_fragmentCollectionContributorTracker.
 				getFragmentCollectionContributors();
 
+		Collections.sort(
+			fragmentCollectionContributors,
+			(fragmentCollectionContributor1, fragmentCollectionContributor2) -> {
+				String name1 = fragmentCollectionContributor1.getName(
+					themeDisplay.getLocale());
+				String name2 = fragmentCollectionContributor2.getName(
+					themeDisplay.getLocale());
+
+				return name1.compareTo(name2);
+			});
+
 		for (FragmentCollectionContributor fragmentCollectionContributor :
 				fragmentCollectionContributors) {
 

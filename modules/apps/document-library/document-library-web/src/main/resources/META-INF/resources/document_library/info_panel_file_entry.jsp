@@ -348,6 +348,26 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				<dd class="sidebar-dd">
 					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 				</dd>
+				<dt class="sidebar-dt">
+					<liferay-ui:message key="location" />
+				</dt>
+				<dd class="sidebar-dd">
+
+					<%
+					PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
+
+					viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
+					viewFolderURL.setParameter("redirect", currentURL);
+
+					Folder folder = fileEntry.getFolder();
+
+					viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+					%>
+
+					<aui:a href="<%= viewFolderURL.toString() %>">
+						<%= folder.getName() %>
+					</aui:a>
+				</dd>
 
 				<liferay-asset:asset-tags-available
 					className="<%= DLFileEntryConstants.getClassName() %>"

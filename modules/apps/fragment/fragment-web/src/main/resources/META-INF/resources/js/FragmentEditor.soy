@@ -26,7 +26,6 @@
 		content: string,
 		name: string
 	]>}
-	{@param? enableConfiguration : bool}
 	{@param? _configuration: string}
 	{@param? _css: string}
 	{@param? _handleConfigurationChanged: any}
@@ -49,13 +48,11 @@
 									{msg desc=""}code{/msg}
 								</a>
 							</li>
-							{if $enableConfiguration}
-								<li class="nav-item">
-									<a aria-controls="configuration" class="nav-link" data-toggle="tab" href="#configuration" id="configurationTab" role="tab">
-										{msg desc=""}configuration{/msg}
-									</a>
-								</li>
-							{/if}
+							<li class="nav-item">
+								<a aria-controls="configuration" class="nav-link" data-toggle="tab" href="#configuration" id="configurationTab" role="tab">
+									{msg desc=""}configuration{/msg}
+								</a>
+							</li>
 						</ul>
 					</div>
 
@@ -175,20 +172,18 @@
 				</div>
 			</div>
 
-			{if $enableConfiguration}
-				<div aria-labelledby="configurationTab" class="fade tab-pane"
-					 id="configuration" role="tabpanel">
-					<div class="fragment-editor">
-						{call com.liferay.fragment.web.SourceEditor.render}
-							{param events: ['contentChanged': $_handleConfigurationChanged] /}
-							{param initialContent: $initialConfiguration /}
-							{param readOnly: $readOnly /}
-							{param spritemap: $spritemap /}
-							{param syntax: 'json' /}
-						{/call}
-					</div>
+			<div aria-labelledby="configurationTab" class="fade tab-pane"
+				 id="configuration" role="tabpanel">
+				<div class="fragment-editor">
+					{call com.liferay.fragment.web.SourceEditor.render}
+						{param events: ['contentChanged': $_handleConfigurationChanged] /}
+						{param initialContent: $initialConfiguration /}
+						{param readOnly: $readOnly /}
+						{param spritemap: $spritemap /}
+						{param syntax: 'json' /}
+					{/call}
 				</div>
-			{/if}
+			</div>
 		</div>
 	</div>
 {/template}

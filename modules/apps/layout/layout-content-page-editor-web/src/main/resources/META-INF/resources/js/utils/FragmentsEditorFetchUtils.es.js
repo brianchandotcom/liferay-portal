@@ -211,7 +211,7 @@ function getMappedContents() {
 
 	url.searchParams.delete('activeItemType');
 	url.searchParams.delete('activeItemId');
-	url.searchParams.set('sidebarPanelId', 'mapped-contents');
+	url.searchParams.set('sidebarPanelId', 'contents');
 
 	const backURL = `${url.pathname}${url.search}`;
 

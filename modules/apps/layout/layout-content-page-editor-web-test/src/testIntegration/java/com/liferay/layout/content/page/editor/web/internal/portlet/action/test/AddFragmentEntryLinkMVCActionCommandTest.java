@@ -106,6 +106,48 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryLinkFromFragmentRenderer()
+		throws Exception {
+
+		TestFragmentRenderer testFragmentRenderer = new TestFragmentRenderer();
+
+		MockLiferayPortletRequest actionRequest = _getMockActionRequest();
+
+		actionRequest.addParameter(
+			"fragmentKey", testFragmentRenderer.getKey());
+
+		FragmentEntryLink fragmentEntryLink = ReflectionTestUtil.invoke(
+			_mvcActionCommand, "addFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
+
+		Assert.assertNotNull(fragmentEntryLink);
+
+		FragmentEntryLink persistedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertNotNull(persistedFragmentEntryLink);
+
+		Assert.assertEquals(0, persistedFragmentEntryLink.getFragmentEntryId());
+		Assert.assertEquals(
+			PortalUtil.getClassNameId(Layout.class.getName()),
+			persistedFragmentEntryLink.getClassNameId());
+		Assert.assertEquals(
+			_layout.getPlid(), persistedFragmentEntryLink.getClassPK());
+		Assert.assertEquals(
+			StringPool.BLANK, persistedFragmentEntryLink.getCss());
+		Assert.assertEquals(
+			StringPool.BLANK, persistedFragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			StringPool.BLANK, persistedFragmentEntryLink.getJs());
+		Assert.assertEquals(
+			StringPool.BLANK, persistedFragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			testFragmentRenderer.getKey(),
+			persistedFragmentEntryLink.getRendererKey());
+	}
+
+	@Test
 	public void testAddFragmentEntryLinkFromPersistedFragmentEntry()
 		throws Exception {
 

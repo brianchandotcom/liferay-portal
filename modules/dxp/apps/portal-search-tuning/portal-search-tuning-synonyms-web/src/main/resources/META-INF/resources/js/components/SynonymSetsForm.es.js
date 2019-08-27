@@ -37,6 +37,18 @@ class SynonymSetsForm extends Component {
 		synonyms: []
 	};
 
+	constructor(props) {
+		super(props);
+
+		if (props.synonymSets.length > 0) {
+			this._originalSynonymSets = props.synonymSets;
+
+			props.synonymSets.split(',').forEach(synonym => {
+				this.state.synonyms.push(synonym);
+			});
+		}
+	}
+
 	_handleCancel = () => {
 		window.history.back();
 	};
@@ -61,7 +73,7 @@ class SynonymSetsForm extends Component {
 		submitForm(form);
 	};
 
-	_handleUpdate = value => {
+	_handleItemsChange = value => {
 		const newValue = filterEmptyStrings(value.map(item => item.trim()));
 
 		this.setState({
@@ -70,18 +82,6 @@ class SynonymSetsForm extends Component {
 			)
 		});
 	};
-
-	constructor(props) {
-		super(props);
-
-		if (props.synonymSets.length > 0) {
-			this._originalSynonymSets = props.synonymSets;
-
-			props.synonymSets.split(',').forEach(synonym => {
-				this.state.synonyms.push(synonym);
-			});
-		}
-	}
 
 	render() {
 		const {inputValue, synonyms} = this.state;
@@ -108,7 +108,7 @@ class SynonymSetsForm extends Component {
 							items={synonyms}
 							label={Liferay.Language.get('synonyms')}
 							onInputChange={this._handleInputChange}
-							onItemsChange={this._handleUpdate}
+							onItemsChange={this._handleItemsChange}
 						/>
 
 						<div className="sheet-footer">

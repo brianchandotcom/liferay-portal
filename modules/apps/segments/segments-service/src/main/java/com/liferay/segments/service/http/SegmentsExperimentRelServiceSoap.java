@@ -146,6 +146,26 @@ public class SegmentsExperimentRelServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentRelSoap
 			updateSegmentsExperimentRel(
+				long segmentsExperimentRelId, double split)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperimentRel returnValue =
+				SegmentsExperimentRelServiceUtil.updateSegmentsExperimentRel(
+					segmentsExperimentRelId, split);
+
+			return com.liferay.segments.model.SegmentsExperimentRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRelSoap
+			updateSegmentsExperimentRel(
 				long segmentsExperimentRelId, String name,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

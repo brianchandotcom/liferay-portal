@@ -79,6 +79,10 @@ public interface SegmentsExperimentRelService extends BaseService {
 		throws PortalException;
 
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentRelId, double split)
+		throws PortalException;
+
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, String name,
 			ServiceContext serviceContext)
 		throws PortalException;

@@ -55,8 +55,9 @@ import org.gradle.api.file.CopySourceSpec;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DeleteSpec;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.ExtensionContainer;
+import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -102,12 +103,14 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			if (!project.hasProperty(
 					JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME)) {
 
-				project.getExtensions(
-				).getExtraProperties(
-				).set(
+				ExtensionContainer extensionContainer = project.getExtensions();
+
+				ExtraPropertiesExtension extraPropertiesExtension =
+					extensionContainer.getExtraProperties();
+
+				extraPropertiesExtension.set(
 					JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
-					isJspPrecompileEnabled()
-				);
+					isJspPrecompileEnabled());
 			}
 
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
@@ -378,14 +381,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 
 		};
-	}
-
-	private String _getCompileJSPDestinationDirName(Project project) {
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
-
-		return "work/" + basePluginConvention.getArchivesBaseName() + "-" +
-			project.getVersion();
 	}
 
 	private File _getJarFile(Project project) {

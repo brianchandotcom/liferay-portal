@@ -21,23 +21,11 @@
 	},
 	"jest": {
 		"setupFiles": [
-			"<rootDir>/test/liferay/portlet/mock/setup.es.js",
-			"<rootDir>/test/liferay/util/mock/setup.es.js"
-		],
-		"setupFilesAfterEnv": [
-			"<rootDir>/test/setup.es.js"
+			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/node_modules/",
-			"<rootDir>/test/setup.es.js",
 			"<rootDir>/test/liferay/portlet/mock/portlet_data.es.js",
-			"<rootDir>/test/liferay/portlet/mock/setup.es.js",
-			"<rootDir>/test/liferay/util/mock/headers.es.js",
-			"<rootDir>/test/liferay/util/mock/setup.es.js"
-		],
-		"testResultsProcessor": "liferay-jest-junit-reporter",
-		"transformIgnorePatterns": [
-			"<rootDir>.*(node_modules)(?!.*metal.*).*$"
+			"<rootDir>/test/liferay/portlet/mock/setup.es.js"
 		]
 	},
 	"main": "index.es.js",

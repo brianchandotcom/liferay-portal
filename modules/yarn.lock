@@ -985,7 +985,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@clayui/alert@3.0.0-milestone.2", "@clayui/alert@^3.0.0-milestone.2":
+"@clayui/alert@3.0.0-milestone.2":
   version "3.0.0-milestone.2"
   resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.0.0-milestone.2.tgz#1f897892c15b1a91019e1f28eb1322b46f4d2b89"
   integrity sha512-Oq/QGXqz2PpGhzE1KZi8zQE0wb7nvCYYt/lGshGdlhHh5nzzI0D0+yDty0pw7X4hZ29wcjAEdTCLbk6bzuXQEw==

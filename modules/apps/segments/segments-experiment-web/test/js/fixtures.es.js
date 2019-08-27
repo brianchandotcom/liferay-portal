@@ -55,8 +55,8 @@ export const segmentsGoals = [
 		value: 'Click'
 	},
 	{
-		label: 'scroll-depth',
-		value: 'Scroll Depth'
+		label: 'max-scroll-depth',
+		value: 'Max Scroll Depth'
 	},
 	{
 		label: 'time-on-page',

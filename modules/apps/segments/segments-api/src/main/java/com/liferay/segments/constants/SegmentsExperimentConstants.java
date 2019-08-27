@@ -49,7 +49,7 @@ public class SegmentsExperimentConstants {
 	public enum Goal {
 
 		BOUNCE_RATE("bounce-rate"), CLICK_RATE("click"),
-		MAX_SCROLL_DEPTH("scroll-depth"), TIME_ON_PAGE("time-on-page");
+		MAX_SCROLL_DEPTH("max-scroll-depth"), TIME_ON_PAGE("time-on-page");
 
 		public static Goal parse(String label) {
 			for (Goal goal : values()) {

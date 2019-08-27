@@ -108,11 +108,10 @@ public class SegmentsExperimentRelLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public SegmentsExperimentRel deleteSegmentsExperimentRel(
-			SegmentsExperimentRel segmentsExperimentRel,
-			boolean skipSegmentsExperimentStatusValidation)
+			SegmentsExperimentRel segmentsExperimentRel, boolean force)
 		throws PortalException {
 
-		if (!skipSegmentsExperimentStatusValidation) {
+		if (!force) {
 			_validateSegmentsExperimentStatus(
 				segmentsExperimentRel.getSegmentsExperimentId());
 		}
@@ -123,7 +122,7 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 		// Segments experience
 
-		if (!segmentsExperimentRel.isControl()) {
+		if (force || !segmentsExperimentRel.isControl()) {
 			_segmentsExperienceLocalService.deleteSegmentsExperience(
 				segmentsExperimentRel.getSegmentsExperienceId());
 		}

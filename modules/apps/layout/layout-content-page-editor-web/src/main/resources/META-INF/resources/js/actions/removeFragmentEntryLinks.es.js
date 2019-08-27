@@ -22,6 +22,10 @@ import {updatePageEditorLayoutDataAction} from './updatePageEditorLayoutData.es'
 import {updateWidgetsAction} from './updateWidgets.es';
 import {updateMappedContentsAction} from './updateMappedContents.es';
 
+/**
+ * Removes a list of fragment entry links
+ * @param {array} fragmentEntryLinks
+ */
 function removeFragmentEntryLinksAction(fragmentEntryLinks) {
 	return function(dispatch) {
 		return removeFragmentEntryLinks(fragmentEntryLinks).then(() =>
@@ -30,6 +34,10 @@ function removeFragmentEntryLinksAction(fragmentEntryLinks) {
 	};
 }
 
+/**
+ * Removes a fragment entry link
+ * @param {string} fragmentEntryLinkId
+ */
 function removeFragmentEntryLinkAction(fragmentEntryLinkId) {
 	return function(dispatch, getState) {
 		const state = getState();

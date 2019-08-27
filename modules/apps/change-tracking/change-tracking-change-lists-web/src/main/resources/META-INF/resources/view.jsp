@@ -180,14 +180,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 									</c:otherwise>
 								</c:choose>
 
-								<liferay-portlet:actionURL name="/change_lists/delete_ct_collection" var="deleteCollectionURL">
-									<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
-								</liferay-portlet:actionURL>
-
-								<liferay-ui:icon-delete
-									confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", ctCollectionName) %>'
+								<liferay-ui:icon
 									message="delete"
-									url="<%= deleteCollectionURL %>"
+									url="<%= changeListsDisplayContext.getDeleteURL(ctCollectionId, ctCollectionName) %>"
 								/>
 							</c:if>
 						</liferay-ui:icon-menu>
@@ -397,14 +392,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 													</c:otherwise>
 												</c:choose>
 
-												<liferay-portlet:actionURL name="/change_lists/delete_ct_collection" var="deleteCollectionURL">
-													<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
-												</liferay-portlet:actionURL>
-
-												<liferay-ui:icon-delete
-													confirmation='<%= LanguageUtil.format(request, "are-you-sure-you-want-to-delete-x-change-list", ctCollectionName) %>'
+												<liferay-ui:icon
 													message="delete"
-													url="<%= deleteCollectionURL %>"
+													url="<%= changeListsDisplayContext.getDeleteURL(ctCollectionId, ctCollectionName) %>"
 												/>
 											</liferay-ui:icon-menu>
 										</div>

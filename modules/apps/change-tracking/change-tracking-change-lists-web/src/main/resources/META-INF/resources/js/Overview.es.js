@@ -56,63 +56,6 @@ class Overview extends PortletBase {
 		);
 	}
 
-	_handleClickTrash() {
-		let ok = false;
-
-		const label = this._sub(
-			Liferay.Language.get(
-				'are-you-sure-you-want-to-delete-x-change-list'
-			),
-			[this.headerTitleActiveChangeList]
-		);
-
-		ok = confirm(label);
-
-		if (ok) {
-			const init = {
-				method: 'DELETE'
-			};
-
-			const url =
-				this.urlCollectionsBase + '/' + this.activeCTCollectionId;
-
-			fetch(url, init)
-				.then(response => {
-					if (response.status === 204) {
-						Liferay.Util.navigate(this.urlSelectProduction);
-					} else if (response.status === 404) {
-						openToast({
-							message: this._sub(
-								Liferay.Language.get(
-									'unable-to-delete-change-list-x-because-it-could-not-be-found'
-								),
-								[this.headerTitleActiveChangeList]
-							),
-							title: Liferay.Language.get('error'),
-							type: 'danger'
-						});
-					}
-				})
-				.catch(error => {
-					const message =
-						typeof error === 'string'
-							? error
-							: this._sub(
-									Liferay.Language.get(
-										'an-error-occured-when-trying-to-delete-x'
-									),
-									[this.headerTitleActiveChangeList]
-							  );
-
-					openToast({
-						message,
-						title: Liferay.Language.get('error'),
-						type: 'danger'
-					});
-				});
-		}
-	}
-
 	_populateFields(requestResult) {
 		let activeCollection = requestResult[0];
 		let productionInformation = requestResult[1];
@@ -223,27 +166,6 @@ class Overview extends PortletBase {
 			});
 	}
 
-	_sub(langKey, args) {
-		const keyArray = langKey
-			.split(SPLIT_REGEX)
-			.filter(val => val.length !== 0);
-
-		for (let i = 0; i < args.length; i++) {
-			const arg = args[i];
-
-			const indexKey = `{${i}}`;
-
-			let argIndex = keyArray.indexOf(indexKey);
-
-			while (argIndex >= 0) {
-				keyArray.splice(argIndex, 1, arg);
-
-				argIndex = keyArray.indexOf(indexKey);
-			}
-		}
-
-		return keyArray.join('');
-	}
 }
 
 /**
@@ -399,6 +321,16 @@ Overview.STATE = {
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
+
+	/**
+	 * URL to publish the delete active collection.
+	 *
+	 * @default undefined
+	 * @instance
+	 * @memberOf Overview
+	 * @type {string}
+	 */
+	urlActiveCollectionDelete: Config.string().required(),
 
 	/**
 	 * URL to publish the current active collection.

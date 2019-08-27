@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param spritemap: string}
+	{@param urlActiveCollectionDelete: string}
 	{@param urlActiveCollectionPublish: string}
 	{@param urlCheckoutProduction: string}
 	{@param urlProductionView: string}
@@ -40,7 +41,6 @@
 		userPortraitURL: string,
 		userName: string
 	]}
-	{@param? _handleClickTrash: any}
 
 	{let $headerButtonLabel kind="text"}
 		{msg desc=""}publish{/msg}
@@ -101,8 +101,8 @@
 						{/param}
 						{param headerTitle: $headerTitleActiveChangeList /}
 						{param spritemap: $spritemap /}
+						{param urlActiveCollectionDelete: $urlActiveCollectionDelete /}
 						{param urlActiveCollectionPublish: $urlActiveCollectionPublish /}
-						{param _handleClickTrash: $_handleClickTrash /}
 					{/call}
 				</div>
 
@@ -199,10 +199,10 @@
 		userName: string
 	]}
 	{@param? publishedByTitle: string}
+	{@param? urlActiveCollectionDelete: string}
 	{@param? urlActiveCollectionPublish: string}
 	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
-	{@param? _handleClickTrash: any}
 
 	<div class="overview-card-sheet {$cardStateColor}">
 		{call .overviewCardHeader}
@@ -218,8 +218,8 @@
 			{param headerSubTitle: $headerSubTitle /}
 			{param headerTitle: $headerTitle /}
 			{param spritemap: $spritemap /}
+			{param urlActiveCollectionDelete: $urlActiveCollectionDelete /}
 			{param urlActiveCollectionPublish: $urlActiveCollectionPublish /}
-			{param _handleClickTrash: $_handleClickTrash /}
 		{/call}
 
 		{if not $cardEmpty}
@@ -261,10 +261,10 @@
 	]}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
+	{@param? urlActiveCollectionDelete: string}
 	{@param? urlActiveCollectionPublish: string}
 	{@param? urlCheckoutProduction: string}
 	{@param? urlSelectChangeList: string}
-	{@param? _handleClickTrash: any}
 
 	{let $twoColumns: $headerButton /}
 
@@ -323,11 +323,13 @@
 								</div>
 							{/if}
 							<div class="btn-group-item">
-								<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs" data-qa-id="headerTrash" onclick="{$_handleClickTrash}" type="button">
-									<svg class="icon-monospaced lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
-										<use xlink:href="{$spritemap}#trash" />
-									</svg>
-								</button>
+								<a href="{$urlActiveCollectionDelete}">
+									<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-xs" data-qa-id="headerTrash" type="button">
+										<svg class="icon-monospaced lexicon-icon lexicon-icon-trash" focusable="false" role="presentation">
+											<use xlink:href="{$spritemap}#trash" />
+										</svg>
+									</button>
+								</a>
 							</div>
 						</div>
 					</div>

@@ -129,6 +129,8 @@ public class ChangeListsDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
+			"urlActiveCollectionDelete", _getDeleteActiveCTCollectionURL()
+		).put(
 			"urlActiveCollectionPublish", _getPublishActiveCTCollectionURL()
 		).put(
 			"urlCheckoutProduction",
@@ -234,6 +236,27 @@ public class ChangeListsDisplayContext {
 		long ctCollectionId) {
 
 		return _ctEngineManager.getCTCollectionChangeTypeCounts(ctCollectionId);
+	}
+
+	public String getDeleteURL(long ctCollectionId, String name) {
+		PortletURL deleteURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS,
+			PortletRequest.ACTION_PHASE);
+
+		deleteURL.setParameter(
+			ActionRequest.ACTION_NAME, "/change_lists/delete_ct_collection");
+
+		deleteURL.setParameter(
+			"ctCollectionId", String.valueOf(ctCollectionId));
+
+		return StringBundler.concat(
+			"javascript:confirm('",
+			HtmlUtil.escapeJS(
+				LanguageUtil.format(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-x-change-list", name,
+					false)),
+			"') && Liferay.Util.navigate('", deleteURL, "')");
 	}
 
 	public String getDisplayStyle() {
@@ -471,6 +494,21 @@ public class ChangeListsDisplayContext {
 		return jsonArray;
 	}
 
+	private CTCollection _getCTCollection() throws PortalException {
+		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return null;
+		}
+
+		if (_ctCollection != null) {
+			return _ctCollection;
+		}
+
+		_ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollectionId);
+
+		return _ctCollection;
+	}
+
 	private JSONArray _getCTEntriesJSONArray() throws Exception {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -527,6 +565,16 @@ public class ChangeListsDisplayContext {
 				CTDefinitionRegistryUtil.getVersionEntityVersion(
 					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK()))
 		);
+	}
+
+	private String _getDeleteActiveCTCollectionURL() throws PortalException {
+		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return null;
+		}
+
+		CTCollection ctCollection = _getCTCollection();
+
+		return getDeleteURL(_ctCollectionId, ctCollection.getName());
 	}
 
 	private String _getEntityNameTranslation(String contentType)
@@ -699,8 +747,7 @@ public class ChangeListsDisplayContext {
 			return null;
 		}
 
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollectionId);
+		CTCollection ctCollection = _getCTCollection();
 
 		return getPublishURL(_ctCollectionId, ctCollection.getName());
 	}
@@ -711,6 +758,7 @@ public class ChangeListsDisplayContext {
 				"CTCollection", "modifiedDate", false);
 
 	private final boolean _confirmationEnabled;
+	private CTCollection _ctCollection;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTEngineManager _ctEngineManager;

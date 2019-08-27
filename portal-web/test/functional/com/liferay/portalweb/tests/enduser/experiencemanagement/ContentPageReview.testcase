@@ -452,6 +452,8 @@ definition {
 	@description = "This case ensures that comment list can be viewed and accessed via site navigation."
 	@priority = "5"
 	test ViewCommentListNavigation {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentListNavigation";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
@@ -535,6 +537,8 @@ definition {
 	@description = "This case ensures that multiple comments can be added, viewed and accessed in the fragment list."
 	@priority = "4"
 	test ViewMultipleCommentsList {
+		property test.name.skip.portal.instance = "ContentPageReview#ViewMultipleCommentsList";
+
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");

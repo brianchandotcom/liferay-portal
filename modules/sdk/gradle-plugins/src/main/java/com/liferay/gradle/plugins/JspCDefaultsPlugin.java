@@ -79,13 +79,21 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 		Map<String, Object> bundleInstructions = BndBuilderUtil.getInstructions(
 			project);
 
+		StringBuilder sb = new StringBuilder();
+
 		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
-		File destinationDir = javaCompile.getDestinationDir();
+		sb.append(FileUtil.getAbsolutePath(javaCompile.getDestinationDir()));
 
-		bundleInstructions.put(
-			"-add-resource", FileUtil.getAbsolutePath(destinationDir));
+		sb.append(',');
+
+		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
+			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
+
+		sb.append(FileUtil.getAbsolutePath(compileJSPTask.getDestinationDir()));
+
+		bundleInstructions.put("-add-resource", sb.toString());
 	}
 
 	private void _configureTaskGenerateJSPJava(final Project project) {

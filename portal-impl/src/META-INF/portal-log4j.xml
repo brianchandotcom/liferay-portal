@@ -52,6 +52,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.mail.messaging">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.mail.service.impl.MailServiceImpl">
 		<priority value="ERROR" />
 	</category>
@@ -70,6 +74,10 @@
 
 	<category name="com.liferay.mail.util.MailSessionFactoryBean">
 		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.petra.mail">
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.action.JSONServiceAction">

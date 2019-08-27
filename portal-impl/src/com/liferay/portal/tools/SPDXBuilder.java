@@ -73,23 +73,23 @@ public class SPDXBuilder {
 
 		String rdfFileName = ArgumentsUtil.getString(
 			arguments, "spdx.file", null);
-		String licenseReportPropertiesFileName = ArgumentsUtil.getString(
+		String licenseOverridePropertiesFileName = ArgumentsUtil.getString(
 			arguments, "license.report.override.properties.file", null);
 
 		new SPDXBuilder(
 			StringUtil.split(xmls), rdfFileName,
-			licenseReportPropertiesFileName);
+			licenseOverridePropertiesFileName);
 	}
 
 	public SPDXBuilder(
 		String[] xmls, String rdfFileName,
-		String licenseReportPropertiesFileName) {
+		String licenseOverridePropertiesFileName) {
 
 		try {
 			System.setProperty("line.separator", StringPool.NEW_LINE);
 
 			Document document = _getDocument(
-				xmls, rdfFileName, licenseReportPropertiesFileName);
+				xmls, rdfFileName, licenseOverridePropertiesFileName);
 			File rdfFile = new File(rdfFileName);
 
 			_write(
@@ -210,7 +210,7 @@ public class SPDXBuilder {
 	@SuppressWarnings("unchecked")
 	private Document _getDocument(
 			String[] xmls, String rdfFileName,
-			String licenseReportPropertiesFileName)
+			String licenseOverridePropertiesFile)
 		throws Exception {
 
 		Comparator<String> comparator = String.CASE_INSENSITIVE_ORDER;
@@ -233,8 +233,8 @@ public class SPDXBuilder {
 			}
 		}
 
-		Properties licenseProperties = _getLicenseProperties(
-			licenseReportPropertiesFileName);
+		Properties licenseOverrideProperties = _getLicenseOverrideProperties(
+			licenseOverridePropertiesFile);
 
 		Document spdxDocument = saxReader.read(new File(rdfFileName));
 
@@ -257,7 +257,7 @@ public class SPDXBuilder {
 				_getQName("Package"));
 
 			List<Element> libraryElements = _createLibraryElements(
-				packageElement, licenseProperties);
+				packageElement, licenseOverrideProperties);
 
 			for (Element libraryElement : libraryElements) {
 				String key = _getKey("spdx", libraryElement);
@@ -337,17 +337,17 @@ public class SPDXBuilder {
 		return null;
 	}
 
-	private Properties _getLicenseProperties(
-			String licenseReportPropertiesFileName)
+	private Properties _getLicenseOverrideProperties(
+			String licenseOverridePropertiesFileName)
 		throws IOException {
 
 		Properties licenseProperties = new Properties();
 
-		if (Validator.isNull(licenseReportPropertiesFileName)) {
+		if (Validator.isNull(licenseOverridePropertiesFileName)) {
 			return licenseProperties;
 		}
 
-		File file = new File(licenseReportPropertiesFileName);
+		File file = new File(licenseOverridePropertiesFileName);
 
 		if (file.exists()) {
 			licenseProperties.load(new FileInputStream(file));

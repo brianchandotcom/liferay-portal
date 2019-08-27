@@ -109,22 +109,9 @@ public class FragmentEntryConfigUtil {
 			return _getAssetEntryJSONObject(value);
 		}
 		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(), "select")) {
-
-			String dataType = fragmentConfigurationField.getDataType();
-
-			if (Validator.isNull(dataType)) {
-				_log.error(
-					fragmentConfigurationField.getName() +
-						" field has an invalid data type");
-
-				return null;
-			}
-
-			return _getFieldValue(dataType, value);
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					fragmentConfigurationField.getType(), "text")) {
+					fragmentConfigurationField.getType(), "select") ||
+				 StringUtil.equalsIgnoreCase(
+					 fragmentConfigurationField.getType(), "text")) {
 
 			String dataType = fragmentConfigurationField.getDataType();
 

@@ -6,7 +6,6 @@
 		"eslint": "6.1.0",
 		"fs-extra": "7.0.1",
 		"gulp": "3.9.1",
-		"jest-fetch-mock": "2.1.2",
 		"jsdoc": "3.6.3",
 		"karma": "4.0.0",
 		"liferay-frontend-common-css": "1.0.4",
@@ -16,7 +15,7 @@
 		"liferay-npm-bridge-generator": "2.12.0",
 		"liferay-npm-bundler": "2.12.0",
 		"liferay-npm-bundler-preset-standard": "2.12.0",
-		"liferay-npm-scripts": "8.0.1",
+		"liferay-npm-scripts": "8.1.0",
 		"liferay-theme-es2015-hook": "8.0.0-rc.2",
 		"metal-jest-serializer": "2.0.0"
 	},

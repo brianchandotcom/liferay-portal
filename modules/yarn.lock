@@ -10632,7 +10632,7 @@ jest-environment-node@^24.5.0:
     jest-mock "^24.5.0"
     jest-util "^24.5.0"
 
-jest-fetch-mock@2.1.2:
+jest-fetch-mock@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/jest-fetch-mock/-/jest-fetch-mock-2.1.2.tgz#1260b347918e3931c4ec743ceaf60433da661bd0"
   integrity sha512-tcSR4Lh2bWLe1+0w/IwvNxeDocMI/6yIA2bijZ0fyWxC4kQ18lckQ1n7Yd40NKuisGmcGBRFPandRXrW/ti/Bw==
@@ -11703,10 +11703,10 @@ liferay-npm-bundler@2.12.0:
     semver "^5.5.0"
     xml-js "^1.6.8"
 
-liferay-npm-scripts@8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-8.0.1.tgz#c1ee6d982e3c9500d3192715fd8a8e7a590aa078"
-  integrity sha512-4fOmv0oWSLw3zPF2rl+Eh3xsFtZ75yoIwf7rl1FJTqrKnzDeDjYgBsOIBqqYd9oleDEndEsHbmKHVi5tPRlwTw==
+liferay-npm-scripts@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-8.1.0.tgz#cb0fa411c3ef492840a3585b494b9671ff1100da"
+  integrity sha512-9S9pjMxs7JYiZ4/6EEmkq9TiFmzfeky25gMT6rEyyiGSg1slcl1NDxnVFN5dk0BaxjHyIEGupAt3uFdYURYbvA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -11734,6 +11734,7 @@ liferay-npm-scripts@8.0.1:
     glob "^7.1.3"
     http-proxy-middleware "^0.19.1"
     jest "^24.5.0"
+    jest-fetch-mock "^2.1.2"
     liferay-jest-junit-reporter "1.0.1"
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.12.0"

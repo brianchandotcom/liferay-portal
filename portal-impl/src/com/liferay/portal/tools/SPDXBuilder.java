@@ -130,6 +130,15 @@ public class SPDXBuilder {
 		}
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #SPDXBuilder(
+	 *             String[], File, Properties)}
+	 */
+	@Deprecated
+	public SPDXBuilder(String[] xmls, String rdf) {
+		new SPDXBuilder(xmls, new File(rdf), new Properties());
+	}
+
 	@SuppressWarnings("unchecked")
 	private List<Element> _createLibraryElements(
 		Element packageElement, Properties licenseProperties) {

@@ -348,34 +348,37 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				<dd class="sidebar-dd">
 					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 				</dd>
-				<dt class="sidebar-dt">
-					<liferay-ui:message key="location" />
-				</dt>
-				<dd class="sidebar-dd">
 
-					<%
-					PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
+				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, fileEntry.getFolderId(), ActionKeys.VIEW) %>">
+					<dt class="sidebar-dt">
+						<liferay-ui:message key="location" />
+					</dt>
+					<dd class="sidebar-dd">
 
-					viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-					viewFolderURL.setParameter("redirect", currentURL);
+						<%
+						PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
 
-					Folder folder = fileEntry.getFolder();
+						viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
+						viewFolderURL.setParameter("redirect", currentURL);
 
-					viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
-					%>
+						Folder folder = fileEntry.getFolder();
 
-					<clay:sticker
-						icon="folder"
-						size="sm"
-						style="secondary"
-					/>
+						viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+						%>
 
-					<clay:link
-						href="<%= viewFolderURL.toString() %>"
-						label="<%= folder.getName() %>"
-						style="secondary"
-					/>
-				</dd>
+						<clay:sticker
+							icon="folder"
+							size="sm"
+							style="secondary"
+						/>
+
+						<clay:link
+							href="<%= viewFolderURL.toString() %>"
+							label="<%= folder.getName() %>"
+							style="secondary"
+						/>
+					</dd>
+				</c:if>
 
 				<liferay-asset:asset-tags-available
 					className="<%= DLFileEntryConstants.getClassName() %>"

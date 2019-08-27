@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.layout.seo">
+	<namespace>Layout</namespace>
+	<entity local-service="true" name="LayoutCanonicalURL" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="layoutCanonicalURLId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column localized="true" name="canonicalURL" type="String" />
+		<column name="enabled" type="boolean" />
+		<column name="privateLayout" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="layoutId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="G_P_L" return-type="LayoutCanonicalURL" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="layoutId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Layout" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

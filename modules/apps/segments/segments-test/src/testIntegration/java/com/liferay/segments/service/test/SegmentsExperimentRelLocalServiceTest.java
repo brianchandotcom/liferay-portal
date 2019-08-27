@@ -83,23 +83,18 @@ public class SegmentsExperimentRelLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertNotNull(segmentsExperimentRel);
-
 		Assert.assertEquals(
 			segmentsExperiment.getSegmentsExperimentId(),
 			segmentsExperimentRel.getSegmentsExperimentId());
-
 		Assert.assertEquals(
 			segmentsExperiment.getSegmentsExperimentKey(),
 			segmentsExperimentRel.getSegmentsExperimentKey());
-
 		Assert.assertEquals(
 			segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperimentRel.getSegmentsExperienceId());
-
 		Assert.assertEquals(
 			segmentsExperience.getSegmentsExperienceKey(),
 			segmentsExperimentRel.getSegmentsExperienceKey());
-
 		Assert.assertEquals(
 			segmentsExperience.getName(LocaleUtil.getDefault()),
 			segmentsExperimentRel.getName(LocaleUtil.getDefault()));

@@ -15,10 +15,10 @@
 package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.ant.bnd.metatype.MetatypePlugin;
+import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
-import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.workspace.FrontendPlugin;
@@ -61,7 +61,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
-import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.jvm.tasks.Jar;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
@@ -100,6 +99,17 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		if (bndBndFile.exists() &&
 			(buildGradleFile.exists() || pomXmlFile.exists())) {
 
+			if (!project.hasProperty(
+					JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME)) {
+
+				project.getExtensions(
+				).getExtraProperties(
+				).set(
+					JspCDefaultsPlugin.COMPILE_JSP_INCLUDE_PROPERTY_NAME,
+					isJspPrecompileEnabled()
+				);
+			}
+
 			GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
 			if (FileUtil.exists(project, "service.xml")) {
@@ -108,20 +118,16 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			Jar jar = (Jar)GradleUtil.getTask(
 				project, JavaPlugin.JAR_TASK_NAME);
-			final JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
-				project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
 			_configureLiferayOSGi(project);
 
-			_configureRootTaskDistBundle(jar, compileJSPTask);
+			_configureRootTaskDistBundle(jar);
 
 			project.afterEvaluate(
 				new Action<Project>() {
 
 					@Override
 					public void execute(Project project) {
-						_configureTaskCompileJSP(
-							compileJSPTask, _getWorkspaceExtension(project));
 						_configureTaskTestIntegration(project);
 					}
 
@@ -266,9 +272,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureRootTaskDistBundle(
-		final Jar jar, final JavaCompile compileJSPTask) {
-
+	private void _configureRootTaskDistBundle(final Jar jar) {
 		final Project project = jar.getProject();
 
 		Copy copy = (Copy)GradleUtil.getTask(
@@ -285,26 +289,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
-
-		if (isJspPrecompileEnabled()) {
-			copy.into(
-				new Closure<String>(project) {
-
-					@SuppressWarnings("unused")
-					public String doCall() {
-						return _getCompileJSPDestinationDirName(project);
-					}
-
-				},
-				new Closure<Void>(project) {
-
-					@SuppressWarnings("unused")
-					public void doCall(CopySourceSpec copySourceSpec) {
-						copySourceSpec.from(compileJSPTask);
-					}
-
-				});
-		}
 	}
 
 	private void _configureRootTaskDistBundle(final Task buildTask) {
@@ -317,20 +301,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		copy.dependsOn(buildTask);
 
 		copy.into("osgi/modules", _copyJarClosure(project, buildTask));
-	}
-
-	private void _configureTaskCompileJSP(
-		JavaCompile compileJSPTask, WorkspaceExtension workspaceExtension) {
-
-		if (!isJspPrecompileEnabled()) {
-			return;
-		}
-
-		File dir = new File(
-			workspaceExtension.getHomeDir(),
-			_getCompileJSPDestinationDirName(compileJSPTask.getProject()));
-
-		compileJSPTask.setDestinationDir(dir);
 	}
 
 	private void _configureTaskTestIntegration(Project project) {

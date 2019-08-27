@@ -48,13 +48,13 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return content;
 		}
 
-		content = _checkConvertedKeys(content);
-		content = _checkGitLiferayPortalBranch(content);
+		content = _fixConvertedKeys(content);
+		content = _fixGitLiferayPortalBranch(content);
 
 		return _formatSourceFormatterProperties(fileName, content);
 	}
 
-	private String _checkConvertedKeys(String content) {
+	private String _fixConvertedKeys(String content) {
 		for (String[] array : _CONVERTED_KEYS) {
 			content = StringUtil.replace(content, array[0], array[1]);
 		}
@@ -62,7 +62,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _checkGitLiferayPortalBranch(String content) {
+	private String _fixGitLiferayPortalBranch(String content) {
 		Matcher matcher = _gitLiferayPortalBranchPattern.matcher(content);
 
 		if (matcher.find()) {

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay View Count API
+Bundle-SymbolicName: com.liferay.view.count.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.view.count.exception,\
+	com.liferay.view.count.model,\
+	com.liferay.view.count.service,\
+	com.liferay.view.count.service.persistence

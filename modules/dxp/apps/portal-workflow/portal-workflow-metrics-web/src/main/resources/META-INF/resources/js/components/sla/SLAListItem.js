@@ -1,6 +1,7 @@
 import {ChildLink} from '../../shared/components/router/routerWrapper';
 import {formatDuration} from '../../shared/util/duration';
 import Icon from '../../shared/components/Icon';
+import moment from '../../shared/util/moment';
 import React from 'react';
 import SLAListCardContext from './SLAListCardContext';
 
@@ -31,20 +32,6 @@ class SLAListItem extends React.Component {
 			? Liferay.Language.get('blocked')
 			: Liferay.Language.get('running');
 
-		let dateModifiedText = '';
-
-		if (dateModified) {
-			const date = new Date(dateModified);
-			const month = date.toLocaleString(
-				Liferay.ThemeDisplay.getBCP47LanguageId(),
-				{month: 'short', timeZone: 'UTC'}
-			);
-
-			const dayOfMonth = `${date.getUTCDate()}`.padStart(2, '0');
-
-			dateModifiedText = `${month} ${dayOfMonth}`;
-		}
-
 		return (
 			<tr>
 				<td className="table-cell-expand">
@@ -67,7 +54,11 @@ class SLAListItem extends React.Component {
 
 				<td>{durationString}</td>
 
-				<td>{dateModifiedText}</td>
+				<td>
+					{moment
+						.utc(dateModified)
+						.format(Liferay.Language.get('mmm-dd'))}
+				</td>
 
 				<td>
 					<div className="dropdown dropdown-action">

@@ -16,37 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL viewURL = renderResponse.createRenderURL();
-
-String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
-
-renderResponse.setTitle(LanguageUtil.get(request, "add-account"));
-%>
-
-<portlet:actionURL name="/account_admin/edit_account" var="editAccountURL" />
-
-<liferay-frontend:edit-form
-	action="<%= editAccountURL %>"
->
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-
-	<liferay-frontend:edit-form-body>
-		<h2 class="sheet-title">
-			<%= LanguageUtil.get(request, "information") %>
-		</h2>
-
-		<liferay-frontend:fieldset-group>
-			<liferay-util:include page="/account_display.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:fieldset-group>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<liferay-frontend:screen-navigation
+	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT %>"
+	portletURL="<%= renderResponse.createRenderURL() %>"
+/>

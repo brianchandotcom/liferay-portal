@@ -76,7 +76,10 @@ const useInstanceListData = (page, pageSize, processId, query) => {
 			);
 		}
 
-		if (isCompletedStatusSelected() && selectedTimeRange) {
+		if (
+			isCompletedStatusSelected(filters[filterConstants.processStatus]) &&
+			selectedTimeRange
+		) {
 			baseURL += `&${
 				filterConstants.timeRangeDateEnd
 			}=${selectedTimeRange.dateEnd.toISOString()}`;

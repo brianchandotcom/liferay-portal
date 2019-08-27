@@ -5,17 +5,14 @@ const buildFallbackTimeRange = (fallbackKeys, queryDateEnd, queryDateStart) => {
 	const fallbackItems = buildFallbackItems(fallbackKeys);
 
 	if (fallbackItems && fallbackItems.length) {
-		const customTimeRange = fallbackItems.filter(
-			item => item.key === 'custom'
-		)[0];
-
-		if (customTimeRange) {
-			customTimeRange.dateEnd = parseQueryDate(queryDateEnd, true);
-			customTimeRange.dateStart = parseQueryDate(queryDateStart, true);
-		}
+		return {
+			...fallbackItems[0],
+			dateEnd: parseQueryDate(queryDateEnd, true),
+			dateStart: parseQueryDate(queryDateStart)
+		};
 	}
 
-	return fallbackItems;
+	return null;
 };
 
 const formatDate = date => moment.utc(date).format('L');

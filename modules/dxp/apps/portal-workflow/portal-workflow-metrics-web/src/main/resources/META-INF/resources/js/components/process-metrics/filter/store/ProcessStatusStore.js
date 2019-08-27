@@ -40,8 +40,10 @@ const useProcessStatus = processStatusKeys => {
 		return processStatuses.filter(item => item.active);
 	};
 
-	const isCompletedStatusSelected = () => {
-		const selectedProcessStatuses = getSelectedProcessStatuses();
+	const isCompletedStatusSelected = fallbackKeys => {
+		const selectedProcessStatuses = getSelectedProcessStatuses(
+			fallbackKeys
+		);
 
 		if (selectedProcessStatuses) {
 			return selectedProcessStatuses

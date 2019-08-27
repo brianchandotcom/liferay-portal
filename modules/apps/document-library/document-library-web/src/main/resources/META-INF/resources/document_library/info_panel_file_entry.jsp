@@ -370,9 +370,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						style="secondary"
 					/>
 
-					<aui:a href="<%= viewFolderURL.toString() %>">
-						<%= folder.getName() %>
-					</aui:a>
+					<clay:link
+						href="<%= viewFolderURL.toString() %>"
+						label="<%= folder.getName() %>"
+						style="secondary"
+					/>
 				</dd>
 
 				<liferay-asset:asset-tags-available

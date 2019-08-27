@@ -30,9 +30,12 @@ import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
+ * @author Peter Shin
  */
 public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
@@ -41,8 +44,30 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		if (fileName.endsWith("/source-formatter.properties")) {
-			return _formatSourceFormatterProperties(fileName, content);
+		if (!fileName.endsWith("/source-formatter.properties")) {
+			return content;
+		}
+
+		content = _checkConvertedKeys(content);
+		content = _checkGitLiferayPortalBranch(content);
+
+		return _formatSourceFormatterProperties(fileName, content);
+	}
+
+	private String _checkConvertedKeys(String content) {
+		for (String[] array : _CONVERTED_KEYS) {
+			content = StringUtil.replace(content, array[0], array[1]);
+		}
+
+		return content;
+	}
+
+	private String _checkGitLiferayPortalBranch(String content) {
+		Matcher matcher = _gitLiferayPortalBranchPattern.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}
 
 		return content;
@@ -205,9 +230,19 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final String[][] _CONVERTED_KEYS = {
+		{
+			"blob/master/portal-impl/src/source-formatter.properties",
+			"blob/master/source-formatter.properties"
+		}
+	};
+
 	private static final char[][] _REVERSE_ORDER_CHARACTERS = {
 		{CharPool.COLON, CharPool.PERIOD}, {CharPool.DASH, CharPool.SLASH}
 	};
+
+	private static final Pattern _gitLiferayPortalBranchPattern =
+		Pattern.compile("\\sgit\\.liferay\\.portal\\.branch=(\\\\\\s+)");
 
 	private Boolean _hasPrivateAppsDir;
 

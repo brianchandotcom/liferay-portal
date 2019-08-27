@@ -413,7 +413,6 @@
 		<check name="PropertiesPortalEnvironmentVariablesCheck" />
 		<check name="PropertiesPortalFileCheck" />
 		<check name="PropertiesPortletFileCheck" />
-		<check name="PropertiesSourceFormatterContentCheck" />
 		<check name="PropertiesSourceFormatterFileCheck" />
 		<check name="PropertiesWhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />

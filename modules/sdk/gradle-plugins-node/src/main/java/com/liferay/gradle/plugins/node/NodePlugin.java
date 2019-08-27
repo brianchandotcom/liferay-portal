@@ -24,11 +24,9 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecutePackageManagerTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
-import com.liferay.gradle.plugins.node.tasks.PackageLinkTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunBuildTask;
 import com.liferay.gradle.plugins.node.tasks.PackageRunTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
 
@@ -43,8 +41,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -84,8 +80,6 @@ public class NodePlugin implements Plugin<Project> {
 
 	public static final String NPM_SHRINKWRAP_TASK_NAME = "npmShrinkwrap";
 
-	public static final String PACKAGE_LINKS_TASK_NAME = "packageLinks";
-
 	public static final String PACKAGE_RUN_BUILD_TASK_NAME = "packageRunBuild";
 
 	public static final String PACKAGE_RUN_TEST_TASK_NAME = "packageRunTest";
@@ -117,7 +111,6 @@ public class NodePlugin implements Plugin<Project> {
 
 		_addTaskNpmPackageLock(project, cleanNpmTask, npmInstallTask);
 		_addTaskNpmShrinkwrap(project, cleanNpmTask, npmInstallTask);
-		_addTasksPackageLink(npmInstallTask, packageJsonMap);
 		_addTasksPackageRun(npmInstallTask, packageJsonMap, nodeExtension);
 
 		_configureTasksDownloadNodeModule(
@@ -255,60 +248,6 @@ public class NodePlugin implements Plugin<Project> {
 		return npmShrinkwrapTask;
 	}
 
-	private PackageLinkTask _addTaskPackageLink(
-		String dependencyName, NpmInstallTask npmInstallTask) {
-
-		Project project = npmInstallTask.getProject();
-
-		String suffix = StringUtil.camelCase(dependencyName, true);
-
-		final PackageLinkTask packageLinkTask = GradleUtil.addTask(
-			project, _PACKAGE_LINK_TASK_NAME_PREFIX + suffix,
-			PackageLinkTask.class);
-
-		packageLinkTask.dependsOn(npmInstallTask);
-		packageLinkTask.setDescription(
-			"Links the \"" + dependencyName + "\" package.json dependency.");
-		packageLinkTask.setDependencyName(dependencyName);
-
-		return packageLinkTask;
-	}
-
-	private Task _addTaskPackageLinks(
-		Set<String> dependencyNames, Project project) {
-
-		Task task = project.task(PACKAGE_LINKS_TASK_NAME);
-
-		task.setDescription("Links all the package.json dependencies.");
-
-		Pattern pattern = null;
-
-		String taskNameRegex = GradleUtil.getTaskPrefixedProperty(
-			task, "task.name.regex");
-
-		if (Validator.isNotNull(taskNameRegex)) {
-			pattern = Pattern.compile(taskNameRegex);
-		}
-
-		for (String dependencyName : dependencyNames) {
-			String suffix = StringUtil.camelCase(dependencyName, true);
-
-			String taskName = _PACKAGE_LINK_TASK_NAME_PREFIX + suffix;
-
-			if (pattern != null) {
-				Matcher matcher = pattern.matcher(taskName);
-
-				if (!matcher.find()) {
-					continue;
-				}
-			}
-
-			task.dependsOn(taskName);
-		}
-
-		return task;
-	}
-
 	private PackageRunTask _addTaskPackageRun(
 		String scriptName, NpmInstallTask npmInstallTask) {
 
@@ -396,28 +335,6 @@ public class NodePlugin implements Plugin<Project> {
 			});
 
 		return packageRunBuildTask;
-	}
-
-	@SuppressWarnings("unchecked")
-	private void _addTasksPackageLink(
-		NpmInstallTask npmInstallTask, Map<String, Object> packageJsonMap) {
-
-		if (packageJsonMap == null) {
-			return;
-		}
-
-		Map<String, String> dependenciesJsonMap =
-			(Map<String, String>)packageJsonMap.get("dependencies");
-
-		if (dependenciesJsonMap != null) {
-			Set<String> dependencyNames = dependenciesJsonMap.keySet();
-
-			for (String dependencyName : dependencyNames) {
-				_addTaskPackageLink(dependencyName, npmInstallTask);
-			}
-
-			_addTaskPackageLinks(dependencyNames, npmInstallTask.getProject());
-		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -1004,8 +921,6 @@ public class NodePlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final String _PACKAGE_LINK_TASK_NAME_PREFIX = "packageLink";
 
 	private static final String _PACKAGE_RUN_TASK_NAME_PREFIX = "packageRun";
 

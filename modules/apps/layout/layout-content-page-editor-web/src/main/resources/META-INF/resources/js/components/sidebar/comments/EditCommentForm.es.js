@@ -28,21 +28,22 @@ const EditCommentForm = props => {
 
 		editFragmentEntryLinkComment(props.comment.commentId, textareaContent)
 			.then(comment => {
-			setEditingComment(false);
+				setEditingComment(false);
 
-			props.onEdit(comment);
-			props.onCloseForm();
+				props.onEdit(comment);
+				props.onCloseForm();
 			})
-			.catch(error => {
+			.catch(() => {
 				openToast({
-					// TODO: avoid hardcoded copy
-					message: 'the comment couldn’t be resolved.',
+					message: Liferay.Language.get(
+						'the-comment-could-not-be-edited'
+					),
 					title: Liferay.Language.get('error'),
 					type: 'danger'
 				});
 
 				setEditingComment(false);
-		});
+			});
 	};
 
 	return (

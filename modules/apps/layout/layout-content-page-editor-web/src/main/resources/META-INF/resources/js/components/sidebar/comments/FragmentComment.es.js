@@ -74,6 +74,41 @@ const FragmentComment = props => {
 		small: true
 	});
 
+	const handleResolveButtonClick = () => {
+		setChangingResolved(true);
+
+		editFragmentEntryLinkComment(
+			props.comment.commentId,
+			props.comment.body,
+			!resolved
+		)
+			.then(comment => {
+				setChangingResolved(false);
+
+				if (showResolvedComments) {
+					props.onEdit(comment);
+				} else if (!resolved) {
+					setShowResolveMask(true);
+					hideComment(() => props.onEdit(comment));
+				}
+			})
+			.catch(() => {
+				openToast({
+					message: resolved
+						? Liferay.Language.get(
+								'the-comment-could-not-be-unresolved'
+						  )
+						: Liferay.Language.get(
+								'the-comment-could-not-be-resolved'
+						  ),
+					title: Liferay.Language.get('error'),
+					type: 'danger'
+				});
+
+				setChangingResolved(false);
+			});
+	};
+
 	const hideComment = onHide => {
 		setHidden(true);
 
@@ -120,37 +155,7 @@ const FragmentComment = props => {
 					<ResolveButton
 						disabled={editing}
 						loading={changingResolved}
-						onClick={() => {
-							setChangingResolved(true);
-
-							editFragmentEntryLinkComment(
-								props.comment.commentId,
-								props.comment.body,
-								!resolved
-							)
-								.then(comment => {
-								setChangingResolved(false);
-
-								if (showResolvedComments) {
-									props.onEdit(comment);
-								} else if (!resolved) {
-									setShowResolveMask(true);
-									hideComment(() => props.onEdit(comment));
-								}
-								})
-								.catch(error => {
-									openToast({
-										// TODO: avoid hardcoded copy
-										message: resolved
-											? 'the comment couldn’t be unresolved.'
-											: 'the comment couldn’t be resolved.',
-										title: Liferay.Language.get('error'),
-										type: 'danger'
-									});
-
-									setChangingResolved(false);
-							});
-						}}
+						onClick={handleResolveButtonClick}
 						resolved={resolved}
 					/>
 				)}
@@ -255,15 +260,14 @@ const FragmentComment = props => {
 							.then(() =>
 								hideComment(() => props.onDelete(props.comment))
 							)
-							.catch(error => {
+							.catch(() => {
 								openToast({
-									// TODO: avoid hardcoded copy
-									message: 'the comment couldn’t be deleted.',
+									message: Liferay.Language.get(
+										'the-comment-could-not-be-deleted'
+									),
 									title: Liferay.Language.get('error'),
 									type: 'danger'
 								});
-
-								setAddingComment(false);
 							})
 					}
 				/>

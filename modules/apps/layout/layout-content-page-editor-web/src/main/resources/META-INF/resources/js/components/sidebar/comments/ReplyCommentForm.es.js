@@ -50,10 +50,11 @@ const ReplyCommentForm = props => {
 				setShowForm(false);
 				setTextareaContent('');
 			})
-			.catch(error => {
+			.catch(() => {
 				openToast({
-					// TODO: avoid hardcoded copy
-					message: 'the comment couldn’t be saved.',
+					message: Liferay.Language.get(
+						'the-reply-could-not-be-saved'
+					),
 					title: Liferay.Language.get('error'),
 					type: 'danger'
 				});

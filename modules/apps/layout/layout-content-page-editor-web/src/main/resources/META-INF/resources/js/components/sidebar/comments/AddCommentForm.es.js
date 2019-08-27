@@ -53,10 +53,11 @@ const AddCommentForm = props => {
 				setShowButtons(false);
 				setTextareaContent('');
 			})
-			.catch(error => {
+			.catch(() => {
 				openToast({
-					// TODO: avoid hardcoded copy
-					message: 'the comment couldn’t be saved.',
+					message: Liferay.Language.get(
+						'the-comment-could-not-be-saved'
+					),
 					title: Liferay.Language.get('error'),
 					type: 'danger'
 				});

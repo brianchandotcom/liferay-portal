@@ -233,7 +233,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 		private File _getLicensePropertiesFile() {
 			String propertiesFile = System.getProperty(
-				"license.report.properties.file");
+				"license.report.override.properties.file");
 
 			if (Validator.isNull(propertiesFile)) {
 				return null;

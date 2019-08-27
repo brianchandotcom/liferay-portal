@@ -74,7 +74,7 @@ public class SPDXBuilder {
 		String rdfFileName = ArgumentsUtil.getString(
 			arguments, "rdf.file", null);
 		String licenseReportPropertiesFileName = ArgumentsUtil.getString(
-			arguments, "license.report.properties.file", null);
+			arguments, "license.report.override.properties.file", null);
 
 		new SPDXBuilder(
 			StringUtil.split(xmls), rdfFileName,

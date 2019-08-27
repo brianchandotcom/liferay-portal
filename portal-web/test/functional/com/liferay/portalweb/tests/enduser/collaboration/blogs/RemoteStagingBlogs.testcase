@@ -42,8 +42,8 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Blogs");

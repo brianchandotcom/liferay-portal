@@ -66,6 +66,7 @@ runGradleTest {
 				int pos = it.path.indexOf('/')
 
 				if (pos == -1) {
+					println it.toString()
 					return
 				}
 
@@ -84,14 +85,6 @@ runGradleTest {
 
 			for (String fileName : ["osgi/modules/com.liferay.foo.web-1.0.0.jar", "osgi/modules/qux-layouttpl-7.0.0.1.war", "osgi/war/baz-theme.war", "osgi/war/foo.war"]) {
 				String zipEntryName = zipEntryRootName + fileName
-
-				assert zipFile.getEntry(zipEntryName) != null : zipEntryName
-			}
-
-			// Compiled JSP classes
-
-			for (String fileName in ["init_jsp.class", "view_jsp.class"]) {
-				String zipEntryName = "${zipEntryRootName}work/com.liferay.foo.web-1.0.0/org/apache/jsp/${fileName}"
 
 				assert zipFile.getEntry(zipEntryName) != null : zipEntryName
 			}

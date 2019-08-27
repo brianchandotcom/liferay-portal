@@ -38,14 +38,41 @@ function _getFormData(body, portletNamespace, _formData = new FormData()) {
  * @param {string} url
  * @param {object} [body={}]
  * @private
- * @return {Promise<Response>}
+ * @return {Promise<object>}
  * @review
  */
 function _fetch(url, body = {}) {
 	return fetch(url, {
 		body: _getFormData(body, _store.getState().portletNamespace),
 		method: 'POST'
-	});
+	})
+		.then(
+			response =>
+				new Promise((resolve, reject) => {
+					response
+						.clone()
+						.json()
+						.then(body => resolve([response, body]))
+						.catch(() => response.clone().text())
+						.then(body => resolve([response, body]))
+						.catch(reject);
+				})
+		)
+		.then(([response, body]) => {
+			if (typeof body === 'object') {
+				if ('exception' in body) {
+					throw new Error(body.exception);
+				} else if ('error' in body) {
+					throw new Error(body.error);
+				}
+			}
+
+			if (response.status >= 400) {
+				throw new Error(`${response.status} ${body}`);
+			}
+
+			return body;
+		});
 }
 
 /**
@@ -126,7 +153,7 @@ function editFragmentEntryLinkComment(commentId, body, resolved) {
 		body,
 		commentId,
 		resolved
-	}).then(response => response.json());
+	});
 }
 
 /**
@@ -139,20 +166,20 @@ function getAssetFieldValue(classNameId, classPK, fieldId) {
 		classNameId,
 		classPK,
 		fieldId
-	}).then(response => response.json());
+	});
 }
 
 function getAssetMappingFields(classNameId, classPK) {
 	return _fetch(_store.getState().getAssetMappingFieldsURL, {
 		classNameId,
 		classPK
-	}).then(response => response.json());
+	});
 }
 
 function getExperienceUsedPortletIds(segmentsExperienceId) {
 	return _fetch(_store.getState().getExperienceUsedPortletsURL, {
 		segmentsExperienceId
-	}).then(response => response.json());
+	});
 }
 
 function getMappedContents() {
@@ -171,14 +198,14 @@ function getMappedContents() {
 		backURL,
 		classNameId,
 		classPK
-	}).then(response => response.json());
+	});
 }
 
 function getStructureMappingFields(classNameId, classTypeId) {
 	return _fetch(_store.getState().mappingFieldsURL, {
 		classNameId,
 		classTypeId
-	}).then(response => response.json());
+	});
 }
 
 /**

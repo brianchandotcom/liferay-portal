@@ -242,7 +242,6 @@ function createSegmentsExperienceReducer(state, action) {
 			name,
 			segmentsEntryId
 		})
-			.then(response => response.json())
 			.then(objectResponse => {
 				if (objectResponse.error) throw objectResponse.error;
 				return objectResponse;

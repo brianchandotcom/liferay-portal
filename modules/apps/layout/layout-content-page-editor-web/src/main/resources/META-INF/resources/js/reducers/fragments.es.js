@@ -290,7 +290,6 @@ function duplicateFragmentEntryLinkReducer(state, action) {
 
 	return new Promise(resolve => {
 		duplicateFragmentEntryLink(action.fragmentEntryLinkId)
-			.then(response => response.json())
 			.then(response => {
 				const fragmentEntryLink = setIn(
 					response,

@@ -36,7 +36,6 @@ const ReplyCommentForm = props => {
 			props.parentCommentId,
 			textareaContent
 		)
-			.then(response => response.json())
 			.then(comment => {
 				dispatch(
 					updateFragmentEntryLinkCommentReplyAction(

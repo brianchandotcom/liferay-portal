@@ -40,7 +40,6 @@ const AddCommentForm = props => {
 		setAddingComment(true);
 
 		addFragmentEntryLinkComment(props.fragmentEntryLinkId, textareaContent)
-			.then(response => response.json())
 			.then(comment => {
 				dispatch(
 					updateFragmentEntryLinkCommentAction(

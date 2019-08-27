@@ -16,6 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -160,6 +161,18 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			actualFragmentEntryLinks.toString(),
 			originalFragmentEntryLinks.size() + 1,
 			actualFragmentEntryLinks.size());
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testAddInvalidFragmentEntryToLayout() throws Exception {
+		MockLiferayPortletRequest actionRequest = _getMockActionRequest();
+
+		actionRequest.addParameter(
+			"fragmentKey", RandomTestUtil.randomString());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "addFragmentEntryLink",
+			new Class<?>[] {ActionRequest.class}, actionRequest);
 	}
 
 	private FragmentEntry _getFragmentEntry() throws PortalException {

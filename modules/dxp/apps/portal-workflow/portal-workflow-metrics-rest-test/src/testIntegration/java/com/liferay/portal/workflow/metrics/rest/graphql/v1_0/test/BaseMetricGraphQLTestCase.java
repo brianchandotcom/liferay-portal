@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.graphql.v1_0.test;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -26,7 +27,6 @@ import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Metric;
 import com.liferay.portal.workflow.metrics.rest.client.http.HttpInvoker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,13 +71,27 @@ public abstract class BaseMetricGraphQLTestCase {
 		Assert.assertTrue(true);
 	}
 
+	protected void assertEqualsIgnoringOrder(
+		List<Metric> metrics, JSONArray jsonArray) {
+
+		for (Metric metric : metrics) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equals(metric, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + metric, contains);
+		}
+	}
+
 	protected boolean equals(Metric metric, JSONObject jsonObject) {
-		List<String> fieldNames = new ArrayList(
-			Arrays.asList(getAdditionalAssertFieldNames()));
-
-		fieldNames.add("id");
-
-		for (String fieldName : fieldNames) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("value", fieldName)) {
 				if (!Objects.equals(
 						metric.getValue(),
@@ -100,24 +114,28 @@ public abstract class BaseMetricGraphQLTestCase {
 		return new String[0];
 	}
 
-	protected Metric randomMetric() throws Exception {
-		return new Metric() {
-			{
-				value = RandomTestUtil.randomDouble();
-			}
-		};
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("id"));
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
 	}
 
-	protected Company testCompany;
-	protected Group testGroup;
-
-	private String _invoke(String query) throws Exception {
+	protected String invoke(String query) throws Exception {
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		JSONObject jsonObject = JSONUtil.put("query", query);
-
-		httpInvoker.body(jsonObject.toString(), "application/json");
-
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 		httpInvoker.path("http://localhost:8080/o/graphql");
 		httpInvoker.userNameAndPassword("test@liferay.com:test");
@@ -127,7 +145,23 @@ public abstract class BaseMetricGraphQLTestCase {
 		return httpResponse.getContent();
 	}
 
-	private class GraphQLField {
+	protected Metric randomMetric() throws Exception {
+		return new Metric() {
+			{
+				value = RandomTestUtil.randomDouble();
+			}
+		};
+	}
+
+	protected Metric testMetric_addMetric() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Company testCompany;
+	protected Group testGroup;
+
+	protected class GraphQLField {
 
 		public GraphQLField(String key, GraphQLField... graphQLFields) {
 			this(key, new HashMap<>(), graphQLFields);

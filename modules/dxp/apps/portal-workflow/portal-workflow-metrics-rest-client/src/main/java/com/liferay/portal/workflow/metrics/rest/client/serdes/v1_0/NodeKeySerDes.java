@@ -117,6 +117,41 @@ public class NodeKeySerDes {
 		return map;
 	}
 
+	public static class NodeKeyJSONParser extends BaseJSONParser<NodeKey> {
+
+		@Override
+		protected NodeKey createDTO() {
+			return new NodeKey();
+		}
+
+		@Override
+		protected NodeKey[] createDTOArray(int size) {
+			return new NodeKey[size];
+		}
+
+		@Override
+		protected void setField(
+			NodeKey nodeKey, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "executionType")) {
+				if (jsonParserFieldValue != null) {
+					nodeKey.setExecutionType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					nodeKey.setId((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -143,9 +178,12 @@ public class NodeKeySerDes {
 
 			Object value = entry.getValue();
 
-			Class valueClass = value.getClass();
+			Class<?> valueClass = value.getClass();
 
-			if (value instanceof String) {
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
@@ -181,41 +219,6 @@ public class NodeKeySerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class NodeKeyJSONParser extends BaseJSONParser<NodeKey> {
-
-		@Override
-		protected NodeKey createDTO() {
-			return new NodeKey();
-		}
-
-		@Override
-		protected NodeKey[] createDTOArray(int size) {
-			return new NodeKey[size];
-		}
-
-		@Override
-		protected void setField(
-			NodeKey nodeKey, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "executionType")) {
-				if (jsonParserFieldValue != null) {
-					nodeKey.setExecutionType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					nodeKey.setId((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

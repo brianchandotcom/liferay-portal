@@ -112,6 +112,42 @@ public class HistogramSerDes {
 		return map;
 	}
 
+	public static class HistogramJSONParser extends BaseJSONParser<Histogram> {
+
+		@Override
+		protected Histogram createDTO() {
+			return new Histogram();
+		}
+
+		@Override
+		protected Histogram[] createDTOArray(int size) {
+			return new Histogram[size];
+		}
+
+		@Override
+		protected void setField(
+			Histogram histogram, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					histogram.setKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					histogram.setValue(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -138,9 +174,12 @@ public class HistogramSerDes {
 
 			Object value = entry.getValue();
 
-			Class valueClass = value.getClass();
+			Class<?> valueClass = value.getClass();
 
-			if (value instanceof String) {
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
@@ -176,42 +215,6 @@ public class HistogramSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class HistogramJSONParser extends BaseJSONParser<Histogram> {
-
-		@Override
-		protected Histogram createDTO() {
-			return new Histogram();
-		}
-
-		@Override
-		protected Histogram[] createDTOArray(int size) {
-			return new Histogram[size];
-		}
-
-		@Override
-		protected void setField(
-			Histogram histogram, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "key")) {
-				if (jsonParserFieldValue != null) {
-					histogram.setKey((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					histogram.setValue(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

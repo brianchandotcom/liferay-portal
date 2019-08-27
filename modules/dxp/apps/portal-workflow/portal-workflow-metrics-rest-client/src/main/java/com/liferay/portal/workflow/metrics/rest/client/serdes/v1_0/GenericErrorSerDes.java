@@ -119,6 +119,42 @@ public class GenericErrorSerDes {
 		return map;
 	}
 
+	public static class GenericErrorJSONParser
+		extends BaseJSONParser<GenericError> {
+
+		@Override
+		protected GenericError createDTO() {
+			return new GenericError();
+		}
+
+		@Override
+		protected GenericError[] createDTOArray(int size) {
+			return new GenericError[size];
+		}
+
+		@Override
+		protected void setField(
+			GenericError genericError, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "fieldName")) {
+				if (jsonParserFieldValue != null) {
+					genericError.setFieldName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "message")) {
+				if (jsonParserFieldValue != null) {
+					genericError.setMessage((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -145,9 +181,12 @@ public class GenericErrorSerDes {
 
 			Object value = entry.getValue();
 
-			Class valueClass = value.getClass();
+			Class<?> valueClass = value.getClass();
 
-			if (value instanceof String) {
+			if (value instanceof Map) {
+				sb.append(_toJSON((Map)value));
+			}
+			else if (value instanceof String) {
 				sb.append("\"");
 				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
@@ -183,42 +222,6 @@ public class GenericErrorSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class GenericErrorJSONParser
-		extends BaseJSONParser<GenericError> {
-
-		@Override
-		protected GenericError createDTO() {
-			return new GenericError();
-		}
-
-		@Override
-		protected GenericError[] createDTOArray(int size) {
-			return new GenericError[size];
-		}
-
-		@Override
-		protected void setField(
-			GenericError genericError, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "fieldName")) {
-				if (jsonParserFieldValue != null) {
-					genericError.setFieldName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "message")) {
-				if (jsonParserFieldValue != null) {
-					genericError.setMessage((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

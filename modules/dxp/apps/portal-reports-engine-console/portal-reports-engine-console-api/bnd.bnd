@@ -12,4 +12,8 @@ Export-Package:\
 	com.liferay.portal.reports.engine.console.status,\
 	com.liferay.portal.reports.engine.console.util,\
 	com.liferay.portal.reports.engine.console.util.comparator
+Import-Package:\
+	!net.sf.cglib.proxy.*,\
+	\
+	*
 Liferay-Releng-Module-Group-Title: Reports Engine Console

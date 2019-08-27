@@ -84,6 +84,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 
 												<liferay-ui:icon
 													icon="lock"
+													iconCssClass="text-muted"
 													markupView="lexicon"
 												/>
 											</a>
@@ -110,6 +111,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												<c:if test="<%= fragmentCollection.getGroupId() != scopeGroupId %>">
 													<liferay-ui:icon
 														icon="lock"
+														iconCssClass="text-muted"
 														markupView="lexicon"
 													/>
 												</c:if>

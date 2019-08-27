@@ -364,6 +364,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 					%>
 
+					<clay:sticker
+						icon="folder"
+						size="sm"
+						style="secondary"
+					/>
+
 					<aui:a href="<%= viewFolderURL.toString() %>">
 						<%= folder.getName() %>
 					</aui:a>

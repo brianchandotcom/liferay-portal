@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
@@ -177,7 +178,9 @@ public class MappedContentUtil {
 			PortletURL portletURL = assetRenderer.getURLEdit(
 				httpServletRequest, LiferayWindowState.NORMAL, backURL);
 
-			jsonObject.put("editURL", portletURL.toString());
+			if (portletURL != null) {
+				jsonObject.put("editURL", portletURL.toString());
+			}
 		}
 
 		if (AssetEntryPermission.contains(
@@ -190,7 +193,9 @@ public class MappedContentUtil {
 				null, String.valueOf(assetEntry.getClassPK()),
 				LiferayWindowState.POP_UP.toString(), null, httpServletRequest);
 
-			jsonObject.put("permissionsURL", permissionsURL);
+			if (Validator.isNotNull(permissionsURL)) {
+				jsonObject.put("permissionsURL", permissionsURL);
+			}
 		}
 
 		if (AssetEntryPermission.contains(
@@ -204,7 +209,9 @@ public class MappedContentUtil {
 				viewUsagesURL, "p_p_state",
 				LiferayWindowState.POP_UP.toString());
 
-			jsonObject.put("viewUsagesURL", viewUsagesURL);
+			if (viewUsagesURL != null) {
+				jsonObject.put("viewUsagesURL", viewUsagesURL);
+			}
 		}
 
 		return jsonObject;

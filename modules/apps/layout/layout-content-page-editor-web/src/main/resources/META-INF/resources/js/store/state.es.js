@@ -358,13 +358,6 @@ const INITIAL_STATE = {
 	).value([]),
 
 	/**
-	 * When true, it indicates that configuration is enabled
-	 * @review
-	 * @type {boolean}
-	 */
-	enableConfiguration: Config.bool().value(false),
-
-	/**
 	 * Fragment id to indicate if that fragment editor has to be cleared.
 	 * @default ''
 	 * @review

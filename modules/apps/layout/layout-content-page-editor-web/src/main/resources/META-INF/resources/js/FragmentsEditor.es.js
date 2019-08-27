@@ -25,7 +25,6 @@ import './components/toolbar/FragmentsEditorToolbar.es';
 import {
 	CLEAR_ACTIVE_ITEM,
 	CLEAR_HOVERED_ITEM,
-	UPDATE_ACTIVE_ITEM,
 	UPDATE_HOVERED_ITEM
 } from './actions/actions.es';
 import {INITIAL_STATE} from './store/state.es';
@@ -35,6 +34,7 @@ import {
 } from './utils/FragmentsEditorDialogUtils';
 import {Store} from './store/store.es';
 import templates from './FragmentsEditor.soy';
+import {updateActiveItemAction} from './actions/updateActiveItem.es';
 
 /**
  * DOM selector where the fragmentEntryLinks are rendered
@@ -190,12 +190,13 @@ class FragmentsEditor extends Component {
 		} = FragmentsEditor._getItemTarget(event);
 
 		if (fragmentsEditorItemId && fragmentsEditorItemType) {
-			this.store.dispatch({
-				activeItemId: fragmentsEditorItemId,
-				activeItemType: fragmentsEditorItemType,
-				appendItem: this._shiftPressed,
-				type: UPDATE_ACTIVE_ITEM
-			});
+			this.store.dispatch(
+				updateActiveItemAction(
+					fragmentsEditorItemId,
+					fragmentsEditorItemType,
+					this._shiftPressed
+				)
+			);
 		} else if (
 			(dom.closest(event.target, WRAPPER_SELECTOR) ||
 				event.target === document.querySelector(WRAPPER_SELECTOR)) &&

@@ -20,15 +20,8 @@
 	},
 	"description": "",
 	"jest": {
-		"moduleNameMapper": {
-			"libs/odata-parser": "<rootDir>/src/main/resources/META-INF/resources/js/libs/ODataParser.es.js"
-		},
-		"setupFilesAfterEnv": [
-			"<rootDir>/test/js/setup.js"
-		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/js/[^/]+\\.js",
-			"<rootDir>/node_modules/"
+			"<rootDir>/test/js/[^/]+\\.js"
 		]
 	},
 	"main": "js/index.es.js",

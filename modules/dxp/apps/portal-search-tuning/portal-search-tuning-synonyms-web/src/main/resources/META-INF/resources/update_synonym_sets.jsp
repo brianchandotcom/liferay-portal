@@ -65,9 +65,6 @@ portletDisplay.setURLBack(redirect);
 			inputName: '<%= renderResponse.getNamespace() + "newSynonymSet" %>',
 			originalInputName: '<%= renderResponse.getNamespace() + "originalSynonymSet" %>',
 			synonymSets: '<%= synonymSets %>'
-		},
-		{
-			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
 		}
 	);
 </aui:script>

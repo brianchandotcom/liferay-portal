@@ -25,8 +25,8 @@ import {
 	SegmentsExperienceType,
 	SegmentsExperimentType
 } from '../types.es';
-import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
+import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 
 const _statusToType = status => STATUS_TO_TYPE[status];
 

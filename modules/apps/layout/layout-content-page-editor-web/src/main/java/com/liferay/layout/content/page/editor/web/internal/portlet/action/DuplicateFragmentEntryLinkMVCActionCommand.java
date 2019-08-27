@@ -18,6 +18,7 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -104,10 +105,6 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					fragmentEntryLink.getRendererKey(), serviceContext);
 
 			jsonObject.put(
-				"configuration",
-				JSONFactoryUtil.createJSONObject(
-					duplicateFragmentEntryLink.getConfiguration())
-			).put(
 				"defaultConfigurationValues",
 				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
 					duplicateFragmentEntryLink.getConfiguration())
@@ -124,10 +121,12 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getRendererKey(), serviceContext);
 
+			String configuration;
 			String fragmentEntryKey;
 			String name;
 
 			if (fragmentEntry != null) {
+				configuration = fragmentEntry.getConfiguration();
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
 				name = fragmentEntry.getName();
 			}
@@ -136,11 +135,15 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					_fragmentRendererTracker.getFragmentRenderer(
 						fragmentEntryLink.getRendererKey());
 
+				configuration = fragmentRenderer.getConfiguration(
+					new DefaultFragmentRendererContext(fragmentEntryLink));
 				fragmentEntryKey = fragmentRenderer.getKey();
 				name = fragmentRenderer.getLabel(serviceContext.getLocale());
 			}
 
 			jsonObject.put(
+				"configuration", JSONFactoryUtil.createJSONObject(configuration)
+			).put(
 				"fragmentEntryKey", fragmentEntryKey
 			).put(
 				"name", name

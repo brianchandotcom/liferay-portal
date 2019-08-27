@@ -352,8 +352,6 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		_configureJmxRemotePortSpec(
-			setUpTestableTomcatTask, testIntegrationTomcatExtension);
 		_configureManagerSpec(
 			setUpTestableTomcatTask, testIntegrationTomcatExtension);
 		_configureModuleFrameworkBaseDirSpec(

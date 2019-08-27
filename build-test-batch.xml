@@ -1752,6 +1752,7 @@ com.liferay.portal.kernel.util.ServiceProxyFactory.timeout=600000</echo>
 										<include name="apps/*" />
 										<include name="private/apps/*" />
 										<exclude name="${build.exclude.dirs}" />
+										<exclude name="apps/app-builder" />
 										<exclude name="apps/static" />
 										<exclude name="apps/sync" />
 										<present targetdir="modules">

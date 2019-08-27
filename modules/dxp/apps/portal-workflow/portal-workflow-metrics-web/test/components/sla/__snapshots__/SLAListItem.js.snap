@@ -25,7 +25,7 @@ exports[`Should render component 1`] = `
     
   </td>
   <td>
-    
+    Aug 27
   </td>
   <td>
     <div
@@ -298,7 +298,9 @@ exports[`Should render component 2`] = `
             running
           </td>
           <td />
-          <td />
+          <td>
+            Aug 27
+          </td>
           <td>
             <div
               className="dropdown dropdown-action"

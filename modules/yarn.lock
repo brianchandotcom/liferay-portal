@@ -1139,6 +1139,20 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/management-toolbar@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/management-toolbar/-/management-toolbar-3.0.0-milestone.3.tgz#e63538d9cf154b092e3206365d386462a81fbcd4"
+  integrity sha512-MS5DOc0vqANyMXCYHDKJ1MlRWhcNnODotGbFy2sglgKnqE+M2/hsxroVzxlI+6lSFUU+vFGwzM9SyGqdGWmHKg==
+  dependencies:
+    "@clayui/button" "^3.0.0-milestone.3"
+    "@clayui/drop-down" "^3.0.0-milestone.3"
+    "@clayui/form" "^3.0.0-milestone.3"
+    "@clayui/icon" "^3.0.0-milestone.3"
+    "@clayui/label" "^3.0.0-milestone.3"
+    "@clayui/link" "^3.0.0-milestone.3"
+    "@clayui/shared" "^3.0.0-milestone.3"
+    classnames "^2.2.6"
+
 "@clayui/modal@3.0.0-milestone.3":
   version "3.0.0-milestone.3"
   resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.0.0-milestone.3.tgz#35161ca3c261f820a1f07b8a5f14faa17dd05319"
@@ -1224,6 +1238,13 @@
     "@clayui/link" "^3.0.0-milestone.3"
     classnames "^2.2.6"
 
+"@clayui/slider@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/slider/-/slider-3.0.0-milestone.3.tgz#e4ecf2fcc89d67fd495aa3d9e927f5114dd098f4"
+  integrity sha512-lZi+X4cBJIGkwUBiWrenymOvGG+u5q6mba395Ur4iravXIDhj1DevvqbnJ74FcvVSPItWDoCK08Rv7O3VJ4zJA==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/sticker@3.0.0-milestone.3", "@clayui/sticker@^3.0.0-milestone.3":
   version "3.0.0-milestone.3"
   resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.0.0-milestone.3.tgz#9b1707e6ba18f41b17688278ee5760ebe912cd9c"
@@ -1236,6 +1257,14 @@
   resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.0.0-milestone.3.tgz#b24e29da00301aef87fa43d2707a204204723d83"
   integrity sha512-Xbnqi3esVSVe+vHSr75GtRQuBOtOocWdMQl/CGRoiLpN7Zxp2XsQI19Z5IWUGxJffzQfUvVzAkSPNC/5TKZLiA==
   dependencies:
+    classnames "^2.2.6"
+
+"@clayui/tabs@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/tabs/-/tabs-3.0.0-milestone.3.tgz#89620e8d9956937ffee55944b93418e07d37d77c"
+  integrity sha512-QbfEzMfx2C7PqfOnii4tJRhQPlAYy7zlc0sRYOWtoORGGBm+gY8GMHCZU05cn8rDR8WKVjjfrYV3uEK+IhXY8g==
+  dependencies:
+    "@clayui/shared" "^3.0.0-milestone.3"
     classnames "^2.2.6"
 
 "@clayui/time-picker@3.0.0-milestone.3", "@clayui/time-picker@^3.0.0-milestone.3":

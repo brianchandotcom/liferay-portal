@@ -12,9 +12,9 @@
  * details.
  */
 
-import * as FormSupport from 'source/components/FormRenderer/FormSupport.es';
-import createElement from 'mock/createElement.es';
-import mockPages from 'mock/mockPages.es';
+import * as FormSupport from '../../../src/main/resources/META-INF/resources/js//components/FormRenderer/FormSupport.es';
+import createElement from '../__mock__/createElement.es';
+import mockPages from '../__mock__/mockPages.es';
 
 let pages = null;
 

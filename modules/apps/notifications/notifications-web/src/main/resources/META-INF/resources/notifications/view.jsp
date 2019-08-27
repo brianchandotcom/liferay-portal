@@ -183,11 +183,9 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 				{
 					method: 'POST'
 				}
-			)
-			.then(function(response) {
+			).then(function(response) {
 				return response.json();
-			})
-			.then(function(response) {
+			}).then(function(response) {
 				if (response.success) {
 					var notificationContainer = currentTarget.ancestor('li.list-group-item');
 

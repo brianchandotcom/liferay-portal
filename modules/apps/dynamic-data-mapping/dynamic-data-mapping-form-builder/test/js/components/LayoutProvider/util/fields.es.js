@@ -12,8 +12,8 @@
  * details.
  */
 
-import mockPages from 'mock/mockPages.es';
-import {generateFieldName} from 'source/components/LayoutProvider/util/fields.es';
+import mockPages from '../../../__mock__/mockPages.es';
+import {generateFieldName} from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/util/fields.es';
 
 describe('LayoutProvider/util/fields', () => {
 	describe('generateFieldName(pages, desiredName, currentName)', () => {

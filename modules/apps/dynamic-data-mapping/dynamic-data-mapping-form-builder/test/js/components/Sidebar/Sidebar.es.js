@@ -13,9 +13,9 @@
  */
 
 import '../../__fixtures__/MockField.es';
-import Sidebar from 'source/components/Sidebar/Sidebar.es';
+import Sidebar from '../../../src/main/resources/META-INF/resources/js/components/Sidebar/Sidebar.es';
 import {dom as MetalTestUtil} from 'metal-dom';
-import {PagesVisitor} from 'source/util/visitors.es';
+import {PagesVisitor} from '../../../src/main/resources/META-INF/resources/js/util/visitors.es';
 
 let component;
 const focusedField = {

@@ -12,8 +12,8 @@
  * details.
  */
 
-import Token from 'source/expressions/Token.es';
-import Tokenizer from 'source/expressions/Tokenizer.es';
+import Token from '../../../src/main/resources/META-INF/resources/js/expressions/Token.es';
+import Tokenizer from '../../../src/main/resources/META-INF/resources/js/expressions/Tokenizer.es';
 
 describe('Tokenizer', () => {
 	it('tokenizes single digit expressions', () => {

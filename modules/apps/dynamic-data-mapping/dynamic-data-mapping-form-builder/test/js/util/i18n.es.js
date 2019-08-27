@@ -12,7 +12,7 @@
  * details.
  */
 
-import {setLocalizedValue} from 'source/util/i18n.es';
+import {setLocalizedValue} from '../../../src/main/resources/META-INF/resources/js/util/i18n.es';
 
 describe('Internationlization', () => {
 	it('creates a localized property for a specific object string value', () => {

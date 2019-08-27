@@ -12,10 +12,10 @@
  * details.
  */
 
-import Builder from 'source/components/FormBuilder/FormBuilder.es';
+import Builder from '../../../../src/main/resources/META-INF/resources/js/components/FormBuilder/FormBuilder.es';
 import dom from 'metal-dom';
-import Pages from 'mock/mockPages.es';
-import SucessPageSettings from 'mock/mockSuccessPage.es';
+import Pages from '../../__mock__/mockPages.es';
+import SucessPageSettings from '../../__mock__/mockSuccessPage.es';
 
 const spritemap = 'icons.svg';
 

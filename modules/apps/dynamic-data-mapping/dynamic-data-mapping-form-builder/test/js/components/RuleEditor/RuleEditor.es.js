@@ -14,8 +14,8 @@
 
 import '../../__fixtures__/MockField.es';
 import dom from 'metal-dom';
-import mockPages from 'mock/mockPages.es';
-import RuleEditor from 'source/components/RuleEditor/RuleEditor.es';
+import mockPages from '../../__mock__/mockPages.es';
+import RuleEditor from '../../../src/main/resources/META-INF/resources/js/components/RuleEditor/RuleEditor.es';
 
 let component;
 

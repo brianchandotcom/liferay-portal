@@ -13,8 +13,8 @@
  */
 
 import '../../__fixtures__/MockField.es';
-import Calculator from 'source/components/Calculator/Calculator.es';
-import Token from 'source/expressions/Token.es';
+import Calculator from '../../../../src/main/resources/META-INF/resources/js/components/Calculator/Calculator.es';
+import Token from '../../../../src/main/resources/META-INF/resources/js/expressions/Token.es';
 
 let component;
 

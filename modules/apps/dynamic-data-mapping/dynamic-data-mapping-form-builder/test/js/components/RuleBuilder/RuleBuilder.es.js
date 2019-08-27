@@ -14,7 +14,7 @@
 
 import '../../__fixtures__/MockField.es';
 import dom from 'metal-dom';
-import RuleBuilder from 'source/components/RuleBuilder/RuleBuilder.es';
+import RuleBuilder from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RuleBuilder.es';
 
 const spritemap = 'icons.svg';
 let component;

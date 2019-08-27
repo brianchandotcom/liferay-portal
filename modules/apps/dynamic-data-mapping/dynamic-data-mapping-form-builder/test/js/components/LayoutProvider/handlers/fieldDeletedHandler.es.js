@@ -12,10 +12,10 @@
  * details.
  */
 
-import * as fieldDeletedHandler from 'source/components/LayoutProvider/handlers/fieldDeletedHandler.es';
-import * as FormSupport from 'source/components/Form/FormSupport.es';
-import mockPages from 'mock/mockPages.es';
-import RulesSupport from 'source/components/RuleBuilder/RulesSupport.es';
+import * as fieldDeletedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/fieldDeletedHandler.es';
+import * as FormSupport from '../../../src/main/resources/META-INF/resources/js/components/Form/FormSupport.es';
+import mockPages from '../../../__mock__/mockPages.es';
+import RulesSupport from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
 
 describe('LayoutProvider/handlers/fieldDeletedHandler', () => {
 	describe('handleFieldDeleted(state, event)', () => {

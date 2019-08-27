@@ -12,7 +12,7 @@
  * details.
  */
 
-import RulesSupport from 'source/components/RuleBuilder/RulesSupport.es';
+import RulesSupport from '../../../src/main/resources/META-INF/resources/js/components/RuleBuilder/RulesSupport.es';
 
 const mockActions = [
 	{

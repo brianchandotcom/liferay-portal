@@ -12,7 +12,7 @@
  * details.
  */
 
-import * as columnResizedHandler from 'source/components/LayoutProvider/handlers/columnResizedHandler.es';
+import * as columnResizedHandler from '../../../src/main/resources/META-INF/resources/js/components/LayoutProvider/handlers/columnResizedHandler.es';
 
 describe('LayoutProvider/handlers/columnResized', () => {
 	describe('handleColumnResized(state, source, column, direction)', () => {

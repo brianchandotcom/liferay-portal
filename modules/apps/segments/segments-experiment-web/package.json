@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.0.0-milestone.2",
-		"@clayui/button": "3.0.0-milestone.2",
-		"@clayui/drop-down": "3.0.0-milestone.2",
-		"@clayui/icon": "3.0.0-milestone.2",
-		"@clayui/select": "3.0.0-milestone.2",
+		"@clayui/alert": "3.0.0-milestone.3",
+		"@clayui/button": "3.0.0-milestone.3",
+		"@clayui/drop-down": "3.0.0-milestone.3",
+		"@clayui/icon": "3.0.0-milestone.3",
+		"@clayui/select": "3.0.0-milestone.3",
 		"classnames": "^2.2.6",
 		"frontend-js-react-web": "^2.0.0",
 		"prop-types": "15.7.2",

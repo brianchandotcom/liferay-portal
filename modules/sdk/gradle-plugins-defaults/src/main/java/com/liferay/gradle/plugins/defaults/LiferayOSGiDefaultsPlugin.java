@@ -572,7 +572,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					_configureTaskCompileJSP(
 						project, jarJSPsTask, liferayExtension);
-					_configureTaskGenerateJSPJava(project, liferayExtension);
 
 					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
@@ -3120,6 +3119,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				javaCompile.setActions(Collections.emptyList());
 				javaCompile.setDependsOn(Collections.singleton(copy));
 			}
+
+			_configureTaskGenerateJSPJava(project, liferayExtension);
 		}
 	}
 

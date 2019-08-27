@@ -349,38 +349,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 				</dd>
 
-				<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, fileEntry.getFolderId(), ActionKeys.VIEW) %>">
-					<dt class="sidebar-dt">
-						<liferay-ui:message key="location" />
-					</dt>
-					<dd class="sidebar-dd">
+				<%
+				request.setAttribute("info_panel_location.jsp-parentFolder", fileEntry.getFolder());
+				%>
 
-						<%
-						PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
-
-						viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-						viewFolderURL.setParameter("redirect", currentURL);
-
-						Folder parentFolder = fileEntry.getFolder();
-
-						long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : parentFolder.getFolderId();
-
-						viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
-						%>
-
-						<clay:sticker
-							icon="folder"
-							size="sm"
-							style="secondary"
-						/>
-
-						<clay:link
-							href="<%= viewFolderURL.toString() %>"
-							label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : parentFolder.getName() %>'
-							style="secondary"
-						/>
-					</dd>
-				</c:if>
+				<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
 
 				<liferay-asset:asset-tags-available
 					className="<%= DLFileEntryConstants.getClassName() %>"

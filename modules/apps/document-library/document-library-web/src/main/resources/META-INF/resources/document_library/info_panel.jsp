@@ -108,38 +108,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 								<%= HtmlUtil.escape(folder.getUserName()) %>
 							</dd>
 
-							<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folder.getParentFolderId(), ActionKeys.VIEW) %>">
-								<dt class="sidebar-dt">
-									<liferay-ui:message key="location" />
-								</dt>
-								<dd class="sidebar-dd">
+							<%
+							request.setAttribute("info_panel_location.jsp-parentFolder", folder.getParentFolder());
+							%>
 
-									<%
-									PortletURL viewFolderURL = liferayPortletResponse.createRenderURL();
-
-									viewFolderURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-									viewFolderURL.setParameter("redirect", currentURL);
-
-									Folder parentFolder = folder.getParentFolder();
-
-									long parentFolderId = (parentFolder == null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : parentFolder.getFolderId();
-
-									viewFolderURL.setParameter("folderId", String.valueOf(parentFolderId));
-									%>
-
-									<clay:sticker
-										icon="folder"
-										size="sm"
-										style="secondary"
-									/>
-
-									<clay:link
-										href="<%= viewFolderURL.toString() %>"
-										label='<%= (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? LanguageUtil.get(request, "home") : parentFolder.getName() %>'
-										style="secondary"
-									/>
-								</dd>
-							</c:if>
+							<liferay-util:include page="/document_library/info_panel_location.jsp" servletContext="<%= application %>" />
 						</c:if>
 					</dl>
 				</liferay-ui:section>

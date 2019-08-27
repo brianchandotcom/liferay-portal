@@ -434,6 +434,7 @@ definition {
 			openComment = "true");
 
 		var fragmentComment = "Title fragment comment";
+
 		if (!(IsElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY"))) {
 			Click(
 				key_fragmentName = "Title",

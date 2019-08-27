@@ -569,10 +569,10 @@ AUI.add(
 
 						remoteServices.updateCalendarColor(calendarId, color);
 					} else {
-						Liferay.Store(
+						Liferay.Util.Session.set(
 							'com.liferay.calendar.web_calendar' +
-								calendarId +
-								'Color',
+							calendarId +
+							'Color',
 							color
 						);
 					}
@@ -701,8 +701,7 @@ AUI.add(
 		requires: [
 			'aui-datatype',
 			'dd-plugin',
-			'liferay-calendar-util',
-			'liferay-store'
+			'liferay-calendar-util'
 		]
 	}
 );

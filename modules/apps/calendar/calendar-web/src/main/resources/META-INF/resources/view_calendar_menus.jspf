@@ -18,7 +18,7 @@
 String backURL = PortalUtil.getCurrentURL(request);
 %>
 
-<aui:script use="aui-toggler,calendar,liferay-calendar-simple-color-picker,liferay-calendar-simple-menu,liferay-calendar-util,liferay-store">
+<aui:script use="aui-toggler,calendar,liferay-calendar-simple-color-picker,liferay-calendar-simple-menu,liferay-calendar-util">
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
 
 	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
@@ -528,7 +528,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 			var columnOptions = A.one('#<portlet:namespace />columnOptions');
 			var columnTogglerIcon = A.one('#' + columnTogglerIconId);
 
-			Liferay.Store('com.liferay.calendar.web_columnOptionsVisible', columnOptions.hasClass('hide'));
+			Liferay.Util.Session.set('com.liferay.calendar.web_columnOptionsVisible', columnOptions.hasClass('hide'));
 
 			columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
 

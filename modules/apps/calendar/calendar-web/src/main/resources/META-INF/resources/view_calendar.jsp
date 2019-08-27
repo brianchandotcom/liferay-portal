@@ -218,7 +218,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<%@ include file="/view_calendar_menus.jspf" %>
 </c:if>
 
-<aui:script use="liferay-calendar-list,liferay-calendar-util,liferay-scheduler,liferay-store">
+<aui:script use="liferay-calendar-list,liferay-calendar-util,liferay-scheduler">
 	Liferay.CalendarUtil.USER_CLASS_NAME_ID = <%= PortalUtil.getClassNameId(User.class) %>;
 
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
@@ -286,7 +286,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 						var calendarIds = A.Array.invoke(event.newVal, 'get', 'calendarId');
 
-						Liferay.Store('com.liferay.calendar.web_otherCalendars', calendarIds.join());
+						Liferay.Util.Session.set('com.liferay.calendar.web_otherCalendars', calendarIds.join());
 					},
 					'scheduler-calendar:visibleChange': function(event) {
 						syncCalendarsMap();
@@ -348,7 +348,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 						var calendar = event.currentTarget;
 
-						Liferay.Store('com.liferay.calendar.web_calendar' + calendar.get('calendarId') + 'Visible', event.newVal);
+						Liferay.Util.Session.set('com.liferay.calendar.web_calendar' + calendar.get('calendarId') + 'Visible', event.newVal);
 					}
 				}
 			);

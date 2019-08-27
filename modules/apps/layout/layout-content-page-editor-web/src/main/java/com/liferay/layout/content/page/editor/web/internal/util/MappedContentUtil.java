@@ -309,14 +309,18 @@ public class MappedContentUtil {
 			Set<Long> mappedClassPKs)
 		throws PortalException {
 
-		Set<AssetEntry> assetEntries = new HashSet<>();
-
 		JSONObject layoutDataJSONObject = JSONFactoryUtil.createJSONObject(
 			layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT));
 
 		JSONArray structureJSONArray = layoutDataJSONObject.getJSONArray(
 			"structure");
+
+		if (structureJSONArray == null) {
+			return Collections.emptySet();
+		}
+
+		Set<AssetEntry> assetEntries = new HashSet<>();
 
 		Iterator<JSONObject> iteratorStructure = structureJSONArray.iterator();
 

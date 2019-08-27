@@ -141,9 +141,9 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				addWorkflowMetricsSLADefinition(
-					sla.getName(), sla.getDescription(), sla.getDuration(),
-					sla.getCalendarKey(), processId,
-					_toStringArray(sla.getPauseNodeKeys()),
+					sla.getCalendarKey(), sla.getDescription(),
+					sla.getDuration(), sla.getName(),
+					_toStringArray(sla.getPauseNodeKeys()), processId,
 					_toStringArray(sla.getStartNodeKeys()),
 					_toStringArray(sla.getStopNodeKeys()),
 					_createServiceContext()));
@@ -154,8 +154,8 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
 				updateWorkflowMetricsSLADefinition(
-					slaId, sla.getName(), sla.getDescription(),
-					sla.getDuration(), sla.getCalendarKey(),
+					slaId, sla.getCalendarKey(), sla.getDescription(),
+					sla.getDuration(), sla.getName(),
 					_toStringArray(sla.getPauseNodeKeys()),
 					_toStringArray(sla.getStartNodeKeys()),
 					_toStringArray(sla.getStopNodeKeys()),

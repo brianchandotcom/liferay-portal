@@ -2,14 +2,13 @@
 	"mappings": {
 		"_doc": {
 			"properties": {
+				"aliases": {
+					"store": true,
+					"type": "text"
+				},
 				"blocks": {
 					"store": true,
 					"type": "keyword"
-				},
-				"displayDate": {
-					"format": "yyyyMMddHHmmss",
-					"store": true,
-					"type": "date"
 				},
 				"inactive": {
 					"store": true,
@@ -19,12 +18,12 @@
 					"store": true,
 					"type": "keyword"
 				},
-				"modified": {
-					"format": "yyyyMMddHHmmss",
-					"store": true,
-					"type": "date"
-				},
 				"name": {
+					"fields" : {
+						"keyword" : {
+							"type" : "keyword"
+						}
+					},
 					"store": true,
 					"type": "text"
 				},
@@ -40,6 +39,15 @@
 						}
 					},
 					"type" : "nested"
+				},
+				"queryString": {
+					"fields" : {
+						"keyword" : {
+							"type" : "keyword"
+						}
+					},
+					"store": true,
+					"type": "text"
 				},
 				"queryStrings": {
 					"fields" : {

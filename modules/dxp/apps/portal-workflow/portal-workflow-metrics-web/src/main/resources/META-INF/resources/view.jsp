@@ -24,6 +24,7 @@
 	bootstrapRequire.default(
 		<%= PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA %>,
 		<%= Arrays.toString(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>,
+		<%= DateUtil.isFormatAmPm(locale) %>,
 		<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>,
 		'<portlet:namespace />'
 	);

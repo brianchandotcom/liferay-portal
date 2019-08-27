@@ -41,7 +41,7 @@ public interface FragmentServiceConfiguration {
 	)
 	public boolean propagateChanges();
 
-	@Meta.AD(deflt = "false", name = "enable-configuration", required = false)
+	@Meta.AD(deflt = "true", name = "enable-configuration", required = false)
 	public boolean enableConfiguration();
 
 }

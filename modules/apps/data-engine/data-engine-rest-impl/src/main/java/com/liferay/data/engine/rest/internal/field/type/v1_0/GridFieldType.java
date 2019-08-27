@@ -23,6 +23,7 @@ import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
@@ -63,11 +64,15 @@ public class GridFieldType extends BaseFieldType {
 		customProperties.put(
 			"columns",
 			DataFieldOptionUtil.toLocalizedDataFieldOptions(
-				jsonObject.getJSONObject("columns")));
+				(JSONObject)GetterUtil.getObject(
+					jsonObject.getJSONObject("columns"),
+					JSONFactoryUtil.createJSONObject())));
 		customProperties.put(
 			"rows",
 			DataFieldOptionUtil.toLocalizedDataFieldOptions(
-				jsonObject.getJSONObject("rows")));
+				(JSONObject)GetterUtil.getObject(
+					jsonObject.getJSONObject("rows"),
+					JSONFactoryUtil.createJSONObject())));
 
 		return spiDataDefinitionField;
 	}

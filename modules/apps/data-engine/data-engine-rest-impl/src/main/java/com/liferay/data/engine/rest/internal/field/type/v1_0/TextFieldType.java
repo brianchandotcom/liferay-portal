@@ -21,8 +21,10 @@ import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.CustomPropertiesUtil;
 import com.liferay.data.engine.rest.internal.field.type.v1_0.util.DataFieldOptionUtil;
 import com.liferay.data.engine.spi.dto.SPIDataDefinitionField;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Map;
@@ -68,7 +70,9 @@ public class TextFieldType extends BaseFieldType {
 		customProperties.put(
 			"options",
 			DataFieldOptionUtil.toLocalizedDataFieldOptions(
-				jsonObject.getJSONObject("options")));
+				(JSONObject)GetterUtil.getObject(
+					jsonObject.getJSONObject("options"),
+					JSONFactoryUtil.createJSONObject())));
 		customProperties.put(
 			"placeholder",
 			LocalizedValueUtil.toLocalizedValues(

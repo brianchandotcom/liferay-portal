@@ -92,7 +92,7 @@ public class SuspendedSessionConnectionTest {
 
 		_innerTransactionConfig = builder.build();
 
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+		builder = new TransactionConfig.Builder();
 
 		builder.setPropagation(Propagation.SUPPORTS);
 		builder.setReadOnly(true);

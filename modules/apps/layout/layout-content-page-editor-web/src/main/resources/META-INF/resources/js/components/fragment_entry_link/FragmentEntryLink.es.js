@@ -351,20 +351,6 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Callback executed when the fragment remove button is clicked.
-	 * @param {Object} event
-	 * @private
-	 */
-	_handleFragmentRemoveButtonClick(event) {
-		event.stopPropagation();
-
-		removeItem(
-			this.store,
-			removeFragmentEntryLinkAction(this.fragmentEntryLinkId)
-		);
-	}
-
-	/**
 	 * Returns wether the config panel should be shown or not
 	 * @private
 	 * @review

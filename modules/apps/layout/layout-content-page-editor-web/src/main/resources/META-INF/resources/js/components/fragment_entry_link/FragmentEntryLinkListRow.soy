@@ -19,7 +19,6 @@
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleResizerMouseDown: any}
 	{@param? _handleRowKeyUp: any}
-	{@param? _handleRowRemoveButtonClick: any}
 	{@param? _highlighted: bool}
 	{@param? _resizeColumnIndex: number}
 	{@param? _resizeHighlightedColumn: number}
@@ -45,7 +44,6 @@
 			label: string
 		]
 	]}
-	{@param? spritemap: string}
 	{@param? store: ?}
 
 	{let $rowClasses kind="text"}
@@ -122,16 +120,6 @@
 			<ul class="tbar-nav">
 				<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
 					{msg desc=""}section{/msg}
-				</li>
-				<li class="fragments-editor__topper__item tbar-item">
-					<button
-						class="btn btn-small btn-unstyled"
-						data-onclick="{$_handleRowRemoveButtonClick}"
-					>
-						<svg class="fragments-editor__topper__icon lexicon-icon">
-							<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
-						</svg>
-					</button>
 				</li>
 			</ul>
 		</nav>

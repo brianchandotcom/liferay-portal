@@ -10,7 +10,6 @@
 	{@param? _fragmentsEditorRowTypes: ?}
 	{@param? _handleFragmentKeyUp: any}
 	{@param? _handleFragmentCommentsButtonClick: any}
-	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _hovered: bool}
 	{@param? _showComments: bool}
 	{@param? activeItemId: string}
@@ -88,15 +87,6 @@
 						</li>
 					{/if}
 
-					{if $rowType == $_fragmentsEditorRowTypes.sectionRow}
-						<li class="fragments-editor__topper__item tbar-item">
-							<button class="btn btn-small btn-unstyled" data-onclick="{$_handleFragmentRemoveButtonClick}">
-								<svg class="fragments-editor__topper__icon lexicon-icon">
-									<use xlink:href="{$spritemap ?: ''}#times-circle"></use>
-								</svg>
-							</button>
-						</li>
-					{/if}
 				</ul>
 			</nav>
 		{/if}

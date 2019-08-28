@@ -499,15 +499,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
-		jar.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					directDeployTask.execute();
-				}
-
-			});
+		jar.finalizedBy(directDeployTask);
 
 		return directDeployTask;
 	}

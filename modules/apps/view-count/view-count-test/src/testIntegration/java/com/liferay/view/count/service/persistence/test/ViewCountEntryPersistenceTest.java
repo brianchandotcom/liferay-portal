@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -88,7 +89,7 @@ public class ViewCountEntryPersistenceTest {
 	@Test
 	public void testCreate() throws Exception {
 		ViewCountEntryPK pk = new ViewCountEntryPK(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			CompanyThreadLocal.getCompanyId(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		ViewCountEntry viewCountEntry = _persistence.create(pk);

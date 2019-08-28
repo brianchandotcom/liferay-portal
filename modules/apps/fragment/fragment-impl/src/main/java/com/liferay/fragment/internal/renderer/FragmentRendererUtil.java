@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -62,6 +65,20 @@ public class FragmentRendererUtil {
 		}
 
 		return null;
+	}
+
+	public static boolean isEditMode(HttpServletRequest httpServletRequest) {
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		String layoutMode = ParamUtil.getString(
+			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.EDIT)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static void printPortletMessageInfo(

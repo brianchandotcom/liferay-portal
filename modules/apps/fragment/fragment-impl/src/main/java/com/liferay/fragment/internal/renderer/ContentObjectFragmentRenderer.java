@@ -90,9 +90,11 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext, httpServletRequest);
 
 		if (displayObject == null) {
-			FragmentRendererUtil.printPortletMessageInfo(
-				httpServletRequest, httpServletResponse,
-				"the-selected-content-will-be-shown-here");
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-selected-content-will-be-shown-here");
+			}
 
 			return;
 		}
@@ -102,9 +104,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			httpServletRequest);
 
 		if (infoItemRenderer == null) {
-			FragmentRendererUtil.printPortletMessageInfo(
-				httpServletRequest, httpServletResponse,
-				"there-are-no-available-renderers-for-the-selected-content");
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"there-are-no-available-renderers-for-the-selected-" +
+						"content");
+			}
 
 			return;
 		}

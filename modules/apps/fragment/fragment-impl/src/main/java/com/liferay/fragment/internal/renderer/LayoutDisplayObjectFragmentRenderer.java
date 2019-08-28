@@ -56,9 +56,11 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		Object displayObject = _getDisplayObject(httpServletRequest);
 
 		if (displayObject == null) {
-			FragmentRendererUtil.printPortletMessageInfo(
-				httpServletRequest, httpServletResponse,
-				"the-display-page-content-will-be-shown-here");
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-display-page-content-will-be-shown-here");
+			}
 
 			return;
 		}
@@ -67,10 +69,12 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			displayObject.getClass());
 
 		if (infoItemRenderer == null) {
-			FragmentRendererUtil.printPortletMessageInfo(
-				httpServletRequest, httpServletResponse,
-				"there-are-no-available-renderers-for-the-display-page-" +
-					"content");
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"there-are-no-available-renderers-for-the-display-page-" +
+						"content");
+			}
 
 			return;
 		}

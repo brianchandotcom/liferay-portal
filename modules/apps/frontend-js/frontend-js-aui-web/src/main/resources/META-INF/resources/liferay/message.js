@@ -194,10 +194,10 @@ AUI.add(
 						}
 
 						sessionData[instance.get('id')] = messageVisible;
-						
-						for (let [key, value] of Object.entries(sessionData)) {
+
+						Object.entries(sessionData).forEach((key, value) => {
 							Liferay.Util.Session.set(key,value);
-						}
+						});
 					}
 				},
 

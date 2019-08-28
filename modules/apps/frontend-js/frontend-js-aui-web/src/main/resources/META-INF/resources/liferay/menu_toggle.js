@@ -260,9 +260,9 @@ AUI.add(
 
 						data[handleId] = open ? 'open' : 'closed';
 
-						for (let [key, value] of Object.entries(data)) {
+						Object.entries(data).forEach((key, value) => {
 							Liferay.Util.Session.set(key,value);
-						}
+						});
 					}
 				},
 
@@ -286,8 +286,7 @@ AUI.add(
 			'aui-node',
 			'event-outside',
 			'event-tap',
-			'liferay-menu-filter',
-			'liferay-store'
+			'liferay-menu-filter'
 		]
 	}
 );

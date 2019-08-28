@@ -21,6 +21,7 @@ import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
@@ -124,7 +125,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 		String sourceFileName = title;
 
-		sourceFileName += DLOpenerMimeTypes.getMimeTypeExtension(mimeType);
+		sourceFileName += DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
+			mimeType);
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();

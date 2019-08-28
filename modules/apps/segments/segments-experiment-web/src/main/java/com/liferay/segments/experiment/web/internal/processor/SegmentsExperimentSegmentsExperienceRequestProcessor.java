@@ -203,6 +203,13 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			StringPool.BLANK
 		);
 
+		if (Objects.equals(
+				segmentsExperienceKey,
+				SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+			return SegmentsExperienceConstants.ID_DEFAULT;
+		}
+
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -214,6 +221,20 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		return -1;
+	}
+
+	private String _getSegmentsExperienceKey(long segmentsExperienceId) {
+		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperienceId);
+
+			if (segmentsExperience != null) {
+				return segmentsExperience.getSegmentsExperienceKey();
+			}
+		}
+
+		return SegmentsExperienceConstants.KEY_DEFAULT;
 	}
 
 	private long _getSelectedSegmentsExperienceId(
@@ -246,13 +267,9 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, long segmentsExperienceId) {
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
-
 		Cookie abTestVariantIdCookie = new Cookie(
 			_AB_TEST_VARIANT_ID_COOKIE_NAME,
-			String.valueOf(segmentsExperience.getSegmentsExperienceKey()));
+			_getSegmentsExperienceKey(segmentsExperienceId));
 
 		String domain = CookieKeys.getDomain(httpServletRequest);
 

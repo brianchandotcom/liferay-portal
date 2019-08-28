@@ -1,3 +1,4 @@
+@import 'partials/variables';
 @import 'partials/backgrounds';
 @import 'partials/buttons';
 @import 'partials/contents';
@@ -5,8 +6,7 @@
 @import 'partials/footer';
 @import 'partials/header';
 @import 'partials/text-formats';
-
-@import 'portlet_decorator';
+@import 'partials/portlet_decorator';
 
 .img-spacing {
 	margin-bottom: 15px;

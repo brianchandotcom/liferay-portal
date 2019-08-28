@@ -18,6 +18,7 @@
 
 <%
 String editFormViewRootElementId = renderResponse.getNamespace() + "-app-builder-edit-form-view";
+String dataLayoutBuilderElementId = renderResponse.getNamespace() + "-app-builder-data-layout-builder";
 String componentId = renderResponse.getNamespace() + "dataLayoutBuilder";
 long dataDefinitionId = ParamUtil.getLong(request, "dataDefinitionId");
 long dataLayoutId = ParamUtil.getLong(request, "dataLayoutId");
@@ -31,13 +32,15 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 
 		<div id="<%= editFormViewRootElementId %>"></div>
 
-		<liferay-data-engine:data-layout-builder
-			componentId="<%= componentId %>"
-			dataDefinitionInputId="dataDefinition"
-			dataLayoutId="<%= 0L %>"
-			dataLayoutInputId="dataLayout"
-			namespace="<%= renderResponse.getNamespace() %>"
-		/>
+		<div class="app-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
+			<liferay-data-engine:data-layout-builder
+				componentId="<%= componentId %>"
+				dataDefinitionInputId="dataDefinition"
+				dataLayoutId="<%= 0L %>"
+				dataLayoutInputId="dataLayout"
+				namespace="<%= renderResponse.getNamespace() %>"
+			/>
+		</div>
 	</aui:form>
 </div>
 
@@ -51,6 +54,7 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 				{
 					basePortletURL: '<%= basePortletURL %>',
 					dataLayoutBuilder: dataLayoutBuilder,
+					dataLayoutBuilderElementId: '<%= dataLayoutBuilderElementId %>',
 					dataDefinitionId: <%= dataDefinitionId %>,
 					dataLayoutId: <%= dataLayoutId %>,
 					newCustomObject: <%= newCustomObject %>

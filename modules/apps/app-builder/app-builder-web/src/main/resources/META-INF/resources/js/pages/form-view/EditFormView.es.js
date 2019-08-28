@@ -26,6 +26,7 @@ import {AppContext} from '../../AppContext.es';
 export default ({
 	dataDefinitionId,
 	dataLayoutBuilder,
+	dataLayoutBuilderElementId,
 	dataLayoutId,
 	newCustomObject
 }) => {
@@ -98,9 +99,8 @@ export default ({
 
 	const handleSidebarToggle = closed => setSidebarClosed(closed);
 
-	const {componentId} = dataLayoutBuilder.props;
 	const builderElementRef = useRef(
-		document.querySelector(`#${componentId}container`)
+		document.querySelector(`#${dataLayoutBuilderElementId}`)
 	);
 
 	useSidebarContent(builderElementRef, isSidebarClosed);

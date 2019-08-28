@@ -57,7 +57,7 @@
 			</div>
 		{/if}
 
-		{if $enableSelectTemplate and isNonnull($availableTemplates) and length($availableTemplates) > 0}
+		{if $enableSelectTemplate and isNonnull($availableTemplates) and length($availableTemplates) > 1}
 			{call .templateSelector}
 				{param availableTemplates: $availableTemplates /}
 				{param selectedTemplate: $configurationValues[$field.name]?.template /}

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -61,6 +63,8 @@ public interface ViewCountEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ViewCountEntryLocalServiceUtil} to access the view count entry local service. Add custom service methods to <code>com.liferay.view.count.service.impl.ViewCountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public ViewCountEntry addViewCountEntry(
+		long companyId, long classNameId, long classPK);
 
 	/**
 	 * Adds the view count entry to the database. Also notifies the appropriate model listeners.
@@ -197,6 +201,9 @@ public interface ViewCountEntryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getViewCount(long companyId, long classNameId, long classPK);
+
 	/**
 	 * Returns a range of all the view count entries.
 	 *
@@ -228,6 +235,18 @@ public interface ViewCountEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ViewCountEntry getViewCountEntry(ViewCountEntryPK viewCountEntryPK)
+		throws PortalException;
+
+	@Transactional(enabled = false)
+	public void incrementViewCount(
+		long companyId, long classNameId, long classPK);
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void incrementViewCount(
+		long companyId, long classNameId, long classPK, int increment);
+
+	public void removeViewCount(long companyId, long classNameId, long classPK)
 		throws PortalException;
 
 	/**

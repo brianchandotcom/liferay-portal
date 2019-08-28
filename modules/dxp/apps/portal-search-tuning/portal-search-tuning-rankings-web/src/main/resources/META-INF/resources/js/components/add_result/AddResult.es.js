@@ -9,21 +9,14 @@
  * distribution rights of the Software.
  */
 
+import AddResultModal from './AddResultModal.es';
 import ClayButton from '@clayui/button';
 import ClayEmptyState, {DISPLAY_STATES} from '../shared/ClayEmptyState.es';
-import {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayModal from '@clayui/modal';
-import getCN from 'classnames';
-import Item from '../list/Item.es';
-import PaginationBar from './PaginationBar.es';
 import React, {Component} from 'react';
 import ThemeContext from '../../ThemeContext.es';
 import {fetchDocuments} from '../../utils/api.es';
 import {PropTypes} from 'prop-types';
 import {resultsDataToMap} from '../../utils/util.es';
-import {sub} from '../../utils/language.es';
 import {toggleListItem} from '../../utils/util.es';
 
 const DELTAS = [5, 10, 20, 30, 50];
@@ -272,15 +265,6 @@ class AddResult extends Component {
 
 		const start = page * selectedDelta;
 
-		const classManagementBar = getCN(
-			'management-bar',
-			addResultSelectedIds.length > 0
-				? 'management-bar-primary'
-				: 'management-bar-light',
-			'navbar',
-			'navbar-expand-md'
-		);
-
 		return (
 			<li className="nav-item">
 				<ClayButton
@@ -291,275 +275,31 @@ class AddResult extends Component {
 				</ClayButton>
 
 				{showModal && (
-					<ClayModal
-						className="modal-full-screen-sm-down results-ranking-modal-root"
-						onClose={this._handleCloseModal}
-						size="lg"
-					>
-						{onClose => (
-							<div
-								className="add-result-modal-root"
-								data-testid="add-result-modal"
-							>
-								<ClayModal.Header>
-									{Liferay.Language.get('add-result')}
-								</ClayModal.Header>
-
-								<ClayModal.Body>
-									<div className="add-result-container container-fluid">
-										<div className="management-bar navbar-expand-md">
-											<div className="navbar-form navbar-form-autofit">
-												<div className="input-group">
-													<div className="input-group-item">
-														<input
-															aria-label={Liferay.Language.get(
-																'search-the-engine'
-															)}
-															className="form-control input-group-inset input-group-inset-after"
-															onChange={
-																this
-																	._handleSearchChange
-															}
-															onKeyDown={
-																this
-																	._handleSearchKeyDown
-															}
-															placeholder={Liferay.Language.get(
-																'search-the-engine'
-															)}
-															type="text"
-															value={
-																addResultSearchQuery
-															}
-														/>
-
-														<div className="input-group-inset-item input-group-inset-item-after">
-															<ClayButton
-																displayType="unstyled"
-																onClick={
-																	this
-																		._handleSearchEnter
-																}
-															>
-																<ClayIcon symbol="search" />
-															</ClayButton>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div className="add-result-scroller inline-scroller">
-										{dataLoading && (
-											<div className="list-group sheet">
-												<div className="sheet-title">
-													<div className="load-more-container">
-														<ClayLoadingIndicator />
-													</div>
-												</div>
-											</div>
-										)}
-
-										{!dataLoading &&
-											(results.total && results.items ? (
-												<>
-													<div className="add-result-sheet sheet">
-														<div
-															className={
-																classManagementBar
-															}
-														>
-															<div className="container-fluid container-fluid-max-xl">
-																<ul className="navbar-nav navbar-nav-expand">
-																	<li className="nav-item">
-																		<ClayCheckbox
-																			aria-label={Liferay.Language.get(
-																				'select-all'
-																			)}
-																			checked={
-																				this._getCurrentResultSelectedIds()
-																					.length ===
-																				results
-																					.items
-																					.length
-																			}
-																			indeterminate={
-																				addResultSelectedIds.length >
-																					0 &&
-																				this._getCurrentResultSelectedIds()
-																					.length !==
-																					results
-																						.items
-																						.length
-																			}
-																			onChange={
-																				this
-																					._handleAllCheckbox
-																			}
-																		/>
-																	</li>
-
-																	<li className="nav-item">
-																		<span className="navbar-text">
-																			{addResultSelectedIds.length >
-																			0
-																				? sub(
-																						Liferay.Language.get(
-																							'x-items-selected'
-																						),
-																						[
-																							addResultSelectedIds.length
-																						]
-																				  )
-																				: sub(
-																						Liferay.Language.get(
-																							'x-x-of-x-results'
-																						),
-																						[
-																							start -
-																								selectedDelta +
-																								1,
-																							Math.min(
-																								start,
-																								results.total
-																							),
-																							results.total
-																						]
-																				  )}
-																		</span>
-																	</li>
-
-																	{addResultSelectedIds.length >
-																		0 && (
-																		<li className="nav-item nav-item-shrink">
-																			<ClayButton
-																				className="btn-outline-borderless"
-																				displayType="secondary"
-																				onClick={
-																					this
-																						._handleClearAllSelected
-																				}
-																				small
-																			>
-																				{Liferay.Language.get(
-																					'clear-all-selected'
-																				)}
-																			</ClayButton>
-																		</li>
-																	)}
-																</ul>
-															</div>
-														</div>
-
-														<ul
-															className="list-group"
-															data-testid="add-result-items"
-														>
-															{results.items.map(
-																(
-																	result,
-																	index
-																) => (
-																	<Item
-																		author={
-																			result.author
-																		}
-																		clicks={
-																			result.clicks
-																		}
-																		date={
-																			result.date
-																		}
-																		extension={
-																			result.extension
-																		}
-																		hidden={
-																			result.hidden
-																		}
-																		id={
-																			result.id
-																		}
-																		index={
-																			index
-																		}
-																		key={
-																			result.id
-																		}
-																		onSelect={
-																			this
-																				._handleSelect
-																		}
-																		selected={addResultSelectedIds.includes(
-																			result.id
-																		)}
-																		title={
-																			result.title
-																		}
-																		type={
-																			result.type
-																		}
-																	/>
-																)
-															)}
-														</ul>
-													</div>
-
-													<div className="add-result-container">
-														<PaginationBar
-															deltas={DELTAS}
-															onDeltaChange={
-																this
-																	._handleDeltaChange
-															}
-															onPageChange={
-																this
-																	._handlePageChange
-															}
-															page={page}
-															selectedDelta={
-																selectedDelta
-															}
-															totalItems={
-																results.total
-															}
-														/>
-													</div>
-												</>
-											) : (
-												this._renderEmptyState()
-											))}
-									</div>
-								</ClayModal.Body>
-
-								<ClayModal.Footer
-									last={
-										<ClayButton.Group spaced>
-											<ClayButton
-												className="btn-outline-borderless"
-												displayType="secondary"
-												onClick={onClose}
-											>
-												{Liferay.Language.get('cancel')}
-											</ClayButton>
-
-											<ClayButton
-												disabled={
-													addResultSelectedIds.length ===
-													0
-												}
-												onClick={this._handleSubmit(
-													onClose
-												)}
-											>
-												{Liferay.Language.get('add')}
-											</ClayButton>
-										</ClayButton.Group>
-									}
-								/>
-							</div>
-						)}
-					</ClayModal>
+					<AddResultModal
+						DELTAS={DELTAS}
+						addResultSearchQuery={addResultSearchQuery}
+						addResultSelectedIds={addResultSelectedIds}
+						dataLoading={dataLoading}
+						getCurrentResultSelectedIds={
+							this._getCurrentResultSelectedIds
+						}
+						handleAllCheckbox={this._handleAllCheckbox}
+						handleClearAllSelected={this._handleClearAllSelected}
+						handleClose={this._handleCloseModal}
+						handleDeltaChange={this._handleDeltaChange}
+						handlePageChange={this._handlePageChange}
+						handleSearchChange={this._handleSearchChange}
+						handleSearchEnter={this._handleSearchEnter}
+						handleSearchKeyDown={this._handleSearchKeyDown}
+						handleSelect={this._handleSelect}
+						handleSubmit={this._handleSubmit}
+						page={page}
+						renderEmptyState={this._renderEmptyState}
+						results={results}
+						selectedDelta={selectedDelta}
+						showModal={showModal}
+						start={start}
+					/>
 				)}
 			</li>
 		);

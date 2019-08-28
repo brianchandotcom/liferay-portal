@@ -49,15 +49,10 @@ export function formatHours(hours, minutes) {
 
 export function getDurationValues(durationValue) {
 	const fullDuration = moment.duration(durationValue);
-	const hoursDuration = moment.duration({
-		hours: fullDuration.hours(),
-		minutes: fullDuration.minutes()
-	});
-	const daysDuration = fullDuration.subtract(hoursDuration);
 
 	return {
-		days: daysDuration.asDays() || null,
-		hours: hoursDuration.hours() || null,
-		minutes: hoursDuration.minutes() || null
+		days: fullDuration.days() || null,
+		hours: fullDuration.hours() || null,
+		minutes: fullDuration.minutes() || null
 	};
 }

@@ -25,7 +25,7 @@ exports[`Should render component 1`] = `
     
   </td>
   <td>
-    Aug 27
+    May 06
   </td>
   <td>
     <div
@@ -143,6 +143,7 @@ exports[`Should render component 2`] = `
       }
     >
       <SLAListItem
+        dateModified={2019-05-06T20:32:18.000Z}
         instancesCount="10"
         onTime="5"
         overdue="5"
@@ -299,7 +300,7 @@ exports[`Should render component 2`] = `
           </td>
           <td />
           <td>
-            Aug 27
+            May 06
           </td>
           <td>
             <div

@@ -245,8 +245,6 @@ class FragmentEditableBackgroundImage extends Component {
 			!this._getBackgroundImageValue() &&
 			panelId === FLOATING_TOOLBAR_BUTTONS.fragmentBackgroundImage.panelId
 		) {
-			event.preventDefault();
-
 			openImageSelector({
 				callback: url => this._updateFragmentBackgroundImage(url),
 				imageSelectorURL: this.imageSelectorURL,

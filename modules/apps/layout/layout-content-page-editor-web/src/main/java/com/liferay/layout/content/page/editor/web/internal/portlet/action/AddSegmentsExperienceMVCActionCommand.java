@@ -352,6 +352,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			).put(
 				"segmentsExperimentRelId",
 				segmentsExperimentRel.getSegmentsExperimentRelId()
+			).put(
+				"split", segmentsExperimentRel.getSplit()
 			));
 	}
 

@@ -88,14 +88,33 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 <c:if test="<%= !StringUtil.equals(selLayout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY) %>">
 	<h4><liferay-ui:message key="canonical-url" /></h4>
 
-	<aui:input checked="<%= selLayout.isLayoutPrototypeLinkActive() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="TypeSettingsProperties--useCustomCanonicalURL--" type="toggle-switch" value='<%= GetterUtil.getBoolean(layoutTypeSettings.getProperty("useCustomCanonicalURL")) %>' />
+	<%
+		LayoutCanonicalURL selLayoutCanonicalURL = layoutsAdminDisplayContext.getSelLayoutCanonicalURL();
+	%>
 
-	<div id="<portlet:namespace />customCanonicalURLSettings">
-		<aui:input name="TypeSettingsProperties--customCanonicalURL--" type="text" value='<%= layoutTypeSettings.getProperty("customCanonicalURL", StringPool.BLANK) %>'>
-			<aui:validator name="url" />
-		</aui:input>
-	</div>
-</c:if>
+	<c:choose>
+		<c:when test="<%= selLayoutCanonicalURL != null %>">
+			<aui:model-context bean="<%= selLayoutCanonicalURL %>" model="<%= LayoutCanonicalURL.class %>" />
+
+			<aui:input checked="<%= selLayoutCanonicalURL.isEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+
+			<div id="<portlet:namespace />customCanonicalURLSettings">
+				<aui:input name="canonicalURL" placeholder="canonical-url">
+					<aui:validator name="url" />
+				</aui:input>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+
+			<div id="<portlet:namespace />customCanonicalURLSettings">
+				<aui:input name="canonicalURL" placeholder="canonical-url" type="text">
+					<aui:validator name="url" />
+				</aui:input>
+			</div>
+		</c:otherwise>
+	</c:choose>
+	</></c:if>
 
 <aui:script>
 	Liferay.Util.toggleBoxes('<portlet:namespace />useCustomCanonicalURL', '<portlet:namespace />customCanonicalURLSettings');

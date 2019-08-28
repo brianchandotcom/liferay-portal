@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>PAGE_TITLE</td>
-	<td>title=Untitled.${key_documentType}</td>
+	<td>title=${key_documentTitle}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[@id='WACDocumentPanelContent']</td>
+	<td>//div[@id='WACViewPanel']  | //div[contains(@id,'sheetContentDiv')]</td>
 	<td></td>
 </tr>
 <tr>

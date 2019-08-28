@@ -48,11 +48,17 @@ const CustomObjectPopover = ({
 		return !invalid;
 	};
 
+	const resetForm = () => {
+		nameInputRef.current.value = '';
+
+		setAddFormView(true);
+	};
+
 	useEffect(() => {
 		if (visible) {
 			nameInputRef.current.focus();
 		} else {
-			nameInputRef.current.value = '';
+			resetForm();
 		}
 	}, [alignElement, nameInputRef, visible]);
 
@@ -121,13 +127,13 @@ const CustomObjectPopover = ({
 				</form>
 			)}
 			footer={() => (
-				<div className="clearfix border-top p-3" style={{width: 450}}>
-					<div className="pull-right">
+				<div className="border-top p-3" style={{width: 450}}>
+					<div className="d-flex justify-content-end">
 						<Button
 							className="mr-3"
 							displayType="secondary"
 							onClick={() => {
-								nameInputRef.current.value = '';
+								resetForm();
 
 								onCancel();
 							}}

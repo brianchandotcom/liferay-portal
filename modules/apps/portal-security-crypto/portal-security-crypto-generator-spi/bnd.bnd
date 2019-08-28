@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Security Crypto Generator SPI
+Bundle-SymbolicName: com.liferay.portal.security.crypto.generator.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.crypto.generator.spi,\
+	com.liferay.portal.security.crypto.generator.spi.hashing,\
+	com.liferay.portal.security.crypto.generator.spi.hashing.factory,\
+	com.liferay.portal.security.crypto.generator.spi.hashing.salt

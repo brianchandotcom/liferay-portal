@@ -425,7 +425,7 @@
 	<tag>
 		<description>Creates a component to create and select tags to add to an asset, such as a blog entry, bookmark, or wiki page.</description>
 		<name>asset-tags-selector</name>
-		<tag-class>com.liferay.asset.taglib.servlet.taglib.soy.AssetTagsSelectorTag</tag-class>
+		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetTagsSelectorTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<description>A function to call when a tag is added.</description>

@@ -12,316 +12,232 @@
  * details.
  */
 
-import 'clay-multi-select';
+import ClayButton from '@clayui/button';
+import {useResource} from '@clayui/data-provider';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayMultiSelect from '@clayui/multi-select';
 import {ItemSelectorDialog} from 'frontend-js-web';
-import Component from 'metal-component';
-import Soy from 'metal-soy';
-import {Config} from 'metal-state';
+import PropTypes from 'prop-types';
+import React, {useEffect, useRef} from 'react';
 
-import templates from './AssetTagsSelector.soy';
+function usePrevious(value) {
+	const ref = useRef();
 
-/**
- * Wraps Clay's existing <code>MultiSelect</code> component that offers the user
- * a tag selection input.
- */
-class AssetTagsSelector extends Component {
-	/**
-	 * @inheritDoc
-	 */
-	attached(...args) {
-		super.attached(...args);
+	useEffect(() => {
+		ref.current = value;
+	}, [value]);
 
-		this._dataSource = this._handleQuery.bind(this);
-	}
+	return ref.current;
+}
 
-	/**
-	 * Opens the tag selection dialog.
-	 *
-	 * @param {!Event} event The event.
-	 * @private
-	 */
-	_handleButtonClicked() {
+function AssetTagsSelector({
+	addCallback,
+	eventName,
+	groupIds = [],
+	id,
+	inputName,
+	inputValue,
+	label,
+	onInputValueChange = () => {},
+	onSelectedItemsChange = () => {},
+	portletURL,
+	removeCallback,
+	selectedItems = [],
+	showSelectButton
+}) {
+	const {resource, refetch} = useResource({
+		fetchOptions: {
+			body: Liferay.Util.objectToFormData({
+				cmd: JSON.stringify({
+					'/assettag/search': {
+						end: 20,
+						groupIds,
+						name: `%${inputValue === '*' ? '' : inputValue}%`,
+						start: 0,
+						tagProperties: ''
+					}
+				}),
+				p_auth: Liferay.authToken
+			}),
+			method: 'POST'
+		},
+		link: `${window.location.origin}${themeDisplay.getPathContext()}
+				/api/jsonws/invoke`
+	});
+
+	const previousInputValue = usePrevious(inputValue);
+
+	useEffect(() => {
+		if (inputValue && inputValue !== previousInputValue) {
+			refetch();
+		}
+	}, [inputValue, previousInputValue, refetch]);
+
+	const callGlobalCallback = (callback, item) => {
+		if (callback && typeof window[callback] === 'function') {
+			window[callback](item);
+		}
+	};
+
+	const handleInputBlur = () => {
+		const filteredItems = resource && resource.map(tag => tag.value);
+
+		if (!filteredItems || (filteredItems && filteredItems.length === 0)) {
+			if (inputValue) {
+				if (!selectedItems.find(item => item.label === inputValue)) {
+					onSelectedItemsChange(
+						selectedItems.concat({
+							label: inputValue,
+							value: inputValue
+						})
+					);
+				}
+				onInputValueChange('');
+			}
+		}
+	};
+
+	const handleItemsChange = items => {
+		const addedItems = items.filter(
+			item =>
+				!selectedItems.find(
+					selectedItem => selectedItem.value === item.value
+				)
+		);
+
+		const removedItems = selectedItems.filter(
+			selectedItem =>
+				!items.find(item => item.value === selectedItem.value)
+		);
+
+		const current = [...selectedItems, ...addedItems].filter(
+			item =>
+				!removedItems.find(
+					removedItem => removedItem.value === item.value
+				)
+		);
+
+		onSelectedItemsChange(current);
+
+		addedItems.forEach(item => callGlobalCallback(addCallback, item));
+
+		removedItems.forEach(item => callGlobalCallback(removeCallback, item));
+	};
+
+	const handleSelectButtonClick = () => {
 		const sub = (str, obj) => str.replace(/\{([^}]+)\}/g, (_, m) => obj[m]);
 
-		const uri = sub(decodeURIComponent(this.portletURL), {
-			selectedTagNames: this._getTagNames()
+		const url = sub(decodeURIComponent(portletURL), {
+			selectedTagNames: selectedItems.map(item => item.value).join()
 		});
 
 		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
-			eventName: this.eventName,
+			eventName,
 			title: Liferay.Language.get('tags'),
-			url: uri
+			url
 		});
 
 		itemSelectorDialog.open();
 
 		itemSelectorDialog.on('selectedItemChange', event => {
-			const selectedItems = event.selectedItem;
+			const dialogSelectedItems = event.selectedItem;
 
-			if (selectedItems) {
+			if (dialogSelectedItems) {
 				const newValues =
-					selectedItems.items.length > 0
-						? selectedItems.items.split(',')
+					dialogSelectedItems.items.length > 0
+						? dialogSelectedItems.items.split(',').map(value => {
+								return {
+									label: value,
+									value
+								};
+						  })
 						: [];
-				const oldItems = this.selectedItems.slice();
-				const oldValues = oldItems.map(item => item.value);
-				const valueMapper = item => {
-					return {
-						label: item,
-						value: item
-					};
-				};
 
-				const addedItems = newValues
-					.filter(value => !oldValues.includes(value))
-					.map(valueMapper);
+				const addedItems = newValues.filter(
+					newValue =>
+						!selectedItems.find(
+							selectedItem =>
+								selectedItem.label === newValue.label
+						)
+				);
 
-				const removedItems = oldValues
-					.filter(value => !newValues.includes(value))
-					.map(valueMapper);
+				const removedItems = selectedItems.filter(
+					selectedItem =>
+						!newValues.find(
+							newValue => newValue.label === selectedItem.label
+						)
+				);
 
-				this.selectedItems = newValues.map(valueMapper);
-
-				this.tagNames = this._getTagNames();
+				onSelectedItemsChange(newValues);
 
 				addedItems.forEach(item =>
-					this._notifyItemsChanged(
-						'itemAdded',
-						this.addCallback,
-						item
-					)
+					callGlobalCallback(addCallback, item)
 				);
 
 				removedItems.forEach(item =>
-					this._notifyItemsChanged(
-						'itemRemoved',
-						this.removeCallback,
-						item
-					)
+					callGlobalCallback(removeCallback, item)
 				);
 			}
 		});
-	}
+	};
 
-	/**
-	 * Converts the list of selected tags into a comma-separated serialized
-	 * version to be used as a fallback for old services and implementations.
-	 *
-	 * @private
-	 * @return {string} The serialized, comma-separated version of the selected items.
-	 */
-	_getTagNames() {
-		return this.selectedItems
-			.map(selectedItem => selectedItem.value)
-			.join();
-	}
+	return (
+		<div className="lfr-tags-selector-content" id={id}>
+			<ClayForm.Group>
+				<label>{label || Liferay.Language.get('tags')}</label>
 
-	/**
-	 * Creates a tag with the text introduced in the input.
-	 *
-	 * @param  {!Event} event The event.
-	 */
-	_handleInputBlur(event) {
-		const filteredItems = event.target.filteredItems;
+				<ClayInput.Group>
+					<ClayInput.GroupItem>
+						<ClayMultiSelect
+							inputName={inputName}
+							inputValue={inputValue}
+							items={selectedItems}
+							onBlur={handleInputBlur}
+							onChange={onInputValueChange}
+							onItemsChange={handleItemsChange}
+							sourceItems={
+								resource
+									? resource.map(tag => {
+											return {
+												label: tag.text,
+												value: tag.value
+											};
+									  })
+									: []
+							}
+						/>
+					</ClayInput.GroupItem>
 
-		if (!filteredItems || (filteredItems && filteredItems.length === 0)) {
-			const inputValue = event.target.inputValue;
-
-			if (inputValue) {
-				const existingTag = this.selectedItems.find(
-					tag => tag.value === inputValue
-				);
-
-				if (existingTag) {
-					return;
-				}
-
-				const item = {
-					label: inputValue,
-					value: inputValue
-				};
-
-				this.selectedItems = this.selectedItems.concat(item);
-				this.tagNames = this._getTagNames();
-
-				this._notifyItemsChanged('itemAdded', this.addCallback, item);
-			}
-		}
-	}
-
-	_handleInputFocus(event) {
-		this.emit('inputFocus', event);
-	}
-
-	/**
-	 * Updates tags fallback and notifies that a new tag has been added.
-	 *
-	 * @param {!Event} event The event.
-	 * @private
-	 */
-	_handleItemAdded(event) {
-		this.selectedItems = event.data.selectedItems;
-		this.tagNames = this._getTagNames();
-
-		this._notifyItemsChanged(
-			'itemAdded',
-			this.addCallback,
-			event.data.item
-		);
-	}
-
-	/**
-	 * Updates tags fallback and notifies that a new tag has been removed.
-	 *
-	 * @param {!Event} event The event.
-	 * @private
-	 */
-	_handleItemRemoved(event) {
-		this.selectedItems = event.data.selectedItems;
-		this.tagNames = this._getTagNames();
-
-		this._notifyItemsChanged(
-			'itemRemoved',
-			this.removeCallback,
-			event.data.item
-		);
-	}
-
-	/**
-	 * Responds to user input to retrieve the list of available tags from the
-	 * tags search service.
-	 *
-	 * @param {!string} query
-	 * @private
-	 */
-	_handleQuery(query) {
-		return new Promise(resolve => {
-			Liferay.Service(
-				'/assettag/search',
-				{
-					end: 20,
-					groupIds: this.groupIds,
-					name: `%${query === '*' ? '' : query}%`,
-					start: 0,
-					tagProperties: ''
-				},
-				tags => resolve(tags.map(tag => tag.value))
-			);
-		});
-	}
-
-	/**
-	 * Notifies changed items
-	 *
-	 * @param {!string} eventName
-	 * @param {!Function} callback
-	 * @param {!object} item
-	 * @private
-	 */
-	_notifyItemsChanged(eventName, callback, item) {
-		if (callback) {
-			window[callback](item);
-		}
-
-		this.emit(eventName, {
-			item,
-			selectedItems: this.selectedItems
-		});
-	}
+					{showSelectButton && (
+						<ClayInput.GroupItem shrink>
+							<ClayButton
+								displayType="secondary"
+								onClick={handleSelectButtonClick}
+							>
+								{Liferay.Language.get('select')}
+							</ClayButton>
+						</ClayInput.GroupItem>
+					)}
+				</ClayInput.Group>
+			</ClayForm.Group>
+		</div>
+	);
 }
 
-/**
- * State definition.
- *
- * @static
- * @type {!Object}
- */
-AssetTagsSelector.STATE = {
-	/**
-	 * Function to call every time the input value changes.
-	 *
-	 * @default _handleQuery
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?func}
-	 */
-	_dataSource: Config.func().internal(),
-
-	/**
-	 * Function to call when a tag is added.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?string}
-	 */
-	addCallback: Config.string(),
-
-	/**
-	 * Event name which fires when the user selects a display page using the
-	 * item selector.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?string}
-	 */
-	eventName: Config.string(),
-
-	/**
-	 * List of group IDs where tags should be located.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?string}
-	 */
-	groupIds: Config.array().value([]),
-
-	/**
-	 * URL of a portlet to display the tags.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?string}
-	 */
-	portletURL: Config.string(),
-
-	/**
-	 * Function to call when a tag is removed.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?string}
-	 */
-	removeCallback: Config.string(),
-
-	/**
-	 * List of the selected items.
-	 *
-	 * @default []
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @type {?Array<Object>}
-	 */
-	selectedItems: Config.array(Config.object()).value([]),
-
-	/**
-	 * A comma separated list of selected items.
-	 *
-	 * @default undefined
-	 * @instance
-	 * @memberof AssetTagsSelector
-	 * @review
-	 * @type {?string}
-	 */
-	tagNames: Config.string().value('')
+AssetTagsSelector.propTypes = {
+	addCallback: PropTypes.string,
+	eventName: PropTypes.string,
+	groupIds: PropTypes.array,
+	id: PropTypes.string,
+	inputName: PropTypes.string,
+	inputValue: PropTypes.string,
+	label: PropTypes.string,
+	onInputValueChange: PropTypes.func,
+	onSelectedItemsChange: PropTypes.func,
+	portletURL: PropTypes.string,
+	removeCallback: PropTypes.string,
+	selectedItems: PropTypes.array
 };
 
-Soy.register(AssetTagsSelector, templates);
-
-export {AssetTagsSelector};
 export default AssetTagsSelector;

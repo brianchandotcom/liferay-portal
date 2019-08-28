@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -94,16 +94,19 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		try {
 			if (cmd.equals(Constants.ADD)) {
-				addAccountEntry(actionRequest);
+				AccountEntry accountEntry = addAccountEntry(actionRequest);
+
+				redirect = _http.setParameter(
+					redirect, actionResponse.getNamespace() + "accountEntryId",
+					accountEntry.getAccountEntryId());
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				updateAccountEntry(actionRequest);
 			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				sendRedirect(actionRequest, actionResponse, redirect);
@@ -161,7 +164,6 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
 			logoBytes, status);
-
 	}
 
 	@Reference
@@ -169,5 +171,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Http _http;
 
 }

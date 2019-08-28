@@ -28,8 +28,8 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("FormatBndInstructions1/app.testbnd");
 		test(
 			"FormatBndInstructions2/app.testbnd",
-			"Deprecated apps not on Marketplace should be moved to the " +
-				"deprecated folder");
+			"Deprecated apps that are not published on Marketplace should be " +
+				"moved to the deprecated folder");
 		test(
 			"FormatBndInstructions3/app.testbnd",
 			StringBundler.concat(

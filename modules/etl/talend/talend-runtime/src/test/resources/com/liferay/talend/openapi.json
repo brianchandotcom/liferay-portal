@@ -53,7 +53,9 @@
 					}
 				},
 				"required": [
-					"sku"
+					"attachment",
+					"id",
+					"title"
 				],
 				"type": "object",
 				"xml": {

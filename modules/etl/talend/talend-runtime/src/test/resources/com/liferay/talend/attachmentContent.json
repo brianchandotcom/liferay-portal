@@ -1,0 +1,15 @@
+{
+	"attachment": "AAAUUUU3HJ9MMASK",
+	"displayDate": "2011-11-01T12:45:00+02:00",
+	"expirationDate": "2119-03-21T11:22:00+02:00",
+	"externalReferenceCode": "ext-123",
+	"id": 19770709,
+	"neverExpire": true,
+	"priority": 2.1,
+	"src": "https://www.liferay.com",
+	"title": {
+		"en_US": "Start Test Image",
+		"hr_HR": "Pocetna Test Slika"
+	},
+	"type": 768
+}

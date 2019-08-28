@@ -52,8 +52,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		JSONObject jsonObject = new JSONObject(content);
 
-		content = _fixDependencyVersions(
-			fileName, absolutePath, content, jsonObject);
+		content = _fixDependencyVersions(absolutePath, content, jsonObject);
 
 		String dirName = absolutePath.substring(0, absolutePath.length() - 12);
 
@@ -125,8 +124,7 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 	}
 
 	private String _fixDependencyVersions(
-			String fileName, String absolutePath, String content,
-			JSONObject jsonObject)
+			String absolutePath, String content, JSONObject jsonObject)
 		throws IOException {
 
 		if (jsonObject.isNull("dependencies")) {

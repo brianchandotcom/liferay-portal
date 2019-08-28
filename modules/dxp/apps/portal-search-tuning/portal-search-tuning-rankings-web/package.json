@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.0.0-milestone.2",
-		"@clayui/form": "^3.0.0-milestone.2",
-		"@clayui/icon": "^3.0.0-milestone.2",
-		"@clayui/link": "^3.0.0-milestone.2",
-		"@clayui/loading-indicator": "^3.0.0-milestone.2",
-		"@clayui/modal": "^3.0.0-milestone.2",
+		"@clayui/button": "3.0.0-milestone.3",
+		"@clayui/form": "3.0.0-milestone.3",
+		"@clayui/icon": "3.0.0-milestone.3",
+		"@clayui/link": "3.0.0-milestone.3",
+		"@clayui/loading-indicator": "3.0.0-milestone.3",
+		"@clayui/modal": "3.0.0-milestone.3",
 		"classnames": "2.2.6",
 		"lodash.isfunction": "3.0.9",
 		"lodash.times": "^4.3.2",

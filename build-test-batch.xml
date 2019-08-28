@@ -3952,6 +3952,35 @@ log.sanitizer.enabled=false</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="js-unit-private-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules/private" task="packageRunTest">
+					<arg value="--continue" />
+					<arg value="--parallel" />
+				</gradle-execute>
+
+				<replace
+					dir="modules"
+					includes="**/TEST-frontend-js.xml"
+				>
+					<replacefilter>
+						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+					<replacefilter>
+						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+				</replace>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="jsf-jdk8">
 		<ant antfile="build-test-batch/jsf.xml" target="jsf-jdk8" />
 	</target>

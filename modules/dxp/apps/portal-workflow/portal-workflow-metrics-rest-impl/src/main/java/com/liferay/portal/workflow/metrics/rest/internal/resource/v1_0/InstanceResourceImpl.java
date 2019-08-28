@@ -438,7 +438,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
 
 		termsAggregation.addOrders(Order.key(true));
-
 		termsAggregation.addPipelineAggregations(
 			_createBucketSelectorPipelineAggregation(),
 			_createBucketSortPipelineAggregation(pagination));

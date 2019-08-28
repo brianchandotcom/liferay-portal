@@ -15,7 +15,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import {SegmentsVariantType} from '../../types.es';
 import VariantList from './internal/VariantList.es';
 import VariantForm from './internal/VariantForm.es';
@@ -28,6 +28,18 @@ function Variants({
 	selectedSegmentsExperienceId,
 	variants
 }) {
+	const {
+		observer: creatingVariantObserver,
+		onClose: creatingVariantOnClose
+	} = useModal({
+		onClose: () => setCreatingVariant(false)
+	});
+	const {
+		observer: editingVariantObserver,
+		onClose: editingVariantOnClose
+	} = useModal({
+		onClose: () => setEditingVariant({active: false})
+	});
 	const [creatingVariant, setCreatingVariant] = useState(false);
 	const [editingVariant, setEditingVariant] = useState({active: false});
 
@@ -74,37 +86,30 @@ function Variants({
 			/>
 
 			{creatingVariant && (
-				<ClayModal onClose={() => setCreatingVariant(false)} size="sm">
-					{onClose => (
-						<VariantForm
-							errorMessage={Liferay.Language.get(
-								'create-variant-error-message'
-							)}
-							onClose={onClose}
-							onSave={_handleVariantCreation}
-							title={Liferay.Language.get('create-new-variant')}
-						/>
-					)}
+				<ClayModal observer={creatingVariantObserver} size="sm">
+					<VariantForm
+						errorMessage={Liferay.Language.get(
+							'create-variant-error-message'
+						)}
+						onClose={creatingVariantOnClose}
+						onSave={_handleVariantCreation}
+						title={Liferay.Language.get('create-new-variant')}
+					/>
 				</ClayModal>
 			)}
 
 			{editingVariant.active && (
-				<ClayModal
-					onClose={() => setEditingVariant({active: false})}
-					size="sm"
-				>
-					{onClose => (
-						<VariantForm
-							errorMessage={Liferay.Language.get(
-								'edit-variant-error-message'
-							)}
-							name={editingVariant.name}
-							onClose={onClose}
-							onSave={_handleVariantEditionSave}
-							title={Liferay.Language.get('edit-variant')}
-							variantId={editingVariant.variantId}
-						/>
-					)}
+				<ClayModal observer={editingVariantObserver} size="sm">
+					<VariantForm
+						errorMessage={Liferay.Language.get(
+							'edit-variant-error-message'
+						)}
+						name={editingVariant.name}
+						onClose={editingVariantOnClose}
+						onSave={_handleVariantEditionSave}
+						title={Liferay.Language.get('edit-variant')}
+						variantId={editingVariant.variantId}
+					/>
 				</ClayModal>
 			)}
 		</>

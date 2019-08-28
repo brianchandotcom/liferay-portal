@@ -68,14 +68,14 @@ public class LayoutData {
 				layoutColumnJSONArray.put(layoutColumnJSONObject);
 			}
 
-			layoutRowJSONArray = JSONUtil.put(
-				JSONUtil.put(
-					"columns", layoutColumnJSONArray
-				).put(
-					"rowId", String.valueOf(rowId++)
-				).put(
-					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
-				));
+			layoutRowJSONArray.put(
+                JSONUtil.put(
+                    "columns", layoutColumnJSONArray
+                ).put(
+                    "rowId", String.valueOf(rowId++)
+                ).put(
+                    "type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
+                ));
 		}
 
 		return JSONUtil.put(

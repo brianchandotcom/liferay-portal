@@ -38,7 +38,9 @@ import java.util.Map;
 /**
  * @author Julio Camarero
  * @author Ambrín Chaudhary
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class FlagsTag extends ComponentRendererTag {
 
 	@Override

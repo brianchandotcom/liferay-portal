@@ -23,6 +23,7 @@ import templates from './Flags.soy';
 /**
  * It opens a dialog where the user can flag the page.
  * @abstract
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @extends {PortletBase}
  */
 

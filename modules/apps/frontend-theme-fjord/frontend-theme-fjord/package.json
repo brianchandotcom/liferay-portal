@@ -11,7 +11,7 @@
 		"baseTheme": "styled",
 		"distName": "fjord-theme",
 		"rubySass": false,
-		"version": "7.1"
+		"version": "7.2"
 	},
 	"main": "package.json",
 	"name": "liferay-fjord-theme",

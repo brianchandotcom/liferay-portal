@@ -1818,10 +1818,10 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @return the matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_D_A(
+	public static List<UserNotificationEvent> findByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired) {
 
-		return getPersistence().findByU_D_A(userId, delivered, actionRequired);
+		return getPersistence().findByU_D_AR(userId, delivered, actionRequired);
 	}
 
 	/**
@@ -1838,11 +1838,11 @@ public class UserNotificationEventUtil {
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_D_A(
+	public static List<UserNotificationEvent> findByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end) {
 
-		return getPersistence().findByU_D_A(
+		return getPersistence().findByU_D_AR(
 			userId, delivered, actionRequired, start, end);
 	}
 
@@ -1861,11 +1861,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_D_A(
+	public static List<UserNotificationEvent> findByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().findByU_D_A(
+		return getPersistence().findByU_D_AR(
 			userId, delivered, actionRequired, start, end, orderByComparator);
 	}
 
@@ -1885,12 +1885,12 @@ public class UserNotificationEventUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_D_A(
+	public static List<UserNotificationEvent> findByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired, int start,
 		int end, OrderByComparator<UserNotificationEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_D_A(
+		return getPersistence().findByU_D_AR(
 			userId, delivered, actionRequired, start, end, orderByComparator,
 			useFinderCache);
 	}
@@ -1905,13 +1905,13 @@ public class UserNotificationEventUtil {
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_D_A_First(
+	public static UserNotificationEvent findByU_D_AR_First(
 			long userId, boolean delivered, boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_D_A_First(
+		return getPersistence().findByU_D_AR_First(
 			userId, delivered, actionRequired, orderByComparator);
 	}
 
@@ -1924,11 +1924,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_D_A_First(
+	public static UserNotificationEvent fetchByU_D_AR_First(
 		long userId, boolean delivered, boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_D_A_First(
+		return getPersistence().fetchByU_D_AR_First(
 			userId, delivered, actionRequired, orderByComparator);
 	}
 
@@ -1942,13 +1942,13 @@ public class UserNotificationEventUtil {
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_D_A_Last(
+	public static UserNotificationEvent findByU_D_AR_Last(
 			long userId, boolean delivered, boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_D_A_Last(
+		return getPersistence().findByU_D_AR_Last(
 			userId, delivered, actionRequired, orderByComparator);
 	}
 
@@ -1961,11 +1961,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_D_A_Last(
+	public static UserNotificationEvent fetchByU_D_AR_Last(
 		long userId, boolean delivered, boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_D_A_Last(
+		return getPersistence().fetchByU_D_AR_Last(
 			userId, delivered, actionRequired, orderByComparator);
 	}
 
@@ -1980,14 +1980,14 @@ public class UserNotificationEventUtil {
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public static UserNotificationEvent[] findByU_D_A_PrevAndNext(
+	public static UserNotificationEvent[] findByU_D_AR_PrevAndNext(
 			long userNotificationEventId, long userId, boolean delivered,
 			boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_D_A_PrevAndNext(
+		return getPersistence().findByU_D_AR_PrevAndNext(
 			userNotificationEventId, userId, delivered, actionRequired,
 			orderByComparator);
 	}
@@ -1999,10 +1999,10 @@ public class UserNotificationEventUtil {
 	 * @param delivered the delivered
 	 * @param actionRequired the action required
 	 */
-	public static void removeByU_D_A(
+	public static void removeByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired) {
 
-		getPersistence().removeByU_D_A(userId, delivered, actionRequired);
+		getPersistence().removeByU_D_AR(userId, delivered, actionRequired);
 	}
 
 	/**
@@ -2013,10 +2013,219 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @return the number of matching user notification events
 	 */
-	public static int countByU_D_A(
+	public static int countByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired) {
 
-		return getPersistence().countByU_D_A(userId, delivered, actionRequired);
+		return getPersistence().countByU_D_AR(
+			userId, delivered, actionRequired);
+	}
+
+	/**
+	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @return the matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_A(
+		long userId, boolean delivered, boolean archived) {
+
+		return getPersistence().findByU_D_A(userId, delivered, archived);
+	}
+
+	/**
+	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @return the range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_A(
+		long userId, boolean delivered, boolean archived, int start, int end) {
+
+		return getPersistence().findByU_D_A(
+			userId, delivered, archived, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_A(
+		long userId, boolean delivered, boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().findByU_D_A(
+			userId, delivered, archived, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_A(
+		long userId, boolean delivered, boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_D_A(
+			userId, delivered, archived, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_D_A_First(
+			long userId, boolean delivered, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_A_First(
+			userId, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_D_A_First(
+		long userId, boolean delivered, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_D_A_First(
+			userId, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_D_A_Last(
+			long userId, boolean delivered, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_A_Last(
+			userId, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_D_A_Last(
+		long userId, boolean delivered, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_D_A_Last(
+			userId, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the user notification events before and after the current user notification event in the ordered set where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userNotificationEventId the primary key of the current user notification event
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification event
+	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
+	 */
+	public static UserNotificationEvent[] findByU_D_A_PrevAndNext(
+			long userNotificationEventId, long userId, boolean delivered,
+			boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_A_PrevAndNext(
+			userNotificationEventId, userId, delivered, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 */
+	public static void removeByU_D_A(
+		long userId, boolean delivered, boolean archived) {
+
+		getPersistence().removeByU_D_A(userId, delivered, archived);
+	}
+
+	/**
+	 * Returns the number of user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @return the number of matching user notification events
+	 */
+	public static int countByU_D_A(
+		long userId, boolean delivered, boolean archived) {
+
+		return getPersistence().countByU_D_A(userId, delivered, archived);
 	}
 
 	/**
@@ -2027,10 +2236,10 @@ public class UserNotificationEventUtil {
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_A_A(
+	public static List<UserNotificationEvent> findByU_AR_A(
 		long userId, boolean actionRequired, boolean archived) {
 
-		return getPersistence().findByU_A_A(userId, actionRequired, archived);
+		return getPersistence().findByU_AR_A(userId, actionRequired, archived);
 	}
 
 	/**
@@ -2047,11 +2256,11 @@ public class UserNotificationEventUtil {
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_A_A(
+	public static List<UserNotificationEvent> findByU_AR_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end) {
 
-		return getPersistence().findByU_A_A(
+		return getPersistence().findByU_AR_A(
 			userId, actionRequired, archived, start, end);
 	}
 
@@ -2070,11 +2279,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_A_A(
+	public static List<UserNotificationEvent> findByU_AR_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().findByU_A_A(
+		return getPersistence().findByU_AR_A(
 			userId, actionRequired, archived, start, end, orderByComparator);
 	}
 
@@ -2094,12 +2303,12 @@ public class UserNotificationEventUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_A_A(
+	public static List<UserNotificationEvent> findByU_AR_A(
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end, OrderByComparator<UserNotificationEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_A_A(
+		return getPersistence().findByU_AR_A(
 			userId, actionRequired, archived, start, end, orderByComparator,
 			useFinderCache);
 	}
@@ -2114,13 +2323,13 @@ public class UserNotificationEventUtil {
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_A_A_First(
+	public static UserNotificationEvent findByU_AR_A_First(
 			long userId, boolean actionRequired, boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_A_A_First(
+		return getPersistence().findByU_AR_A_First(
 			userId, actionRequired, archived, orderByComparator);
 	}
 
@@ -2133,11 +2342,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_A_A_First(
+	public static UserNotificationEvent fetchByU_AR_A_First(
 		long userId, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_A_A_First(
+		return getPersistence().fetchByU_AR_A_First(
 			userId, actionRequired, archived, orderByComparator);
 	}
 
@@ -2151,13 +2360,13 @@ public class UserNotificationEventUtil {
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_A_A_Last(
+	public static UserNotificationEvent findByU_AR_A_Last(
 			long userId, boolean actionRequired, boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_A_A_Last(
+		return getPersistence().findByU_AR_A_Last(
 			userId, actionRequired, archived, orderByComparator);
 	}
 
@@ -2170,11 +2379,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_A_A_Last(
+	public static UserNotificationEvent fetchByU_AR_A_Last(
 		long userId, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_A_A_Last(
+		return getPersistence().fetchByU_AR_A_Last(
 			userId, actionRequired, archived, orderByComparator);
 	}
 
@@ -2189,14 +2398,14 @@ public class UserNotificationEventUtil {
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public static UserNotificationEvent[] findByU_A_A_PrevAndNext(
+	public static UserNotificationEvent[] findByU_AR_A_PrevAndNext(
 			long userNotificationEventId, long userId, boolean actionRequired,
 			boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_A_A_PrevAndNext(
+		return getPersistence().findByU_AR_A_PrevAndNext(
 			userNotificationEventId, userId, actionRequired, archived,
 			orderByComparator);
 	}
@@ -2208,10 +2417,10 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public static void removeByU_A_A(
+	public static void removeByU_AR_A(
 		long userId, boolean actionRequired, boolean archived) {
 
-		getPersistence().removeByU_A_A(userId, actionRequired, archived);
+		getPersistence().removeByU_AR_A(userId, actionRequired, archived);
 	}
 
 	/**
@@ -2222,10 +2431,10 @@ public class UserNotificationEventUtil {
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public static int countByU_A_A(
+	public static int countByU_AR_A(
 		long userId, boolean actionRequired, boolean archived) {
 
-		return getPersistence().countByU_A_A(userId, actionRequired, archived);
+		return getPersistence().countByU_AR_A(userId, actionRequired, archived);
 	}
 
 	/**
@@ -2463,11 +2672,11 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @return the matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_D_A(
+	public static List<UserNotificationEvent> findByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired) {
 
-		return getPersistence().findByU_DT_D_A(
+		return getPersistence().findByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired);
 	}
 
@@ -2486,11 +2695,11 @@ public class UserNotificationEventUtil {
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_D_A(
+	public static List<UserNotificationEvent> findByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end) {
 
-		return getPersistence().findByU_DT_D_A(
+		return getPersistence().findByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired, start, end);
 	}
 
@@ -2510,12 +2719,12 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_D_A(
+	public static List<UserNotificationEvent> findByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().findByU_DT_D_A(
+		return getPersistence().findByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired, start, end,
 			orderByComparator);
 	}
@@ -2537,13 +2746,13 @@ public class UserNotificationEventUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_D_A(
+	public static List<UserNotificationEvent> findByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, int start, int end,
 		OrderByComparator<UserNotificationEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_DT_D_A(
+		return getPersistence().findByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -2559,14 +2768,14 @@ public class UserNotificationEventUtil {
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_DT_D_A_First(
+	public static UserNotificationEvent findByU_DT_D_AR_First(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_D_A_First(
+		return getPersistence().findByU_DT_D_AR_First(
 			userId, deliveryType, delivered, actionRequired, orderByComparator);
 	}
 
@@ -2580,12 +2789,12 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_DT_D_A_First(
+	public static UserNotificationEvent fetchByU_DT_D_AR_First(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_DT_D_A_First(
+		return getPersistence().fetchByU_DT_D_AR_First(
 			userId, deliveryType, delivered, actionRequired, orderByComparator);
 	}
 
@@ -2600,14 +2809,14 @@ public class UserNotificationEventUtil {
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_DT_D_A_Last(
+	public static UserNotificationEvent findByU_DT_D_AR_Last(
 			long userId, int deliveryType, boolean delivered,
 			boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_D_A_Last(
+		return getPersistence().findByU_DT_D_AR_Last(
 			userId, deliveryType, delivered, actionRequired, orderByComparator);
 	}
 
@@ -2621,12 +2830,12 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_DT_D_A_Last(
+	public static UserNotificationEvent fetchByU_DT_D_AR_Last(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_DT_D_A_Last(
+		return getPersistence().fetchByU_DT_D_AR_Last(
 			userId, deliveryType, delivered, actionRequired, orderByComparator);
 	}
 
@@ -2642,14 +2851,14 @@ public class UserNotificationEventUtil {
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public static UserNotificationEvent[] findByU_DT_D_A_PrevAndNext(
+	public static UserNotificationEvent[] findByU_DT_D_AR_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean delivered, boolean actionRequired,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_D_A_PrevAndNext(
+		return getPersistence().findByU_DT_D_AR_PrevAndNext(
 			userNotificationEventId, userId, deliveryType, delivered,
 			actionRequired, orderByComparator);
 	}
@@ -2662,11 +2871,11 @@ public class UserNotificationEventUtil {
 	 * @param delivered the delivered
 	 * @param actionRequired the action required
 	 */
-	public static void removeByU_DT_D_A(
+	public static void removeByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired) {
 
-		getPersistence().removeByU_DT_D_A(
+		getPersistence().removeByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired);
 	}
 
@@ -2679,12 +2888,238 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @return the number of matching user notification events
 	 */
-	public static int countByU_DT_D_A(
+	public static int countByU_DT_D_AR(
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired) {
 
-		return getPersistence().countByU_DT_D_A(
+		return getPersistence().countByU_DT_D_AR(
 			userId, deliveryType, delivered, actionRequired);
+	}
+
+	/**
+	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @return the matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived) {
+
+		return getPersistence().findByU_DT_D_A(
+			userId, deliveryType, delivered, archived);
+	}
+
+	/**
+	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @return the range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived,
+		int start, int end) {
+
+		return getPersistence().findByU_DT_D_A(
+			userId, deliveryType, delivered, archived, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived,
+		int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().findByU_DT_D_A(
+			userId, deliveryType, delivered, archived, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived,
+		int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_DT_D_A(
+			userId, deliveryType, delivered, archived, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_DT_D_A_First(
+			long userId, int deliveryType, boolean delivered, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_A_First(
+			userId, deliveryType, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_DT_D_A_First(
+		long userId, int deliveryType, boolean delivered, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_DT_D_A_First(
+			userId, deliveryType, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_DT_D_A_Last(
+			long userId, int deliveryType, boolean delivered, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_A_Last(
+			userId, deliveryType, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_DT_D_A_Last(
+		long userId, int deliveryType, boolean delivered, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_DT_D_A_Last(
+			userId, deliveryType, delivered, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the user notification events before and after the current user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userNotificationEventId the primary key of the current user notification event
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification event
+	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
+	 */
+	public static UserNotificationEvent[] findByU_DT_D_A_PrevAndNext(
+			long userNotificationEventId, long userId, int deliveryType,
+			boolean delivered, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_A_PrevAndNext(
+			userNotificationEventId, userId, deliveryType, delivered, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 */
+	public static void removeByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived) {
+
+		getPersistence().removeByU_DT_D_A(
+			userId, deliveryType, delivered, archived);
+	}
+
+	/**
+	 * Returns the number of user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param archived the archived
+	 * @return the number of matching user notification events
+	 */
+	public static int countByU_DT_D_A(
+		long userId, int deliveryType, boolean delivered, boolean archived) {
+
+		return getPersistence().countByU_DT_D_A(
+			userId, deliveryType, delivered, archived);
 	}
 
 	/**
@@ -2696,11 +3131,11 @@ public class UserNotificationEventUtil {
 	 * @param archived the archived
 	 * @return the matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_A_A(
+	public static List<UserNotificationEvent> findByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		return getPersistence().findByU_DT_A_A(
+		return getPersistence().findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived);
 	}
 
@@ -2719,11 +3154,11 @@ public class UserNotificationEventUtil {
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_A_A(
+	public static List<UserNotificationEvent> findByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end) {
 
-		return getPersistence().findByU_DT_A_A(
+		return getPersistence().findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived, start, end);
 	}
 
@@ -2743,12 +3178,12 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_A_A(
+	public static List<UserNotificationEvent> findByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().findByU_DT_A_A(
+		return getPersistence().findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived, start, end,
 			orderByComparator);
 	}
@@ -2770,13 +3205,13 @@ public class UserNotificationEventUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification events
 	 */
-	public static List<UserNotificationEvent> findByU_DT_A_A(
+	public static List<UserNotificationEvent> findByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end,
 		OrderByComparator<UserNotificationEvent> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByU_DT_A_A(
+		return getPersistence().findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -2792,14 +3227,14 @@ public class UserNotificationEventUtil {
 	 * @return the first matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_DT_A_A_First(
+	public static UserNotificationEvent findByU_DT_AR_A_First(
 			long userId, int deliveryType, boolean actionRequired,
 			boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_A_A_First(
+		return getPersistence().findByU_DT_AR_A_First(
 			userId, deliveryType, actionRequired, archived, orderByComparator);
 	}
 
@@ -2813,11 +3248,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_DT_A_A_First(
+	public static UserNotificationEvent fetchByU_DT_AR_A_First(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_DT_A_A_First(
+		return getPersistence().fetchByU_DT_AR_A_First(
 			userId, deliveryType, actionRequired, archived, orderByComparator);
 	}
 
@@ -2832,14 +3267,14 @@ public class UserNotificationEventUtil {
 	 * @return the last matching user notification event
 	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent findByU_DT_A_A_Last(
+	public static UserNotificationEvent findByU_DT_AR_A_Last(
 			long userId, int deliveryType, boolean actionRequired,
 			boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_A_A_Last(
+		return getPersistence().findByU_DT_AR_A_Last(
 			userId, deliveryType, actionRequired, archived, orderByComparator);
 	}
 
@@ -2853,11 +3288,11 @@ public class UserNotificationEventUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
 	 */
-	public static UserNotificationEvent fetchByU_DT_A_A_Last(
+	public static UserNotificationEvent fetchByU_DT_AR_A_Last(
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		return getPersistence().fetchByU_DT_A_A_Last(
+		return getPersistence().fetchByU_DT_AR_A_Last(
 			userId, deliveryType, actionRequired, archived, orderByComparator);
 	}
 
@@ -2873,14 +3308,14 @@ public class UserNotificationEventUtil {
 	 * @return the previous, current, and next user notification event
 	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
 	 */
-	public static UserNotificationEvent[] findByU_DT_A_A_PrevAndNext(
+	public static UserNotificationEvent[] findByU_DT_AR_A_PrevAndNext(
 			long userNotificationEventId, long userId, int deliveryType,
 			boolean actionRequired, boolean archived,
 			OrderByComparator<UserNotificationEvent> orderByComparator)
 		throws com.liferay.portal.kernel.exception.
 			NoSuchUserNotificationEventException {
 
-		return getPersistence().findByU_DT_A_A_PrevAndNext(
+		return getPersistence().findByU_DT_AR_A_PrevAndNext(
 			userNotificationEventId, userId, deliveryType, actionRequired,
 			archived, orderByComparator);
 	}
@@ -2893,11 +3328,11 @@ public class UserNotificationEventUtil {
 	 * @param actionRequired the action required
 	 * @param archived the archived
 	 */
-	public static void removeByU_DT_A_A(
+	public static void removeByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		getPersistence().removeByU_DT_A_A(
+		getPersistence().removeByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived);
 	}
 
@@ -2910,12 +3345,494 @@ public class UserNotificationEventUtil {
 	 * @param archived the archived
 	 * @return the number of matching user notification events
 	 */
-	public static int countByU_DT_A_A(
+	public static int countByU_DT_AR_A(
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		return getPersistence().countByU_DT_A_A(
+		return getPersistence().countByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived);
+	}
+
+	/**
+	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @return the matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived) {
+
+		return getPersistence().findByU_D_AR_A(
+			userId, delivered, actionRequired, archived);
+	}
+
+	/**
+	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @return the range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived, int start, int end) {
+
+		return getPersistence().findByU_D_AR_A(
+			userId, delivered, actionRequired, archived, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().findByU_D_AR_A(
+			userId, delivered, actionRequired, archived, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_D_AR_A(
+			userId, delivered, actionRequired, archived, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_D_AR_A_First(
+			long userId, boolean delivered, boolean actionRequired,
+			boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_AR_A_First(
+			userId, delivered, actionRequired, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_D_AR_A_First(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_D_AR_A_First(
+			userId, delivered, actionRequired, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_D_AR_A_Last(
+			long userId, boolean delivered, boolean actionRequired,
+			boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_AR_A_Last(
+			userId, delivered, actionRequired, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_D_AR_A_Last(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_D_AR_A_Last(
+			userId, delivered, actionRequired, archived, orderByComparator);
+	}
+
+	/**
+	 * Returns the user notification events before and after the current user notification event in the ordered set where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userNotificationEventId the primary key of the current user notification event
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification event
+	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
+	 */
+	public static UserNotificationEvent[] findByU_D_AR_A_PrevAndNext(
+			long userNotificationEventId, long userId, boolean delivered,
+			boolean actionRequired, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_D_AR_A_PrevAndNext(
+			userNotificationEventId, userId, delivered, actionRequired,
+			archived, orderByComparator);
+	}
+
+	/**
+	 * Removes all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 */
+	public static void removeByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived) {
+
+		getPersistence().removeByU_D_AR_A(
+			userId, delivered, actionRequired, archived);
+	}
+
+	/**
+	 * Returns the number of user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @return the number of matching user notification events
+	 */
+	public static int countByU_D_AR_A(
+		long userId, boolean delivered, boolean actionRequired,
+		boolean archived) {
+
+		return getPersistence().countByU_D_AR_A(
+			userId, delivered, actionRequired, archived);
+	}
+
+	/**
+	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @return the matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived) {
+
+		return getPersistence().findByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived);
+	}
+
+	/**
+	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @return the range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived, int start, int end) {
+
+		return getPersistence().findByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived, start,
+			end);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().findByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param start the lower bound of the range of user notification events
+	 * @param end the upper bound of the range of user notification events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching user notification events
+	 */
+	public static List<UserNotificationEvent> findByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived, start,
+			end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_DT_D_AR_A_First(
+			long userId, int deliveryType, boolean delivered,
+			boolean actionRequired, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_AR_A_First(
+			userId, deliveryType, delivered, actionRequired, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_DT_D_AR_A_First(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_DT_D_AR_A_First(
+			userId, deliveryType, delivered, actionRequired, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event
+	 * @throws NoSuchUserNotificationEventException if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent findByU_DT_D_AR_A_Last(
+			long userId, int deliveryType, boolean delivered,
+			boolean actionRequired, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_AR_A_Last(
+			userId, deliveryType, delivered, actionRequired, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
+	 */
+	public static UserNotificationEvent fetchByU_DT_D_AR_A_Last(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getPersistence().fetchByU_DT_D_AR_A_Last(
+			userId, deliveryType, delivered, actionRequired, archived,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the user notification events before and after the current user notification event in the ordered set where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userNotificationEventId the primary key of the current user notification event
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user notification event
+	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
+	 */
+	public static UserNotificationEvent[] findByU_DT_D_AR_A_PrevAndNext(
+			long userNotificationEventId, long userId, int deliveryType,
+			boolean delivered, boolean actionRequired, boolean archived,
+			OrderByComparator<UserNotificationEvent> orderByComparator)
+		throws com.liferay.portal.kernel.exception.
+			NoSuchUserNotificationEventException {
+
+		return getPersistence().findByU_DT_D_AR_A_PrevAndNext(
+			userNotificationEventId, userId, deliveryType, delivered,
+			actionRequired, archived, orderByComparator);
+	}
+
+	/**
+	 * Removes all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 */
+	public static void removeByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived) {
+
+		getPersistence().removeByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived);
+	}
+
+	/**
+	 * Returns the number of user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param deliveryType the delivery type
+	 * @param delivered the delivered
+	 * @param actionRequired the action required
+	 * @param archived the archived
+	 * @return the number of matching user notification events
+	 */
+	public static int countByU_DT_D_AR_A(
+		long userId, int deliveryType, boolean delivered,
+		boolean actionRequired, boolean archived) {
+
+		return getPersistence().countByU_DT_D_AR_A(
+			userId, deliveryType, delivered, actionRequired, archived);
 	}
 
 	/**

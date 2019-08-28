@@ -274,6 +274,16 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_D_AR() throws Exception {
+		_persistence.countByU_D_AR(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_D_AR(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByU_D_A() throws Exception {
 		_persistence.countByU_D_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
@@ -284,12 +294,12 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_A_A() throws Exception {
-		_persistence.countByU_A_A(
+	public void testCountByU_AR_A() throws Exception {
+		_persistence.countByU_AR_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_A_A(
+		_persistence.countByU_AR_A(
 			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
@@ -307,6 +317,17 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_DT_D_AR() throws Exception {
+		_persistence.countByU_DT_D_AR(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_DT_D_AR(
+			0L, 0, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByU_DT_D_A() throws Exception {
 		_persistence.countByU_DT_D_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
@@ -318,14 +339,37 @@ public class UserNotificationEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_DT_A_A() throws Exception {
-		_persistence.countByU_DT_A_A(
+	public void testCountByU_DT_AR_A() throws Exception {
+		_persistence.countByU_DT_AR_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByU_DT_A_A(
+		_persistence.countByU_DT_AR_A(
 			0L, 0, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByU_D_AR_A() throws Exception {
+		_persistence.countByU_D_AR_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_D_AR_A(
+			0L, RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByU_DT_D_AR_A() throws Exception {
+		_persistence.countByU_DT_D_AR_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByU_DT_D_AR_A(
+			0L, 0, RandomTestUtil.randomBoolean(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 	}
 
 	@Test

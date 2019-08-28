@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.view.count.model.ViewCountEntry" />
+	<class name="com.liferay.view.count.model.impl.ViewCountEntryImpl" table="ViewCountEntry">
+		<composite-id class="com.liferay.view.count.service.persistence.ViewCountEntryPK" name="primaryKey">
+			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="viewCount" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>

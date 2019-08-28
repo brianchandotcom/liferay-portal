@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.view.count.model.ViewCountEntry">
+		<field name="companyId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="viewCount" type="long" />
+	</model>
+</model-hints>

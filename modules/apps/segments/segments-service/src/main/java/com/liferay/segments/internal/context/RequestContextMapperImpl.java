@@ -125,23 +125,17 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 			}
 		}
 
-		if (user != null) {
-			if (user.getLastLoginDate() != null) {
-				Date lastLoginDate = user.getLastLoginDate();
+		ZonedDateTime lastSignInZonedDateTime = ZonedDateTime.of(
+			LocalDateTime.MIN, ZoneOffset.UTC);
 
-				context.put(
-					Context.LAST_SIGN_IN_DATE_TIME,
-					ZonedDateTime.ofInstant(
-						lastLoginDate.toInstant(), ZoneOffset.UTC));
-			}
-			else {
-				context.put(
-					Context.LAST_SIGN_IN_DATE_TIME,
-					ZonedDateTime.of(LocalDateTime.MIN, ZoneOffset.UTC));
-			}
+		if ((user != null) && (user.getLastLoginDate() != null)) {
+			Date lastLoginDate = user.getLastLoginDate();
 
-			context.put(Context.SIGNED_IN, !user.isDefaultUser());
+			lastSignInZonedDateTime = ZonedDateTime.ofInstant(
+				lastLoginDate.toInstant(), ZoneOffset.UTC);
 		}
+
+		context.put(Context.LAST_SIGN_IN_DATE_TIME, lastSignInZonedDateTime);
 
 		context.put(
 			Context.LANGUAGE_ID,
@@ -155,6 +149,15 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		context.put(
 			Context.REQUEST_PARAMETER,
 			_getRequestParameters(httpServletRequest));
+
+		boolean signedIn = false;
+
+		if (user != null) {
+			signedIn = !user.isDefaultUser();
+		}
+
+		context.put(Context.SIGNED_IN, signedIn);
+
 		context.put(
 			Context.URL, _portal.getCurrentCompleteURL(httpServletRequest));
 

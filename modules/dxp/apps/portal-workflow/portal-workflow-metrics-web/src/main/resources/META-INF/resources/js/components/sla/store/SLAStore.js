@@ -50,6 +50,10 @@ const useSLA = (fetchClient, slaId, processId) => {
 	};
 
 	const changeValue = (name, value) => {
+		if (name === 'days' && isNaN(value)) {
+			value = 0;
+		}
+
 		setSLA(oldSla => ({...oldSla, ...{[name]: value}}));
 	};
 

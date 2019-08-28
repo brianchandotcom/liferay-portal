@@ -53,11 +53,13 @@ public class LayoutCanonicalURLServiceUtil {
 			updateLayoutCanonicalURL(
 				long groupId, boolean privateLayout, long layoutId,
 				boolean enabled,
-				java.util.Map<java.util.Locale, String> canonicalURLMap)
+				java.util.Map<java.util.Locale, String> canonicalURLMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateLayoutCanonicalURL(
-			groupId, privateLayout, layoutId, enabled, canonicalURLMap);
+			groupId, privateLayout, layoutId, enabled, canonicalURLMap,
+			serviceContext);
 	}
 
 	public static LayoutCanonicalURLService getService() {

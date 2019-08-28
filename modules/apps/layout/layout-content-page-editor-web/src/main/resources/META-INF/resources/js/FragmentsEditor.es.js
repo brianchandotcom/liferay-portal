@@ -194,7 +194,7 @@ class FragmentsEditor extends Component {
 				updateActiveItemAction(
 					fragmentsEditorItemId,
 					fragmentsEditorItemType,
-					this._shiftPressed
+					{appendItem: this._shiftPressed}
 				)
 			);
 		} else if (

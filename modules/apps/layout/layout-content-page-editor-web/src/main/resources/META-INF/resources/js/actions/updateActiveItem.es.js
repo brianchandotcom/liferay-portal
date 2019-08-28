@@ -18,11 +18,13 @@ import {UPDATE_ACTIVE_ITEM} from './actions.es';
  * Updates the active item
  * @param {string} activeItemId
  * @param {string} activeItemType
+ * @param {object} [options={}]
+ * @param {boolean} [options.appendItem=false]
  */
 function updateActiveItemAction(
 	activeItemId,
 	activeItemType,
-	appendItem = false
+	{appendItem = false} = {}
 ) {
 	return {
 		activeItemId,

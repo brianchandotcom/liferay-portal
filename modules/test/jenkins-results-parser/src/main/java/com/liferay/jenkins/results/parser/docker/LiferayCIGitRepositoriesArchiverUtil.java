@@ -265,12 +265,13 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 				k8sNodeReadWriteResourceMonitor.getNewConnectionName();
 
 			try {
-				gitRepositoryArchivesDirResourceMonitor.waitWrite(
-					gitRepositoryConnectionKey);
+				k8sNodeReadWriteResourceMonitor.waitWrite(
+					k8sNodeConnectionName);
 
 				TGZUtil.archive(gitRepositoryDir, gitRepositoryArchiveTemp);
 
-				k8sNodeReadWriteResourceMonitor.wait(k8sNodeConnectionName);
+				gitRepositoryArchivesDirResourceMonitor.waitWrite(
+					gitRepositoryConnectionKey);
 
 				JenkinsResultsParserUtil.move(
 					gitRepositoryArchiveTemp, gitRepositoryArchive);
@@ -279,11 +280,11 @@ public class LiferayCIGitRepositoriesArchiverUtil {
 				throw new RuntimeException(ioe);
 			}
 			finally {
+				gitRepositoryArchivesDirResourceMonitor.signalWrite(
+					gitRepositoryConnectionKey);
+
 				k8sNodeReadWriteResourceMonitor.signalWrite(
 					k8sNodeConnectionName);
-
-				gitRepositoryArchivesDirResourceMonitor.signal(
-					gitRepositoryConnectionKey);
 
 				JenkinsResultsParserUtil.delete(gitRepositoryArchiveTemp);
 			}

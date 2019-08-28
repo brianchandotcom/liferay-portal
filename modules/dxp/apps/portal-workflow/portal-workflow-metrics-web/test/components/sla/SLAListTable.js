@@ -6,18 +6,27 @@ import SLAListTable from '../../../src/main/resources/META-INF/resources/js/comp
 test('Should render component', () => {
 	const data = [
 		{
+			dateModified: new Date(
+				Date.UTC('2019', '04', '06', '20', '32', '18')
+			),
 			description: 'Total time to complete the request.',
-			duration: '4d 6h 30min',
+			duration: 431945900,
 			name: 'Total resolution time'
 		},
 		{
+			dateModified: new Date(
+				Date.UTC('2019', '04', '06', '20', '32', '18')
+			),
 			description: 'Total time to complete the request.',
-			duration: '4d 6h 30min',
+			duration: 431945900,
 			name: 'Total resolution time'
 		},
 		{
+			dateModified: new Date(
+				Date.UTC('2019', '04', '06', '20', '32', '18')
+			),
 			description: 'Total time to complete the request.',
-			duration: '4d 6h 30min',
+			duration: 431945900,
 			name: 'Total resolution time'
 		}
 	];

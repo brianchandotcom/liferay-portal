@@ -7,6 +7,9 @@ test('Should render component', () => {
 	const component = renderer.create(
 		<Router>
 			<SLAListItem
+				dateModified={
+					new Date(Date.UTC('2019', '04', '06', '20', '32', '18'))
+				}
 				id={1234}
 				instancesCount="10"
 				onTime="5"
@@ -25,6 +28,9 @@ test('Should render component', () => {
 	const component = mount(
 		<Router>
 			<SLAListItem
+				dateModified={
+					new Date(Date.UTC('2019', '04', '06', '20', '32', '18'))
+				}
 				instancesCount="10"
 				onTime="5"
 				overdue="5"

@@ -8,6 +8,9 @@ test('Should render component', () => {
 	const data = {
 		items: [
 			{
+				dateModified: new Date(
+					Date.UTC('2019', '04', '06', '20', '32', '18')
+				),
 				description: 'Total time to complete the request.',
 				duration: 1553879089,
 				name: 'Total resolution time'

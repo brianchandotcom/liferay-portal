@@ -194,8 +194,10 @@ AUI.add(
 						}
 
 						sessionData[instance.get('id')] = messageVisible;
-
-						Liferay.Store(sessionData);
+						
+						for (let [key, value] of Object.entries(sessionData)) {
+							Liferay.Util.Session.set(key,value);
+						}
 					}
 				},
 
@@ -255,6 +257,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-store']
+		requires: ['aui-base']
 	}
 );

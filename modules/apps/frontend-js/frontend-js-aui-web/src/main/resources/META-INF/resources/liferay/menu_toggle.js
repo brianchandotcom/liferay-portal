@@ -260,7 +260,9 @@ AUI.add(
 
 						data[handleId] = open ? 'open' : 'closed';
 
-						Liferay.Store(data);
+						for (let [key, value] of Object.entries(data)) {
+							Liferay.Util.Session.set(key,value);
+						}
 					}
 				},
 

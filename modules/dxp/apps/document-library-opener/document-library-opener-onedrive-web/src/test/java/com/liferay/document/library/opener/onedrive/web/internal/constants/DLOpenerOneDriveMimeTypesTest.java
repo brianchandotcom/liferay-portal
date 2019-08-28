@@ -15,7 +15,6 @@
 package com.liferay.document.library.opener.onedrive.web.internal.constants;
 
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
-import com.liferay.portal.kernel.util.ContentTypes;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,17 +27,17 @@ public class DLOpenerOneDriveMimeTypesTest {
 	@Test
 	public void testGetMimeTypeExtension() {
 		Assert.assertEquals(
-			".doc",
+			".docx",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
-				ContentTypes.APPLICATION_MSWORD));
+				DLOpenerMimeTypes.APPLICATION_VND_DOCX));
 		Assert.assertEquals(
-			".ppt",
+			".pptx",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
-				ContentTypes.APPLICATION_VND_MS_POWERPOINT));
+				DLOpenerMimeTypes.APPLICATION_VND_PPTX));
 		Assert.assertEquals(
-			".xls",
+			".xlsx",
 			DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
-				ContentTypes.APPLICATION_VND_MS_EXCEL));
+				DLOpenerMimeTypes.APPLICATION_VND_XLSX));
 	}
 
 	@Test
@@ -46,22 +45,19 @@ public class DLOpenerOneDriveMimeTypesTest {
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
-				ContentTypes.APPLICATION_MSWORD));
+				DLOpenerMimeTypes.APPLICATION_RTF));
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
-				ContentTypes.APPLICATION_VND_MS_POWERPOINT));
+				DLOpenerMimeTypes.APPLICATION_VND_PPTX));
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
-				ContentTypes.APPLICATION_VND_MS_EXCEL));
+				DLOpenerMimeTypes.APPLICATION_VND_XLSX));
 	}
 
 	@Test
 	public void testIsOffice365MimeTypeSupported() {
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/msword"));
 		Assert.assertTrue(
 			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
 				"application/rtf"));

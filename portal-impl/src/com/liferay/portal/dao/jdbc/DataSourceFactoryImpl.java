@@ -124,13 +124,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	@Override
 	public DataSource initDataSource(Properties properties) throws Exception {
-		Properties defaultProperties = PropsUtil.getProperties(
-			"jdbc.default.", true);
-
-		PropertiesUtil.merge(defaultProperties, properties);
-
-		properties = defaultProperties;
-
 		testDatabaseClass(properties);
 
 		_waitForJDBCConnection(properties);

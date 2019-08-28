@@ -4,26 +4,6 @@ definition {
 	macro _addGroup {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		if (isSet(groupDescription)) {
-			var groupDescriptionEncoded = URLUtil.encodeUTF8("${groupDescription}");
-
-			var groupDescriptionMap = '''{"en_US":"${groupDescriptionEncoded}"}''';
-		}
-		else {
-			var groupDescriptionMap = "{}";
-		}
-
-		var groupNameEncoded = URLUtil.encodeUTF8("${groupName}");
-
-		var groupNameMap = '''{"en_US":"${groupNameEncoded}"}''';
-
-		if (isSet(parentGroupName)) {
-			var parentGroupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${parentGroupName}");
-		}
-		else {
-			var parentGroupId = "0";
-		}
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -95,11 +75,7 @@ definition {
 
 	@summary = "Get the groupId from any existing group by using groupKey"
 	macro _getGroupIdByGroupKey {
-		Variables.assertDefined(parameterList = "${groupKey}");
-
-		if (!(isSet(site))) {
-			var site = "true";
-		}
+		Variables.assertDefined(parameterList = "${groupKey},${site}");
 
 		var companyId = JSONCompany.getCompanyId();
 

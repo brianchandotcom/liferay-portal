@@ -2,6 +2,8 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a fragment collection"
 	macro _addFragmentCollection {
+		Variables.assertDefined(parameterList = "${groupId},${name}");
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -17,23 +19,9 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a fragment (default type is section)"
 	macro _addSection {
+		Variables.assertDefined(parameterList = "${groupId},${collectionId},${name},${html},${configuration},${type},${status}");
+
 		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(html))) {
-			var html = "test";
-		}
-
-		if (!(isSet(configuration))) {
-			var configuration = "";
-		}
-
-		if (!(isSet(type))) {
-			var type = "0";
-		}
-
-		if (!(isSet(status))) {
-			var status = "0";
-		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/fragment.fragmententry/add-fragment-entry \
@@ -69,6 +57,7 @@ definition {
 			-d <CURL_DATA[end=-1]CURL_DATA> \
 			-d -orderByComparator=
 		''';
+
 		var collectionId = JSONCurlUtil.post("${curl}", "$..fragmentCollectionId");
 		var collectionId = StringUtil.replace("${collectionId}", "[&quot;", "");
 		var collectionId = StringUtil.replace("${collectionId}", "&quot;]", "");
@@ -110,6 +99,7 @@ definition {
 			-d <CURL_DATA[start=-1]CURL_DATA> \
 			-d <CURL_DATA[end=-1]CURL_DATA>
 		''';
+
 		var fragmentNameResult = JSONCurlUtil.post("${curl}", "$..[?(@['name'] == '${fragmentName}')]");
 
 		return "${fragmentNameResult}";

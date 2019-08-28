@@ -33,6 +33,22 @@ definition {
 
 		Variables.assertDefined(parameterList = "${collectionName},${name}");
 
+		if (!(isSet(html))) {
+			var html = "test";
+		}
+
+		if (!(isSet(configuration))) {
+			var configuration = "";
+		}
+
+		if (!(isSet(type))) {
+			var type = "0";
+		}
+
+		if (!(isSet(status))) {
+			var status = "0";
+		}
+
 		var collectionId = JSONFragmentAPI._getCollectionIdByName(
 			collectionName = "${collectionName}",
 			groupId = "${groupId}"

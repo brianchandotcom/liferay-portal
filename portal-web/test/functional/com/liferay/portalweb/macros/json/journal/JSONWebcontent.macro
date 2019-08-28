@@ -4,6 +4,35 @@ definition {
 	macro addBasicWebContentLocalized {
 		Variables.assertDefined(parameterList = "${groupName}");
 
+		if (isSet(contentMap)) {
+			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
+		}
+		else {
+			var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
+		}
+
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = "{}";
+		}
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
 		JSONUtil2._exclusiveOrCheck(
@@ -45,6 +74,10 @@ definition {
 	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
+		if (!(isSet(parentFolderId))) {
+			var parentFolderId = "0";
+		}
+
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
 		JSONWebcontentAPI._addFolder(
@@ -55,6 +88,30 @@ definition {
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
 	macro addWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
+
+		var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
+
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		if (!(isSet(serviceContext))) {
+			var serviceContext = "{}";
+		}
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
 
 		if (isSet(folderName)) {
 			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(

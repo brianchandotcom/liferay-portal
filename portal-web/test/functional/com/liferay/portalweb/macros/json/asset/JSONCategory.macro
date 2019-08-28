@@ -16,6 +16,27 @@ definition {
 			vocabularyName = "${vocabularyName}"
 		);
 
+		if (!(isSet(parentCategoryId))) {
+			var parentCategoryId = "0";
+		}
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
 		JSONCategoryAPI._addCategory(
 			description = "${description}",
 			descriptionMap = "${descriptionMap}",
@@ -63,6 +84,23 @@ definition {
 			A = "${title}",
 			B = "${titleMap}",
 			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
 
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 

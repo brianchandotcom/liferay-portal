@@ -2,30 +2,9 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a category"
 	macro _addCategory {
-		Variables.assertDefined(parameterList = "${groupId}");
+		Variables.assertDefined(parameterList = "${groupId},${parentCategoryId},${titleMap},${descriptionMap},${vocabularyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-
-		if (!(isSet(parentCategoryId))) {
-			var parentCategoryId = "0";
-		}
-
-		if (isSet(titleMap)) {
-			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
-		}
-		else {
-			var titleMap = '''{"en_US":"${title}"}''';
-		}
-
-		if (isSet(descriptionMap)) {
-			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
-		}
-		else if (isSet(description)) {
-			var descriptionMap = '''{"en_US":"${description}"}''';
-		}
-		else {
-			var descriptionMap = "{}";
-		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetcategory/add-category \
@@ -43,24 +22,9 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a vocabulary"
 	macro _addVocabulary {
+		Variables.assertDefined(parameterList = "${groupId},${titleMap},${descriptionMap}");
+
 		var portalURL = JSONCompany.getPortalURL();
-
-		if (isSet(titleMap)) {
-			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
-		}
-		else {
-			var titleMap = '''{"en_US":"${title}"}''';
-		}
-
-		if (isSet(descriptionMap)) {
-			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
-		}
-		else if (isSet(description)) {
-			var descriptionMap = '''{"en_US":"${description}"}''';
-		}
-		else {
-			var descriptionMap = "{}";
-		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/assetvocabulary/add-vocabulary \

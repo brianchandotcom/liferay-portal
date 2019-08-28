@@ -2,11 +2,9 @@ definition {
 
 	@summary = "Helper function to add a WC Folder via JSON"
 	macro _addFolder {
-		var portalURL = JSONCompany.getPortalURL();
+		Variables.assertDefined(parameterList = "${groupId},${parentFolderId},${folderName}");
 
-		if (!(isSet(parentFolderId))) {
-			var parentFolderId = "0";
-		}
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
@@ -22,36 +20,9 @@ definition {
 
 	@summary = "Helper function to add a WC Article via JSON"
 	macro _addWebContent {
+		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXML},${serviceContext}");
+
 		var portalURL = JSONCompany.getPortalURL();
-
-		if (isSet(contentMap)) {
-			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
-		}
-		else {
-			var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
-		}
-
-		if (isSet(description)) {
-			var descriptionMap = '''{"en_US":"${description}"}''';
-		}
-		else {
-			var descriptionMap = "{}";
-		}
-
-		if (!(isSet(folderId))) {
-			var folderId = "0";
-		}
-
-		if (!(isSet(serviceContext))) {
-			var serviceContext = "{}";
-		}
-
-		if (isSet(titleMap)) {
-			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
-		}
-		else {
-			var titleMap = '''{"en_US":"${title}"}''';
-		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \

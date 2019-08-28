@@ -8,6 +8,17 @@ definition {
 			var type = "portlet";
 		}
 
+		if (isSet(parentLayoutName)) {
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "true"
+			);
+		}
+		else {
+			var parentLayoutId = "0";
+		}
+
 		var groupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${groupName}");
 
 		JSONLayoutAPI._addLayout(
@@ -21,6 +32,17 @@ definition {
 	@summary = "Add a private site page or private child site page to an existing site via groupName"
 	macro addPrivateLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (isSet(parentLayoutName)) {
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "true"
+			);
+		}
+		else {
+			var parentLayoutId = "0";
+		}
 
 		if (!(isSet(type))) {
 			var type = "portlet";
@@ -40,6 +62,17 @@ definition {
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
+		if (isSet(parentLayoutName)) {
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "false"
+			);
+		}
+		else {
+			var parentLayoutId = "0";
+		}
+
 		if (!(isSet(type))) {
 			var type = "portlet";
 		}
@@ -57,6 +90,17 @@ definition {
 	@summary = "Add a public site page or public child site page to an existing site via groupName"
 	macro addPublicLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		if (isSet(parentLayoutName)) {
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "false"
+			);
+		}
+		else {
+			var parentLayoutId = "0";
+		}
 
 		if (!(isSet(type))) {
 			var type = "portlet";

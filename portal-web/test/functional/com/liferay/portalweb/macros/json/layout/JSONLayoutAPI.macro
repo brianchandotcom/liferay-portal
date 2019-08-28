@@ -2,16 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a layout"
 	macro _addLayout {
-		if (isSet(parentLayoutName)) {
-			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "${privateLayout}"
-			);
-		}
-		else {
-			var parentLayoutId = "0";
-		}
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${parentLayoutId},${layoutName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -34,11 +25,7 @@ definition {
 
 	@summary = "Get the layoutId from a layout by using groupId and layoutName"
 	macro _getLayoutIdByName {
-		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
-
-		if (!("${privateLayout}" == "true")) {
-			var privateLayout = "false";
-		}
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -61,11 +48,7 @@ definition {
 
 	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
 	macro _getTypeSettingsByName {
-		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
-
-		if (!("${privateLayout}" == "true")) {
-			var privateLayout = "false";
-		}
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
 

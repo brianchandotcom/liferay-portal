@@ -4,6 +4,21 @@ definition {
 	macro addChildSite {
 		Variables.assertDefined(parameterList = "${groupName},${parentGroupName}");
 
+		if (isSet(groupDescription)) {
+			var groupDescriptionEncoded = URLUtil.encodeUTF8("${groupDescription}");
+
+			var groupDescriptionMap = '''{"en_US":"${groupDescriptionEncoded}"}''';
+		}
+		else {
+			var groupDescriptionMap = "{}";
+		}
+
+		var groupNameEncoded = URLUtil.encodeUTF8("${groupName}");
+
+		var groupName = '''{"en_US":"${groupNameEncoded}"}''';
+
+		var parentGroupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${parentGroupName}");
+
 		JSONGroupAPI._addGroup(
 			groupDescription = "${groupDescription}",
 			groupName = "${groupName}",
@@ -13,6 +28,21 @@ definition {
 	@summary = "Add a basic site"
 	macro addGroup {
 		Variables.assertDefined(parameterList = "${groupName}");
+
+		if (isSet(groupDescription)) {
+			var groupDescriptionEncoded = URLUtil.encodeUTF8("${groupDescription}");
+
+			var groupDescriptionMap = '''{"en_US":"${groupDescriptionEncoded}"}''';
+		}
+		else {
+			var groupDescriptionMap = "{}";
+		}
+
+		var groupNameEncoded = URLUtil.encodeUTF8("${groupName}");
+
+		var groupName = '''{"en_US":"${groupNameEncoded}"}''';
+
+		var parentGroupId = "0";
 
 		JSONGroupAPI._addGroup(
 			groupDescription = "${groupDescription}",

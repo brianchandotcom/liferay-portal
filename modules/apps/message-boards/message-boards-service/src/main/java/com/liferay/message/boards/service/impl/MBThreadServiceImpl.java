@@ -587,9 +587,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
-	@Reference(
-		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER
-	)
+	@Reference(target = MBPersistenceConstants.SERVICE_CONFIGURATION_FILTER)
 	private Configuration _configuration;
 
 	@Reference

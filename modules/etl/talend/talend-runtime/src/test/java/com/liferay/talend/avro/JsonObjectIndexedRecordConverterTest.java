@@ -15,6 +15,7 @@
 package com.liferay.talend.avro;
 
 import com.liferay.talend.BaseTest;
+import com.liferay.talend.avro.exception.ConverterException;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
 import org.apache.avro.Schema;
@@ -52,6 +53,34 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 		Assert.assertEquals(
 			"displayDate field value", 1320144300000L, displayDate);
+	}
+
+	@Test(expected = ConverterException.class)
+	public void testToIndexedRecordWithInvalidDateProperty() {
+		String endpoint = "/v1.0/attachments/{id}";
+
+		Schema schema = getSchema(
+			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
+
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
+
+		jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject("attachmentContentInvalidDateProperty.json"));
+	}
+
+	@Test(expected = ConverterException.class)
+	public void testToIndexedRecordWithMissingRequiredProperty() {
+		String endpoint = "/v1.0/catalogs/{siteId}/products";
+
+		Schema schema = getSchema(
+			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
+
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
+
+		jsonObjectIndexedRecordConverter.toIndexedRecord(
+			readObject("productContentMissingRequiredProperty.json"));
 	}
 
 	@Test

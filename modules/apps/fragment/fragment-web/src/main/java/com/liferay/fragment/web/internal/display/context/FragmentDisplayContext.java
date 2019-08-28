@@ -23,6 +23,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.web.internal.constants.FragmentTypeConstants;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
@@ -225,12 +226,7 @@ public class FragmentDisplayContext {
 
 		Collections.sort(
 			fragmentCollectionContributors,
-			(fragmentCollectionContributor1, fragmentCollectionContributor2) -> {
-				String name1 = fragmentCollectionContributor1.getName(locale);
-				String name2 = fragmentCollectionContributor2.getName(locale);
-
-				return name1.compareTo(name2);
-			});
+			new FragmentCollectionContributorNameComparator(locale));
 
 		return fragmentCollectionContributors;
 	}

@@ -32,6 +32,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -869,14 +870,8 @@ public class ContentPageEditorDisplayContext {
 
 		Collections.sort(
 			fragmentCollectionContributors,
-			(fragmentCollectionContributor1, fragmentCollectionContributor2) -> {
-				String name1 = fragmentCollectionContributor1.getName(
-					themeDisplay.getLocale());
-				String name2 = fragmentCollectionContributor2.getName(
-					themeDisplay.getLocale());
-
-				return name1.compareTo(name2);
-			});
+			new FragmentCollectionContributorNameComparator(
+				themeDisplay.getLocale()));
 
 		for (FragmentCollectionContributor fragmentCollectionContributor :
 				fragmentCollectionContributors) {

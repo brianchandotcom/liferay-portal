@@ -83,11 +83,11 @@ public class SPDXBuilder {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link #SPDXBuilder(
-	 *             String[], File, Properties)}
+	 *             String[], String, String)}
 	 */
 	@Deprecated
-	public SPDXBuilder(String[] xmls, String rdf) {
-		new SPDXBuilder(xmls, rdf, null);
+	public SPDXBuilder(String[] xmls, String spdxFileName) {
+		new SPDXBuilder(xmls, spdxFileName, null);
 	}
 
 	public SPDXBuilder(
@@ -143,7 +143,7 @@ public class SPDXBuilder {
 
 	@SuppressWarnings("unchecked")
 	private List<Element> _createLibraryElements(
-		Element packageElement, Properties licenseProperties) {
+		Element packageElement, Properties licenseOverrideProperties) {
 
 		List<Element> libraryElements = new ArrayList<>();
 
@@ -190,7 +190,7 @@ public class SPDXBuilder {
 			}
 
 			String licenseName = _getLicenseName(
-				packageElement, fileName, licenseProperties);
+				packageElement, fileName, licenseOverrideProperties);
 
 			if (licenseName != null) {
 				Element licensesElement = libraryElement.addElement("licenses");
@@ -202,7 +202,7 @@ public class SPDXBuilder {
 				element.addText(licenseName);
 
 				String licenseURL = _getLicenseURL(
-					packageElement, fileName, licenseProperties);
+					packageElement, fileName, licenseOverrideProperties);
 
 				if (licenseURL != null) {
 					element = licenseElement.addElement("license-url");
@@ -326,12 +326,13 @@ public class SPDXBuilder {
 	}
 
 	private String _getLicenseName(
-		Element packageElement, String fileName, Properties licenseProperties) {
+		Element packageElement, String fileName,
+		Properties licenseOverrideProperties) {
 
 		String key = "license.name[" + fileName + "]";
 
-		if (licenseProperties.containsKey(key)) {
-			return licenseProperties.getProperty(key);
+		if (licenseOverrideProperties.containsKey(key)) {
+			return licenseOverrideProperties.getProperty(key);
 		}
 
 		Element licenseConcludedElement = packageElement.element(

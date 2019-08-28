@@ -159,7 +159,7 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperiment(
-		long segmentsExperimentId, int status, double confidenceLevel)
+			long segmentsExperimentId, int status, double confidenceLevel)
 		throws PortalException {
 
 		_segmentsExperimentResourcePermission.check(

@@ -56,6 +56,14 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 	}
 
 	@Override
+	public double getConfidenceLevel() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return GetterUtil.getDouble(
+			typeSettingsProperties.getProperty("confidenceLevel"));
+	}
+
+	@Override
 	public String getGoal() {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
@@ -68,14 +76,6 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 		return GetterUtil.getString(
 			typeSettingsProperties.getProperty("goalTarget"));
-	}
-
-	@Override
-	public double getConfidenceLevel() {
-		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
-
-		return GetterUtil.getDouble(
-			typeSettingsProperties.getProperty("confidenceLevel"));
 	}
 
 	@Override

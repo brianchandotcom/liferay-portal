@@ -77,6 +77,32 @@ public class ResourceNodeConverterTest extends BaseTest {
 			"productId value is 20111101", Long.valueOf(20111101), productId);
 	}
 
+	@Test
+	public void testToIndexedRecordIfDateTimeStringPropertyPresent() {
+		String endpoint = "/v1.0/attachments/{id}";
+
+		Schema schema = getSchema(
+			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
+
+		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
+			new JsonObjectIndexedRecordConverter(schema);
+
+		IndexedRecord indexedRecord =
+			jsonObjectIndexedRecordConverter.toIndexedRecord(
+				readObject("attachmentContent.json"));
+
+		Assert.assertNotNull(
+			"attachment is converted to indexed record", indexedRecord);
+
+		Object displayDate = indexedRecord.get(1);
+
+		Assert.assertEquals(
+			"displayDate field type", Long.class, displayDate.getClass());
+
+		Assert.assertEquals(
+			"displayDate field value", 1320144300000L, displayDate);
+	}
+
 	private JsonObject _oasJsonObject;
 	private JsonObject _productJsonObject;
 

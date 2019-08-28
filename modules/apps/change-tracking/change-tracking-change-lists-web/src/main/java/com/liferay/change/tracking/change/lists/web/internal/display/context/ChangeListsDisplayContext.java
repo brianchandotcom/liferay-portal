@@ -21,9 +21,11 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTPreferences;
+import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -40,8 +42,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -62,6 +66,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -81,6 +87,8 @@ public class ChangeListsDisplayContext {
 		CTEntryLocalService ctEntryLocalService,
 		CTEngineManager ctEngineManager,
 		CTPreferencesLocalService ctPreferencesLocalService,
+		CTProcessLocalService ctProcessLocalService,
+		UserLocalService userLocalService,
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
@@ -88,6 +96,8 @@ public class ChangeListsDisplayContext {
 		_ctEntryLocalService = ctEntryLocalService;
 		_ctEngineManager = ctEngineManager;
 		_ctPreferencesLocalService = ctPreferencesLocalService;
+		_ctProcessLocalService = ctProcessLocalService;
+		_userLocalService = userLocalService;
 		_httpServletRequest = httpServletRequest;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -120,33 +130,21 @@ public class ChangeListsDisplayContext {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
+			"activeCTCollection", _getActiveCTCollectionJSONObject()
+		).put(
 			"changeEntries", _getCTEntriesJSONArray()
 		).put(
 			"changeListsDropdownMenu", _getChangeListsDropdownMenuJSONArray()
 		).put(
-			"namespace", _renderResponse.getNamespace()
+			"latestCTProcess", _getLatestCTProcessJSONObject()
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		).put(
-			"urlActiveCollectionDelete", _getDeleteActiveCTCollectionURL()
-		).put(
-			"urlActiveCollectionPublish", _getPublishActiveCTCollectionURL()
 		).put(
 			"urlCheckoutProduction",
 			getCheckoutURL(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, "work-on-production",
 				true)
-		).put(
-			"urlCollectionsBase",
-			_themeDisplay.getPortalURL() +
-				"/o/change-tracking-legacy/collections"
-		).put(
-			"urlProductionInformation",
-			StringBundler.concat(
-				_themeDisplay.getPortalURL(),
-				"/o/change-tracking-legacy/processes?companyId=",
-				_themeDisplay.getCompanyId(), "&type=published-latest")
 		).put(
 			"urlProductionView", _themeDisplay.getPortalURL()
 		);
@@ -158,10 +156,6 @@ public class ChangeListsDisplayContext {
 		portletURL.setParameter("select", "true");
 
 		soyContext.put("urlSelectChangeList", portletURL.toString());
-
-		portletURL.setParameter("refresh", "true");
-
-		soyContext.put("urlSelectProduction", portletURL.toString());
 
 		return soyContext;
 	}
@@ -235,7 +229,14 @@ public class ChangeListsDisplayContext {
 	public Map<Integer, Long> getCTCollectionChangeTypeCounts(
 		long ctCollectionId) {
 
-		return _ctEngineManager.getCTCollectionChangeTypeCounts(ctCollectionId);
+		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
+			ctCollectionId);
+
+		Stream<CTEntry> ctEntriesStream = ctEntries.stream();
+
+		return ctEntriesStream.collect(
+			Collectors.groupingBy(
+				CTEntry::getChangeType, Collectors.counting()));
 	}
 
 	public String getDeleteURL(long ctCollectionId, String name) {
@@ -463,6 +464,41 @@ public class ChangeListsDisplayContext {
 		return _confirmationEnabled;
 	}
 
+	private JSONObject _getActiveCTCollectionJSONObject() throws Exception {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (_ctCollectionId <= 0) {
+			return jsonObject;
+		}
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			_ctCollectionId);
+		Map<Integer, Long> ctCollectionChangeTypeCounts =
+			getCTCollectionChangeTypeCounts(_ctCollectionId);
+
+		return jsonObject.put(
+			"additionCount",
+			ctCollectionChangeTypeCounts.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_ADDITION, 0L)
+		).put(
+			"deletionCount",
+			ctCollectionChangeTypeCounts.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_DELETION, 0L)
+		).put(
+			"description", ctCollection.getDescription()
+		).put(
+			"deleteURL", getDeleteURL(_ctCollectionId, ctCollection.getName())
+		).put(
+			"name", ctCollection.getName()
+		).put(
+			"modifiedCount",
+			ctCollectionChangeTypeCounts.getOrDefault(
+				CTConstants.CT_CHANGE_TYPE_MODIFICATION, 0L)
+		).put(
+			"publishURL", getPublishURL(_ctCollectionId, ctCollection.getName())
+		);
+	}
+
 	private JSONArray _getChangeListsDropdownMenuJSONArray() {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -492,21 +528,6 @@ public class ChangeListsDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	private CTCollection _getCTCollection() throws PortalException {
-		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return null;
-		}
-
-		if (_ctCollection != null) {
-			return _ctCollection;
-		}
-
-		_ctCollection = _ctCollectionLocalService.getCTCollection(
-			_ctCollectionId);
-
-		return _ctCollection;
 	}
 
 	private JSONArray _getCTEntriesJSONArray() throws Exception {
@@ -565,16 +586,6 @@ public class ChangeListsDisplayContext {
 				CTDefinitionRegistryUtil.getVersionEntityVersion(
 					ctEntry.getModelClassNameId(), ctEntry.getModelClassPK()))
 		);
-	}
-
-	private String _getDeleteActiveCTCollectionURL() throws PortalException {
-		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return null;
-		}
-
-		CTCollection ctCollection = _getCTCollection();
-
-		return getDeleteURL(_ctCollectionId, ctCollection.getName());
 	}
 
 	private String _getEntityNameTranslation(String contentType)
@@ -676,6 +687,37 @@ public class ChangeListsDisplayContext {
 		return iteratorURL;
 	}
 
+	private JSONObject _getLatestCTProcessJSONObject() throws PortalException {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		CTProcess ctProcess = _ctProcessLocalService.fetchLatestCTProcess(
+			_themeDisplay.getCompanyId());
+
+		if (ctProcess == null) {
+			return jsonObject;
+		}
+
+		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+			ctProcess.getCtCollectionId());
+		Format format = FastDateFormatFactoryUtil.getDateTime(
+			_themeDisplay.getLocale());
+		User user = _userLocalService.getUser(ctProcess.getUserId());
+
+		return jsonObject.put(
+			"description", ctCollection.getDescription()
+		).put(
+			"dateTime", format.format(ctProcess.getCreateDate())
+		).put(
+			"name", ctCollection.getName()
+		).put(
+			"userInitials", user.getInitials()
+		).put(
+			"userName", user.getFullName()
+		).put(
+			"userPortraitURL", user.getPortraitURL(_themeDisplay)
+		);
+	}
+
 	private String _getOrderByCol() {
 		if (_orderByCol != null) {
 			return _orderByCol;
@@ -742,28 +784,18 @@ public class ChangeListsDisplayContext {
 		return portletURL;
 	}
 
-	private String _getPublishActiveCTCollectionURL() throws PortalException {
-		if (_ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-			return null;
-		}
-
-		CTCollection ctCollection = _getCTCollection();
-
-		return getPublishURL(_ctCollectionId, ctCollection.getName());
-	}
-
 	private static final OrderByComparator<CTCollection>
 		_modifiedDateDescendingOrderByComparator =
 			OrderByComparatorFactoryUtil.create(
 				"CTCollection", "modifiedDate", false);
 
 	private final boolean _confirmationEnabled;
-	private CTCollection _ctCollection;
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTEngineManager _ctEngineManager;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTPreferencesLocalService _ctPreferencesLocalService;
+	private final CTProcessLocalService _ctProcessLocalService;
 	private String _displayStyle;
 	private JSONArray _entityNameTranslationsJSONArray;
 	private String _filterByStatus;
@@ -773,5 +805,6 @@ public class ChangeListsDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
+	private final UserLocalService _userLocalService;
 
 }

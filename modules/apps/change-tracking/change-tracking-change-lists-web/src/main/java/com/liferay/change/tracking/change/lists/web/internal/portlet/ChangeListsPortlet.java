@@ -22,6 +22,7 @@ import com.liferay.change.tracking.engine.CTEngineManager;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.UserBag;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -103,6 +105,7 @@ public class ChangeListsPortlet extends MVCPortlet {
 			new ChangeListsDisplayContext(
 				_ctCollectionLocalService, _ctEntryLocalService,
 				_ctEngineManager, _ctPreferencesLocalService,
+				_ctProcessLocalService, _userLocalService,
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse);
 
@@ -166,6 +169,12 @@ public class ChangeListsPortlet extends MVCPortlet {
 	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
+	private CTProcessLocalService _ctProcessLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

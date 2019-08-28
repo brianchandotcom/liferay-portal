@@ -5,11 +5,18 @@
  */
 {template .render}
 	{@param spritemap: string}
-	{@param urlActiveCollectionDelete: string}
-	{@param urlActiveCollectionPublish: string}
 	{@param urlCheckoutProduction: string}
 	{@param urlProductionView: string}
 	{@param urlSelectChangeList: string}
+	{@param? activeCTCollection: [
+		additionCount: number,
+		deleteURL: string,
+		deletionCount: number,
+		description: string,
+		modifiedCount: number,
+		name: string,
+		publishURL: string
+	]}
 	{@param? changeEntries: list<[
 		title: string,
 		userName: string,
@@ -19,27 +26,19 @@
 		changeType: string,
 		version: string
 	]>}
-	{@param? changes: [
-		added: number,
-		deleted: number,
-		modified: number
-	]}
-	{@param? descriptionActiveChangeList: string}
-	{@param? descriptionProductionInformation: string}
 	{@param? changeListsDropdownMenu: list<[
 		label: string,
 		checkoutURL: string
 	]>}
 	{@param? headerButtonDisabled: bool}
-	{@param? headerTitleActiveChangeList: string}
-	{@param? headerTitleProductionInformation: string}
 	{@param? initialFetch: bool}
-	{@param? productionFound: bool}
-	{@param? publishedBy: [
+	{@param? latestCTProcess: [
 		dateTime: string,
+		description: string,
+		name: string,
 		userInitials: string,
-		userPortraitURL: string,
-		userName: string
+		userName: string,
+		userPortraitURL: string
 	]}
 
 	{let $headerButtonLabel kind="text"}
@@ -72,16 +71,16 @@
 						{param cardEmpty: false /}
 						{param cardStateColor: 'border-left-blue' /}
 						{param changes: [
-							'added': $changes.added,
+							'added': $activeCTCollection.additionCount,
 							'addedLabel': $addedLabel,
-							'deleted': $changes.deleted,
+							'deleted': $activeCTCollection.deletionCount,
 							'deletedLabel': $deletedLabel,
-							'modified': $changes.modified,
+							'modified': $activeCTCollection.modifiedCount,
 							'modifiedLabel': $modifiedLabel ] /}
 						{param changesLabel kind="text"}
 							{msg desc=""}changes{/msg}
 						{/param}
-						{param description: $descriptionActiveChangeList /}
+						{param description: $activeCTCollection.description /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
@@ -99,18 +98,18 @@
 						{param headerSubTitle kind="text"}
 							{msg desc=""}active-change-list{/msg}
 						{/param}
-						{param headerTitle: $headerTitleActiveChangeList /}
+						{param headerTitle: $activeCTCollection.name /}
 						{param spritemap: $spritemap /}
-						{param urlActiveCollectionDelete: $urlActiveCollectionDelete /}
-						{param urlActiveCollectionPublish: $urlActiveCollectionPublish /}
+						{param urlActiveCollectionDelete: $activeCTCollection.deleteURL /}
+						{param urlActiveCollectionPublish: $activeCTCollection.publishURL /}
 					{/call}
 				</div>
 
 				<div class="col-sm-6">
 					{call .overviewCard}
-						{param cardEmpty: not $productionFound /}
+						{param cardEmpty: not $latestCTProcess.name /}
 						{param cardStateColor: 'border-left-green' /}
-						{param description: $descriptionProductionInformation /}
+						{param description: $latestCTProcess.description /}
 						{param descriptionTitle kind="text"}
 							{msg desc=""}description{/msg}
 						{/param}
@@ -120,8 +119,8 @@
 						{param headerSubTitle kind="text"}
 							{msg desc=""}published-change-list{/msg}
 						{/param}
-						{param headerTitle: $headerTitleProductionInformation /}
-						{param publishedBy: $publishedBy /}
+						{param headerTitle: $latestCTProcess.name /}
+						{param latestCTProcess: $latestCTProcess /}
 						{param publishedByTitle kind="text"}
 							{msg desc=""}published-by{/msg}
 						{/param}
@@ -137,7 +136,7 @@
 						{param cardStateColor: 'border-left-blue' /}
 						{param changeEntries: $changeEntries /}
 						{param headerSubTitle kind="text"}
-							{msg desc=""}latest-changes-in{/msg} {$headerTitleActiveChangeList}
+							{msg desc=""}latest-changes-in{/msg} {$activeCTCollection.name}
 						{/param}
 						{param spritemap: $spritemap /}
 					{/call}
@@ -192,11 +191,13 @@
 	]}
 	{@param? headerSubTitle: string}
 	{@param? headerTitle: string}
-	{@param? publishedBy: [
+	{@param? latestCTProcess: [
 		dateTime: string,
+		description: string,
+		name: string,
 		userInitials: string,
-		userPortraitURL: string,
-		userName: string
+		userName: string,
+		userPortraitURL: string
 	]}
 	{@param? publishedByTitle: string}
 	{@param? urlActiveCollectionDelete: string}
@@ -230,7 +231,7 @@
 				{param changesLabel: $changesLabel /}
 				{param description: $description /}
 				{param descriptionTitle: $descriptionTitle /}
-				{param publishedBy: $publishedBy /}
+				{param latestCTProcess: $latestCTProcess /}
 				{param publishedByTitle: $publishedByTitle /}
 			{/call}
 		{else}
@@ -361,11 +362,13 @@
 	]}
 	{@param? description: string}
 	{@param? descriptionTitle: string}
-	{@param? publishedBy: [
+	{@param? latestCTProcess: [
 		dateTime: string,
+		description: string,
+		name: string,
 		userInitials: string,
-		userPortraitURL: string,
-		userName: string
+		userName: string,
+		userPortraitURL: string
 	]}
 	{@param? publishedByTitle: string}
 
@@ -391,7 +394,7 @@
 			</div>
 		{/if}
 
-		{if $publishedBy}
+		{if $latestCTProcess}
 			<div class="overview-card-sheet-block">
 				{if $publishedByTitle}
 					<h3>{$publishedByTitle}</h3>
@@ -400,19 +403,19 @@
 				<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
 
 					<div class="autofit-col">
-						{if $publishedBy.userInitials}
+						{if $latestCTProcess.userInitials}
 							<div class="user-icon user-icon-color-9 user-icon-default user-icon-lg">
-								<span data-qa-id="userInitials">{$publishedBy.userInitials}</span>
+								<span data-qa-id="userInitials">{$latestCTProcess.userInitials}</span>
 							</div>
-						{elseif $publishedBy.userPortraitURL}
-							<div class="aspect-ratio-bg-cover user-icon user-icon-lg" style="background-image:url({$publishedBy.userPortraitURL})">
+						{elseif $latestCTProcess.userPortraitURL}
+							<div class="aspect-ratio-bg-cover user-icon user-icon-lg" style="background-image:url({$latestCTProcess.userPortraitURL})">
 							</div>
 						{/if}
 					</div>
 
 					<div class="autofit-col autofit-col-expand">
 						<div class="aspect-ratio-item-left-middle text-secondary" data-qa-id="publishedBy">
-							{$publishedBy.dateTime} {msg desc=""}by{/msg} {$publishedBy.userName}
+							{$latestCTProcess.dateTime} {msg desc=""}by{/msg} {$latestCTProcess.userName}
 						</div>
 					</div>
 				</div>

@@ -14,23 +14,21 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.model.LayoutCanonicalURL;
 import com.liferay.layout.seo.service.base.LayoutCanonicalURLServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the layout canonical url remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.LayoutCanonicalURLService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutCanonicalURLServiceBaseImpl
+ * @author Adolfo Pérez
  */
 @Component(
 	property = {
@@ -42,9 +40,21 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutCanonicalURLServiceImpl
 	extends LayoutCanonicalURLServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.layout.seo.service.LayoutCanonicalURLServiceUtil</code> to access the layout canonical url remote service.
-	 */
+	@Override
+	public LayoutCanonicalURL updateLayoutCanonicalURL(
+			long groupId, boolean privateLayout, long layoutId, boolean enabled,
+			Map<Locale, String> canonicalURLMap)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		return layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
+			getUserId(), groupId, privateLayout, layoutId, enabled,
+			canonicalURLMap);
+	}
+
 }

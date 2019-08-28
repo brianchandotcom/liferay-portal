@@ -72,11 +72,12 @@ public class AccountEntryLocalServiceUtil {
 
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, long logoId, int status, String website)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, logoId, status);
+			userId, parentAccountEntryId, name, description, logoId, status,
+			website);
 	}
 
 	/**

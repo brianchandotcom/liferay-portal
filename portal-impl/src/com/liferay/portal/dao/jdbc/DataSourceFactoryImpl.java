@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -50,6 +49,8 @@ import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.io.Closeable;
 
@@ -332,16 +333,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 	protected DataSource initDataSourceHikariCP(Properties properties)
 		throws Exception {
 
-		testLiferayPoolProviderClass(_HIKARICP_DATASOURCE_CLASS_NAME);
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> hikariDataSourceClazz = contextClassLoader.loadClass(
-			_HIKARICP_DATASOURCE_CLASS_NAME);
-
-		Object hikariDataSource = hikariDataSourceClazz.newInstance();
+		HikariDataSource hikariDataSource = new HikariDataSource();
 
 		String connectionPropertiesString = (String)properties.remove(
 			"connectionProperties");
@@ -352,8 +344,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					connectionPropertiesString, CharPool.SEMICOLON,
 					CharPool.NEW_LINE));
 
-			BeanUtil.setProperty(
-				hikariDataSource, "dataSourceProperties", connectionProperties);
+			hikariDataSource.setDataSourceProperties(connectionProperties);
 		}
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
@@ -406,7 +397,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		registerConnectionPoolMetrics(
 			new HikariConnectionPoolMetrics(hikariDataSource));
 
-		return (DataSource)hikariDataSource;
+		return hikariDataSource;
 	}
 
 	protected DataSource initDataSourceTomcat(Properties properties)
@@ -594,44 +585,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 	}
 
-	protected void testLiferayPoolProviderClass(String className)
-		throws Exception {
-
-		try {
-			Class.forName(className);
-		}
-		catch (ClassNotFoundException cnfe) {
-			if (!ServerDetector.isTomcat()) {
-				throw cnfe;
-			}
-
-			String url = PropsUtil.get(
-				PropsKeys.SETUP_LIFERAY_POOL_PROVIDER_JAR_URL,
-				new Filter(PropsValues.JDBC_DEFAULT_LIFERAY_POOL_PROVIDER));
-			String name = PropsUtil.get(
-				PropsKeys.SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME,
-				new Filter(PropsValues.JDBC_DEFAULT_LIFERAY_POOL_PROVIDER));
-
-			if (Validator.isNull(url) || Validator.isNull(name)) {
-				throw cnfe;
-			}
-
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-			if (!(classLoader instanceof URLClassLoader)) {
-				_log.error(
-					"Unable to install JAR because the portal class loader " +
-						"is not an instance of URLClassLoader");
-
-				return;
-			}
-
-			JarUtil.downloadAndInstallJar(
-				new URL(url), PropsValues.LIFERAY_LIB_PORTAL_DIR, name,
-				(URLClassLoader)classLoader);
-		}
-	}
-
 	private void _waitForJDBCConnection(Properties properties) {
 		int maxRetries = PropsValues.RETRY_JDBC_ON_STARTUP_MAX_RETRIES;
 
@@ -695,9 +648,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					"use a data source instead");
 		}
 	}
-
-	private static final String _HIKARICP_DATASOURCE_CLASS_NAME =
-		"com.zaxxer.hikari.HikariDataSource";
 
 	private static final String _TOMCAT_JDBC_POOL_OBJECT_NAME_PREFIX =
 		"TomcatJDBCPool:type=ConnectionPool,name=";

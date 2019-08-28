@@ -88,7 +88,7 @@ String tabs1Value = GetterUtil.getString(SessionClicks.get(request, namespace + 
 
 				redirectField.value = redirectURL.toString();
 
-				Liferay.Store('<portlet:namespace /><%= id %>', event.id);
+				Liferay.Util.Session.set('<portlet:namespace /><%= id %>', event.id);
 			};
 
 			var clearFormNavigatorHandles = function(event) {

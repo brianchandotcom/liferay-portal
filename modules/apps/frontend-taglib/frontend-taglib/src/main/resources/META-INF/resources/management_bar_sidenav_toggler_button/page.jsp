@@ -28,7 +28,7 @@
 	label="<%= label %>"
 />
 
-<aui:script use="liferay-store">
+<aui:script>
 	var sidenavToggle = document.querySelector('[href="#<%= sidenavId %>"]');
 
 	if (!Liferay.SideNavigation.instance(sidenavToggle)) {
@@ -45,14 +45,14 @@
 		sidenavInstance.on(
 			'closed.lexicon.sidenav',
 			function(event) {
-				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'closed');
+				Liferay.Util.Session.set('com.liferay.info.panel_<%= sidenavId %>', 'closed');
 			}
 		);
 
 		sidenavInstance.on(
 			'open.lexicon.sidenav',
 			function(event) {
-				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');
+				Liferay.Util.Session.set('com.liferay.info.panel_<%= sidenavId %>', 'open');
 			}
 		);
 	}

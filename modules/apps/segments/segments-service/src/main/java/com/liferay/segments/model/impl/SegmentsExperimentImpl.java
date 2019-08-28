@@ -71,6 +71,14 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 	}
 
 	@Override
+	public double getConfidenceLevel() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return GetterUtil.getDouble(
+			typeSettingsProperties.getProperty("confidenceLevel"));
+	}
+
+	@Override
 	public String getSegmentsEntryName(Locale locale) throws PortalException {
 		if (getSegmentsExperienceId() ==
 				SegmentsExperienceConstants.ID_DEFAULT) {

@@ -217,7 +217,7 @@ public class UserNotificationEventLocalServiceImpl
 	public List<UserNotificationEvent> getArchivedUserNotificationEvents(
 		long userId, boolean actionRequired, boolean archived) {
 
-		return userNotificationEventPersistence.findByU_A_A(
+		return userNotificationEventPersistence.findByU_AR_A(
 			userId, actionRequired, archived);
 	}
 
@@ -226,7 +226,7 @@ public class UserNotificationEventLocalServiceImpl
 		long userId, boolean actionRequired, boolean archived, int start,
 		int end) {
 
-		return userNotificationEventPersistence.findByU_A_A(
+		return userNotificationEventPersistence.findByU_AR_A(
 			userId, actionRequired, archived, start, end);
 	}
 
@@ -251,7 +251,7 @@ public class UserNotificationEventLocalServiceImpl
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		return userNotificationEventPersistence.findByU_DT_A_A(
+		return userNotificationEventPersistence.findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived);
 	}
 
@@ -260,7 +260,7 @@ public class UserNotificationEventLocalServiceImpl
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end) {
 
-		return userNotificationEventPersistence.findByU_DT_A_A(
+		return userNotificationEventPersistence.findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived, start, end);
 	}
 
@@ -269,7 +269,7 @@ public class UserNotificationEventLocalServiceImpl
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		int start, int end, OrderByComparator<UserNotificationEvent> obc) {
 
-		return userNotificationEventPersistence.findByU_DT_A_A(
+		return userNotificationEventPersistence.findByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived, start, end, obc);
 	}
 
@@ -292,7 +292,7 @@ public class UserNotificationEventLocalServiceImpl
 	public int getArchivedUserNotificationEventsCount(
 		long userId, boolean actionRequired, boolean archived) {
 
-		return userNotificationEventPersistence.countByU_A_A(
+		return userNotificationEventPersistence.countByU_AR_A(
 			userId, actionRequired, archived);
 	}
 
@@ -309,7 +309,7 @@ public class UserNotificationEventLocalServiceImpl
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		return userNotificationEventPersistence.countByU_DT_A_A(
+		return userNotificationEventPersistence.countByU_DT_AR_A(
 			userId, deliveryType, actionRequired, archived);
 	}
 

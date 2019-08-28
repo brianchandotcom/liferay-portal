@@ -158,11 +158,15 @@ public class FragmentEntryConfigUtil {
 				continue;
 			}
 
-			JSONObject configurationJSONObject =
-				getSegmentedConfigurationValues(
-					segmentsExperienceIds, configurationValuesJSONObject);
+			if (isPersonalizationSupported(configurationValuesJSONObject)) {
+				JSONObject configurationJSONObject =
+					getSegmentedConfigurationValues(
+						segmentsExperienceIds, configurationValuesJSONObject);
 
-			return configurationJSONObject.get(name);
+				return configurationJSONObject.get(name);
+			}
+
+			return configurationValuesJSONObject.get(name);
 		}
 
 		return null;

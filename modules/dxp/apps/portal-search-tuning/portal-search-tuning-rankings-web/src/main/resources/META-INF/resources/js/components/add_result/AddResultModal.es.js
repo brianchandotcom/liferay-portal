@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {ClayCheckbox} from '@clayui/form';
-import {sub} from '../../utils/language.es';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
@@ -20,6 +18,8 @@ import Item from '../list/Item.es';
 import PaginationBar from './PaginationBar.es';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {ClayCheckbox} from '@clayui/form';
+import {sub} from '../../utils/language.es';
 
 function AddResultModal({
 	DELTAS,
@@ -103,157 +103,146 @@ function AddResultModal({
 								</div>
 							</div>
 						</div>
+					</div>
 
-						<div className="add-result-scroller inline-scroller">
-							{dataLoading && (
-								<div className="list-group sheet">
-									<div className="sheet-title">
-										<div className="load-more-container">
-											<ClayLoadingIndicator />
-										</div>
+					<div className="add-result-scroller inline-scroller">
+						{dataLoading && (
+							<div className="list-group sheet">
+								<div className="sheet-title">
+									<div className="load-more-container">
+										<ClayLoadingIndicator />
 									</div>
 								</div>
-							)}
+							</div>
+						)}
 
-							{!dataLoading &&
-								(results.total && results.items ? (
-									<>
-										<div className="add-result-sheet sheet">
-											<div className={classManagementBar}>
-												<div className="container-fluid container-fluid-max-xl">
-													<ul className="navbar-nav navbar-nav-expand">
-														<li className="nav-item">
-															<ClayCheckbox
-																aria-label={Liferay.Language.get(
-																	'select-all'
-																)}
-																checked={
-																	getCurrentResultSelectedIds()
-																		.length ===
+						{!dataLoading &&
+							(results.total && results.items ? (
+								<>
+									<div className="add-result-sheet sheet">
+										<div className={classManagementBar}>
+											<div className="container-fluid container-fluid-max-xl">
+												<ul className="navbar-nav navbar-nav-expand">
+													<li className="nav-item">
+														<ClayCheckbox
+															aria-label={Liferay.Language.get(
+																'select-all'
+															)}
+															checked={
+																getCurrentResultSelectedIds()
+																	.length ===
+																results.items
+																	.length
+															}
+															indeterminate={
+																addResultSelectedIds.length >
+																	0 &&
+																getCurrentResultSelectedIds()
+																	.length !==
 																	results
 																		.items
 																		.length
-																}
-																indeterminate={
-																	addResultSelectedIds.length >
-																		0 &&
-																	getCurrentResultSelectedIds()
-																		.length !==
-																		results
-																			.items
-																			.length
-																}
-																onChange={
-																	handleAllCheckbox
-																}
-															/>
-														</li>
-
-														<li className="nav-item">
-															<span className="navbar-text">
-																{addResultSelectedIds.length >
-																0
-																	? sub(
-																			Liferay.Language.get(
-																				'x-items-selected'
-																			),
-																			[
-																				addResultSelectedIds.length
-																			]
-																	  )
-																	: sub(
-																			Liferay.Language.get(
-																				'x-x-of-x-results'
-																			),
-																			[
-																				start -
-																					selectedDelta +
-																					1,
-																				Math.min(
-																					start,
-																					results.total
-																				),
-																				results.total
-																			]
-																	  )}
-															</span>
-														</li>
-
-														{addResultSelectedIds.length >
-															0 && (
-															<li className="nav-item nav-item-shrink">
-																<ClayButton
-																	className="btn-outline-borderless"
-																	displayType="secondary"
-																	onClick={
-																		handleClearAllSelected
-																	}
-																	small
-																>
-																	{Liferay.Language.get(
-																		'clear-all-selected'
-																	)}
-																</ClayButton>
-															</li>
-														)}
-													</ul>
-												</div>
-											</div>
-
-											<ul
-												className="list-group"
-												data-testid="add-result-items"
-											>
-												{results.items.map(
-													(result, index) => (
-														<Item
-															author={
-																result.author
 															}
-															clicks={
-																result.clicks
+															onChange={
+																handleAllCheckbox
 															}
-															date={result.date}
-															extension={
-																result.extension
-															}
-															hidden={
-																result.hidden
-															}
-															id={result.id}
-															index={index}
-															key={result.id}
-															onSelect={
-																handleSelect
-															}
-															selected={addResultSelectedIds.includes(
-																result.id
-															)}
-															title={result.title}
-															type={result.type}
 														/>
-													)
-												)}
-											</ul>
+													</li>
+
+													<li className="nav-item">
+														<span className="navbar-text">
+															{addResultSelectedIds.length >
+															0
+																? sub(
+																		Liferay.Language.get(
+																			'x-items-selected'
+																		),
+																		[
+																			addResultSelectedIds.length
+																		]
+																  )
+																: sub(
+																		Liferay.Language.get(
+																			'x-x-of-x-results'
+																		),
+																		[
+																			start -
+																				selectedDelta +
+																				1,
+																			Math.min(
+																				start,
+																				results.total
+																			),
+																			results.total
+																		]
+																  )}
+														</span>
+													</li>
+
+													{addResultSelectedIds.length >
+														0 && (
+														<li className="nav-item nav-item-shrink">
+															<ClayButton
+																className="btn-outline-borderless"
+																displayType="secondary"
+																onClick={
+																	handleClearAllSelected
+																}
+																small
+															>
+																{Liferay.Language.get(
+																	'clear-all-selected'
+																)}
+															</ClayButton>
+														</li>
+													)}
+												</ul>
+											</div>
 										</div>
 
-										<div className="add-result-container">
-											<PaginationBar
-												deltas={DELTAS}
-												onDeltaChange={
-													handleDeltaChange
-												}
-												onPageChange={handlePageChange}
-												page={page}
-												selectedDelta={selectedDelta}
-												totalItems={results.total}
-											/>
-										</div>
-									</>
-								) : (
-									renderEmptyState()
-								))}
-						</div>
+										<ul
+											className="list-group"
+											data-testid="add-result-items"
+										>
+											{results.items.map(
+												(result, index) => (
+													<Item
+														author={result.author}
+														clicks={result.clicks}
+														date={result.date}
+														extension={
+															result.extension
+														}
+														hidden={result.hidden}
+														id={result.id}
+														index={index}
+														key={result.id}
+														onSelect={handleSelect}
+														selected={addResultSelectedIds.includes(
+															result.id
+														)}
+														title={result.title}
+														type={result.type}
+													/>
+												)
+											)}
+										</ul>
+									</div>
+
+									<div className="add-result-container">
+										<PaginationBar
+											deltas={DELTAS}
+											onDeltaChange={handleDeltaChange}
+											onPageChange={handlePageChange}
+											page={page}
+											selectedDelta={selectedDelta}
+											totalItems={results.total}
+										/>
+									</div>
+								</>
+							) : (
+								renderEmptyState()
+							))}
 					</div>
 				</ClayModal.Body>
 

@@ -8411,6 +8411,24 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addPersistedSubscribers(
 			JournalFolder.class.getName(), article.getGroupId());
 
+		long liveGroupId = 0;
+
+		try {
+			Group group = serviceContext.getScopeGroup();
+
+			if (group.isStagingGroup()) {
+				liveGroupId = staging.getLiveGroupId(
+					serviceContext.getScopeGroupId());
+			}
+		}
+		catch (Exception e) {
+		}
+
+		if (liveGroupId > 0) {
+			subscriptionSender.addPersistedStagingSubscribers(
+				JournalFolder.class.getName(), liveGroupId);
+		}
+
 		if (folder != null) {
 			subscriptionSender.addPersistedSubscribers(
 				JournalFolder.class.getName(), folder.getFolderId());
@@ -8418,6 +8436,23 @@ public class JournalArticleLocalServiceImpl
 			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
 				subscriptionSender.addPersistedSubscribers(
 					JournalFolder.class.getName(), ancestorFolderId);
+			}
+
+			if (liveGroupId > 0) {
+				folder = journalFolderPersistence.fetchByUUID_G(
+					folder.getUuid(), liveGroupId);
+
+				if (folder != null) {
+					subscriptionSender.addPersistedStagingSubscribers(
+						JournalFolder.class.getName(), folder.getFolderId());
+
+					for (Long ancestorFolderId :
+							folder.getAncestorFolderIds()) {
+
+						subscriptionSender.addPersistedStagingSubscribers(
+							JournalFolder.class.getName(), ancestorFolderId);
+					}
+				}
 			}
 		}
 
@@ -8431,6 +8466,17 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.addPersistedSubscribers(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		if (liveGroupId > 0) {
+			article = journalArticlePersistence.fetchByUUID_G(
+				article.getUuid(), liveGroupId);
+
+			if (article != null) {
+				subscriptionSender.addPersistedStagingSubscribers(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey());
+			}
+		}
 
 		subscriptionSender.flushNotificationsAsync();
 	}

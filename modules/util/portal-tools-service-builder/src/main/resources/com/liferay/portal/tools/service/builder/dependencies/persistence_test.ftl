@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -130,7 +131,11 @@ public class ${entity.name}PersistenceTest {
 				<#if stringUtil.equals(entityColumn.type, "int")>
 					RandomTestUtil.nextInt()
 				<#elseif stringUtil.equals(entityColumn.type, "long")>
-					RandomTestUtil.nextLong()
+					<#if stringUtil.equals(entityColumn.name, "companyId")>
+						CompanyThreadLocal.getCompanyId()
+					<#else>
+						RandomTestUtil.nextLong()
+					</#if>
 				<#elseif stringUtil.equals(entityColumn.type, "String")>
 					<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), entityColumn.getName()) />
 

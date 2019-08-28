@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -203,43 +203,43 @@ const FlagsModal = ({
 	signedIn,
 	status
 }) => {
+	const {observer, onClose} = useModal({
+		onClose: handleClose
+	});
+
 	return (
-		<ClayModal onClose={handleClose} size="md">
-			{onClose => (
+		<ClayModal observer={observer} size="md">
+			<ClayModal.Header>
+				{Liferay.Language.get('report-inappropriate-content')}
+			</ClayModal.Header>
+			{status === STATUS_REPORT ? (
+				<ModalContentForm
+					handleClose={onClose}
+					handleInputChange={handleInputChange}
+					handleSubmit={handleSubmit}
+					isSending={isSending}
+					pathTermsOfUse={pathTermsOfUse}
+					reasons={reasons}
+					selectedReason={selectedReason}
+					signedIn={signedIn}
+				/>
+			) : (
 				<>
-					<ClayModal.Header>
-						{Liferay.Language.get('report-inappropriate-content')}
-					</ClayModal.Header>
-					{status === STATUS_REPORT ? (
-						<ModalContentForm
-							handleClose={onClose}
-							handleInputChange={handleInputChange}
-							handleSubmit={handleSubmit}
-							isSending={isSending}
-							pathTermsOfUse={pathTermsOfUse}
-							reasons={reasons}
-							selectedReason={selectedReason}
-							signedIn={signedIn}
-						/>
-					) : (
-						<>
-							<ModalBody
-								companyName={companyName}
-								handleClose={onClose}
-								status={status}
-							/>
-							<ClayModal.Footer
-								last={
-									<ClayButton
-										displayType="secondary"
-										onClick={onClose}
-									>
-										{Liferay.Language.get('close')}
-									</ClayButton>
-								}
-							/>
-						</>
-					)}
+					<ModalBody
+						companyName={companyName}
+						handleClose={onClose}
+						status={status}
+					/>
+					<ClayModal.Footer
+						last={
+							<ClayButton
+								displayType="secondary"
+								onClick={onClose}
+							>
+								{Liferay.Language.get('close')}
+							</ClayButton>
+						}
+					/>
 				</>
 			)}
 		</ClayModal>

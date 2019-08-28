@@ -71,7 +71,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</aui:form>
 </div>
 
-<aui:script use="aui-base,aui-io-request">
+<aui:script use="aui-base,aui-io-request,io-form">
 	var done = A.one('#<portlet:namespace />done');
 
 	if (done) {

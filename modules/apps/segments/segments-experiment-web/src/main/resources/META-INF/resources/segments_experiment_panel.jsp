@@ -43,9 +43,9 @@ String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-exp
 				editSegmentsExperimentStatusURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
 				editSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
 				editSegmentsVariantLayoutURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
-				editSegmentsVariantSplitURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantSplitURL() %>',
-				editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>'
-			},
+				editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
+				runSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
+	},
 			namespace: '<portlet:namespace />',
 			page: {
 				classPK: '<%= themeDisplay.getPlid() %>',

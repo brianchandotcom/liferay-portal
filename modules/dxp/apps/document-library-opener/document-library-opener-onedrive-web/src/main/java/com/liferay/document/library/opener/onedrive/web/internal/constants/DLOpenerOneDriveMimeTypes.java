@@ -188,12 +188,7 @@ public class DLOpenerOneDriveMimeTypes {
 		new AbstractMap.SimpleEntry<>(APPLICATION_VND_PPTM, ".pptm"),
 		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLSM, ".xlsm"),
 		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLTM, ".xltm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLTX, ".xltx"),
-		new AbstractMap.SimpleEntry<>(ContentTypes.APPLICATION_MSWORD, ".doc"),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.APPLICATION_VND_MS_EXCEL, ".xls"),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.APPLICATION_VND_MS_POWERPOINT, ".ppt")
+		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLTX, ".xltx")
 	).collect(
 		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 	);
@@ -218,15 +213,6 @@ public class DLOpenerOneDriveMimeTypes {
 			APPLICATION_VND_XLTM, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
 		new AbstractMap.SimpleEntry<>(
 			APPLICATION_VND_XLTX, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.APPLICATION_MSWORD,
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.APPLICATION_VND_MS_EXCEL,
-			DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
-			DLOpenerMimeTypes.APPLICATION_VND_PPTX),
 		new AbstractMap.SimpleEntry<>(
 			ContentTypes.TEXT, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
 		new AbstractMap.SimpleEntry<>(

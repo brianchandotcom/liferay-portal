@@ -14,6 +14,7 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.exception.NoSuchCanonicalURLException;
 import com.liferay.layout.seo.model.LayoutCanonicalURL;
 import com.liferay.layout.seo.service.base.LayoutCanonicalURLLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -36,6 +37,15 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LayoutCanonicalURLLocalServiceImpl
 	extends LayoutCanonicalURLLocalServiceBaseImpl {
+
+	@Override
+	public void deleteLayoutCanonicalURL(
+			long groupId, boolean privateLayout, long layoutId)
+		throws NoSuchCanonicalURLException {
+
+		layoutCanonicalURLPersistence.removeByG_P_L(
+			groupId, privateLayout, layoutId);
+	}
 
 	@Override
 	public LayoutCanonicalURL fetchLayoutCanonicalURL(

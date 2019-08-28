@@ -215,6 +215,11 @@ public class SegmentsExperimentWrapper
 		return model.getCompanyId();
 	}
 
+	@Override
+	public double getConfidenceLevel() {
+		return model.getConfidenceLevel();
+	}
+
 	/**
 	 * Returns the create date of this segments experiment.
 	 *

@@ -119,6 +119,15 @@ public class SegmentsExperimentServiceUtil {
 
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
+				long segmentsExperimentId, int status, double confidenceLevel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSegmentsExperiment(
+			segmentsExperimentId, status, confidenceLevel);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperiment(
 				long segmentsExperimentId, String name, String description,
 				String goal, String goalTarget)
 		throws com.liferay.portal.kernel.exception.PortalException {

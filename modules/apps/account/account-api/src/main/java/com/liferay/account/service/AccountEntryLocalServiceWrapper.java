@@ -74,11 +74,12 @@ public class AccountEntryLocalServiceWrapper
 	@Override
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, long logoId, int status, String website)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.addAccountEntry(
-			userId, parentAccountEntryId, name, description, logoId, status);
+			userId, parentAccountEntryId, name, description, logoId, status,
+			website);
 	}
 
 	/**

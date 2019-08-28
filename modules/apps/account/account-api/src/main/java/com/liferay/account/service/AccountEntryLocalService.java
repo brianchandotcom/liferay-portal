@@ -79,7 +79,7 @@ public interface AccountEntryLocalService
 
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, long logoId, int status, String website)
 		throws PortalException;
 
 	/**

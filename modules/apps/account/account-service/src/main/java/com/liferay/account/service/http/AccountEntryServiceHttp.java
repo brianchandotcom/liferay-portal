@@ -56,7 +56,8 @@ public class AccountEntryServiceHttp {
 
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			HttpPrincipal httpPrincipal, long userId, long parentAccountEntryId,
-			String name, String description, long logoId, int status)
+			String name, String description, long logoId, int status,
+			String website)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,7 +67,7 @@ public class AccountEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, parentAccountEntryId, name, description,
-				logoId, status);
+				logoId, status, website);
 
 			Object returnObj = null;
 
@@ -143,7 +144,7 @@ public class AccountEntryServiceHttp {
 	private static final Class<?>[] _addAccountEntryParameterTypes0 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
-			int.class
+			int.class, String.class
 		};
 	private static final Class<?>[] _getAccountEntriesParameterTypes1 =
 		new Class[] {

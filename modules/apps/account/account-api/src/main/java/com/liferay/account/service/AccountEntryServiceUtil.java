@@ -41,11 +41,12 @@ public class AccountEntryServiceUtil {
 	 */
 	public static com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, long logoId, int status, String website)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAccountEntry(
-			userId, parentAccountEntryId, name, description, logoId, status);
+			userId, parentAccountEntryId, name, description, logoId, status,
+			website);
 	}
 
 	public static java.util.List<com.liferay.account.model.AccountEntry>

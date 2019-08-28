@@ -88,7 +88,7 @@ exports[`Should render component 1`] = `
           running
         </td>
         <td>
-          4d 23h 59min
+          9999d 23h 59min
         </td>
         <td>
           May 06
@@ -167,7 +167,7 @@ exports[`Should render component 1`] = `
           running
         </td>
         <td>
-          4d 23h 59min
+          1min
         </td>
         <td>
           May 06
@@ -246,7 +246,7 @@ exports[`Should render component 1`] = `
           running
         </td>
         <td>
-          4d 23h 59min
+          1h 59min
         </td>
         <td>
           May 06

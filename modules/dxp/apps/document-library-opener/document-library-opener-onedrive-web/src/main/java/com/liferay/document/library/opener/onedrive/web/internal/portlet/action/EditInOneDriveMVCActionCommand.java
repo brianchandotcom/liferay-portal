@@ -141,6 +141,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			catch (PortalException pe) {
 				throw pe;
 			}
+			catch (RuntimeException re) {
+				throw re;
+			}
 			catch (Throwable throwable) {
 				throw new PortalException(throwable);
 			}

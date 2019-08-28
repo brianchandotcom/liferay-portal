@@ -92,9 +92,9 @@ public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 		}
 
 		return _userNotificationEventLocalService.
-			getArchivedUserNotificationEventsCount(
+			getUserNotificationEventsCount(
 				themeDisplay.getUserId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
+				UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false);
 	}
 
 	@Reference(unbind = "-")

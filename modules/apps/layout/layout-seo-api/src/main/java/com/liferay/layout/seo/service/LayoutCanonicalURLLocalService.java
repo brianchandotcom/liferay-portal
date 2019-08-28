@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -110,6 +111,9 @@ public interface LayoutCanonicalURLLocalService
 
 	public void deleteLayoutCanonicalURL(
 			long groupId, boolean privateLayout, long layoutId)
+		throws NoSuchCanonicalURLException;
+
+	public void deleteLayoutCanonicalURL(String uuid, long groupId)
 		throws NoSuchCanonicalURLException;
 
 	/**
@@ -310,7 +314,8 @@ public interface LayoutCanonicalURLLocalService
 
 	public LayoutCanonicalURL updateLayoutCanonicalURL(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabled, Map<Locale, String> canonicalURLMap)
+			boolean enabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

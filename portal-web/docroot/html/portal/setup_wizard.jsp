@@ -90,7 +90,7 @@
 									</div>
 								</aui:field-wrapper>
 
-								<aui:input label="time-zone" name="companyTimeZoneId" type="timeZone" value="<%= PropsValues.COMPANY_DEFAULT_TIME_ZONE %>" />
+								<aui:input label="time-zone" name="companyTimeZoneId" type="timeZone" value="<%= SetupWizardUtil.getDefaultTimeZoneId() %>" />
 							</aui:fieldset>
 
 							<aui:fieldset cssClass="col-md-6">

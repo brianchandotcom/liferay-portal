@@ -99,6 +99,8 @@ public class ExperimentUtil {
 
 		Experiment experiment = new Experiment();
 
+		experiment.setConfidenceLevel(
+			segmentsExperiment.getConfidenceLevel() * 100);
 		experiment.setCreateDate(segmentsExperiment.getCreateDate());
 		experiment.setDataSourceId(dataSourceId);
 		experiment.setDescription(segmentsExperiment.getDescription());

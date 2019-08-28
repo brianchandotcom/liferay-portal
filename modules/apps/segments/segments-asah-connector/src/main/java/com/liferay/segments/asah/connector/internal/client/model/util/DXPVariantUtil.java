@@ -39,7 +39,7 @@ public class DXPVariantUtil {
 		dxpVariant.setDXPVariantId(
 			segmentsExperimentRel.getSegmentsExperienceKey());
 		dxpVariant.setDXPVariantName(segmentsExperimentRel.getName(locale));
-		dxpVariant.setTrafficSplit(segmentsExperimentRel.getSplit());
+		dxpVariant.setTrafficSplit(segmentsExperimentRel.getSplit() * 100);
 
 		return dxpVariant;
 	}

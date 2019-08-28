@@ -21,17 +21,17 @@
 </tr>
 <tr>
 	<td>SYNONYMS_MULTI_SELECT_FIELD</td>
-	<td>//div[contains(@class,'multiselect-root')]//input</td>
+	<td>//div[contains(@id,'SynonymsPortlet')]//input[@class='form-control-inset']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SYNONYMS_MULTI_SELECT_REMOVE</td>
-	<td>//div[contains(@class,'multiValue') and contains(.,'${key_synonym}')]//div[contains(@class,'multi-value__remove')]</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_synonym}')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SYNONYMS_MULTI_SELECT_VALUE</td>
-	<td>//div[contains(@class,'multiValue') and contains(.,'${key_synonym}')]</td>
+	<td>//span[contains(@class,'label-dismissible') and contains(.,'${key_synonym}')]</td>
 	<td></td>
 </tr>
 </tbody>

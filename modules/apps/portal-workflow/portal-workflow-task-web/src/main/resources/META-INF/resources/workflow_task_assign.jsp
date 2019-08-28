@@ -86,8 +86,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 						body: data,
 						method: 'POST'
 					}
-				)
-				.then(function() {
+				).then(function() {
 					Liferay.Util.getOpener().<portlet:namespace />refreshPortlet('<%= redirect.toString() %>');
 					Liferay.Util.getWindow('<portlet:namespace />assignToDialog').destroy();
 				})

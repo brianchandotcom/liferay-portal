@@ -136,9 +136,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
 				PortalUtil.getClassNameId(Layout.class.getName()),
 				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, 0,
-				testFragmentRenderer.getKey(), serviceContext);
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, 0, testFragmentRenderer.getKey(),
+				serviceContext);
 
 		ActionRequest actionRequest = _getMockHttpServletRequest(
 			originalFragmentEntryLink.getFragmentEntryLinkId());

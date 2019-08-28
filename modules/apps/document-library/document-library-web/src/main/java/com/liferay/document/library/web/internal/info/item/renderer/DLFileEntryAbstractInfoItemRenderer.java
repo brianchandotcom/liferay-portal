@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.web.internal.info.item.renderer;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = InfoItemRenderer.class)
-public class FileEntryAbstractInfoItemRenderer
-	implements InfoItemRenderer<FileEntry> {
+public class DLFileEntryAbstractInfoItemRenderer
+	implements InfoItemRenderer<DLFileEntry> {
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -43,16 +43,16 @@ public class FileEntryAbstractInfoItemRenderer
 
 	@Override
 	public void render(
-		FileEntry fileEntry, HttpServletRequest httpServletRequest,
+		DLFileEntry dlFileEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
 		try {
 			httpServletRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, dlFileEntry);
 
 			httpServletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
-				fileEntry.getFileVersion());
+				dlFileEntry.getFileVersion());
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(

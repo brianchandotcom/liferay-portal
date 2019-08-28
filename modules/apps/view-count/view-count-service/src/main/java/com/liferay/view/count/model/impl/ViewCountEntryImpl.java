@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public class ViewCountEntryImpl extends ViewCountEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a view count entry model instance should use the {@link com.liferay.view.count.model.ViewCountEntry} interface instead.

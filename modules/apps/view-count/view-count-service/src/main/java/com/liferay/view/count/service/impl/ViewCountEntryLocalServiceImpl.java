@@ -15,22 +15,19 @@
 package com.liferay.view.count.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.base.ViewCountEntryLocalServiceBaseImpl;
+import com.liferay.view.count.service.persistence.ViewCountEntryPK;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the view count entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.view.count.service.ViewCountEntryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Preston Crary
- * @see ViewCountEntryLocalServiceBaseImpl
  */
 @Component(
 	property = "model.class.name=com.liferay.view.count.model.ViewCountEntry",
@@ -39,9 +36,54 @@ import org.osgi.service.component.annotations.Component;
 public class ViewCountEntryLocalServiceImpl
 	extends ViewCountEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.view.count.service.ViewCountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.view.count.service.ViewCountEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public ViewCountEntry addViewCountEntry(
+		long companyId, long classNameId, long classPK) {
+
+		ViewCountEntry viewCountEntry = viewCountEntryPersistence.create(
+			new ViewCountEntryPK(companyId, classNameId, classPK));
+
+		return viewCountEntryPersistence.update(viewCountEntry);
+	}
+
+	@Override
+	public long getViewCount(long companyId, long classNameId, long classPK) {
+		ViewCountEntry viewCountEntry =
+			viewCountEntryPersistence.fetchByPrimaryKey(
+				new ViewCountEntryPK(companyId, classNameId, classPK));
+
+		if (viewCountEntry == null) {
+			return 0;
+		}
+
+		return viewCountEntry.getViewCount();
+	}
+
+	@Override
+	@Transactional(enabled = false)
+	public void incrementViewCount(
+		long companyId, long classNameId, long classPK) {
+
+		viewCountEntryLocalService.incrementViewCount(
+			companyId, classNameId, classPK, 1);
+	}
+
+	@BufferedIncrement(incrementClass = NumberIncrement.class)
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void incrementViewCount(
+		long companyId, long classNameId, long classPK, int increment) {
+
+		viewCountEntryFinder.incrementViewCount(
+			companyId, classNameId, classPK, increment);
+	}
+
+	@Override
+	public void removeViewCount(long companyId, long classNameId, long classPK)
+		throws PortalException {
+
+		viewCountEntryPersistence.remove(
+			new ViewCountEntryPK(companyId, classNameId, classPK));
+	}
+
 }

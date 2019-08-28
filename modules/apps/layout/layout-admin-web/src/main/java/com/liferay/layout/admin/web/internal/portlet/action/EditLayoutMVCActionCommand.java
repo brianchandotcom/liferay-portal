@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.seo.service.LayoutCanonicalURLService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -103,6 +104,11 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
+		boolean useCustomCanonicalURL = ParamUtil.getBoolean(
+			actionRequest, "useCustomCanonicalURL");
+		Map<Locale, String> canonicalURLMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "canonicalURL");
+
 		byte[] iconBytes = null;
 
 		long fileEntryId = ParamUtil.getLong(
@@ -144,6 +150,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
+		_layoutCanonicalURLService.updateLayoutCanonicalURL(
+			groupId, privateLayout, layoutId, useCustomCanonicalURL,
+			canonicalURLMap);
+
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
 
@@ -154,6 +164,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				descriptionMap, keywordsMap, robotsMap, type,
 				draftLayout.isHidden(), draftLayout.getFriendlyURLMap(),
 				!deleteLogo, iconBytes, serviceContext);
+
+			_layoutCanonicalURLService.updateLayoutCanonicalURL(
+				groupId, privateLayout, draftLayout.getLayoutId(),
+				useCustomCanonicalURL, canonicalURLMap);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);
@@ -174,13 +188,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			formTypeSettingsProperties.put(
 				"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));
-		}
-
-		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
-			formTypeSettingsProperties.getProperty("useCustomCanonicalURL"));
-
-		if (!useCustomCanonicalURL) {
-			formTypeSettingsProperties.remove("customCanonicalURL");
 		}
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -259,6 +266,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private LayoutCanonicalURLService _layoutCanonicalURLService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

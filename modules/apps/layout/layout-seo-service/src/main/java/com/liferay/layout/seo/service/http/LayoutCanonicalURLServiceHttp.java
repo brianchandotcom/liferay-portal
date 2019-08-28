@@ -58,7 +58,8 @@ public class LayoutCanonicalURLServiceHttp {
 			updateLayoutCanonicalURL(
 				HttpPrincipal httpPrincipal, long groupId,
 				boolean privateLayout, long layoutId, boolean enabled,
-				java.util.Map<java.util.Locale, String> canonicalURLMap)
+				java.util.Map<java.util.Locale, String> canonicalURLMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -68,7 +69,7 @@ public class LayoutCanonicalURLServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, enabled,
-				canonicalURLMap);
+				canonicalURLMap, serviceContext);
 
 			Object returnObj = null;
 
@@ -102,7 +103,8 @@ public class LayoutCanonicalURLServiceHttp {
 	private static final Class<?>[] _updateLayoutCanonicalURLParameterTypes0 =
 		new Class[] {
 			long.class, boolean.class, long.class, boolean.class,
-			java.util.Map.class
+			java.util.Map.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 
 }

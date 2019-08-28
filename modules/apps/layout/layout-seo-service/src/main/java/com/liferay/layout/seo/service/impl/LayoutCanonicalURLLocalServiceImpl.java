@@ -14,23 +14,21 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.model.LayoutCanonicalURL;
 import com.liferay.layout.seo.service.base.LayoutCanonicalURLLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.DateUtil;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the layout canonical url local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.LayoutCanonicalURLLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutCanonicalURLLocalServiceBaseImpl
+ * @author Adolfo Pérez
  */
 @Component(
 	property = "model.class.name=com.liferay.layout.seo.model.LayoutCanonicalURL",
@@ -39,10 +37,65 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutCanonicalURLLocalServiceImpl
 	extends LayoutCanonicalURLLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.layout.seo.service.LayoutCanonicalURLLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutCanonicalURLLocalServiceUtil</code>.
-	 */
+	@Override
+	public LayoutCanonicalURL fetchLayoutCanonicalURL(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		return layoutCanonicalURLPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+	}
+
+	@Override
+	public LayoutCanonicalURL updateLayoutCanonicalURL(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean enabled, Map<Locale, String> canonicalURLMap)
+		throws PortalException {
+
+		LayoutCanonicalURL layoutCanonicalURL =
+			layoutCanonicalURLPersistence.fetchByG_P_L(
+				groupId, privateLayout, layoutId);
+
+		if (layoutCanonicalURL == null) {
+			return _addLayoutCanonicalURL(
+				userId, groupId, privateLayout, layoutId, enabled,
+				canonicalURLMap);
+		}
+
+		layoutCanonicalURL.setModifiedDate(DateUtil.newDate());
+		layoutCanonicalURL.setEnabled(enabled);
+		layoutCanonicalURL.setCanonicalURLMap(canonicalURLMap);
+
+		return layoutCanonicalURLPersistence.update(layoutCanonicalURL);
+	}
+
+	private LayoutCanonicalURL _addLayoutCanonicalURL(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean enabled, Map<Locale, String> canonicalURLMap)
+		throws PortalException {
+
+		LayoutCanonicalURL layoutCanonicalURL =
+			layoutCanonicalURLPersistence.create(
+				counterLocalService.increment());
+
+		layoutCanonicalURL.setGroupId(groupId);
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		layoutCanonicalURL.setCompanyId(group.getCompanyId());
+
+		layoutCanonicalURL.setUserId(userId);
+
+		Date now = DateUtil.newDate();
+
+		layoutCanonicalURL.setCreateDate(now);
+		layoutCanonicalURL.setModifiedDate(now);
+
+		layoutCanonicalURL.setEnabled(enabled);
+		layoutCanonicalURL.setCanonicalURLMap(canonicalURLMap);
+		layoutCanonicalURL.setPrivateLayout(privateLayout);
+		layoutCanonicalURL.setLayoutId(layoutId);
+
+		return layoutCanonicalURLPersistence.update(layoutCanonicalURL);
+	}
 
 }

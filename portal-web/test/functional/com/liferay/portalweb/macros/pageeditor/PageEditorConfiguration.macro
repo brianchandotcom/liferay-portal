@@ -1,15 +1,22 @@
 definition {
 
+	@summary = "Toggles the config switch to open and close the configuration floating toolbar"
+	macro _toggleConfigurationFloatingToolbar {
+		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+	}
+
 	macro changeConfigText {
 		Click(
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
 		FormFields.editText(
 			fieldName = "${textConfigName}",
 			fieldValue = "${editableText}");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
 	macro checkConfigCheckbox {
@@ -17,13 +24,13 @@ definition {
 			fragment_name = "${fragmentName}",
 			locator1 = "PageEditor#SECTION_NAME");
 
-		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 
 		Check.checkToggleSwitch(
 			checkboxName = "${checkboxName}",
 			locator1 = "Fragment#FRAGMENT_CHECKBOX");
 
-		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
 	}
 
 }

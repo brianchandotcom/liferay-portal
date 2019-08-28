@@ -17,15 +17,15 @@ package com.liferay.document.library.opener.onedrive.web.internal.portlet.action
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
-import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
+import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2FlowHelper;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
-import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2StateUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -38,16 +38,15 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -64,33 +63,29 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
+	@Activate
+	public void activate() {
+		_oAuth2FlowHelper = new OAuth2FlowHelper(
+			_oAuth2Manager, _portal, _portletURLFactory);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_oAuth2FlowHelper = null;
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long companyId = _portal.getCompanyId(actionRequest);
-		long userId = _portal.getUserId(actionRequest);
+		OAuth2FlowHelper.OAuth2FlowResult oAuth2FlowResult =
+			_oAuth2FlowHelper.execute(
+				actionRequest, this::_executeCommand,
+				_getSuccessURL(actionRequest));
 
-		Optional<AccessToken> accessTokenOptional =
-			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
-
-		if (accessTokenOptional.isPresent()) {
-			_executeCommand(actionRequest);
-		}
-		else {
-			String state = PwdGenerator.getPassword(5);
-
-			OAuth2StateUtil.save(
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(actionRequest)),
-				new OAuth2State(
-					userId, _getSuccessURL(actionRequest),
-					_getFailureURL(actionRequest), state));
-
-			actionResponse.sendRedirect(
-				_oAuth2Manager.getAuthorizationURL(
-					companyId, _portal.getPortalURL(actionRequest), state));
+		if (oAuth2FlowResult.isRedirect()) {
+			actionResponse.sendRedirect(oAuth2FlowResult.getRedirectURL());
 		}
 	}
 
@@ -105,7 +100,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.getFileEntry(fileEntryId));
 	}
 
-	private void _executeCommand(ActionRequest actionRequest)
+	private JSONObject _executeCommand(ActionRequest actionRequest)
 		throws PortalException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -134,14 +129,14 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(actionRequest);
 
-				_saveDLOpenerOneDriveFileReference(
+				hideDefaultSuccessMessage(actionRequest);
+
+				return _saveDLOpenerOneDriveFileReference(
 					actionRequest,
 					TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> _checkOutOneDriveFileEntry(
 							fileEntryId, serviceContext)));
-
-				hideDefaultSuccessMessage(actionRequest);
 			}
 			catch (PortalException pe) {
 				throw pe;
@@ -154,7 +149,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			_saveDLOpenerOneDriveFileReference(
+			return _saveDLOpenerOneDriveFileReference(
 				actionRequest,
 				_dlOpenerOneDriveManager.requestEditAccess(
 					themeDisplay.getUserId(),
@@ -163,17 +158,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		else {
 			throw new IllegalArgumentException();
 		}
-	}
 
-	private String _getFailureURL(PortletRequest portletRequest)
-		throws PortalException {
-
-		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
-			portletRequest, _portal.getPortletId(portletRequest),
-			_portal.getControlPanelPlid(portletRequest),
-			PortletRequest.RENDER_PHASE);
-
-		return liferayPortletURL.toString();
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private String _getSuccessURL(PortletRequest portletRequest) {
@@ -181,11 +167,15 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getHttpServletRequest(portletRequest));
 	}
 
-	private void _saveDLOpenerOneDriveFileReference(
+	private JSONObject _saveDLOpenerOneDriveFileReference(
 		PortletRequest portletRequest,
 		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference) {
 
 		portletRequest.setAttribute(
+			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
+			dlOpenerOneDriveFileReference);
+
+		return JSONUtil.put(
 			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
 			dlOpenerOneDriveFileReference);
 	}
@@ -195,6 +185,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+
+	private OAuth2FlowHelper<ActionRequest> _oAuth2FlowHelper;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

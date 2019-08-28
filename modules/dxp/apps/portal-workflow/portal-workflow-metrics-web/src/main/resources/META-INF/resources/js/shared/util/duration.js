@@ -51,7 +51,7 @@ export function getDurationValues(durationValue) {
 	const fullDuration = moment.duration(durationValue);
 
 	return {
-		days: fullDuration.days() || null,
+		days: parseInt(fullDuration.asDays()) || null,
 		hours: fullDuration.hours() || null,
 		minutes: fullDuration.minutes() || null
 	};

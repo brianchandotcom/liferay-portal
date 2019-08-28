@@ -43,6 +43,17 @@ public class UserNotificationEventLocalServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.UserNotificationEvent
 			addUserNotificationEvent(
+				long userId, boolean delivered, boolean actionRequired,
+				com.liferay.portal.kernel.notifications.NotificationEvent
+					notificationEvent)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addUserNotificationEvent(
+			userId, delivered, actionRequired, notificationEvent);
+	}
+
+	public static com.liferay.portal.kernel.model.UserNotificationEvent
+			addUserNotificationEvent(
 				long userId, boolean actionRequired,
 				com.liferay.portal.kernel.notifications.NotificationEvent
 					notificationEvent)
@@ -60,6 +71,19 @@ public class UserNotificationEventLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addUserNotificationEvent(userId, notificationEvent);
+	}
+
+	public static com.liferay.portal.kernel.model.UserNotificationEvent
+			addUserNotificationEvent(
+				long userId, String type, long timestamp, int deliveryType,
+				long deliverBy, boolean delivered, String payload,
+				boolean actionRequired, boolean archived,
+				ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addUserNotificationEvent(
+			userId, type, timestamp, deliveryType, deliverBy, delivered,
+			payload, actionRequired, archived, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent
@@ -665,6 +689,13 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static int getUserNotificationEventsCount(
+		long userId, int deliveryType, boolean delivered, boolean archived) {
+
+		return getService().getUserNotificationEventsCount(
+			userId, deliveryType, delivered, archived);
+	}
+
+	public static int getUserNotificationEventsCount(
 		long userId, String type, int deliveryType, boolean archived) {
 
 		return getService().getUserNotificationEventsCount(
@@ -693,6 +724,19 @@ public class UserNotificationEventLocalServiceUtil {
 
 		return getService().sendUserNotificationEvents(
 			userId, portletId, deliveryType, notificationEventJSONObject);
+	}
+
+	public static com.liferay.portal.kernel.model.UserNotificationEvent
+			storeUserNotificationEvents(
+				long userId, String portletId, int deliveryType,
+				boolean actionRequired,
+				com.liferay.portal.kernel.json.JSONObject
+					notificationEventJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().storeUserNotificationEvents(
+			userId, portletId, deliveryType, actionRequired,
+			notificationEventJSONObject);
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent

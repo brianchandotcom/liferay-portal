@@ -372,7 +372,6 @@
 				<package-root>modules/core/petra/petra-string/src/main/java</package-root>
 				<package-root>modules/core/registry-api/src/main/java</package-root>
 				<package-root>portal-impl/src</package-root>
-				<package-root>portal-impl/test/integration</package-root>
 				<package-root>portal-impl/test/unit</package-root>
 				<package-root>portal-kernel/src</package-root>
 				<package-root>portal-kernel/test/unit</package-root>

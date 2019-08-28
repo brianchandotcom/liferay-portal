@@ -52,8 +52,17 @@ class FragmentEditableBackgroundImage extends Component {
 			this
 		);
 
+		this._handleEditableBackgroundImageClick = this._handleEditableBackgroundImageClick.bind(
+			this
+		);
+
 		this.element.classList.add(
 			'fragments-editor__background-image-editable'
+		);
+
+		this.element.addEventListener(
+			'click',
+			this._handleEditableBackgroundImageClick
 		);
 
 		this._setEditableAttributes();
@@ -65,6 +74,13 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	disposed() {
 		this._disposeFloatingToolbar();
+
+		if (this.element) {
+			this.element.removeEventListener(
+				'click',
+				this._handleEditableBackgroundImageClick
+			);
+		}
 	}
 
 	/**
@@ -232,6 +248,23 @@ class FragmentEditableBackgroundImage extends Component {
 	 */
 	_getItemId() {
 		return `${this.fragmentEntryLinkId}-${this.editableId}`;
+	}
+
+	/**
+	 * Callback executed when the background image editable is clicked
+	 * @param {Event} event
+	 * @private
+	 */
+	_handleEditableBackgroundImageClick(event) {
+		const item = event.target.closest('[data-fragments-editor-item-id]');
+
+		if (item === this.element && this._active) {
+			openImageSelector({
+				callback: url => this._updateFragmentBackgroundImage(url),
+				imageSelectorURL: this.imageSelectorURL,
+				portletNamespace: this.portletNamespace
+			});
+		}
 	}
 
 	/**

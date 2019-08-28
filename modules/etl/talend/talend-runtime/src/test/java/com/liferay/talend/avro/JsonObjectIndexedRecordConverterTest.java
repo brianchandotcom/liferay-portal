@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class ResourceNodeConverterTest extends BaseTest {
+public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 	@Before
 	public void setUp() {

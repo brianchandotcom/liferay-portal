@@ -36,11 +36,30 @@ public class LiferayCXFLogger extends AbstractDelegatingLogger {
 		super(name, resourceBundleName);
 
 		_log = LogFactoryUtil.getLog(name);
+
+		if (_log.isTraceEnabled()) {
+			_level = Level.FINEST;
+		}
+		else if (_log.isDebugEnabled()) {
+			_level = Level.FINER;
+		}
+		else if (_log.isInfoEnabled()) {
+			_level = Level.INFO;
+		}
+		else if (_log.isWarnEnabled()) {
+			_level = Level.WARNING;
+		}
+		else if (_log.isErrorEnabled()) {
+			_level = Level.WARNING;
+		}
+		else {
+			_level = Level.OFF;
+		}
 	}
 
 	@Override
 	public Level getLevel() {
-		return Level.ALL;
+		return _level;
 	}
 
 	@Override
@@ -111,6 +130,7 @@ public class LiferayCXFLogger extends AbstractDelegatingLogger {
 	private static final Log _classLog = LogFactoryUtil.getLog(
 		LiferayCXFLogger.class);
 
+	private final Level _level;
 	private final Log _log;
 
 }

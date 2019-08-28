@@ -25,6 +25,7 @@ import {
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';
 import {navigateToExperience} from '../util/navigation.es';
+import {STATUS_RUNNING} from '../util/statuses.es';
 
 function SegmentsExperimentsSidebar({
 	initialGoals,
@@ -60,6 +61,7 @@ function SegmentsExperimentsSidebar({
 				onEditSegmentsExperimentStatus={
 					_handleEditSegmentExperimentStatus
 				}
+				onRunExperiment={_handleRunExperiment}
 				onSelectSegmentsExperienceChange={
 					_handleSelectSegmentsExperience
 				}
@@ -184,6 +186,19 @@ function SegmentsExperimentsSidebar({
 						segmentsExperiment.segmentsExperienceId
 				});
 			});
+	}
+
+	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
+		const body = {
+			confidenceLevel,
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			segmentsExperimentRels: JSON.stringify(splitVariantsMap),
+			status: STATUS_RUNNING
+		};
+
+		segmentsExperimentsUtil.runExperiment(body).then(function() {
+			navigateToExperience(initialSelectedSegmentsExperienceId);
+		});
 	}
 
 	function _handleEditSegmentExperimentStatus(segmentsExperiment, status) {
@@ -354,9 +369,7 @@ function SegmentsExperimentsSidebar({
 			});
 
 			if (variantExperienceId === initialSelectedSegmentsExperienceId) {
-				navigateToExperience(
-					initialSegmentsExperiment.segmentsExperienceId
-				);
+				navigateToExperience(initialSelectedSegmentsExperienceId);
 			} else {
 				setVariants(newVariants);
 			}

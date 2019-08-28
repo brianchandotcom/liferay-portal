@@ -29,7 +29,8 @@ export default function segmentsExperimentsApp(id, props, context) {
 		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
 		editSegmentsVariantLayoutURL,
-		editSegmentsVariantURL
+		editSegmentsVariantURL,
+		runSegmentsExperimentURL
 	} = endpoints;
 
 	render(
@@ -46,7 +47,8 @@ export default function segmentsExperimentsApp(id, props, context) {
 						deleteSegmentsVariantURL,
 						editSegmentsExperimentStatusURL,
 						editSegmentsExperimentURL,
-						editSegmentsVariantURL
+						editSegmentsVariantURL,
+						runSegmentsExperimentURL
 					},
 					namespace: context.namespace
 				})

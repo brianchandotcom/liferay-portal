@@ -13,6 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
+import {fetch} from 'frontend-js-web';
 
 function SegmentsExperimentsUtil({
 	endpoints,
@@ -25,7 +26,8 @@ function SegmentsExperimentsUtil({
 		deleteSegmentsVariantURL,
 		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
-		editSegmentsVariantURL
+		editSegmentsVariantURL,
+		runSegmentsExperimentURL
 	} = endpoints;
 
 	function editVariant(body) {
@@ -106,13 +108,27 @@ function SegmentsExperimentsUtil({
 			});
 	}
 
+	function runExperiment(body) {
+		return fetch(runSegmentsExperimentURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
+			});
+	}
+
 	return {
 		createExperiment,
 		createVariant,
 		deleteVariant,
 		editExperiment,
 		editExperimentStatus,
-		editVariant
+		editVariant,
+		runExperiment
 	};
 }
 

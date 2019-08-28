@@ -15,6 +15,7 @@
 import PropTypes from 'prop-types';
 
 const SegmentsExperimentType = PropTypes.shape({
+	confidenceLevel: PropTypes.string.isRequired,
 	description: PropTypes.string,
 	editable: PropTypes.bool.isRequired,
 	goal: SegmentsExperimentGoal,
@@ -33,10 +34,12 @@ const SegmentsExperienceType = PropTypes.shape({
 });
 
 const InitialSegmentsVariantType = PropTypes.shape({
+	control: PropTypes.bool.isRequired,
 	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperimentId: PropTypes.string.isRequired,
-	segmentsExperimentRelId: PropTypes.string.isRequired
+	segmentsExperimentRelId: PropTypes.string.isRequired,
+	split: PropTypes.number.isRequired
 });
 
 const SegmentsVariantType = PropTypes.shape({
@@ -44,7 +47,8 @@ const SegmentsVariantType = PropTypes.shape({
 	name: PropTypes.string.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
 	segmentsExperimentId: PropTypes.string.isRequired,
-	segmentsExperimentRelId: PropTypes.string.isRequired
+	segmentsExperimentRelId: PropTypes.string.isRequired,
+	split: PropTypes.number.isRequired
 });
 
 const SegmentsExperimentGoal = PropTypes.shape({

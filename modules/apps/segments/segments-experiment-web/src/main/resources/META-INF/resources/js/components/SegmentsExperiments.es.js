@@ -45,6 +45,7 @@ function SegmentsExperiments({
 	onCreateSegmentsExperiment,
 	onEditSegmentsExperiment,
 	onEditSegmentsExperimentStatus,
+	onRunExperiment,
 	onSelectSegmentsExperienceChange,
 	onVariantCreation,
 	onVariantDeletion,
@@ -149,6 +150,7 @@ function SegmentsExperiments({
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
 						}
+						onRunExperiment={onRunExperiment}
 						segmentsExperiment={segmentsExperiment}
 						variants={variants}
 					/>
@@ -195,6 +197,7 @@ SegmentsExperiments.propTypes = {
 	onCreateSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
+	onRunExperiment: PropTypes.func.isRequired,
 	onSelectSegmentsExperienceChange: PropTypes.func.isRequired,
 	onVariantCreation: PropTypes.func.isRequired,
 	onVariantDeletion: PropTypes.func.isRequired,

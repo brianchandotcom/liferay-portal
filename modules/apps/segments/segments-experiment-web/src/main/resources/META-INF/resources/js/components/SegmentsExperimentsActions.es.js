@@ -12,33 +12,33 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
+import {ReviewTestModal} from './ReviewTestModal.es';
 import {InitialSegmentsVariantType, SegmentsExperimentType} from '../types.es';
-
-const STATUS_DRAFT = 0;
-const STATUS_PAUSED = 5;
-const STATUS_RUNNING = 1;
-const STATUS_TERMINATED = 6;
+import {
+	STATUS_DRAFT,
+	STATUS_PAUSED,
+	STATUS_RUNNING,
+	STATUS_TERMINATED
+} from '../util/statuses.es';
 
 function SegmentsExperimentsActions({
 	onEditSegmentsExperimentStatus,
+	onRunExperiment,
 	segmentsExperiment,
 	variants
 }) {
+	const [visible, setVisible] = useState(false);
+
 	return (
 		<>
 			{segmentsExperiment.status.value === STATUS_DRAFT && (
 				<ClayButton
 					className="w-100"
 					disabled={variants.length <= 1}
-					onClick={() =>
-						onEditSegmentsExperimentStatus(
-							segmentsExperiment,
-							STATUS_RUNNING
-						)
-					}
+					onClick={_handleReviewClick}
 				>
 					{Liferay.Language.get('review-and-run-test')}
 				</ClayButton>
@@ -91,12 +91,29 @@ function SegmentsExperimentsActions({
 					</ClayButton>
 				</>
 			)}
+			{visible && (
+				<ReviewTestModal
+					onRun={_handleRunTest}
+					setVisible={setVisible}
+					variants={variants}
+					visible={visible}
+				/>
+			)}
 		</>
 	);
+
+	function _handleReviewClick() {
+		setVisible(true);
+	}
+
+	function _handleRunTest({confidenceLevel, splitVariantsMap}) {
+		onRunExperiment({confidenceLevel, splitVariantsMap});
+	}
 }
 
 SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
+	onRunExperiment: PropTypes.func.isRequired,
 	segmentsExperiment: SegmentsExperimentType,
 	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
 };

@@ -150,8 +150,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 		public BaseLicenseReportConfigurator(Project project) {
 			this.project = project;
 
-			_licenseOverridePropertiesFile =
-				_getLicenseOverridePropertiesFile();
+			_overridePropertiesFile = _getOverridePropertiesFile();
 		}
 
 		@Override
@@ -184,16 +183,16 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				licenseReportExtension.outputDir = outputDir;
 			}
 
-			Properties licenseOverrideProperties = new Properties();
+			Properties overrideProperties = new Properties();
 
-			if (_licenseOverridePropertiesFile != null) {
-				licenseOverrideProperties = GUtil.loadProperties(
-					_licenseOverridePropertiesFile);
+			if (_overridePropertiesFile != null) {
+				overrideProperties = GUtil.loadProperties(
+					_overridePropertiesFile);
 			}
 
 			licenseReportExtension.renderers = new ReportRenderer[] {
 				new ThirdPartyVersionsXmlReportRenderer(
-					fileName, licenseOverrideProperties, licenseReportExtension,
+					fileName, overrideProperties, licenseReportExtension,
 					new Callable<String>() {
 
 						@Override
@@ -205,13 +204,13 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 					})
 			};
 
-			if (_licenseOverridePropertiesFile != null) {
+			if (_overridePropertiesFile != null) {
 				ReportTask reportTask = (ReportTask)GradleUtil.getTask(
 					project, "generateLicenseReport");
 
 				TaskInputs taskInputs = reportTask.getInputs();
 
-				taskInputs.file(_licenseOverridePropertiesFile);
+				taskInputs.file(_overridePropertiesFile);
 			}
 		}
 
@@ -232,15 +231,15 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 		protected final Project project;
 
-		private File _getLicenseOverridePropertiesFile() {
-			String licenseOverridePropertiesFileName = System.getProperty(
+		private File _getOverridePropertiesFile() {
+			String overridePropertiesFileName = System.getProperty(
 				"license.report.override.properties.file");
 
-			if (Validator.isNull(licenseOverridePropertiesFileName)) {
+			if (Validator.isNull(overridePropertiesFileName)) {
 				return null;
 			}
 
-			File file = new File(licenseOverridePropertiesFileName);
+			File file = new File(overridePropertiesFileName);
 
 			if (!file.exists()) {
 				return null;
@@ -249,7 +248,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			return file;
 		}
 
-		private final File _licenseOverridePropertiesFile;
+		private final File _overridePropertiesFile;
 
 	}
 
@@ -350,14 +349,14 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 		extends VersionsXmlReportRenderer {
 
 		public ThirdPartyVersionsXmlReportRenderer(
-			String fileName, Properties licenseOverrideProperties,
+			String fileName, Properties overrideProperties,
 			LicenseReportExtension licenseReportExtension,
 			Callable<String> moduleFileNamePrefixCallable) {
 
 			super(
 				fileName, licenseReportExtension, moduleFileNamePrefixCallable);
 
-			_licenseOverrideProperties = licenseOverrideProperties;
+			_overrideProperties = overrideProperties;
 		}
 
 		@Override
@@ -366,8 +365,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			String key = "license.name[" + moduleFileName + "]";
 
-			if (_licenseOverrideProperties.containsKey(key)) {
-				return _licenseOverrideProperties.getProperty(key);
+			if (_overrideProperties.containsKey(key)) {
+				return _overrideProperties.getProperty(key);
 			}
 
 			return super.getLicenseName(moduleFileName, moduleData);
@@ -379,8 +378,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			String key = "license.url[" + moduleFileName + "]";
 
-			if (_licenseOverrideProperties.containsKey(key)) {
-				return _licenseOverrideProperties.getProperty(key);
+			if (_overrideProperties.containsKey(key)) {
+				return _overrideProperties.getProperty(key);
 			}
 
 			return super.getLicenseUrl(moduleFileName, moduleData);
@@ -407,7 +406,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 			return false;
 		}
 
-		private final Properties _licenseOverrideProperties;
+		private final Properties _overrideProperties;
 
 	}
 

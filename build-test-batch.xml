@@ -3910,10 +3910,26 @@ log.sanitizer.enabled=false</echo>
 	<target name="js-unit-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" task="packageRunTest">
-					<arg value="--continue" />
-					<arg value="--parallel" />
-				</gradle-execute>
+				<for keepgoing="true" param="js.test.dir">
+					<path>
+						<dirset
+							dir="modules"
+							excludes="private/**,node_modules/**,${base.dir}/**/test/stories/**"
+							includes="**/test"
+						/>
+					</path>
+					<sequential>
+						<if>
+							<resourcecontains resource="@{js.test.dir}/../package.json" substring="&quot;test&quot;:" />
+							<then>
+								<gradle-execute dir="@{js.test.dir}/.." task="packageRunTest">
+									<arg value="--continue" />
+									<arg value="--parallel" />
+								</gradle-execute>
+							</then>
+						</if>
+					</sequential>
+				</for>
 
 				<replace
 					dir="modules"

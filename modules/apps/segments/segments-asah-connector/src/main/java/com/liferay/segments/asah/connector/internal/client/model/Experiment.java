@@ -27,6 +27,10 @@ import java.util.List;
  */
 public final class Experiment {
 
+	public Double getConfidenceLevel() {
+		return _confidenceLevel;
+	}
+
 	@JsonFormat(
 		pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
 		shape = JsonFormat.Shape.STRING, timezone = "UTC"
@@ -135,6 +139,10 @@ public final class Experiment {
 		return new Date(_startedDate.getTime());
 	}
 
+	public void setConfidenceLevel(Double confidenceLevel) {
+		_confidenceLevel = confidenceLevel;
+	}
+
 	public void setCreateDate(Date createDate) {
 		if (createDate != null) {
 			_createDate = new Date(createDate.getTime());
@@ -217,6 +225,7 @@ public final class Experiment {
 		}
 	}
 
+	private Double _confidenceLevel;
 	private Date _createDate;
 	private String _dataSourceId;
 	private String _description;

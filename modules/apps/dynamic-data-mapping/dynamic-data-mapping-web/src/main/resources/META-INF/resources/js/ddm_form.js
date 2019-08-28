@@ -315,7 +315,7 @@ AUI.add(
 				var container = instance.get('container');
 
 				var templateResourceParameters = {
-					doAsUserId: instance.get('doAsGroupId'),
+					doAsGroupId: instance.get('doAsGroupId'),
 					fieldName: instance.get('name'),
 					mode: instance.get('mode'),
 					namespace: instance.get('fieldsNamespace'),
@@ -329,7 +329,7 @@ AUI.add(
 					p_p_state: 'pop_up'
 				};
 
-				var templateResourceURL = Liferay.Util.PortletURL.createRenderURL(
+				var templateResourceURL = Liferay.Util.PortletURL.createResourceURL(
 					themeDisplay.getURLControlPanel(),
 					templateResourceParameters
 				);

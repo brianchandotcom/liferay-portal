@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.change.tracking.CTService;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -47,6 +48,11 @@ public class CTServiceRegistry {
 					_classNameLocalService.getClassNameId(
 						ctService.getModelClass()));
 			});
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Reference

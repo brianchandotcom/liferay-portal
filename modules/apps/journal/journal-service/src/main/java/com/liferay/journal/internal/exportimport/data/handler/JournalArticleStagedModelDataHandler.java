@@ -41,6 +41,7 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1239,13 +1241,6 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalGroupServiceConfiguration(
-		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
-
-		_journalGroupServiceConfiguration = journalGroupServiceConfiguration;
-	}
-
-	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -1480,11 +1475,19 @@ public class JournalArticleStagedModelDataHandler
 						(key, value) -> subscriptionSender.setContextAttribute(
 							key, value.get("originalValue")));
 
+					JournalGroupServiceConfiguration
+						journalGroupServiceConfiguration =
+							_configurationProvider.getConfiguration(
+								JournalGroupServiceConfiguration.class,
+								new GroupServiceSettingsLocator(
+									article.getGroupId(),
+									JournalConstants.SERVICE_NAME));
+
 					String fromAddress =
-						_journalGroupServiceConfiguration.emailFromAddress();
+						journalGroupServiceConfiguration.emailFromAddress();
 
 					String fromName =
-						_journalGroupServiceConfiguration.emailFromName();
+						journalGroupServiceConfiguration.emailFromName();
 
 					subscriptionSender.setFrom(fromAddress, fromName);
 
@@ -1599,7 +1602,6 @@ public class JournalArticleStagedModelDataHandler
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalCreationStrategy _journalCreationStrategy;
-	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 
 	@Reference
 	private Portal _portal;

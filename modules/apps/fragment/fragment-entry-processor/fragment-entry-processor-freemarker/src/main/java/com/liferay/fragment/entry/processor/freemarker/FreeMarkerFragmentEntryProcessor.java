@@ -42,10 +42,8 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -248,7 +246,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 		JSONObject configurationJSONObject = configurationValuesJSONObject;
 
-		if (_isPersonalizationSupported(configurationValuesJSONObject)) {
+		if (FragmentEntryConfigUtil.isPersonalizationSupported(
+				configurationValuesJSONObject)) {
+
 			configurationJSONObject =
 				FragmentEntryConfigUtil.getSegmentedConfigurationValues(
 					segmentsExperienceIds, configurationValuesJSONObject);
@@ -295,20 +295,6 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		return message;
-	}
-
-	private boolean _isPersonalizationSupported(JSONObject jsonObject) {
-		Iterator<String> keys = jsonObject.keys();
-
-		while (keys.hasNext()) {
-			String key = keys.next();
-
-			if (key.startsWith(SegmentsExperienceConstants.ID_PREFIX)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

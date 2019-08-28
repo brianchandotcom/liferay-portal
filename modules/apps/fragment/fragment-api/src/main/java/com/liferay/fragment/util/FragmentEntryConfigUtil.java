@@ -231,6 +231,20 @@ public class FragmentEntryConfigUtil {
 		return configurationJSONObject;
 	}
 
+	public static boolean isPersonalizationSupported(JSONObject jsonObject) {
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext()) {
+			String key = keys.next();
+
+			if (key.startsWith(SegmentsExperienceConstants.ID_PREFIX)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static Object _getAssetEntry(String value) {
 		if (Validator.isNull(value)) {
 			return null;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -337,7 +337,7 @@ public class WikiPageFinderImpl
 				sql, "[$CREATE_DATE_COMPARATOR$]", createDateComparator);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -395,7 +395,7 @@ public class WikiPageFinderImpl
 				sql, "[$MODIFIED_DATE_COMPARATOR$]", modifiedDateComparator);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -445,7 +445,7 @@ public class WikiPageFinderImpl
 				getClass(), COUNT_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -511,7 +511,7 @@ public class WikiPageFinderImpl
 				sql, "[$CREATE_DATE_COMPARATOR$]", createDateComparator);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -559,7 +559,7 @@ public class WikiPageFinderImpl
 				sql, "[$MODIFIED_DATE_COMPARATOR$]", modifiedDateComparator);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -599,7 +599,7 @@ public class WikiPageFinderImpl
 				getClass(), FIND_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
 					groupId);
 			}
@@ -641,6 +641,9 @@ public class WikiPageFinderImpl
 
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference
 	private Portal _portal;

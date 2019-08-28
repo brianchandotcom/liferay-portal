@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -277,7 +277,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		long folderId = node.getAttachmentsFolderId();
 
 		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			PortletFileRepositoryUtil.deletePortletFolder(folderId);
+			_portletFileRepository.deletePortletFolder(folderId);
 		}
 
 		// Subscriptions
@@ -287,7 +287,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<WikiNode> indexer = _indexerRegistry.nullSafeGetIndexer(
 			WikiNode.class);
 
 		indexer.delete(node);
@@ -310,7 +310,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			wikiNodeLocalService.deleteNode(node);
 		}
 
-		PortletFileRepositoryUtil.deletePortletRepository(
+		_portletFileRepository.deletePortletRepository(
 			groupId, WikiConstants.SERVICE_NAME);
 	}
 
@@ -573,7 +573,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<WikiNode> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<WikiNode> indexer = _indexerRegistry.nullSafeGetIndexer(
 			WikiNode.class);
 
 		indexer.reindex(node);
@@ -666,9 +666,15 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNodeLocalServiceImpl.class);
 
 	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
 	private MultiVMPool _multiVMPool;
 
 	private PortalCache<?, ?> _portalCache;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

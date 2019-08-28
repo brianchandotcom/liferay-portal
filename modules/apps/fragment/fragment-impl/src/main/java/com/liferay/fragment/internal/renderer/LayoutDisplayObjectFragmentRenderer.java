@@ -20,20 +20,10 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,7 +56,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		Object displayObject = _getDisplayObject(httpServletRequest);
 
 		if (displayObject == null) {
-			_printPortletMessageInfo(
+			FragmentRendererUtil.printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
 				"the-rendered-content-will-be-shown-here");
 
@@ -77,7 +67,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			displayObject.getClass());
 
 		if (infoItemRenderer == null) {
-			_printPortletMessageInfo(
+			FragmentRendererUtil.printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
 				"there-are-no-available-renderers-for-the-rendered-content");
 
@@ -101,8 +91,9 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private InfoItemRenderer _getInfoItemRenderer(Class<?> displayObjectClass) {
-		List<InfoItemRenderer> infoItemRenderers = _getInfoItemRenderers(
-			displayObjectClass);
+		List<InfoItemRenderer> infoItemRenderers =
+			FragmentRendererUtil.getInfoItemRenderers(
+				displayObjectClass, _infoItemRendererTracker);
 
 		if (infoItemRenderers == null) {
 			return null;
@@ -110,64 +101,6 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 
 		return infoItemRenderers.get(0);
 	}
-
-	private List<InfoItemRenderer> _getInfoItemRenderers(Class<?> clazz) {
-		Class<?>[] interfaces = clazz.getInterfaces();
-
-		if (interfaces.length != 0) {
-			for (Class<?> anInterface : interfaces) {
-				List<InfoItemRenderer> infoItemRenderers =
-					_infoItemRendererTracker.getInfoItemRenderers(
-						anInterface.getName());
-
-				if (!infoItemRenderers.isEmpty()) {
-					return infoItemRenderers;
-				}
-			}
-		}
-
-		Class<?> superclass = clazz.getSuperclass();
-
-		if (superclass != null) {
-			return _getInfoItemRenderers(superclass);
-		}
-
-		return null;
-	}
-
-	private void _printPortletMessageInfo(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String message) {
-
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("<div class=\"portlet-msg-info\">");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", themeDisplay.getLocale(), getClass());
-
-			sb.append(LanguageUtil.get(resourceBundle, message));
-
-			sb.append("</div>");
-
-			printWriter.write(sb.toString());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioe, ioe);
-			}
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutDisplayObjectFragmentRenderer.class);
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;

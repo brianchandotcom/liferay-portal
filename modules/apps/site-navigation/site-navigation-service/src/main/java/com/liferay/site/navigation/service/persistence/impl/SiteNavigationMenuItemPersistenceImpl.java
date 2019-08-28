@@ -4750,7 +4750,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 
 	@Override
 	@Reference(
-		target = SiteNavigationPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = SiteNavigationPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

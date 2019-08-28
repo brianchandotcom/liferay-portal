@@ -3212,7 +3212,7 @@ public class LayoutPageTemplateStructurePersistenceImpl
 
 	@Override
 	@Reference(
-		target = LayoutPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = LayoutPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

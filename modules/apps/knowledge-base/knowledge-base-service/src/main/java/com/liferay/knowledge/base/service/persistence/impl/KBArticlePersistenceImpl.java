@@ -36489,7 +36489,7 @@ public class KBArticlePersistenceImpl
 
 	@Override
 	@Reference(
-		target = KBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = KBPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

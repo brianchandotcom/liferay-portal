@@ -2080,7 +2080,7 @@ public class KaleoConditionPersistenceImpl
 
 	@Override
 	@Reference(
-		target = KaleoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = KaleoPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -2990,7 +2990,7 @@ public class DLContentPersistenceImpl
 
 	@Override
 	@Reference(
-		target = DLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = DLPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

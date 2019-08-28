@@ -1971,7 +1971,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 
 	@Override
 	@Reference(
-		target = DEPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = DEPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

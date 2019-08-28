@@ -2454,7 +2454,7 @@ public class MemberRequestPersistenceImpl
 
 	@Override
 	@Reference(
-		target = IMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = IMPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

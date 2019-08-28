@@ -1938,7 +1938,7 @@ public class PushNotificationsDevicePersistenceImpl
 
 	@Override
 	@Reference(
-		target = PushNotificationsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = PushNotificationsPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

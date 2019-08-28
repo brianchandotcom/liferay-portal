@@ -3341,7 +3341,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	@Override
 	@Reference(
-		target = OAuthTwoPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = OAuthTwoPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

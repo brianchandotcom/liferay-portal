@@ -1184,7 +1184,7 @@ public class AuditEventPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AuditPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = AuditPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

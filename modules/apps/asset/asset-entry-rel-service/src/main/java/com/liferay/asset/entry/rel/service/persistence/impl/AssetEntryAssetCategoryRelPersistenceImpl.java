@@ -2142,7 +2142,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AssetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = AssetPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

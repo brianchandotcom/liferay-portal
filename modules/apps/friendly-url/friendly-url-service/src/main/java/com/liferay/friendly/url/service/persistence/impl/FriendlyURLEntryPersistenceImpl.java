@@ -2896,7 +2896,7 @@ public class FriendlyURLEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = FURLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = FURLPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -2600,7 +2600,7 @@ public class MBStatsUserPersistenceImpl
 
 	@Override
 	@Reference(
-		target = MBPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = MBPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

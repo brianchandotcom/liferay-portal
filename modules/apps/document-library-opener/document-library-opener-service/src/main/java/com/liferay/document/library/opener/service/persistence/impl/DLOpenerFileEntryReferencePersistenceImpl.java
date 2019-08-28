@@ -1300,7 +1300,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 	@Override
 	@Reference(
-		target = DLOpenerPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = DLOpenerPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -3201,7 +3201,7 @@ public class TrashEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = TrashPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = TrashPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

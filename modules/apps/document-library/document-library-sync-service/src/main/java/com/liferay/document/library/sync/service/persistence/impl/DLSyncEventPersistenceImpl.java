@@ -1397,7 +1397,7 @@ public class DLSyncEventPersistenceImpl
 
 	@Override
 	@Reference(
-		target = DLSyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = DLSyncPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -4034,7 +4034,7 @@ public class AppBuilderAppPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AppBuilderPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = AppBuilderPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

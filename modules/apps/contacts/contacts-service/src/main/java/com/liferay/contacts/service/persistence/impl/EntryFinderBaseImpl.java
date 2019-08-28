@@ -37,7 +37,7 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 
 	@Override
 	@Reference(
-		target = ContactsPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = ContactsPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

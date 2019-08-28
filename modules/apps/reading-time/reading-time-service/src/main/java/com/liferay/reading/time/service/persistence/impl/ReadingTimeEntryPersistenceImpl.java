@@ -2550,7 +2550,7 @@ public class ReadingTimeEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = ReadingTimePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = ReadingTimePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

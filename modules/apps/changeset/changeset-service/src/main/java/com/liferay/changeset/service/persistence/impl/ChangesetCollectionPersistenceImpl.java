@@ -3376,7 +3376,7 @@ public class ChangesetCollectionPersistenceImpl
 
 	@Override
 	@Reference(
-		target = ChangesetPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = ChangesetPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -2589,7 +2589,7 @@ public class AccountEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AccountPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = AccountPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

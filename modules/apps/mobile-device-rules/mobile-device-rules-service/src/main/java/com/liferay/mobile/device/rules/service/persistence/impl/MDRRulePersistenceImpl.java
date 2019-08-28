@@ -2754,7 +2754,7 @@ public class MDRRulePersistenceImpl
 
 	@Override
 	@Reference(
-		target = MDRPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = MDRPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

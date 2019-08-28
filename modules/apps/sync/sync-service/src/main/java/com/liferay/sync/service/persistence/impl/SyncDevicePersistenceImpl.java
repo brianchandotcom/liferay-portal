@@ -3048,7 +3048,7 @@ public class SyncDevicePersistenceImpl
 
 	@Override
 	@Reference(
-		target = SyncPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = SyncPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

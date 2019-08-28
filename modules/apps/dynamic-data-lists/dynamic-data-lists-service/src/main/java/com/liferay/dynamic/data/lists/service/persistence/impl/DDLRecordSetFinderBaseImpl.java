@@ -56,7 +56,7 @@ public abstract class DDLRecordSetFinderBaseImpl
 
 	@Override
 	@Reference(
-		target = DDLPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = DDLPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -2108,7 +2108,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AssetAutoTaggerPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = AssetAutoTaggerPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

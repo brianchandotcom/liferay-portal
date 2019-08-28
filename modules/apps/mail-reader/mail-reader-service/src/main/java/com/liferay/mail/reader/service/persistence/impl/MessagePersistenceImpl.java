@@ -2050,7 +2050,7 @@ public class MessagePersistenceImpl
 
 	@Override
 	@Reference(
-		target = MailPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = MailPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

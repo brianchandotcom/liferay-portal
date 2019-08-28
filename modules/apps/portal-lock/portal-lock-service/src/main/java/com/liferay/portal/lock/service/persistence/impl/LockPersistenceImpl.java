@@ -3334,7 +3334,7 @@ public class LockPersistenceImpl
 
 	@Override
 	@Reference(
-		target = LockPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = LockPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

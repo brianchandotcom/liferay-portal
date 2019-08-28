@@ -38,7 +38,7 @@ public abstract class CTProcessFinderBaseImpl
 
 	@Override
 	@Reference(
-		target = CTPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = CTPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

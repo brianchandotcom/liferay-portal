@@ -5001,7 +5001,7 @@ public class SAPEntryPersistenceImpl
 
 	@Override
 	@Reference(
-		target = SAPPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = SAPPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

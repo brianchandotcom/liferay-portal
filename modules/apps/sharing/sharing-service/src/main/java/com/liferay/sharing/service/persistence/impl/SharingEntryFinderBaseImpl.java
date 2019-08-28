@@ -55,7 +55,7 @@ public abstract class SharingEntryFinderBaseImpl
 
 	@Override
 	@Reference(
-		target = SharingPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = SharingPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

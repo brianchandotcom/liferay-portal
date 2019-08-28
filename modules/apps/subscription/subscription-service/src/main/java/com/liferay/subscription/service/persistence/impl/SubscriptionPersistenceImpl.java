@@ -4908,7 +4908,7 @@ public class SubscriptionPersistenceImpl
 
 	@Override
 	@Reference(
-		target = SubscriptionPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = SubscriptionPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

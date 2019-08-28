@@ -17,7 +17,7 @@ create table SegmentsExperiment (
 	classNameId LONG,
 	classPK LONG,
 	name VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	typeSettings TEXT null,
 	status INTEGER
 );

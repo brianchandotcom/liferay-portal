@@ -355,6 +355,9 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private ImageLocalService _imageLocalService;
 
 	@Reference
+	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -382,9 +385,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 	@Reference
 	private Sites _sites;
-
-	@Reference
-	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
 
 	private class CopyLayoutCallable implements Callable<Layout> {
 
@@ -445,7 +445,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_targetLayout.getUserId(), _targetLayout.getGroupId(),
 					_targetLayout.isPrivateLayout(),
 					_targetLayout.getLayoutId(), layoutCanonicalURL.isEnabled(),
-					layoutCanonicalURL.getCanonicalURLMap());
+					layoutCanonicalURL.getCanonicalURLMap(), serviceContext);
 			}
 
 			return _layoutLocalService.updateIconImage(

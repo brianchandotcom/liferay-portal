@@ -15,6 +15,7 @@
 package com.liferay.segments.experiment.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -24,13 +25,21 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
-import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentRelService;
+import com.liferay.segments.service.SegmentsExperimentService;
+
+import java.util.Iterator;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,36 +56,32 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
-		"mvc.command.name=/edit_segments_experiment_rel_split"
+		"mvc.command.name=/run_segments_experiment"
 	},
 	service = MVCActionCommand.class
 )
-public class EditSegmentsExperimentRelSplitMVCActionCommand
+public class RunSegmentsExperimentMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+		ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		Callable<JSONObject> callable = new RunSegmentsExperimentCallable(
+			actionRequest);
+
 		JSONObject jsonObject = null;
 
 		try {
-			SegmentsExperimentRel segmentsExperimentRel =
-				_segmentsExperimentRelService.updateSegmentsExperimentRel(
-					ParamUtil.getLong(actionRequest, "segmentsExperimentRelId"),
-					ParamUtil.getDouble(actionRequest, "split"));
-
-			jsonObject = JSONUtil.put(
-				"segmentsExperimentRel",
-				SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
-					segmentsExperimentRel, themeDisplay.getLocale()));
+			jsonObject = TransactionInvokerUtil.invoke(
+				_transactionConfig, callable);
 		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		catch (Throwable t) {
+			_log.error(t, t);
 
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(actionResponse);
@@ -95,11 +100,68 @@ public class EditSegmentsExperimentRelSplitMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private JSONObject _runSegmentsExperiment(ActionRequest actionRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String segmentsExperimentRels =
+			ParamUtil.getString(actionRequest, "segmentsExperimentRels");
+
+		JSONObject segmentsExperimentRelsJSON =
+			JSONFactoryUtil.createJSONObject(segmentsExperimentRels);
+
+		Iterator<String> iterator = segmentsExperimentRelsJSON.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			_segmentsExperimentRelService.updateSegmentsExperimentRel(
+				GetterUtil.getLong(key),
+				segmentsExperimentRelsJSON.getDouble(key));
+		}
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentService.updateSegmentsExperiment(
+				ParamUtil.getLong(actionRequest, "segmentsExperimentId"),
+				ParamUtil.getInteger(actionRequest, "status"),
+				ParamUtil.getDouble(actionRequest, "confidenceLevel"));
+
+		return JSONUtil.put(
+			"segmentsExperiment",
+			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
+				themeDisplay.getLocale(), segmentsExperiment));
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditSegmentsExperimentRelSplitMVCActionCommand.class);
+		RunSegmentsExperimentMVCActionCommand.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperimentService _segmentsExperimentService;
+
+	private class RunSegmentsExperimentCallable
+		implements Callable<JSONObject> {
+
+		@Override
+		public JSONObject call() throws Exception {
+			return _runSegmentsExperiment(_actionRequest);
+		}
+
+		private RunSegmentsExperimentCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
+	}
 
 	@Reference
 	private SegmentsExperimentRelService _segmentsExperimentRelService;

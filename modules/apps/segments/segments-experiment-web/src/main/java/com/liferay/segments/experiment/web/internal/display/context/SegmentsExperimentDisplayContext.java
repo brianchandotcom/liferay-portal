@@ -127,11 +127,6 @@ public class SegmentsExperimentDisplayContext {
 			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
 	}
 
-	public String getEditSegmentsVariantSplitURL() {
-		return _getSegmentsExperimentActionURL(
-			"/edit_segments_experiment_rel_split");
-	}
-
 	public String getEditSegmentsVariantURL() {
 		return _getSegmentsExperimentActionURL("/edit_segments_experiment_rel");
 	}
@@ -187,6 +182,10 @@ public class SegmentsExperimentDisplayContext {
 			));
 
 		return segmentsExperiencesJSONArray;
+	}
+
+	public String getRunSegmentsExperimenttURL() {
+		return _getSegmentsExperimentActionURL("/run_segments_experiment");
 	}
 
 	public JSONArray getSegmentsExperimentGoalsJSONArray(Locale locale) {

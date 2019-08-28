@@ -95,18 +95,18 @@ if (entryId > 0) {
 				method: 'POST'
 			}).then(function(response) {
 				return repsonse.json();
-			}).then(function(responseData) {
-				if (!responseData.success) {
+			}).then(function(data) {
+				if (!data.success) {
 					var message = A.one('#<portlet:namespace />errorMessage');
 
 					if (message) {
 						message.addClass('alert alert-danger');
 
-						message.html(responseData.message);
+						message.html(data.message);
 					}
 				}
 				else {
-					Liferay.component('contactsCenter').renderEntry(responseData);
+					Liferay.component('contactsCenter').renderEntry(data);
 
 					Liferay.component('contactsCenter').closePopup();
 				}

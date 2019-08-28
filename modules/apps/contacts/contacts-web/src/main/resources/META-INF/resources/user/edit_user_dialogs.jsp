@@ -129,18 +129,18 @@ if (extension) {
 				method: 'POST'
 			}).then(function(response) {
 					return response.json();
-			}).then(function(responseData) {
-					if (!responseData.success) {
+			}).then(function(data) {
+					if (!data.success) {
 						var message = A.one('#<%= portletNamespace %>errorMessage');
 
 						if (message) {
-							message.html('<span class="alert alert-danger">' + responseData.message + '</span>');
+							message.html('<span class="alert alert-danger">' + data.message + '</span>');
 						}
 					}
 					else {
 						Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
 
-						var redirect = responseData.redirect;
+						var redirect = data.redirect;
 
 						if (redirect) {
 							var topWindow = Liferay.Util.getTop();

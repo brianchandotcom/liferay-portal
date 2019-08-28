@@ -60,6 +60,8 @@ public interface SegmentsExperiment
 
 			};
 
+	public double getConfidenceLevel();
+
 	public String getGoal();
 
 	public String getGoalTarget();

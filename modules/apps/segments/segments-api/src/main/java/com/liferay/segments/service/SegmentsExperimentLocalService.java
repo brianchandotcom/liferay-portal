@@ -344,6 +344,10 @@ public interface SegmentsExperimentLocalService
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, int status, double confidenceLevel)
+		throws PortalException;
+
+	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,
 			String goal, String goalTarget)
 		throws PortalException;

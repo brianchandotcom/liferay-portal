@@ -10,7 +10,7 @@ test('Should render component', () => {
 				Date.UTC('2019', '04', '06', '20', '32', '18')
 			),
 			description: 'Total time to complete the request.',
-			duration: 431945900,
+			duration: 863999940000,
 			name: 'Total resolution time'
 		},
 		{
@@ -18,7 +18,7 @@ test('Should render component', () => {
 				Date.UTC('2019', '04', '06', '20', '32', '18')
 			),
 			description: 'Total time to complete the request.',
-			duration: 431945900,
+			duration: 60000,
 			name: 'Total resolution time'
 		},
 		{
@@ -26,7 +26,7 @@ test('Should render component', () => {
 				Date.UTC('2019', '04', '06', '20', '32', '18')
 			),
 			description: 'Total time to complete the request.',
-			duration: 431945900,
+			duration: 7140000,
 			name: 'Total resolution time'
 		}
 	];

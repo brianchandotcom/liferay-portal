@@ -17,6 +17,7 @@ package com.liferay.talend.avro;
 import com.liferay.talend.common.json.JsonFinder;
 import com.liferay.talend.common.oas.OASException;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,9 @@ import javax.json.JsonObject;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 
+import javax.xml.bind.DatatypeConverter;
+
+import org.apache.avro.LogicalTypes;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.IndexedRecord;
@@ -102,7 +106,16 @@ public class JsonObjectIndexedRecordConverter {
 					record.put(schemaEntry.pos(), _asDouble(jsonValue));
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
-					record.put(schemaEntry.pos(), _asLong(jsonValue));
+					if (fieldSchema.getLogicalType() ==
+							LogicalTypes.timestampMillis()) {
+
+						record.put(
+							schemaEntry.pos(),
+							_asDateTimeInMilliseconds(jsonValue));
+					}
+					else {
+						record.put(schemaEntry.pos(), _asLong(jsonValue));
+					}
 				}
 				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
 					record.put(schemaEntry.pos(), _asInteger(jsonValue));
@@ -149,6 +162,14 @@ public class JsonObjectIndexedRecordConverter {
 		}
 
 		return Boolean.FALSE;
+	}
+
+	private Long _asDateTimeInMilliseconds(JsonValue jsonValue) {
+		String iso8601Date = _asText(jsonValue);
+
+		Calendar calendar = DatatypeConverter.parseDateTime(iso8601Date);
+
+		return calendar.getTimeInMillis();
 	}
 
 	private Double _asDouble(JsonValue jsonValue) {

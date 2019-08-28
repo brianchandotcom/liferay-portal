@@ -35,6 +35,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -158,6 +160,74 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundle = bundleContext.getBundle();
+	}
+
+	private void _addComments(FragmentEntryLink fragmentEntryLink)
+		throws PortalException {
+
+		long parentCommentId1 = _commentManager.addComment(
+			fragmentEntryLink.getUserId(), fragmentEntryLink.getGroupId(),
+			FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			"Can we add some borders to this? It is ugly.",
+			className -> new ServiceContext());
+
+		_commentManager.addComment(
+			fragmentEntryLink.getUserId(), FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getUserName(), parentCommentId1,
+			String.valueOf(Math.random()), "Borders are overrated.",
+			className -> new ServiceContext());
+
+		_commentManager.addComment(
+			fragmentEntryLink.getUserId(), FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getUserName(), parentCommentId1,
+			String.valueOf(Math.random()), "Sure, we can add 2px border.",
+			className -> new ServiceContext());
+
+		long parentCommentId2 = _commentManager.addComment(
+			fragmentEntryLink.getUserId(), fragmentEntryLink.getGroupId(),
+			FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			"Hmmm, this looks too small. Make it bigger.",
+			className -> new ServiceContext());
+
+		_commentManager.addComment(
+			fragmentEntryLink.getUserId(), FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getUserName(), parentCommentId2,
+			String.valueOf(Math.random()),
+			"The size is ok, do not worry about it.",
+			className -> new ServiceContext());
+
+		long parentCommentId3 = _commentManager.addComment(
+			fragmentEntryLink.getUserId(), fragmentEntryLink.getGroupId(),
+			FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			"This does not fit our guidelines. Please fix it.",
+			className -> new ServiceContext());
+
+		_commentManager.addComment(
+			fragmentEntryLink.getUserId(), FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getUserName(), parentCommentId3,
+			String.valueOf(Math.random()), "You are right. Fixed!",
+			className -> new ServiceContext());
+
+		_commentManager.updateComment(
+			fragmentEntryLink.getUserId(), FragmentEntryLink.class.getName(),
+			fragmentEntryLink.getFragmentEntryLinkId(), parentCommentId3,
+			String.valueOf(Math.random()),
+			"This does not fit our guidelines. Please fix it.",
+			className -> {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				return serviceContext;
+			});
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -538,6 +608,8 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 						plid, fragmentEntryKey, editableValues);
 
 					if (fragmentEntryLink != null) {
+						_addComments(fragmentEntryLink);
+
 						fragmentEntryLinkIdsJSONArray.put(
 							fragmentEntryLink.getFragmentEntryLinkId());
 					}
@@ -593,6 +665,9 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 		BuildingsSiteInitializer.class);
 
 	private Bundle _bundle;
+
+	@Reference
+	private CommentManager _commentManager;
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

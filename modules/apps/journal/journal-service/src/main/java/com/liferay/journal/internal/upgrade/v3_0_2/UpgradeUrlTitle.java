@@ -50,7 +50,8 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(urlTitle);
 
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			groupId, _CLASS_NAME_ID, resourcePrimKey, normalizedURLTitle);
+			groupId, PortalUtil.getClassNameId(JournalArticle.class),
+			resourcePrimKey, normalizedURLTitle);
 	}
 
 	protected void updateFriendlyURLEntryLocalization() throws Exception {
@@ -62,7 +63,7 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 					"classNameId = ? and (urlTitle like ? or urlTitle like ",
 					"?)"))) {
 
-			ps1.setLong(1, _CLASS_NAME_ID);
+			ps1.setLong(1, PortalUtil.getClassNameId(JournalArticle.class));
 			ps1.setString(2, "%/%");
 			ps1.setString(3, "%.%");
 
@@ -126,9 +127,6 @@ public class UpgradeUrlTitle extends UpgradeProcess {
 			}
 		}
 	}
-
-	private static final long _CLASS_NAME_ID = PortalUtil.getClassNameId(
-		JournalArticle.class);
 
 	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 

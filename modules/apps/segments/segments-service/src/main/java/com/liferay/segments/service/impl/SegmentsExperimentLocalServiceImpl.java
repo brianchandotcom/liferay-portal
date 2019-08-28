@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.NoSuchExperimentException;
+import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
@@ -259,7 +260,20 @@ public class SegmentsExperimentLocalServiceImpl
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
-			status);
+			status, 0);
+	}
+
+	@Override
+	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, int status, double confidenceLevel)
+		throws PortalException {
+
+		_validateConfidenceLevel(confidenceLevel);
+
+		return _updateSegmentsExperimentStatus(
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId),
+			status, confidenceLevel);
 	}
 
 	@Override
@@ -305,8 +319,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
-				segmentsExperimentKey, null),
-			status);
+				segmentsExperimentKey, null), status, 0);
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
@@ -327,7 +340,7 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private SegmentsExperiment _updateSegmentsExperimentStatus(
-			SegmentsExperiment segmentsExperiment, int status)
+			SegmentsExperiment segmentsExperiment, int status, double confidenceLevel)
 		throws SegmentsExperimentStatusException {
 
 		_validateStatus(
@@ -339,6 +352,16 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setStatus(status);
+
+		if(confidenceLevel != 0) {
+			UnicodeProperties typeSettingsProperties =
+				segmentsExperiment.getTypeSettingsProperties();
+
+			typeSettingsProperties.setProperty(
+				"confidenceLevel", String.valueOf(confidenceLevel));
+
+			segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
+		}
 
 		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}
@@ -354,6 +377,16 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateStatus(
 			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
 			currentStatus, newStatus);
+	}
+
+	private void _validateConfidenceLevel(double confidenceLevel)
+		throws PortalException {
+
+		if ((confidenceLevel > 1) || (confidenceLevel < 0)) {
+			throw new SegmentsExperimentConfidenceLevelException(
+				"Confidence level " + confidenceLevel +
+					" is not a value between 0 and 1");
+		}
 	}
 
 	private void _validateGoal(String goal) throws PortalException {

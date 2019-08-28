@@ -317,6 +317,7 @@
 		<exception>SegmentsEntryName</exception>
 		<exception>SegmentsExperienceName</exception>
 		<exception>SegmentsExperiencePriority</exception>
+		<exception>SegmentsExperimentConfidenceLevel</exception>
 		<exception>SegmentsExperimentGoal</exception>
 		<exception>SegmentsExperimentName</exception>
 		<exception>SegmentsExperimentRelName</exception>

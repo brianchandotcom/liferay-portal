@@ -260,17 +260,20 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CTCollectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of ct collections
 	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct collections
 	 */
+	@Deprecated
 	public java.util.List<CTCollection> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
+		OrderByComparator<CTCollection> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns an ordered range of all the ct collections where companyId = &#63; and status = &#63;.
@@ -284,14 +287,11 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 * @param start the lower bound of the range of ct collections
 	 * @param end the upper bound of the range of ct collections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ct collections
 	 */
 	public java.util.List<CTCollection> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator,
-		boolean useFinderCache);
+		OrderByComparator<CTCollection> orderByComparator);
 
 	/**
 	 * Returns the first ct collection in the ordered set where companyId = &#63; and status = &#63;.
@@ -304,8 +304,7 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 */
 	public CTCollection findByC_S_First(
 			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
+			OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -318,8 +317,7 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 */
 	public CTCollection fetchByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
+		OrderByComparator<CTCollection> orderByComparator);
 
 	/**
 	 * Returns the last ct collection in the ordered set where companyId = &#63; and status = &#63;.
@@ -332,8 +330,7 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 */
 	public CTCollection findByC_S_Last(
 			long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
+			OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**
@@ -346,8 +343,7 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 */
 	public CTCollection fetchByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-			orderByComparator);
+		OrderByComparator<CTCollection> orderByComparator);
 
 	/**
 	 * Returns the ct collections before and after the current ct collection in the ordered set where companyId = &#63; and status = &#63;.
@@ -361,8 +357,7 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	 */
 	public CTCollection[] findByC_S_PrevAndNext(
 			long ctCollectionId, long companyId, int status,
-			com.liferay.portal.kernel.util.OrderByComparator<CTCollection>
-				orderByComparator)
+			OrderByComparator<CTCollection> orderByComparator)
 		throws NoSuchCollectionException;
 
 	/**

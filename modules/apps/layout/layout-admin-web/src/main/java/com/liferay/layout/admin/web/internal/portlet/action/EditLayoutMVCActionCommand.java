@@ -152,7 +152,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 		_layoutCanonicalURLService.updateLayoutCanonicalURL(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
-			canonicalURLMap);
+			canonicalURLMap, serviceContext);
 
 		Layout draftLayout = _layoutLocalService.fetchLayout(
 			_portal.getClassNameId(Layout.class), layout.getPlid());
@@ -167,7 +167,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 			_layoutCanonicalURLService.updateLayoutCanonicalURL(
 				groupId, privateLayout, draftLayout.getLayoutId(),
-				useCustomCanonicalURL, canonicalURLMap);
+				useCustomCanonicalURL, canonicalURLMap, serviceContext);
 		}
 
 		themeDisplay.clearLayoutFriendlyURL(layout);

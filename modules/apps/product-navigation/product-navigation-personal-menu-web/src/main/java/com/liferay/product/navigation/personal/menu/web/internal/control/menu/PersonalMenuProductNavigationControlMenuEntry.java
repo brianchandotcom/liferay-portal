@@ -75,9 +75,10 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			httpServletRequest.setAttribute(
 				PersonalMenuWebKeys.NOTIFICATIONS_COUNT,
 				_userNotificationEventLocalService.
-					getArchivedUserNotificationEventsCount(
+					getUserNotificationEventsCount(
 						themeDisplay.getUserId(),
-						UserNotificationDeliveryConstants.TYPE_WEBSITE, false));
+						UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
+						false));
 		}
 
 		return super.includeIcon(httpServletRequest, httpServletResponse);

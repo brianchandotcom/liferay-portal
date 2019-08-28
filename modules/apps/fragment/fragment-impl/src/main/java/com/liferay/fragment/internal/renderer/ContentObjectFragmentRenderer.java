@@ -126,17 +126,19 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext, httpServletRequest);
 
-		if (jsonObject != null) {
-			InfoDisplayContributor infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					jsonObject.getString("className"));
+		if (jsonObject == null) {
+			return null;
+		}
 
-			try {
-				return infoDisplayContributor.getInfoDisplayObjectProvider(
-					jsonObject.getLong("classPK"));
-			}
-			catch (Exception e) {
-			}
+		InfoDisplayContributor infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				jsonObject.getString("className"));
+
+		try {
+			return infoDisplayContributor.getInfoDisplayObjectProvider(
+				jsonObject.getLong("classPK"));
+		}
+		catch (Exception e) {
 		}
 
 		return null;

@@ -10,7 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import DRAG_TYPES from '../../utils/drag-types.es';
 import getCN from 'classnames';
@@ -463,7 +463,7 @@ class Item extends PureComponent {
 				</div>
 
 				<div className="autofit-col">
-					<ClayForm.Checkbox
+					<ClayCheckbox
 						aria-label={Liferay.Language.get('select')}
 						checked={selected}
 						onChange={this._handleSelect}

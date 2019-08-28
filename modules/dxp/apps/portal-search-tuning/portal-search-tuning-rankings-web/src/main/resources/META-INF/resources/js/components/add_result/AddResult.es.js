@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayEmptyState, {DISPLAY_STATES} from '../shared/ClayEmptyState.es';
-import ClayForm from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
@@ -373,7 +373,7 @@ class AddResult extends Component {
 															<div className="container-fluid container-fluid-max-xl">
 																<ul className="navbar-nav navbar-nav-expand">
 																	<li className="nav-item">
-																		<ClayForm.Checkbox
+																		<ClayCheckbox
 																			aria-label={Liferay.Language.get(
 																				'select-all'
 																			)}

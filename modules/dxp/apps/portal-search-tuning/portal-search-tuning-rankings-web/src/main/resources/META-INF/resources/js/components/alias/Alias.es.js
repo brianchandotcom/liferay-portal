@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
+import {ClayInputWithMultiSelect} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -46,7 +46,7 @@ class Alias extends Component {
 		const {inputValue} = this.state;
 
 		return (
-			<ClayForm.MultiSelect
+			<ClayInputWithMultiSelect
 				helpText={Liferay.Language.get('add-an-alias-instruction')}
 				inputValue={inputValue}
 				items={keywords}

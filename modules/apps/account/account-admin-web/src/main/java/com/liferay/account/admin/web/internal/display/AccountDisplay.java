@@ -17,11 +17,7 @@ package com.liferay.account.admin.web.internal.display;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Website;
-import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
 
 /**
  * @author Pei-Jung Lan
@@ -72,7 +68,7 @@ public class AccountDisplay {
 		_parentAccountName = _getParentAccountName(accountEntry);
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
-		_website = _getWebsite(accountEntry);
+		_website = accountEntry.getWebsite();
 	}
 
 	private String _getParentAccountName(AccountEntry accountEntry) {
@@ -119,20 +115,6 @@ public class AccountDisplay {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _getWebsite(AccountEntry accountEntry) {
-		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
-			accountEntry.getCompanyId(), AccountEntry.class.getName(),
-			accountEntry.getAccountEntryId());
-
-		if (websites.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		Website website = websites.get(0);
-
-		return website.getUrl();
 	}
 
 	private boolean _isActive(AccountEntry accountEntry) {

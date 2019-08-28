@@ -37,7 +37,7 @@
 }
 
 .signed-out .user-area .navbar-nav {
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		margin-top: 6px;
 	}
 }
@@ -56,7 +56,7 @@
 		padding: 6px 24px 6px 0;
 		text-transform: uppercase;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			padding: 6px;
 		}
 
@@ -67,7 +67,7 @@
 		}
 
 		.icon-login {
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				padding-top: 3px;
 			}
 		}
@@ -105,7 +105,7 @@
 	}
 
 	.logo {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			line-height: 76px;
 		}
 	}
@@ -115,7 +115,7 @@
 	}
 
 	#heading {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			margin-left: 12px;
 		}
 
@@ -130,7 +130,7 @@
 	#navigation {
 		clear: both;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			padding-top: 10px;
 			width: 100%;
 		}
@@ -149,7 +149,7 @@
 					color: #969696;
 				}
 
-				@include sm {
+				@include media-breakpoint-up(sm) {
 					margin-right: 20px;
 					padding: 12px 24px 12px 0;
 				}
@@ -158,7 +158,7 @@
 			.lfr-nav-child-toggle {
 				float: right;
 
-				@include sm {
+				@include media-breakpoint-up(sm) {
 					position: absolute;
 					right: 12px;
 					top: 12px;
@@ -214,11 +214,11 @@
 	.nav-header-global .navbar-nav {
 		margin: 0;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			margin-left: 30px;
 		}
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			margin-left: 60px;
 		}
 
@@ -229,7 +229,7 @@
 				margin: 0 15px;
 				text-transform: uppercase;
 
-				@include sm {
+				@include media-breakpoint-up(sm) {
 					font-size: 12px;
 					margin: 16px 15px;
 					padding: 0;
@@ -249,11 +249,11 @@
 	.navbar-form {
 		padding: 10px 20px;
 
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			padding: 4px;
 		}
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			margin-left: 30px;
 		}
 
@@ -271,7 +271,7 @@
 		}
 
 		.form-group-inline {
-			@include media-query(null, $screen-xs-max) {
+			@include media-breakpoint-down(md) {
 				display: block;
 			}
 		}
@@ -281,11 +281,11 @@
 			height: auto;
 			padding-right: 40px;
 
-			@include media-query($breakpoint_tablet, null) {
+			@include media-breakpoint-up(lg) {
 				max-width: 290px;
 			}
 
-			@include media-query(sm, $screen-sm-max) {
+			@include media-breakpoint-between(sm, lg) {
 				max-width: 200px;
 			}
 		}

@@ -21,7 +21,7 @@
 			background-size: cover;
 			padding-bottom: 100%;
 
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				bottom: 0;
 				left: 0;
 				padding-bottom: 0;
@@ -36,7 +36,7 @@
 			padding-bottom: 20px;
 			padding-top: 20px;
 
-			@include media-query($breakpoint_tablet, null) {
+			@include media-breakpoint-up(lg) {
 				padding-bottom: 80px;
 				padding-top: 80px;
 			}
@@ -47,7 +47,7 @@
 		font-size: 10px;
 		opacity: 0.5;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 12px;
 			margin-bottom: 40px;
 		}
@@ -60,7 +60,7 @@
 		line-height: 100%;
 		margin-bottom: 10px;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 58px;
 			margin-bottom: 40px;
 		}
@@ -70,7 +70,7 @@
 		margin-bottom: 50px;
 		opacity: 0.7;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 16px;
 		}
 	}
@@ -85,7 +85,7 @@
 	background-color: $brand-bg-color-4;
 	padding: 30px 0;
 
-	@include media-query($breakpoint_tablet, null) {
+	@include media-breakpoint-up(lg) {
 		padding: 40px 0;
 	}
 
@@ -96,7 +96,7 @@
 		line-height: 136%;
 		margin-bottom: 30px;
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			font-size: 58px;
 		}
 	}
@@ -116,7 +116,7 @@
 		line-height: 136%;
 		margin-bottom: 30px;
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			font-size: 58px;
 		}
 
@@ -125,7 +125,7 @@
 			background-repeat: no-repeat;
 			background-size: contain;
 
-			@include media-query($breakpoint_tablet, null) {
+			@include media-breakpoint-up(lg) {
 				min-height: 365px;
 				padding: 125px 0 65px;
 			}
@@ -165,7 +165,7 @@
 		border-top-width: 0;
 		padding: 15px;
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			padding: 15px percentage(40/376);
 		}
 	}
@@ -200,7 +200,7 @@
 	margin-bottom: 25px;
 	overflow: hidden;
 
-	@include media-query(null, $screen-xs-max) {
+	@include media-breakpoint-down(md) {
 		margin-bottom: 15px;
 	}
 
@@ -209,11 +209,11 @@
 		font-size: 12px;
 		padding: 15px;
 
-		@include media-query(sm, $screen-sm-max) {
+		@include media-breakpoint-between(sm, lg) {
 			padding: 15px;
 		}
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			padding: 40px 15px;
 		}
 	}
@@ -223,11 +223,11 @@
 		font-size: 10px;
 		opacity: 0.5;
 
-		@include media-query(sm, $screen-sm-max) {
+		@include media-breakpoint-between(sm, lg) {
 			margin-bottom: 30px;
 		}
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			font-size: 12px;
 			margin-bottom: 80px;
 		}
@@ -237,13 +237,13 @@
 		margin-bottom: 30px;
 		opacity: 0.7;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 16px;
 			margin-bottom: 40px;
 		}
 	}
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		.image {
 			padding: 0;
 

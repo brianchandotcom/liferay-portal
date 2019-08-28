@@ -141,6 +141,7 @@ const Body = ({id, processId, query}) => {
 	const daysMask = createNumberMask({
 		allowLeadingZeroes: true,
 		includeThousandsSeparator: false,
+		integerLimit: 4,
 		prefix: ''
 	});
 

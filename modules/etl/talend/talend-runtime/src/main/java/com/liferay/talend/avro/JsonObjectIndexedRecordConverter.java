@@ -14,12 +14,11 @@
 
 package com.liferay.talend.avro;
 
+import com.liferay.talend.avro.exception.ConverterException;
 import com.liferay.talend.common.json.JsonFinder;
-import com.liferay.talend.common.oas.OASException;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.json.JsonNumber;
@@ -38,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.avro.converter.AvroConverter;
 import org.talend.daikon.avro.converter.string.StringBooleanConverter;
 import org.talend.daikon.avro.converter.string.StringDoubleConverter;
@@ -59,99 +59,32 @@ public class JsonObjectIndexedRecordConverter {
 	public IndexedRecord toIndexedRecord(JsonObject contentJsonObject) {
 		IndexedRecord record = new GenericData.Record(_schema);
 
-		List<Schema.Field> schemaFields = _schema.getFields();
+		for (Schema.Field field : _schema.getFields()) {
+			Schema fieldSchema = field.schema();
+			String fieldName = field.name();
 
-		schemaFields.forEach(
-			schemaEntry -> {
-				String valueFinderPath = _getValueFinderPath(
-					schemaEntry.name());
+			JsonValue jsonValue = _getJsonValue(field, contentJsonObject);
 
-				JsonValue jsonValue = _jsonFinder.getDescendantJsonValue(
-					valueFinderPath, contentJsonObject);
-
-				if (jsonValue == JsonValue.NULL) {
-					if (AvroUtils.isNullable(schemaEntry.schema())) {
-						if (_logger.isDebugEnabled()) {
-							_logger.debug(
-								"Ignoring content's absent path {}",
-								valueFinderPath);
-						}
-
-						return;
-					}
-
-					throw new OASException(
-						"Missing non-nullable value at " + valueFinderPath);
+			if (jsonValue == null) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug("Ignoring optional field {}", fieldName);
 				}
 
-				Schema fieldSchema = AvroUtils.unwrapIfNullable(
-					schemaEntry.schema());
+				continue;
+			}
 
-				AvroConverter avroConverter = _converterRegistry.get(
-					fieldSchema.getType());
-
-				if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
-					record.put(schemaEntry.pos(), _asBoolean(jsonValue));
-				}
-				else if (AvroUtils.isSameType(
-							fieldSchema, AvroUtils._bytes())) {
-
-					record.put(
-						schemaEntry.pos(),
-						avroConverter.convertToAvro(_asText(jsonValue)));
-				}
-				else if (AvroUtils.isSameType(
-							fieldSchema, AvroUtils._double())) {
-
-					record.put(schemaEntry.pos(), _asDouble(jsonValue));
-				}
-				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
-					if (fieldSchema.getLogicalType() ==
-							LogicalTypes.timestampMillis()) {
-
-						record.put(
-							schemaEntry.pos(),
-							_asDateTimeInMilliseconds(jsonValue));
-					}
-					else {
-						record.put(schemaEntry.pos(), _asLong(jsonValue));
-					}
-				}
-				else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
-					record.put(schemaEntry.pos(), _asInteger(jsonValue));
-				}
-				else if (fieldSchema.getType() == Schema.Type.MAP) {
-					OASDictionaryConverter oasDictionaryConverter =
-						new OASDictionaryConverter(fieldSchema);
-
-					record.put(
-						schemaEntry.pos(),
-						oasDictionaryConverter.toIndexedRecord(
-							jsonValue.asJsonObject()));
-				}
-				else if (fieldSchema.getType() == Schema.Type.RECORD) {
-					JsonObjectIndexedRecordConverter dictionaryConverter =
-						new JsonObjectIndexedRecordConverter(fieldSchema);
-
-					record.put(
-						schemaEntry.pos(),
-						dictionaryConverter.toIndexedRecord(
-							jsonValue.asJsonObject()));
-				}
-				else {
-					if (jsonValue instanceof JsonString) {
-						record.put(
-							schemaEntry.pos(),
-							avroConverter.convertToAvro(_asText(jsonValue)));
-
-						return;
-					}
-
-					record.put(
-						schemaEntry.pos(),
-						avroConverter.convertToAvro(jsonValue.toString()));
-				}
-			});
+			try {
+				record.put(field.pos(), _convert(jsonValue, fieldSchema));
+			}
+			catch (Exception e) {
+				throw new ConverterException(
+					String.format(
+						"Unable to convert field `%s` value `%s`to %s",
+						fieldName, jsonValue.toString(),
+						fieldSchema.toString(true)),
+					e);
+			}
+		}
 
 		return record;
 	}
@@ -198,6 +131,76 @@ public class JsonObjectIndexedRecordConverter {
 		JsonString jsonString = (JsonString)jsonValue;
 
 		return jsonString.getString();
+	}
+
+	private Object _convert(JsonValue jsonValue, Schema schema) {
+		Schema fieldSchema = AvroUtils.unwrapIfNullable(schema);
+
+		AvroConverter avroConverter = _converterRegistry.get(
+			fieldSchema.getType());
+
+		if (AvroUtils.isSameType(fieldSchema, AvroUtils._boolean())) {
+			return _asBoolean(jsonValue);
+		}
+		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._bytes())) {
+			return avroConverter.convertToAvro(_asText(jsonValue));
+		}
+		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._double())) {
+			return _asDouble(jsonValue);
+		}
+		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._long())) {
+			if (fieldSchema.getLogicalType() ==
+					LogicalTypes.timestampMillis()) {
+
+				return _asDateTimeInMilliseconds(jsonValue);
+			}
+
+			return _asLong(jsonValue);
+		}
+		else if (AvroUtils.isSameType(fieldSchema, AvroUtils._int())) {
+			return _asInteger(jsonValue);
+		}
+		else if (fieldSchema.getType() == Schema.Type.MAP) {
+			OASDictionaryConverter oasDictionaryConverter =
+				new OASDictionaryConverter(fieldSchema);
+
+			return oasDictionaryConverter.toIndexedRecord(
+				jsonValue.asJsonObject());
+		}
+		else if (fieldSchema.getType() == Schema.Type.RECORD) {
+			JsonObjectIndexedRecordConverter dictionaryConverter =
+				new JsonObjectIndexedRecordConverter(fieldSchema);
+
+			return dictionaryConverter.toIndexedRecord(
+				jsonValue.asJsonObject());
+		}
+
+		if (jsonValue instanceof JsonString) {
+			return avroConverter.convertToAvro(_asText(jsonValue));
+		}
+
+		return avroConverter.convertToAvro(jsonValue.toString());
+	}
+
+	private JsonValue _getJsonValue(
+		Schema.Field field, JsonObject contentJsonObject) {
+
+		String valueFinderPath = _getValueFinderPath(field.name());
+
+		JsonValue jsonValue = _jsonFinder.getDescendantJsonValue(
+			valueFinderPath, contentJsonObject);
+
+		if (jsonValue != JsonValue.NULL) {
+			return jsonValue;
+		}
+
+		if (field.getProp(SchemaConstants.TALEND_IS_LOCKED) == null) {
+			return null;
+		}
+
+		throw new ConverterException(
+			String.format(
+				"Field %s at %s is required", field.name(), valueFinderPath));
 	}
 
 	private String _getValueFinderPath(String name) {

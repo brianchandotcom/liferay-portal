@@ -25,4 +25,8 @@ public class ConverterException extends BaseComponentException {
 		super(message, 0);
 	}
 
+	public ConverterException(String message, Throwable cause) {
+		super(message, 0, cause);
+	}
+
 }

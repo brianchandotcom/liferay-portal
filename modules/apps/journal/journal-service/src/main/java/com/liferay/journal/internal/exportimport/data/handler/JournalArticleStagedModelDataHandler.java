@@ -50,6 +50,9 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,6 +63,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -68,6 +72,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -993,6 +998,8 @@ public class JournalArticleStagedModelDataHandler
 
 				_importFriendlyURLEntries(
 					portletDataContext, article, importedArticle);
+
+				_sendStoredUserNotificationEvents(article);
 			}
 			finally {
 				ServiceContextThreadLocal.popServiceContext();
@@ -1409,6 +1416,46 @@ public class JournalArticleStagedModelDataHandler
 
 				_friendlyURLEntryLocalService.updateFriendlyURLEntry(
 					existingFriendlyURLEntry);
+			}
+		}
+	}
+
+	private void _sendStoredUserNotificationEvents(JournalArticle article) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setCompanyId(article.getCompanyId());
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property delivered = PropertyFactoryUtil.forName("delivered");
+
+				dynamicQuery.add(delivered.eq(false));
+
+				Property payload = PropertyFactoryUtil.forName("payload");
+
+				dynamicQuery.add(
+					payload.like(
+						StringPool.PERCENT + article.getId() +
+							StringPool.PERCENT));
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<UserNotificationEvent>)
+				userNotificationEvent -> {
+					userNotificationEvent.setDelivered(true);
+					UserNotificationEventLocalServiceUtil.
+						updateUserNotificationEvent(userNotificationEvent);
+				});
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to send UserNotificationEvent for article " +
+						article.getArticleId());
 			}
 		}
 	}

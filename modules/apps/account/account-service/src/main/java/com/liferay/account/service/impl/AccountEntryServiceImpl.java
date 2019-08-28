@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -22,12 +23,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,8 +51,8 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 			String description, long logoId, int status)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_ENTRY);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, AccountActionKeys.ADD_ACCOUNT_ENTRY);
 
 		return accountEntryLocalService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, logoId, status);
@@ -74,5 +78,12 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 		return accountEntryLocalService.getAccountEntries(
 			companyId, status, start, end, obc);
 	}
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 }

@@ -98,7 +98,7 @@ public class AssetTagsSelectorTag extends ComponentRendererTag {
 	@Override
 	public String getModule() {
 		return NPMResolverHolder._npmResolver.resolveModuleName(
-			"asset-taglib/asset_tags_selector/AssetTagsSelector.es");
+			"asset-taglib/asset_tags_selector/soy/AssetTagsSelector.es");
 	}
 
 	public void setAddCallback(String addCallback) {

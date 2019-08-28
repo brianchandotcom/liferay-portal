@@ -28,6 +28,7 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.Order;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
@@ -435,6 +436,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				dateEnd, dateStart, ListUtil.toList(slaStatuses),
 				ListUtil.toList(statuses), ListUtil.toList(taskKeys)));
+
+		termsAggregation.addOrders(Order.key(true));
 
 		termsAggregation.addPipelineAggregations(
 			_createBucketSelectorPipelineAggregation(),

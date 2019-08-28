@@ -69,16 +69,20 @@ public class LayoutData {
 			}
 
 			layoutRowJSONArray.put(
-                JSONUtil.put(
-                    "columns", layoutColumnJSONArray
-                ).put(
-                    "rowId", String.valueOf(rowId++)
-                ).put(
-                    "type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
-                ));
+				JSONUtil.put(
+					"columns", layoutColumnJSONArray
+				).put(
+					"config", JSONFactoryUtil.createJSONObject()
+				).put(
+					"rowId", String.valueOf(rowId++)
+				).put(
+					"type", String.valueOf(FragmentConstants.TYPE_COMPONENT)
+				));
 		}
 
 		return JSONUtil.put(
+			"config", JSONFactoryUtil.createJSONObject()
+		).put(
 			"nextColumnId", columnId
 		).put(
 			"nextRowId", rowId

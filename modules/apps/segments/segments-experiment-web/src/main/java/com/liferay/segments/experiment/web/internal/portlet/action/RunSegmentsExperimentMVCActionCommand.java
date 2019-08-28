@@ -65,7 +65,7 @@ public class RunSegmentsExperimentMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -106,20 +106,20 @@ public class RunSegmentsExperimentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String segmentsExperimentRels =
-			ParamUtil.getString(actionRequest, "segmentsExperimentRels");
+		String segmentsExperimentRels = ParamUtil.getString(
+			actionRequest, "segmentsExperimentRels");
 
-		JSONObject segmentsExperimentRelsJSON =
+		JSONObject segmentsExperimentRelsJSONObject =
 			JSONFactoryUtil.createJSONObject(segmentsExperimentRels);
 
-		Iterator<String> iterator = segmentsExperimentRelsJSON.keys();
+		Iterator<String> iterator = segmentsExperimentRelsJSONObject.keys();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
 			_segmentsExperimentRelService.updateSegmentsExperimentRel(
 				GetterUtil.getLong(key),
-				segmentsExperimentRelsJSON.getDouble(key));
+				segmentsExperimentRelsJSONObject.getDouble(key));
 		}
 
 		SegmentsExperiment segmentsExperiment =
@@ -145,6 +145,9 @@ public class RunSegmentsExperimentMVCActionCommand
 	private Portal _portal;
 
 	@Reference
+	private SegmentsExperimentRelService _segmentsExperimentRelService;
+
+	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
 
 	private class RunSegmentsExperimentCallable
@@ -162,8 +165,5 @@ public class RunSegmentsExperimentMVCActionCommand
 		private final ActionRequest _actionRequest;
 
 	}
-
-	@Reference
-	private SegmentsExperimentRelService _segmentsExperimentRelService;
 
 }

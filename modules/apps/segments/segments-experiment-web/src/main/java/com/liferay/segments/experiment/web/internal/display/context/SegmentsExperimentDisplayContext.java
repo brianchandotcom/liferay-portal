@@ -131,6 +131,10 @@ public class SegmentsExperimentDisplayContext {
 		return _getSegmentsExperimentActionURL("/edit_segments_experiment_rel");
 	}
 
+	public String getRunSegmentsExperimenttURL() {
+		return _getSegmentsExperimentActionURL("/run_segments_experiment");
+	}
+
 	public JSONArray getSegmentsExperiencesJSONArray(Locale locale)
 		throws PortalException {
 
@@ -182,10 +186,6 @@ public class SegmentsExperimentDisplayContext {
 			));
 
 		return segmentsExperiencesJSONArray;
-	}
-
-	public String getRunSegmentsExperimenttURL() {
-		return _getSegmentsExperimentActionURL("/run_segments_experiment");
 	}
 
 	public JSONArray getSegmentsExperimentGoalsJSONArray(Locale locale) {

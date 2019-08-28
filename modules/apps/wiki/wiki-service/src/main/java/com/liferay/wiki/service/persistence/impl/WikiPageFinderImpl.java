@@ -642,6 +642,7 @@ public class WikiPageFinderImpl
 	@Reference
 	private CustomSQL _customSQL;
 
+	@Reference
 	private Portal _portal;
 
 }

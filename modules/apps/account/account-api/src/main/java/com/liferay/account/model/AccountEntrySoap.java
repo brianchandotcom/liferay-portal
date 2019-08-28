@@ -45,6 +45,7 @@ public class AccountEntrySoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setWebsite(model.getWebsite());
 
 		return soapModel;
 	}
@@ -186,6 +187,14 @@ public class AccountEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	public String getWebsite() {
+		return _website;
+	}
+
+	public void setWebsite(String website) {
+		_website = website;
+	}
+
 	private long _accountEntryId;
 	private long _companyId;
 	private long _userId;
@@ -197,5 +206,6 @@ public class AccountEntrySoap implements Serializable {
 	private String _description;
 	private long _logoId;
 	private int _status;
+	private String _website;
 
 }

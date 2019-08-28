@@ -142,6 +142,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setStatus(RandomTestUtil.nextInt());
 
+		newAccountEntry.setWebsite(RandomTestUtil.randomString());
+
 		_accountEntries.add(_persistence.update(newAccountEntry));
 
 		AccountEntry existingAccountEntry = _persistence.findByPrimaryKey(
@@ -175,6 +177,8 @@ public class AccountEntryPersistenceTest {
 			existingAccountEntry.getLogoId(), newAccountEntry.getLogoId());
 		Assert.assertEquals(
 			existingAccountEntry.getStatus(), newAccountEntry.getStatus());
+		Assert.assertEquals(
+			existingAccountEntry.getWebsite(), newAccountEntry.getWebsite());
 	}
 
 	@Test
@@ -220,7 +224,7 @@ public class AccountEntryPersistenceTest {
 			"AccountEntry", "accountEntryId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"parentAccountEntryId", true, "name", true, "description", true,
-			"logoId", true, "status", true);
+			"logoId", true, "status", true, "website", true);
 	}
 
 	@Test
@@ -460,6 +464,8 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setLogoId(RandomTestUtil.nextLong());
 
 		accountEntry.setStatus(RandomTestUtil.nextInt());
+
+		accountEntry.setWebsite(RandomTestUtil.randomString());
 
 		_accountEntries.add(_persistence.update(accountEntry));
 

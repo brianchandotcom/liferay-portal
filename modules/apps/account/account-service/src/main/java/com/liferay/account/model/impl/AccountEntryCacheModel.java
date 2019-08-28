@@ -65,7 +65,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{accountEntryId=");
 		sb.append(accountEntryId);
@@ -89,6 +89,8 @@ public class AccountEntryCacheModel
 		sb.append(logoId);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", website=");
+		sb.append(website);
 		sb.append("}");
 
 		return sb.toString();
@@ -142,6 +144,13 @@ public class AccountEntryCacheModel
 		accountEntryImpl.setLogoId(logoId);
 		accountEntryImpl.setStatus(status);
 
+		if (website == null) {
+			accountEntryImpl.setWebsite("");
+		}
+		else {
+			accountEntryImpl.setWebsite(website);
+		}
+
 		accountEntryImpl.resetOriginalValues();
 
 		return accountEntryImpl;
@@ -165,6 +174,7 @@ public class AccountEntryCacheModel
 		logoId = objectInput.readLong();
 
 		status = objectInput.readInt();
+		website = objectInput.readUTF();
 	}
 
 	@Override
@@ -204,6 +214,13 @@ public class AccountEntryCacheModel
 		objectOutput.writeLong(logoId);
 
 		objectOutput.writeInt(status);
+
+		if (website == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(website);
+		}
 	}
 
 	public long accountEntryId;
@@ -217,5 +234,6 @@ public class AccountEntryCacheModel
 	public String description;
 	public long logoId;
 	public int status;
+	public String website;
 
 }

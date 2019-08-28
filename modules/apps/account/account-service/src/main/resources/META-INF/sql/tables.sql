@@ -9,5 +9,6 @@ create table AccountEntry (
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
 	logoId LONG,
-	status INTEGER
+	status INTEGER,
+	website VARCHAR(75) null
 );

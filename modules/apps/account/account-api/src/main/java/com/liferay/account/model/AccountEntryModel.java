@@ -241,4 +241,19 @@ public interface AccountEntryModel
 	 */
 	public void setStatus(int status);
 
+	/**
+	 * Returns the website of this account entry.
+	 *
+	 * @return the website of this account entry
+	 */
+	@AutoEscape
+	public String getWebsite();
+
+	/**
+	 * Sets the website of this account entry.
+	 *
+	 * @param website the website of this account entry
+	 */
+	public void setWebsite(String website);
+
 }

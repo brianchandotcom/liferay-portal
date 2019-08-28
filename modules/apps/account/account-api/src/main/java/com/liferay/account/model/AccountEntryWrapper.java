@@ -56,6 +56,7 @@ public class AccountEntryWrapper
 		attributes.put("description", getDescription());
 		attributes.put("logoId", getLogoId());
 		attributes.put("status", getStatus());
+		attributes.put("website", getWebsite());
 
 		return attributes;
 	}
@@ -127,6 +128,12 @@ public class AccountEntryWrapper
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		String website = (String)attributes.get("website");
+
+		if (website != null) {
+			setWebsite(website);
 		}
 	}
 
@@ -258,6 +265,16 @@ public class AccountEntryWrapper
 	@Override
 	public String getUserUuid() {
 		return model.getUserUuid();
+	}
+
+	/**
+	 * Returns the website of this account entry.
+	 *
+	 * @return the website of this account entry
+	 */
+	@Override
+	public String getWebsite() {
+		return model.getWebsite();
 	}
 
 	@Override
@@ -393,6 +410,16 @@ public class AccountEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the website of this account entry.
+	 *
+	 * @param website the website of this account entry
+	 */
+	@Override
+	public void setWebsite(String website) {
+		model.setWebsite(website);
 	}
 
 	@Override

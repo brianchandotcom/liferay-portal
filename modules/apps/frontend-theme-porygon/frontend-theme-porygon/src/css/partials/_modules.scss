@@ -10,7 +10,7 @@
 	}
 
 	.asset-title {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 40px;
 			font-weight: 300;
 		}
@@ -31,9 +31,10 @@
 	}
 
 	.blog-list-card-content {
-		@include position(absolute, null null 10px null);
+		position: absolute;
+		bottom: 10px;
 
-		@include media-query($breakpoint_tablet, null) {
+		@include media-breakpoint-up(lg) {
 			padding: 10px 30px;
 		}
 	}
@@ -42,7 +43,7 @@
 .blog-list {
 	margin-top: 20px;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		margin-top: 40px;
 	}
 
@@ -75,7 +76,7 @@
 		font-size: 20px;
 		font-weight: 300;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			font-size: 36px;
 		}
 	}

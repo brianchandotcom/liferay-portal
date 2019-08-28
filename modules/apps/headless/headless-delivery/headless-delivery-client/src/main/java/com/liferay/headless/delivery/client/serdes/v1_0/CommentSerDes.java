@@ -194,6 +194,65 @@ public class CommentSerDes {
 		return map;
 	}
 
+	public static class CommentJSONParser extends BaseJSONParser<Comment> {
+
+		@Override
+		protected Comment createDTO() {
+			return new Comment();
+		}
+
+		@Override
+		protected Comment[] createDTOArray(int size) {
+			return new Comment[size];
+		}
+
+		@Override
+		protected void setField(
+			Comment comment, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					comment.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					comment.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					comment.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					comment.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
+				if (jsonParserFieldValue != null) {
+					comment.setNumberOfComments(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "text")) {
+				if (jsonParserFieldValue != null) {
+					comment.setText((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -261,65 +320,6 @@ public class CommentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class CommentJSONParser extends BaseJSONParser<Comment> {
-
-		@Override
-		protected Comment createDTO() {
-			return new Comment();
-		}
-
-		@Override
-		protected Comment[] createDTOArray(int size) {
-			return new Comment[size];
-		}
-
-		@Override
-		protected void setField(
-			Comment comment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "creator")) {
-				if (jsonParserFieldValue != null) {
-					comment.setCreator(
-						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					comment.setDateCreated(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					comment.setDateModified(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					comment.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "numberOfComments")) {
-				if (jsonParserFieldValue != null) {
-					comment.setNumberOfComments(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
-				if (jsonParserFieldValue != null) {
-					comment.setText((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

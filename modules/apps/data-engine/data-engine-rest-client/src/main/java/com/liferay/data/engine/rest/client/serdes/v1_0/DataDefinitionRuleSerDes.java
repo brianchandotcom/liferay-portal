@@ -185,6 +185,60 @@ public class DataDefinitionRuleSerDes {
 		return map;
 	}
 
+	public static class DataDefinitionRuleJSONParser
+		extends BaseJSONParser<DataDefinitionRule> {
+
+		@Override
+		protected DataDefinitionRule createDTO() {
+			return new DataDefinitionRule();
+		}
+
+		@Override
+		protected DataDefinitionRule[] createDTOArray(int size) {
+			return new DataDefinitionRule[size];
+		}
+
+		@Override
+		protected void setField(
+			DataDefinitionRule dataDefinitionRule, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(
+					jsonParserFieldName, "dataDefinitionFieldNames")) {
+
+				if (jsonParserFieldValue != null) {
+					dataDefinitionRule.setDataDefinitionFieldNames(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "dataDefinitionRuleParameters")) {
+
+				if (jsonParserFieldValue != null) {
+					dataDefinitionRule.setDataDefinitionRuleParameters(
+						(Map)DataDefinitionRuleSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					dataDefinitionRule.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ruleType")) {
+				if (jsonParserFieldValue != null) {
+					dataDefinitionRule.setRuleType(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -252,60 +306,6 @@ public class DataDefinitionRuleSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataDefinitionRuleJSONParser
-		extends BaseJSONParser<DataDefinitionRule> {
-
-		@Override
-		protected DataDefinitionRule createDTO() {
-			return new DataDefinitionRule();
-		}
-
-		@Override
-		protected DataDefinitionRule[] createDTOArray(int size) {
-			return new DataDefinitionRule[size];
-		}
-
-		@Override
-		protected void setField(
-			DataDefinitionRule dataDefinitionRule, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(
-					jsonParserFieldName, "dataDefinitionFieldNames")) {
-
-				if (jsonParserFieldValue != null) {
-					dataDefinitionRule.setDataDefinitionFieldNames(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "dataDefinitionRuleParameters")) {
-
-				if (jsonParserFieldValue != null) {
-					dataDefinitionRule.setDataDefinitionRuleParameters(
-						(Map)DataDefinitionRuleSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					dataDefinitionRule.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "ruleType")) {
-				if (jsonParserFieldValue != null) {
-					dataDefinitionRule.setRuleType(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -224,6 +224,74 @@ public class BlogPostingImageSerDes {
 		return map;
 	}
 
+	public static class BlogPostingImageJSONParser
+		extends BaseJSONParser<BlogPostingImage> {
+
+		@Override
+		protected BlogPostingImage createDTO() {
+			return new BlogPostingImage();
+		}
+
+		@Override
+		protected BlogPostingImage[] createDTOArray(int size) {
+			return new BlogPostingImage[size];
+		}
+
+		@Override
+		protected void setField(
+			BlogPostingImage blogPostingImage, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setContentUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setFileExtension(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
+				if (jsonParserFieldValue != null) {
+					blogPostingImage.setViewableBy(
+						BlogPostingImage.ViewableBy.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -291,74 +359,6 @@ public class BlogPostingImageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class BlogPostingImageJSONParser
-		extends BaseJSONParser<BlogPostingImage> {
-
-		@Override
-		protected BlogPostingImage createDTO() {
-			return new BlogPostingImage();
-		}
-
-		@Override
-		protected BlogPostingImage[] createDTOArray(int size) {
-			return new BlogPostingImage[size];
-		}
-
-		@Override
-		protected void setField(
-			BlogPostingImage blogPostingImage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setContentUrl(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setEncodingFormat(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setFileExtension(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setTitle((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "viewableBy")) {
-				if (jsonParserFieldValue != null) {
-					blogPostingImage.setViewableBy(
-						BlogPostingImage.ViewableBy.create(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

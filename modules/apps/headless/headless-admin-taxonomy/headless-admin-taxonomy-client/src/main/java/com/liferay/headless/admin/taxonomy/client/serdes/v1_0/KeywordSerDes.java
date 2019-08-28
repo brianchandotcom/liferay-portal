@@ -211,6 +211,71 @@ public class KeywordSerDes {
 		return map;
 	}
 
+	public static class KeywordJSONParser extends BaseJSONParser<Keyword> {
+
+		@Override
+		protected Keyword createDTO() {
+			return new Keyword();
+		}
+
+		@Override
+		protected Keyword[] createDTOArray(int size) {
+			return new Keyword[size];
+		}
+
+		@Override
+		protected void setField(
+			Keyword keyword, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "keywordUsageCount")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setKeywordUsageCount(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					keyword.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -278,71 +343,6 @@ public class KeywordSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class KeywordJSONParser extends BaseJSONParser<Keyword> {
-
-		@Override
-		protected Keyword createDTO() {
-			return new Keyword();
-		}
-
-		@Override
-		protected Keyword[] createDTOArray(int size) {
-			return new Keyword[size];
-		}
-
-		@Override
-		protected void setField(
-			Keyword keyword, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "creator")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setCreator(
-						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setDateCreated(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setDateModified(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "keywordUsageCount")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setKeywordUsageCount(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "siteId")) {
-				if (jsonParserFieldValue != null) {
-					keyword.setSiteId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -234,6 +234,74 @@ public class SegmentSerDes {
 		return map;
 	}
 
+	public static class SegmentJSONParser extends BaseJSONParser<Segment> {
+
+		@Override
+		protected Segment createDTO() {
+			return new Segment();
+		}
+
+		@Override
+		protected Segment[] createDTOArray(int size) {
+			return new Segment[size];
+		}
+
+		@Override
+		protected void setField(
+			Segment segment, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "active")) {
+				if (jsonParserFieldValue != null) {
+					segment.setActive((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "criteria")) {
+				if (jsonParserFieldValue != null) {
+					segment.setCriteria((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					segment.setDateCreated(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					segment.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					segment.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					segment.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					segment.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "source")) {
+				if (jsonParserFieldValue != null) {
+					segment.setSource((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -301,74 +369,6 @@ public class SegmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class SegmentJSONParser extends BaseJSONParser<Segment> {
-
-		@Override
-		protected Segment createDTO() {
-			return new Segment();
-		}
-
-		@Override
-		protected Segment[] createDTOArray(int size) {
-			return new Segment[size];
-		}
-
-		@Override
-		protected void setField(
-			Segment segment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "active")) {
-				if (jsonParserFieldValue != null) {
-					segment.setActive((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "criteria")) {
-				if (jsonParserFieldValue != null) {
-					segment.setCriteria((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					segment.setDateCreated(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					segment.setDateModified(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					segment.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					segment.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "siteId")) {
-				if (jsonParserFieldValue != null) {
-					segment.setSiteId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "source")) {
-				if (jsonParserFieldValue != null) {
-					segment.setSource((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

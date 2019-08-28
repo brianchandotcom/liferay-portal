@@ -225,6 +225,75 @@ public class ContentFieldSerDes {
 		return map;
 	}
 
+	public static class ContentFieldJSONParser
+		extends BaseJSONParser<ContentField> {
+
+		@Override
+		protected ContentField createDTO() {
+			return new ContentField();
+		}
+
+		@Override
+		protected ContentField[] createDTOArray(int size) {
+			return new ContentField[size];
+		}
+
+		@Override
+		protected void setField(
+			ContentField contentField, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "dataType")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setDataType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "inputControl")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setInputControl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "nestedFields")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setNestedFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ContentFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new ContentField[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "repeatable")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setRepeatable((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					contentField.setValue(
+						ValueSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -292,75 +361,6 @@ public class ContentFieldSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ContentFieldJSONParser
-		extends BaseJSONParser<ContentField> {
-
-		@Override
-		protected ContentField createDTO() {
-			return new ContentField();
-		}
-
-		@Override
-		protected ContentField[] createDTOArray(int size) {
-			return new ContentField[size];
-		}
-
-		@Override
-		protected void setField(
-			ContentField contentField, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "dataType")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setDataType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "inputControl")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setInputControl((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setLabel((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "nestedFields")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setNestedFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> ContentFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new ContentField[size]
-						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "repeatable")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setRepeatable((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					contentField.setValue(
-						ValueSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

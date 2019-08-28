@@ -136,6 +136,48 @@ public class FormFieldOptionSerDes {
 		return map;
 	}
 
+	public static class FormFieldOptionJSONParser
+		extends BaseJSONParser<FormFieldOption> {
+
+		@Override
+		protected FormFieldOption createDTO() {
+			return new FormFieldOption();
+		}
+
+		@Override
+		protected FormFieldOption[] createDTOArray(int size) {
+			return new FormFieldOption[size];
+		}
+
+		@Override
+		protected void setField(
+			FormFieldOption formFieldOption, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					formFieldOption.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					formFieldOption.setLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					formFieldOption.setValue((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -203,48 +245,6 @@ public class FormFieldOptionSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class FormFieldOptionJSONParser
-		extends BaseJSONParser<FormFieldOption> {
-
-		@Override
-		protected FormFieldOption createDTO() {
-			return new FormFieldOption();
-		}
-
-		@Override
-		protected FormFieldOption[] createDTOArray(int size) {
-			return new FormFieldOption[size];
-		}
-
-		@Override
-		protected void setField(
-			FormFieldOption formFieldOption, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					formFieldOption.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					formFieldOption.setLabel((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					formFieldOption.setValue((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

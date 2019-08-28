@@ -117,6 +117,44 @@ public class ParentTaxonomyCategorySerDes {
 		return map;
 	}
 
+	public static class ParentTaxonomyCategoryJSONParser
+		extends BaseJSONParser<ParentTaxonomyCategory> {
+
+		@Override
+		protected ParentTaxonomyCategory createDTO() {
+			return new ParentTaxonomyCategory();
+		}
+
+		@Override
+		protected ParentTaxonomyCategory[] createDTOArray(int size) {
+			return new ParentTaxonomyCategory[size];
+		}
+
+		@Override
+		protected void setField(
+			ParentTaxonomyCategory parentTaxonomyCategory,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					parentTaxonomyCategory.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					parentTaxonomyCategory.setName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -184,44 +222,6 @@ public class ParentTaxonomyCategorySerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ParentTaxonomyCategoryJSONParser
-		extends BaseJSONParser<ParentTaxonomyCategory> {
-
-		@Override
-		protected ParentTaxonomyCategory createDTO() {
-			return new ParentTaxonomyCategory();
-		}
-
-		@Override
-		protected ParentTaxonomyCategory[] createDTOArray(int size) {
-			return new ParentTaxonomyCategory[size];
-		}
-
-		@Override
-		protected void setField(
-			ParentTaxonomyCategory parentTaxonomyCategory,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					parentTaxonomyCategory.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					parentTaxonomyCategory.setName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

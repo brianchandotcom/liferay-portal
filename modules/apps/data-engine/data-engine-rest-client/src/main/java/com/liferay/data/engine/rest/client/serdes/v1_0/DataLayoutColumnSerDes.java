@@ -127,6 +127,44 @@ public class DataLayoutColumnSerDes {
 		return map;
 	}
 
+	public static class DataLayoutColumnJSONParser
+		extends BaseJSONParser<DataLayoutColumn> {
+
+		@Override
+		protected DataLayoutColumn createDTO() {
+			return new DataLayoutColumn();
+		}
+
+		@Override
+		protected DataLayoutColumn[] createDTOArray(int size) {
+			return new DataLayoutColumn[size];
+		}
+
+		@Override
+		protected void setField(
+			DataLayoutColumn dataLayoutColumn, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "columnSize")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutColumn.setColumnSize(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fieldNames")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutColumn.setFieldNames(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -194,44 +232,6 @@ public class DataLayoutColumnSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataLayoutColumnJSONParser
-		extends BaseJSONParser<DataLayoutColumn> {
-
-		@Override
-		protected DataLayoutColumn createDTO() {
-			return new DataLayoutColumn();
-		}
-
-		@Override
-		protected DataLayoutColumn[] createDTOArray(int size) {
-			return new DataLayoutColumn[size];
-		}
-
-		@Override
-		protected void setField(
-			DataLayoutColumn dataLayoutColumn, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "columnSize")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutColumn.setColumnSize(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fieldNames")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutColumn.setFieldNames(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

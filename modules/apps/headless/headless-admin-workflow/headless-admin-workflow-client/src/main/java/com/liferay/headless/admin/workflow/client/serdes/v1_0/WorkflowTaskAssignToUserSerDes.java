@@ -153,6 +153,50 @@ public class WorkflowTaskAssignToUserSerDes {
 		return map;
 	}
 
+	public static class WorkflowTaskAssignToUserJSONParser
+		extends BaseJSONParser<WorkflowTaskAssignToUser> {
+
+		@Override
+		protected WorkflowTaskAssignToUser createDTO() {
+			return new WorkflowTaskAssignToUser();
+		}
+
+		@Override
+		protected WorkflowTaskAssignToUser[] createDTOArray(int size) {
+			return new WorkflowTaskAssignToUser[size];
+		}
+
+		@Override
+		protected void setField(
+			WorkflowTaskAssignToUser workflowTaskAssignToUser,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "assigneeId")) {
+				if (jsonParserFieldValue != null) {
+					workflowTaskAssignToUser.setAssigneeId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "comment")) {
+				if (jsonParserFieldValue != null) {
+					workflowTaskAssignToUser.setComment(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dueDate")) {
+				if (jsonParserFieldValue != null) {
+					workflowTaskAssignToUser.setDueDate(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -220,50 +264,6 @@ public class WorkflowTaskAssignToUserSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class WorkflowTaskAssignToUserJSONParser
-		extends BaseJSONParser<WorkflowTaskAssignToUser> {
-
-		@Override
-		protected WorkflowTaskAssignToUser createDTO() {
-			return new WorkflowTaskAssignToUser();
-		}
-
-		@Override
-		protected WorkflowTaskAssignToUser[] createDTOArray(int size) {
-			return new WorkflowTaskAssignToUser[size];
-		}
-
-		@Override
-		protected void setField(
-			WorkflowTaskAssignToUser workflowTaskAssignToUser,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "assigneeId")) {
-				if (jsonParserFieldValue != null) {
-					workflowTaskAssignToUser.setAssigneeId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "comment")) {
-				if (jsonParserFieldValue != null) {
-					workflowTaskAssignToUser.setComment(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dueDate")) {
-				if (jsonParserFieldValue != null) {
-					workflowTaskAssignToUser.setDueDate(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

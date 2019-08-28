@@ -137,6 +137,48 @@ public class RelatedContentSerDes {
 		return map;
 	}
 
+	public static class RelatedContentJSONParser
+		extends BaseJSONParser<RelatedContent> {
+
+		@Override
+		protected RelatedContent createDTO() {
+			return new RelatedContent();
+		}
+
+		@Override
+		protected RelatedContent[] createDTOArray(int size) {
+			return new RelatedContent[size];
+		}
+
+		@Override
+		protected void setField(
+			RelatedContent relatedContent, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentType")) {
+				if (jsonParserFieldValue != null) {
+					relatedContent.setContentType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					relatedContent.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					relatedContent.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -204,48 +246,6 @@ public class RelatedContentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class RelatedContentJSONParser
-		extends BaseJSONParser<RelatedContent> {
-
-		@Override
-		protected RelatedContent createDTO() {
-			return new RelatedContent();
-		}
-
-		@Override
-		protected RelatedContent[] createDTOArray(int size) {
-			return new RelatedContent[size];
-		}
-
-		@Override
-		protected void setField(
-			RelatedContent relatedContent, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentType")) {
-				if (jsonParserFieldValue != null) {
-					relatedContent.setContentType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					relatedContent.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					relatedContent.setTitle((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

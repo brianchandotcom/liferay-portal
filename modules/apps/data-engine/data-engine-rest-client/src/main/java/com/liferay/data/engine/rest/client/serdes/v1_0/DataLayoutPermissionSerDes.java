@@ -203,6 +203,67 @@ public class DataLayoutPermissionSerDes {
 		return map;
 	}
 
+	public static class DataLayoutPermissionJSONParser
+		extends BaseJSONParser<DataLayoutPermission> {
+
+		@Override
+		protected DataLayoutPermission createDTO() {
+			return new DataLayoutPermission();
+		}
+
+		@Override
+		protected DataLayoutPermission[] createDTOArray(int size) {
+			return new DataLayoutPermission[size];
+		}
+
+		@Override
+		protected void setField(
+			DataLayoutPermission dataLayoutPermission,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "addDataLayout")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setAddDataLayout(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "definePermissions")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setDefinePermissions(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "delete")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setDelete(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleNames")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setRoleNames(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "update")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setUpdate(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "view")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPermission.setView((Boolean)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -270,67 +331,6 @@ public class DataLayoutPermissionSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataLayoutPermissionJSONParser
-		extends BaseJSONParser<DataLayoutPermission> {
-
-		@Override
-		protected DataLayoutPermission createDTO() {
-			return new DataLayoutPermission();
-		}
-
-		@Override
-		protected DataLayoutPermission[] createDTOArray(int size) {
-			return new DataLayoutPermission[size];
-		}
-
-		@Override
-		protected void setField(
-			DataLayoutPermission dataLayoutPermission,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "addDataLayout")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setAddDataLayout(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "definePermissions")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setDefinePermissions(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "delete")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setDelete(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "roleNames")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setRoleNames(
-						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "update")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setUpdate(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "view")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPermission.setView((Boolean)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -112,6 +112,41 @@ public class RoleBriefSerDes {
 		return map;
 	}
 
+	public static class RoleBriefJSONParser extends BaseJSONParser<RoleBrief> {
+
+		@Override
+		protected RoleBrief createDTO() {
+			return new RoleBrief();
+		}
+
+		@Override
+		protected RoleBrief[] createDTOArray(int size) {
+			return new RoleBrief[size];
+		}
+
+		@Override
+		protected void setField(
+			RoleBrief roleBrief, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					roleBrief.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					roleBrief.setName((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -179,41 +214,6 @@ public class RoleBriefSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class RoleBriefJSONParser extends BaseJSONParser<RoleBrief> {
-
-		@Override
-		protected RoleBrief createDTO() {
-			return new RoleBrief();
-		}
-
-		@Override
-		protected RoleBrief[] createDTOArray(int size) {
-			return new RoleBrief[size];
-		}
-
-		@Override
-		protected void setField(
-			RoleBrief roleBrief, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					roleBrief.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					roleBrief.setName((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

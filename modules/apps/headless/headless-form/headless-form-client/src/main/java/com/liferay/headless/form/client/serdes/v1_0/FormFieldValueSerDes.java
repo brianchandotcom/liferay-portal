@@ -174,6 +174,60 @@ public class FormFieldValueSerDes {
 		return map;
 	}
 
+	public static class FormFieldValueJSONParser
+		extends BaseJSONParser<FormFieldValue> {
+
+		@Override
+		protected FormFieldValue createDTO() {
+			return new FormFieldValue();
+		}
+
+		@Override
+		protected FormFieldValue[] createDTOArray(int size) {
+			return new FormFieldValue[size];
+		}
+
+		@Override
+		protected void setField(
+			FormFieldValue formFieldValue, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "formDocument")) {
+				if (jsonParserFieldValue != null) {
+					formFieldValue.setFormDocument(
+						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formDocumentId")) {
+				if (jsonParserFieldValue != null) {
+					formFieldValue.setFormDocumentId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					formFieldValue.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					formFieldValue.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					formFieldValue.setValue((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -241,60 +295,6 @@ public class FormFieldValueSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class FormFieldValueJSONParser
-		extends BaseJSONParser<FormFieldValue> {
-
-		@Override
-		protected FormFieldValue createDTO() {
-			return new FormFieldValue();
-		}
-
-		@Override
-		protected FormFieldValue[] createDTOArray(int size) {
-			return new FormFieldValue[size];
-		}
-
-		@Override
-		protected void setField(
-			FormFieldValue formFieldValue, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "formDocument")) {
-				if (jsonParserFieldValue != null) {
-					formFieldValue.setFormDocument(
-						FormDocumentSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "formDocumentId")) {
-				if (jsonParserFieldValue != null) {
-					formFieldValue.setFormDocumentId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					formFieldValue.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					formFieldValue.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					formFieldValue.setValue((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -208,6 +208,68 @@ public class KnowledgeBaseAttachmentSerDes {
 		return map;
 	}
 
+	public static class KnowledgeBaseAttachmentJSONParser
+		extends BaseJSONParser<KnowledgeBaseAttachment> {
+
+		@Override
+		protected KnowledgeBaseAttachment createDTO() {
+			return new KnowledgeBaseAttachment();
+		}
+
+		@Override
+		protected KnowledgeBaseAttachment[] createDTOArray(int size) {
+			return new KnowledgeBaseAttachment[size];
+		}
+
+		@Override
+		protected void setField(
+			KnowledgeBaseAttachment knowledgeBaseAttachment,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setContentUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setFileExtension(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseAttachment.setTitle(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -275,68 +337,6 @@ public class KnowledgeBaseAttachmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class KnowledgeBaseAttachmentJSONParser
-		extends BaseJSONParser<KnowledgeBaseAttachment> {
-
-		@Override
-		protected KnowledgeBaseAttachment createDTO() {
-			return new KnowledgeBaseAttachment();
-		}
-
-		@Override
-		protected KnowledgeBaseAttachment[] createDTOArray(int size) {
-			return new KnowledgeBaseAttachment[size];
-		}
-
-		@Override
-		protected void setField(
-			KnowledgeBaseAttachment knowledgeBaseAttachment,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setContentUrl(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setEncodingFormat(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setFileExtension(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					knowledgeBaseAttachment.setTitle(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

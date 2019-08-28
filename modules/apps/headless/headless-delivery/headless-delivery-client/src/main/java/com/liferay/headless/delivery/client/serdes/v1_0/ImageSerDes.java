@@ -133,6 +133,47 @@ public class ImageSerDes {
 		return map;
 	}
 
+	public static class ImageJSONParser extends BaseJSONParser<Image> {
+
+		@Override
+		protected Image createDTO() {
+			return new Image();
+		}
+
+		@Override
+		protected Image[] createDTOArray(int size) {
+			return new Image[size];
+		}
+
+		@Override
+		protected void setField(
+			Image image, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "caption")) {
+				if (jsonParserFieldValue != null) {
+					image.setCaption((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					image.setContentUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageId")) {
+				if (jsonParserFieldValue != null) {
+					image.setImageId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -200,47 +241,6 @@ public class ImageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ImageJSONParser extends BaseJSONParser<Image> {
-
-		@Override
-		protected Image createDTO() {
-			return new Image();
-		}
-
-		@Override
-		protected Image[] createDTOArray(int size) {
-			return new Image[size];
-		}
-
-		@Override
-		protected void setField(
-			Image image, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "caption")) {
-				if (jsonParserFieldValue != null) {
-					image.setCaption((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					image.setContentUrl((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "imageId")) {
-				if (jsonParserFieldValue != null) {
-					image.setImageId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

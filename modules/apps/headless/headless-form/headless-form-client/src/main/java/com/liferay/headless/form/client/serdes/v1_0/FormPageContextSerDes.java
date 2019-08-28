@@ -147,6 +147,58 @@ public class FormPageContextSerDes {
 		return map;
 	}
 
+	public static class FormPageContextJSONParser
+		extends BaseJSONParser<FormPageContext> {
+
+		@Override
+		protected FormPageContext createDTO() {
+			return new FormPageContext();
+		}
+
+		@Override
+		protected FormPageContext[] createDTOArray(int size) {
+			return new FormPageContext[size];
+		}
+
+		@Override
+		protected void setField(
+			FormPageContext formPageContext, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "enabled")) {
+				if (jsonParserFieldValue != null) {
+					formPageContext.setEnabled((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "formFieldContexts")) {
+				if (jsonParserFieldValue != null) {
+					formPageContext.setFormFieldContexts(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FormFieldContextSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new FormFieldContext[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "showRequiredFieldsWarning")) {
+
+				if (jsonParserFieldValue != null) {
+					formPageContext.setShowRequiredFieldsWarning(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -214,58 +266,6 @@ public class FormPageContextSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class FormPageContextJSONParser
-		extends BaseJSONParser<FormPageContext> {
-
-		@Override
-		protected FormPageContext createDTO() {
-			return new FormPageContext();
-		}
-
-		@Override
-		protected FormPageContext[] createDTOArray(int size) {
-			return new FormPageContext[size];
-		}
-
-		@Override
-		protected void setField(
-			FormPageContext formPageContext, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "enabled")) {
-				if (jsonParserFieldValue != null) {
-					formPageContext.setEnabled((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "formFieldContexts")) {
-				if (jsonParserFieldValue != null) {
-					formPageContext.setFormFieldContexts(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldContextSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormFieldContext[size]
-						));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "showRequiredFieldsWarning")) {
-
-				if (jsonParserFieldValue != null) {
-					formPageContext.setShowRequiredFieldsWarning(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

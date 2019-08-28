@@ -173,6 +173,61 @@ public class AdaptedImageSerDes {
 		return map;
 	}
 
+	public static class AdaptedImageJSONParser
+		extends BaseJSONParser<AdaptedImage> {
+
+		@Override
+		protected AdaptedImage createDTO() {
+			return new AdaptedImage();
+		}
+
+		@Override
+		protected AdaptedImage[] createDTOArray(int size) {
+			return new AdaptedImage[size];
+		}
+
+		@Override
+		protected void setField(
+			AdaptedImage adaptedImage, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setContentUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "height")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setHeight(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "resolutionName")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setResolutionName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "width")) {
+				if (jsonParserFieldValue != null) {
+					adaptedImage.setWidth(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -240,61 +295,6 @@ public class AdaptedImageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class AdaptedImageJSONParser
-		extends BaseJSONParser<AdaptedImage> {
-
-		@Override
-		protected AdaptedImage createDTO() {
-			return new AdaptedImage();
-		}
-
-		@Override
-		protected AdaptedImage[] createDTOArray(int size) {
-			return new AdaptedImage[size];
-		}
-
-		@Override
-		protected void setField(
-			AdaptedImage adaptedImage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					adaptedImage.setContentUrl((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "height")) {
-				if (jsonParserFieldValue != null) {
-					adaptedImage.setHeight(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "resolutionName")) {
-				if (jsonParserFieldValue != null) {
-					adaptedImage.setResolutionName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					adaptedImage.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "width")) {
-				if (jsonParserFieldValue != null) {
-					adaptedImage.setWidth(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

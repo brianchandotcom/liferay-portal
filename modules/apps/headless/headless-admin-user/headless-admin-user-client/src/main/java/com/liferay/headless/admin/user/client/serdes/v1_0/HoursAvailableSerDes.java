@@ -140,6 +140,47 @@ public class HoursAvailableSerDes {
 		return map;
 	}
 
+	public static class HoursAvailableJSONParser
+		extends BaseJSONParser<HoursAvailable> {
+
+		@Override
+		protected HoursAvailable createDTO() {
+			return new HoursAvailable();
+		}
+
+		@Override
+		protected HoursAvailable[] createDTOArray(int size) {
+			return new HoursAvailable[size];
+		}
+
+		@Override
+		protected void setField(
+			HoursAvailable hoursAvailable, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "closes")) {
+				if (jsonParserFieldValue != null) {
+					hoursAvailable.setCloses((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dayOfWeek")) {
+				if (jsonParserFieldValue != null) {
+					hoursAvailable.setDayOfWeek((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "opens")) {
+				if (jsonParserFieldValue != null) {
+					hoursAvailable.setOpens((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -207,47 +248,6 @@ public class HoursAvailableSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class HoursAvailableJSONParser
-		extends BaseJSONParser<HoursAvailable> {
-
-		@Override
-		protected HoursAvailable createDTO() {
-			return new HoursAvailable();
-		}
-
-		@Override
-		protected HoursAvailable[] createDTOArray(int size) {
-			return new HoursAvailable[size];
-		}
-
-		@Override
-		protected void setField(
-			HoursAvailable hoursAvailable, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "closes")) {
-				if (jsonParserFieldValue != null) {
-					hoursAvailable.setCloses((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dayOfWeek")) {
-				if (jsonParserFieldValue != null) {
-					hoursAvailable.setDayOfWeek((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "opens")) {
-				if (jsonParserFieldValue != null) {
-					hoursAvailable.setOpens((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

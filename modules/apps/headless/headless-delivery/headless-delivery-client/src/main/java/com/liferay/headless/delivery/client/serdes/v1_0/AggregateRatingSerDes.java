@@ -152,6 +152,56 @@ public class AggregateRatingSerDes {
 		return map;
 	}
 
+	public static class AggregateRatingJSONParser
+		extends BaseJSONParser<AggregateRating> {
+
+		@Override
+		protected AggregateRating createDTO() {
+			return new AggregateRating();
+		}
+
+		@Override
+		protected AggregateRating[] createDTOArray(int size) {
+			return new AggregateRating[size];
+		}
+
+		@Override
+		protected void setField(
+			AggregateRating aggregateRating, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "bestRating")) {
+				if (jsonParserFieldValue != null) {
+					aggregateRating.setBestRating(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ratingCount")) {
+				if (jsonParserFieldValue != null) {
+					aggregateRating.setRatingCount(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
+				if (jsonParserFieldValue != null) {
+					aggregateRating.setRatingValue(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
+				if (jsonParserFieldValue != null) {
+					aggregateRating.setWorstRating(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -219,56 +269,6 @@ public class AggregateRatingSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class AggregateRatingJSONParser
-		extends BaseJSONParser<AggregateRating> {
-
-		@Override
-		protected AggregateRating createDTO() {
-			return new AggregateRating();
-		}
-
-		@Override
-		protected AggregateRating[] createDTOArray(int size) {
-			return new AggregateRating[size];
-		}
-
-		@Override
-		protected void setField(
-			AggregateRating aggregateRating, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "bestRating")) {
-				if (jsonParserFieldValue != null) {
-					aggregateRating.setBestRating(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "ratingCount")) {
-				if (jsonParserFieldValue != null) {
-					aggregateRating.setRatingCount(
-						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
-				if (jsonParserFieldValue != null) {
-					aggregateRating.setRatingValue(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
-				if (jsonParserFieldValue != null) {
-					aggregateRating.setWorstRating(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

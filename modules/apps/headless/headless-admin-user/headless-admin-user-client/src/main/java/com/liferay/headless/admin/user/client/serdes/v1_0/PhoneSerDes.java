@@ -171,6 +171,56 @@ public class PhoneSerDes {
 		return map;
 	}
 
+	public static class PhoneJSONParser extends BaseJSONParser<Phone> {
+
+		@Override
+		protected Phone createDTO() {
+			return new Phone();
+		}
+
+		@Override
+		protected Phone[] createDTOArray(int size) {
+			return new Phone[size];
+		}
+
+		@Override
+		protected void setField(
+			Phone phone, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "extension")) {
+				if (jsonParserFieldValue != null) {
+					phone.setExtension((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					phone.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "phoneNumber")) {
+				if (jsonParserFieldValue != null) {
+					phone.setPhoneNumber((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "phoneType")) {
+				if (jsonParserFieldValue != null) {
+					phone.setPhoneType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "primary")) {
+				if (jsonParserFieldValue != null) {
+					phone.setPrimary((Boolean)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -238,56 +288,6 @@ public class PhoneSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class PhoneJSONParser extends BaseJSONParser<Phone> {
-
-		@Override
-		protected Phone createDTO() {
-			return new Phone();
-		}
-
-		@Override
-		protected Phone[] createDTOArray(int size) {
-			return new Phone[size];
-		}
-
-		@Override
-		protected void setField(
-			Phone phone, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "extension")) {
-				if (jsonParserFieldValue != null) {
-					phone.setExtension((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					phone.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "phoneNumber")) {
-				if (jsonParserFieldValue != null) {
-					phone.setPhoneNumber((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "phoneType")) {
-				if (jsonParserFieldValue != null) {
-					phone.setPhoneType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "primary")) {
-				if (jsonParserFieldValue != null) {
-					phone.setPrimary((Boolean)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -112,6 +112,41 @@ public class SiteBriefSerDes {
 		return map;
 	}
 
+	public static class SiteBriefJSONParser extends BaseJSONParser<SiteBrief> {
+
+		@Override
+		protected SiteBrief createDTO() {
+			return new SiteBrief();
+		}
+
+		@Override
+		protected SiteBrief[] createDTOArray(int size) {
+			return new SiteBrief[size];
+		}
+
+		@Override
+		protected void setField(
+			SiteBrief siteBrief, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					siteBrief.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					siteBrief.setName((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -179,41 +214,6 @@ public class SiteBriefSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class SiteBriefJSONParser extends BaseJSONParser<SiteBrief> {
-
-		@Override
-		protected SiteBrief createDTO() {
-			return new SiteBrief();
-		}
-
-		@Override
-		protected SiteBrief[] createDTOArray(int size) {
-			return new SiteBrief[size];
-		}
-
-		@Override
-		protected void setField(
-			SiteBrief siteBrief, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					siteBrief.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					siteBrief.setName((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

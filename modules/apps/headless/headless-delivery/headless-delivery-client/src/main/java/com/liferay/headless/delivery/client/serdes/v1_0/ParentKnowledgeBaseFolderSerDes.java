@@ -126,6 +126,44 @@ public class ParentKnowledgeBaseFolderSerDes {
 		return map;
 	}
 
+	public static class ParentKnowledgeBaseFolderJSONParser
+		extends BaseJSONParser<ParentKnowledgeBaseFolder> {
+
+		@Override
+		protected ParentKnowledgeBaseFolder createDTO() {
+			return new ParentKnowledgeBaseFolder();
+		}
+
+		@Override
+		protected ParentKnowledgeBaseFolder[] createDTOArray(int size) {
+			return new ParentKnowledgeBaseFolder[size];
+		}
+
+		@Override
+		protected void setField(
+			ParentKnowledgeBaseFolder parentKnowledgeBaseFolder,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "folderId")) {
+				if (jsonParserFieldValue != null) {
+					parentKnowledgeBaseFolder.setFolderId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "folderName")) {
+				if (jsonParserFieldValue != null) {
+					parentKnowledgeBaseFolder.setFolderName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -193,44 +231,6 @@ public class ParentKnowledgeBaseFolderSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ParentKnowledgeBaseFolderJSONParser
-		extends BaseJSONParser<ParentKnowledgeBaseFolder> {
-
-		@Override
-		protected ParentKnowledgeBaseFolder createDTO() {
-			return new ParentKnowledgeBaseFolder();
-		}
-
-		@Override
-		protected ParentKnowledgeBaseFolder[] createDTOArray(int size) {
-			return new ParentKnowledgeBaseFolder[size];
-		}
-
-		@Override
-		protected void setField(
-			ParentKnowledgeBaseFolder parentKnowledgeBaseFolder,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "folderId")) {
-				if (jsonParserFieldValue != null) {
-					parentKnowledgeBaseFolder.setFolderId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "folderName")) {
-				if (jsonParserFieldValue != null) {
-					parentKnowledgeBaseFolder.setFolderName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -117,6 +117,44 @@ public class ObjectReviewedSerDes {
 		return map;
 	}
 
+	public static class ObjectReviewedJSONParser
+		extends BaseJSONParser<ObjectReviewed> {
+
+		@Override
+		protected ObjectReviewed createDTO() {
+			return new ObjectReviewed();
+		}
+
+		@Override
+		protected ObjectReviewed[] createDTOArray(int size) {
+			return new ObjectReviewed[size];
+		}
+
+		@Override
+		protected void setField(
+			ObjectReviewed objectReviewed, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					objectReviewed.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "resourceType")) {
+				if (jsonParserFieldValue != null) {
+					objectReviewed.setResourceType(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -184,44 +222,6 @@ public class ObjectReviewedSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ObjectReviewedJSONParser
-		extends BaseJSONParser<ObjectReviewed> {
-
-		@Override
-		protected ObjectReviewed createDTO() {
-			return new ObjectReviewed();
-		}
-
-		@Override
-		protected ObjectReviewed[] createDTOArray(int size) {
-			return new ObjectReviewed[size];
-		}
-
-		@Override
-		protected void setField(
-			ObjectReviewed objectReviewed, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					objectReviewed.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "resourceType")) {
-				if (jsonParserFieldValue != null) {
-					objectReviewed.setResourceType(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

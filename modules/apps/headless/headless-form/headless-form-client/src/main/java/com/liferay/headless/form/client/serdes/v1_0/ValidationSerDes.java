@@ -134,6 +134,48 @@ public class ValidationSerDes {
 		return map;
 	}
 
+	public static class ValidationJSONParser
+		extends BaseJSONParser<Validation> {
+
+		@Override
+		protected Validation createDTO() {
+			return new Validation();
+		}
+
+		@Override
+		protected Validation[] createDTOArray(int size) {
+			return new Validation[size];
+		}
+
+		@Override
+		protected void setField(
+			Validation validation, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "errorMessage")) {
+				if (jsonParserFieldValue != null) {
+					validation.setErrorMessage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "expression")) {
+				if (jsonParserFieldValue != null) {
+					validation.setExpression((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					validation.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -201,48 +243,6 @@ public class ValidationSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ValidationJSONParser
-		extends BaseJSONParser<Validation> {
-
-		@Override
-		protected Validation createDTO() {
-			return new Validation();
-		}
-
-		@Override
-		protected Validation[] createDTOArray(int size) {
-			return new Validation[size];
-		}
-
-		@Override
-		protected void setField(
-			Validation validation, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "errorMessage")) {
-				if (jsonParserFieldValue != null) {
-					validation.setErrorMessage((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "expression")) {
-				if (jsonParserFieldValue != null) {
-					validation.setExpression((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					validation.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

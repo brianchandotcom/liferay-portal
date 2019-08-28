@@ -204,6 +204,71 @@ public class RatingSerDes {
 		return map;
 	}
 
+	public static class RatingJSONParser extends BaseJSONParser<Rating> {
+
+		@Override
+		protected Rating createDTO() {
+			return new Rating();
+		}
+
+		@Override
+		protected Rating[] createDTOArray(int size) {
+			return new Rating[size];
+		}
+
+		@Override
+		protected void setField(
+			Rating rating, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "bestRating")) {
+				if (jsonParserFieldValue != null) {
+					rating.setBestRating(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					rating.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+				if (jsonParserFieldValue != null) {
+					rating.setDateCreated(toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					rating.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					rating.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
+				if (jsonParserFieldValue != null) {
+					rating.setRatingValue(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
+				if (jsonParserFieldValue != null) {
+					rating.setWorstRating(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -271,71 +336,6 @@ public class RatingSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class RatingJSONParser extends BaseJSONParser<Rating> {
-
-		@Override
-		protected Rating createDTO() {
-			return new Rating();
-		}
-
-		@Override
-		protected Rating[] createDTOArray(int size) {
-			return new Rating[size];
-		}
-
-		@Override
-		protected void setField(
-			Rating rating, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "bestRating")) {
-				if (jsonParserFieldValue != null) {
-					rating.setBestRating(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "creator")) {
-				if (jsonParserFieldValue != null) {
-					rating.setCreator(
-						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
-				if (jsonParserFieldValue != null) {
-					rating.setDateCreated(toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
-				if (jsonParserFieldValue != null) {
-					rating.setDateModified(
-						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					rating.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "ratingValue")) {
-				if (jsonParserFieldValue != null) {
-					rating.setRatingValue(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "worstRating")) {
-				if (jsonParserFieldValue != null) {
-					rating.setWorstRating(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

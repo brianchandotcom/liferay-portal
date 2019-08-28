@@ -125,6 +125,48 @@ public class ServiceSerDes {
 		return map;
 	}
 
+	public static class ServiceJSONParser extends BaseJSONParser<Service> {
+
+		@Override
+		protected Service createDTO() {
+			return new Service();
+		}
+
+		@Override
+		protected Service[] createDTOArray(int size) {
+			return new Service[size];
+		}
+
+		@Override
+		protected void setField(
+			Service service, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "hoursAvailable")) {
+				if (jsonParserFieldValue != null) {
+					service.setHoursAvailable(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> HoursAvailableSerDes.toDTO((String)object)
+						).toArray(
+							size -> new HoursAvailable[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "serviceType")) {
+				if (jsonParserFieldValue != null) {
+					service.setServiceType((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -192,48 +234,6 @@ public class ServiceSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ServiceJSONParser extends BaseJSONParser<Service> {
-
-		@Override
-		protected Service createDTO() {
-			return new Service();
-		}
-
-		@Override
-		protected Service[] createDTOArray(int size) {
-			return new Service[size];
-		}
-
-		@Override
-		protected void setField(
-			Service service, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "hoursAvailable")) {
-				if (jsonParserFieldValue != null) {
-					service.setHoursAvailable(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> HoursAvailableSerDes.toDTO((String)object)
-						).toArray(
-							size -> new HoursAvailable[size]
-						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "serviceType")) {
-				if (jsonParserFieldValue != null) {
-					service.setServiceType((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

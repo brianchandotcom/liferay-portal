@@ -193,6 +193,72 @@ public class DataRecordCollectionSerDes {
 		return map;
 	}
 
+	public static class DataRecordCollectionJSONParser
+		extends BaseJSONParser<DataRecordCollection> {
+
+		@Override
+		protected DataRecordCollection createDTO() {
+			return new DataRecordCollection();
+		}
+
+		@Override
+		protected DataRecordCollection[] createDTOArray(int size) {
+			return new DataRecordCollection[size];
+		}
+
+		@Override
+		protected void setField(
+			DataRecordCollection dataRecordCollection,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "dataDefinitionId")) {
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setDataDefinitionId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "dataRecordCollectionKey")) {
+
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setDataRecordCollectionKey(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setDescription(
+						(Map)DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setName(
+						(Map)DataRecordCollectionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					dataRecordCollection.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -260,72 +326,6 @@ public class DataRecordCollectionSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataRecordCollectionJSONParser
-		extends BaseJSONParser<DataRecordCollection> {
-
-		@Override
-		protected DataRecordCollection createDTO() {
-			return new DataRecordCollection();
-		}
-
-		@Override
-		protected DataRecordCollection[] createDTOArray(int size) {
-			return new DataRecordCollection[size];
-		}
-
-		@Override
-		protected void setField(
-			DataRecordCollection dataRecordCollection,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "dataDefinitionId")) {
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setDataDefinitionId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "dataRecordCollectionKey")) {
-
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setDataRecordCollectionKey(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "description")) {
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setDescription(
-						(Map)DataRecordCollectionSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setName(
-						(Map)DataRecordCollectionSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "siteId")) {
-				if (jsonParserFieldValue != null) {
-					dataRecordCollection.setSiteId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

@@ -205,6 +205,67 @@ public class WikiPageAttachmentSerDes {
 		return map;
 	}
 
+	public static class WikiPageAttachmentJSONParser
+		extends BaseJSONParser<WikiPageAttachment> {
+
+		@Override
+		protected WikiPageAttachment createDTO() {
+			return new WikiPageAttachment();
+		}
+
+		@Override
+		protected WikiPageAttachment[] createDTOArray(int size) {
+			return new WikiPageAttachment[size];
+		}
+
+		@Override
+		protected void setField(
+			WikiPageAttachment wikiPageAttachment, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setContentUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setFileExtension(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -272,67 +333,6 @@ public class WikiPageAttachmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class WikiPageAttachmentJSONParser
-		extends BaseJSONParser<WikiPageAttachment> {
-
-		@Override
-		protected WikiPageAttachment createDTO() {
-			return new WikiPageAttachment();
-		}
-
-		@Override
-		protected WikiPageAttachment[] createDTOArray(int size) {
-			return new WikiPageAttachment[size];
-		}
-
-		@Override
-		protected void setField(
-			WikiPageAttachment wikiPageAttachment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setContentUrl(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setEncodingFormat(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setFileExtension(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					wikiPageAttachment.setTitle((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

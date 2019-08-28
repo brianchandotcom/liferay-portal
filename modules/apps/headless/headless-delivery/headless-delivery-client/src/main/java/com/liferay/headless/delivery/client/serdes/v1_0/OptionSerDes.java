@@ -116,6 +116,41 @@ public class OptionSerDes {
 		return map;
 	}
 
+	public static class OptionJSONParser extends BaseJSONParser<Option> {
+
+		@Override
+		protected Option createDTO() {
+			return new Option();
+		}
+
+		@Override
+		protected Option[] createDTOArray(int size) {
+			return new Option[size];
+		}
+
+		@Override
+		protected void setField(
+			Option option, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					option.setLabel((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "value")) {
+				if (jsonParserFieldValue != null) {
+					option.setValue((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -183,41 +218,6 @@ public class OptionSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class OptionJSONParser extends BaseJSONParser<Option> {
-
-		@Override
-		protected Option createDTO() {
-			return new Option();
-		}
-
-		@Override
-		protected Option[] createDTOArray(int size) {
-			return new Option[size];
-		}
-
-		@Override
-		protected void setField(
-			Option option, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					option.setLabel((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
-				if (jsonParserFieldValue != null) {
-					option.setValue((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

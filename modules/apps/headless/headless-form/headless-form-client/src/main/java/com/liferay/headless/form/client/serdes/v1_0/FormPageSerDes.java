@@ -162,6 +162,58 @@ public class FormPageSerDes {
 		return map;
 	}
 
+	public static class FormPageJSONParser extends BaseJSONParser<FormPage> {
+
+		@Override
+		protected FormPage createDTO() {
+			return new FormPage();
+		}
+
+		@Override
+		protected FormPage[] createDTOArray(int size) {
+			return new FormPage[size];
+		}
+
+		@Override
+		protected void setField(
+			FormPage formPage, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "formFields")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setFormFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FormFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new FormField[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "headline")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setHeadline((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "text")) {
+				if (jsonParserFieldValue != null) {
+					formPage.setText((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -229,58 +281,6 @@ public class FormPageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class FormPageJSONParser extends BaseJSONParser<FormPage> {
-
-		@Override
-		protected FormPage createDTO() {
-			return new FormPage();
-		}
-
-		@Override
-		protected FormPage[] createDTOArray(int size) {
-			return new FormPage[size];
-		}
-
-		@Override
-		protected void setField(
-			FormPage formPage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "formFields")) {
-				if (jsonParserFieldValue != null) {
-					formPage.setFormFields(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldSerDes.toDTO((String)object)
-						).toArray(
-							size -> new FormField[size]
-						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "headline")) {
-				if (jsonParserFieldValue != null) {
-					formPage.setHeadline((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					formPage.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
-				if (jsonParserFieldValue != null) {
-					formPage.setText((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

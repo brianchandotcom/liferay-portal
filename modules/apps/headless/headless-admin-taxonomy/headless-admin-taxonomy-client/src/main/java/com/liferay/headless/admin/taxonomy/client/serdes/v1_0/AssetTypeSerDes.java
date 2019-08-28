@@ -133,6 +133,46 @@ public class AssetTypeSerDes {
 		return map;
 	}
 
+	public static class AssetTypeJSONParser extends BaseJSONParser<AssetType> {
+
+		@Override
+		protected AssetType createDTO() {
+			return new AssetType();
+		}
+
+		@Override
+		protected AssetType[] createDTOArray(int size) {
+			return new AssetType[size];
+		}
+
+		@Override
+		protected void setField(
+			AssetType assetType, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "required")) {
+				if (jsonParserFieldValue != null) {
+					assetType.setRequired((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					assetType.setSubtype((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					assetType.setType((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -200,46 +240,6 @@ public class AssetTypeSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class AssetTypeJSONParser extends BaseJSONParser<AssetType> {
-
-		@Override
-		protected AssetType createDTO() {
-			return new AssetType();
-		}
-
-		@Override
-		protected AssetType[] createDTOArray(int size) {
-			return new AssetType[size];
-		}
-
-		@Override
-		protected void setField(
-			AssetType assetType, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "required")) {
-				if (jsonParserFieldValue != null) {
-					assetType.setRequired((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "subtype")) {
-				if (jsonParserFieldValue != null) {
-					assetType.setSubtype((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					assetType.setType((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

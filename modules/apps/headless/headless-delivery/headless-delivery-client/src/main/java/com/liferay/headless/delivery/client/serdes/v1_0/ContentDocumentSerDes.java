@@ -225,6 +225,72 @@ public class ContentDocumentSerDes {
 		return map;
 	}
 
+	public static class ContentDocumentJSONParser
+		extends BaseJSONParser<ContentDocument> {
+
+		@Override
+		protected ContentDocument createDTO() {
+			return new ContentDocument();
+		}
+
+		@Override
+		protected ContentDocument[] createDTOArray(int size) {
+			return new ContentDocument[size];
+		}
+
+		@Override
+		protected void setField(
+			ContentDocument contentDocument, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setContentUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setFileExtension(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					contentDocument.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -292,72 +358,6 @@ public class ContentDocumentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ContentDocumentJSONParser
-		extends BaseJSONParser<ContentDocument> {
-
-		@Override
-		protected ContentDocument createDTO() {
-			return new ContentDocument();
-		}
-
-		@Override
-		protected ContentDocument[] createDTOArray(int size) {
-			return new ContentDocument[size];
-		}
-
-		@Override
-		protected void setField(
-			ContentDocument contentDocument, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setContentUrl((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "description")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setDescription(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setEncodingFormat(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setFileExtension(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					contentDocument.setTitle((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

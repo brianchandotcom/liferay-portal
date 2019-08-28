@@ -205,6 +205,68 @@ public class MessageBoardAttachmentSerDes {
 		return map;
 	}
 
+	public static class MessageBoardAttachmentJSONParser
+		extends BaseJSONParser<MessageBoardAttachment> {
+
+		@Override
+		protected MessageBoardAttachment createDTO() {
+			return new MessageBoardAttachment();
+		}
+
+		@Override
+		protected MessageBoardAttachment[] createDTOArray(int size) {
+			return new MessageBoardAttachment[size];
+		}
+
+		@Override
+		protected void setField(
+			MessageBoardAttachment messageBoardAttachment,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setContentUrl(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setFileExtension(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setSizeInBytes(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardAttachment.setTitle(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -272,68 +334,6 @@ public class MessageBoardAttachmentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class MessageBoardAttachmentJSONParser
-		extends BaseJSONParser<MessageBoardAttachment> {
-
-		@Override
-		protected MessageBoardAttachment createDTO() {
-			return new MessageBoardAttachment();
-		}
-
-		@Override
-		protected MessageBoardAttachment[] createDTOArray(int size) {
-			return new MessageBoardAttachment[size];
-		}
-
-		@Override
-		protected void setField(
-			MessageBoardAttachment messageBoardAttachment,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "contentUrl")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setContentUrl(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setEncodingFormat(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setFileExtension(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setSizeInBytes(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					messageBoardAttachment.setTitle(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

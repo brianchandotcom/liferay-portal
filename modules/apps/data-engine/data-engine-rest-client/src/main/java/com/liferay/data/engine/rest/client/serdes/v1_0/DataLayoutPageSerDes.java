@@ -146,6 +146,58 @@ public class DataLayoutPageSerDes {
 		return map;
 	}
 
+	public static class DataLayoutPageJSONParser
+		extends BaseJSONParser<DataLayoutPage> {
+
+		@Override
+		protected DataLayoutPage createDTO() {
+			return new DataLayoutPage();
+		}
+
+		@Override
+		protected DataLayoutPage[] createDTOArray(int size) {
+			return new DataLayoutPage[size];
+		}
+
+		@Override
+		protected void setField(
+			DataLayoutPage dataLayoutPage, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "dataLayoutRows")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPage.setDataLayoutRows(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> DataLayoutRowSerDes.toDTO((String)object)
+						).toArray(
+							size -> new DataLayoutRow[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPage.setDescription(
+						(Map)DataLayoutPageSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					dataLayoutPage.setTitle(
+						(Map)DataLayoutPageSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -213,58 +265,6 @@ public class DataLayoutPageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataLayoutPageJSONParser
-		extends BaseJSONParser<DataLayoutPage> {
-
-		@Override
-		protected DataLayoutPage createDTO() {
-			return new DataLayoutPage();
-		}
-
-		@Override
-		protected DataLayoutPage[] createDTOArray(int size) {
-			return new DataLayoutPage[size];
-		}
-
-		@Override
-		protected void setField(
-			DataLayoutPage dataLayoutPage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "dataLayoutRows")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPage.setDataLayoutRows(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> DataLayoutRowSerDes.toDTO((String)object)
-						).toArray(
-							size -> new DataLayoutRow[size]
-						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "description")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPage.setDescription(
-						(Map)DataLayoutPageSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					dataLayoutPage.setTitle(
-						(Map)DataLayoutPageSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

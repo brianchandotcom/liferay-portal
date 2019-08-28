@@ -147,6 +147,62 @@ public class GridSerDes {
 		return map;
 	}
 
+	public static class GridJSONParser extends BaseJSONParser<Grid> {
+
+		@Override
+		protected Grid createDTO() {
+			return new Grid();
+		}
+
+		@Override
+		protected Grid[] createDTOArray(int size) {
+			return new Grid[size];
+		}
+
+		@Override
+		protected void setField(
+			Grid grid, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "columns")) {
+				if (jsonParserFieldValue != null) {
+					grid.setColumns(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FormFieldOptionSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new FormFieldOption[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					grid.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "rows")) {
+				if (jsonParserFieldValue != null) {
+					grid.setRows(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FormFieldOptionSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new FormFieldOption[size]
+						));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -214,62 +270,6 @@ public class GridSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class GridJSONParser extends BaseJSONParser<Grid> {
-
-		@Override
-		protected Grid createDTO() {
-			return new Grid();
-		}
-
-		@Override
-		protected Grid[] createDTOArray(int size) {
-			return new Grid[size];
-		}
-
-		@Override
-		protected void setField(
-			Grid grid, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "columns")) {
-				if (jsonParserFieldValue != null) {
-					grid.setColumns(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldOptionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormFieldOption[size]
-						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					grid.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "rows")) {
-				if (jsonParserFieldValue != null) {
-					grid.setRows(
-						Stream.of(
-							toStrings((Object[])jsonParserFieldValue)
-						).map(
-							object -> FormFieldOptionSerDes.toDTO(
-								(String)object)
-						).toArray(
-							size -> new FormFieldOption[size]
-						));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

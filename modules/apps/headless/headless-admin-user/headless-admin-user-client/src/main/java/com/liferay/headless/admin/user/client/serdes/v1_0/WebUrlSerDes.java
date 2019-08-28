@@ -133,6 +133,46 @@ public class WebUrlSerDes {
 		return map;
 	}
 
+	public static class WebUrlJSONParser extends BaseJSONParser<WebUrl> {
+
+		@Override
+		protected WebUrl createDTO() {
+			return new WebUrl();
+		}
+
+		@Override
+		protected WebUrl[] createDTOArray(int size) {
+			return new WebUrl[size];
+		}
+
+		@Override
+		protected void setField(
+			WebUrl webUrl, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					webUrl.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "url")) {
+				if (jsonParserFieldValue != null) {
+					webUrl.setUrl((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "urlType")) {
+				if (jsonParserFieldValue != null) {
+					webUrl.setUrlType((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -200,46 +240,6 @@ public class WebUrlSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class WebUrlJSONParser extends BaseJSONParser<WebUrl> {
-
-		@Override
-		protected WebUrl createDTO() {
-			return new WebUrl();
-		}
-
-		@Override
-		protected WebUrl[] createDTOArray(int size) {
-			return new WebUrl[size];
-		}
-
-		@Override
-		protected void setField(
-			WebUrl webUrl, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					webUrl.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
-				if (jsonParserFieldValue != null) {
-					webUrl.setUrl((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "urlType")) {
-				if (jsonParserFieldValue != null) {
-					webUrl.setUrlType((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

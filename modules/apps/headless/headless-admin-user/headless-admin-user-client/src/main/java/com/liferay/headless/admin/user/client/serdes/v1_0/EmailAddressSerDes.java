@@ -154,6 +154,53 @@ public class EmailAddressSerDes {
 		return map;
 	}
 
+	public static class EmailAddressJSONParser
+		extends BaseJSONParser<EmailAddress> {
+
+		@Override
+		protected EmailAddress createDTO() {
+			return new EmailAddress();
+		}
+
+		@Override
+		protected EmailAddress[] createDTOArray(int size) {
+			return new EmailAddress[size];
+		}
+
+		@Override
+		protected void setField(
+			EmailAddress emailAddress, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
+				if (jsonParserFieldValue != null) {
+					emailAddress.setEmailAddress((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					emailAddress.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "primary")) {
+				if (jsonParserFieldValue != null) {
+					emailAddress.setPrimary((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					emailAddress.setType((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -221,53 +268,6 @@ public class EmailAddressSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class EmailAddressJSONParser
-		extends BaseJSONParser<EmailAddress> {
-
-		@Override
-		protected EmailAddress createDTO() {
-			return new EmailAddress();
-		}
-
-		@Override
-		protected EmailAddress[] createDTOArray(int size) {
-			return new EmailAddress[size];
-		}
-
-		@Override
-		protected void setField(
-			EmailAddress emailAddress, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "emailAddress")) {
-				if (jsonParserFieldValue != null) {
-					emailAddress.setEmailAddress((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					emailAddress.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "primary")) {
-				if (jsonParserFieldValue != null) {
-					emailAddress.setPrimary((Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					emailAddress.setType((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

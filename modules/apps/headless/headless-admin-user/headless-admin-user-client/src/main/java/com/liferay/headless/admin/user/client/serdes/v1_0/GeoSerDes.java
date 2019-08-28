@@ -108,6 +108,42 @@ public class GeoSerDes {
 		return map;
 	}
 
+	public static class GeoJSONParser extends BaseJSONParser<Geo> {
+
+		@Override
+		protected Geo createDTO() {
+			return new Geo();
+		}
+
+		@Override
+		protected Geo[] createDTOArray(int size) {
+			return new Geo[size];
+		}
+
+		@Override
+		protected void setField(
+			Geo geo, String jsonParserFieldName, Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "latitude")) {
+				if (jsonParserFieldValue != null) {
+					geo.setLatitude(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "longitude")) {
+				if (jsonParserFieldValue != null) {
+					geo.setLongitude(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -175,42 +211,6 @@ public class GeoSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class GeoJSONParser extends BaseJSONParser<Geo> {
-
-		@Override
-		protected Geo createDTO() {
-			return new Geo();
-		}
-
-		@Override
-		protected Geo[] createDTOArray(int size) {
-			return new Geo[size];
-		}
-
-		@Override
-		protected void setField(
-			Geo geo, String jsonParserFieldName, Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "latitude")) {
-				if (jsonParserFieldValue != null) {
-					geo.setLatitude(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "longitude")) {
-				if (jsonParserFieldValue != null) {
-					geo.setLongitude(
-						Double.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

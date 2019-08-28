@@ -138,6 +138,49 @@ public class FormSuccessPageSerDes {
 		return map;
 	}
 
+	public static class FormSuccessPageJSONParser
+		extends BaseJSONParser<FormSuccessPage> {
+
+		@Override
+		protected FormSuccessPage createDTO() {
+			return new FormSuccessPage();
+		}
+
+		@Override
+		protected FormSuccessPage[] createDTOArray(int size) {
+			return new FormSuccessPage[size];
+		}
+
+		@Override
+		protected void setField(
+			FormSuccessPage formSuccessPage, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "description")) {
+				if (jsonParserFieldValue != null) {
+					formSuccessPage.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "headline")) {
+				if (jsonParserFieldValue != null) {
+					formSuccessPage.setHeadline((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					formSuccessPage.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -205,49 +248,6 @@ public class FormSuccessPageSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class FormSuccessPageJSONParser
-		extends BaseJSONParser<FormSuccessPage> {
-
-		@Override
-		protected FormSuccessPage createDTO() {
-			return new FormSuccessPage();
-		}
-
-		@Override
-		protected FormSuccessPage[] createDTOArray(int size) {
-			return new FormSuccessPage[size];
-		}
-
-		@Override
-		protected void setField(
-			FormSuccessPage formSuccessPage, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "description")) {
-				if (jsonParserFieldValue != null) {
-					formSuccessPage.setDescription(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "headline")) {
-				if (jsonParserFieldValue != null) {
-					formSuccessPage.setHeadline((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					formSuccessPage.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

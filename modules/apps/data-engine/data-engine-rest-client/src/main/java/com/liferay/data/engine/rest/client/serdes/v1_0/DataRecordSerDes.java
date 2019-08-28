@@ -129,6 +129,51 @@ public class DataRecordSerDes {
 		return map;
 	}
 
+	public static class DataRecordJSONParser
+		extends BaseJSONParser<DataRecord> {
+
+		@Override
+		protected DataRecord createDTO() {
+			return new DataRecord();
+		}
+
+		@Override
+		protected DataRecord[] createDTOArray(int size) {
+			return new DataRecord[size];
+		}
+
+		@Override
+		protected void setField(
+			DataRecord dataRecord, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "dataRecordCollectionId")) {
+				if (jsonParserFieldValue != null) {
+					dataRecord.setDataRecordCollectionId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dataRecordValues")) {
+				if (jsonParserFieldValue != null) {
+					dataRecord.setDataRecordValues(
+						(Map)DataRecordSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					dataRecord.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -196,51 +241,6 @@ public class DataRecordSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class DataRecordJSONParser
-		extends BaseJSONParser<DataRecord> {
-
-		@Override
-		protected DataRecord createDTO() {
-			return new DataRecord();
-		}
-
-		@Override
-		protected DataRecord[] createDTOArray(int size) {
-			return new DataRecord[size];
-		}
-
-		@Override
-		protected void setField(
-			DataRecord dataRecord, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "dataRecordCollectionId")) {
-				if (jsonParserFieldValue != null) {
-					dataRecord.setDataRecordCollectionId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dataRecordValues")) {
-				if (jsonParserFieldValue != null) {
-					dataRecord.setDataRecordValues(
-						(Map)DataRecordSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					dataRecord.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

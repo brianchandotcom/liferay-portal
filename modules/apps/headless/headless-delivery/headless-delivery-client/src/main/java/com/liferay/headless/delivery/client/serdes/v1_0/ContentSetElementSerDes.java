@@ -161,6 +161,54 @@ public class ContentSetElementSerDes {
 		return map;
 	}
 
+	public static class ContentSetElementJSONParser
+		extends BaseJSONParser<ContentSetElement> {
+
+		@Override
+		protected ContentSetElement createDTO() {
+			return new ContentSetElement();
+		}
+
+		@Override
+		protected ContentSetElement[] createDTOArray(int size) {
+			return new ContentSetElement[size];
+		}
+
+		@Override
+		protected void setField(
+			ContentSetElement contentSetElement, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "content")) {
+				if (jsonParserFieldValue != null) {
+					contentSetElement.setContent((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentType")) {
+				if (jsonParserFieldValue != null) {
+					contentSetElement.setContentType(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					contentSetElement.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "title")) {
+				if (jsonParserFieldValue != null) {
+					contentSetElement.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -228,54 +276,6 @@ public class ContentSetElementSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ContentSetElementJSONParser
-		extends BaseJSONParser<ContentSetElement> {
-
-		@Override
-		protected ContentSetElement createDTO() {
-			return new ContentSetElement();
-		}
-
-		@Override
-		protected ContentSetElement[] createDTOArray(int size) {
-			return new ContentSetElement[size];
-		}
-
-		@Override
-		protected void setField(
-			ContentSetElement contentSetElement, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "content")) {
-				if (jsonParserFieldValue != null) {
-					contentSetElement.setContent((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "contentType")) {
-				if (jsonParserFieldValue != null) {
-					contentSetElement.setContentType(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					contentSetElement.setId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					contentSetElement.setTitle((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

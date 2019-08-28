@@ -186,6 +186,69 @@ public class ValueSerDes {
 		return map;
 	}
 
+	public static class ValueJSONParser extends BaseJSONParser<Value> {
+
+		@Override
+		protected Value createDTO() {
+			return new Value();
+		}
+
+		@Override
+		protected Value[] createDTOArray(int size) {
+			return new Value[size];
+		}
+
+		@Override
+		protected void setField(
+			Value value, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "data")) {
+				if (jsonParserFieldValue != null) {
+					value.setData((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "document")) {
+				if (jsonParserFieldValue != null) {
+					value.setDocument(
+						ContentDocumentSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "geo")) {
+				if (jsonParserFieldValue != null) {
+					value.setGeo(GeoSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "image")) {
+				if (jsonParserFieldValue != null) {
+					value.setImage(
+						ContentDocumentSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "link")) {
+				if (jsonParserFieldValue != null) {
+					value.setLink((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "structuredContentLink")) {
+
+				if (jsonParserFieldValue != null) {
+					value.setStructuredContentLink(
+						StructuredContentLinkSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -253,69 +316,6 @@ public class ValueSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ValueJSONParser extends BaseJSONParser<Value> {
-
-		@Override
-		protected Value createDTO() {
-			return new Value();
-		}
-
-		@Override
-		protected Value[] createDTOArray(int size) {
-			return new Value[size];
-		}
-
-		@Override
-		protected void setField(
-			Value value, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "data")) {
-				if (jsonParserFieldValue != null) {
-					value.setData((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "document")) {
-				if (jsonParserFieldValue != null) {
-					value.setDocument(
-						ContentDocumentSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "geo")) {
-				if (jsonParserFieldValue != null) {
-					value.setGeo(GeoSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "image")) {
-				if (jsonParserFieldValue != null) {
-					value.setImage(
-						ContentDocumentSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "link")) {
-				if (jsonParserFieldValue != null) {
-					value.setLink((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "structuredContentLink")) {
-
-				if (jsonParserFieldValue != null) {
-					value.setStructuredContentLink(
-						StructuredContentLinkSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

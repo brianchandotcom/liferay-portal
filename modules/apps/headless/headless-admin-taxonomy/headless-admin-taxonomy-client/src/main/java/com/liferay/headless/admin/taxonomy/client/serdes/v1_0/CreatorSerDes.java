@@ -218,6 +218,66 @@ public class CreatorSerDes {
 		return map;
 	}
 
+	public static class CreatorJSONParser extends BaseJSONParser<Creator> {
+
+		@Override
+		protected Creator createDTO() {
+			return new Creator();
+		}
+
+		@Override
+		protected Creator[] createDTOArray(int size) {
+			return new Creator[size];
+		}
+
+		@Override
+		protected void setField(
+			Creator creator, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "additionalName")) {
+				if (jsonParserFieldValue != null) {
+					creator.setAdditionalName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "familyName")) {
+				if (jsonParserFieldValue != null) {
+					creator.setFamilyName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "givenName")) {
+				if (jsonParserFieldValue != null) {
+					creator.setGivenName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					creator.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "image")) {
+				if (jsonParserFieldValue != null) {
+					creator.setImage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					creator.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
+				if (jsonParserFieldValue != null) {
+					creator.setProfileURL((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -285,66 +345,6 @@ public class CreatorSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class CreatorJSONParser extends BaseJSONParser<Creator> {
-
-		@Override
-		protected Creator createDTO() {
-			return new Creator();
-		}
-
-		@Override
-		protected Creator[] createDTOArray(int size) {
-			return new Creator[size];
-		}
-
-		@Override
-		protected void setField(
-			Creator creator, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "additionalName")) {
-				if (jsonParserFieldValue != null) {
-					creator.setAdditionalName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "familyName")) {
-				if (jsonParserFieldValue != null) {
-					creator.setFamilyName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "givenName")) {
-				if (jsonParserFieldValue != null) {
-					creator.setGivenName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					creator.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "image")) {
-				if (jsonParserFieldValue != null) {
-					creator.setImage((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					creator.setName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
-				if (jsonParserFieldValue != null) {
-					creator.setProfileURL((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

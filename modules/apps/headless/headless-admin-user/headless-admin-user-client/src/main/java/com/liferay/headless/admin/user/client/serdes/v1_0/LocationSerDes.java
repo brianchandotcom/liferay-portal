@@ -135,6 +135,46 @@ public class LocationSerDes {
 		return map;
 	}
 
+	public static class LocationJSONParser extends BaseJSONParser<Location> {
+
+		@Override
+		protected Location createDTO() {
+			return new Location();
+		}
+
+		@Override
+		protected Location[] createDTOArray(int size) {
+			return new Location[size];
+		}
+
+		@Override
+		protected void setField(
+			Location location, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "addressCountry")) {
+				if (jsonParserFieldValue != null) {
+					location.setAddressCountry((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
+				if (jsonParserFieldValue != null) {
+					location.setAddressRegion((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					location.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -202,46 +242,6 @@ public class LocationSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class LocationJSONParser extends BaseJSONParser<Location> {
-
-		@Override
-		protected Location createDTO() {
-			return new Location();
-		}
-
-		@Override
-		protected Location[] createDTOArray(int size) {
-			return new Location[size];
-		}
-
-		@Override
-		protected void setField(
-			Location location, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "addressCountry")) {
-				if (jsonParserFieldValue != null) {
-					location.setAddressCountry((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "addressRegion")) {
-				if (jsonParserFieldValue != null) {
-					location.setAddressRegion((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
-				if (jsonParserFieldValue != null) {
-					location.setId(Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

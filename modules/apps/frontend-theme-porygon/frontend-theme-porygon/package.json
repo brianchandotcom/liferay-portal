@@ -19,7 +19,7 @@
 			"liferay-theme-es2015-hook"
 		],
 		"rubySass": false,
-		"version": "7.1"
+		"version": "7.2"
 	},
 	"main": "package.json",
 	"name": "liferay-porygon-theme",

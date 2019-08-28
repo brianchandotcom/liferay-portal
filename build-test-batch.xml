@@ -1314,7 +1314,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false ">
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
 						<test-action>
 							<trycatch>
 								<try>

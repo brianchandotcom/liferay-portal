@@ -52,6 +52,42 @@ import javax.servlet.jsp.PageContext;
 @Deprecated
 public class AssetTagsSelectorTag extends IncludeTag {
 
+	public String getAddCallback() {
+		return _addCallback;
+	}
+
+	public String getClassName() {
+		return _className;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public String getHiddenInput() {
+		return _hiddenInput;
+	}
+
+	public String getRemoveCallback() {
+		return _removeCallback;
+	}
+
+	public boolean isAllowAddEntry() {
+		return _allowAddEntry;
+	}
+
+	public boolean isAutoFocus() {
+		return _autoFocus;
+	}
+
+	public boolean isIgnoreRequestValue() {
+		return _ignoreRequestValue;
+	}
+
+	public boolean isShowSelectButton() {
+		return _showSelectButton;
+	}
+
 	public void setAddCallback(String addCallback) {
 		_addCallback = addCallback;
 	}
@@ -99,6 +135,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_removeCallback = removeCallback;
 	}
 
+	public void setShowSelectButton(boolean showSelectButton) {
+		_showSelectButton = showSelectButton;
+	}
+
 	public void setTagNames(String tagNames) {
 		_tagNames = tagNames;
 	}
@@ -117,6 +157,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_id = null;
 		_ignoreRequestValue = false;
 		_removeCallback = null;
+		_showSelectButton = true;
 		_tagNames = null;
 	}
 
@@ -217,46 +258,44 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
-			"liferay-asset:asset-tags-selector:context", _getContext());
-		httpServletRequest.setAttribute(
-			"liferay-asset:asset-tags-selector:inputName", _getInputName());
-		httpServletRequest.setAttribute(
-			"liferay-asset:asset-tags-selector:tagNames", getTagNames());
+			"liferay-asset:asset-tags-selector:data", _getData());
 	}
 
-	private Map<String, Object> _getContext() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	private Map<String, Object> _getData() {
+		Map<String, Object> data = new HashMap<>();
 
-		Map<String, Object> context = new HashMap<>();
+		if (Validator.isNotNull(_addCallback)) {
+			data.put("addCallback", _getNamespace() + _addCallback);
+		}
 
-		context.put("addCallback", _getNamespace() + _addCallback);
-		context.put("eventName", getEventName());
-		context.put("groupIds", getGroupIds());
-		context.put("inputName", _getInputName());
-		context.put("portletURL", getPortletURL());
-		context.put("removeCallback", _getNamespace() + _removeCallback);
+		data.put("eventName", getEventName());
+		data.put("groupIds", getGroupIds());
+		data.put("id", _getNamespace() + getId() + "assetTagsSelector");
+		data.put("inputName", _getInputName());
+		data.put("portletURL", getPortletURL().toString());
+
+		if (Validator.isNotNull(_addCallback)) {
+			data.put("removeCallback", _getNamespace() + _removeCallback);
+		}
 
 		List<String> tagNames = StringUtil.split(getTagNames());
 
 		List<Map<String, String>> selectedItems = new ArrayList<>();
 
 		for (String tagName : tagNames) {
-			Map<String, String> item = new HashMap<>();
+			Map<String, String> selectedItem = new HashMap<>();
 
-			item.put("label", tagName);
-			item.put("value", tagName);
+			selectedItem.put("label", tagName);
+			selectedItem.put("value", tagName);
 
-			selectedItems.add(item);
+			selectedItems.add(selectedItem);
 		}
 
-		context.put("selectedItems", selectedItems);
+		data.put("selectedItems", selectedItems);
 
-		context.put(
-			"spritemap",
-			themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+		data.put("showSelectButton", _showSelectButton);
 
-		return context;
+		return data;
 	}
 
 	private String _getInputName() {
@@ -297,6 +336,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private boolean _ignoreRequestValue;
 	private String _namespace;
 	private String _removeCallback;
+	private boolean _showSelectButton = true;
 	private String _tagNames;
 
 }

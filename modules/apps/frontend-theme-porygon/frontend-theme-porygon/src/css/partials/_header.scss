@@ -5,7 +5,7 @@ header {
 	}
 
 	.logo {
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			margin: 4px 0;
 		}
 	}
@@ -129,7 +129,7 @@ header {
 	}
 
 	.lfr-nav-child-toggle {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			float: left;
 			padding: 0 10px;
 		}
@@ -138,16 +138,12 @@ header {
 	.portlet-body > .navbar {
 		margin: 0 15px;
 	}
-
-	li.open > a:focus {
-		@include tab-focus;
-	}
 }
 
 .search-opened {
 	header {
 		#search {
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				height: 60px;
 			}
 		}

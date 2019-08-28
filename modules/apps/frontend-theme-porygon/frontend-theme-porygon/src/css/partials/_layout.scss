@@ -17,23 +17,23 @@
 }
 
 .grid-2-columns {
-	@include md {
+	@include media-breakpoint-up(md) {
 		grid-template-columns: 50% 50%;
 	}
 }
 
 .grid-3-columns {
-	@include md {
+	@include media-breakpoint-up(md) {
 		grid-template-columns: 33.32% 33.32% 33.32%;
 	}
 }
 
 .grid-4-columns {
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		grid-template-columns: 50% 50%;
 	}
 
-	@include md {
+	@include media-breakpoint-up(md) {
 		grid-template-columns: 25% 25% 25% 25%;
 	}
 }

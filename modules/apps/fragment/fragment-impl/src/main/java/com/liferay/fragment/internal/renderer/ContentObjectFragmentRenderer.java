@@ -92,7 +92,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		if (displayObject == null) {
 			FragmentRendererUtil.printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
-				"the-rendered-content-will-be-shown-here");
+				"the-selected-content-will-be-shown-here");
 
 			return;
 		}

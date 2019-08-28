@@ -58,7 +58,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		if (displayObject == null) {
 			FragmentRendererUtil.printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
-				"the-rendered-content-will-be-shown-here");
+				"the-display-page-content-will-be-shown-here");
 
 			return;
 		}
@@ -69,7 +69,8 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		if (infoItemRenderer == null) {
 			FragmentRendererUtil.printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
-				"there-are-no-available-renderers-for-the-rendered-content");
+				"there-are-no-available-renderers-for-the-display-page-" +
+					"content");
 
 			return;
 		}

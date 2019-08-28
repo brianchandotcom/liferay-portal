@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1492,17 +1493,43 @@ public class JournalArticleStagedModelDataHandler
 					subscriptionSender.setFrom(fromAddress, fromName);
 
 					subscriptionSender.setHtmlFormat(true);
-					subscriptionSender.setLocalizedBodyMap(
+
+					Map<String, String> localizedJsonBodyMap =
 						(Map)JSONFactoryUtil.looseDeserialize(
 							jsonObject.get(
 								"localizedBodyMap"
-							).toString()));
+							).toString());
 
-					subscriptionSender.setLocalizedSubjectMap(
+					Map<Locale, String> localizedBodyMap = new HashMap<>();
+
+					for (Map.Entry<String, String> entry :
+							localizedJsonBodyMap.entrySet()) {
+
+						localizedBodyMap.put(
+							LocaleUtil.fromLanguageId(entry.getKey()),
+							entry.getValue());
+					}
+
+					subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+
+					Map<String, String> localizedJsonSubjectMap =
 						(Map)JSONFactoryUtil.looseDeserialize(
 							jsonObject.get(
 								"localizedSubjectMap"
-							).toString()));
+							).toString());
+
+					Map<Locale, String> localizedSubjectMap = new HashMap<>();
+
+					for (Map.Entry<String, String> entry :
+							localizedJsonSubjectMap.entrySet()) {
+
+						localizedSubjectMap.put(
+							LocaleUtil.fromLanguageId(entry.getKey()),
+							entry.getValue());
+					}
+
+					subscriptionSender.setLocalizedSubjectMap(
+						localizedSubjectMap);
 
 					subscriptionSender.setMailId(
 						"journal_article", article.getId());

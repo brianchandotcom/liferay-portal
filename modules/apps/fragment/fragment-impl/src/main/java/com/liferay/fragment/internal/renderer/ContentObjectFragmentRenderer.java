@@ -14,25 +14,35 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.FragmentEntryConfigUtil;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(service = FragmentRenderer.class)
-public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
+public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -53,8 +63,31 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public String getConfiguration(
+		FragmentRendererContext fragmentRendererContext) {
+
+		return JSONUtil.put(
+			"fieldSets",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"fields",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"label", "select-content"
+						).put(
+							"name", "itemSelector"
+						).put(
+							"type", "itemSelector"
+						).put(
+							"typeOptions",
+							JSONUtil.put("enableSelectTemplate", true)
+						))))
+		).toString();
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "display-page-content");
+		return LanguageUtil.get(locale, "content");
 	}
 
 	@Override
@@ -63,7 +96,8 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object displayObject = _getDisplayObject(httpServletRequest);
+		Object displayObject = _getDisplayObject(
+			fragmentRendererContext, httpServletRequest);
 
 		if (displayObject == null) {
 			_printPortletMessageInfo(
@@ -74,12 +108,13 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		}
 
 		InfoItemRenderer infoItemRenderer = _getInfoItemRenderer(
-			displayObject.getClass());
+			displayObject.getClass(), fragmentRendererContext,
+			httpServletRequest);
 
 		if (infoItemRenderer == null) {
 			_printPortletMessageInfo(
 				httpServletRequest, httpServletResponse,
-				"there-are-no-available-renderers-for-the-rendered-content");
+				"there-are-no-available-renderers-for-the-selected-content");
 
 			return;
 		}
@@ -88,10 +123,37 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			displayObject, httpServletRequest, httpServletResponse);
 	}
 
-	private Object _getDisplayObject(HttpServletRequest httpServletRequest) {
+	private InfoDisplayObjectProvider
+		_getConfigurationInfoDisplayObjectProvider(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest) {
+
+		JSONObject jsonObject = _getFieldValueJSONObject(
+			fragmentRendererContext, httpServletRequest);
+
+		if (jsonObject != null) {
+			InfoDisplayContributor infoDisplayContributor =
+				_infoDisplayContributorTracker.getInfoDisplayContributor(
+					jsonObject.getString("className"));
+
+			try {
+				return infoDisplayContributor.getInfoDisplayObjectProvider(
+					jsonObject.getLong("classPK"));
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return null;
+	}
+
+	private Object _getDisplayObject(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
 		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			_getConfigurationInfoDisplayObjectProvider(
+				fragmentRendererContext, httpServletRequest);
 
 		if (infoDisplayObjectProvider == null) {
 			return null;
@@ -100,7 +162,29 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 		return infoDisplayObjectProvider.getDisplayObject();
 	}
 
-	private InfoItemRenderer _getInfoItemRenderer(Class<?> displayObjectClass) {
+	private JSONObject _getFieldValueJSONObject(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
+		long[] segmentsExperienceIds = GetterUtil.getLongValues(
+			httpServletRequest.getAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+		return (JSONObject)FragmentEntryConfigUtil.getFieldValue(
+			getConfiguration(fragmentRendererContext),
+			fragmentEntryLink.getEditableValues(), segmentsExperienceIds,
+			"itemSelector");
+	}
+
+	private InfoItemRenderer _getInfoItemRenderer(
+		Class<?> displayObjectClass,
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
 		List<InfoItemRenderer> infoItemRenderers = _getInfoItemRenderers(
 			displayObjectClass);
 
@@ -108,7 +192,28 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 			return null;
 		}
 
-		return infoItemRenderers.get(0);
+		InfoItemRenderer defaultInfoItemRenderer = infoItemRenderers.get(0);
+
+		JSONObject jsonObject = _getFieldValueJSONObject(
+			fragmentRendererContext, httpServletRequest);
+
+		if (jsonObject == null) {
+			return defaultInfoItemRenderer;
+		}
+
+		String template = jsonObject.getString("template");
+
+		if (Validator.isNull(template)) {
+			return defaultInfoItemRenderer;
+		}
+
+		for (InfoItemRenderer infoItemRenderer : infoItemRenderers) {
+			if (Objects.equals(infoItemRenderer.getKey(), template)) {
+				return infoItemRenderer;
+			}
+		}
+
+		return defaultInfoItemRenderer;
 	}
 
 	private List<InfoItemRenderer> _getInfoItemRenderers(Class<?> clazz) {
@@ -167,7 +272,10 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutDisplayObjectFragmentRenderer.class);
+		ContentObjectFragmentRenderer.class);
+
+	@Reference
+	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoItemRendererTracker _infoItemRendererTracker;

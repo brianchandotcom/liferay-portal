@@ -46,6 +46,17 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity local-service="true" name="AccountEntryUserRel">
+
+		<!-- PK fields -->
+
+		<column name="accountEntryId" primary="true" type="long" />
+		<column name="userId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+	</entity>
 	<exceptions>
 		<exception>AccountEntryName</exception>
 	</exceptions>

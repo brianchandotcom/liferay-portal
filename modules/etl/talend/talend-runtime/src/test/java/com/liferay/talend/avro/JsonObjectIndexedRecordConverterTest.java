@@ -17,30 +17,16 @@ package com.liferay.talend.avro;
 import com.liferay.talend.BaseTest;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
-import javax.json.JsonObject;
-
 import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Igor Beslic
  */
 public class JsonObjectIndexedRecordConverterTest extends BaseTest {
-
-	@Before
-	public void setUp() {
-		if (_oasJsonObject == null) {
-			_oasJsonObject = readObject("openapi.json");
-		}
-
-		if (_productJsonObject == null) {
-			_productJsonObject = readObject("productPostRequestContent.json");
-		}
-	}
 
 	@Test
 	public void testToIndexedRecordIfDateTimeStringPropertyPresent() {
@@ -73,14 +59,14 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 		String endpoint = "/v1.0/catalogs/{siteId}/products";
 
 		Schema schema = getSchema(
-			endpoint, OASConstants.OPERATION_GET, _oasJsonObject);
+			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
 
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
 			new JsonObjectIndexedRecordConverter(schema);
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
-				_productJsonObject);
+				readObject("productContent.json"));
 
 		Assert.assertNotNull(
 			"product is converted to indexed record", indexedRecord);
@@ -102,8 +88,5 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 		Assert.assertEquals(
 			"productId value is 20111101", Long.valueOf(20111101), productId);
 	}
-
-	private JsonObject _oasJsonObject;
-	private JsonObject _productJsonObject;
 
 }

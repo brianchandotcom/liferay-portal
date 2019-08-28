@@ -66,7 +66,7 @@ public class LiferayWriterTest extends BaseTest {
 
 		liferayWriter.write(
 			_createIndexedRecordFromFile(
-				"productPostRequestContent.json", postContentSchema));
+				"productContent.json", postContentSchema));
 
 		JsonObject outputJsonObject =
 			liferayRequestContentAggregatorSink.getOutputJsonObject();

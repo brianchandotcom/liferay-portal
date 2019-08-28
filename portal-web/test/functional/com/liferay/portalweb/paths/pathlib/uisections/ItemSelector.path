@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILE_UPLOAD_CAPTION</td>
+	<td>//div[@class='image-viewer-footer-content']/p[@class='image-viewer-caption' and contains(.,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILE_INFO_ICON</td>
 	<td>//div[contains(@class,'image-viewer-focused')]//span[contains(@class,'item-viewer-icon-info')]</td>
 	<td></td>

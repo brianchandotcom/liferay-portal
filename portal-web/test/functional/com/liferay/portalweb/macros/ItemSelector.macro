@@ -194,7 +194,7 @@ definition {
 			value1 = "${uploadFileName}");
 
 		AssertTextEquals(
-			locator1 = "ItemSelector#CAPTION",
+			locator1 = "ItemSelector#FILE_UPLOAD_CAPTION",
 			value1 = "${uploadFileName}");
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_MODAL_FOOTER");

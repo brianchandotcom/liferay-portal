@@ -231,8 +231,8 @@ public class DLFileEntryModelResourcePermissionRegistrar {
 						dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
 						actionId);
 
-				if (hasOwnerPermission) {
-					return true;
+				if (!hasOwnerPermission) {
+					return false;
 				}
 			}
 

@@ -20,6 +20,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 
 import java.util.Locale;
@@ -43,7 +44,7 @@ public class LayoutCanonicalURLServiceImpl
 	@Override
 	public LayoutCanonicalURL updateLayoutCanonicalURL(
 			long groupId, boolean privateLayout, long layoutId, boolean enabled,
-			Map<Locale, String> canonicalURLMap)
+			Map<Locale, String> canonicalURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayout(
@@ -54,7 +55,7 @@ public class LayoutCanonicalURLServiceImpl
 
 		return layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
 			getUserId(), groupId, privateLayout, layoutId, enabled,
-			canonicalURLMap);
+			canonicalURLMap, serviceContext);
 	}
 
 }

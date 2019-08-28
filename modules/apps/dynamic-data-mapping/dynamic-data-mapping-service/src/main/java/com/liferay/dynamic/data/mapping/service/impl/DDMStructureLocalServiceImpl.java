@@ -29,11 +29,9 @@ import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -1832,17 +1830,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected DDMForm deserializeJSONDDMForm(String content) {
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
-		return deserializeDDMForm(content, ddmFormDeserializer);
+		return deserializeDDMForm(content, _jsonDDMFormDeserializer);
 	}
 
 	protected DDMForm deserializeXSDDDMForm(String content) {
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
-
-		return deserializeDDMForm(content, ddmFormDeserializer);
+		return deserializeDDMForm(content, _xsdDDMFormDeserializer);
 	}
 
 	protected DDMStructure doUpdateStructure(
@@ -2115,14 +2107,11 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected String serializeJSONDDMForm(DDMForm ddmForm) {
-		DDMFormSerializer ddmFormSerializer =
-			_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormSerializer.serialize(builder.build());
+			_jsonDDMFormSerializer.serialize(builder.build());
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
@@ -2133,17 +2122,10 @@ public class DDMStructureLocalServiceImpl
 
 				@Override
 				public Void call() throws Exception {
-					DDMFormSerializer ddmFormSerializer =
-						_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
-					DDMFormDeserializer ddmFormDeserializer =
-						_ddmFormDeserializerTracker.getDDMFormDeserializer(
-							"json");
-
 					DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
 						new DDMFormTemplateSynchonizer(
-							structure.getDDMForm(), ddmFormDeserializer,
-							ddmFormSerializer, _ddmTemplateLocalService);
+							structure.getDDMForm(), _jsonDDMFormDeserializer,
+							_jsonDDMFormSerializer, _ddmTemplateLocalService);
 
 					List<DDMTemplate> templates = getStructureTemplates(
 						structure, DDMTemplateConstants.TEMPLATE_TYPE_FORM);
@@ -2326,12 +2308,6 @@ public class DDMStructureLocalServiceImpl
 		_ddmDataProviderInstanceLocalService;
 
 	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-
-	@Reference
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
-
-	@Reference
 	private DDMFormValidator _ddmFormValidator;
 
 	@Reference
@@ -2355,10 +2331,19 @@ public class DDMStructureLocalServiceImpl
 	@Reference
 	private DDMXML _ddmXML;
 
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
+
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(ddm.form.deserializer.type=xsd)")
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

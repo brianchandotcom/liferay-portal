@@ -202,6 +202,86 @@ public class ${schemaName}SerDes {
 		return map;
 	}
 
+	public static class ${schemaName}JSONParser extends BaseJSONParser<${schemaName}> {
+
+		@Override
+		protected ${schemaName} createDTO() {
+			return new ${schemaName}();
+		}
+
+		@Override
+		protected ${schemaName}[] createDTOArray(int size) {
+			return new ${schemaName}[size];
+		}
+
+		@Override
+		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
+			<#list properties?keys as propertyName>
+				<#if !propertyName?is_first>
+					else
+				</#if>
+
+				if (Objects.equals(jsonParserFieldName, "${propertyName}")) {
+				if (jsonParserFieldValue != null) {
+						<#assign capitalizedPropertyName = propertyName?cap_first />
+
+						<#if enumSchemas?keys?seq_contains(properties[propertyName])>
+							<#assign capitalizedPropertyName = properties[propertyName] />
+						</#if>
+
+					${schemaVarName}.set${capitalizedPropertyName}(
+
+						<#assign propertyType = properties[propertyName] />
+
+						<#if stringUtil.equals(propertyType, "Date")>
+							toDate((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Date[]")>
+							toDates((Object[])jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Double")>
+							Double.valueOf((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Integer")>
+							Integer.valueOf((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Integer[]")>
+							toIntegers((Object[])jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Long")>
+							Long.valueOf((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Long[]")>
+							toLongs((Object[])jsonParserFieldValue)
+						<#elseif stringUtil.startsWith(propertyType, "Map<")>
+							(Map)${schemaName}SerDes.toMap((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Number")>
+							Integer.valueOf((String)jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "Number[]")>
+							toIntegers((Object[])jsonParserFieldValue)
+						<#elseif stringUtil.equals(propertyType, "String[]")>
+							toStrings((Object[])jsonParserFieldValue)
+						<#elseif allSchemas?keys?seq_contains(propertyType)>
+							${propertyType}SerDes.toDTO((String)jsonParserFieldValue)
+						<#elseif propertyType?ends_with("[]") && allSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
+							Stream.of(
+								toStrings((Object[])jsonParserFieldValue)
+							).map(
+								object -> ${propertyType?remove_ending("[]")}SerDes.toDTO((String)object)
+							).toArray(
+								size -> new ${propertyType?remove_ending("[]")}[size]
+							)
+						<#elseif enumSchemas?keys?seq_contains(properties[propertyName])>
+							${schemaName}.${propertyType}.create((String)jsonParserFieldValue)
+						<#else>
+							(${propertyType})jsonParserFieldValue
+						</#if>
+
+					);
+				}
+			}
+			</#list>
+
+		else {
+			throw new IllegalArgumentException("Unsupported field name " + jsonParserFieldName);
+		}
+		}
+	}
+
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);
 
@@ -269,86 +349,6 @@ public class ${schemaName}SerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class ${schemaName}JSONParser extends BaseJSONParser<${schemaName}> {
-
-		@Override
-		protected ${schemaName} createDTO() {
-			return new ${schemaName}();
-		}
-
-		@Override
-		protected ${schemaName}[] createDTOArray(int size) {
-			return new ${schemaName}[size];
-		}
-
-		@Override
-		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
-			<#list properties?keys as propertyName>
-				<#if !propertyName?is_first>
-					else
-				</#if>
-
-				if (Objects.equals(jsonParserFieldName, "${propertyName}")) {
-					if (jsonParserFieldValue != null) {
-						<#assign capitalizedPropertyName = propertyName?cap_first />
-
-						<#if enumSchemas?keys?seq_contains(properties[propertyName])>
-							<#assign capitalizedPropertyName = properties[propertyName] />
-						</#if>
-
-						${schemaVarName}.set${capitalizedPropertyName}(
-
-						<#assign propertyType = properties[propertyName] />
-
-						<#if stringUtil.equals(propertyType, "Date")>
-							toDate((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Date[]")>
-							toDates((Object[])jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Double")>
-							Double.valueOf((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Integer")>
-							Integer.valueOf((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Integer[]")>
-							toIntegers((Object[])jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Long")>
-							Long.valueOf((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Long[]")>
-							toLongs((Object[])jsonParserFieldValue)
-						<#elseif stringUtil.startsWith(propertyType, "Map<")>
-							(Map)${schemaName}SerDes.toMap((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Number")>
-							Integer.valueOf((String)jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "Number[]")>
-							toIntegers((Object[])jsonParserFieldValue)
-						<#elseif stringUtil.equals(propertyType, "String[]")>
-							toStrings((Object[])jsonParserFieldValue)
-						<#elseif allSchemas?keys?seq_contains(propertyType)>
-							${propertyType}SerDes.toDTO((String)jsonParserFieldValue)
-						<#elseif propertyType?ends_with("[]") && allSchemas?keys?seq_contains(propertyType?remove_ending("[]"))>
-							Stream.of(
-								toStrings((Object[])jsonParserFieldValue)
-							).map(
-								object -> ${propertyType?remove_ending("[]")}SerDes.toDTO((String)object)
-							).toArray(
-								size -> new ${propertyType?remove_ending("[]")}[size]
-							)
-						<#elseif enumSchemas?keys?seq_contains(properties[propertyName])>
-							${schemaName}.${propertyType}.create((String)jsonParserFieldValue)
-						<#else>
-							(${propertyType})jsonParserFieldValue
-						</#if>
-
-						);
-					}
-				}
-			</#list>
-
-			else {
-				throw new IllegalArgumentException("Unsupported field name " + jsonParserFieldName);
-			}
-		}
 	}
 
 }

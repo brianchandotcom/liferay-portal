@@ -81,7 +81,7 @@ InstanceListCard.Body = ({page, pageSize, processId}) => {
 					errorMessageText={errorMessageText}
 					fetching={fetching}
 					loading={loading}
-					searching={searching}
+					searching={searching && totalCount === 0}
 				>
 					<InstanceListTable items={items} />
 

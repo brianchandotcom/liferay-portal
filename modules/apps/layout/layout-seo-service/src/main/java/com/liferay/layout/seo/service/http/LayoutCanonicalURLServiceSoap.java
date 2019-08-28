@@ -72,7 +72,8 @@ public class LayoutCanonicalURLServiceSoap {
 			updateLayoutCanonicalURL(
 				long groupId, boolean privateLayout, long layoutId,
 				boolean enabled, String[] canonicalURLMapLanguageIds,
-				String[] canonicalURLMapValues)
+				String[] canonicalURLMapValues,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
 		try {
@@ -82,7 +83,8 @@ public class LayoutCanonicalURLServiceSoap {
 
 			com.liferay.layout.seo.model.LayoutCanonicalURL returnValue =
 				LayoutCanonicalURLServiceUtil.updateLayoutCanonicalURL(
-					groupId, privateLayout, layoutId, enabled, canonicalURLMap);
+					groupId, privateLayout, layoutId, enabled, canonicalURLMap,
+					serviceContext);
 
 			return com.liferay.layout.seo.model.LayoutCanonicalURLSoap.
 				toSoapModel(returnValue);

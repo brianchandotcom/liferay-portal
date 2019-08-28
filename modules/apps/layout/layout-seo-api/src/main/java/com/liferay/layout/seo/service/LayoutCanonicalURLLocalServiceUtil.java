@@ -101,6 +101,12 @@ public class LayoutCanonicalURLLocalServiceUtil {
 		getService().deleteLayoutCanonicalURL(groupId, privateLayout, layoutId);
 	}
 
+	public static void deleteLayoutCanonicalURL(String uuid, long groupId)
+		throws com.liferay.layout.seo.exception.NoSuchCanonicalURLException {
+
+		getService().deleteLayoutCanonicalURL(uuid, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -375,11 +381,13 @@ public class LayoutCanonicalURLLocalServiceUtil {
 			updateLayoutCanonicalURL(
 				long userId, long groupId, boolean privateLayout, long layoutId,
 				boolean enabled,
-				java.util.Map<java.util.Locale, String> canonicalURLMap)
+				java.util.Map<java.util.Locale, String> canonicalURLMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateLayoutCanonicalURL(
-			userId, groupId, privateLayout, layoutId, enabled, canonicalURLMap);
+			userId, groupId, privateLayout, layoutId, enabled, canonicalURLMap,
+			serviceContext);
 	}
 
 	public static LayoutCanonicalURLLocalService getService() {

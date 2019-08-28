@@ -21,9 +21,13 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +49,19 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "display-page-content");
+	}
+
+	@Override
+	public boolean isSelectable(HttpServletRequest httpServletRequest) {
+		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_ASSET_DISPLAY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -79,8 +79,8 @@ function SegmentsExperimentsSidebar({
 					description={creationModal.description}
 					error={creationModal.error}
 					goals={initialGoals}
+					handleClose={_handleModalClose}
 					name={creationModal.name}
-					onClose={_handleModalClose}
 					onSave={_handleExperimentCreation}
 					segmentsExperienceId={creationModal.segmentsExperienceId}
 					title={Liferay.Language.get('create-new-test')}
@@ -93,8 +93,8 @@ function SegmentsExperimentsSidebar({
 					error={editionModal.error}
 					goal={editionModal.goal.value}
 					goals={initialGoals}
+					handleClose={_handleEditModalClose}
 					name={editionModal.name}
-					onClose={_handleEditModalClose}
 					onSave={_handleExperimentEdition}
 					segmentsExperienceId={editionModal.segmentsExperienceId}
 					segmentsExperimentId={editionModal.segmentsExperimentId}

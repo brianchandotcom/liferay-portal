@@ -14,7 +14,7 @@
 
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import ClayModal from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import ClayAlert from '@clayui/alert';
 import ValidatedInput from './ValidatedInput/ValidatedInput.es';
@@ -28,13 +28,16 @@ function SegmentsExperimentsModal({
 	error,
 	goal,
 	goals = [],
+	handleClose,
 	name = '',
-	onClose,
 	onSave,
 	segmentsExperienceId,
 	segmentsExperimentId,
 	title
 }) {
+	const {observer, onClose} = useModal({
+		onClose: handleClose
+	});
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputGoal, setInputGoal] = useState(
 		goal || (goals[0] && goals[0].value)
@@ -43,100 +46,84 @@ function SegmentsExperimentsModal({
 	const [invalidForm, setInvalidForm] = useState(false);
 
 	return active ? (
-		<ClayModal onClose={_handleModalClose} size="lg">
-			{onClose => {
-				return (
-					<>
-						<ClayModal.Header>{title}</ClayModal.Header>
-						<ClayModal.Body>
-							<form onSubmit={_handleFormSubmit}>
-								{error && (
-									<ClayAlert
-										displayType="danger"
-										title={Liferay.Language.get('error')}
-									>
-										{error}
-									</ClayAlert>
-								)}
+		<ClayModal observer={observer} size="lg">
+			<ClayModal.Header>{title}</ClayModal.Header>
+			<ClayModal.Body>
+				<form onSubmit={_handleFormSubmit}>
+					{error && (
+						<ClayAlert
+							displayType="danger"
+							title={Liferay.Language.get('error')}
+						>
+							{error}
+						</ClayAlert>
+					)}
 
-								<ValidatedInput
-									autofocus={true}
-									errorMessage={Liferay.Language.get(
-										'test-name-is-required'
-									)}
-									label={Liferay.Language.get('test-name')}
-									onChange={_handleNameChange}
-									onValidationChange={
-										_handleInputNameValidation
-									}
-									value={inputName}
-								/>
+					<ValidatedInput
+						autofocus={true}
+						errorMessage={Liferay.Language.get(
+							'test-name-is-required'
+						)}
+						label={Liferay.Language.get('test-name')}
+						onChange={_handleNameChange}
+						onValidationChange={_handleInputNameValidation}
+						value={inputName}
+					/>
 
-								<div className="form-group">
-									<label>
-										{Liferay.Language.get('description')}
-									</label>
-									<textarea
-										className="form-control"
-										maxLength="4000"
-										onChange={_handleDescriptionChange}
-										placeholder={Liferay.Language.get(
-											'description-placeholder'
-										)}
-										value={inputDescription}
-									/>
-								</div>
-								{goals.length > 0 && (
-									<div className="form-group">
-										<label className="w100">
-											{Liferay.Language.get(
-												'select-goal'
-											)}
-											<ClayIcon
-												className="reference-mark text-warning ml-1"
-												symbol="asterisk"
-											/>
-											<ClaySelect
-												className="mt-1"
-												defaultValue={inputGoal}
-												onChange={_handleGoalChange}
-											>
-												{goals.map(goal => (
-													<ClaySelect.Option
-														key={goal.value}
-														label={goal.label}
-														value={goal.value}
-													/>
-												))}
-											</ClaySelect>
-										</label>
-									</div>
-								)}
-							</form>
-						</ClayModal.Body>
-
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										disabled={invalidForm}
-										displayType="secondary"
-										onClick={onClose}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
-									<ClayButton
-										displayType="primary"
-										onClick={_handleSave}
-									>
-										{Liferay.Language.get('save')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
+					<div className="form-group">
+						<label>{Liferay.Language.get('description')}</label>
+						<textarea
+							className="form-control"
+							maxLength="4000"
+							onChange={_handleDescriptionChange}
+							placeholder={Liferay.Language.get(
+								'description-placeholder'
+							)}
+							value={inputDescription}
 						/>
-					</>
-				);
-			}}
+					</div>
+					{goals.length > 0 && (
+						<div className="form-group">
+							<label className="w100">
+								{Liferay.Language.get('select-goal')}
+								<ClayIcon
+									className="reference-mark text-warning ml-1"
+									symbol="asterisk"
+								/>
+								<ClaySelect
+									className="mt-1"
+									defaultValue={inputGoal}
+									onChange={_handleGoalChange}
+								>
+									{goals.map(goal => (
+										<ClaySelect.Option
+											key={goal.value}
+											label={goal.label}
+											value={goal.value}
+										/>
+									))}
+								</ClaySelect>
+							</label>
+						</div>
+					)}
+				</form>
+			</ClayModal.Body>
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							disabled={invalidForm}
+							displayType="secondary"
+							onClick={onClose}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+						<ClayButton displayType="primary" onClick={_handleSave}>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
 		</ClayModal>
 	) : null;
 
@@ -172,13 +159,6 @@ function SegmentsExperimentsModal({
 		}
 	}
 
-	/**
-	 * Resets modal values and triggers `onClose`
-	 */
-	function _handleModalClose() {
-		onClose();
-	}
-
 	function _handleFormSubmit(event) {
 		event.preventDefault();
 
@@ -192,8 +172,8 @@ SegmentsExperimentsModal.propTypes = {
 	error: PropTypes.string,
 	goal: SegmentsExperimentGoal,
 	goals: PropTypes.arrayOf(SegmentsExperimentGoal),
+	handleClose: PropTypes.func.isRequired,
 	name: PropTypes.string,
-	onClose: PropTypes.func.isRequired,
 	onSave: PropTypes.func.isRequired,
 	segmentsExperienceId: PropTypes.string,
 	segmentsExperimentId: PropTypes.string,

@@ -29,15 +29,19 @@
 			</div>
 
 			<a class="carousel-control-prev" data-slide="prev" href="#<@portlet.namespace />-main-carousel" role="button">
-				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-
-				<span class="sr-only">Previous</span>
+				<@liferay_ui["icon"]
+					icon="angle-left"
+					markupView="lexicon"
+					message="Previous"
+				/>
 			</a>
 
 			<a class="carousel-control-next" data-slide="next" href="#<@portlet.namespace />-main-carousel" role="button">
-				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-
-				<span class="sr-only">Next</span>
+				<@liferay_ui["icon"]
+					icon="angle-right"
+					markupView="lexicon"
+					message="Next"
+				/>
 			</a>
 		</div>
 	</section>

@@ -139,17 +139,17 @@ AUI.add(
 				if (layoutRevisionStatus) {
 					Liferay.after('updatedStatus', function(event) {
 						Liferay.Util.fetch(instance.layoutRevisionStatusURL)
-							.then(function(response) {
+							.then(response => {
 								return response.text();
 							})
-							.then(function(response) {
+							.then(response => {
 								layoutRevisionStatus.plug(
 									A.Plugin.ParseContent
 								);
 
 								layoutRevisionStatus.setContent(response);
 							})
-							.catch(function() {
+							.catch(() => {
 								layoutRevisionStatus.setContent(
 									Liferay.Language.get(
 										'there-was-an-unexpected-error.-please-refresh-the-current-page'
@@ -200,14 +200,14 @@ AUI.add(
 				}
 
 				Liferay.Util.fetch(event.publishURL)
-					.then(function() {
+					.then(() => {
 						if (event.incomplete) {
 							location.href = event.currentURL;
 						} else {
 							Liferay.fire('updatedLayout');
 						}
 					})
-					.catch(function() {
+					.catch(() => {
 						layoutRevisionDetails.addClass('alert alert-danger');
 
 						layoutRevisionDetails.setContent(
@@ -257,10 +257,10 @@ AUI.add(
 						method: 'POST'
 					}
 				)
-					.then(function() {
+					.then(() => {
 						window.location.reload();
 					})
-					.catch(function() {
+					.catch(() => {
 						instance._getNotification().show();
 					});
 			}

@@ -27,10 +27,10 @@ ext {
 		"com.liferay.css.builder.version": "3.0.0",
 		"com.liferay.gradle.plugins.css.builder.version": "3.0.0",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.7",
-		"com.liferay.gradle.plugins.version": "4.4.2",
+		"com.liferay.gradle.plugins.version": "4.4.5",
 		"com.liferay.gradle.plugins.workspace.version": "2.1.5",
 		"com.liferay.portal.tools.bundle.support.version": "3.4.3",
-		"com.liferay.portal.tools.service.builder.version": "1.0.297",
+		"com.liferay.portal.tools.service.builder.version": "1.0.298",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
 		"com.liferay.portal.tools.theme.builder.version": "1.1.7"
 	]

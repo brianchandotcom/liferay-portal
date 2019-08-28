@@ -182,6 +182,135 @@ definition {
 			value1 = "Word Doc Title");
 	}
 
+	@description = "This test ensures that an Excel document title can be changed via the OneDrive editor."
+	@priority = "4"
+	test EditExcelDocument {
+		property test.name.skip.portal.instance = "OneDrive#EditExcelDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.xlsx",
+			dmDocumentTitle = "Document_2.xlsx");
+
+		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.xlsx");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "Excel Doc Title Edited",
+			key_documentTitle = "Document_2.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Document_2.xlsx",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Document_2.xlsx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Excel Doc Title Edited",
+			dmDocumentVersionNumber = "2.0");
+	}
+
+	@description = "This test ensures that a Powerpoint document title can be changed via the OneDrive editor."
+	@priority = "4"
+	test EditPowerPointDocument {
+		property test.name.skip.portal.instance = "OneDrive#EditPowerPointDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.pptx",
+			dmDocumentTitle = "Document_2.pptx");
+
+		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.pptx");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "Powerpoint Doc Title Edited",
+			key_documentTitle = "Document_2.pptx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Document_2.pptx",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Document_2.pptx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Powerpoint Doc Title Edited",
+			dmDocumentVersionNumber = "2.0");
+	}
+
+	@description = "This test ensures that a Word document title can be changed via the OneDrive editor."
+	@priority = "4"
+	test EditWordDocument {
+		property test.name.skip.portal.instance = "OneDrive#EditWordDocument";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_2.docx",
+			dmDocumentTitle = "Document_2.docx");
+
+		OneDrive.gotoEdit(dmDocumentTitle = "Document_2.docx");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		OneDrive.editTitle(
+			dmDocumentTitle = "Word Doc Title Edited",
+			key_documentTitle = "Document_2.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewCheckedoutPG(
+			dmDocumentTitle = "Document_2.docx",
+			status = "Draft");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.checkinPG(dmDocumentTitle = "Document_2.docx");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.viewAllPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Word Doc Title Edited",
+			dmDocumentVersionNumber = "2.0");
+	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

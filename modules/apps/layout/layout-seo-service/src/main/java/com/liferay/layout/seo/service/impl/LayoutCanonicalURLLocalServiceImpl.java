@@ -20,6 +20,7 @@ import com.liferay.layout.seo.service.base.LayoutCanonicalURLLocalServiceBaseImp
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.DateUtil;
 
 import java.util.Date;
@@ -48,6 +49,13 @@ public class LayoutCanonicalURLLocalServiceImpl
 	}
 
 	@Override
+	public void deleteLayoutCanonicalURL(String uuid, long groupId)
+		throws NoSuchCanonicalURLException {
+
+		layoutCanonicalURLPersistence.removeByUUID_G(uuid, groupId);
+	}
+
+	@Override
 	public LayoutCanonicalURL fetchLayoutCanonicalURL(
 		long groupId, boolean privateLayout, long layoutId) {
 
@@ -58,7 +66,8 @@ public class LayoutCanonicalURLLocalServiceImpl
 	@Override
 	public LayoutCanonicalURL updateLayoutCanonicalURL(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabled, Map<Locale, String> canonicalURLMap)
+			boolean enabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutCanonicalURL layoutCanonicalURL =
@@ -68,7 +77,7 @@ public class LayoutCanonicalURLLocalServiceImpl
 		if (layoutCanonicalURL == null) {
 			return _addLayoutCanonicalURL(
 				userId, groupId, privateLayout, layoutId, enabled,
-				canonicalURLMap);
+				canonicalURLMap, serviceContext);
 		}
 
 		layoutCanonicalURL.setModifiedDate(DateUtil.newDate());
@@ -80,13 +89,15 @@ public class LayoutCanonicalURLLocalServiceImpl
 
 	private LayoutCanonicalURL _addLayoutCanonicalURL(
 			long userId, long groupId, boolean privateLayout, long layoutId,
-			boolean enabled, Map<Locale, String> canonicalURLMap)
+			boolean enabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutCanonicalURL layoutCanonicalURL =
 			layoutCanonicalURLPersistence.create(
 				counterLocalService.increment());
 
+		layoutCanonicalURL.setUuid(serviceContext.getUuid());
 		layoutCanonicalURL.setGroupId(groupId);
 
 		Group group = groupLocalService.getGroup(groupId);

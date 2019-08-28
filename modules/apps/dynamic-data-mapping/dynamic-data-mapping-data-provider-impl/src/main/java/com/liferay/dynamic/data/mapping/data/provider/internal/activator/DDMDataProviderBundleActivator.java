@@ -22,8 +22,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Rodrigo Paulino
  */
-public class DynamicDataMappingDataProviderImplBundleActivator
-	implements BundleActivator {
+public class DDMDataProviderBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {

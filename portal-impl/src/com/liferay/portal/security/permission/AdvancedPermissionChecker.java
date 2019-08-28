@@ -1328,14 +1328,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			groupId,
 			key -> {
 				try {
-					UserBag userBag = getUserBag();
-
 					RoleCollectionImpl roleCollectionImpl =
-						new RoleCollectionImpl(roleIds, groupId, this);
+						new RoleCollectionImpl(
+							user, getUserBag(), roleIds, groupId, this);
 
 					for (RoleContributor roleContributor : _roleContributors) {
-						roleContributor.contribute(
-							user, userBag, roleCollectionImpl);
+						roleContributor.contribute(roleCollectionImpl);
 					}
 
 					return roleCollectionImpl.getRoleIds();

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.security.permission.contributor;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -29,8 +31,11 @@ import java.util.Set;
 public class RoleCollectionImpl implements RoleCollection {
 
 	public RoleCollectionImpl(
-		long[] roleIds, long groupId, PermissionChecker permissionChecker) {
+		User user, UserBag userBag, long[] roleIds, long groupId,
+		PermissionChecker permissionChecker) {
 
+		_user = user;
+		_userBag = userBag;
 		_roleIds = roleIds;
 		_groupId = groupId;
 		_permissionChecker = permissionChecker;
@@ -93,6 +98,16 @@ public class RoleCollectionImpl implements RoleCollection {
 	}
 
 	@Override
+	public User getUser() {
+		return _user;
+	}
+
+	@Override
+	public UserBag getUserBag() {
+		return _userBag;
+	}
+
+	@Override
 	public boolean hasRoleId(long roleId) {
 		if ((_addedRoleIds != null) && _addedRoleIds.contains(roleId)) {
 			return true;
@@ -138,5 +153,7 @@ public class RoleCollectionImpl implements RoleCollection {
 	private final PermissionChecker _permissionChecker;
 	private Set<Long> _removedRoleIds;
 	private final long[] _roleIds;
+	private final User _user;
+	private final UserBag _userBag;
 
 }

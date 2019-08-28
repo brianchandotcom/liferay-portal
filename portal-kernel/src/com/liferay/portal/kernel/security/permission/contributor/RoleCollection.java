@@ -14,13 +14,16 @@
 
 package com.liferay.portal.kernel.security.permission.contributor;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.UserBag;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * RoleCollection is used as the argument to {@link
- * RoleContributor#contribute(User, UserBag, RoleCollection)}. It holds the
- * managed collection of roleIds starting with the <em>initial</em> set
- * calculated from persisted role assignment and role inheritance.
+ * RoleContributor#contribute(RoleCollection)}. It holds the managed
+ * collection of roleIds starting with the <em>initial</em> set calculated
+ * from persisted role assignment and role inheritance.
  *
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
@@ -60,6 +63,10 @@ public interface RoleCollection {
 	 *         and inheritance
 	 */
 	public long[] getInitialRoleIds();
+
+	public User getUser();
+
+	public UserBag getUserBag();
 
 	/**
 	 * Check if a Role is already in the collection by roleId.

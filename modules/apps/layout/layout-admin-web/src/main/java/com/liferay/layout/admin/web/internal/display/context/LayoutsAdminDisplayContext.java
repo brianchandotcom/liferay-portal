@@ -28,6 +28,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
+import com.liferay.layout.seo.model.LayoutCanonicalURL;
+import com.liferay.layout.seo.service.LayoutCanonicalURLLocalServiceUtil;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.layout.util.template.LayoutConverter;
@@ -1073,6 +1075,18 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return _selLayout;
+	}
+
+	public LayoutCanonicalURL getSelLayoutCanonicalURL() {
+		Layout layout = getSelLayout();
+
+		if (layout == null) {
+			return null;
+		}
+
+		return LayoutCanonicalURLLocalServiceUtil.fetchLayoutCanonicalURL(
+			layout.getGroupId(), layout.isPrivateLayout(),
+			layout.getLayoutId());
 	}
 
 	public LayoutSet getSelLayoutSet() throws PortalException {

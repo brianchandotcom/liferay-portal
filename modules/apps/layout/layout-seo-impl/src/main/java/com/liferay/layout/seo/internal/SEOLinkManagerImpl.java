@@ -17,12 +17,13 @@ package com.liferay.layout.seo.internal;
 import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.SEOLink;
 import com.liferay.layout.seo.kernel.SEOLinkManager;
+import com.liferay.layout.seo.model.LayoutCanonicalURL;
+import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -83,7 +84,7 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws ConfigurationException {
 
-		String layoutCanonicalURL = _getLayoutCanonicalURL(layout);
+		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
 
 		if (Validator.isNotNull(layoutCanonicalURL)) {
 			return layoutCanonicalURL;
@@ -103,15 +104,17 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		return alternateURLs.getOrDefault(locale, canonicalURL);
 	}
 
-	private String _getLayoutCanonicalURL(Layout layout) {
-		boolean useCustomCanonicalURL = GetterUtil.getBoolean(
-			layout.getTypeSettingsProperty("useCustomCanonicalURL"));
+	private String _getLayoutCanonicalURL(Locale locale, Layout layout) {
+		LayoutCanonicalURL layoutCanonicalURL =
+			_layoutCanonicalURLLocalService.fetchLayoutCanonicalURL(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
 
-		if (!useCustomCanonicalURL) {
+		if ((layoutCanonicalURL == null) || !layoutCanonicalURL.isEnabled()) {
 			return StringPool.BLANK;
 		}
 
-		return layout.getTypeSettingsProperty("customCanonicalURL");
+		return layoutCanonicalURL.getCanonicalURL(locale);
 	}
 
 	@Reference
@@ -119,5 +122,8 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
 
 }

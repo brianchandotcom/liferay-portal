@@ -43,6 +43,7 @@ definition {
 	}
 
 	@description = "This test is skipping portal instance setup due to LPS-75168"
+	@ignore = "true"
 	@priority = "4"
 	test ViewNewSiteMember {
 		property test.name.skip.portal.instance = "InviteMembers#ViewNewSiteMember";

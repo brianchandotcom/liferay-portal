@@ -20,6 +20,7 @@ import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.asah.connector.internal.provider.AsahInterestTermProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,6 +41,10 @@ public class AsahInterestTermAssetListAssetEntryQueryProcessor
 	public void processAssetEntryQuery(
 		String userId, UnicodeProperties unicodeProperties,
 		AssetEntryQuery assetEntryQuery) {
+
+		if (Validator.isNull(userId)) {
+			return;
+		}
 
 		boolean enableContentRecommendation = GetterUtil.getBoolean(
 			unicodeProperties.getProperty("enableContentRecommendation"));

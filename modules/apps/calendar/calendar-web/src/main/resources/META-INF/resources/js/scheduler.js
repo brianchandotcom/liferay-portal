@@ -280,7 +280,7 @@ AUI.add(
 						arguments
 					);
 
-					Liferay.Store(
+					Liferay.Util.Session.set(
 						'com.liferay.calendar.web_defaultView',
 						event.newVal.get('name')
 					);

@@ -13,5 +13,6 @@
 		<field name="description" type="String" />
 		<field name="logoId" type="long" />
 		<field name="status" type="int" />
+		<field name="website" type="String" />
 	</model>
 </model-hints>

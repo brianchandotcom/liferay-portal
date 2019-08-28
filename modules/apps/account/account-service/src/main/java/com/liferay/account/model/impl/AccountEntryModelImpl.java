@@ -79,7 +79,7 @@ public class AccountEntryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"logoId", Types.BIGINT},
-		{"status", Types.INTEGER}
+		{"status", Types.INTEGER}, {"website", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,10 +97,11 @@ public class AccountEntryModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("website", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,status INTEGER)";
+		"create table AccountEntry (accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(75) null,description VARCHAR(75) null,logoId LONG,status INTEGER,website VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -153,6 +154,7 @@ public class AccountEntryModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setLogoId(soapModel.getLogoId());
 		model.setStatus(soapModel.getStatus());
+		model.setWebsite(soapModel.getWebsite());
 
 		return model;
 	}
@@ -349,6 +351,10 @@ public class AccountEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"status",
 			(BiConsumer<AccountEntry, Integer>)AccountEntry::setStatus);
+		attributeGetterFunctions.put("website", AccountEntry::getWebsite);
+		attributeSetterBiConsumers.put(
+			"website",
+			(BiConsumer<AccountEntry, String>)AccountEntry::setWebsite);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -540,6 +546,22 @@ public class AccountEntryModelImpl
 		return _originalStatus;
 	}
 
+	@JSON
+	@Override
+	public String getWebsite() {
+		if (_website == null) {
+			return "";
+		}
+		else {
+			return _website;
+		}
+	}
+
+	@Override
+	public void setWebsite(String website) {
+		_website = website;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -587,6 +609,7 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setDescription(getDescription());
 		accountEntryImpl.setLogoId(getLogoId());
 		accountEntryImpl.setStatus(getStatus());
+		accountEntryImpl.setWebsite(getWebsite());
 
 		accountEntryImpl.resetOriginalValues();
 
@@ -720,6 +743,14 @@ public class AccountEntryModelImpl
 
 		accountEntryCacheModel.status = getStatus();
 
+		accountEntryCacheModel.website = getWebsite();
+
+		String website = accountEntryCacheModel.website;
+
+		if ((website != null) && (website.length() == 0)) {
+			accountEntryCacheModel.website = null;
+		}
+
 		return accountEntryCacheModel;
 	}
 
@@ -812,6 +843,7 @@ public class AccountEntryModelImpl
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
+	private String _website;
 	private long _columnBitmask;
 	private AccountEntry _escapedModel;
 

@@ -62,7 +62,7 @@ public class AccountEntryLocalServiceImpl
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, long logoId, int status, String website)
 		throws PortalException {
 
 		// Account entry
@@ -83,6 +83,7 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setDescription(description);
 		accountEntry.setLogoId(logoId);
 		accountEntry.setStatus(status);
+		accountEntry.setWebsite(website);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
 

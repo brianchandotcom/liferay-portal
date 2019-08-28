@@ -15,23 +15,28 @@
 package com.liferay.document.library.opener.onedrive.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2StateUtil;
+import com.liferay.document.library.opener.onedrive.web.internal.util.DLOpenerTimestampUtil;
+import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -39,13 +44,24 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,11 +74,11 @@ import org.osgi.service.component.annotations.Reference;
 		"auth.token.ignore.mvc.action=true",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"mvc.command.name=/document_library/edit_in_office365"
+		"mvc.command.name=/document_library/create_in_office365"
 	},
 	service = MVCActionCommand.class
 )
-public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
+public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -94,74 +110,97 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(
-			long fileEntryId, ServiceContext serviceContext)
+	private DLOpenerOneDriveFileReference _addDLOpenerOneDriveFileReference(
+			Locale locale, long userId, long repositoryId, long folderId,
+			String mimeType, ServiceContext serviceContext)
 		throws PortalException {
 
-		_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		String title = _uniqueFileEntryTitleProvider.provide(
+			serviceContext.getScopeGroupId(), folderId,
+			serviceContext.getLocale());
 
-		return _dlOpenerOneDriveManager.checkOut(
-			serviceContext.getUserId(),
-			_dlAppService.getFileEntry(fileEntryId));
+		String sourceFileName = title;
+
+		sourceFileName += DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
+			mimeType);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		if (Objects.equals(DLOpenerMimeTypes.APPLICATION_VND_XLSX, mimeType)) {
+			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(locale);
+
+			xssfWorkbook.createSheet(
+				_language.get(resourceBundle, "onedrive-excel-sheet"));
+
+			try {
+				xssfWorkbook.write(byteArrayOutputStream);
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
+		}
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			repositoryId, folderId, sourceFileName, mimeType, title,
+			StringPool.BLANK, StringPool.BLANK,
+			byteArrayOutputStream.toByteArray(), serviceContext);
+
+		_dlAppService.checkOutFileEntry(
+			fileEntry.getFileEntryId(), serviceContext);
+
+		return _dlOpenerOneDriveManager.createFile(userId, fileEntry);
 	}
 
 	private void _executeCommand(ActionRequest actionRequest)
 		throws PortalException {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
 
-		if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-			_dlAppService.cancelCheckOut(fileEntryId);
+		String timestamp = ParamUtil.getString(actionRequest, "timestamp");
+
+		if (DLOpenerTimestampUtil.contains(
+				httpServletRequest, Constants.ADD, timestamp)) {
+
+			return;
 		}
-		else if (cmd.equals(Constants.CHECKIN)) {
-			DLVersionNumberIncrease dlVersionNumberIncrease =
-				DLVersionNumberIncrease.valueOf(
-					actionRequest.getParameter("versionIncrease"),
-					DLVersionNumberIncrease.AUTOMATIC);
 
-			String changeLog = ParamUtil.getString(actionRequest, "changeLog");
+		try {
+			long repositoryId = ParamUtil.getLong(
+				actionRequest, "repositoryId");
+			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+			String contentType = ParamUtil.getString(
+				actionRequest, "contentType",
+				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			_dlAppService.checkInFileEntry(
-				fileEntryId, dlVersionNumberIncrease, changeLog,
-				serviceContext);
-		}
-		else if (cmd.equals(Constants.CHECKOUT)) {
-			try {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
-
-				_saveDLOpenerOneDriveFileReference(
-					actionRequest,
-					TransactionInvokerUtil.invoke(
-						_transactionConfig,
-						() -> _checkOutOneDriveFileEntry(
-							fileEntryId, serviceContext)));
-
-				hideDefaultSuccessMessage(actionRequest);
-			}
-			catch (PortalException pe) {
-				throw pe;
-			}
-			catch (Throwable throwable) {
-				throw new PortalException(throwable);
-			}
-		}
-		else if (cmd.equals(Constants.EDIT)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			_saveDLOpenerOneDriveFileReference(
 				actionRequest,
-				_dlOpenerOneDriveManager.requestEditAccess(
-					themeDisplay.getUserId(),
-					_dlAppService.getFileEntry(fileEntryId)));
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> _addDLOpenerOneDriveFileReference(
+						_portal.getLocale(actionRequest),
+						_portal.getUserId(actionRequest), repositoryId,
+						folderId, contentType, serviceContext)));
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			DLOpenerTimestampUtil.add(
+				httpServletRequest, Constants.ADD, timestamp);
 		}
-		else {
-			throw new IllegalArgumentException();
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
 		}
 	}
 
@@ -197,6 +236,9 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private OAuth2Manager _oAuth2Manager;
 
 	@Reference
@@ -205,8 +247,16 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private PortletURLFactory _portletURLFactory;
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
+
 	private final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private UniqueFileEntryTitleProvider _uniqueFileEntryTitleProvider;
 
 }

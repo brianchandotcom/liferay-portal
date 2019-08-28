@@ -122,6 +122,8 @@ public class SegmentsExperimentUtil {
 		).put(
 			"segmentsExperimentRelId",
 			String.valueOf(segmentsExperimentRel.getSegmentsExperimentRelId())
+		).put(
+			"split", segmentsExperimentRel.getSplit()
 		);
 	}
 

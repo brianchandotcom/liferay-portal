@@ -92,6 +92,15 @@ public class OAuth2Manager {
 		}
 	}
 
+	public boolean hasAccessToken(long companyId, long userId)
+		throws PortalException {
+
+		Optional<AccessToken> accessTokenOptional = getAccessTokenOptional(
+			companyId, userId);
+
+		return accessTokenOptional.isPresent();
+	}
+
 	public void revokeOAuth2AccessToken(long companyId, long userId) {
 		Optional<AccessToken> accessTokenOptional =
 			_accessTokenStore.getAccessTokenOptional(companyId, userId);

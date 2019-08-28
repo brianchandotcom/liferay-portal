@@ -197,8 +197,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		catch (PortalException pe) {
 			throw pe;
 		}
-		catch (RuntimeException r) {
-			throw r;
+		catch (RuntimeException re) {
+			throw re;
 		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);

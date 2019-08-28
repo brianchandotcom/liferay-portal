@@ -14,8 +14,6 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,8 +24,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 
@@ -96,12 +92,10 @@ public class OAuth2FlowHelperTest {
 	@Test
 	public void testExecuteWithAccessToken() throws PortalException {
 		Mockito.when(
-			_oAuth2Manager.getAccessTokenOptional(
+			_oAuth2Manager.hasAccessToken(
 				Matchers.anyLong(), Matchers.anyLong())
 		).thenReturn(
-			Optional.of(
-				new AccessToken(
-					new OAuth2AccessToken(RandomTestUtil.randomString())))
+			true
 		);
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -127,10 +121,10 @@ public class OAuth2FlowHelperTest {
 	@Test
 	public void testExecuteWithoutAccessToken() throws PortalException {
 		Mockito.when(
-			_oAuth2Manager.getAccessTokenOptional(
+			_oAuth2Manager.hasAccessToken(
 				Matchers.anyLong(), Matchers.anyLong())
 		).thenReturn(
-			Optional.empty()
+			false
 		);
 
 		MockHttpServletRequest mockHttpServletRequest =

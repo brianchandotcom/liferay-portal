@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.portlet.PortletRequest;
 
@@ -50,10 +49,7 @@ public class OAuth2FlowHelper<T extends PortletRequest> {
 		long companyId = _portal.getCompanyId(t);
 		long userId = _portal.getUserId(t);
 
-		Optional<AccessToken> accessTokenOptional =
-			_oAuth2Manager.getAccessTokenOptional(companyId, userId);
-
-		if (accessTokenOptional.isPresent()) {
+		if (_oAuth2Manager.hasAccessToken(companyId, userId)) {
 			return new OAuth2FlowResult(unsafeFunction.apply(t));
 		}
 

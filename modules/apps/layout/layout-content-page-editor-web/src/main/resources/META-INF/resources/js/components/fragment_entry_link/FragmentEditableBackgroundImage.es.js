@@ -77,11 +77,13 @@ class FragmentEditableBackgroundImage extends Component {
 			this.activeItemType ===
 				FRAGMENTS_EDITOR_ITEM_TYPES.backgroundImageEditable
 		) {
+			this._active = true;
 			this.element.classList.add(
 				'fragments-editor__background-image-editable--active'
 			);
 			this._createFloatingToolbar();
 		} else {
+			this._active = false;
 			this.element.classList.remove(
 				'fragments-editor__background-image-editable--active'
 			);
@@ -374,6 +376,18 @@ class FragmentEditableBackgroundImage extends Component {
  * @type {!Object}
  */
 FragmentEditableBackgroundImage.STATE = {
+	/**
+	 * Wether the editable is active
+	 * @instance
+	 * @memberOf FragmentEditableBackgroundImage
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+	_active: Config.internal()
+		.bool()
+		.value(false),
+
 	/**
 	 * Mapped asset field value
 	 * @instance

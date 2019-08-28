@@ -93,6 +93,10 @@ public class SegmentsExperimentDisplayContext {
 			"/content_layout/add_segments_experience");
 	}
 
+	public String getDeleteSegmentsExperimentURL() {
+		return _getSegmentsExperimentActionURL("/delete_segments_experiment");
+	}
+
 	public String getDeleteSegmentsVariantURL() {
 		return _getSegmentsExperimentActionURL(
 			"/delete_segments_experiment_rel");

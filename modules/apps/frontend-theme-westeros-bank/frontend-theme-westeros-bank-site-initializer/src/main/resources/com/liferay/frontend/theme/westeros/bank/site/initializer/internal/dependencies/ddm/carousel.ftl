@@ -1,5 +1,5 @@
 <style>
-	#<@portlet.namespace />.wb-carousel-wrapper .item-wrapper-image {
+	#[@liferay_portlet.namespace].wb-carousel-wrapper .item-wrapper-image {
 		background-size: cover;
 		padding-bottom: 100%;
 

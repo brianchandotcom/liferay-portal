@@ -39,6 +39,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
 import com.liferay.journal.model.JournalArticle;
@@ -72,7 +73,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -82,6 +83,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
@@ -1237,6 +1239,13 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalGroupServiceConfiguration(
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
+
+		_journalGroupServiceConfiguration = journalGroupServiceConfiguration;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -1422,7 +1431,7 @@ public class JournalArticleStagedModelDataHandler
 
 	private void _sendStoredUserNotificationEvents(JournalArticle article) {
 		ActionableDynamicQuery actionableDynamicQuery =
-			UserNotificationEventLocalServiceUtil.getActionableDynamicQuery();
+			_userNotificationEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(article.getCompanyId());
 
@@ -1444,8 +1453,73 @@ public class JournalArticleStagedModelDataHandler
 			(ActionableDynamicQuery.PerformActionMethod<UserNotificationEvent>)
 				userNotificationEvent -> {
 					userNotificationEvent.setDelivered(true);
-					UserNotificationEventLocalServiceUtil.
+
+					_userNotificationEventLocalService.
 						updateUserNotificationEvent(userNotificationEvent);
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						userNotificationEvent.getPayload());
+
+					SubscriptionSender subscriptionSender =
+						new SubscriptionSender();
+
+					subscriptionSender.setClassName(
+						jsonObject.getString("className"));
+					subscriptionSender.setClassPK(
+						jsonObject.getLong("classPK"));
+					subscriptionSender.setCompanyId(
+						userNotificationEvent.getCompanyId());
+
+					Map<String, HashMap<String, Object>> contextMap =
+						(Map)JSONFactoryUtil.looseDeserialize(
+							jsonObject.get(
+								"context"
+							).toString());
+
+					contextMap.forEach(
+						(key, value) -> subscriptionSender.setContextAttribute(
+							key, value.get("originalValue")));
+
+					String fromAddress =
+						_journalGroupServiceConfiguration.emailFromAddress();
+
+					String fromName =
+						_journalGroupServiceConfiguration.emailFromName();
+
+					subscriptionSender.setFrom(fromAddress, fromName);
+
+					subscriptionSender.setHtmlFormat(true);
+					subscriptionSender.setLocalizedBodyMap(
+						(Map)JSONFactoryUtil.looseDeserialize(
+							jsonObject.get(
+								"localizedBodyMap"
+							).toString()));
+
+					subscriptionSender.setLocalizedSubjectMap(
+						(Map)JSONFactoryUtil.looseDeserialize(
+							jsonObject.get(
+								"localizedSubjectMap"
+							).toString()));
+
+					subscriptionSender.setMailId(
+						"journal_article", article.getId());
+					subscriptionSender.setNotificationType(
+						jsonObject.getInt("notificationType"));
+					subscriptionSender.setPortletId(
+						jsonObject.getString("portletId"));
+					subscriptionSender.setReplyToAddress(fromAddress);
+
+					try {
+						subscriptionSender.sendEmailNotification(
+							userNotificationEvent.getUserId());
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to email UserNotificationEvent for " +
+									"article " + article.getArticleId());
+						}
+					}
 				});
 
 		try {
@@ -1525,10 +1599,15 @@ public class JournalArticleStagedModelDataHandler
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalCreationStrategy _journalCreationStrategy;
+	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
 
 	@Reference
 	private Portal _portal;
 
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

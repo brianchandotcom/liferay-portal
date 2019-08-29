@@ -30,7 +30,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Cristina González
  */
-public class OAuth2FlowHelper<T extends PortletRequest> {
+public class OAuth2FlowHelper {
 
 	public OAuth2FlowHelper(
 		OAuth2Manager oAuth2Manager, Portal portal,
@@ -41,7 +41,7 @@ public class OAuth2FlowHelper<T extends PortletRequest> {
 		_portletURLFactory = portletURLFactory;
 	}
 
-	public OAuth2FlowResult execute(
+	public <T extends PortletRequest> OAuth2FlowResult execute(
 			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction,
 			String successURL)
 		throws PortalException {

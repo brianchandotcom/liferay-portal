@@ -85,7 +85,7 @@ public class OAuth2FlowHelperTest {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		_oAuth2FlowHelper = new OAuth2FlowHelper<>(
+		_oAuth2FlowHelper = new OAuth2FlowHelper(
 			_oAuth2Manager, _portal, _portletURLFactory);
 	}
 
@@ -167,7 +167,7 @@ public class OAuth2FlowHelperTest {
 	}
 
 	private static LiferayPortletURL _liferayPortletURL;
-	private static OAuth2FlowHelper<PortletRequest> _oAuth2FlowHelper;
+	private static OAuth2FlowHelper _oAuth2FlowHelper;
 	private static OAuth2Manager _oAuth2Manager;
 	private static Portal _portal;
 	private static PortletURLFactory _portletURLFactory;

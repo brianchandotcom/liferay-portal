@@ -189,7 +189,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
 
-	private OAuth2FlowHelper<ActionRequest> _oAuth2FlowHelper;
+	private OAuth2FlowHelper _oAuth2FlowHelper;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

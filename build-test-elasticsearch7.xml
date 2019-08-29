@@ -427,22 +427,64 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<delete dir="${elasticsearch.dir}" />
 
 			<if>
-				<not>
-					<available file="${app.server.parent.dir}/${elasticsearch.zip.name}" />
-				</not>
+				<and>
+					<not>
+						<available file="${app.server.parent.dir}/${elasticsearch.tar.name.linux}" />
+					</not>
+					<os family="unix" />
+				</and>
 				<then>
 					<mirrors-get
-						dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+						dest="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
 						skipChecksum="true"
-						src="${elasticsearch.zip.url}"
+						src="${elasticsearch.tar.url.linux}"
+					/>
+					<untar
+						compression="gzip"
+						dest="${app.server.parent.dir}"
+						src="${app.server.parent.dir}/${elasticsearch.tar.name.linux}"
 					/>
 				</then>
+				<elseif>
+					<and>
+						<not>
+							<available file="${app.server.parent.dir}/${elasticsearch.tar.name.mac}" />
+						</not>
+						<os family="mac" />
+					</and>
+					<then>
+						<mirrors-get
+							dest="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
+							skipChecksum="true"
+							src="${elasticsearch.tar.url.mac}"
+						/>
+						<untar
+							compression="gzip"
+							dest="${app.server.parent.dir}"
+							src="${app.server.parent.dir}/${elasticsearch.tar.name.mac}"
+						/>
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<not>
+							<available file="${app.server.parent.dir}/${elasticsearch.zip.name.windows}" />
+						</not>
+						<os family="windows" />
+					</and>
+					<then>
+						<mirrors-get
+							dest="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
+							skipChecksum="true"
+							src="${elasticsearch.zip.url.windows}"
+						/>
+						<unzip
+							dest="${app.server.parent.dir}"
+							src="${app.server.parent.dir}/${elasticsearch.zip.name.windows}"
+						/>
+					</then>
+				</elseif>
 			</if>
-
-			<unzip
-				dest="${app.server.parent.dir}"
-				src="${app.server.parent.dir}/${elasticsearch.zip.name}"
-			/>
 		</sequential>
 	</macrodef>
 

@@ -92,10 +92,11 @@ class FragmentEntryLinkContent extends Component {
 	 * Renders the content if it is changed.
 	 * @inheritDoc
 	 * @param {string} newContent The new content to render.
+	 * @param {string} prevContent
 	 */
-	syncContent(newContent) {
-		if (newContent && newContent !== this.content) {
-			this._renderContent(newContent);
+	syncContent(newContent, prevContent) {
+		if (newContent && newContent !== prevContent) {
+			this._renderContent(newContent, {evaluateJs: true});
 		}
 	}
 

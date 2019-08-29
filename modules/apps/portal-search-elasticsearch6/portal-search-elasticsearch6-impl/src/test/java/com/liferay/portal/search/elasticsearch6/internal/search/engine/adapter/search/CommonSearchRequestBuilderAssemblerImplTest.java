@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch6.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslatorFixture;
@@ -25,18 +23,19 @@ import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQuer
 import com.liferay.portal.search.elasticsearch6.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch6.internal.query.SearchAssert;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
-import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.client.Client;
 
 import org.junit.After;
 import org.junit.Before;
@@ -60,8 +59,11 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		_liferayIndexFixture.setUp();
 
+		Queries queries = new QueriesImpl();
+
 		_commonSearchRequestBuilderAssembler =
-			createCommonSearchRequestBuilderAssembler();
+			createCommonSearchRequestBuilderAssembler(queries);
+		_queries = queries;
 	}
 
 	@After
@@ -70,93 +72,53 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	}
 
 	@Test
-	public void testCustomQueryWithComplexQueryPart() throws Exception {
-		addDocuments();
+	public void testPartsWhenAdditiveWillAppendToWhatMainQueryFinds()
+		throws Exception {
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest() {
-			{
-				setIndexNames(_indexName.getName());
-				setQuery(new MatchQuery("title", "alpha"));
-			}
-		};
+		index("alpha 1", "JournalArticle");
+		index("alpha 2", "DLFileEntry");
+		index("bravo 1", "DLFileEntry");
 
-		assertSearch(searchSearchRequest, "title", "alpha 1", "alpha 2");
+		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
 
-		ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory =
-			new ComplexQueryPartBuilderFactoryImpl();
+		searchSearchRequest.setQuery(
+			new MatchQuery("entryClassName", "DLFileEntry"));
 
-		searchSearchRequest.addComplexQueryParts(
-			ListUtil.toList(
-				complexQueryPartBuilderFactory.builder(
-				).boost(
-					null
-				).disabled(
-					false
-				).field(
-					"entryClassName"
-				).name(
-					StringPool.BLANK
-				).occur(
-					"must"
-				).parent(
-					StringPool.BLANK
-				).type(
-					"match"
-				).value(
-					"DLFileEntry"
-				).build()));
+		addPart("filter", _queries.term("title", "bravo"), searchSearchRequest);
 
-		searchSearchRequest.setIndexNames(_indexName.getName());
+		assertSearch(searchSearchRequest, "bravo 1");
 
-		assertSearch(searchSearchRequest, "title", "alpha 2");
+		addPartAdditive(
+			"should", _queries.term("entryClassName", "JournalArticle"),
+			searchSearchRequest);
+
+		assertSearch(searchSearchRequest, "alpha 1", "bravo 1");
+	}
+
+	@Test
+	public void testPartsWillNarrowDownWhatMainQueryFinds() throws Exception {
+		index("alpha 1", "JournalArticle");
+		index("alpha 2", "DLFileEntry");
+		index("bravo 1", "DLFileEntry");
+
+		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
+
+		searchSearchRequest.setQuery(new MatchQuery("title", "alpha"));
+
+		assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
+
+		addPart(
+			"filter", _queries.term("entryClassName", "DLFileEntry"),
+			searchSearchRequest);
+
+		assertSearch(searchSearchRequest, "alpha 2");
 	}
 
 	@Rule
 	public TestName testName = new TestName();
 
-	protected void addDocuments() {
-		index(
-			new HashMap<String, Object>() {
-				{
-					put("title", "alpha 1");
-					put("entryClassName", "JournalArticle");
-				}
-			});
-
-		index(
-			new HashMap<String, Object>() {
-				{
-					put("title", "alpha 2");
-					put("entryClassName", "DLFileEntry");
-				}
-			});
-
-		index(
-			new HashMap<String, Object>() {
-				{
-					put("title", "bravo 1");
-					put("entryClassName", "DLFileEntry");
-				}
-			});
-	}
-
-	protected void assertSearch(
-			SearchSearchRequest searchSearchRequest, String field,
-			String... expected)
-		throws Exception {
-
-		SearchRequestBuilder searchRequestBuilder =
-			SearchAction.INSTANCE.newRequestBuilder(
-				_liferayIndexFixture.getClient());
-
-		_commonSearchRequestBuilderAssembler.assemble(
-			searchRequestBuilder, searchSearchRequest);
-
-		SearchAssert.assertSearch(searchRequestBuilder, field, expected);
-	}
-
-	protected CommonSearchRequestBuilderAssembler
-		createCommonSearchRequestBuilderAssembler() {
+	protected static CommonSearchRequestBuilderAssembler
+		createCommonSearchRequestBuilderAssembler(Queries queries) {
 
 		ElasticsearchQueryTranslatorFixture
 			elasticsearchQueryTranslatorFixture =
@@ -184,7 +146,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 		return new CommonSearchRequestBuilderAssemblerImpl() {
 			{
 				setComplexQueryBuilderFactory(
-					new TestComplexQueryBuilderFactory());
+					createComplexQueryBuilderFactory(queries));
 				setFacetTranslator(new DefaultFacetTranslator());
 				setFilterToQueryBuilderTranslator(
 					elasticsearchFilterTranslatorFixture.
@@ -196,23 +158,79 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 		};
 	}
 
-	protected void index(Map<String, Object> map) {
-		_liferayIndexFixture.index(map);
+	protected static ComplexQueryBuilderFactory
+		createComplexQueryBuilderFactory(Queries queries) {
+
+		return () -> new ComplexQueryBuilderImpl(queries, null);
 	}
 
-	protected class TestComplexQueryBuilderFactory
-		implements ComplexQueryBuilderFactory {
+	protected void addPart(
+		String occur, Query query, SearchSearchRequest searchSearchRequest) {
 
-		@Override
-		public ComplexQueryBuilder builder() {
-			return new ComplexQueryBuilderImpl(new QueriesImpl(), null);
-		}
+		searchSearchRequest.addComplexQueryParts(
+			Arrays.asList(
+				_complexQueryPartBuilderFactory.builder(
+				).occur(
+					occur
+				).query(
+					query
+				).build()));
+	}
 
+	protected void addPartAdditive(
+		String occur, Query query, SearchSearchRequest searchSearchRequest) {
+
+		searchSearchRequest.addComplexQueryParts(
+			Arrays.asList(
+				_complexQueryPartBuilderFactory.builder(
+				).additive(
+					true
+				).occur(
+					occur
+				).query(
+					query
+				).build()));
+	}
+
+	protected void assertSearch(
+			SearchSearchRequest searchSearchRequest, String... expected)
+		throws Exception {
+
+		Client client = _liferayIndexFixture.getClient();
+
+		SearchRequestBuilder searchRequestBuilder = client.prepareSearch();
+
+		_commonSearchRequestBuilderAssembler.assemble(
+			searchRequestBuilder, searchSearchRequest);
+
+		SearchAssert.assertSearch(searchRequestBuilder, "title", expected);
+	}
+
+	protected SearchSearchRequest createSearchSearchRequest() {
+		return new SearchSearchRequest() {
+			{
+				setIndexNames(_indexName.getName());
+			}
+		};
+	}
+
+	protected void index(String title, String entryClassName) {
+		_liferayIndexFixture.index(
+			new HashMap<String, Object>() {
+				{
+					put("title", title);
+					put("entryClassName", entryClassName);
+				}
+			});
 	}
 
 	private CommonSearchRequestBuilderAssembler
 		_commonSearchRequestBuilderAssembler;
+	private final ComplexQueryPartBuilderFactory
+		_complexQueryPartBuilderFactory =
+			new ComplexQueryPartBuilderFactoryImpl();
 	private IndexName _indexName;
 	private LiferayIndexFixture _liferayIndexFixture;
+	private Queries _queries;
 
 }

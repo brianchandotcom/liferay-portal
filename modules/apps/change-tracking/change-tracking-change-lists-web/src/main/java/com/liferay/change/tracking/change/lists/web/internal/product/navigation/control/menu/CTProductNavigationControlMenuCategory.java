@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.change.lists.indicator.web.internal.product.navigation.control.menu;
+package com.liferay.change.tracking.change.lists.web.internal.product.navigation.control.menu;
 
 import com.liferay.change.tracking.constants.CTProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;

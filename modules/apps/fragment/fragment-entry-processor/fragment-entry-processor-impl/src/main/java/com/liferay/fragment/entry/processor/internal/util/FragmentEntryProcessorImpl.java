@@ -320,11 +320,11 @@ public class FragmentEntryProcessorImpl implements FragmentEntryProcessorUtil {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchAssetEntry(
 			previewClassPK);
 
-		if (assetEntry.getClassPK() == classPK) {
-			return true;
+		if ((assetEntry == null) || (assetEntry.getClassPK() != classPK)) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Reference

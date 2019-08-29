@@ -20,7 +20,7 @@ import {SplitPicker} from './SplitPicker/SplitPicker.es';
 import {SliderWithLabel} from './SliderWithLabel.es';
 import {InitialSegmentsVariantType} from '../types.es';
 
-function ReviewTestModal({onRun, variants, visible, setVisible}) {
+function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	const [confidenceLevel, setConfidenceLevel] = useState(50);
 	const [draftVariants, setDraftVariants] = useState(
 		variants.map(variant => {
@@ -85,6 +85,10 @@ function ReviewTestModal({onRun, variants, visible, setVisible}) {
 		)
 	);
 
+	/**
+	 * Creates a splitVariantsMap `{ [segmentsExperimentRelId]: splitValue, ... }`
+	 * and bubbles up `onRun` with `confidenceLevel` and `splitVariantsMap`
+	 */
 	function _handleRun() {
 		const splitVariantsMap = draftVariants.reduce((acc, v) => {
 			return {
@@ -100,11 +104,11 @@ function ReviewTestModal({onRun, variants, visible, setVisible}) {
 	}
 }
 
-ReviewTestModal.propTypes = {
+ReviewExperimentModal.propTypes = {
 	onRun: PropTypes.func.isRequired,
 	setVisible: PropTypes.func.isRequired,
 	variants: PropTypes.arrayOf(InitialSegmentsVariantType),
 	visible: PropTypes.bool.isRequired
 };
 
-export {ReviewTestModal};
+export {ReviewExperimentModal};

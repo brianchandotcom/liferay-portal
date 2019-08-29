@@ -16,6 +16,7 @@ import React, {useReducer, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {SliderWithLabel} from '../SliderWithLabel.es';
 import {InitialSegmentsVariantType} from '../../types.es';
+import {changeSplitValue} from './utils.es';
 
 function SplitPicker({variants, onChange}) {
 	const [splitVariants, dispatch] = useReducer(_reducer, variants);
@@ -51,107 +52,16 @@ SplitPicker.propTypes = {
 	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
 };
 
+export {SplitPicker};
+
 function _reducer(splitVariants, action) {
 	switch (action.type) {
 		case 'change':
 		default:
-			return _changeSplitValue(
+			return changeSplitValue(
 				splitVariants,
 				action.variantId,
 				action.value
 			);
 	}
 }
-
-function _fixSplitArray(variants, editedIndex, indexToFix, totalSplit) {
-	const nextIndexToFix =
-		indexToFix === 0 ? variants.length - 1 : indexToFix - 1;
-
-	if (editedIndex === indexToFix) {
-		return _fixSplitArray(
-			variants,
-			editedIndex,
-			nextIndexToFix,
-			totalSplit
-		);
-	}
-
-	if (totalSplit > 100) {
-		const correctedSplit = variants[indexToFix].split - (totalSplit - 100);
-
-		if (correctedSplit < 0) {
-			variants[indexToFix] = {
-				...variants[indexToFix],
-				split: 0
-			};
-
-			return _fixSplitArray(
-				variants,
-				editedIndex,
-				nextIndexToFix,
-				100 - (correctedSplit - variants[indexToFix].split)
-			);
-		} else {
-			variants[indexToFix] = {
-				...variants[indexToFix],
-				split: correctedSplit
-			};
-		}
-	}
-
-	if (totalSplit < 100) {
-		const correctedSplit = variants[indexToFix].split + (100 - totalSplit);
-
-		if (correctedSplit > 100) {
-			variants[indexToFix] = {
-				...variants[indexToFix],
-				split: 100
-			};
-
-			return _fixSplitArray(
-				variants,
-				editedIndex,
-				nextIndexToFix,
-				totalSplit - correctedSplit
-			);
-		} else {
-			variants[indexToFix] = {
-				...variants[indexToFix],
-				split: correctedSplit
-			};
-		}
-	}
-
-	return variants;
-}
-
-function _changeSplitValue(splitVariants, variantId, value) {
-	const newSplitVariants = [];
-	let totalSplit = 0;
-	const lastIndex = splitVariants.length - 1;
-	let editedIndex = null;
-
-	for (let i = 0; i < splitVariants.length; i++) {
-		const variant = splitVariants[i];
-
-		if (variantId === variant.segmentsExperimentRelId) {
-			newSplitVariants.push({...variant, split: value});
-			totalSplit += value;
-			editedIndex = i;
-		} else {
-			newSplitVariants.push(variant);
-			totalSplit += variant.split;
-		}
-	}
-
-	const definetiveSplitVariants = _fixSplitArray(
-		newSplitVariants,
-		editedIndex,
-		lastIndex,
-		totalSplit
-	);
-
-	return definetiveSplitVariants;
-}
-
-export {SplitPicker};

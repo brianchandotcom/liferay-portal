@@ -332,7 +332,8 @@ function SegmentsExperimentsSidebar({
 						name,
 						segmentsExperienceId,
 						segmentsExperimentId,
-						segmentsExperimentRelId
+						segmentsExperimentRelId,
+						split
 					} = segmentsExperimentRel;
 
 					setVariants([
@@ -343,7 +344,7 @@ function SegmentsExperimentsSidebar({
 							segmentsExperienceId,
 							segmentsExperimentId,
 							segmentsExperimentRelId,
-							split: 0
+							split
 						}
 					]);
 					resolve();

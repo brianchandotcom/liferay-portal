@@ -126,6 +126,7 @@ class SimpleInputModal extends PortletBase {
 	 */
 	_handleFormSuccess(responseContent) {
 		this.emit('formSuccess', {
+			...responseContent,
 			redirectURL: responseContent.redirectURL || ''
 		});
 	}

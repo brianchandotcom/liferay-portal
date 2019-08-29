@@ -34,9 +34,15 @@ public class IdsQueryTranslatorImpl implements IdsQueryTranslator {
 	public QueryBuilder translate(IdsQuery idsQuery) {
 		IdsQueryBuilder idsQueryBuilder = QueryBuilders.idsQuery();
 
+		if (idsQuery.getBoost() != null) {
+			idsQueryBuilder.boost(idsQuery.getBoost());
+		}
+
 		Set<String> ids = idsQuery.getIds();
 
 		idsQueryBuilder.addIds(ids.toArray(new String[0]));
+
+		idsQueryBuilder.queryName(idsQuery.getQueryName());
 
 		Set<String> types = idsQuery.getTypes();
 

@@ -26,10 +26,6 @@
 			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 				<aui:input label="account-name" name="name" required="<%= true %>" type="text" />
 			</aui:field-wrapper>
-
-			<aui:field-wrapper cssClass="form-group lfr-input-text-container">
-				<aui:input name="website" type="text" />
-			</aui:field-wrapper>
 		</aui:col>
 
 		<aui:col width="<%= 40 %>">

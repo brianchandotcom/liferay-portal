@@ -61,12 +61,6 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
-					name="website"
-					property="website"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand"
 					name="account-owner"
 					value=""
 				/>

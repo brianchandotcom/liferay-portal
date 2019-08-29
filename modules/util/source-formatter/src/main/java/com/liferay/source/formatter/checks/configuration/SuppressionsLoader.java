@@ -158,7 +158,12 @@ public class SuppressionsLoader {
 			String fileNameRegex = suppressElement.attributeValue(
 				_FILE_REGEX_ATTRIBUTE_NAME);
 
-			if (Objects.equals(portalFileLocation, suppressionsFileLocation)) {
+			if (fileNameRegex == null) {
+				fileNameRegex = ".*";
+			}
+			else if (Objects.equals(
+						portalFileLocation, suppressionsFileLocation)) {
+
 				fileNameRegex = portalFileLocation + fileNameRegex;
 			}
 

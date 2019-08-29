@@ -30,6 +30,8 @@ import java.util.stream.Stream;
  */
 public class SegmentsExperimentConstants {
 
+	public static final int NOTIFICATION_TYPE_UPDATE_STATUS = 0;
+
 	public static final int STATUS_COMPLETED = 2;
 
 	public static final int STATUS_DRAFT = 0;

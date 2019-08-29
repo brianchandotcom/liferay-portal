@@ -64,12 +64,19 @@ function SegmentsExperimentsActions({
 					<ClayButton
 						className="w-100"
 						displayType="secondary"
-						onClick={() =>
-							onEditSegmentsExperimentStatus(
-								segmentsExperiment,
-								STATUS_TERMINATED
-							)
-						}
+						onClick={() => {
+							const confirmed = confirm(
+								Liferay.Language.get(
+									'are-you-sure-you-want-to-delete-this'
+								)
+							);
+
+							if (confirmed)
+								onEditSegmentsExperimentStatus(
+									segmentsExperiment,
+									STATUS_TERMINATED
+								);
+						}}
 					>
 						{Liferay.Language.get('terminate-test')}
 					</ClayButton>

@@ -48,6 +48,7 @@ function SegmentsExperimentsSidebar({
 		<div className="p-3">
 			<SegmentsExperiments
 				onCreateSegmentsExperiment={_handleCreateSegmentsExperiment}
+				onDeleteSegmentsExperiment={_handleDeleteSegmentsExperiment}
 				onEditSegmentsExperiment={_handleEditSegmentsExperiment}
 				onEditSegmentsExperimentStatus={
 					_handleEditSegmentExperimentStatus
@@ -115,6 +116,16 @@ function SegmentsExperimentsSidebar({
 	function _handleEditModalClose() {
 		setEditionModal({
 			active: false
+		});
+	}
+
+	function _handleDeleteSegmentsExperiment() {
+		const body = {
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+		};
+
+		segmentsExperimentsUtil.deleteExperiment(body).then(() => {
+			navigateToExperience(initialSelectedSegmentsExperienceId);
 		});
 	}
 

@@ -23,6 +23,7 @@ function SegmentsExperimentsUtil({
 	const {
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
+		deleteSegmentsExperimentURL,
 		deleteSegmentsVariantURL,
 		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
@@ -53,6 +54,19 @@ function SegmentsExperimentsUtil({
 			.then(objectResponse => {
 				if (objectResponse.error) throw objectResponse.error;
 				return objectResponse;
+			});
+	}
+
+	function deleteExperiment(body) {
+		return fetch(deleteSegmentsExperimentURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(response => {
+				if (response.error) throw response.error;
+				return response;
 			});
 	}
 
@@ -124,6 +138,7 @@ function SegmentsExperimentsUtil({
 	return {
 		createExperiment,
 		createVariant,
+		deleteExperiment,
 		deleteVariant,
 		editExperiment,
 		editExperimentStatus,
@@ -137,6 +152,7 @@ SegmentsExperimentsUtil.propTypes = {
 	endpoints: PropTypes.shape({
 		createSegmentsExperimentURL: PropTypes.string.isRequired,
 		createSegmentsVariantURL: PropTypes.string.isRequired,
+		deleteSegmentsExperimentURL: PropTypes.string.isRequired,
 		deleteSegmentsVariantURL: PropTypes.string.isRequired,
 		editSegmentsExperimentStatusURL: PropTypes.string.isRequired,
 		editSegmentsExperimentURL: PropTypes.string.isRequired,

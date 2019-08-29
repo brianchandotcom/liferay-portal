@@ -16,15 +16,12 @@ package com.liferay.talend.avro;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import com.liferay.talend.BaseTest;
 import com.liferay.talend.common.oas.constants.OASConstants;
-
-import java.io.InputStream;
 
 import java.util.List;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReader;
 
 import org.apache.avro.Schema;
 
@@ -37,7 +34,7 @@ import org.talend.daikon.avro.AvroUtils;
 /**
  * @author Zoltán Takács
  */
-public class EndpointSchemaInferrerTest {
+public class EndpointSchemaInferrerTest extends BaseTest {
 
 	@Before
 	public void setUp() {
@@ -45,15 +42,7 @@ public class EndpointSchemaInferrerTest {
 			return;
 		}
 
-		Class<EndpointSchemaInferrerTest> endpointSchemaInferrerTestClass =
-			EndpointSchemaInferrerTest.class;
-
-		InputStream resourceAsStream =
-			endpointSchemaInferrerTestClass.getResourceAsStream("openapi.json");
-
-		JsonReader jsonReader = Json.createReader(resourceAsStream);
-
-		_oasJsonObject = jsonReader.readObject();
+		_oasJsonObject = readObject("openapi.json");
 	}
 
 	@Test

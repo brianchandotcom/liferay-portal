@@ -37,7 +37,7 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 			for (int i = 0; i < structureJSONArray.length(); i++) {
 				JSONObject rowJSONObject = structureJSONArray.getJSONObject(i);
 
-				int type = GetterUtil.getInteger(rowJSONObject.getInt("type"), FragmentConstants.TYPE_COMPONENT);
+				int type = rowJSONObject.getInt("type", FragmentConstants.TYPE_COMPONENT);
 
 				if (type == FragmentConstants.TYPE_COMPONENT) {
 					String backgroundColorCssClass = StringPool.BLANK;
@@ -52,10 +52,10 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new Rend
 					if (rowConfigJSONObject != null) {
 						backgroundColorCssClass = rowConfigJSONObject.getString("backgroundColorCssClass");
 						backgroundImage = renderFragmentLayoutDisplayContext.getBackgroundImage(rowConfigJSONObject);
-						columnSpacing = GetterUtil.getBoolean(rowConfigJSONObject.getString("columnSpacing"), true);
+						columnSpacing = rowConfigJSONObject.getBoolean("columnSpacing", true);
 						containerType = rowConfigJSONObject.getString("containerType");
-						paddingHorizontal = GetterUtil.getLong(rowConfigJSONObject.getString("paddingHorizontal"), paddingHorizontal);
-						paddingVertical = GetterUtil.getLong(rowConfigJSONObject.getString("paddingVertical"), paddingVertical);
+						paddingHorizontal = rowConfigJSONObject.getLong("paddingHorizontal", paddingHorizontal);
+						paddingVertical = rowConfigJSONObject.getLong("paddingVertical", paddingVertical);
 					}
 		%>
 

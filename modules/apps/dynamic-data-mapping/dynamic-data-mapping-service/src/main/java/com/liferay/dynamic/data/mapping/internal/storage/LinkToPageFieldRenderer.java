@@ -17,16 +17,16 @@ package com.liferay.dynamic.data.mapping.internal.storage;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.LayoutServiceUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -39,6 +39,15 @@ import java.util.Locale;
  * @author Bruno Basto
  */
 public class LinkToPageFieldRenderer extends BaseFieldRenderer {
+
+	protected LinkToPageFieldRenderer(
+		JSONFactory jsonFactory, Language language,
+		LayoutService layoutService) {
+
+		_jsonFactory = jsonFactory;
+		_language = language;
+		_layoutService = layoutService;
+	}
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -72,7 +81,7 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(value);
+			jsonObject = _jsonFactory.createJSONObject(value);
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
@@ -87,15 +96,15 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 		long layoutId = jsonObject.getLong("layoutId");
 
 		try {
-			return LayoutServiceUtil.getLayoutName(
+			return _layoutService.getLayoutName(
 				groupId, privateLayout, layoutId,
-				LanguageUtil.getLanguageId(locale));
+				_language.getLanguageId(locale));
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchLayoutException ||
 				e instanceof PrincipalException) {
 
-				return LanguageUtil.format(
+				return _language.format(
 					locale, "is-temporarily-unavailable", "content");
 			}
 		}
@@ -105,5 +114,9 @@ public class LinkToPageFieldRenderer extends BaseFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LinkToPageFieldRenderer.class);
+
+	private final JSONFactory _jsonFactory;
+	private final Language _language;
+	private final LayoutService _layoutService;
 
 }

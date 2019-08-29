@@ -18,13 +18,13 @@ import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -39,6 +39,13 @@ import java.util.Locale;
  * @author Sergio González
  */
 public class GeolocationFieldRenderer extends BaseFieldRenderer {
+
+	protected GeolocationFieldRenderer(
+		JSONFactory jsonFactory, Language language) {
+
+		_jsonFactory = jsonFactory;
+		_language = language;
+	}
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -72,7 +79,7 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(value);
+			jsonObject = _jsonFactory.createJSONObject(value);
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
@@ -84,7 +91,7 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(LanguageUtil.get(locale, "latitude"));
+		sb.append(_language.get(locale, "latitude"));
 		sb.append(": ");
 
 		double latitude = jsonObject.getDouble("latitude");
@@ -94,7 +101,7 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 		sb.append(numberFormat.format(latitude));
 
 		sb.append(StringPool.COMMA_AND_SPACE);
-		sb.append(LanguageUtil.get(locale, "longitude"));
+		sb.append(_language.get(locale, "longitude"));
 		sb.append(": ");
 
 		double longitude = jsonObject.getDouble("longitude");
@@ -106,5 +113,8 @@ public class GeolocationFieldRenderer extends BaseFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GeolocationFieldRenderer.class);
+
+	private final JSONFactory _jsonFactory;
+	private final Language _language;
 
 }

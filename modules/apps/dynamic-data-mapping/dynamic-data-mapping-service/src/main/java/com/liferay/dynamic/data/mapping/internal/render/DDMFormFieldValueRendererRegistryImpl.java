@@ -16,130 +16,96 @@ package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
-import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = DDMFormFieldValueRendererRegistry.class)
 public class DDMFormFieldValueRendererRegistryImpl
 	implements DDMFormFieldValueRendererRegistry {
 
-	public DDMFormFieldValueRendererRegistryImpl() {
-		Class<?> clazz = getClass();
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		for (int i = 0; i < _defaultDDMFormFieldValueRenderers.length; i++) {
+			_serviceRegistrations[i] = bundleContext.registerService(
+				DDMFormFieldValueRenderer.class,
+				_defaultDDMFormFieldValueRenderers[i], null);
+		}
 
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMFormFieldValueRenderer.class, null,
+			(serviceReference, emitter) -> {
+				DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+					bundleContext.getService(serviceReference);
 
-		_bundleContext = bundle.getBundleContext();
+				try {
+					emitter.emit(
+						ddmFormFieldValueRenderer.
+							getSupportedDDMFormFieldType());
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			StringBundler.concat(
-				"(&(objectClass=", DDMFormFieldValueRenderer.class.getName(),
-				")(!(objectClass=", clazz.getName(), ")))"),
-			new DDMFormFieldValueRendererServiceTrackerCustomizer());
+		_ddmFormFieldValueRendererRegistryUtil.
+			setDDMFormFieldValueRendererRegistry(this);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_ddmFormFieldValueRendererRegistryUtil.
+			setDDMFormFieldValueRendererRegistry(null);
+
+		_serviceTrackerMap.close();
+
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
 	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(
 		String ddmFormFieldType) {
 
-		List<DDMFormFieldValueRenderer> ddmFormFieldValueRenderers =
-			_ddmFormFieldValueRenderersMap.get(ddmFormFieldType);
-
-		if ((ddmFormFieldValueRenderers == null) ||
-			ddmFormFieldValueRenderers.isEmpty()) {
-
-			return null;
-		}
-
-		return ddmFormFieldValueRenderers.get(
-			ddmFormFieldValueRenderers.size() - 1);
+		return _serviceTrackerMap.getService(ddmFormFieldType);
 	}
 
-	public void setDefaultDDMFormFieldValueRenderers(
-		List<DDMFormFieldValueRenderer> ddmFormFieldValueRenderers) {
-
-		for (DDMFormFieldValueRenderer ddmFormFieldValueRenderer :
-				ddmFormFieldValueRenderers) {
-
-			_bundleContext.registerService(
-				DDMFormFieldValueRenderer.class, ddmFormFieldValueRenderer,
-				null);
-		}
-	}
-
-	private final BundleContext _bundleContext;
-	private final Map<String, List<DDMFormFieldValueRenderer>>
-		_ddmFormFieldValueRenderersMap = new ConcurrentHashMap<>();
-	private final ServiceTracker
-		<DDMFormFieldValueRenderer, DDMFormFieldValueRenderer> _serviceTracker;
-
-	private class DDMFormFieldValueRendererServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<DDMFormFieldValueRenderer, DDMFormFieldValueRenderer> {
-
-		@Override
-		public DDMFormFieldValueRenderer addingService(
-			ServiceReference<DDMFormFieldValueRenderer> serviceReference) {
-
-			DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-				_bundleContext.getService(serviceReference);
-
-			String supportedDDMFormFieldType =
-				ddmFormFieldValueRenderer.getSupportedDDMFormFieldType();
-
-			List<DDMFormFieldValueRenderer> ddmFormFieldValueRenderers =
-				_ddmFormFieldValueRenderersMap.get(supportedDDMFormFieldType);
-
-			if (ddmFormFieldValueRenderers == null) {
-				ddmFormFieldValueRenderers = new ArrayList<>();
-
-				_ddmFormFieldValueRenderersMap.put(
-					supportedDDMFormFieldType, ddmFormFieldValueRenderers);
-			}
-
-			ddmFormFieldValueRenderers.add(ddmFormFieldValueRenderer);
-
-			return ddmFormFieldValueRenderer;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DDMFormFieldValueRenderer> serviceReference,
-			DDMFormFieldValueRenderer ddmFormFieldValueRenderer) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DDMFormFieldValueRenderer> serviceReference,
-			DDMFormFieldValueRenderer ddmFormFieldValueRenderer) {
-
-			_bundleContext.ungetService(serviceReference);
-
-			List<DDMFormFieldValueRenderer> ddmFormFieldValueRenderers =
-				_ddmFormFieldValueRenderersMap.get(
-					ddmFormFieldValueRenderer.getSupportedDDMFormFieldType());
-
-			if (ddmFormFieldValueRenderers == null) {
-				return;
-			}
-
-			ddmFormFieldValueRenderers.remove(ddmFormFieldValueRenderer);
-		}
-
-	}
+	private final DDMFormFieldValueRendererRegistryUtil
+		_ddmFormFieldValueRendererRegistryUtil =
+			new DDMFormFieldValueRendererRegistryUtil();
+	private final DDMFormFieldValueRenderer[]
+		_defaultDDMFormFieldValueRenderers = {
+			new CheckboxDDMFormFieldValueRenderer(),
+			new ColorDDMFormFieldValueRenderer(),
+			new DateDDMFormFieldValueRenderer(),
+			new DecimalDDMFormFieldValueRenderer(),
+			new DocumentLibraryDDMFormFieldValueRenderer(),
+			new GeolocationDDMFormFieldValueRenderer(),
+			new IntegerDDMFormFieldValueRenderer(),
+			new JournalArticleDDMFormFieldValueRenderer(),
+			new LinkToPageDDMFormFieldValueRenderer(),
+			new NumberDDMFormFieldValueRenderer(),
+			new RadioDDMFormFieldValueRenderer(),
+			new SelectDDMFormFieldValueRenderer(),
+			new TextAreaDDMFormFieldValueRenderer(),
+			new TextDDMFormFieldValueRenderer(),
+			new TextHTMLDDMFormFieldValueRenderer()
+		};
+	private final ServiceRegistration<?>[] _serviceRegistrations =
+		new ServiceRegistration[_defaultDDMFormFieldValueRenderers.length];
+	private ServiceTrackerMap<String, DDMFormFieldValueRenderer>
+		_serviceTrackerMap;
 
 }

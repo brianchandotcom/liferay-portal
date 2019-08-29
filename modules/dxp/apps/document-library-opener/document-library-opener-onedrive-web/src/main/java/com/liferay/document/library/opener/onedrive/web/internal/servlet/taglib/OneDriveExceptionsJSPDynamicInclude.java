@@ -25,20 +25,21 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Alicia García García
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class OneDriveViewJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class OneDriveExceptionsJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.document.library.web#/document_library/view.jsp#post");
+			"com.liferay.document.library.web#/document_library" +
+				"/view.jsp#errors");
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/view_post.jsp";
+		return "/dynamic_include/view_errors.jsp";
 	}
 
 	@Override
@@ -56,6 +57,6 @@ public class OneDriveViewJSPDynamicInclude extends BaseJSPDynamicInclude {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OneDriveViewJSPDynamicInclude.class);
+		OneDriveExceptionsJSPDynamicInclude.class);
 
 }

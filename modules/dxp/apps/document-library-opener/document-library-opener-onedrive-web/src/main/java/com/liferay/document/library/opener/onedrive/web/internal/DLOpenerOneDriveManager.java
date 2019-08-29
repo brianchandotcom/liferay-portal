@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.microsoft.graph.core.DefaultClientConfig;
+import com.microsoft.graph.http.GraphServiceException;
 import com.microsoft.graph.models.extensions.DriveItem;
 import com.microsoft.graph.models.extensions.IGraphServiceClient;
 import com.microsoft.graph.models.extensions.Permission;
@@ -299,6 +300,9 @@ public class DLOpenerOneDriveManager {
 			try (InputStream is = iDriveItemStreamRequest.get()) {
 				return FileUtil.createTempFile(is);
 			}
+		}
+		catch (GraphServiceException gse) {
+			throw gse;
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

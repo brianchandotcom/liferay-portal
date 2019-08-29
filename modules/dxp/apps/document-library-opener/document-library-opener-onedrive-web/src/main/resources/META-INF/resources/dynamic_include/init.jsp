@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference" %><%@
 page import="com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys" %><%@
+page import="com.liferay.document.library.opener.onedrive.web.internal.exception.GraphServicePortalException" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

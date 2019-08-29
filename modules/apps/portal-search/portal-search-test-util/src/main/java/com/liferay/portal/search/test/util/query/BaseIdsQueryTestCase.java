@@ -21,13 +21,17 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.IdsQuery;
+import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.junit.Test;
@@ -50,30 +54,68 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 
 		Sort sort = sorts.field(Field.USER_NAME, SortOrder.DESC);
 
-		String expected = "[delta, alpha]";
+		assertSearch(
+			idsQuery, searchSearchRequest -> searchSearchRequest.addSorts(sort),
+			"[delta, alpha]");
+	}
+
+	@Test
+	public void testIdsQueryBoost() {
+		index(1, "alpha");
+		index(2, "bravo");
+		index(3, "charlie");
+		index(4, "delta");
+
+		BooleanQuery booleanQuery = queries.booleanQuery();
+
+		IdsQuery idsQuery = queries.ids();
+
+		idsQuery.addIds("4");
+		idsQuery.setBoost(1000F);
+
+		TermQuery termQuery = queries.term(Field.USER_NAME, "alpha");
+
+		termQuery.setBoost(500F);
+
+		booleanQuery.addShouldQueryClauses(idsQuery, termQuery);
+
+		assertSearch(booleanQuery, "[delta, alpha]");
+	}
+
+	protected void assertSearch(
+		Query query, Consumer<SearchSearchRequest> consumer, String expected) {
 
 		assertSearch(
 			indexingTestHelper -> {
-				SearchEngineAdapter searchEngineAdapter =
-					getSearchEngineAdapter();
+				SearchSearchRequest searchSearchRequest =
+					getSearchSearchRequest(query);
 
-				SearchSearchResponse searchSearchResponse =
-					searchEngineAdapter.execute(
-						new SearchSearchRequest() {
-							{
-								addSorts(sort);
-								setIndexNames("_all");
-								setQuery(idsQuery);
-							}
-						});
+				if (consumer != null) {
+					consumer.accept(searchSearchRequest);
+				}
 
-				Stream<Document> stream = getDocumentsStream(
-					searchSearchResponse.getSearchHits());
-
-				DocumentsAssert.assertValues(
-					searchSearchResponse.getSearchRequestString(), stream,
-					Field.USER_NAME, expected);
+				assertSearch(searchSearchRequest, expected);
 			});
+	}
+
+	protected void assertSearch(Query query, String expected) {
+		assertSearch(query, null, expected);
+	}
+
+	protected void assertSearch(
+		SearchSearchRequest searchSearchRequest, String expected) {
+
+		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
+
+		SearchSearchResponse searchSearchResponse = searchEngineAdapter.execute(
+			searchSearchRequest);
+
+		Stream<Document> stream = getDocumentsStream(
+			searchSearchResponse.getSearchHits());
+
+		DocumentsAssert.assertValues(
+			searchSearchResponse.getSearchRequestString(), stream,
+			Field.USER_NAME, expected);
 	}
 
 	protected Stream<Document> getDocumentsStream(SearchHits searchHits) {
@@ -82,6 +124,15 @@ public abstract class BaseIdsQueryTestCase extends BaseIndexingTestCase {
 		Stream<SearchHit> stream = list.stream();
 
 		return stream.map(SearchHit::getDocument);
+	}
+
+	protected SearchSearchRequest getSearchSearchRequest(Query query) {
+		return new SearchSearchRequest() {
+			{
+				setIndexNames("_all");
+				setQuery(query);
+			}
+		};
 	}
 
 	protected void index(int uid, String userName) {

@@ -3920,7 +3920,10 @@ log.sanitizer.enabled=false</echo>
 					</path>
 					<sequential>
 						<if>
-							<resourcecontains resource="@{js.test.dir}/../package.json" substring="&quot;test&quot;:" />
+							<resourcecontains
+								resource="@{js.test.dir}/../package.json"
+								substring="&quot;test&quot;:"
+							/>
 							<then>
 								<gradle-execute dir="@{js.test.dir}/.." task="packageRunTest">
 									<arg value="--continue" />

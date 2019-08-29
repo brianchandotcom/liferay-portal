@@ -28,7 +28,6 @@ dependencies {
 	testCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile group: "xerces", name: "xercesImpl", version: "2.11.0"
-	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testCompile project(":apps:journal:journal-api")

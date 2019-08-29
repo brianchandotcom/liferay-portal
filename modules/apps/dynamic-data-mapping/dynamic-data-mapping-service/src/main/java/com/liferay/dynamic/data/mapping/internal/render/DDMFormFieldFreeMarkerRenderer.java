@@ -712,7 +712,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 	private static final String _TPL_EXT = ".ftl";
 
 	private static final String _TPL_PATH =
-		"com/liferay/dynamic/data/mapping/dependencies/";
+		"com/liferay/dynamic/data/mapping/service/dependencies/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldFreeMarkerRenderer.class);

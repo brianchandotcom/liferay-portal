@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Mapping IO
-Bundle-SymbolicName: com.liferay.dynamic.data.mapping.io
-Bundle-Version: 5.0.0
-Import-Package:\
-	!org.apache.poi.hssf.usermodel.*,\
-	!org.apache.poi.ss.usermodel.*,\
-	\
-	*
--includeresource: @poi-[0-9]*.jar

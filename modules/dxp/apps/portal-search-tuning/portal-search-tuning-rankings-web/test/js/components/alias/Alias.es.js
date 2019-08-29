@@ -12,6 +12,7 @@
 import Alias from '../../../../src/main/resources/META-INF/resources/js/components/alias/Alias.es';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('Alias', () => {
 	it('has a list of aliases available', () => {
@@ -31,9 +32,7 @@ describe('Alias', () => {
 			<Alias keywords={['one', 'two', 'three']} onChange={jest.fn()} />
 		);
 
-		expect(
-			queryByText('Type a comma or press enter to input an alias.')
-		).not.toBeNull();
+		expect(queryByText('add-an-alias-instruction')).not.toBeNull();
 	});
 
 	it('updates the input value', () => {

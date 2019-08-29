@@ -12,6 +12,7 @@
 import React from 'react';
 import Pagination from '../../../../src/main/resources/META-INF/resources/js/components/add_result/Pagination.es';
 import {fireEvent, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('Pagination', () => {
 	it('has a disabled previous arrow on first page', () => {

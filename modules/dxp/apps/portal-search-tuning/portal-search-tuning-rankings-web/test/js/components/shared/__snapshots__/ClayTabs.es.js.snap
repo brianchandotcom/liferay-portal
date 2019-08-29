@@ -7,7 +7,7 @@ exports[`ClayTabs renders 1`] = `
     data-tabs="true"
   >
     <nav
-      aria-label="Navigation"
+      aria-label="navigation"
       class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
     >
       <ul

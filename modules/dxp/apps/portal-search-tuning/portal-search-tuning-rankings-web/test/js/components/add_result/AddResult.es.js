@@ -20,6 +20,7 @@ import {
 	waitForElement,
 	within
 } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
@@ -34,29 +35,15 @@ const MODAL_ID = 'add-result-modal';
 const RESULTS_LIST_ID = 'add-result-items';
 
 describe('AddResult', () => {
-	/*
-	Console error occurs alongside message stating that "React state
-	should be wrapped in 'act'." This can be removed after react-dom@16.9.0.
-	Link for reference:
-	https://github.com/testing-library/react-testing-library/issues/281#issuecomment-480349256
-	 */
+	it('shows an add result button', () => {
+		const {getByText} = render(
+			<AddResult
+				fetchDocumentsSearchUrl={FETCH_SEARCH_DOCUMENTS_URL}
+				onAddResultSubmit={jest.fn()}
+			/>
+		);
 
-	const originalError = console.error;
-
-	beforeAll(() => {
-		console.error = (...args) => {
-			if (
-				/Warning.*not wrapped in act/.test(args[0]) ||
-				/Warning: Can't perform a React state update/.test(args[0])
-			) {
-				return;
-			}
-			originalError.call(console, ...args);
-		};
-	});
-
-	afterAll(() => {
-		console.error = originalError;
+		expect(getByText('add-result')).toBeInTheDocument();
 	});
 
 	it('shows a modal when the add a result button gets clicked', async () => {
@@ -67,7 +54,7 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		await wait(() => {
 			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
@@ -82,16 +69,14 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
+
+		expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
+
+		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('cancel'));
 
 		await wait(() => {
-			expect(queryByTestId(MODAL_ID)).toBeInTheDocument();
-		});
-
-		fireEvent.click(within(getByTestId(MODAL_ID)).getByText('Cancel'));
-
-		await wait(() => {
-			expect(queryByTestId(MODAL_ID)).not.toBeInTheDocument();
+			expect(queryByTestId(MODAL_ID)).toBeNull();
 		});
 	});
 
@@ -103,17 +88,13 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		expect(modal.querySelector('.empty-state-title')).toHaveTextContent(
-			'Search the engine'
-		);
+		expect(modal).toHaveTextContent('search-the-engine');
 
-		expect(
-			modal.querySelector('.empty-state-description')
-		).toHaveTextContent('Search the engine to display results.');
+		expect(modal).toHaveTextContent('search-the-engine-to-display-results');
 	});
 
 	it('does not show the prompt in the modal after enter key is pressed', async () => {
@@ -124,11 +105,11 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = modal.querySelector('.form-control');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
@@ -136,12 +117,7 @@ describe('AddResult', () => {
 
 		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
 
-		expect(
-			modal.querySelector('.empty-state-title')
-		).not.toBeInTheDocument();
-		expect(
-			modal.querySelector('.empty-state-description')
-		).not.toBeInTheDocument();
+		expect(modal).not.toHaveTextContent('sorry-there-are-no-results-found');
 	});
 
 	it('shows the results in the modal after enter key is pressed', async () => {
@@ -152,11 +128,11 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = modal.querySelector('.form-control');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
@@ -178,11 +154,11 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = modal.querySelector('.form-control');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
@@ -194,7 +170,7 @@ describe('AddResult', () => {
 			getByTestId('300').querySelector('.custom-control-input')
 		);
 
-		fireEvent.click(getByText('Add'));
+		fireEvent.click(getByText('add'));
 
 		expect(onAddResultSubmit.mock.calls.length).toBe(1);
 	});
@@ -209,11 +185,11 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = getByPlaceholderText(modal, 'Search the engine.');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 
@@ -243,11 +219,11 @@ describe('AddResult', () => {
 			/>
 		);
 
-		fireEvent.click(getByText('Add Result'));
+		fireEvent.click(getByText('add-result'));
 
 		const modal = getByTestId(MODAL_ID);
 
-		const input = modal.querySelector('.form-control');
+		const input = getByPlaceholderText(modal, 'search-the-engine');
 
 		fireEvent.change(input, {target: {value: 'test'}});
 

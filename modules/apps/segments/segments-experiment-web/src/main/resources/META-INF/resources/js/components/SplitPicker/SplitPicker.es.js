@@ -35,7 +35,7 @@ function SplitPicker({variants, onChange}) {
 						onValueChange={value =>
 							dispatch({
 								type: 'change',
-								value: parseFloat(value),
+								value,
 								variantId: variant.segmentsExperimentRelId
 							})
 						}

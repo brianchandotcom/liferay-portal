@@ -140,6 +140,7 @@ describe('SegmentsExperimentsSidebar', () => {
 		expect(experiment).not.toBe(null);
 
 		const createTestHelpMessage = getByText('review-and-run-test');
+		expect(createTestHelpMessage).toHaveAttribute('disabled');
 		expect(createTestHelpMessage).not.toBe(null);
 
 		const createTestButton = getByText('edit');
@@ -309,5 +310,39 @@ describe('Variants', () => {
 		expect(queryByTestId('create-variant')).toBe(null);
 
 		segmentsExperiment.editable = true;
+	});
+});
+
+describe('Run and review test', () => {
+	it('can view review Experiment Modal', done => {
+		const {
+			getByText,
+			getByDisplayValue,
+			getAllByDisplayValue
+		} = _renderSegmentsExperimentsSidebarComponent({
+			initialSegmentsExperiences: segmentsExperiences,
+			initialSegmentsExperiment: segmentsExperiment,
+			initialSegmentsVariants: segmentsVariants
+		});
+
+		const defaultExperience = getByDisplayValue(
+			segmentsExperiences[0].name
+		);
+		expect(defaultExperience).not.toBe(null);
+
+		const experiment = getByText(segmentsExperiment.name);
+		expect(experiment).not.toBe(null);
+
+		const createTestHelpMessage = getByText('review-and-run-test');
+		expect(createTestHelpMessage).not.toBe(null);
+		expect(createTestHelpMessage).not.toHaveAttribute('disabled');
+
+		userEvent.click(createTestHelpMessage);
+
+		waitForElement(() => getByText('review-and-run-test')).then(() => {
+			const inputs = getAllByDisplayValue('50');
+			expect(inputs.length).toBe(3);
+			done();
+		});
 	});
 });

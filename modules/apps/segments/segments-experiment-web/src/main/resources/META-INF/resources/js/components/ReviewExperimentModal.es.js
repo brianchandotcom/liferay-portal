@@ -36,7 +36,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		visible && (
 			<ClayModal observer={observer} size="lg">
 				<ClayModal.Header>
-					{Liferay.Language.get('Review & Start Test')}
+					{Liferay.Language.get('review-and-start-test')}
 				</ClayModal.Header>
 				<ClayModal.Body>
 					<h3 className="sheet-subtitle border-bottom-0 text-secondary">

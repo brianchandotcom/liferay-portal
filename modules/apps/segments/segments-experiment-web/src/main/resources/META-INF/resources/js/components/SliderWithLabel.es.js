@@ -31,7 +31,7 @@ function SliderWithLabel({label, subTitle, value, onValueChange}) {
 					className="w-100"
 					max={100}
 					min={0}
-					onChange={e => onValueChange(e.target.value)}
+					onChange={_handleValueChange}
 					type="range"
 					value={value}
 				/>
@@ -44,13 +44,19 @@ function SliderWithLabel({label, subTitle, value, onValueChange}) {
 			</div>
 		</label>
 	);
+
+	function _handleValueChange(event) {
+		const newValue = parseFloat(event.target.value);
+
+		onValueChange(newValue);
+	}
 }
 
 SliderWithLabel.propTypes = {
 	label: PropTypes.string.isRequired,
 	onValueChange: PropTypes.func.isRequired,
-	subTitle: PropTypes.string.isRequired,
-	value: PropTypes.string.isRequired
+	subTitle: PropTypes.string,
+	value: PropTypes.number.isRequired
 };
 
 export {SliderWithLabel};

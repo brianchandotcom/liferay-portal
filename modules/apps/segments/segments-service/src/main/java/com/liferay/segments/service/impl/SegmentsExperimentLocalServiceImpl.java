@@ -21,14 +21,20 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException;
@@ -323,6 +329,45 @@ public class SegmentsExperimentLocalServiceImpl
 			0, status);
 	}
 
+	protected void sendNotificationEvent(SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext == null) ||
+			(serviceContext.getUserId() == segmentsExperiment.getUserId())) {
+
+			return;
+		}
+
+		if (!UserNotificationManagerUtil.isDeliver(
+				segmentsExperiment.getUserId(),
+				SegmentsPortletKeys.SEGMENTS_EXPERIMENT, 0,
+				SegmentsExperimentConstants.NOTIFICATION_TYPE_UPDATE_STATUS,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			return;
+		}
+
+		JSONObject notificationEventJSONObject = JSONUtil.put(
+			"classPK", segmentsExperiment.getSegmentsExperimentId()
+		).put(
+			"referrerClassNameId", segmentsExperiment.getClassNameId()
+		).put(
+			"referrerClassPK", segmentsExperiment.getClassPK()
+		).put(
+			"segmentsExperimentKey",
+			segmentsExperiment.getSegmentsExperimentKey()
+		);
+
+		userNotificationEventLocalService.sendUserNotificationEvents(
+			segmentsExperiment.getUserId(),
+			SegmentsPortletKeys.SEGMENTS_EXPERIMENT,
+			UserNotificationDeliveryConstants.TYPE_WEBSITE,
+			notificationEventJSONObject);
+	}
+
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
 		long segmentsEntryId) {
 
@@ -343,7 +388,7 @@ public class SegmentsExperimentLocalServiceImpl
 	private SegmentsExperiment _updateSegmentsExperimentStatus(
 			SegmentsExperiment segmentsExperiment, double confidenceLevel,
 			int status)
-		throws SegmentsExperimentStatusException {
+		throws PortalException {
 
 		_validateStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
@@ -366,6 +411,10 @@ public class SegmentsExperimentLocalServiceImpl
 		}
 
 		segmentsExperiment.setStatus(status);
+
+		// Notifications
+
+		sendNotificationEvent(segmentsExperiment);
 
 		return segmentsExperimentPersistence.update(segmentsExperiment);
 	}

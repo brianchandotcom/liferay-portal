@@ -38,6 +38,11 @@
 	<td>//div[@class='wiki-body']//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TITLE</td>
+	<td>//div[contains(@class,'content-body') and contains(.,'${key_wikiPageTitle}')]/h2</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -342,7 +342,8 @@ function SegmentsExperimentsSidebar({
 							name,
 							segmentsExperienceId,
 							segmentsExperimentId,
-							segmentsExperimentRelId
+							segmentsExperimentRelId,
+							split: 0
 						}
 					]);
 					resolve();

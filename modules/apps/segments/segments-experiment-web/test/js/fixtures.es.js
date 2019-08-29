@@ -66,15 +66,19 @@ export const segmentsGoals = [
 
 export const segmentsVariants = [
 	{
+		control: true,
 		name: 'Control',
 		segmentsExperienceId: '0',
 		segmentsExperimentId: '0',
-		segmentsExperimentRelId: '123'
+		segmentsExperimentRelId: '123',
+		split: 0.0
 	},
 	{
+		control: false,
 		name: 'Variant 1',
 		segmentsExperienceId: '40',
 		segmentsExperimentId: '0',
-		segmentsExperimentRelId: '124'
+		segmentsExperimentRelId: '124',
+		split: 0.0
 	}
 ];

@@ -29,11 +29,11 @@ export const formatMonthDate = (date, timeRange) => {
 	}
 
 	if (firstDayOfMonth.isSame(lastDayOfMonth, 'day')) {
-		return firstDayOfMonth.format('MMM D, YYYY');
+		return firstDayOfMonth.format(Liferay.Language.get('mmm-dd-yyyy'));
 	}
-	return `${firstDayOfMonth.format('MMM D')}-${lastDayOfMonth.format(
-		'D, YYYY'
-	)}`;
+	return `${firstDayOfMonth.format(
+		Liferay.Language.get('mmm-dd')
+	)}-${lastDayOfMonth.format(Liferay.Language.get('dd-yyyy'))}`;
 };
 
 export const formatWeekDate = (date, timeRange) => {
@@ -53,11 +53,15 @@ export const formatWeekDate = (date, timeRange) => {
 	const lastMonth = lastDayOfWeek.format('MMM');
 
 	if (firstDayOfWeek.isSame(lastDayOfWeek, 'day')) {
-		return firstDayOfWeek.format('MMM D');
+		return firstDayOfWeek.format(Liferay.Language.get('mmm-dd'));
 	} else if (firstMonth === lastMonth) {
-		return `${firstDayOfWeek.format('MMM D')}-${lastDayOfWeek.format('D')}`;
+		return `${firstDayOfWeek.format(
+			Liferay.Language.get('mmm-dd')
+		)}-${lastDayOfWeek.format('D')}`;
 	}
-	return `${firstDayOfWeek.format('MMM D')}-${lastDayOfWeek.format('MMM D')}`;
+	return `${firstDayOfWeek.format(
+		Liferay.Language.get('mmm-dd')
+	)}-${lastDayOfWeek.format(Liferay.Language.get('mmm-dd'))}`;
 };
 
 export const formatWeekDateWithYear = (date, timeRange) => {
@@ -80,40 +84,46 @@ export const formatWeekDateWithYear = (date, timeRange) => {
 	const lastYear = lastDayOfWeek.format('YYYY');
 
 	if (firstDayOfWeek.isSame(lastDayOfWeek, 'day')) {
-		return firstDayOfWeek.format('MMM D, YYYY');
+		return firstDayOfWeek.format(Liferay.Language.get('mmm-dd-yyyy'));
 	} else if (firstYear !== lastYear) {
 		return `${firstDayOfWeek.format(
-			'MMM D, YYYY'
-		)} - ${lastDayOfWeek.format('MMM D, YYYY')}`;
+			Liferay.Language.get('mmm-dd-yyyy')
+		)} - ${lastDayOfWeek.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
 	} else if (firstMonth !== lastMonth) {
-		return `${firstDayOfWeek.format('MMM D')} - ${lastDayOfWeek.format(
-			'MMM D, YYYY'
-		)}`;
+		return `${firstDayOfWeek.format(
+			Liferay.Language.get('mmm-dd')
+		)} - ${lastDayOfWeek.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
 	}
-	return `${firstDayOfWeek.format('MMM D')} - ${lastDayOfWeek.format(
-		'D, YYYY'
-	)}`;
+	return `${firstDayOfWeek.format(
+		Liferay.Language.get('mmm-dd')
+	)} - ${lastDayOfWeek.format(Liferay.Language.get('dd-yyyy'))}`;
 };
 
-export const formatXAxisDate = (date, timeRangeKey, timeRange) => {
+export const formatXAxisDate = (date, isAmPm, timeRangeKey, timeRange) => {
 	const currentDate = moment.utc(date);
 	const rangeUnit = getRangeKey(timeRange);
 
 	if (timeRangeKey === HOURS) {
-		return currentDate.format('h A');
+		let datetPattern = Liferay.Language.get('hh-mm');
+
+		if (isAmPm) {
+			datetPattern = Liferay.Language.get('hh-mm-a');
+		}
+
+		return currentDate.format(datetPattern);
 	} else if (timeRangeKey === YEARS) {
 		return currentDate.format('YYYY');
 	} else if (
 		[LAST_YEAR, LAST_180_DAYS].includes(rangeUnit) &&
 		MONTHS === timeRangeKey
 	) {
-		return currentDate.format('MMM YYYY');
+		return currentDate.format(Liferay.Language.get('mmm-yyyy'));
 	} else if (timeRangeKey === MONTHS) {
 		return currentDate.format('MMM');
 	} else if (timeRangeKey === WEEKS) {
 		return formatWeekDate(date, timeRange);
 	}
-	return currentDate.format('MMM D');
+	return currentDate.format(Liferay.Language.get('mmm-dd'));
 };
 
 export const formatYearDate = (date, timeRange) => {
@@ -131,11 +141,11 @@ export const formatYearDate = (date, timeRange) => {
 	}
 
 	if (firstDayOfYear.isSame(lastDayOfYear, 'day')) {
-		return firstDayOfYear.format('MMM D, YYYY');
+		return firstDayOfYear.format(Liferay.Language.get('mmm-dd-yyyy'));
 	}
-	return `${firstDayOfYear.format('MMM D')}-${lastDayOfYear.format(
-		'MMM D, YYYY'
-	)}`;
+	return `${firstDayOfYear.format(
+		Liferay.Language.get('mmm-dd')
+	)}-${lastDayOfYear.format(Liferay.Language.get('mmm-dd-yyyy'))}`;
 };
 
 export const getAxisMeasures = value => {

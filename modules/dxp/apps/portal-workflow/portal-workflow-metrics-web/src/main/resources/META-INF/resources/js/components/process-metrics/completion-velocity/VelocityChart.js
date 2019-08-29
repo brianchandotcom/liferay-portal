@@ -1,16 +1,3 @@
-import LineChart from '@clayui/charts';
-import moment from '../../../shared/util/moment';
-import {TimeRangeContext} from '../filter/store/TimeRangeStore';
-import TooltipChart from '../../../shared/components/chart/TooltipChart';
-import {VelocityDataContext} from './store/VelocityDataStore';
-import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
-import React, {useContext} from 'react';
-import {
-	HOURS,
-	MONTHS,
-	WEEKS,
-	YEARS
-} from '../../../shared/util/chart-constants';
 import {
 	formatMonthDate,
 	formatWeekDateWithYear,
@@ -19,12 +6,28 @@ import {
 	getAxisMeasuresFromData,
 	getXAxisIntervals
 } from '../../../shared/util/chart';
+import {
+	HOURS,
+	MONTHS,
+	WEEKS,
+	YEARS
+} from '../../../shared/util/chart-constants';
+import React, {useContext} from 'react';
+import {AppContext} from '../../AppContext';
+import LineChart from '@clayui/charts';
+import moment from '../../../shared/util/moment';
+import {TimeRangeContext} from '../filter/store/TimeRangeStore';
+import TooltipChart from '../../../shared/components/chart/TooltipChart';
+import {VelocityDataContext} from './store/VelocityDataStore';
+import {VelocityUnitContext} from '../filter/store/VelocityUnitStore';
 
 const VelocityChart = () => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const {getSelectedVelocityUnit} = useContext(VelocityUnitContext);
 
 	const {key: unitKey, name: unitName} = getSelectedVelocityUnit() || {};
+
+	const {isAmPm} = useContext(AppContext);
 
 	const {velocityData} = useContext(VelocityDataContext);
 
@@ -72,6 +75,7 @@ const VelocityChart = () => {
 							format: date =>
 								formatXAxisDate(
 									date,
+									isAmPm,
 									unitKey,
 									getSelectedTimeRange()
 								),
@@ -123,6 +127,7 @@ const VelocityChart = () => {
 				}}
 				tooltip={{
 					contents: VelocityChart.Tooltip(
+						isAmPm,
 						getSelectedTimeRange(),
 						unitKey,
 						unitName
@@ -133,7 +138,7 @@ const VelocityChart = () => {
 	);
 };
 
-const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
+const Tooltip = (isAmPm, timeRange, unitKey, unitName) => dataPoints => {
 	const isValidDate = date => {
 		if (date instanceof Date && !isNaN(date.getTime())) {
 			return true;
@@ -142,11 +147,19 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 		return false;
 	};
 
-	const formatTooltipDate = (date, unitKey, timeRange) => {
+	const formatTooltipDate = (date, isAmPm, timeRange, unitKey) => {
+		let datePattern = Liferay.Language.get('ddd-mmm-d');
+
 		const dateUTC = moment.utc(date);
 
 		if (unitKey === HOURS) {
-			return dateUTC.format('MMM D, h A');
+			if (isAmPm) {
+				datePattern = Liferay.Language.get('mmm-dd-hh-mm-a');
+			} else {
+				datePattern = Liferay.Language.get('mmm-dd-hh-mm');
+			}
+
+			return dateUTC.format(datePattern);
 		} else if (unitKey === WEEKS) {
 			return formatWeekDateWithYear(date, timeRange);
 		} else if (unitKey === MONTHS) {
@@ -154,21 +167,22 @@ const Tooltip = (timeRange, unitKey, unitName) => dataPoints => {
 		} else if (unitKey === YEARS) {
 			return formatYearDate(date, timeRange);
 		}
-		return dateUTC.format('ddd, MMM D');
+		return dateUTC.format(datePattern);
 	};
 
-	const getDateTitle = (date, dates, unitKey) => {
+	const getDateTitle = (date, isAmPm, timeRange, unitKey) => {
 		if (!isValidDate(date)) {
 			return '';
 		}
 
-		return formatTooltipDate(date, unitKey, dates);
+		return formatTooltipDate(date, isAmPm, timeRange, unitKey);
 	};
 
 	const selectedDataPoint = dataPoints[0];
 
 	const currentPeriodTitle = getDateTitle(
 		selectedDataPoint.x,
+		isAmPm,
 		timeRange,
 		unitKey
 	);

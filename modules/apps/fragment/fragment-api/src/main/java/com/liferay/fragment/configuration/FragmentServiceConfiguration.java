@@ -45,7 +45,10 @@ public interface FragmentServiceConfiguration {
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
 	@Deprecated
-	@Meta.AD(deflt = "false", name = "enable-configuration", required = false)
+	@Meta.AD(
+		deflt = "false", description = "enable-configuration-help",
+		name = "enable-configuration", required = false
+	)
 	public boolean enableConfiguration();
 
 }

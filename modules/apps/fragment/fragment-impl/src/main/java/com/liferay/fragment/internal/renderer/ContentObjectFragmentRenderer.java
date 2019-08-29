@@ -86,14 +86,28 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object displayObject = _getDisplayObject(
+		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext, httpServletRequest);
+
+		if (jsonObject == null) {
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-selected-content-will-be-shown-here");
+			}
+
+			return;
+		}
+
+		Object displayObject = _getDisplayObject(
+			jsonObject.getString("className"), jsonObject.getLong("classPK"));
 
 		if (displayObject == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
-					"the-selected-content-will-be-shown-here");
+					"the-selected-content-is-no-longer-available.-please-" +
+						"select-another");
 			}
 
 			return;
@@ -118,45 +132,24 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			displayObject, httpServletRequest, httpServletResponse);
 	}
 
-	private InfoDisplayObjectProvider
-		_getConfigurationInfoDisplayObjectProvider(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest) {
-
-		JSONObject jsonObject = _getFieldValueJSONObject(
-			fragmentRendererContext, httpServletRequest);
-
-		if (jsonObject == null) {
-			return null;
-		}
-
+	private Object _getDisplayObject(String className, long classPK) {
 		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				jsonObject.getString("className"));
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		try {
-			return infoDisplayContributor.getInfoDisplayObjectProvider(
-				jsonObject.getLong("classPK"));
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+			if (infoDisplayObjectProvider == null) {
+				return null;
+			}
+
+			return infoDisplayObjectProvider.getDisplayObject();
 		}
 		catch (Exception e) {
 		}
 
 		return null;
-	}
-
-	private Object _getDisplayObject(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
-
-		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			_getConfigurationInfoDisplayObjectProvider(
-				fragmentRendererContext, httpServletRequest);
-
-		if (infoDisplayObjectProvider == null) {
-			return null;
-		}
-
-		return infoDisplayObjectProvider.getDisplayObject();
 	}
 
 	private JSONObject _getFieldValueJSONObject(

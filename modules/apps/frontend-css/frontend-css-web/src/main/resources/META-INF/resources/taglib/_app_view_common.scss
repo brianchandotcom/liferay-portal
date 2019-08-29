@@ -1,5 +1,3 @@
-@import 'mixins';
-
 .app-view-entry {
 	.entry-thumbnail {
 		margin: 0;
@@ -30,7 +28,7 @@
 	.entry-metadata {
 		margin: 10px 0 20px;
 
-		@include respond-to(phone, tablet) {
+		@include media-breakpoint-down(lg) {
 			margin: 0 0 5px 15px;
 			width: 85%;
 		}
@@ -117,7 +115,7 @@
 		position: relative;
 		text-align: center;
 
-		@include respond-to(phone, tablet) {
+		@include media-breakpoint-down(lg) {
 			float: none;
 		}
 	}

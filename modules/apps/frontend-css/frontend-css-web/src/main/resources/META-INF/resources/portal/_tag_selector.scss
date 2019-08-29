@@ -1,5 +1,3 @@
-@import 'bourbon';
-
 .lfr-tags-selector-list {
 	border: 0 solid transparent;
 	border-width: 0 1px 1px;
@@ -7,7 +5,7 @@
 
 	li {
 		&.tree-node .tree-node-content {
-			@include ellipsis;
+			@include text-truncate();
 		}
 	}
 }
@@ -52,7 +50,7 @@
 		}
 
 		.lfr-tag-text {
-			@include ellipsis;
+			@include text-truncate();
 		}
 	}
 

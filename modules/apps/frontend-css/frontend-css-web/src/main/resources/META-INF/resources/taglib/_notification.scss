@@ -1,5 +1,5 @@
 .alert-notifications.alert-notifications-fixed {
-	@include respond-to(phone) {
+	@include media-breakpoint-down(md) {
 		top: inherit;
 
 		.alert {

@@ -1,5 +1,3 @@
-@import 'mixins';
-
 .lfr-pagination {
 	&:after {
 		clear: both;
@@ -44,7 +42,7 @@
 	.lfr-pagination-delta-selector {
 		float: left;
 
-		@include respond-to(phone, tablet) {
+		@include media-breakpoint-down(lg) {
 			.lfr-icon-menu-text {
 				display: none;
 			}

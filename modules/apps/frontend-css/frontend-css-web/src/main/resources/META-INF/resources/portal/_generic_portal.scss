@@ -1,6 +1,3 @@
-@import 'bourbon';
-@import 'mixins';
-
 td {
 	&.lfr-center {
 		text-align: center;
@@ -39,10 +36,11 @@ td {
 .lfr-code {
 	border: 1px solid transparent;
 	overflow: hidden;
+	overflow-wrap: normal;
 	overflow-x: auto;
 	white-space: pre;
-
-	@include word-wrap(normal);
+	word-break: normal;
+	word-wrap: normal;
 
 	table {
 		table-layout: auto;
@@ -111,13 +109,13 @@ img.icon {
 		top: 0;
 		z-index: 10000;
 
-		@include respond-to(phone, tablet) {
+		@include media-breakpoint-down(lg) {
 			line-height: 20px;
 			margin-bottom: 0;
 			padding: 14px 28px;
 			position: static;
 
-			@include respond-to(phone) {
+			@include media-breakpoint-down(md) {
 				margin: 0 -20px;
 			}
 		}
@@ -162,7 +160,7 @@ img.icon {
 	margin-left: 0.3em;
 }
 
-@include respond-to(phone) {
+@include media-breakpoint-down(md) {
 	.definition-of-terms {
 		dd {
 			margin-left: 10px;

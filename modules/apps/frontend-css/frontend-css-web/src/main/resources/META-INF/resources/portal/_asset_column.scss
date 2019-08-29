@@ -1,5 +1,3 @@
-@import 'bourbon';
-
 .lfr-asset-column-content {
 	margin-right: 1em;
 	padding: 0;
@@ -14,7 +12,7 @@
 		margin-bottom: 2em;
 		text-align: center;
 
-		@include word-wrap(break-all);
+		@include overflow-wrap(break-all);
 	}
 
 	.lfr-asset-avatar img {

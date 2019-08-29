@@ -1,7 +1,5 @@
-@import 'bourbon';
-
 .taglib-asset-tags-summary .tag {
-	@include hyphens;
+	@include hyphens();
 
 	margin-bottom: 3px;
 	margin-right: 3px;

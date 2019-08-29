@@ -7,7 +7,7 @@
 		padding: 0;
 	}
 
-	@include sm() {
+	@include media-breakpoint-up(sm) {
 		min-height: 59px;
 	}
 
@@ -19,7 +19,7 @@
 		.btn {
 			margin: 7px 0 7px 15px;
 
-			@include sm() {
+			@include media-breakpoint-up(sm) {
 				margin: 13px 0 13px 15px;
 			}
 		}
@@ -33,7 +33,7 @@
 		transform: translate(-50%);
 		width: 100%;
 
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			margin-top: 20px;
 		}
 	}

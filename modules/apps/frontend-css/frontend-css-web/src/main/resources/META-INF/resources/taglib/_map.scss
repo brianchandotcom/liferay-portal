@@ -1,5 +1,3 @@
-@import 'mixins';
-
 .lfr-map {
 	border: 1px solid transparent;
 	min-height: 400px;
@@ -20,7 +18,7 @@
 		}
 	}
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		.home-button {
 			height: auto;
 			width: auto;

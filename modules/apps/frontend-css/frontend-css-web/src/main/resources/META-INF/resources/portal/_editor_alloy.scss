@@ -1,7 +1,7 @@
 * [class*='ae-toolbar-'][role='toolbar'] {
 	z-index: 980;
 
-	@media (max-width: $screen-sm) {
+	@include media-breakpoint-down(md) {
 		z-index: 1000;
 	}
 }

@@ -1,8 +1,6 @@
-@import 'mixins';
-
 .app-view-taglib {
 	.form-search {
-		@include respond-to(phone, tablet) {
+		@include media-breakpoint-down(lg) {
 			margin-top: 5px;
 		}
 	}
@@ -20,7 +18,7 @@
 			top: 15px;
 			z-index: 1;
 
-			@include respond-to(phone, tablet) {
+			@include media-breakpoint-down(lg) {
 				top: 17px;
 			}
 		}
@@ -32,14 +30,14 @@
 		float: right;
 		margin: 8px 0 8px 15px;
 
-		@include respond-to(phone) {
+		@include media-breakpoint-down(md) {
 			float: none;
 			margin: 7.5px -15px;
 		}
 
 		.display-style-buttons {
 			> .dropdown {
-				@include respond-to(phone) {
+				@include media-breakpoint-down(md) {
 					> .dropdown-menu {
 						border-width: 0;
 						display: block;

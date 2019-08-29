@@ -1,5 +1,3 @@
-@import 'mixins';
-
 .lfr-preview-file {
 	position: relative;
 }
@@ -51,12 +49,10 @@
 	height: 52px;
 	line-height: 48px;
 	top: 50%;
-
-	@include transform(translateY(-50%));
-
+	transform: translateY(-50%);
 	width: 52px;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		height: 64px;
 		line-height: 60px;
 		width: 64px;
@@ -93,7 +89,7 @@
 	max-width: 100%;
 	vertical-align: middle;
 
-	@include respond-to(phone) {
+	@include media-breakpoint-down(md) {
 		max-height: 65%;
 	}
 }

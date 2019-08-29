@@ -59,6 +59,21 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment deleteSegmentsExperiment(
+			long segmentsExperimentId)
+		throws PortalException {
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(),
+			segmentsExperimentLocalService.getSegmentsExperiment(
+				segmentsExperimentId),
+			ActionKeys.DELETE);
+
+		return segmentsExperimentLocalService.deleteSegmentsExperiment(
+			segmentsExperimentId);
+	}
+
+	@Override
+	public SegmentsExperiment deleteSegmentsExperiment(
 			String segmentsExperimentKey)
 		throws PortalException {
 

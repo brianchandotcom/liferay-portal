@@ -15,12 +15,9 @@
 package com.liferay.document.library.opener.onedrive.web.internal.constants;
 
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.AbstractMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,91 +25,6 @@ import java.util.stream.Stream;
  * @author Cristina González
  */
 public class DLOpenerOneDriveMimeTypes {
-
-	/**
-	 * The MIME type for Microsoft Office Open XML Format Document with Macros
-	 * Enabled (docm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_DOCM =
-		"application/vnd.ms-word.document.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Office Open XML Format Template with Macros
-	 * Enabled (dotm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_DOTM =
-		"application/vnd.ms-word.template.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Document Template (dotx).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_DOTX =
-		"application/vnd.openxmlformats-officedocument.wordprocessingml." +
-			"template";
-
-	/**
-	 * The MIME type for Microsoft Office Open XML Format Presentation Template
-	 * with Macros Enabled (potm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_POTM =
-		"application/vnd.ms-powerpoint.template.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Office Open XML Format Presentation Template
-	 * (potx).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_POTX =
-		"application/vnd.openxmlformats-officedocument.presentationml.template";
-
-	/**
-	 * The MIME type for Microsoft PowerPoint (ppsm) presentations.
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_PPSM =
-		"application/vnd.ms-powerpoint.slideshow.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Macro-Enabled Workbook (pptm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_PPTM =
-		"application/vnd.ms-powerpoint.presentation.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Macro-Enabled Workbook (xlsm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_XLSM =
-		"application/vnd.ms-excel.sheet.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Macro-Enabled Workbook (xltm).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_XLTM =
-		"application/vnd.ms-excel.template.macroEnabled.12";
-
-	/**
-	 * The MIME type for Microsoft Macro-Enabled Workbook (xltx).
-	 *
-	 * @review
-	 */
-	public static final String APPLICATION_VND_XLTX =
-		"application/vnd.openxmlformats-officedocument.spreadsheetml.template";
 
 	/**
 	 * Returns the canonical file extension associated with the MIME type. The
@@ -131,14 +43,7 @@ public class DLOpenerOneDriveMimeTypes {
 	 * @review
 	 */
 	public static String getMimeTypeExtension(String mimeType) {
-		String mimeTypeExtension = DLOpenerMimeTypes.getMimeTypeExtension(
-			mimeType);
-
-		if (Objects.equals(StringPool.BLANK, mimeTypeExtension)) {
-			return _extensions.getOrDefault(mimeType, StringPool.BLANK);
-		}
-
-		return mimeTypeExtension;
+		return DLOpenerMimeTypes.getMimeTypeExtension(mimeType);
 	}
 
 	/**
@@ -178,69 +83,15 @@ public class DLOpenerOneDriveMimeTypes {
 		return _office365MimeTypes.containsKey(mimeType);
 	}
 
-	private static final Map<String, String> _extensions = Stream.of(
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_DOCM, ".docm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_DOTM, ".dotm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_DOTX, ".dotx"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_POTM, ".potm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_POTX, ".potx"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_PPSM, ".ppsm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_PPTM, ".pptm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLSM, ".xlsm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLTM, ".xltm"),
-		new AbstractMap.SimpleEntry<>(APPLICATION_VND_XLTX, ".xltx")
-	).collect(
-		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-	);
 	private static final Map<String, String> _office365MimeTypes = Stream.of(
 		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_DOCM, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_DOTM, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_DOTX, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_POTM, DLOpenerMimeTypes.APPLICATION_VND_PPTX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_POTX, DLOpenerMimeTypes.APPLICATION_VND_PPTX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_PPSM, DLOpenerMimeTypes.APPLICATION_VND_PPTX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_PPTM, DLOpenerMimeTypes.APPLICATION_VND_PPTX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLSM, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLTM, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			APPLICATION_VND_XLTX, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.TEXT, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.TEXT_CSV, DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.TEXT_HTML, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			ContentTypes.TEXT_PLAIN, DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.APPLICATION_RTF,
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.APPLICATION_VND_ODT,
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.APPLICATION_VND_ODS,
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
 		new AbstractMap.SimpleEntry<>(
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX),
 		new AbstractMap.SimpleEntry<>(
 			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
-			DLOpenerMimeTypes.APPLICATION_VND_XLSX),
-		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.TEXT_TAB_SEPARATED_VALUES,
 			DLOpenerMimeTypes.APPLICATION_VND_XLSX)
 	).collect(
 		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)

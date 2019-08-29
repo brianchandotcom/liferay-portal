@@ -45,7 +45,7 @@ public class DLOpenerOneDriveMimeTypesTest {
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
-				DLOpenerMimeTypes.APPLICATION_RTF));
+				DLOpenerMimeTypes.APPLICATION_VND_DOCX));
 		Assert.assertEquals(
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
@@ -54,38 +54,6 @@ public class DLOpenerOneDriveMimeTypesTest {
 			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
 				DLOpenerMimeTypes.APPLICATION_VND_XLSX));
-	}
-
-	@Test
-	public void testIsOffice365MimeTypeSupported() {
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/rtf"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/vnd.ms-word.document.macroEnabled.12"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/vnd.ms-word.template.macroEnabled.12"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/vnd.oasis.opendocument.text"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/vnd.openxmlformats-officedocument." +
-					"wordprocessingml.document"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"application/vnd.openxmlformats-officedocument." +
-					"wordprocessingml.template"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported("text"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"text/html"));
-		Assert.assertTrue(
-			DLOpenerOneDriveMimeTypes.isOffice365MimeTypeSupported(
-				"text/plain"));
 	}
 
 }

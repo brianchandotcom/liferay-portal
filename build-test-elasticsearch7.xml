@@ -98,7 +98,7 @@ xpack.security.sessionTimeout: 600000</echo>
 
 	<macrodef name="configure-portal-elasticsearch-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"</echo>
 		</sequential>
 	</macrodef>
 
@@ -113,11 +113,11 @@ xpack.security.sessionTimeout: 600000</echo>
 				replace="\\\\="
 			/>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration.config">kibanaPassword="${osgi.config.elastic.user.password}"
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch6.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.xpack.security.internal.configuration.XPackSecurityConfiguration.config">certificateFormat="PEM"
 password="${osgi.config.elastic.user.password}"
 requiresAuthentication="true"
 sslCertificateAuthoritiesPaths="${elasticsearch.dir}-1/config/certs/ca/ca.crt"
@@ -416,7 +416,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<unzip
-				dest="${liferay.home}/data/elasticsearch6/repo"
+				dest="${liferay.home}/data/elasticsearch7/repo"
 				src="${liferay.home}/${elasticsearch.boston-dataset-index.zip.name}"
 			/>
 		</sequential>
@@ -594,7 +594,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 		<unzip-boston-dataset-index />
 
 		<exec executable="curl" outputproperty="curl.output">
-			<arg line="-X PUT &quot;localhost:9200/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch6/repo&quot;}}&apos;" />
+			<arg line="-X PUT &quot;localhost:9200/_snapshot/my_backup&quot; -H &apos;Content-Type: application/json&apos; -d&apos;{&quot;type&quot;: &quot;fs&quot;,&quot;settings&quot;: {&quot;location&quot;: &quot;${liferay.home}/data/elasticsearch7/repo&quot;}}&apos;" />
 		</exec>
 
 		<echo>Defining snapshot repository.${line.separator}${curl.output}</echo>

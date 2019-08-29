@@ -58,17 +58,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 				>
 
 					<%
-					boolean production = curCTCollection.isProduction();
+					String ctCollectionName = curCTCollection.isProduction() ? "work-on-production" : curCTCollection.getName();
 
-					long ctCollectionId = curCTCollection.getCtCollectionId();
-					String ctCollectionName = production ? "work-on-production" : curCTCollection.getName();
-
-					boolean activeChangeList = changeListsDisplayContext.isChangeListActive(ctCollectionId);
-					String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, ctCollectionName, production ? true : false);
+					boolean activeChangeList = changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId());
+					String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), ctCollectionName, curCTCollection.isProduction() ? true : false);
 					%>
 
 					<c:choose>
-						<c:when test="<%= production && activeChangeList %>">
+						<c:when test="<%= curCTCollection.isProduction() && activeChangeList %>">
 							<liferay-ui:search-container-column-text
 								name="name"
 							>
@@ -81,7 +78,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 								name="name"
 							>
 								<c:choose>
-									<c:when test="<%= production %>">
+									<c:when test="<%= curCTCollection.isProduction() %>">
 										<span class="work-on-production"><liferay-ui:message key="work-on-production" /></span>
 									</c:when>
 									<c:otherwise>
@@ -94,14 +91,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 					<liferay-ui:search-container-column-date
 						name="modified-date"
-						value="<%= !production ? curCTCollection.getModifiedDate() : null %>"
+						value="<%= !curCTCollection.isProduction() ? curCTCollection.getModifiedDate() : null %>"
 					>
 					</liferay-ui:search-container-column-date>
 
 					<liferay-ui:search-container-column-text
 						name="created-by"
 					>
-						<c:if test="<%= !production %>">
+						<c:if test="<%= !curCTCollection.isProduction() %>">
 							<%= HtmlUtil.escape(curCTCollection.getUserName()) %>
 						</c:if>
 					</liferay-ui:search-container-column-text>
@@ -110,7 +107,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 						name="description"
 					>
 						<c:choose>
-							<c:when test="<%= production %>">
+							<c:when test="<%= curCTCollection.isProduction() %>">
 								<span class="work-on-production-description"><liferay-ui:message key="your-changes-will-be-added-to-the-live-site-immediately" /></span>
 							</c:when>
 							<c:otherwise>
@@ -122,7 +119,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 					<liferay-ui:search-container-column-text
 						name="status"
 					>
-						<c:if test="<%= changeListsDisplayContext.isChangeListActive(ctCollectionId) %>">
+						<c:if test="<%= changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId()) %>">
 							<span class="label label-info">
 								<span class="label-item label-item-expand"><liferay-ui:message key="active" /></span>
 							</span>
@@ -152,11 +149,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 								</c:otherwise>
 							</c:choose>
 
-							<c:if test="<%= !production %>">
+							<c:if test="<%= !curCTCollection.isProduction() %>">
 								<liferay-portlet:renderURL var="editCollectionURL">
 									<portlet:param name="mvcRenderCommandName" value="/change_lists/edit_ct_collection" />
 									<portlet:param name="backURL" value="<%= themeDisplay.getURLCurrent() %>" />
-									<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
+									<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 								</liferay-portlet:renderURL>
 
 								<liferay-ui:icon
@@ -165,10 +162,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 								/>
 
 								<c:choose>
-									<c:when test="<%= changeListsDisplayContext.hasCTEntries(ctCollectionId) %>">
+									<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
 										<liferay-ui:icon
 											message="publish"
-											url="<%= changeListsDisplayContext.getPublishURL(ctCollectionId, ctCollectionName) %>"
+											url="<%= changeListsDisplayContext.getPublishURL(curCTCollection.getCtCollectionId(), ctCollectionName) %>"
 										/>
 									</c:when>
 									<c:otherwise>
@@ -182,7 +179,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 								<liferay-ui:icon
 									message="delete"
-									url="<%= changeListsDisplayContext.getDeleteURL(ctCollectionId, ctCollectionName) %>"
+									url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), ctCollectionName) %>"
 								/>
 							</c:if>
 						</liferay-ui:icon-menu>
@@ -272,22 +269,18 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 					>
 
 						<%
-						long ctCollectionId = curCTCollection.getCtCollectionId();
-						String ctCollectionName = curCTCollection.getName();
-						boolean production = curCTCollection.isProduction();
-
-						boolean activeChangeList = changeListsDisplayContext.isChangeListActive(ctCollectionId);
-						String checkoutURL = changeListsDisplayContext.getCheckoutURL(ctCollectionId, ctCollectionName, false);
+						boolean activeChangeList = changeListsDisplayContext.isChangeListActive(curCTCollection.getCtCollectionId());
+						String checkoutURL = changeListsDisplayContext.getCheckoutURL(curCTCollection.getCtCollectionId(), curCTCollection.getName(), false);
 						%>
 
-						<c:if test="<%= !production %>">
+						<c:if test="<%= !curCTCollection.isProduction() %>">
 							<div class="col-sm-4">
 								<div class="<%= activeChangeList ? "border-left-blue" : "border-left-gray" %> card select-card-sheet">
 									<div class="card-row card-row-layout-fixed card-row-padded card-row-valign-top select-card-header">
 										<div class="card-col-content lfr-card-details-column">
 											<a href="<%= !activeChangeList ? checkoutURL : portletURL.toString() %>">
 												<span class="card-h3" data-qa-id="headerSubTitle">
-													<%= HtmlUtil.escape(ctCollectionName) %>
+													<%= HtmlUtil.escape(curCTCollection.getName()) %>
 												</span>
 											</a>
 
@@ -311,7 +304,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 												<span class="card-h4"><liferay-ui:message key="changes" /></span>
 
 												<%
-												Map<Integer, Long> changeTypeCounts = changeListsDisplayContext.getCTCollectionChangeTypeCounts(ctCollectionId);
+												Map<Integer, Long> changeTypeCounts = changeListsDisplayContext.getCTCollectionChangeTypeCounts(curCTCollection.getCtCollectionId());
 												%>
 
 												<div class="changes-row">
@@ -368,7 +361,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 												<liferay-portlet:renderURL var="editCollectionURL">
 													<portlet:param name="mvcRenderCommandName" value="/change_lists/edit_ct_collection" />
 													<portlet:param name="backURL" value="<%= themeDisplay.getURLCurrent() %>" />
-													<portlet:param name="ctCollectionId" value="<%= String.valueOf(ctCollectionId) %>" />
+													<portlet:param name="ctCollectionId" value="<%= String.valueOf(curCTCollection.getCtCollectionId()) %>" />
 												</liferay-portlet:renderURL>
 
 												<liferay-ui:icon
@@ -377,10 +370,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 												/>
 
 												<c:choose>
-													<c:when test="<%= changeListsDisplayContext.hasCTEntries(ctCollectionId) %>">
+													<c:when test="<%= changeListsDisplayContext.hasCTEntries(curCTCollection.getCtCollectionId()) %>">
 														<liferay-ui:icon
 															message="publish"
-															url="<%= changeListsDisplayContext.getPublishURL(ctCollectionId, ctCollectionName) %>"
+															url="<%= changeListsDisplayContext.getPublishURL(curCTCollection.getCtCollectionId(), curCTCollection.getName()) %>"
 														/>
 													</c:when>
 													<c:otherwise>
@@ -394,7 +387,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-change-list"));
 
 												<liferay-ui:icon
 													message="delete"
-													url="<%= changeListsDisplayContext.getDeleteURL(ctCollectionId, ctCollectionName) %>"
+													url="<%= changeListsDisplayContext.getDeleteURL(curCTCollection.getCtCollectionId(), curCTCollection.getName()) %>"
 												/>
 											</liferay-ui:icon-menu>
 										</div>

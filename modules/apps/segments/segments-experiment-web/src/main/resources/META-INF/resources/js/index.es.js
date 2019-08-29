@@ -25,6 +25,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 	const {
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
+		deleteSegmentsExperimentURL,
 		deleteSegmentsVariantURL,
 		editSegmentsExperimentStatusURL,
 		editSegmentsExperimentURL,
@@ -44,6 +45,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 					endpoints: {
 						createSegmentsExperimentURL,
 						createSegmentsVariantURL,
+						deleteSegmentsExperimentURL,
 						deleteSegmentsVariantURL,
 						editSegmentsExperimentStatusURL,
 						editSegmentsExperimentURL,

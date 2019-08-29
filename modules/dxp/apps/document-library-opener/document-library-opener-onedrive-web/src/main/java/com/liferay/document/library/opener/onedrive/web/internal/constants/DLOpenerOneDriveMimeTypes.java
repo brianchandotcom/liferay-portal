@@ -15,11 +15,9 @@
 package com.liferay.document.library.opener.onedrive.web.internal.constants;
 
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Set;
 
 /**
  * @author Cristina González
@@ -47,9 +45,7 @@ public class DLOpenerOneDriveMimeTypes {
 	}
 
 	/**
-	 * Returns the OneDrive MIME type equivalent to the one received. For
-	 * example, this method maps Open Office documents and plain text files to
-	 * Word, CSV files to Excel, and and so on.
+	 * Returns the OneDrive MIME type equivalent to the one received.
 	 *
 	 * <p>
 	 * This method returns a valid Office 365 document type only for MIME types
@@ -68,7 +64,7 @@ public class DLOpenerOneDriveMimeTypes {
 					mimeType);
 		}
 
-		return _office365MimeTypes.get(mimeType);
+		return mimeType;
 	}
 
 	/**
@@ -80,21 +76,14 @@ public class DLOpenerOneDriveMimeTypes {
 	 * @review
 	 */
 	public static boolean isOffice365MimeTypeSupported(String mimeType) {
-		return _office365MimeTypes.containsKey(mimeType);
+		return _office365MimeTypes.contains(mimeType);
 	}
 
-	private static final Map<String, String> _office365MimeTypes = Stream.of(
-		new AbstractMap.SimpleEntry<>(
+	private static final Set<String> _office365MimeTypes = SetUtil.fromArray(
+		new String[] {
 			DLOpenerMimeTypes.APPLICATION_VND_DOCX,
-			DLOpenerMimeTypes.APPLICATION_VND_DOCX),
-		new AbstractMap.SimpleEntry<>(
 			DLOpenerMimeTypes.APPLICATION_VND_PPTX,
-			DLOpenerMimeTypes.APPLICATION_VND_PPTX),
-		new AbstractMap.SimpleEntry<>(
-			DLOpenerMimeTypes.APPLICATION_VND_XLSX,
-			DLOpenerMimeTypes.APPLICATION_VND_XLSX)
-	).collect(
-		Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-	);
+			DLOpenerMimeTypes.APPLICATION_VND_XLSX
+		});
 
 }

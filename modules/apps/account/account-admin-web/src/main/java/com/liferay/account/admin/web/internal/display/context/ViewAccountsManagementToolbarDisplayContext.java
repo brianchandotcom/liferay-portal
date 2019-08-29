@@ -15,7 +15,10 @@
 package com.liferay.account.admin.web.internal.display.context;
 
 import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission;
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
@@ -26,8 +29,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +149,22 @@ public class ViewAccountsManagementToolbarDisplayContext
 		return "accountsManagementToolbar";
 	}
 
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							liferayPortletResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/account_admin/edit_account");
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add-account"));
+					});
+			}
+		};
+	}
+
 	@Override
 	public String getDefaultEventHandler() {
 		return "ACCOUNTS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
@@ -173,6 +194,16 @@ public class ViewAccountsManagementToolbarDisplayContext
 	@Override
 	public Boolean isDisabled() {
 		return false;
+	}
+
+	@Override
+	public Boolean isShowCreationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return AccountPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			AccountActionKeys.ADD_ACCOUNT_ENTRY);
 	}
 
 	@Override

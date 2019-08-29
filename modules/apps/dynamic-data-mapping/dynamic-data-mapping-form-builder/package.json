@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"classnames": "^2.2.6",
+		"classnames": "2.2.6",
 		"clay-alert": "2.18.0",
 		"clay-checkbox": "2.18.0",
 		"clay-dropdown": "2.18.0",

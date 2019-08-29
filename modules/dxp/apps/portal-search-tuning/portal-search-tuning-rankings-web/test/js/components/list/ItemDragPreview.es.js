@@ -12,7 +12,7 @@
 import ItemDragPreview from '../../../../src/main/resources/META-INF/resources/js/components/list/ItemDragPreview.es';
 import React from 'react';
 import {render} from '@testing-library/react';
-import {mockDocument} from '../../mock-data';
+import {mockDocument} from '../../mocks/data.es';
 import '@testing-library/jest-dom/extend-expect';
 
 // Mock pinned document since only pinned results can be dragged.

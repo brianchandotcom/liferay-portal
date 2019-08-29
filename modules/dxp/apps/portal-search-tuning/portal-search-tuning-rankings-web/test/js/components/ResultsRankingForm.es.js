@@ -21,10 +21,8 @@ import {
 	FETCH_HIDDEN_DOCUMENTS_URL,
 	FETCH_SEARCH_DOCUMENTS_URL,
 	FETCH_VISIBLE_DOCUMENTS_URL
-} from '../mock-data';
+} from '../mocks/data.es';
 import '@testing-library/jest-dom/extend-expect';
-
-jest.mock('../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
 const FORM_NAME = 'testForm';
 

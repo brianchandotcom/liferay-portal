@@ -11,7 +11,7 @@
 
 import AddResult from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResult.es';
 import React from 'react';
-import {FETCH_SEARCH_DOCUMENTS_URL} from '../../mock-data';
+import {FETCH_SEARCH_DOCUMENTS_URL} from '../../mocks/data.es';
 import {
 	fireEvent,
 	getByPlaceholderText,
@@ -21,8 +21,6 @@ import {
 	within
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-
-jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
 /* eslint-disable no-unused-vars */
 jest.mock('react-dnd', () => ({

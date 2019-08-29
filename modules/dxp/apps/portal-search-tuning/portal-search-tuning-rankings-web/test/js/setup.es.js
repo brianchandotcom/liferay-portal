@@ -9,6 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {FETCH_HIDDEN_DOCUMENTS_URL, getMockResultsData} from './mocks/data.es';
+
+const APIUtil = require('../../src/main/resources/META-INF/resources/js/utils/api.es');
 const LanguageUtil = require('../../src/main/resources/META-INF/resources/js/utils/language.es');
 
 /**
@@ -16,3 +19,27 @@ const LanguageUtil = require('../../src/main/resources/META-INF/resources/js/uti
  * passed and displayed.
  */
 LanguageUtil.sub = (key, args) => [key, args];
+
+/**
+ * Mocks fetchDocuments for consistent data to test. Uses the getMockResultsData
+ * in order to mock the fetch formula
+ */
+
+// eslint-disable-next-line no-undef
+APIUtil.fetchDocuments = jest.fn((url, config) => {
+	const {from, keywords, size} = config;
+
+	const p = Promise.resolve(
+		getMockResultsData(
+			size,
+			from,
+			keywords,
+			url === FETCH_HIDDEN_DOCUMENTS_URL
+		)
+	).then(data => ({
+		items: data.documents,
+		total: data.total
+	}));
+
+	return p;
+});

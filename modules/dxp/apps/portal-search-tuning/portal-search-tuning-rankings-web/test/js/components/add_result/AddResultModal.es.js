@@ -12,7 +12,7 @@
 import AddResultModal from '../../../../src/main/resources/META-INF/resources/js/components/add_result/AddResultModal.es';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
-import {getMockResultsData} from '../../mock-data';
+import {getMockResultsData} from '../../mocks/data.es';
 import '@testing-library/jest-dom/extend-expect';
 
 const DELTAS = [5, 10, 20, 30, 50];

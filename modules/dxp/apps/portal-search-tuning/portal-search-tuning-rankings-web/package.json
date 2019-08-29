@@ -22,7 +22,7 @@
 			"<rootDir>/test/js/setup.es.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/js/mock-data.js",
+			"<rootDir>/test/js/mocks/*",
 			"<rootDir>/test/js/setup.es.js"
 		]
 	},

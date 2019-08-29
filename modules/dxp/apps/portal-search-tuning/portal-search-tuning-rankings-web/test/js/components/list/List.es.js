@@ -17,11 +17,9 @@ import {
 	getByText,
 	render
 } from '@testing-library/react';
-import {getMockResultsData} from '../../mock-data';
+import {getMockResultsData} from '../../mocks/data.es';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
 import '@testing-library/jest-dom/extend-expect';
-
-jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
 const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents

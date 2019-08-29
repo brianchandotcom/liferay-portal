@@ -12,11 +12,12 @@
 import React from 'react';
 import SearchBar from '../../../../src/main/resources/META-INF/resources/js/components/list/SearchBar.es';
 import {fireEvent, render} from '@testing-library/react';
-import {FETCH_SEARCH_DOCUMENTS_URL, getMockResultsData} from '../../mock-data';
+import {
+	FETCH_SEARCH_DOCUMENTS_URL,
+	getMockResultsData
+} from '../../mocks/data.es';
 import {resultsDataToMap} from '../../../../src/main/resources/META-INF/resources/js/utils/util.es';
 import '@testing-library/jest-dom/extend-expect';
-
-jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
 const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents

@@ -16,7 +16,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
-import {InitialSegmentsVariantType, SegmentsExperimentType} from '../types.es';
+import {SegmentsVariantType, SegmentsExperimentType} from '../types.es';
 import {
 	STATUS_DRAFT,
 	STATUS_PAUSED,
@@ -107,7 +107,7 @@ SegmentsExperimentsActions.propTypes = {
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
 	onRunExperiment: PropTypes.func.isRequired,
 	segmentsExperiment: SegmentsExperimentType,
-	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
+	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 
 export default SegmentsExperimentsActions;

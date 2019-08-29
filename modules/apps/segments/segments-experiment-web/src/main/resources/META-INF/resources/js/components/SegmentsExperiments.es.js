@@ -21,7 +21,7 @@ import ClayLabel from '@clayui/label';
 import ClaySelect from '@clayui/select';
 import Variants from './Variants/Variants.es';
 import {
-	InitialSegmentsVariantType,
+	SegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentType
 } from '../types.es';
@@ -205,7 +205,7 @@ SegmentsExperiments.propTypes = {
 	segmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	segmentsExperiment: SegmentsExperimentType,
 	selectedSegmentsExperienceId: PropTypes.string.isRequired,
-	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
+	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 
 export default SegmentsExperiments;

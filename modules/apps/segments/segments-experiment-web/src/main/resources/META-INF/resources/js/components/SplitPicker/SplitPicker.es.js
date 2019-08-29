@@ -15,7 +15,7 @@
 import React, {useReducer, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {SliderWithLabel} from '../SliderWithLabel.es';
-import {InitialSegmentsVariantType} from '../../types.es';
+import {SegmentsVariantType} from '../../types.es';
 import {changeSplitValue} from './utils.es';
 
 function SplitPicker({variants, onChange}) {
@@ -49,7 +49,7 @@ function SplitPicker({variants, onChange}) {
 
 SplitPicker.propTypes = {
 	onChange: PropTypes.func.isRequired,
-	variants: PropTypes.arrayOf(InitialSegmentsVariantType)
+	variants: PropTypes.arrayOf(SegmentsVariantType)
 };
 
 export {SplitPicker};

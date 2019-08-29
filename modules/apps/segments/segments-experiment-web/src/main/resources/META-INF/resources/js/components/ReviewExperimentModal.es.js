@@ -18,7 +18,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayButton from '@clayui/button';
 import {SplitPicker} from './SplitPicker/SplitPicker.es';
 import {SliderWithLabel} from './SliderWithLabel.es';
-import {InitialSegmentsVariantType} from '../types.es';
+import {SegmentsVariantType} from '../types.es';
 
 function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	const [confidenceLevel, setConfidenceLevel] = useState(50);
@@ -107,7 +107,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 ReviewExperimentModal.propTypes = {
 	onRun: PropTypes.func.isRequired,
 	setVisible: PropTypes.func.isRequired,
-	variants: PropTypes.arrayOf(InitialSegmentsVariantType),
+	variants: PropTypes.arrayOf(SegmentsVariantType),
 	visible: PropTypes.bool.isRequired
 };
 

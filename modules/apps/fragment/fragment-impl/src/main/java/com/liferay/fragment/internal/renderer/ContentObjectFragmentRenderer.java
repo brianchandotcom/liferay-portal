@@ -118,10 +118,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			displayObject, httpServletRequest, httpServletResponse);
 	}
 
-	private InfoDisplayObjectProvider
-		_getConfigurationInfoDisplayObjectProvider(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest) {
+	private Object _getDisplayObject(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
 
 		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext, httpServletRequest);
@@ -135,28 +134,20 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 				jsonObject.getString("className"));
 
 		try {
-			return infoDisplayContributor.getInfoDisplayObjectProvider(
-				jsonObject.getLong("classPK"));
+			InfoDisplayObjectProvider infoDisplayObjectProvider =
+				infoDisplayContributor.getInfoDisplayObjectProvider(
+					jsonObject.getLong("classPK"));
+
+			if (infoDisplayObjectProvider == null) {
+				return null;
+			}
+
+			return infoDisplayObjectProvider.getDisplayObject();
 		}
 		catch (Exception e) {
 		}
 
 		return null;
-	}
-
-	private Object _getDisplayObject(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
-
-		InfoDisplayObjectProvider infoDisplayObjectProvider =
-			_getConfigurationInfoDisplayObjectProvider(
-				fragmentRendererContext, httpServletRequest);
-
-		if (infoDisplayObjectProvider == null) {
-			return null;
-		}
-
-		return infoDisplayObjectProvider.getDisplayObject();
 	}
 
 	private JSONObject _getFieldValueJSONObject(

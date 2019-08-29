@@ -21,9 +21,9 @@ import ClayLabel from '@clayui/label';
 import ClaySelect from '@clayui/select';
 import Variants from './Variants/Variants.es';
 import {
-	SegmentsVariantType,
 	SegmentsExperienceType,
-	SegmentsExperimentType
+	SegmentsExperimentType,
+	SegmentsVariantType
 } from '../types.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';

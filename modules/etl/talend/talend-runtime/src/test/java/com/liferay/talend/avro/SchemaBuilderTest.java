@@ -40,7 +40,7 @@ import org.talend.daikon.avro.AvroUtils;
 public class SchemaBuilderTest {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		if (_oasJsonObject != null) {
 			return;
 		}
@@ -113,7 +113,7 @@ public class SchemaBuilderTest {
 		Schema.Field fieldSchema = nestedSchema.getField("minStockQuantity");
 
 		Assert.assertTrue(
-			"Integer type was expected for nested field: ",
+			"OAS integer in nested object maps to AVRO integer",
 			AvroUtils.isSameType(
 				AvroUtils.unwrapIfNullable(fieldSchema.schema()),
 				AvroUtils._int()));
@@ -129,7 +129,7 @@ public class SchemaBuilderTest {
 		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Boolean type was expected: ",
+			"OAS boolean maps to AVRO boolean type",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
 
 		Schema.Field nestedField = schema.getField("subscriptionConfiguration");
@@ -140,7 +140,7 @@ public class SchemaBuilderTest {
 		Schema.Field enabledField = nestedFieldSchema.getField("enable");
 
 		Assert.assertTrue(
-			"Boolean type was expected for nested field: ",
+			"OAS boolean maps to AVRO boolean type",
 			AvroUtils.isSameType(
 				AvroUtils.unwrapIfNullable(enabledField.schema()),
 				AvroUtils._boolean()));

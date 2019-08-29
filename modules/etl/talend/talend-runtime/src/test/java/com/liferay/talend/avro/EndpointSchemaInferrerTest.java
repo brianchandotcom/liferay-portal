@@ -40,7 +40,7 @@ import org.talend.daikon.avro.AvroUtils;
 public class EndpointSchemaInferrerTest {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		if (_oasJsonObject != null) {
 			return;
 		}
@@ -120,7 +120,7 @@ public class EndpointSchemaInferrerTest {
 		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Integer type was expected for nested field: ",
+			"OAS integer in nested object maps to AVRO integer",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._int()));
 	}
 
@@ -139,14 +139,14 @@ public class EndpointSchemaInferrerTest {
 		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Long type was expected: ",
+			"OAS long maps to AVRO long",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._long()));
 
 		field = schema.getField("subscriptionConfiguration_numberOfLength");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Long type was expected for nested field: ",
+			"OAS long in nested object maps to AVRO long",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._long()));
 	}
 
@@ -170,35 +170,35 @@ public class EndpointSchemaInferrerTest {
 		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"String type was expected: ",
+			"OAS string maps to AVRO string",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("taxConfiguration_taxCategory");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"String type was expected for nested field: ",
+			"OAS string in nested object maps to AVRO string",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("description");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"String type was expected for dictionary field: ",
+			"OAS dictionary maps to AVRO string",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("expando");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"String type was expected for free form object field: ",
+			"OAS free form object maps to AVRO string",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 
 		field = schema.getField("categories");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"String type was expected for arrays: ",
+			"OAS string maps to AVRO string",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._string()));
 	}
 
@@ -212,14 +212,14 @@ public class EndpointSchemaInferrerTest {
 		Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Boolean type was expected: ",
+			"OAS boolean maps to AVRO boolean",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
 
 		field = schema.getField("subscriptionConfiguration_enable");
 		fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 		Assert.assertTrue(
-			"Boolean type was expected for nested field: ",
+			"OAS boolean in nested object maps to AVRO boolean",
 			AvroUtils.isSameType(fieldSchema, AvroUtils._boolean()));
 	}
 

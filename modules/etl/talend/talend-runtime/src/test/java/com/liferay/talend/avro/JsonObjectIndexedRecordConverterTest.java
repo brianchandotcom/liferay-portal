@@ -100,22 +100,21 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 		Assert.assertNotNull(
 			"Product is converted to indexed record", indexedRecord);
 
-		Assert.assertEquals("SKU is '3 pcs'", "3 pcs", indexedRecord.get(13));
+		Assert.assertEquals("SKU field value", "3 pcs", indexedRecord.get(13));
 
 		Object id = indexedRecord.get(17);
 
-		Assert.assertEquals("ID class is Long", Long.class, id.getClass());
+		Assert.assertEquals("ID field type", Long.class, id.getClass());
 
-		Assert.assertEquals("ID value is 19770907", Long.valueOf(19770709), id);
+		Assert.assertEquals("ID field value", Long.valueOf(19770709), id);
 
 		Object productId = indexedRecord.get(24);
 
 		Assert.assertEquals(
-			"Product ID class is long 20111101", Long.class,
-			productId.getClass());
+			"Product ID field type", Long.class, productId.getClass());
 
 		Assert.assertEquals(
-			"Product ID value is 20111101", Long.valueOf(20111101), productId);
+			"Product ID field value", Long.valueOf(20111101), productId);
 	}
 
 }

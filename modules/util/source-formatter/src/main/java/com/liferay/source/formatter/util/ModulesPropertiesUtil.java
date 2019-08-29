@@ -36,6 +36,8 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Shin
  */
@@ -115,6 +117,22 @@ public class ModulesPropertiesUtil {
 						bundleInformationMap.put(
 							"bnd.version[" + bundleSymbolicName + "]",
 							bundleVersion);
+					}
+
+					Path packageJSONPath = dirPath.resolve("package.json");
+
+					if (!Files.exists(packageJSONPath)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					JSONObject jsonObject = new JSONObject(
+						FileUtil.read(packageJSONPath.toFile()));
+
+					if (!jsonObject.isNull("name")) {
+						bundleInformationMap.put(
+							"bundle.symbolic.name[" +
+								jsonObject.getString("name") + "]",
+							bundleSymbolicName);
 					}
 
 					return FileVisitResult.SKIP_SUBTREE;

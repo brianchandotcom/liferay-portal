@@ -242,7 +242,8 @@ describe('Variants', () => {
 							segmentsExperimentId: JSON.stringify(Math.random()),
 							segmentsExperimentRelId: JSON.stringify(
 								Math.random()
-							)
+							),
+							split: 0.0
 						}
 					});
 				})

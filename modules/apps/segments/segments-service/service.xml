@@ -274,6 +274,7 @@
 		<!-- References -->
 
 		<reference entity="Layout" package-path="com.liferay.portal" />
+		<reference entity="UserNotificationEvent" package-path="com.liferay.portal.kernel" />
 	</entity>
 	<entity local-service="true" name="SegmentsExperimentRel" remote-service="true">
 

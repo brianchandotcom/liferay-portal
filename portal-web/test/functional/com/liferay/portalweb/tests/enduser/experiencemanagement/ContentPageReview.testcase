@@ -428,8 +428,6 @@ definition {
 	@description = "This test ensures that set the value of Content Page Comments from system settings will act as the default value for a virtual instance."
 	@priority = "4"
 	test ViewVirtualInstanceCommentInheritsSystemConfiguration {
-		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentVirtualInstanceInheritsSystemSettings";
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

@@ -103,12 +103,12 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 	dom.delegate(
 		addMenuItemFm,
 		'click',
-		'selector-button',
+		'.selector-button',
 		function(event) {
 			Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(journalViewMoreMenuItemsDisplayContext.getEventName()) %>',
 				{
-					ddmStructureKey: event.currentTarget.attr('data-ddmStructureKey')
+					ddmStructureKey: event.target.getAttribute('data-ddmStructureKey')
 				}
 			);
 

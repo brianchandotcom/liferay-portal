@@ -86,8 +86,15 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		Object displayObject = _getDisplayObject(
+		JSONObject jsonObject = _getFieldValueJSONObject(
 			fragmentRendererContext, httpServletRequest);
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		Object displayObject = _getDisplayObject(
+			jsonObject.getString("className"), jsonObject.getLong("classPK"));
 
 		if (displayObject == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -118,25 +125,13 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			displayObject, httpServletRequest, httpServletResponse);
 	}
 
-	private Object _getDisplayObject(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
-
-		JSONObject jsonObject = _getFieldValueJSONObject(
-			fragmentRendererContext, httpServletRequest);
-
-		if (jsonObject == null) {
-			return null;
-		}
-
+	private Object _getDisplayObject(String className, long classPK) {
 		InfoDisplayContributor infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				jsonObject.getString("className"));
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
 		try {
 			InfoDisplayObjectProvider infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(
-					jsonObject.getLong("classPK"));
+				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
 
 			if (infoDisplayObjectProvider == null) {
 				return null;

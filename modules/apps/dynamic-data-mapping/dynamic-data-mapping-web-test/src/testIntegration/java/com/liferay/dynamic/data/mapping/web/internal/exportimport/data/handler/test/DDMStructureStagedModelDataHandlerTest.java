@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -555,10 +556,10 @@ public class DDMStructureStagedModelDataHandlerTest
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 
-	private DDMDataProvider _ddmDataProvider;
+	@Inject(filter = "ddm.form.values.deserializer.type=json")
+	private static DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
-	@Inject
-	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+	private DDMDataProvider _ddmDataProvider;
 
 	@DeleteAfterTestRun
 	private Company _targetCompany;

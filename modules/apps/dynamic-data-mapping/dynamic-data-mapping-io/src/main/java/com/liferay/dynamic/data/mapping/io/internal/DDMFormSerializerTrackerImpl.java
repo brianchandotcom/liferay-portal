@@ -16,56 +16,30 @@ package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(immediate = true, service = DDMFormSerializerTracker.class)
+@Deprecated
 public class DDMFormSerializerTrackerImpl implements DDMFormSerializerTracker {
 
 	@Override
 	public DDMFormSerializer getDDMFormSerializer(String type) {
-		return _ddmFormSerializers.get(type);
+		if (Objects.equals(type, "json")) {
+			return _jsonDDMFormSerializer;
+		}
+
+		return null;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMFormSerializer(
-		DDMFormSerializer ddmFormSerializer, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "ddm.form.serializer.type");
-
-		_ddmFormSerializers.put(type, ddmFormSerializer);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_ddmFormSerializers.clear();
-	}
-
-	protected void removeDDMFormSerializer(
-		DDMFormSerializer ddmFormSerializer, Map<String, Object> properties) {
-
-		String type = MapUtil.getString(properties, "ddm.form.serializer.type");
-
-		_ddmFormSerializers.remove(type);
-	}
-
-	private final Map<String, DDMFormSerializer> _ddmFormSerializers =
-		new TreeMap<>();
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 }

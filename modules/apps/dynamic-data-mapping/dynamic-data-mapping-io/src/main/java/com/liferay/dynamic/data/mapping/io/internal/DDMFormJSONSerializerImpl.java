@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,25 +34,16 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 	@Override
 	public String serialize(DDMForm ddmForm) {
-		DDMFormSerializer ddmFormSerializer =
-			_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormSerializer.serialize(builder.build());
+			_jsonDDMFormSerializer.serialize(builder.build());
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormSerializerTracker(
-		DDMFormSerializerTracker ddmFormSerializerTracker) {
-
-		_ddmFormSerializerTracker = ddmFormSerializerTracker;
-	}
-
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 }

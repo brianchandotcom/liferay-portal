@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.h
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.taglib.DDMFormFieldTypesDynamicInclude;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
@@ -181,10 +180,6 @@ public abstract class BaseDDMFormFieldTypesDynamicInclude
 
 	@Reference
 	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	protected DDMFormFieldTypesSerializerTracker
-		ddmFormFieldTypesSerializerTracker;
 
 	@Reference
 	protected JSONFactory jsonFactory;

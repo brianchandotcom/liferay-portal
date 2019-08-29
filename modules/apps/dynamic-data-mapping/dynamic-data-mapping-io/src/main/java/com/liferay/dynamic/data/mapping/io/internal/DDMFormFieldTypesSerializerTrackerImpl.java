@@ -16,22 +16,18 @@ package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(immediate = true, service = DDMFormFieldTypesSerializerTracker.class)
+@Deprecated
 public class DDMFormFieldTypesSerializerTrackerImpl
 	implements DDMFormFieldTypesSerializerTracker {
 
@@ -39,40 +35,14 @@ public class DDMFormFieldTypesSerializerTrackerImpl
 	public DDMFormFieldTypesSerializer getDDMFormFieldTypesSerializer(
 		String type) {
 
-		return _ddmFormFieldTypesSerializers.get(type);
+		if (Objects.equals(type, "json")) {
+			return _ddmFormFieldTypesSerializer;
+		}
+
+		return null;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMFormFieldTypesSerializer(
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.field.types.serializer.type");
-
-		_ddmFormFieldTypesSerializers.put(type, ddmFormFieldTypesSerializer);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_ddmFormFieldTypesSerializers.clear();
-	}
-
-	protected void removeDDMFormFieldTypesSerializer(
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.field.types.serializer.type");
-
-		_ddmFormFieldTypesSerializers.remove(type);
-	}
-
-	private final Map<String, DDMFormFieldTypesSerializer>
-		_ddmFormFieldTypesSerializers = new TreeMap<>();
+	@Reference(target = "(ddm.form.field.types.serializer.type=json)")
+	private DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 
 }

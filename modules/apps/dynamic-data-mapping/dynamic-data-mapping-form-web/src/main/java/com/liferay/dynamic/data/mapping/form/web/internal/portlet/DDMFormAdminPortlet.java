@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activato
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
@@ -139,8 +139,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
 					_ddmFormFieldTypeServicesTracker,
-					_ddmFormFieldTypesSerializerTracker,
-					_ddmFormInstanceLocalService,
+					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceRecordWriterTracker,
 					_ddmFormInstanceService,
@@ -161,8 +160,7 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormBuilderContextFactory,
 					_ddmFormBuilderSettingsRetriever,
 					_ddmFormFieldTypeServicesTracker,
-					_ddmFormFieldTypesSerializerTracker,
-					_ddmFormInstanceLocalService,
+					_ddmFormFieldTypesSerializer, _ddmFormInstanceLocalService,
 					_ddmFormInstanceRecordLocalService,
 					_ddmFormInstanceRecordWriterTracker,
 					_ddmFormInstanceService,
@@ -198,9 +196,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
-	@Reference
-	private DDMFormFieldTypesSerializerTracker
-		_ddmFormFieldTypesSerializerTracker;
+	@Reference(target = "(ddm.form.field.types.serializer.type=json)")
+	private DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;

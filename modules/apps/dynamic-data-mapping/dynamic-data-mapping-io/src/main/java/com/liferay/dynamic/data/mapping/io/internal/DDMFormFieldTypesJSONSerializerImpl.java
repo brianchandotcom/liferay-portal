@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 
 import java.util.List;
 
@@ -38,30 +37,18 @@ public class DDMFormFieldTypesJSONSerializerImpl
 
 	@Override
 	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
-			_ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
-				"json");
-
 		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
 			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormFieldTypes);
 
 		DDMFormFieldTypesSerializerSerializeResponse
 			ddmFormFieldTypesSerializerSerializeResponse =
-				ddmFormFieldTypesSerializer.serialize(builder.build());
+				_ddmFormFieldTypesSerializer.serialize(builder.build());
 
 		return ddmFormFieldTypesSerializerSerializeResponse.getContent();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypesSerializerTracker(
-		DDMFormFieldTypesSerializerTracker ddmFormFieldTypesSerializerTracker) {
-
-		_ddmFormFieldTypesSerializerTracker =
-			ddmFormFieldTypesSerializerTracker;
-	}
-
-	private DDMFormFieldTypesSerializerTracker
-		_ddmFormFieldTypesSerializerTracker;
+	@Reference(target = "(ddm.form.field.types.serializer.type=json)")
+	private DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 
 }

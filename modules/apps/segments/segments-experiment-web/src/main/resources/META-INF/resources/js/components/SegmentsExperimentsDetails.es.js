@@ -22,18 +22,26 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 				{Liferay.Language.get('details')}
 			</h4>
 
-			<div className="mb-2">
-				<b>{Liferay.Language.get('segment')}: </b>
-				{segmentsExperiment.segmentsEntryName}
-			</div>
-			<div>
-				<b>{Liferay.Language.get('goal')}: </b>
-				{segmentsExperiment.goal.label}
-			</div>
-			<div>
-				<b>{Liferay.Language.get('confidence-level')}: </b>
-				{segmentsExperiment.confidenceLevel * 100 + '%'}
-			</div>
+			<dl>
+				<div className="d-flex">
+					<dt>{Liferay.Language.get('segment') + ':'} </dt>
+					<dd className="text-secondary ml-2">
+						{segmentsExperiment.segmentsEntryName}
+					</dd>
+				</div>
+				<div className="d-flex">
+					<dt>{Liferay.Language.get('goal') + ':'} </dt>
+					<dd className="text-secondary ml-2">
+						{segmentsExperiment.goal.label}
+					</dd>
+				</div>
+				<div className="d-flex">
+					<dt>{Liferay.Language.get('confidence-level') + ':'} </dt>
+					<dd className="text-secondary ml-2">
+						{segmentsExperiment.confidenceLevel * 100 + '%'}
+					</dd>
+				</div>
+			</dl>
 		</>
 	);
 }

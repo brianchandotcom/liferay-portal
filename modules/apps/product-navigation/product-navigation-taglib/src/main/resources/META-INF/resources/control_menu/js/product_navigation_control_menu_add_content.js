@@ -98,7 +98,7 @@ AUI.add(
 					if (displayStyle) {
 						instance._displayStyle = displayStyle;
 
-						Liferay.Store(
+						Liferay.Util.Session.set(
 							'com.liferay.product.navigation.control.menu.web_addPanelDisplayStyle',
 							displayStyle
 						);
@@ -135,8 +135,7 @@ AUI.add(
 			'aui-parse-content',
 			'liferay-product-navigation-control-menu',
 			'liferay-product-navigation-control-menu-add-base',
-			'liferay-product-navigation-control-menu-add-content-search',
-			'liferay-store'
+			'liferay-product-navigation-control-menu-add-content-search'
 		]
 	}
 );

@@ -88,11 +88,11 @@
 						</c:if>
 
 						<c:if test="<%= hasAddApplicationsPermission && hasAddContentPermission %>">
-							<aui:script use="liferay-store">
+							<aui:script>
 								$('#<portlet:namespace />Accordion').on(
 									'show.bs.collapse',
 									function(event) {
-										Liferay.Store('com.liferay.product.navigation.control.menu.web_addPanelTab', event.target.getAttribute('data-value'));
+										Liferay.Util.Session.set('com.liferay.product.navigation.control.menu.web_addPanelTab', event.target.getAttribute('data-value'));
 									}
 								);
 							</aui:script>

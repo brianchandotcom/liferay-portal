@@ -190,7 +190,7 @@ AUI.add(
 					var target = event.target;
 
 					if (target === host.getChildren()[0]) {
-						Liferay.Store(
+						Liferay.Util.Session.set(
 							'com.liferay.frontend.js.web_' +
 								treeId +
 								'RootNode',
@@ -487,6 +487,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-store']
+		requires: ['aui-base']
 	}
 );

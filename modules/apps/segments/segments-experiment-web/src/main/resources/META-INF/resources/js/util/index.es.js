@@ -30,29 +30,16 @@ function SegmentsExperimentsUtil({
 		runSegmentsExperimentURL
 	} = endpoints;
 
-	function editVariant(body) {
-		return fetch(editSegmentsVariantURL, {
+	function createExperiment(body) {
+		return fetch(createSegmentsExperimentURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
 		})
 			.then(response => response.json())
-			.then(response => {
-				if (response.error) throw response.error;
-				return response;
-			});
-	}
-
-	function deleteVariant(body) {
-		return fetch(deleteSegmentsVariantURL, {
-			body: _getFormDataRequest(body, namespace),
-			credentials: 'include',
-			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(response => {
-				if (response.error) throw response.error;
-				return response;
+			.then(objectResponse => {
+				if (objectResponse.error) throw objectResponse.error;
+				return objectResponse;
 			});
 	}
 
@@ -69,16 +56,16 @@ function SegmentsExperimentsUtil({
 			});
 	}
 
-	function createExperiment(body) {
-		return fetch(createSegmentsExperimentURL, {
+	function deleteVariant(body) {
+		return fetch(deleteSegmentsVariantURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
 		})
 			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
+			.then(response => {
+				if (response.error) throw response.error;
+				return response;
 			});
 	}
 
@@ -105,6 +92,19 @@ function SegmentsExperimentsUtil({
 			.then(objectResponse => {
 				if (objectResponse.error) throw objectResponse.error;
 				return objectResponse;
+			});
+	}
+
+	function editVariant(body) {
+		return fetch(editSegmentsVariantURL, {
+			body: _getFormDataRequest(body, namespace),
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => response.json())
+			.then(response => {
+				if (response.error) throw response.error;
+				return response;
 			});
 	}
 

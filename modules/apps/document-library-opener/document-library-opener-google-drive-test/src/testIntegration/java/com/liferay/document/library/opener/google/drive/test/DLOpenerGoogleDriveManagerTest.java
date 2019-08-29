@@ -19,6 +19,10 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveManager;
+import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -27,9 +31,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
+
+import java.util.Dictionary;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -80,6 +88,27 @@ public class DLOpenerGoogleDriveManagerTest {
 	}
 
 	@Test
+	public void testGetAuthorizationURLSucceedsIfThereAreValidCredentials()
+		throws Exception {
+
+		_withGoogleDriveEnabled(
+			() -> {
+				String redirectUri = "http://localhost:8080";
+				String state = RandomTestUtil.randomString();
+
+				Assert.assertEquals(
+					StringBundler.concat(
+						"https://accounts.google.com/o/oauth2/auth?client_id=",
+						_getGoogleDriveClientId(), "&redirect_uri=",
+						redirectUri, "&response_type=code",
+						"&scope=https://www.googleapis.com/auth/drive.file",
+						"&state=", state),
+					_dlOpenerGoogleDriveManager.getAuthorizationURL(
+						_company.getCompanyId(), state, redirectUri));
+			});
+	}
+
+	@Test
 	public void testHasInvalidCredentialByDefault() throws Exception {
 		Assert.assertFalse(
 			_dlOpenerGoogleDriveManager.hasValidCredential(
@@ -87,10 +116,51 @@ public class DLOpenerGoogleDriveManagerTest {
 	}
 
 	@Test
+	public void testIsConfigured() throws Exception {
+		_withGoogleDriveEnabled(
+			() -> Assert.assertTrue(
+				_dlOpenerGoogleDriveManager.isConfigured(
+					_company.getCompanyId())));
+	}
+
+	@Test
 	public void testIsNotConfiguredByDefault() {
 		Assert.assertFalse(
 			_dlOpenerGoogleDriveManager.isConfigured(_company.getCompanyId()));
 	}
+
+	private String _getGoogleDriveClientId() {
+		return "clientId";
+	}
+
+	private String _getGoogleDriveClientSecret() {
+		return "clientSecret";
+	}
+
+	private <E extends Exception> void _withGoogleDriveEnabled(
+			UnsafeRunnable<E> unsafeRunnable)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("clientId", _getGoogleDriveClientId());
+		dictionary.put("clientSecret", _getGoogleDriveClientSecret());
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.document.library.google.drive.configuration." +
+						"DLGoogleDriveCompanyConfiguration",
+					dictionary)) {
+
+			unsafeRunnable.run();
+		}
+	}
+
+	@Inject
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Inject
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 	@DeleteAfterTestRun
 	private Company _company;

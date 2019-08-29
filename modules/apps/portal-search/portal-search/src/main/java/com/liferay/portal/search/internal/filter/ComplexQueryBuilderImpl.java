@@ -108,7 +108,7 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 		}
 
 		protected Query addQuery(ComplexQueryPart complexQueryPart) {
-			Query query = buildQuery(complexQueryPart);
+			Query query = getQuery(complexQueryPart);
 
 			if (query == null) {
 				return null;
@@ -136,23 +136,6 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 			else if (Objects.equals("should", occur)) {
 				booleanQuery.addShouldQueryClauses(query);
 			}
-		}
-
-		protected Query buildQuery(ComplexQueryPart complexQueryPart) {
-			if (complexQueryPart.isDisabled()) {
-				return null;
-			}
-
-			Query query = getQuery(complexQueryPart);
-
-			if (query == null) {
-				return null;
-			}
-
-			query.setBoost(complexQueryPart.getBoost());
-			query.setQueryName(complexQueryPart.getName());
-
-			return query;
 		}
 
 		protected Query buildQuery(String type, String field, String value) {
@@ -299,15 +282,30 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 		}
 
 		protected Query getQuery(ComplexQueryPart complexQueryPart) {
+			if (complexQueryPart.isDisabled()) {
+				return null;
+			}
+
 			if (complexQueryPart.getQuery() != null) {
 				return complexQueryPart.getQuery();
 			}
 
-			String field = GetterUtil.getString(complexQueryPart.getField());
 			String type = GetterUtil.getString(complexQueryPart.getType());
+
+			String field = GetterUtil.getString(complexQueryPart.getField());
+
 			String value = GetterUtil.getString(complexQueryPart.getValue());
 
-			return buildQuery(type, field, value);
+			Query query = buildQuery(type, field, value);
+
+			if (query == null) {
+				return null;
+			}
+
+			query.setBoost(complexQueryPart.getBoost());
+			query.setQueryName(complexQueryPart.getName());
+
+			return query;
 		}
 
 		protected BooleanQuery getRootBooleanQuery() {

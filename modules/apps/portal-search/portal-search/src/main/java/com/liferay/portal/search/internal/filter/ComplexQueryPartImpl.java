@@ -27,6 +27,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	}
 
 	public ComplexQueryPartImpl(ComplexQueryPartImpl complexQueryPartImpl) {
+		_additive = complexQueryPartImpl._additive;
 		_boost = complexQueryPartImpl._boost;
 		_disabled = complexQueryPartImpl._disabled;
 		_field = complexQueryPartImpl._field;
@@ -79,11 +80,23 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 	}
 
 	@Override
+	public boolean isAdditive() {
+		return _additive;
+	}
+
+	@Override
 	public boolean isDisabled() {
 		return _disabled;
 	}
 
 	public static class Builder implements ComplexQueryPartBuilder {
+
+		@Override
+		public ComplexQueryPartBuilder additive(boolean additive) {
+			_complexQueryPartImpl._additive = additive;
+
+			return this;
+		}
 
 		@Override
 		public ComplexQueryPartBuilder boost(Float boost) {
@@ -158,6 +171,7 @@ public class ComplexQueryPartImpl implements ComplexQueryPart {
 
 	}
 
+	private boolean _additive;
 	private Float _boost;
 	private boolean _disabled;
 	private String _field;

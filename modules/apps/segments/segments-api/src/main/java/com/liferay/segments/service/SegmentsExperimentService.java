@@ -59,6 +59,10 @@ public interface SegmentsExperimentService extends BaseService {
 		throws PortalException;
 
 	public SegmentsExperiment deleteSegmentsExperiment(
+			long segmentsExperimentId)
+		throws PortalException;
+
+	public SegmentsExperiment deleteSegmentsExperiment(
 			String segmentsExperimentKey)
 		throws PortalException;
 

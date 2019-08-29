@@ -124,6 +124,11 @@ public interface SegmentsExperimentLocalService
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException;
 
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public SegmentsExperiment deleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment, boolean force)
+		throws PortalException;
+
 	public void deleteSegmentsExperiments(
 			long segmentsExperienceId, long classNameId, long classPK)
 		throws PortalException;

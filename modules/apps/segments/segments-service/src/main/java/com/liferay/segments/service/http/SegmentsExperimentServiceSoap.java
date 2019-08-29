@@ -88,6 +88,25 @@ public class SegmentsExperimentServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
+			deleteSegmentsExperiment(long segmentsExperimentId)
+		throws RemoteException {
+
+		try {
+			com.liferay.segments.model.SegmentsExperiment returnValue =
+				SegmentsExperimentServiceUtil.deleteSegmentsExperiment(
+					segmentsExperimentId);
+
+			return com.liferay.segments.model.SegmentsExperimentSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentSoap
 			deleteSegmentsExperiment(String segmentsExperimentKey)
 		throws RemoteException {
 
@@ -210,13 +229,14 @@ public class SegmentsExperimentServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
-			updateSegmentsExperiment(long segmentsExperimentId, int status)
+			updateSegmentsExperiment(
+				long segmentsExperimentId, double confidenceLevel, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.updateSegmentsExperiment(
-					segmentsExperimentId, status);
+					segmentsExperimentId, confidenceLevel, status);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);
@@ -229,14 +249,13 @@ public class SegmentsExperimentServiceSoap {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
-			updateSegmentsExperiment(
-				long segmentsExperimentId, double confidenceLevel, int status)
+			updateSegmentsExperiment(long segmentsExperimentId, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.updateSegmentsExperiment(
-					segmentsExperimentId, confidenceLevel, status);
+					segmentsExperimentId, status);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);

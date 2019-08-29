@@ -52,6 +52,13 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment
+			deleteSegmentsExperiment(long segmentsExperimentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteSegmentsExperiment(segmentsExperimentId);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
 			deleteSegmentsExperiment(String segmentsExperimentKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

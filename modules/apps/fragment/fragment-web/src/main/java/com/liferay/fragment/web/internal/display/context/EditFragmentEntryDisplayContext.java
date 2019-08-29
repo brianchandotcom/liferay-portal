@@ -355,7 +355,20 @@ public class EditFragmentEntryDisplayContext {
 			return _readOnly;
 		}
 
-		_readOnly = ParamUtil.getBoolean(_httpServletRequest, "readOnly");
+		boolean readOnly = false;
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				getFragmentCollectionId());
+
+		if ((fragmentCollection == null) ||
+			(fragmentCollection.getGroupId() !=
+				_themeDisplay.getScopeGroupId())) {
+
+			readOnly = true;
+		}
+
+		_readOnly = readOnly;
 
 		return _readOnly;
 	}
@@ -392,6 +405,7 @@ public class EditFragmentEntryDisplayContext {
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
+	private String _fragmentEntryKey;
 	private final FragmentEntryProcessorRegistry
 		_fragmentEntryProcessorRegistry;
 	private String _htmlContent;

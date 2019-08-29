@@ -336,7 +336,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
-				int status)
+				double confidenceLevel, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -345,7 +345,7 @@ public class SegmentsExperimentServiceHttp {
 				_updateSegmentsExperimentParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentId, status);
+				methodKey, segmentsExperimentId, confidenceLevel, status);
 
 			Object returnObj = null;
 
@@ -376,7 +376,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
-				double confidenceLevel, int status)
+				int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -385,7 +385,7 @@ public class SegmentsExperimentServiceHttp {
 				_updateSegmentsExperimentParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentId, confidenceLevel, status);
+				methodKey, segmentsExperimentId, status);
 
 			Object returnObj = null;
 
@@ -519,9 +519,9 @@ public class SegmentsExperimentServiceHttp {
 	private static final Class<?>[] _getSegmentsExperimentsParameterTypes6 =
 		new Class[] {long.class, long.class, long.class};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes7 =
-		new Class[] {long.class, int.class};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes8 =
 		new Class[] {long.class, double.class, int.class};
+	private static final Class<?>[] _updateSegmentsExperimentParameterTypes8 =
+		new Class[] {long.class, int.class};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes9 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class

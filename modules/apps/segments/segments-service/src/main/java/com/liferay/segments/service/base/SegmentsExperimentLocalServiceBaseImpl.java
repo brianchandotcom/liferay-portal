@@ -614,4 +614,9 @@ public abstract class SegmentsExperimentLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
 
+	@Reference
+	protected
+		com.liferay.portal.kernel.service.UserNotificationEventLocalService
+			userNotificationEventLocalService;
+
 }

@@ -62,7 +62,7 @@ public class AccountEntryLocalServiceImpl
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, byte[] logoBytes, int status)
 		throws PortalException {
 
 		// Account entry

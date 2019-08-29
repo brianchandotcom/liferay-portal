@@ -66,13 +66,13 @@ public class AccountEntryServiceSoap {
 
 	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
-			String description, long logoId, int status)
+			String description, byte[] logoBytes, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.account.model.AccountEntry returnValue =
 				AccountEntryServiceUtil.addAccountEntry(
-					userId, parentAccountEntryId, name, description, logoId,
+					userId, parentAccountEntryId, name, description, logoBytes,
 					status);
 
 			return com.liferay.account.model.AccountEntrySoap.toSoapModel(

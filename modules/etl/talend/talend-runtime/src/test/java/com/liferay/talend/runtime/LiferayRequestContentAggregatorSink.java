@@ -33,7 +33,8 @@ public class LiferayRequestContentAggregatorSink extends LiferaySink {
 		_outputResourceURL = resourceURL;
 		_outputJsonObject = jsonObject;
 
-		JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+		JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder(
+			jsonObject);
 
 		jsonObjectBuilder.add("success", "true");
 

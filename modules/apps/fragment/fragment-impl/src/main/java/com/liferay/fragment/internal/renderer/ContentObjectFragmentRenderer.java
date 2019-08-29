@@ -90,6 +90,12 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			fragmentRendererContext, httpServletRequest);
 
 		if (jsonObject == null) {
+			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
+				FragmentRendererUtil.printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-selected-content-will-be-shown-here");
+			}
+
 			return;
 		}
 
@@ -100,7 +106,8 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
 				FragmentRendererUtil.printPortletMessageInfo(
 					httpServletRequest, httpServletResponse,
-					"the-selected-content-will-be-shown-here");
+					"the-selected-content-is-no-longer-available.-please-" +
+						"select-another");
 			}
 
 			return;

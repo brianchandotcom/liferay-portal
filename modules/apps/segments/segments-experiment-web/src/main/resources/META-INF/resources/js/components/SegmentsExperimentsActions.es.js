@@ -16,7 +16,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
-import {SegmentsVariantType, SegmentsExperimentType} from '../types.es';
+import {SegmentsExperimentType, SegmentsVariantType} from '../types.es';
 import {
 	STATUS_DRAFT,
 	STATUS_PAUSED,

@@ -17,10 +17,10 @@ import PropTypes from 'prop-types';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import {
-	SegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentGoal,
-	SegmentsExperimentType
+	SegmentsExperimentType,
+	SegmentsVariantType
 } from '../types.es';
 import SegmentsExperimentsContext from '../context.es';
 import UnsupportedSegmentsExperiments from './UnsupportedSegmentsExperiments.es';

@@ -53,7 +53,7 @@ public class Context {
 
 	public static final String REFERRER_URL = "referrerURL";
 
-	public static final String REQUEST_PARAMETER = "requestParameter";
+	public static final String REQUEST_PARAMETERS = "requestParameters";
 
 	public static final String SIGNED_IN = "signedIn";
 

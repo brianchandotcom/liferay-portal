@@ -49,8 +49,8 @@ public class ContextEntityModel implements EntityModel {
 					Context.COOKIES, locale -> Context.COOKIES)),
 			new CollectionEntityField(
 				new StringEntityField(
-					Context.REQUEST_PARAMETER,
-					locale -> Context.REQUEST_PARAMETER)),
+					Context.REQUEST_PARAMETERS,
+					locale -> Context.REQUEST_PARAMETERS)),
 			new ComplexEntityField("customContext", customEntityFields),
 			new DateEntityField(
 				Context.LOCAL_DATE, locale -> Context.LOCAL_DATE,

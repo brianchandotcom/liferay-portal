@@ -89,14 +89,14 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 				}
 
 				@Override
-				public void revoke() throws PortalException {
+				public void revoke() {
 					_oAuth2Manager.revokeOAuth2AccessToken(
 						user.getCompanyId(), user.getUserId());
 				}
 
 			}
-		).orElseGet(
-			() -> null
+		).orElse(
+			null
 		);
 	}
 

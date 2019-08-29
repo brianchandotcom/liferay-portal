@@ -27,7 +27,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
-page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.contributor.FragmentCollectionContributor" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
@@ -37,12 +36,8 @@ page import="com.liferay.fragment.exception.InvalidFileException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
-page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
-page import="com.liferay.fragment.renderer.DefaultFragmentRendererContext" %><%@
 page import="com.liferay.fragment.renderer.FragmentRendererController" %><%@
 page import="com.liferay.fragment.service.FragmentCollectionLocalServiceUtil" %><%@
-page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
-page import="com.liferay.fragment.service.FragmentEntryLocalServiceUtil" %><%@
 page import="com.liferay.fragment.web.internal.constants.FragmentWebKeys" %><%@
 page import="com.liferay.fragment.web.internal.dao.search.FragmentEntryResultRowSplitter" %><%@
 page import="com.liferay.fragment.web.internal.display.context.ContributedFragmentManagementToolbarDisplayContext" %><%@
@@ -56,6 +51,7 @@ page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLink
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryUsageManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentManagementToolbarDisplayContextFactory" %><%@
+page import="com.liferay.fragment.web.internal.display.context.RenderFragmentEntryDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.SelectFragmentCollectionManagementToolbarDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission" %><%@
@@ -65,7 +61,6 @@ page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentColle
 page import="com.liferay.fragment.web.internal.servlet.taglib.clay.FragmentEntryVerticalCardFactory" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageKeys" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@

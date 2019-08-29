@@ -65,7 +65,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
+				jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -118,7 +118,7 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				_jsonDDMFormDeserializer.deserialize(builder.build());
+				jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -158,9 +158,9 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 	protected DDMTemplateService ddmTemplateService;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
+	protected DDMFormDeserializer jsonDDMFormDeserializer;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
-	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
 
 }

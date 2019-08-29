@@ -280,11 +280,6 @@ public class ValueSerDes {
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
 			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
 
@@ -304,7 +299,7 @@ public class ValueSerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 

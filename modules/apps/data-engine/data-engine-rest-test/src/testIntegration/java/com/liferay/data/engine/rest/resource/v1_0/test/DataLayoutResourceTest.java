@@ -14,29 +14,117 @@
 
 package com.liferay.data.engine.rest.resource.v1_0.test;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.client.dto.v1_0.DataLayout;
+import com.liferay.data.engine.rest.client.dto.v1_0.DataListView;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.serdes.v1_0.DataListViewSerDes;
 import com.liferay.data.engine.rest.resource.v1_0.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author Marcelo Mello
  */
 @RunWith(Arquillian.class)
 public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
+
+	@Test
+	public void serdesworks() {
+		DataListView dataListView = DataListViewSerDes.toDTO(
+			"{\"appliedFilters\": {\"deployments\": [\"site\", \"controlPanel\"],\"siteId\": 123}}");
+
+		dataListView.getAppliedFilters().put(
+			"deployments", JSONUtil.putAll("site", "controlPanel"));
+
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+
+		SimpleModule simpleModule = new SimpleModule();
+
+		simpleModule.addSerializer(
+			JSONArray.class, new JSONArrayJsonSerializer(JSONArray.class));
+
+		objectMapper.registerModule(simpleModule);
+
+		try {
+			String s1 = objectMapper.writeValueAsString(dataListView);
+
+			System.out.println(s1);
+
+
+			String s = DataListViewSerDes.toJSON(dataListView);
+			System.out.println(s);
+
+			DataListView dataListView1 = DataListViewSerDes.toDTO(s1);
+
+			System.out.println(dataListView1);
+
+		}
+		catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public class JSONArrayJsonSerializer extends StdSerializer<JSONArray> {
+
+		public JSONArrayJsonSerializer(Class<JSONArray> clazz) {
+			super(clazz);
+		}
+
+		@Override
+		public void serialize(
+			JSONArray jsonArray, JsonGenerator jsonGenerator,
+			SerializerProvider serializerProvider)
+			throws IOException {
+
+			jsonGenerator.writeStartArray();
+
+			for (Object object : jsonArray) {
+				jsonGenerator.writeObject(object);
+			}
+
+			jsonGenerator.writeEndArray();
+		}
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -126,7 +214,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"dataDefinitionId", "name", "paginationMode"};
+		return new String[]{"dataDefinitionId", "name", "paginationMode"};
 	}
 
 	@Override
@@ -174,7 +262,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 	@Override
 	protected DataLayout testGetSiteDataLayoutsPage_addDataLayout(
-			Long siteId, DataLayout dataLayout)
+		Long siteId, DataLayout dataLayout)
 		throws Exception {
 
 		return dataLayoutResource.postDataDefinitionDataLayout(
@@ -211,7 +299,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 	}
 
 	private void _testGetDataDefinitionDataLayoutsPage(
-			String keywords, String name)
+		String keywords, String name)
 		throws Exception {
 
 		Long dataDefinitionId =
@@ -228,7 +316,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		Assert.assertEquals(1, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(dataLayout), (List<DataLayout>)page.getItems());
+			Arrays.asList(dataLayout), (List<DataLayout>) page.getItems());
 		assertValid(page);
 
 		dataLayoutResource.deleteDataLayout(dataLayout.getId());
@@ -248,7 +336,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		Assert.assertEquals(1, page.getTotalCount());
 
 		assertEqualsIgnoringOrder(
-			Arrays.asList(dataLayout), (List<DataLayout>)page.getItems());
+			Arrays.asList(dataLayout), (List<DataLayout>) page.getItems());
 		assertValid(page);
 
 		dataLayoutResource.deleteDataLayout(dataLayout.getId());

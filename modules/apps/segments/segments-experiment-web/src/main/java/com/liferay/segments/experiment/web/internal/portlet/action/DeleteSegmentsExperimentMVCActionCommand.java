@@ -64,7 +64,7 @@ public class DeleteSegmentsExperimentMVCActionCommand
 
 		try {
 			_segmentsExperimentService.deleteSegmentsExperiment(
-				ParamUtil.getString(actionRequest, "segmentsExperimentKey"));
+				ParamUtil.getLong(actionRequest, "segmentsExperimentId"));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

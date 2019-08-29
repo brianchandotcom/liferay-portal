@@ -620,7 +620,7 @@ definition {
 		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This test makes sure that all files are deleted when user selects all"
+	@description = "This test covers LPS-91598. It makes sure that all files are deleted when user selects all."
 	@priority = "4"
 	test SelectAllAndDelete {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");

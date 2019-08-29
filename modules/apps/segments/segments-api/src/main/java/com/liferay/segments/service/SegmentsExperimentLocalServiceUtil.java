@@ -117,6 +117,16 @@ public class SegmentsExperimentLocalServiceUtil {
 		return getService().deleteSegmentsExperiment(segmentsExperiment);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperiment
+			deleteSegmentsExperiment(
+				com.liferay.segments.model.SegmentsExperiment
+					segmentsExperiment,
+				boolean force)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteSegmentsExperiment(segmentsExperiment, force);
+	}
+
 	public static void deleteSegmentsExperiments(
 			long segmentsExperienceId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -23,6 +25,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -226,6 +229,29 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 				"modules/apps/frontend-taglib/frontend-taglib-clay" +
 					"/package.json",
 				absolutePath, "@clayui/.*"));
+
+		String content = getModulesPropertiesContent(absolutePath);
+
+		if (Validator.isNull(content)) {
+			return _expectedDependencyVersionsMap;
+		}
+
+		List<String> lines = ListUtil.fromString(content);
+
+		for (String line : lines) {
+			String[] array = StringUtil.split(line, StringPool.EQUAL);
+
+			if (array.length != 2) {
+				continue;
+			}
+
+			String key = array[0];
+
+			if (key.startsWith("bundle.symbolic.name[")) {
+				_expectedDependencyVersionsMap.put(
+					key.substring(21, key.length() - 1), StringPool.STAR);
+			}
+		}
 
 		return _expectedDependencyVersionsMap;
 	}

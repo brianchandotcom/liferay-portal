@@ -75,11 +75,19 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 
 	@Override
 	public List<com.liferay.portal.kernel.search.Document> getDocuments71() {
+		if (_hits == null) {
+			return Collections.emptyList();
+		}
+
 		return Arrays.asList(_hits.getDocs());
 	}
 
 	@Override
 	public Stream<Document> getDocumentsStream() {
+		if (_searchHits == null) {
+			return Stream.empty();
+		}
+
 		List<SearchHit> list = _searchHits.getSearchHits();
 
 		return list.stream(
@@ -142,6 +150,10 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 
 	@Override
 	public int getTotalHits() {
+		if (_hits == null) {
+			return 0;
+		}
+
 		return _hits.getLength();
 	}
 
@@ -231,7 +243,7 @@ public class SearchResponseImpl implements SearchResponse, Serializable {
 		new LinkedHashMap<>();
 	private long _count;
 	private final FacetContextImpl _facetContext;
-	private String _federatedSearchKey;
+	private String _federatedSearchKey = StringPool.BLANK;
 	private final Map<String, SearchResponse> _federatedSearchResponsesMap =
 		new LinkedHashMap<>();
 	private final List<GroupByResponse> _groupByResponses = new ArrayList<>();

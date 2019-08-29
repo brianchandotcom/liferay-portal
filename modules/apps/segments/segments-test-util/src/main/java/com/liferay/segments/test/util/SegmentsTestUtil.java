@@ -165,12 +165,12 @@ public class SegmentsTestUtil {
 	}
 
 	public static SegmentsExperiment addSegmentsExperiment(
-			long groupId, long segmentsExperimentId, long classNameId,
+			long groupId, long segmentsExperienceId, long classNameId,
 			long classPK)
 		throws PortalException {
 
 		return SegmentsExperimentLocalServiceUtil.addSegmentsExperiment(
-			segmentsExperimentId, classNameId, classPK,
+			segmentsExperienceId, classNameId, classPK,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
 			StringPool.BLANK,

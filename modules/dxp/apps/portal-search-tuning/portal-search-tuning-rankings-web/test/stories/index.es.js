@@ -25,6 +25,7 @@ import FilterDisplay from '../../src/main/resources/META-INF/resources/js/compon
 import FilterInput from '../../src/main/resources/META-INF/resources/js/components/list/FilterInput.es';
 import Item from '../../src/main/resources/META-INF/resources/js/components/list/Item.es';
 import ItemDragPreview from '../../src/main/resources/META-INF/resources/js/components/list/ItemDragPreview.es';
+import ItemDropdown from '../../src/main/resources/META-INF/resources/js/components/list/ItemDropdown.es';
 import List from '../../src/main/resources/META-INF/resources/js/components/list/List.es';
 import PageToolbar from '../../src/main/resources/META-INF/resources/js/components/PageToolbar.es';
 import ResultsRankingForm from '../../src/main/resources/META-INF/resources/js/components/ResultsRankingForm.es';
@@ -64,7 +65,7 @@ const withSheet = storyFn => (
 	</div>
 );
 
-storiesOf('Main|ResultsRankingForm', module).add('default', () => (
+storiesOf('Pages|ResultsRankingForm', module).add('default', () => (
 	<ResultsRankingForm
 		cancelUrl=""
 		fetchDocumentsHiddenUrl="http://www.mocky.io/v2/5cd31439310000e29a339bbd"
@@ -77,10 +78,6 @@ storiesOf('Main|ResultsRankingForm', module).add('default', () => (
 	/>
 ));
 
-storiesOf('Components|PageToolbar', module).add('default', () => (
-	<PageToolbar submitDisabled={boolean('Disabled', false)} />
-));
-
 storiesOf('Components|Alias', module)
 	.addDecorator(withSheet)
 	.add('default', () => (
@@ -88,6 +85,33 @@ storiesOf('Components|Alias', module)
 			keywords={array('Keywords', [], ',')}
 			onClickDelete={action('onClickDelete')}
 			onClickSubmit={action('onClickSubmit')}
+		/>
+	));
+
+storiesOf('Components|EmptyState', module)
+	.addDecorator(withSheet)
+	.add('default', () => (
+		<ClayEmptyState
+			description={text('Description')}
+			displayState={select(
+				'Display State',
+				{
+					Empty: 'empty',
+					Search: 'search',
+					Success: 'success'
+				},
+				'search'
+			)}
+			title={text('Title')}
+		/>
+	))
+	.add('with action', () => (
+		<ClayEmptyState
+			actionLabel="Refresh"
+			description={text('Description')}
+			displayState="empty"
+			onClickAction={action('onClickAction')}
+			title={text('Title')}
 		/>
 	));
 
@@ -122,8 +146,11 @@ storiesOf('Components|List', module)
 			onAddResultSubmit={action('onAddResultSubmit')}
 			onLoadResults={action('load-results')}
 		/>
-	))
-	.add('item', () => (
+	));
+
+storiesOf('Components|List/Item', module)
+	.addDecorator(withSheet)
+	.add('Item', () => (
 		<div className="list-group">
 			<Item.DecoratedComponent {...mockDataMap['1']} />
 
@@ -152,40 +179,23 @@ storiesOf('Components|List', module)
 			/>
 		</div>
 	))
-	.add('item drag preview', () => <ItemDragPreview {...mockDataMap['1']} />);
-
-storiesOf('Components|EmptyState', module)
-	.addDecorator(withSheet)
-	.add('default', () => (
-		<ClayEmptyState
-			description={text('Description')}
-			displayState={select(
-				'Display State',
-				{
-					Empty: 'empty',
-					Search: 'search',
-					Success: 'success'
-				},
-				'search'
-			)}
-			title={text('Title')}
-		/>
-	))
-	.add('with action', () => (
-		<ClayEmptyState
-			actionLabel="Refresh"
-			description={text('Description')}
-			displayState="empty"
-			onClickAction={action('onClickAction')}
-			title={text('Title')}
+	.add('ItemDragPreview', () => <ItemDragPreview {...mockDataMap['1']} />)
+	.add('ItemDropdown', () => (
+		<ItemDropdown
+			onClickHide={action('onClickHide')}
+			onClickPin={action('onClickPin')}
 		/>
 	));
 
-storiesOf('Components|SearchBar', module)
+storiesOf('Components|List/SearchBar', module)
 	.addDecorator(withSheet)
-	.add('input', () => (
+	.add('FilterInput', () => (
 		<FilterInput disableSearch={false} searchBarTerm="example" />
 	))
-	.add('display', () => (
+	.add('FilterDisplay', () => (
 		<FilterDisplay searchBarTerm="example" totalResultsCount={100} />
 	));
+
+storiesOf('Components|PageToolbar', module).add('default', () => (
+	<PageToolbar submitDisabled={boolean('Disabled', false)} />
+));

@@ -476,7 +476,7 @@ definition {
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Topic");
-		
+
 		JSONCategory.addVocabulary(
 			groupName = "Test Site Name",
 			title = "Vocabulary Name 1");

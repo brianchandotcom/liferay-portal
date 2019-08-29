@@ -75,7 +75,7 @@
 		height: calc(100% - #{$dialog-navbar-height});
 		position: relative;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			height: calc(100% - #{$dialog-desktop-navbar-height});
 		}
 	}
@@ -110,7 +110,7 @@
 			padding-left: 3px;
 			padding-right: 3px;
 
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				padding-left: 8px;
 				padding-right: 8px;
 			}
@@ -128,7 +128,7 @@
 		top: $dialog-navbar-height;
 		-webkit-overflow-scrolling: touch;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			top: $dialog-desktop-navbar-height;
 		}
 	}
@@ -141,7 +141,7 @@
 .dialog-with-footer {
 	#main-content,
 	#wrapper {
-		@include md {
+		@include media-breakpoint-up(md) {
 			height: calc(100% - #{$dialog-footer-height});
 		}
 	}
@@ -164,7 +164,7 @@
 			padding: 10px 24px;
 			width: 100%;
 
-			@include md {
+			@include media-breakpoint-up(md) {
 				position: fixed;
 			}
 
@@ -180,7 +180,7 @@
 	.lfr-form-content,
 	.portlet-configuration-body-content,
 	.roles-selector-body {
-		@include md {
+		@include media-breakpoint-up(md) {
 			padding-bottom: $dialog-footer-height;
 		}
 	}

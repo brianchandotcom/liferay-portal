@@ -14,7 +14,7 @@
 	.truncate-text {
 		display: block;
 
-		@include text-truncate;
+		@include text-truncate();
 
 		word-break: normal \9; // IE 8, 9
 		word-wrap: normal;

@@ -47,7 +47,7 @@
 }
 
 .touch .modify-pages {
-	@include md {
+	@include media-breakpoint-up(md) {
 		.drag-handle {
 			display: none;
 		}

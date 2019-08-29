@@ -7,7 +7,7 @@
 
 	.lfr-discussion-details {
 		.taglib-user-display {
-			@include sm {
+			@include media-breakpoint-up(sm) {
 				word-wrap: break-word;
 			}
 

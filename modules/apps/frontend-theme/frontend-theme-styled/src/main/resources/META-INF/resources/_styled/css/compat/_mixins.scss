@@ -236,7 +236,7 @@
 	// Deprecated parent class requirement as of v3.2.0
 
 	.progress-striped & {
-		@include gradient-striped;
+		@include gradient-striped();
 	}
 }
 

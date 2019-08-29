@@ -43,7 +43,7 @@
 	display: inline-block;
 	white-space: normal;
 
-	@include word-wrap(break-all);
+	@include overflow-wrap(break-all);
 }
 
 .lfr-page-layouts {

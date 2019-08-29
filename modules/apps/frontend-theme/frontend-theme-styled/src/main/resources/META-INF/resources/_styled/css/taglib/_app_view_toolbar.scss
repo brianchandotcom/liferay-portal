@@ -31,7 +31,7 @@
 	.nav-display-style-buttons {
 		.display-style-buttons {
 			> .dropdown {
-				@include media-query(null, $screen-xs-max) {
+				@include media-breakpoint-down(md) {
 					> .dropdown-menu {
 						background-color: transparent;
 						box-shadow: none;

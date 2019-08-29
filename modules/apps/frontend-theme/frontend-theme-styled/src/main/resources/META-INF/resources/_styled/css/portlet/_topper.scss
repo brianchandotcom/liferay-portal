@@ -1,13 +1,12 @@
 %display-portlet-topper {
-	@include media-query(sm) {
+	@include media-breakpoint-up(sm) {
 		opacity: 1;
-
-		@include transform(translateY(-97%));
+		transform: translateY(-97%);
 	}
 }
 
 %display-portlet-content-editable {
-	@include media-query(sm) {
+	@include media-breakpoint-up(sm) {
 		border-color: $portlet-topper-border;
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
@@ -25,9 +24,8 @@
 	> .portlet-topper {
 		display: none;
 
-		@include media-query(sm) {
-			@include display(flex);
-
+		@include media-breakpoint-up(sm) {
+			display: flex;
 			left: 0;
 			opacity: 0;
 			position: absolute;
@@ -144,11 +142,11 @@
 }
 
 .lfr-configurator-visibility {
-	@include media-query(null, $screen-xs-max) {
+	@include media-breakpoint-down(md) {
 		opacity: 0.5;
 	}
 
-	@include media-query(sm) {
+	@include media-breakpoint-up(sm) {
 		.portlet {
 			&:hover,
 			&.focus,
@@ -169,7 +167,7 @@
 
 .controls-visible {
 	.portlet-content-editable {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			border-color: $portlet-topper-border;
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
@@ -177,7 +175,7 @@
 	}
 
 	.portlet-topper {
-		@include media-query(null, $screen-xs-max) {
+		@include media-breakpoint-down(md) {
 			display: -webkit-box;
 			display: -moz-box;
 			display: box;

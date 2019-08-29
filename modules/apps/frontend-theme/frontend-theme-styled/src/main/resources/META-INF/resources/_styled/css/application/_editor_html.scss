@@ -7,7 +7,7 @@
 }
 
 .html-editor.portlet-message-boards {
-	@include hyphens;
+	@include hyphens();
 
 	word-wrap: break-word;
 

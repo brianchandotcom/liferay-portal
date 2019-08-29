@@ -2,7 +2,7 @@
 	.navbar-search {
 		background-color: #f3f3f3;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			background-color: transparent;
 		}
 	}

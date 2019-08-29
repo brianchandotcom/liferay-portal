@@ -49,7 +49,7 @@
 }
 
 .image-viewer-sidenav-menu {
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		background-color: transparent;
 		border-left-width: 0;
 	}
@@ -60,7 +60,7 @@
 		color: #8b8b8b;
 		margin-bottom: 16px;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			color: #777;
 		}
 	}
@@ -69,7 +69,7 @@
 		color: #869cad;
 		margin-bottom: 3px;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			color: #fff;
 		}
 	}
@@ -103,7 +103,7 @@
 				border-color: transparent;
 				color: #777;
 
-				@include sm {
+				@include media-breakpoint-up(sm) {
 					color: #fff;
 				}
 			}

@@ -4,7 +4,7 @@
 	width: 100%;
 	word-break: break-word;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		width: auto;
 	}
 }

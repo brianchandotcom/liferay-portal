@@ -94,7 +94,7 @@
 	word-break: break-all \9;
 	word-wrap: break-word;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		max-width: 125px;
 		min-width: 100px;
 	}
@@ -136,7 +136,7 @@
 .lfr-website-column {
 	min-width: 100px;
 
-	@include sm {
+	@include media-breakpoint-up(sm) {
 		min-width: 115px;
 	}
 

@@ -15,7 +15,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
-import {ReviewTestModal} from './ReviewTestModal.es';
+import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 import {InitialSegmentsVariantType, SegmentsExperimentType} from '../types.es';
 import {
 	STATUS_DRAFT,
@@ -30,7 +30,7 @@ function SegmentsExperimentsActions({
 	segmentsExperiment,
 	variants
 }) {
-	const [visible, setVisible] = useState(false);
+	const [reviewModalVisible, setReviewModalVisible] = useState(false);
 
 	return (
 		<>
@@ -38,7 +38,7 @@ function SegmentsExperimentsActions({
 				<ClayButton
 					className="w-100"
 					disabled={variants.length <= 1}
-					onClick={_handleReviewClick}
+					onClick={() => setReviewModalVisible(true)}
 				>
 					{Liferay.Language.get('review-and-run-test')}
 				</ClayButton>
@@ -91,24 +91,16 @@ function SegmentsExperimentsActions({
 					</ClayButton>
 				</>
 			)}
-			{visible && (
-				<ReviewTestModal
-					onRun={_handleRunTest}
-					setVisible={setVisible}
+			{reviewModalVisible && (
+				<ReviewExperimentModal
+					onRun={onRunExperiment}
+					setVisible={setReviewModalVisible}
 					variants={variants}
-					visible={visible}
+					visible={reviewModalVisible}
 				/>
 			)}
 		</>
 	);
-
-	function _handleReviewClick() {
-		setVisible(true);
-	}
-
-	function _handleRunTest({confidenceLevel, splitVariantsMap}) {
-		onRunExperiment({confidenceLevel, splitVariantsMap});
-	}
 }
 
 SegmentsExperimentsActions.propTypes = {

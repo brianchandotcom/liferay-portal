@@ -1,0 +1,67 @@
+definition {
+
+	macro setDescriptionMap {
+		if (isSet(descriptionMap)) {
+			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = "${descriptionMap}");
+		}
+		else if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		} else {
+			var descriptionMap = "";
+		}
+
+		return "${descriptionMap}";
+	}
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		return "${groupId}";
+	}
+
+	macro setParentCategoryId {
+		if (!(isSet(parentCategoryName))) {
+			var parentCategoryId = "0"
+		} else {
+			Variables.assertDefined(parameterList = "${groupId},${vocabularyId}");
+
+			var parentCategoryId = JSONCategoryAPI._getCategoryIdByName(
+				categoryName = "${parentCategoryName}",
+				groupId = "${groupId}",
+				vocabularyId = "${vocabularyId}"
+			);
+		}
+
+		return "${parentCategoryId}";
+	}
+
+	macro setTitleMap {
+		JSONUtil2._exclusiveOrCheck(
+			A = "${title}",
+			B = "${titleMap}",
+			failMessage = "Please only set 'title' or only 'titleMap' but not both or none.");
+
+		if (isSet(titleMap)) {
+			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
+		}
+		else if (isSet(title)) {
+			var titleMap = '''{"en_US":"${title}"}''';
+		}
+
+		return "${titleMap}";
+	}
+
+	macro setVocabularyId {
+		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
+
+		var vocabularyId = JSONCategoryAPI._getVocabularyIdByName(
+			groupId = "${groupId}",
+			vocabularyName = "${vocabularyName}"
+		);
+
+		return "${vocabularyId}";
+	}
+
+}

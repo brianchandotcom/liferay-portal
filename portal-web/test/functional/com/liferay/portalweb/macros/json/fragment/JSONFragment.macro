@@ -2,17 +2,12 @@ definition {
 
 	@summary = "Add a basic fragment collection."
 	macro addFragmentCollection {
-		if (isSet(groupName)) {
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
-		}
-		else if (isSet(groupKey)) {
-			var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}");
-		}
-		else {
-			fail("Please set 'groupKey or groupName to get groupId'.");
-		}
-
 		Variables.assertDefined(parameterList = "${name}");
+
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
 		JSONFragmentAPI._addFragmentCollection(
 			groupId = "${groupId}",
@@ -21,38 +16,28 @@ definition {
 
 	@summary = "Add a section to a fragment collection."
 	macro addSection {
-		if (isSet(groupName)) {
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
-		}
-		else if (isSet(groupKey)) {
-			var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}");
-		}
-		else {
-			fail("Please set 'groupKey or groupName to get groupId'.");
-		}
-
 		Variables.assertDefined(parameterList = "${collectionName},${name}");
 
-		if (!(isSet(html))) {
-			var html = "test";
-		}
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
-		if (!(isSet(configuration))) {
-			var configuration = "";
-		}
-
-		if (!(isSet(type))) {
-			var type = "0";
-		}
-
-		if (!(isSet(status))) {
-			var status = "0";
-		}
-
-		var collectionId = JSONFragmentAPI._getCollectionIdByName(
+		var collectionId = JSONFragmentSetter.setCollectionId(
 			collectionName = "${collectionName}",
-			groupId = "${groupId}"
-		);
+			groupId = "${groupId}");
+
+		var configuration = JSONFragmentSetter.setConfiguration(
+			configuration = "${configuration}");
+
+		var html = JSONFragmentSetter.setHTML(
+			html = "${html}");
+
+		var status = JSONFragmentSetter.setStatus(
+			status = "${status}");
+
+		var type = JSONFragmentSetter.setType(
+			type = "${type}");
 
 		JSONFragmentAPI._addSection(
 			collectionId = "${collectionId}",
@@ -66,9 +51,12 @@ definition {
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
 	macro assertFragmentCollectionInGroup {
-		Variables.assertDefined(parameterList = "${collectionName},${groupName}");
+		Variables.assertDefined(parameterList = "${collectionName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
 		var collectionNameResult = JSONFragmentAPI._getCollectionName(
 			collectionName = "${collectionName}",
@@ -82,9 +70,12 @@ definition {
 
 	@summary = "Assert that a fragmentCollection does not exist in a group given its collectionName and groupName"
 	macro assertFragmentCollectionNotInGroup {
-		Variables.assertDefined(parameterList = "${collectionName},${groupName}");
+		Variables.assertDefined(parameterList = "${collectionName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
 		var collectionNameResult = JSONFragmentAPI._getCollectionName(
 			collectionName = "${collectionName}",
@@ -98,14 +89,16 @@ definition {
 
 	@summary = "Assert that a fragment exists in a fragmentCollection given its collectionName, fragmentName, and groupName"
 	macro assertFragmentInGroup {
-		Variables.assertDefined(parameterList = "${collectionName},${fragmentName},${groupName}");
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
-		var fragmentCollectionId = JSONFragmentAPI._getCollectionIdByName(
+		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(
 			collectionName = "${collectionName}",
-			groupId = "${groupId}"
-		);
+			groupId = "${groupId}");
 
 		var fragmentNameResult = JSONFragmentAPI._getFragmentName(
 			fragmentCollectionId = "${fragmentCollectionId}",
@@ -120,14 +113,16 @@ definition {
 
 	@summary = "Assert that a fragment does not exist in a group given its fragmentName"
 	macro assertFragmentNotInGroup {
-		Variables.assertDefined(parameterList = "${collectionName},${fragmentName},${groupName}");
+		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONFragmentSetter.setGroupId(
+			groupKey = "${groupKey}",
+			groupName = "${groupName}"
+			site = "${site}");
 
-		var fragmentCollectionId = JSONFragmentAPI._getCollectionIdByName(
+		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(
 			collectionName = "${collectionName}",
-			groupId = "${groupId}"
-		);
+			groupId = "${groupId}");
 
 		var fragmentNameResult = JSONFragmentAPI._getFragmentName(
 			fragmentCollectionId = "${fragmentCollectionId}",

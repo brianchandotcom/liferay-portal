@@ -139,22 +139,19 @@ String redirect = ParamUtil.getString(request, "redirect");
 			function(event) {
 				event.preventDefault();
 
-				fetch(
-					form.action,
-					{
-						credentials: 'include'
-					}
-				).then(
-					function(response) {
-						return response.text();
-					}
-				).then(
-					function(response) {
-						exportImportOptions.innerHTML = response;
+				Liferay.Util.fetch(form.action)
+					.then(
+						function(response) {
+								return response.text();
+						}
+					)
+					.then(
+						function(response) {
+								exportImportOptions.innerHTML = response;
 
-						dom.globalEval.runScriptsInElement(exportImportOptions);
-					}
-				);
+								dom.globalEval.runScriptsInElement(exportImportOptions);
+						}
+					);
 			}
 		);
 	}

@@ -1064,46 +1064,39 @@ AUI.add(
 					var processesNode = instance.get('processesNode');
 
 					if (processesNode && instance._processesResourceURL) {
-						A.io.request(instance._processesResourceURL, {
-							method: 'GET',
-							on: {
-								failure: function() {
-									new Liferay.Notice({
-										closeText: false,
-										content:
-											Liferay.Language.get(
-												'your-request-failed-to-complete'
-											) +
-											'<button aria-label="' +
-											Liferay.Language.get('close') +
-											'" type="button" class="close">&times;</button>',
-										noticeClass: 'hide',
-										timeout: FAILURE_TIMEOUT,
-										toggleText: false,
-										type: 'warning',
-										useAnimation: true
-									}).show();
-								},
-								success: function(event, id, obj) {
-									processesNode.empty();
+						Liferay.Util.fetch(instance._processesResourceURL)
+							.then(response => response.text())
+							.then(response => {
+								processesNode.plug(A.Plugin.ParseContent);
 
-									processesNode.plug(A.Plugin.ParseContent);
+								processesNode.setContent(response);
 
-									processesNode.setContent(
-										this.get('responseData')
-									);
+								instance._updateincompleteProcessMessage(
+									instance._isBackgroundTaskInProgress(),
+									processesNode.one(
+										'.incomplete-process-message'
+									)
+								);
 
-									instance._updateincompleteProcessMessage(
-										instance._isBackgroundTaskInProgress(),
-										processesNode.one(
-											'.incomplete-process-message'
-										)
-									);
-
-									instance._scheduleRenderProcess();
-								}
-							}
-						});
+								instance._scheduleRenderProcess();
+							})
+							.catch(() => {
+								new Liferay.Notice({
+									closeText: false,
+									content:
+										Liferay.Language.get(
+											'your-request-failed-to-complete'
+										) +
+										'<button aria-label="' +
+										Liferay.Language.get('close') +
+										'" type="button" class="close">&times;</button>',
+									noticeClass: 'hide',
+									timeout: FAILURE_TIMEOUT,
+									toggleText: false,
+									type: 'warning',
+									useAnimation: true
+								}).show();
+							});
 					}
 				},
 

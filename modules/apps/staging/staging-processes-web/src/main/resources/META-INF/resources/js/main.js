@@ -910,10 +910,8 @@ AUI.add(
 
 					if (processesNode && instance._processesResourceURL) {
 						Liferay.Util.fetch(instance._processesResourceURL)
-							.then(function(response) {
-								return response.text();
-							})
-							.then(function(response) {
+							.then(response => response.text())
+							.then(response => {
 								processesNode.empty();
 
 								processesNode.plug(A.Plugin.ParseContent);
@@ -929,7 +927,7 @@ AUI.add(
 
 								instance._scheduleRenderProcess();
 							})
-							.catch(function() {
+							.catch(() => {
 								new Liferay.Notice({
 									closeText: false,
 									content:

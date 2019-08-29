@@ -319,7 +319,10 @@ class FragmentEntryLinkListRow extends Component {
 			return this._mappedBackgroundFieldValue;
 		}
 
-		if (typeof this.row.config.backgroundImage === 'string') {
+		if (
+			this.row.config &&
+			typeof this.row.config.backgroundImage === 'string'
+		) {
 			return this.row.config.backgroundImage;
 		}
 

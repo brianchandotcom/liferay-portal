@@ -58,6 +58,11 @@
 	<td>//button[@data-title='Fragment Configuration']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT</td>
+	<td>//select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

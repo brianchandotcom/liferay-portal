@@ -5,6 +5,20 @@ definition {
 		Click.clickNoMouseOver(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
 	}
 
+	macro changeConfigSelection {
+		Click(
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+
+		Select(
+			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+			value1 = "${optionValue}");
+
+		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+	}
+
 	macro changeConfigText {
 		Click(
 			fragment_name = "${fragmentName}",
@@ -31,6 +45,24 @@ definition {
 			locator1 = "Fragment#FRAGMENT_CHECKBOX");
 
 		PageEditorConfiguration._toggleConfigurationFloatingToolbar();
+	}
+
+	macro restoreConfigSelectionValue {
+		Click(
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
+
+		Click(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION");
+
+		var key_text = "Restore Values";
+
+		AssertClickNoError(
+			locator1 = "Button#ANY",
+			value1 = "Restore Values");
+
+		AssertSelectedLabel(
+			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_FIELD_SELECT",
+			value1 = "${defaultValue}");
 	}
 
 }

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionExceptio
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureVersionLocalServiceBaseImpl;
@@ -87,16 +86,13 @@ public class DDMStructureVersionLocalServiceImpl
 			DDMStructureVersion structureVersion)
 		throws PortalException {
 
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				structureVersion.getDefinition());
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -120,7 +116,7 @@ public class DDMStructureVersionLocalServiceImpl
 		return ddmStructureVersionPersistence.countByStructureId(structureId);
 	}
 
-	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 }

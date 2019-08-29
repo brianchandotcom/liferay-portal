@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
@@ -39,16 +38,17 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,17 +59,15 @@ import org.junit.runner.RunWith;
 public class StructuredContentResourceTest
 	extends BaseStructuredContentResourceTestCase {
 
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceReference = registry.getServiceReference(
-			DDMFormDeserializerTracker.class);
-
-		_ddmFormDeserializerTracker = registry.getService(_serviceReference);
 
 		_ddmStructure = _addDDMStructure(testGroup);
 		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
@@ -86,12 +84,6 @@ public class StructuredContentResourceTest
 	@After
 	@Override
 	public void tearDown() throws Exception {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_ddmFormDeserializerTracker = null;
-
-		registry.ungetService(_serviceReference);
-
 		super.tearDown();
 	}
 
@@ -262,15 +254,12 @@ public class StructuredContentResourceTest
 	}
 
 	private DDMForm _deserialize(String content) {
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -284,12 +273,13 @@ public class StructuredContentResourceTest
 		return StringUtil.read(inputStream);
 	}
 
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
 	private DDMStructure _irrelevantDDMStructure;
 	private JournalFolder _irrelevantJournalFolder;
 	private JournalFolder _journalFolder;
-	private ServiceReference<DDMFormDeserializerTracker> _serviceReference;
 
 }

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.io.internal;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 
@@ -35,27 +34,18 @@ public class DDMFormXSDDeserializerImpl implements DDMFormXSDDeserializer {
 
 	@Override
 	public DDMForm deserialize(String serializedDDMForm) {
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				serializedDDMForm);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_xsdDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormDeserializerTracker(
-		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
-
-		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
-	}
-
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
+	@Reference(target = "(ddm.form.deserializer.type=xsd)")
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

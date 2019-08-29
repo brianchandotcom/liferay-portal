@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -553,16 +552,13 @@ public class DDMStructureStagedModelDataHandler
 		String serializedDDMForm = portletDataContext.getZipEntryAsString(
 			ddmFormPath);
 
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				serializedDDMForm);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -736,13 +732,6 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormDeserializerTracker(
-		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
-
-		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMFormLayoutDeserializerTracker(
 		DDMFormLayoutDeserializerTracker ddmFormLayoutDeserializerTracker) {
 
@@ -795,7 +784,6 @@ public class DDMStructureStagedModelDataHandler
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
 
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
@@ -803,6 +791,9 @@ public class DDMStructureStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Reference
 	private Portal _portal;

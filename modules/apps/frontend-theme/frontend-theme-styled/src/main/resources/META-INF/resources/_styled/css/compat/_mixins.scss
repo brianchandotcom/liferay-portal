@@ -389,35 +389,6 @@
 	column-gap: $column-gap;
 }
 
-// Optional hyphenation
-
-@mixin hyphens($mode: auto) {
-	-ms-hyphens: $mode; // IE10+
-	-o-hyphens: $mode;
-	-webkit-hyphens: $mode;
-	hyphens: $mode;
-	word-wrap: break-word;
-}
-
-// Placeholder text
-
-@mixin placeholder($color: $input-color-placeholder) {
-	// Firefox
-
-	&::-moz-placeholder {
-		color: $color;
-		opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
-	}
-
-	&:-ms-input-placeholder {
-		color: $color;
-	} // Internet Explorer 10+
-
-	&::-webkit-input-placeholder {
-		color: $color;
-	} // Safari and Chrome
-}
-
 // Transformations
 
 @mixin scale($ratio...) {
@@ -502,12 +473,6 @@
 
 // Transitions
 
-@mixin transition($transition...) {
-	-o-transition: $transition;
-	-webkit-transition: $transition;
-	transition: $transition;
-}
-
 @mixin transition-property($transition-property...) {
 	-webkit-transition-property: $transition-property;
 	transition-property: $transition-property;
@@ -533,16 +498,6 @@
 	-o-transition: -o-transform $transition;
 	-webkit-transition: -webkit-transform $transition;
 	transition: transform $transition;
-}
-
-// User select
-// For selecting text on the page
-
-@mixin user-select($select) {
-	-moz-user-select: $select;
-	-ms-user-select: $select; // IE10+
-	-webkit-user-select: $select;
-	user-select: $select;
 }
 
 // User icons

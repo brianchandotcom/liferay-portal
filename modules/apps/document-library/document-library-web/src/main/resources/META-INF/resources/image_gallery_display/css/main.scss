@@ -1,4 +1,4 @@
-@import 'bourbon';
+@import 'atlas-variables';
 
 .portlet-image-gallery-display {
 	.lfr-asset-attributes {
@@ -94,7 +94,7 @@
 		clear: both;
 		display: block;
 
-		@include ellipsis;
+		@include text-truncate();
 	}
 }
 

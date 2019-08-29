@@ -1,5 +1,4 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas-variables';
 
 @mixin file-icon($colorIndex, $color) {
 	[data-file-icon-color='#{$colorIndex}'] .lexicon-icon {
@@ -413,7 +412,7 @@
 		}
 
 		.entry-title {
-			@include ellipsis;
+			@include text-truncate();
 
 			display: block;
 			position: relative;
@@ -493,10 +492,9 @@
 
 		.document-description {
 			display: block;
-
 			margin: 8px 0;
 
-			@include hyphens;
+			@include hyphens();
 		}
 
 		.document-thumbnail {
@@ -542,7 +540,7 @@
 		}
 
 		.lfr-asset-description {
-			@include hyphens;
+			@include hyphens();
 		}
 	}
 
@@ -550,7 +548,7 @@
 		margin: 0 auto;
 		width: 90%;
 
-		@include respond-to(phone) {
+		@include media-breakpoint-down(md) {
 			width: auto;
 		}
 	}

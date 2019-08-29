@@ -1,5 +1,3 @@
-@import 'mixins';
-
 $control-menu-height-desktop: 56px;
 $control-menu-height: 49px;
 $product-menu-width: 320px;
@@ -48,7 +46,7 @@ $upper-tbar-height: 4rem;
 		top: $control-menu-height;
 		z-index: 1;
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			top: $control-menu-height-desktop;
 
 			body.open & {

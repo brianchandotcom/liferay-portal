@@ -143,7 +143,8 @@ public class FragmentEntryLinkStagingTest {
 
 		_stagingGroup = FragmentStagingTestUtil.enableLocalStaging(_liveGroup);
 
-		FragmentStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
+		FragmentStagingTestUtil.publishLayoutsRangeFromLastPublishedDate(
+			_stagingGroup, _liveGroup);
 
 		StagingLocalServiceUtil.disableStaging(
 			_liveGroup, new ServiceContext());

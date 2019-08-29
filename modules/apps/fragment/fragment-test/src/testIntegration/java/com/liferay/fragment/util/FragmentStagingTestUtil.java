@@ -65,6 +65,19 @@ public class FragmentStagingTestUtil {
 			liveGroup.getGroupId(), false, parameters);
 	}
 
+	public static void publishLayoutsRangeFromLastPublishedDate(
+			Group stagingGroup, Group liveGroup)
+		throws PortalException {
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			liveGroup.getGroupId(), false, parameters);
+	}
+
 	protected static void addStagingAttribute(
 		ServiceContext serviceContext, String key, Object value) {
 

@@ -81,10 +81,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			AccountEntry accountEntry = null;
-
 			if (cmd.equals(Constants.ADD)) {
-				accountEntry = addAccountEntry(actionRequest);
+				addAccountEntry(actionRequest);
 			}
 		}
 		catch (Exception e) {

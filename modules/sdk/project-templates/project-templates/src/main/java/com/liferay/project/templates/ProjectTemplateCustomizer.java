@@ -14,10 +14,14 @@
 
 package com.liferay.project.templates;
 
+import com.liferay.project.templates.internal.util.Validator;
+
 import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Path;
+
+import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -33,6 +37,10 @@ public interface ProjectTemplateCustomizer {
 		FileUtil.deleteFileInPath(fileName, rootDirPath);
 	}
 
+	public default String getTemplateName() {
+		return null;
+	}
+
 	public void onAfterGenerateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 			ArchetypeGenerationResult archetypeGenerationResult)
@@ -42,5 +50,13 @@ public interface ProjectTemplateCustomizer {
 			ProjectTemplatesArgs projectTemplatesArgs,
 			ArchetypeGenerationRequest archetypeGenerationRequest)
 		throws Exception;
+
+	public default void setProperty(
+		Properties properties, String name, String value) {
+
+		if (Validator.isNotNull(value)) {
+			properties.setProperty(name, value);
+		}
+	}
 
 }

@@ -101,16 +101,16 @@ public class ConvertLayoutMVCActionCommand
 		LayoutConverter layoutConverter =
 			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
 
-		LayoutData layoutData = layoutConverter.convert(draftLayout);
+		LayoutData layoutData = layoutConverter.convert(layout);
 
 		JSONObject layoutDataJSONObject = layoutData.getLayoutDataJSONObject();
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			layout.getUserId(), draftLayout.getGroupId(),
-			_portal.getClassNameId(Layout.class), draftLayout.getPlid(),
-			layoutDataJSONObject.toString(), serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructure(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), layoutDataJSONObject.toString());
 
-		_layoutCopyHelper.copyLayout(draftLayout, layout);
+		_layoutCopyHelper.copyLayout(layout, draftLayout);
 
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),

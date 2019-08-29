@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -57,6 +58,10 @@ public class EditFragmentEntryDisplayContext {
 		_renderResponse = renderResponse;
 		_httpServletRequest = httpServletRequest;
 
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)
+				_httpServletRequest.getAttribute(
+					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
 		_fragmentEntryProcessorRegistry =
 			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
 				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
@@ -179,8 +184,26 @@ public class EditFragmentEntryDisplayContext {
 			return _fragmentEntry;
 		}
 
-		_fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-			getFragmentEntryId());
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				getFragmentEntryId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				getFragmentCollectionId());
+
+		if ((fragmentEntry == null) && (fragmentCollection != null)) {
+			fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				fragmentCollection.getGroupId(), getFragmentEntryKey());
+		}
+
+		if (fragmentEntry == null) {
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					getFragmentEntryKey());
+		}
+
+		_fragmentEntry = fragmentEntry;
 
 		return _fragmentEntry;
 	}
@@ -194,6 +217,17 @@ public class EditFragmentEntryDisplayContext {
 			_httpServletRequest, "fragmentEntryId");
 
 		return _fragmentEntryId;
+	}
+
+	public String getFragmentEntryKey() {
+		if (Validator.isNotNull(_fragmentEntryKey)) {
+			return _fragmentEntryKey;
+		}
+
+		_fragmentEntryKey = ParamUtil.getString(
+			_httpServletRequest, "fragmentEntryKey");
+
+		return _fragmentEntryKey;
 	}
 
 	public String getFragmentEntryTitle() {
@@ -303,6 +337,9 @@ public class EditFragmentEntryDisplayContext {
 		portletURL.setParameter(
 			"fragmentEntryId",
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
+		portletURL.setParameter(
+			"fragmentEntryKey",
+			String.valueOf(fragmentEntry.getFragmentEntryKey()));
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
@@ -402,6 +439,8 @@ public class EditFragmentEntryDisplayContext {
 
 	private String _configurationContent;
 	private String _cssContent;
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 	private Long _fragmentCollectionId;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;

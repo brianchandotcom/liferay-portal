@@ -15,13 +15,19 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +40,13 @@ public class RenderFragmentEntryDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		_httpServletRequest = httpServletRequest;
+
+		_fragmentCollectionContributorTracker =
+			(FragmentCollectionContributorTracker)
+				_httpServletRequest.getAttribute(
+					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext() {
@@ -67,15 +80,37 @@ public class RenderFragmentEntryDisplayContext {
 	}
 
 	private FragmentEntry _getFragmentEntry() {
+		long fragmentCollectionId = ParamUtil.getLong(
+			_httpServletRequest, "fragmentCollectionId");
 		long fragmentEntryId = ParamUtil.getLong(
 			_httpServletRequest, "fragmentEntryId");
+		String fragmentEntryKey = ParamUtil.getString(
+			_httpServletRequest, "fragmentEntryKey");
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
 
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+				fragmentCollectionId);
+
+		if ((fragmentEntry == null) && (fragmentCollection != null)) {
+			fragmentEntry = FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+				fragmentCollection.getGroupId(), fragmentEntryKey);
+		}
+
+		if (fragmentEntry == null) {
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					fragmentEntryKey);
+		}
+
 		return fragmentEntry;
 	}
 
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 	private final HttpServletRequest _httpServletRequest;
+	private final ThemeDisplay _themeDisplay;
 
 }

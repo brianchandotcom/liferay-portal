@@ -14,6 +14,7 @@
 
 package com.liferay.portal.webserver.test.util;
 
+import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServlet;
-import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.util.HashMap;
 import java.util.Map;

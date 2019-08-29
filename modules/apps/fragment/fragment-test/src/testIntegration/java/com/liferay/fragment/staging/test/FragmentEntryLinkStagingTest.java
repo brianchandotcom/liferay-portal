@@ -146,6 +146,17 @@ public class FragmentEntryLinkStagingTest {
 		FragmentStagingTestUtil.publishLayoutsRangeFromLastPublishedDate(
 			_stagingGroup, _liveGroup);
 
+		liveFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
+				liveFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
+
+		FragmentEntry liveFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				liveFragmentEntryLink.getFragmentEntryId());
+
+		Assert.assertEquals(
+			liveFragmentEntryLink.getGroupId(), liveFragmentEntry.getGroupId());
+
 		StagingLocalServiceUtil.disableStaging(
 			_liveGroup, new ServiceContext());
 

@@ -86,6 +86,12 @@ public class AccountEntryLocalServiceImpl
 		accountEntry.setDescription(description);
 		accountEntry.setStatus(status);
 
+		_portal.updateImageId(
+			accountEntry, true, logoBytes, "logoId",
+			_userFileUploadsSettings.getImageMaxSize(),
+			_userFileUploadsSettings.getImageMaxHeight(),
+			_userFileUploadsSettings.getImageMaxWidth());
+
 		accountEntry = accountEntryPersistence.update(accountEntry);
 
 		// Resources

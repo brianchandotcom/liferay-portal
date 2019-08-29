@@ -18,6 +18,7 @@ import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceC
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.background.task.UploadOneDriveDocumentBackgroundTaskExecutor;
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
@@ -76,8 +77,8 @@ public class DLOpenerOneDriveManager {
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
-				userId, fileEntry,
-				DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
+				userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_EDIT);
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
@@ -95,8 +96,8 @@ public class DLOpenerOneDriveManager {
 
 		_dlOpenerFileEntryReferenceLocalService.
 			addPlaceholderDLOpenerFileEntryReference(
-				userId, fileEntry,
-				DLOpenerFileEntryReferenceConstants.TYPE_NEW);
+				userId, DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+				fileEntry, DLOpenerFileEntryReferenceConstants.TYPE_NEW);
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
@@ -126,7 +127,8 @@ public class DLOpenerOneDriveManager {
 		iDriveItemRequest.delete();
 
 		_dlOpenerFileEntryReferenceLocalService.
-			deleteDLOpenerFileEntryReference(fileEntry);
+			deleteDLOpenerFileEntryReference(
+				DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE, fileEntry);
 	}
 
 	public DLOpenerOneDriveFileReference getDLOpenerOneDriveFileReference(
@@ -209,7 +211,9 @@ public class DLOpenerOneDriveManager {
 	public boolean isOneDriveFile(FileEntry fileEntry) {
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
-				fetchDLOpenerFileEntryReference(fileEntry);
+				fetchDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
 
 		if (dlOpenerFileEntryReference != null) {
 			return true;
@@ -310,7 +314,9 @@ public class DLOpenerOneDriveManager {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
-				getDLOpenerFileEntryReference(fileEntry);
+				getDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
 
 		return dlOpenerFileEntryReference.getReferenceKey();
 	}
@@ -344,7 +350,9 @@ public class DLOpenerOneDriveManager {
 		try {
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
 				_dlOpenerFileEntryReferenceLocalService.
-					getDLOpenerFileEntryReference(fileEntry);
+					getDLOpenerFileEntryReference(
+						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+						fileEntry);
 
 			return dlOpenerFileEntryReference.getReferenceKey();
 		}

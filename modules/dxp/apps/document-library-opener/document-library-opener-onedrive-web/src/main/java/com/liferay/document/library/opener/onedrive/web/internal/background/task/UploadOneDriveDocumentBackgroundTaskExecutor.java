@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
@@ -120,6 +121,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 		try {
 			_dlOpenerFileEntryReferenceLocalService.
 				deleteDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
 					_dlAppLocalService.getFileEntry(fileEntryId));
 		}
 		catch (PortalException pe) {
@@ -250,7 +252,8 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 
 		_dlOpenerFileEntryReferenceLocalService.
 			updateDLOpenerFileEntryReference(
-				jsonPrimitive.getAsString(), fileEntry);
+				jsonPrimitive.getAsString(),
+				DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE, fileEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

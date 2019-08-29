@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
@@ -73,7 +74,9 @@ public class OneDriveBackgroundTaskStatusMVCResourceCommand
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
-				fetchDLOpenerFileEntryReference(fileEntry);
+				fetchDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
 
 		if (backgroundTaskStatus == null) {
 			if (dlOpenerFileEntryReference == null) {

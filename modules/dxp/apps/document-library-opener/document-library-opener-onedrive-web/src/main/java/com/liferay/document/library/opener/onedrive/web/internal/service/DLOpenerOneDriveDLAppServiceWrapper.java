@@ -23,6 +23,7 @@ import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceC
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
@@ -73,7 +74,9 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 			DLOpenerFileEntryReference dlOpenerFileEntryReference =
 				_dlOpenerFileEntryReferenceLocalService.
-					getDLOpenerFileEntryReference(fileEntry);
+					getDLOpenerFileEntryReference(
+						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+						fileEntry);
 
 			_dlOpenerOneDriveManager.deleteFile(_getUserId(), fileEntry);
 
@@ -109,7 +112,9 @@ public class DLOpenerOneDriveDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
-				fetchDLOpenerFileEntryReference(fileEntry);
+				fetchDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
 
 		if (dlOpenerFileEntryReference.getType() ==
 				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {

@@ -21,6 +21,7 @@ import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceC
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
+import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -233,7 +234,9 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 	private boolean _isCheckingInNewFile() throws PortalException {
 		DLOpenerFileEntryReference dlOpenerFileEntryReference =
 			_dlOpenerFileEntryReferenceLocalService.
-				getDLOpenerFileEntryReference(fileVersion.getFileEntry());
+				getDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileVersion.getFileEntry());
 
 		if (dlOpenerFileEntryReference.getType() ==
 				DLOpenerFileEntryReferenceConstants.TYPE_NEW) {

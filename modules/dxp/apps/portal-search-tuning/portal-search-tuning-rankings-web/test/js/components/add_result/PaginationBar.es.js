@@ -19,13 +19,6 @@ const DELTAS = [5, 10, 20, 30, 50];
 const PAGINATION_DELTA_ID = 'pagination-delta';
 const PAGINATION_ID = 'pagination';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
-	() => ({
-		sub: (key, args) => [key, args]
-	})
-);
-
 describe('PaginationBar', () => {
 	it('has a dropdown for updating delta', () => {
 		const {getByTestId} = render(

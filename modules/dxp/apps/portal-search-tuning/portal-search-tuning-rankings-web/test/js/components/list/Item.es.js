@@ -14,14 +14,6 @@ import Item from '../../../../src/main/resources/META-INF/resources/js/component
 import {fireEvent, render, within} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
-	() => ({
-		getPluralMessage: jest.fn(),
-		sub: (key, args) => [key, args]
-	})
-);
-
 /* eslint-disable no-unused-vars */
 jest.mock('react-dnd', () => ({
 	DragSource: el => el => el,

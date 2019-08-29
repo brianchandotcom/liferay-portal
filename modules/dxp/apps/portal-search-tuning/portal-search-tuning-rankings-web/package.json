@@ -18,10 +18,12 @@
 	},
 	"jest": {
 		"setupFilesAfterEnv": [
-			"@testing-library/react/cleanup-after-each"
+			"@testing-library/react/cleanup-after-each",
+			"<rootDir>/test/js/setup.es.js"
 		],
 		"testPathIgnorePatterns": [
-			"<rootDir>/test/js/mock-data.js"
+			"<rootDir>/test/js/mock-data.js",
+			"<rootDir>/test/js/setup.es.js"
 		]
 	},
 	"main": "js/index.es.js",

@@ -18,14 +18,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 jest.mock('../../../../src/main/resources/META-INF/resources/js/utils/api.es');
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
-	() => ({
-		getPluralMessage: jest.fn(),
-		sub: (key, args) => [key, args]
-	})
-);
-
 const DATA_MAP = resultsDataToMap(
 	getMockResultsData(10, 0, '', false).documents
 );

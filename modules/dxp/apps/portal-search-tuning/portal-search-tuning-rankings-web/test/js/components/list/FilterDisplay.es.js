@@ -14,13 +14,6 @@ import FilterDisplay from '../../../../src/main/resources/META-INF/resources/js/
 import {fireEvent, render} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/utils/language.es',
-	() => ({
-		sub: (key, args) => [key, args]
-	})
-);
-
 describe('FilterDisplay', () => {
 	it('renders', () => {
 		const {container} = render(

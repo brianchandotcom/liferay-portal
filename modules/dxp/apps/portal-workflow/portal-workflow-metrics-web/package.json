@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/charts": "3.0.0-milestone.1",
+		"@clayui/charts": "3.0.0-milestone.3",
 		"axios": "0.18.0",
 		"classnames": "2.2.6",
 		"clay-charts-react": "2.4.1",

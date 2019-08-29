@@ -952,10 +952,10 @@
     "@clayui/icon" "^3.0.0-milestone.3"
     classnames "^2.2.6"
 
-"@clayui/charts@3.0.0-milestone.1":
-  version "3.0.0-milestone.1"
-  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.0.0-milestone.1.tgz#987d0854557f9de6492c89498d2db9e0e4ae223d"
-  integrity sha512-wSeYmB2f/Np7oCw75wbAQpdDNqLiKl2GbNvo8qLoXeKzSMhdwBtA9gX2mi2f0/DKbBxi0MlrvEZDaqvXlD7AYg==
+"@clayui/charts@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.0.0-milestone.3.tgz#058852cee068bd26b8b673f7cfbabbe65a6d52c2"
+  integrity sha512-fqzaX2MbPWMCGaOvmc0znz/HC+pkWhEamzt9Eh0T6FS/XYvldzyKDeP0PEiEmwtrv/w8w34pTsBkHzgRYi6e1Q==
   dependencies:
     billboard.js "^1.8.0"
     classnames "^2.2.6"

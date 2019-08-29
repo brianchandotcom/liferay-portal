@@ -368,7 +368,7 @@ definition {
 
 	@description = "This test covers LPS-99063. It ensures that Edit and Delete actions should not appear for comment if a user did not create it."
 	@priority = "4"
-	test ViewCommentByNonCreator {
+	test ViewCommentAsNonCreator {
 		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentByNonCreator";
 
 		JSONUser.addUser(

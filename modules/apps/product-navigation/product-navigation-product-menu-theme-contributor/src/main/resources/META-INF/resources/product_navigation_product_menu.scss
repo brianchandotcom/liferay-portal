@@ -1,24 +1,24 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas-variables';
+
 @import 'variables';
 
 body {
 	&.open #wrapper {
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			padding-left: $product-menu-width;
 		}
 	}
 
 	&.open .control-menu,
 	&.open .affix {
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			left: $product-menu-width;
 		}
 	}
 
 	&.open,
 	&.sidenav-transition {
-		@include sm() {
+		@include media-breakpoint-up(sm) {
 			overflow-x: hidden;
 		}
 	}
@@ -44,7 +44,7 @@ body {
 		float: left;
 		width: calc(100% - 32px);
 
-		@include sm {
+		@include media-breakpoint-up(sm) {
 			width: 100%;
 		}
 
@@ -210,7 +210,7 @@ body {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
-		@include word-wrap(normal);
+		@include overflow-wrap(normal);
 
 		&.active {
 			&,

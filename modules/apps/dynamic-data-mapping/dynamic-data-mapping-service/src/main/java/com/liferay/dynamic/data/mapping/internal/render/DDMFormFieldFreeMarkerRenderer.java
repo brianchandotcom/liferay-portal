@@ -76,17 +76,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
-	public DDMFormFieldFreeMarkerRenderer() {
-		String defaultTemplateId = _TPL_PATH + "alloy/text.ftl";
-
-		_defaultTemplateResource = getTemplateResource(defaultTemplateId);
-
-		String defaultReadOnlyTemplateId = _TPL_PATH + "readonly/default.ftl";
-
-		_defaultReadOnlyTemplateResource = getTemplateResource(
-			defaultReadOnlyTemplateId);
-	}
-
 	@Override
 	public String[] getSupportedDDMFormFieldTypes() {
 		return _SUPPORTED_DDM_FORM_FIELD_TYPES;
@@ -622,7 +611,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			fieldNamespace = _DEFAULT_NAMESPACE;
 		}
 
-		TemplateResource templateResource = _defaultTemplateResource;
+		TemplateResource templateResource = getTemplateResource(
+			_TPL_PATH + "alloy/text.ftl");
 
 		Map<String, Object> fieldStructure =
 			(Map<String, Object>)freeMarkerContext.get("fieldStructure");
@@ -637,7 +627,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 			fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
 
-			templateResource = _defaultReadOnlyTemplateResource;
+			templateResource = getTemplateResource(
+				_TPL_PATH + "readonly/default.ftl");
 		}
 
 		String templateName = StringUtil.replaceFirst(
@@ -716,8 +707,5 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormFieldFreeMarkerRenderer.class);
-
-	private final TemplateResource _defaultReadOnlyTemplateResource;
-	private final TemplateResource _defaultTemplateResource;
 
 }

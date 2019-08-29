@@ -1,8 +1,8 @@
 import {
-	formatDate,
+	formatDateEnLocale,
 	formatQueryDate,
-	parseDate,
-	parseDateMoment
+	parseDateEnLocale,
+	parseDateMomentEnLocale
 } from '../../util/timeRangeUtil';
 import {
 	parse,
@@ -24,10 +24,10 @@ const useCustomTimeRange = filterKey => {
 	const selectedTimeRange = getSelectedTimeRange() || {};
 
 	const [dateEnd, setDateEnd] = useState(
-		formatDate(selectedTimeRange.dateEnd)
+		formatDateEnLocale(selectedTimeRange.dateEnd)
 	);
 	const [dateStart, setDateStart] = useState(
-		formatDate(selectedTimeRange.dateStart)
+		formatDateEnLocale(selectedTimeRange.dateStart)
 	);
 
 	const applyCustomFilter = () => {
@@ -36,8 +36,8 @@ const useCustomTimeRange = filterKey => {
 				{
 					...timeRanges[0],
 					active: true,
-					dateEnd: parseDate(dateEnd, true),
-					dateStart: parseDate(dateStart)
+					dateEnd: parseDateEnLocale(dateEnd, true),
+					dateStart: parseDateEnLocale(dateStart)
 				},
 				...timeRanges.slice(1, timeRanges.length).map(item => ({
 					...item,
@@ -63,8 +63,8 @@ const useCustomTimeRange = filterKey => {
 	};
 
 	const validate = () => {
-		const dateEndMoment = parseDateMoment(dateEnd);
-		const dateStartMoment = parseDateMoment(dateStart);
+		const dateEndMoment = parseDateMomentEnLocale(dateEnd);
+		const dateStartMoment = parseDateMomentEnLocale(dateStart);
 
 		let errors = checkValidDate(dateEndMoment, dateStartMoment);
 

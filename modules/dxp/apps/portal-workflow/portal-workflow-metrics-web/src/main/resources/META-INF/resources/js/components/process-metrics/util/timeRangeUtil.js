@@ -15,7 +15,15 @@ const buildFallbackTimeRange = (fallbackKeys, queryDateEnd, queryDateStart) => {
 	return null;
 };
 
-const formatDate = date => moment.utc(date).format('L');
+const formatDate = (date, locale) => {
+	if (locale) {
+		return moment.utc(date, null, locale).format('L');
+	}
+
+	return moment.utc(date).format('L');
+};
+
+const formatDateEnLocale = date => formatDate(date, 'en');
 
 const formatDescriptionDate = date => moment.utc(date).format('ll');
 
@@ -67,8 +75,8 @@ const getFormatPattern = (dateEndMoment, dateStartMoment, isAmPm) => {
 	};
 };
 
-const parseDate = (date, isEndDate, format = 'L') => {
-	let utcDate = parseDateMoment(date, format);
+const parseDate = (date, format, isEndDate, locale) => {
+	let utcDate = parseDateMoment(date, format, locale);
 
 	if (isEndDate) {
 		utcDate = utcDate
@@ -82,19 +90,28 @@ const parseDate = (date, isEndDate, format = 'L') => {
 	return utcDate.toDate();
 };
 
-const parseDateMoment = (date, format = 'L') =>
-	moment.utc(moment(date, format, true));
+const parseDateMoment = (date, format = 'L', locale) =>
+	moment.utc(date, format, locale, true);
+
+const parseDateMomentEnLocale = (date, format = 'L') =>
+	parseDateMoment(date, format, 'en');
+
+const parseDateEnLocale = (date, isEndDate, format = 'L') =>
+	parseDate(date, format, isEndDate, 'en');
 
 const parseQueryDate = (date, isEndDate) =>
-	parseDate(date, isEndDate, 'YYYY-MM-DD');
+	parseDate(date, 'YYYY-MM-DD', isEndDate, 'en');
 
 export {
 	buildFallbackTimeRange,
 	formatDate,
+	formatDateEnLocale,
 	formatDescriptionDate,
 	formatQueryDate,
 	formatTimeRange,
 	parseDate,
 	parseDateMoment,
+	parseDateMomentEnLocale,
+	parseDateEnLocale,
 	parseQueryDate
 };

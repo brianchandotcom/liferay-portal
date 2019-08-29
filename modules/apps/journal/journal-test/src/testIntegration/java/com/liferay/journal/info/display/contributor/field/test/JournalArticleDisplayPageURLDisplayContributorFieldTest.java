@@ -17,6 +17,7 @@ package com.liferay.journal.info.display.contributor.field.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.model.JournalArticle;
@@ -107,6 +108,38 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 	}
 
 	@Test
+	public void testCanSelectDefaultDisplayPageURL() throws Exception {
+		InfoDisplayContributor<JournalArticle> infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				JournalArticle.class.getName());
+
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(article, true);
+
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			_user.getUserId(), _group.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			article.getResourcePrimKey(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			AssetDisplayPageConstants.TYPE_DEFAULT, _serviceContext);
+
+		Map<String, Object> fieldsValues =
+			infoDisplayContributor.getInfoDisplayFieldsValues(
+				article, LocaleUtil.getDefault());
+
+		Assert.assertTrue(fieldsValues.containsKey("displayPageURL"));
+
+		String expectedDisplayPageURL = _buildFriendlyURL(
+			infoDisplayContributor, article);
+
+		Assert.assertEquals(
+			expectedDisplayPageURL, fieldsValues.get("displayPageURL"));
+	}
+
+	@Test
 	public void testCanSelectSpecificDisplayPageURL() throws Exception {
 		InfoDisplayContributor<JournalArticle> infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(
@@ -116,9 +149,7 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 			_group.getGroupId(), 0);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				_group.getGroupId(), RandomTestUtil.randomLong(),
-				RandomTestUtil.randomString(), _serviceContext);
+			_getLayoutPageTemplateEntry(article, false);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			_user.getUserId(), _group.getGroupId(),
@@ -155,6 +186,33 @@ public class JournalArticleDisplayPageURLDisplayContributorFieldTest {
 		sb.append(friendlyURLMap.get(LocaleUtil.getDefault()));
 
 		return sb.toString();
+	}
+
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+			JournalArticle article, boolean defaultLayoutPageTemplateEntry)
+		throws PortalException {
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				_group.getGroupId(), RandomTestUtil.randomLong(),
+				RandomTestUtil.randomString(), _serviceContext);
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				_portal.getClassNameId(JournalArticle.class.getName()),
+				ddmStructure.getStructureId());
+
+		if (defaultLayoutPageTemplateEntry) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					true);
+		}
+
+		return layoutPageTemplateEntry;
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

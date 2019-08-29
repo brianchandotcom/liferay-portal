@@ -29,6 +29,7 @@ function Variant({
 	onVariantDeletion,
 	onVariantEdition,
 	segmentsExperienceId,
+	split,
 	variantId
 }) {
 	const [openDropdown, setOpenDropdown] = useState(false);
@@ -103,6 +104,16 @@ function Variant({
 					</ClayList.ItemField>
 				</>
 			)}
+			{!editable && (
+				<ClayList.ItemField>
+					<span
+						aria-label={Liferay.Language.get('traffic-split')}
+						className="text-secondary font-weight-normal list-group-title"
+					>
+						{split * 100 + '%'}
+					</span>
+				</ClayList.ItemField>
+			)}
 		</ClayList.Item>
 	);
 
@@ -135,6 +146,7 @@ Variant.propTypes = {
 	onVariantDeletion: PropTypes.func.isRequired,
 	onVariantEdition: PropTypes.func.isRequired,
 	segmentsExperienceId: PropTypes.string.isRequired,
+	split: PropTypes.number,
 	variantId: PropTypes.string.isRequired
 };
 

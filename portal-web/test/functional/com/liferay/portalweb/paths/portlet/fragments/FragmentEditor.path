@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENTS_EDITOR_LINE_ERROR</td>
-	<td>//div[contains(@class,'ace_gutter-cell') and contains(@class,'ace_error')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENTS_EDITOR_FLOATING_TOOLBAR_CONFIGURATION</td>
 	<td>//button[@data-title='Fragment Configuration']</td>
 	<td></td>

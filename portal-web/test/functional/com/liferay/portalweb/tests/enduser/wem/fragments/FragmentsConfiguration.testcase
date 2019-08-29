@@ -59,8 +59,6 @@ definition {
 
 		FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
 
-		FragmentsEditor.viewLineError(lineNumber = "4");
-
 		task ("Publish the fragment and assert there is an error message") {
 			Button.clickPublish();
 

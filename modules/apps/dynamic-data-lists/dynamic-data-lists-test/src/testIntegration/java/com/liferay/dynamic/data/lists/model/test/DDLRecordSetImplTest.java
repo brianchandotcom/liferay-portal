@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -95,24 +94,21 @@ public class DDLRecordSetImplTest {
 	}
 
 	protected String serialize(DDMForm ddmForm) {
-		DDMFormSerializer ddmFormSerializer =
-			_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormSerializer.serialize(builder.build());
+			_jsonDDMFormSerializer.serialize(builder.build());
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
-
-	@Inject
-	private static DDMFormSerializerTracker _ddmFormSerializerTracker;
 
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(filter = "ddm.form.serializer.type=json")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 }

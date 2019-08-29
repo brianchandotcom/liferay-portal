@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -246,23 +245,16 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	}
 
 	private String _serializeJSONDDMForm(DDMForm ddmForm) {
-		DDMFormSerializer ddmFormSerializer =
-			_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
 		DDMFormSerializerSerializeRequest.Builder builder =
 			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormSerializer.serialize(builder.build());
+			_jsonDDMFormSerializer.serialize(builder.build());
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
 
 	private DDM _ddm;
-
-	@Reference
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
-
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
@@ -271,6 +263,9 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 	private volatile DLConfiguration _dlConfiguration;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;
+
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 	@Reference
 	private Portal _portal;

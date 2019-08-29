@@ -48,7 +48,6 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_1.UpgradeDDMDataPr
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
@@ -281,7 +280,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	protected DDMFormSerializer getDDMFormSerializer() {
-		return _ddmFormSerializerTracker.getDDMFormSerializer("json");
+		return _jsonDDMFormSerializer;
 	}
 
 	protected DDMFormValuesDeserializer getDDMFormValuesDeserializer() {
@@ -316,9 +315,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
-
-	@Reference
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 
 	@Reference
@@ -344,6 +340,9 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(ddm.form.layout.serializer.type=json)")
 	private DDMFormLayoutSerializer _jsonDDMFormLayoutSerializer;
+
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;

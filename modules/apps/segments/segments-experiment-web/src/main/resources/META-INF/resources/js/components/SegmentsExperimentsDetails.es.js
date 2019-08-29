@@ -30,6 +30,10 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 				<b>{Liferay.Language.get('goal')}: </b>
 				{segmentsExperiment.goal.label}
 			</div>
+			<div>
+				<b>{Liferay.Language.get('confidence-level')}: </b>
+				{segmentsExperiment.confidenceLevel * 100 + '%'}
+			</div>
 		</>
 	);
 }

@@ -278,6 +278,15 @@ public class DDMFormTaglibUtil {
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
+	@Reference(
+		target = "(ddm.form.field.types.serializer.type=json)", unbind = "-"
+	)
+	protected void setDDMFormFieldTypesSerializer(
+		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer) {
+
+		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMFormInstanceLocalService(
 		DDMFormInstanceLocalService ddmFormInstanceLocalService) {
@@ -370,10 +379,7 @@ public class DDMFormTaglibUtil {
 		_ddmFormBuilderSettingsRetriever;
 	private static DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
-
-	@Reference(target = "(ddm.form.field.types.serializer.type=json)")
 	private static DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
-
 	private static DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private static DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
 import {
-	InitialSegmentsVariantType,
+	SegmentsVariantType,
 	SegmentsExperienceType,
 	SegmentsExperimentGoal,
 	SegmentsExperimentType
@@ -408,8 +408,7 @@ SegmentsExperimentsSidebar.propTypes = {
 	initialGoals: PropTypes.arrayOf(SegmentsExperimentGoal),
 	initialSegmentsExperiences: PropTypes.arrayOf(SegmentsExperienceType),
 	initialSegmentsExperiment: SegmentsExperimentType,
-	initialSegmentsVariants: PropTypes.arrayOf(InitialSegmentsVariantType)
-		.isRequired,
+	initialSegmentsVariants: PropTypes.arrayOf(SegmentsVariantType).isRequired,
 	initialSelectedSegmentsExperienceId: PropTypes.string
 };
 

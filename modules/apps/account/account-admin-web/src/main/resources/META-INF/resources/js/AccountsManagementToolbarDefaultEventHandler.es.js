@@ -29,6 +29,16 @@ class AccountsManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		}
 	}
 
+	deleteAccounts(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			this._updateAccounts(itemData.deleteAccountsURL);
+		}
+	}
+
 	_updateAccounts(url) {
 		const form = this.one('#fm');
 

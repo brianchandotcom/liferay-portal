@@ -118,6 +118,27 @@ public class ViewAccountsManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 
 				return dropdownItem;
+			},
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "deleteAccounts");
+
+				PortletURL deleteAccountsURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteAccountsURL.setParameter(
+					ActionRequest.ACTION_NAME, "/account_admin/delete_account");
+				deleteAccountsURL.setParameter("navigation", getNavigation());
+
+				dropdownItem.putData(
+					"deleteAccountsURL", deleteAccountsURL.toString());
+
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
 			});
 	}
 
@@ -130,6 +151,8 @@ public class ViewAccountsManagementToolbarDisplayContext
 		else {
 			availableActions.add("activateAccounts");
 		}
+
+		availableActions.add("deleteAccounts");
 
 		return availableActions;
 	}

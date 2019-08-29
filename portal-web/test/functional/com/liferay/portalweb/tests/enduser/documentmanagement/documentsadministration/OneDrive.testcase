@@ -68,10 +68,10 @@ definition {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 	}
 
-	@description = "This test ensures that an Excel document can be added via the OneDrive editor."
+	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."
 	@priority = "5"
-	test AddExcelDocument {
-		property test.name.skip.portal.instance = "OneDrive#AddExcelDocument";
+	test AddExcelSheet {
+		property test.name.skip.portal.instance = "OneDrive#AddExcelSheet";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -85,7 +85,7 @@ definition {
 		MicrosoftLogin.confirmMicrosoftApp();
 
 		OneDrive.editTitle(
-			dmDocumentTitle = "Excel Doc Title",
+			dmDocumentTitle = "Excel Sheet Title",
 			key_documentType = "xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -101,15 +101,15 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
-			key_dmDocumentTitle = "Excel Doc Title",
+			key_dmDocumentTitle = "Excel Sheet Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "Excel Doc Title");
+			value1 = "Excel Sheet Title");
 	}
 
-	@description = "This test ensures that a Powerpoint document can be added via the OneDrive editor."
+	@description = "This test ensures that a Powerpoint presentation can be added via the OneDrive editor."
 	@priority = "5"
-	test AddPowerPointDocument {
-		property test.name.skip.portal.instance = "OneDrive#AddPowerPointDocument";
+	test AddPowerPointPresentation {
+		property test.name.skip.portal.instance = "OneDrive#AddPowerPointPresentation";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -123,7 +123,7 @@ definition {
 		MicrosoftLogin.confirmMicrosoftApp();
 
 		OneDrive.editTitle(
-			dmDocumentTitle = "PowerPoint Doc Title",
+			dmDocumentTitle = "PowerPoint Presentation Title",
 			key_documentType = "pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -139,9 +139,9 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		AssertTextEquals(
-			key_dmDocumentTitle = "PowerPoint Doc Title",
+			key_dmDocumentTitle = "PowerPoint Presentation Title",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "PowerPoint Doc Title");
+			value1 = "PowerPoint Presentation Title");
 	}
 
 	@description = "This test ensures that a Word document can be added via the OneDrive editor. "
@@ -182,10 +182,10 @@ definition {
 			value1 = "Word Doc Title");
 	}
 
-	@description = "This test ensures that an Excel document title can be changed via the OneDrive editor."
+	@description = "This test ensures that an Excel sheet title can be changed via the OneDrive editor."
 	@priority = "4"
-	test EditExcelDocument {
-		property test.name.skip.portal.instance = "OneDrive#EditExcelDocument";
+	test EditExcelSheet {
+		property test.name.skip.portal.instance = "OneDrive#EditExcelSheet";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -204,7 +204,7 @@ definition {
 		MicrosoftLogin.confirmMicrosoftApp();
 
 		OneDrive.editTitle(
-			dmDocumentTitle = "Excel Doc Title Edited",
+			dmDocumentTitle = "Excel Sheet Title Edited",
 			key_documentTitle = "Document_2.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -221,14 +221,14 @@ definition {
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Excel Doc Title Edited",
+			dmDocumentTitle = "Excel Sheet Title Edited",
 			dmDocumentVersionNumber = "2.0");
 	}
 
-	@description = "This test ensures that a Powerpoint document title can be changed via the OneDrive editor."
+	@description = "This test ensures that a Powerpoint presentation title can be changed via the OneDrive editor."
 	@priority = "4"
-	test EditPowerPointDocument {
-		property test.name.skip.portal.instance = "OneDrive#EditPowerPointDocument";
+	test EditPowerPointPresentation {
+		property test.name.skip.portal.instance = "OneDrive#EditPowerPointPresentation";
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -247,7 +247,7 @@ definition {
 		MicrosoftLogin.confirmMicrosoftApp();
 
 		OneDrive.editTitle(
-			dmDocumentTitle = "Powerpoint Doc Title Edited",
+			dmDocumentTitle = "Powerpoint Presentation Title Edited",
 			key_documentTitle = "Document_2.pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -264,7 +264,7 @@ definition {
 
 		DMDocument.viewAllPG(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Powerpoint Doc Title Edited",
+			dmDocumentTitle = "Powerpoint Presentation Title Edited",
 			dmDocumentVersionNumber = "2.0");
 	}
 

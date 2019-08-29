@@ -17,32 +17,12 @@ package com.liferay.portal.workflow.metrics.model.impl;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * The extended model implementation for the WorkflowMetricsSLADefinitionVersion
- * service. Represents a row in the &quot;WMSLADefinitionVersion&quot; database
- * table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class.
- * Whenever methods are added, rerun ServiceBuilder to copy their definitions
- * into the
- * <code>com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion</code>
- * interface.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class WorkflowMetricsSLADefinitionVersionImpl
 	extends WorkflowMetricsSLADefinitionVersionBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a workflow
-	 * metrics sla definition version model instance should use the {@link
-	 * com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion}
-	 * interface instead.
-	 */
 	public WorkflowMetricsSLADefinitionVersionImpl() {
 	}
 

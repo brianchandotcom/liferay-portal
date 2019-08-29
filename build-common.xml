@@ -845,8 +845,8 @@ information.
 						<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 						<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
-						<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
+						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
+						<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 						<arg value="tasks" />
 						<arg value="--all" />
 						<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
@@ -892,8 +892,8 @@ information.
 								<arg if:set="env.JENKINS_HOME" value="-Dliferay.ssl.context.enabled=${gradle.ci.liferay.ssl.context.enabled}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.connectionTimeout=${gradle.ci.http.connection.timeout}" />
 								<arg if:set="env.JENKINS_HOME" value="-Dorg.gradle.internal.http.socketTimeout=${gradle.ci.http.socket.timeout}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
-								<arg if:set="env.JENKINS_HOME" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
+								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.dirs=${build.patcher.hotfix.dirs}" />
+								<arg if:set="env.FIX_PACKS_RELEASE_ENVIRONMENT" value="-Dpatcher.hotfix.qualifier=${build.patcher.hotfix.qualifier}" />
 								<arg line="@{task}" />
 								<env key="GRADLE_OPTS" value="${task.gradle.opts}" />
 								<redirector errorproperty="@{outputproperty}.error" outputproperty="@{outputproperty}" unless:blank="@{outputproperty}" />
@@ -1621,6 +1621,15 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					</and>
 				</not>
 				<then>
+					<if>
+						<isset property="env.FIX_PACKS_RELEASE_ENVIRONMENT" />
+						<then>
+							<gradle-execute dir="${project.dir}/modules" task="removeHotfixQualifier">
+								<arg value="--build-file=${project.dir}/modules/util.gradle" />
+							</gradle-execute>
+						</then>
+					</if>
+
 					<gradle-execute dir="${project.dir}/modules" task="setUpYarnOfflineCache">
 						<arg value="--build-file=${project.dir}/modules/util.gradle" />
 					</gradle-execute>
@@ -1628,6 +1637,15 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					<retry retrycount="5" retrydelay="10000">
 						<gradle-execute dir="${project.dir}/modules" task=":yarnInstall" />
 					</retry>
+
+					<if>
+						<isset property="env.FIX_PACKS_RELEASE_ENVIRONMENT" />
+						<then>
+							<gradle-execute dir="${project.dir}/modules" task="appendHotfixQualifier">
+								<arg value="--build-file=${project.dir}/modules/util.gradle" />
+							</gradle-execute>
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>

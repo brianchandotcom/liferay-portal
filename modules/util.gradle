@@ -15,10 +15,12 @@ buildscript {
 apply plugin: "com.liferay.source.formatter"
 apply plugin: "com.liferay.source.formatter.defaults"
 
+task appendHotfixQualifier
 task formatSourceCurrentBranch(type: FormatSourceTask)
 task formatSourceLatestAuthor(type: FormatSourceTask)
 task formatSourceLocalChanges(type: FormatSourceTask)
 task printDependencyPath
+task removeHotfixQualifier
 task setUpLibs
 task setUpPortalTools
 task setUpYarnOfflineCache
@@ -32,6 +34,34 @@ Map<File, Properties> libDependenciesMap = libDependenciesFileTree.collectEntrie
 	Properties properties = GUtil.loadProperties(it)
 
 	[it.parentFile, properties]
+}
+
+appendHotfixQualifier {
+	doLast {
+		String dirs = System.getProperty("patcher.hotfix.dirs", "")
+		String qualifier = System.getProperty("patcher.hotfix.qualifier", "")
+
+		for (String dirName : dirs.split(",")) {
+			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
+
+			if (bndBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(bndBndFile)
+
+				String version = properties.getProperty("Bundle-Version")
+
+				if ((version != null) && (version.indexOf(qualifier) == -1)) {
+					String newLine = "Bundle-Version: " + version + qualifier
+					String oldLine = bndBndFile.filterLine {
+						it =~ "^Bundle-Version.*"
+					}
+
+					bndBndFile.text = bndBndFile.text.replace(oldLine.trim(), newLine)
+
+					logger.lifecycle "Appended {}:{}", project.relativePath(bndBndFile), qualifier
+				}
+			}
+		}
+	}
 }
 
 formatSourceCurrentBranch {
@@ -60,6 +90,29 @@ printDependencyPath {
 		configuration.transitive = false
 
 		logger.quiet configuration.singleFile.absolutePath
+	}
+}
+
+removeHotfixQualifier {
+	doLast {
+		String dirs = System.getProperty("patcher.hotfix.dirs", "")
+		String qualifier = System.getProperty("patcher.hotfix.qualifier", "")
+
+		for (String dirName : dirs.split(",")) {
+			File bndBndFile = new File(new File(projectDir, dirName), "bnd.bnd")
+
+			if (bndBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(bndBndFile)
+
+				String version = properties.getProperty("Bundle-Version")
+
+				if ((version != null) && (version.indexOf(qualifier) != -1)) {
+					bndBndFile.text = bndBndFile.text.replace(version, version.minus(qualifier))
+
+					logger.lifecycle "Removed {}:{}", project.relativePath(bndBndFile), qualifier
+				}
+			}
+		}
 	}
 }
 

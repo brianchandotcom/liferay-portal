@@ -41,7 +41,7 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
-				readObject("attachmentContent.json"));
+				readObject("attachment_content.json"));
 
 		Assert.assertNotNull(
 			"Attachment is converted to indexed record", indexedRecord);
@@ -66,7 +66,7 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 			new JsonObjectIndexedRecordConverter(schema);
 
 		jsonObjectIndexedRecordConverter.toIndexedRecord(
-			readObject("attachmentContentInvalidDateProperty.json"));
+			readObject("attachment_content_invalid_date_property.json"));
 	}
 
 	@Test(expected = ConverterException.class)
@@ -80,7 +80,7 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 			new JsonObjectIndexedRecordConverter(schema);
 
 		jsonObjectIndexedRecordConverter.toIndexedRecord(
-			readObject("productContentMissingRequiredProperty.json"));
+			readObject("product_content_missing_required_property.json"));
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
-				readObject("productContent.json"));
+				readObject("product_content.json"));
 
 		Assert.assertNotNull(
 			"Product is converted to indexed record", indexedRecord);

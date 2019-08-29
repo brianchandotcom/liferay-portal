@@ -42,16 +42,7 @@ function SegmentsExperimentsSidebar({
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
 		initialSegmentsExperiment
 	);
-	const [variants, setVariants] = useState(
-		initialSegmentsVariants.map(variant => {
-			if (
-				variant.segmentsExperienceId ===
-				initialSegmentsExperiment.segmentsExperienceId
-			)
-				return {...variant, control: true};
-			return {...variant, control: false};
-		})
-	);
+	const [variants, setVariants] = useState(initialSegmentsVariants);
 
 	return page.type === 'content' ? (
 		<div className="p-3">

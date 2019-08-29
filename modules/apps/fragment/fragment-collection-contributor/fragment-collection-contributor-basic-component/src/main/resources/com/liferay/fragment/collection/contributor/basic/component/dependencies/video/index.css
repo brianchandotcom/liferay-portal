@@ -6,6 +6,7 @@
 	justify-content: center;
 	margin-bottom: 24px;
 	position: relative;
+	width: 100%;
 }
 
 .error-message {

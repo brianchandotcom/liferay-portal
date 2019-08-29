@@ -1,13 +1,11 @@
-<div class="video" data-auto-play="${configuration.autoPlay?c}" data-height="${configuration.height}" data-hide-controls="${configuration.hideControls?c}" data-loop="${configuration.loop?c}" data-width="${configuration.width}">
-	<div class="error-message" hidden>
-		<p>Please enter a valid video URL.</p>
-		<p>Supported providers are: Youtube.</p>
+<div style="display: flex; justify-content: ${configuration.align};">
+	<div class="video" data-auto-play="${configuration.autoPlay?c}" data-height="${configuration.height}" data-hide-controls="${configuration.hideControls?c}" data-loop="${configuration.loop?c}" data-mute="${configuration.mute?c}" data-url="${configuration.url}" data-width="${configuration.width}">
+		<div class="error-message" hidden>
+			<p>Please enter a valid video URL.</p>
+			<p>Supported providers are: Youtube.</p>
+		</div>
+
+		<div aria-hidden="true" class="loading-animation"></div>
+		<div aria-hidden="true" class="video-container"></div>
 	</div>
-
-	<video class="video-source" data-lfr-editable-id="video">
-		<source src="" />
-	</video>
-
-	<div aria-hidden="true" class="loading-animation"></div>
-	<div aria-hidden="true" class="video-container"></div>
 </div>

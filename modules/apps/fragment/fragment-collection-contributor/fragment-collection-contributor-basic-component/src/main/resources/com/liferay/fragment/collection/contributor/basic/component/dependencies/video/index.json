@@ -4,6 +4,12 @@
 			"fields": [
 				{
 					"defaultValue": "",
+					"label": "URL",
+					"name": "url",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
 					"label": "Width",
 					"name": "width",
 					"type": "text"
@@ -15,6 +21,29 @@
 					"type": "text"
 				},
 				{
+					"dataType": "string",
+					"defaultValue": "flex-start",
+					"label": "Align",
+					"name": "align",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "left",
+								"value": "flex-start"
+							},
+							{
+								"label": "center",
+								"value": "center"
+							},
+							{
+								"label": "right",
+								"value": "flex-end"
+							}
+						]
+					}
+				},
+				{
 					"defaultValue": false,
 					"label": "Autoplay",
 					"name": "autoPlay",
@@ -24,6 +53,12 @@
 					"defaultValue": false,
 					"label": "Loop",
 					"name": "loop",
+					"type": "checkbox"
+				},
+				{
+					"defaultValue": true,
+					"label": "Mute",
+					"name": "mute",
 					"type": "checkbox"
 				},
 				{

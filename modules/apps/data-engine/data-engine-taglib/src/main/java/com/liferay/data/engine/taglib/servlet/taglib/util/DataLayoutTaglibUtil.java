@@ -33,7 +33,6 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
@@ -487,9 +486,6 @@ public class DataLayoutTaglibUtil {
 	private DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 
 	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-
-	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 	@Reference
@@ -509,6 +505,9 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private FieldTypeTracker _fieldTypeTracker;
+
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -689,16 +688,13 @@ public class DataLayoutTaglibUtil {
 		}
 
 		private DDMForm _deserializeDDMForm(String content) {
-			DDMFormDeserializer ddmFormDeserializer =
-				_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
 			DDMFormDeserializerDeserializeRequest.Builder builder =
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 					content);
 
 			DDMFormDeserializerDeserializeResponse
 				ddmFormDeserializerDeserializeResponse =
-					ddmFormDeserializer.deserialize(builder.build());
+					_jsonDDMFormDeserializer.deserialize(builder.build());
 
 			return ddmFormDeserializerDeserializeResponse.getDDMForm();
 		}

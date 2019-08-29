@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.internal.webdav;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -346,16 +345,13 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 	protected DDMForm getDDMForm(String definition) throws PortalException {
 		_ddmXML.validateXML(definition);
 
-		DDMFormDeserializer ddmFormDeserializer =
-			_ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
-
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 				definition);
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
-				ddmFormDeserializer.deserialize(builder.build());
+				_xsdDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
@@ -363,13 +359,6 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 	@Reference(unbind = "-")
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormDeserializerTracker(
-		DDMFormDeserializerTracker ddmFormDeserializerTracker) {
-
-		_ddmFormDeserializerTracker = ddmFormDeserializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -408,11 +397,13 @@ public class DDMWebDAVImpl implements DDMWebDAV {
 	private static final Log _log = LogFactoryUtil.getLog(DDMWebDAVImpl.class);
 
 	private DDM _ddm;
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructureService _ddmStructureService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMTemplateService _ddmTemplateService;
 	private DDMXML _ddmXML;
+
+	@Reference(target = "(ddm.form.deserializer.type=xsd)")
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

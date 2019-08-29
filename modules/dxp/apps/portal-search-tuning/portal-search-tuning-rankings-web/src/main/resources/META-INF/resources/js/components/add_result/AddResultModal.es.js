@@ -41,7 +41,6 @@ function AddResultModal({
 	results,
 	renderEmptyState,
 	selectedDelta,
-	start,
 	showModal
 }) {
 	const {observer, onClose} = useModal({
@@ -56,6 +55,8 @@ function AddResultModal({
 		'navbar',
 		'navbar-expand-md'
 	);
+
+	const start = page * selectedDelta;
 
 	return showModal ? (
 		<ClayModal
@@ -291,8 +292,7 @@ AddResultModal.propTypes = {
 	renderEmptyState: PropTypes.func.isRequired,
 	results: PropTypes.object.isRequired,
 	selectedDelta: PropTypes.number.isRequired,
-	showModal: PropTypes.bool.isRequired,
-	start: PropTypes.number.isRequired
+	showModal: PropTypes.bool.isRequired
 };
 
 export default AddResultModal;

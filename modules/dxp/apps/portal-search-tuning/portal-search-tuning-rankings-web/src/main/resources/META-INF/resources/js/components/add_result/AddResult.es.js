@@ -263,8 +263,6 @@ class AddResult extends Component {
 			showModal
 		} = this.state;
 
-		const start = page * selectedDelta;
-
 		return (
 			<li className="nav-item">
 				<ClayButton
@@ -298,7 +296,6 @@ class AddResult extends Component {
 						results={results}
 						selectedDelta={selectedDelta}
 						showModal={showModal}
-						start={start}
 					/>
 				)}
 			</li>

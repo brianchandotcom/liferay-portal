@@ -2,6 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="BNDExportsCheck" files=".*" />
+		<suppress checks="BNDExportsCheck" />
 	</source-check>
 </suppressions>

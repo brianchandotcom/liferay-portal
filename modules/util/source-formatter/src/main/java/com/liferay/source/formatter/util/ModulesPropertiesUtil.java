@@ -31,10 +31,8 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -46,30 +44,33 @@ public class ModulesPropertiesUtil {
 	public static String getContent(File portalDir) throws IOException {
 		StringBundler sb = new StringBundler();
 
-		Map<String, String> bundleVersionsMap = getBundleVersionsMap(portalDir);
+		Map<String, String> bundleInformationMap = getBundleInformationMap(
+			portalDir);
 
-		for (Map.Entry<String, String> entry : bundleVersionsMap.entrySet()) {
+		for (Map.Entry<String, String> entry :
+				bundleInformationMap.entrySet()) {
+
 			sb.append(entry.getKey());
 			sb.append(StringPool.EQUAL);
 			sb.append(entry.getValue());
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		if (!bundleVersionsMap.isEmpty()) {
+		if (!bundleInformationMap.isEmpty()) {
 			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();
 	}
 
-	protected static Map<String, String> getBundleVersionsMap(File portalDir)
+	protected static Map<String, String> getBundleInformationMap(File portalDir)
 		throws IOException {
 
 		if (portalDir == null) {
 			return Collections.emptyMap();
 		}
 
-		final List<File> files = new ArrayList<>();
+		final Map<String, String> bundleInformationMap = new TreeMap<>();
 
 		Files.walkFileTree(
 			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 15,
@@ -77,7 +78,8 @@ public class ModulesPropertiesUtil {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
@@ -91,76 +93,86 @@ public class ModulesPropertiesUtil {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					path = dirPath.resolve("bnd.bnd");
+					Path bndPath = dirPath.resolve("bnd.bnd");
 
-					if (Files.exists(path)) {
-						files.add(path.toFile());
+					if (!Files.exists(bndPath)) {
+						return FileVisitResult.CONTINUE;
+					}
 
+					String bndContent = FileUtil.read(bndPath.toFile());
+
+					String bundleSymbolicName = _getBundleSymbolicName(
+						bndContent, SourceUtil.getAbsolutePath(bndPath));
+
+					if (bundleSymbolicName == null) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					return FileVisitResult.CONTINUE;
+					String bundleVersion = BNDSourceUtil.getDefinitionValue(
+						bndContent, "Bundle-Version");
+
+					if (Validator.isNotNull(bundleVersion)) {
+						bundleInformationMap.put(
+							bundleSymbolicName, bundleVersion);
+					}
+
+					return FileVisitResult.SKIP_SUBTREE;
 				}
 
 			});
 
-		Map<String, String> bundleVersionsMap = new TreeMap<>();
+		return bundleInformationMap;
+	}
 
-		for (File file : files) {
-			String content = FileUtil.read(file);
+	private static String _getBundleSymbolicName(
+		String bndContent, String absolutePath) {
 
-			String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
-				content, "Bundle-SymbolicName");
-
-			if (Validator.isNull(bundleSymbolicName)) {
-				continue;
-			}
-
-			String path = SourceUtil.getAbsolutePath(file);
-
-			if (path.endsWith("/portal-impl/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.impl";
-			}
-			else if (path.endsWith("/portal-kernel/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.kernel";
-			}
-			else if (path.endsWith("/portal-test-integration/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.test.integration";
-			}
-			else if (path.endsWith("/portal-test/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.portal.test";
-			}
-			else if (path.endsWith("/portal-support-tomcat/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.support.tomcat";
-			}
-			else if (path.endsWith("/util-bridges/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.bridges";
-			}
-			else if (path.endsWith("/util-java/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.java";
-			}
-			else if (path.endsWith("/util-slf4j/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.slf4j";
-			}
-			else if (path.endsWith("/util-taglib/bnd.bnd")) {
-				bundleSymbolicName = "com.liferay.util.taglib";
-			}
-
-			if (!bundleSymbolicName.startsWith("com.liferay.")) {
-				continue;
-			}
-
-			String bundleVersion = BNDSourceUtil.getDefinitionValue(
-				content, "Bundle-Version");
-
-			if (Validator.isNull(bundleVersion)) {
-				continue;
-			}
-
-			bundleVersionsMap.put(bundleSymbolicName, bundleVersion);
+		if (absolutePath.endsWith("/portal-impl/bnd.bnd")) {
+			return "com.liferay.portal.impl";
 		}
 
-		return bundleVersionsMap;
+		if (absolutePath.endsWith("/portal-kernel/bnd.bnd")) {
+			return "com.liferay.portal.kernel";
+		}
+
+		if (absolutePath.endsWith("/portal-test-integration/bnd.bnd")) {
+			return "com.liferay.portal.test.integration";
+		}
+
+		if (absolutePath.endsWith("/portal-test/bnd.bnd")) {
+			return "com.liferay.portal.test";
+		}
+
+		if (absolutePath.endsWith("/portal-support-tomcat/bnd.bnd")) {
+			return "com.liferay.support.tomcat";
+		}
+
+		if (absolutePath.endsWith("/util-bridges/bnd.bnd")) {
+			return "com.liferay.util.bridges";
+		}
+
+		if (absolutePath.endsWith("/util-java/bnd.bnd")) {
+			return "com.liferay.util.java";
+		}
+
+		if (absolutePath.endsWith("/util-slf4j/bnd.bnd")) {
+			return "com.liferay.util.slf4j";
+		}
+
+		if (absolutePath.endsWith("/util-taglib/bnd.bnd")) {
+			return "com.liferay.util.taglib";
+		}
+
+		String bundleSymbolicName = BNDSourceUtil.getDefinitionValue(
+			bndContent, "Bundle-SymbolicName");
+
+		if (Validator.isNotNull(bundleSymbolicName) &&
+			bundleSymbolicName.startsWith("com.liferay.")) {
+
+			return bundleSymbolicName;
+		}
+
+		return null;
 	}
 
 	private static final String[] _SKIP_DIR_NAMES = {

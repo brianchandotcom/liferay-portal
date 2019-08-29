@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.account.admin.web.internal.action;
+package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

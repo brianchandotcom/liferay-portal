@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,27 +35,18 @@ public class DDMFormLayoutJSONSerializerImpl
 
 	@Override
 	public String serialize(DDMFormLayout ddmFormLayout) {
-		DDMFormLayoutSerializer ddmFormLayoutSerializer =
-			_ddmFormLayoutSerializerTracker.getDDMFormLayoutSerializer("json");
-
 		DDMFormLayoutSerializerSerializeRequest.Builder builder =
 			DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormLayout);
 
 		DDMFormLayoutSerializerSerializeResponse
 			ddmFormLayoutSerializerSerializeResponse =
-				ddmFormLayoutSerializer.serialize(builder.build());
+				_jsonDDMFormLayoutSerializer.serialize(builder.build());
 
 		return ddmFormLayoutSerializerSerializeResponse.getContent();
 	}
 
-	@Reference(unbind = "-")
-	public void setDDMFormLayoutSerializerTracker(
-		DDMFormLayoutSerializerTracker ddmFormLayoutSerializerTracker) {
-
-		_ddmFormLayoutSerializerTracker = ddmFormLayoutSerializerTracker;
-	}
-
-	private DDMFormLayoutSerializerTracker _ddmFormLayoutSerializerTracker;
+	@Reference(target = "(ddm.form.layout.serializer.type=json)")
+	private DDMFormLayoutSerializer _jsonDDMFormLayoutSerializer;
 
 }

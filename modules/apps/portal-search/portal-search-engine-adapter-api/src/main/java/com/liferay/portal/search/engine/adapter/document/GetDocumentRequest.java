@@ -64,8 +64,16 @@ public class GetDocumentRequest
 		return _type;
 	}
 
+	public boolean isFetchSource() {
+		return _fetchSource;
+	}
+
 	public boolean isRefresh() {
 		return _refresh;
+	}
+
+	public void setFetchSource(boolean fetchSource) {
+		_fetchSource = fetchSource;
 	}
 
 	public void setFetchSourceExclude(String... fetchSourceExclude) {
@@ -88,6 +96,7 @@ public class GetDocumentRequest
 		_type = type;
 	}
 
+	private boolean _fetchSource;
 	private String[] _fetchSourceExclude;
 	private String[] _fetchSourceInclude;
 	private final String _id;

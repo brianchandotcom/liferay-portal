@@ -13,6 +13,7 @@
  */
 
 export const segmentsExperiment = {
+	confidenceLevel: 0,
 	description: 'Experiment 1 description',
 	editable: true,
 	goal: {

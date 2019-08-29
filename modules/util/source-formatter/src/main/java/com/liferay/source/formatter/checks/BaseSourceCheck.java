@@ -370,6 +370,18 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return _maxLineLength;
 	}
 
+	protected String getModulesPropertiesContent(String absolutePath)
+		throws IOException {
+
+		if (!isPortalSource()) {
+			return getPortalContent(
+				_MODULES_PROPERTIES_FILE_NAME, absolutePath);
+		}
+
+		return getContent(
+			_MODULES_PROPERTIES_FILE_NAME, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+	}
+
 	protected List<String> getPluginsInsideModulesDirectoryNames() {
 		return _pluginsInsideModulesDirectoryNames;
 	}
@@ -684,6 +696,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private static final String _MODULES_PROPERTIES_FILE_NAME =
+		"modules/modules.properties";
 
 	private JSONObject _attributesJSONObject = new JSONObjectImpl();
 	private final Map<String, String> _attributeValueMap =

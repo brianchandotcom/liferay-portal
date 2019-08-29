@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 
 import java.io.IOException;
@@ -146,18 +145,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		return matcher.group();
 	}
 
-	private String _getModulesPropertiesContent(String absolutePath)
-		throws IOException {
-
-		if (!isPortalSource()) {
-			return getPortalContent(
-				_MODULES_PROPERTIES_FILE_NAME, absolutePath);
-		}
-
-		return getContent(
-			_MODULES_PROPERTIES_FILE_NAME, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-	}
-
 	private synchronized Map<String, Integer> _getPublishedMajorVersionsMap(
 			String absolutePath)
 		throws IOException {
@@ -166,7 +153,7 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 			return _publishedMajorVersionsMap;
 		}
 
-		String content = _getModulesPropertiesContent(absolutePath);
+		String content = getModulesPropertiesContent(absolutePath);
 
 		if (Validator.isNull(content)) {
 			_publishedMajorVersionsMap = Collections.emptyMap();
@@ -243,9 +230,6 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 
 		return false;
 	}
-
-	private static final String _MODULES_PROPERTIES_FILE_NAME =
-		"modules/modules.properties";
 
 	private static final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");

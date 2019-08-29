@@ -20,6 +20,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -104,7 +105,17 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					fragmentEntryLink.getNamespace(), 0,
 					fragmentEntryLink.getRendererKey(), serviceContext);
 
+			DefaultFragmentRendererContext fragmentRendererContext =
+				new DefaultFragmentRendererContext(fragmentEntryLink);
+
+			fragmentRendererContext.setLocale(serviceContext.getLocale());
+
 			jsonObject.put(
+				"configuration",
+				JSONFactoryUtil.createJSONObject(
+					_fragmentRendererController.getConfiguration(
+						fragmentRendererContext))
+			).put(
 				"defaultConfigurationValues",
 				FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
 					duplicateFragmentEntryLink.getConfiguration())
@@ -121,12 +132,10 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getRendererKey(), serviceContext);
 
-			String configuration = null;
 			String fragmentEntryKey = null;
 			String name = null;
 
 			if (fragmentEntry != null) {
-				configuration = fragmentEntry.getConfiguration();
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
 				name = fragmentEntry.getName();
 			}
@@ -135,15 +144,11 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 					_fragmentRendererTracker.getFragmentRenderer(
 						fragmentEntryLink.getRendererKey());
 
-				configuration = fragmentRenderer.getConfiguration(
-					new DefaultFragmentRendererContext(fragmentEntryLink));
 				fragmentEntryKey = fragmentRenderer.getKey();
 				name = fragmentRenderer.getLabel(serviceContext.getLocale());
 			}
 
 			jsonObject.put(
-				"configuration", JSONFactoryUtil.createJSONObject(configuration)
-			).put(
 				"fragmentEntryKey", fragmentEntryKey
 			).put(
 				"name", name
@@ -204,6 +209,9 @@ public class DuplicateFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;

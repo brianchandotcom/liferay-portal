@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -58,7 +57,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
@@ -742,20 +740,10 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		field.set(_ddm, _ddmFormValuesDeserializer);
 
-		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker =
-			Mockito.mock(DDMFormValuesSerializerTracker.class);
-
-		Mockito.when(
-			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer(
-				Mockito.anyString())
-		).thenReturn(
-			_ddmFormValuesSerializer
-		);
-
 		field = ReflectionUtil.getDeclaredField(
-			DDMImpl.class, "_ddmFormValuesSerializerTracker");
+			DDMImpl.class, "_jsonDDMFormValuesSerializer");
 
-		field.set(_ddm, ddmFormValuesSerializerTracker);
+		field.set(_ddm, _ddmFormValuesSerializer);
 	}
 
 	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {

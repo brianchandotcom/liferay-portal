@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceEx
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -326,16 +325,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	protected String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializer ddmFormValuesSerializer =
-			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
-
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-				ddmFormValuesSerializer.serialize(builder.build());
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
@@ -357,9 +353,9 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Reference
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
-
-	@Reference
 	private DDMFormValuesValidator _ddmFormValuesValidator;
+
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 }

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,27 +35,18 @@ public class DDMFormValuesJSONSerializerImpl
 
 	@Override
 	public String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializer ddmFormValuesSerializer =
-			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
-
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-				ddmFormValuesSerializer.serialize(builder.build());
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesSerializerTracker(
-		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker) {
-
-		_ddmFormValuesSerializerTracker = ddmFormValuesSerializerTracker;
-	}
-
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 }

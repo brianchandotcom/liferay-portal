@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeR
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -209,16 +208,13 @@ public class DDLRecordStagedModelDataHandler
 	}
 
 	protected String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializer ddmFormValuesSerializer =
-			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
-
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-				ddmFormValuesSerializer.serialize(builder.build());
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
@@ -250,13 +246,6 @@ public class DDLRecordStagedModelDataHandler
 
 		_ddmFormValuesExportImportContentProcessor =
 			ddmFormValuesExportImportContentProcessor;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesSerializerTracker(
-		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker) {
-
-		_ddmFormValuesSerializerTracker = ddmFormValuesSerializerTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -297,10 +286,12 @@ public class DDLRecordStagedModelDataHandler
 	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
 	private ExportImportContentProcessor<DDMFormValues>
 		_ddmFormValuesExportImportContentProcessor;
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 
 	@Reference(target = "(ddm.form.values.deserializer.type=json)")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 	private StorageEngine _storageEngine;
 

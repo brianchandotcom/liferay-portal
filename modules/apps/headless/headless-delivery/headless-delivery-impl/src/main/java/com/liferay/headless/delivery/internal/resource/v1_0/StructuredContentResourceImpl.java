@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -811,16 +810,13 @@ public class StructuredContentResourceImpl
 	}
 
 	private String _toString(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializer ddmFormValuesSerializer =
-			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
-
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-				ddmFormValuesSerializer.serialize(builder.build());
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
@@ -873,9 +869,6 @@ public class StructuredContentResourceImpl
 	private DDM _ddm;
 
 	@Reference
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
-
-	@Reference
 	private DDMFormValuesValidator _ddmFormValuesValidator;
 
 	@Reference
@@ -916,6 +909,9 @@ public class StructuredContentResourceImpl
 
 	@Reference
 	private JournalFolderService _journalFolderService;
+
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

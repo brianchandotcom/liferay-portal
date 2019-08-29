@@ -181,8 +181,15 @@ public class GradleDependencyVersionCheck extends BaseFileCheck {
 		for (String line : lines) {
 			String[] array = StringUtil.split(line, StringPool.EQUAL);
 
-			if (array.length == 2) {
-				bundleVersionsMap.put(array[0], array[1]);
+			if (array.length != 2) {
+				continue;
+			}
+
+			String key = array[0];
+
+			if (key.startsWith("bnd.version[")) {
+				bundleVersionsMap.put(
+					key.substring(12, key.length() - 1), array[1]);
 			}
 		}
 

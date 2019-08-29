@@ -113,7 +113,8 @@ public class ModulesPropertiesUtil {
 
 					if (Validator.isNotNull(bundleVersion)) {
 						bundleInformationMap.put(
-							bundleSymbolicName, bundleVersion);
+							"bnd.version[" + bundleSymbolicName + "]",
+							bundleVersion);
 					}
 
 					return FileVisitResult.SKIP_SUBTREE;

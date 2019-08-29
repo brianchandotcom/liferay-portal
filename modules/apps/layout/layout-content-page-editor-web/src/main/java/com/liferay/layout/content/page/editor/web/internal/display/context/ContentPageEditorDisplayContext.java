@@ -492,26 +492,6 @@ public class ContentPageEditorDisplayContext {
 			soyContexts.add(availableSoyContext);
 		}
 
-		if (!pageIsDisplayPage) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put("sidebarPanelId", "separator");
-
-			soyContexts.add(availableSoyContext);
-
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put(
-				"icon", "list-ul"
-			).put(
-				"label", LanguageUtil.get(resourceBundle, "contents")
-			).put(
-				"sidebarPanelId", "contents"
-			);
-
-			soyContexts.add(availableSoyContext);
-		}
-
 		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
 		availableSoyContext.put(

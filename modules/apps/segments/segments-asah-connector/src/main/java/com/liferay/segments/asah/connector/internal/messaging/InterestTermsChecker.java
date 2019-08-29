@@ -14,10 +14,12 @@
 
 package com.liferay.segments.asah.connector.internal.messaging;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.asah.connector.internal.cache.AsahInterestTermCache;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
@@ -70,6 +72,10 @@ public class InterestTermsChecker {
 		List<Topic> topics = interestTermsResults.getItems();
 
 		if (ListUtil.isEmpty(topics)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No interest terms received for user ID " + userId);
+			}
+
 			_asahInterestTermCache.putInterestTerms(userId, new String[0]);
 
 			return;
@@ -88,6 +94,13 @@ public class InterestTermsChecker {
 		).toArray(
 			String[]::new
 		);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Interest terms \"", StringUtil.merge(terms),
+					"\" received for user ID ", userId));
+		}
 
 		_asahInterestTermCache.putInterestTerms(userId, terms);
 	}

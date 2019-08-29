@@ -17,6 +17,9 @@ package com.liferay.segments.asah.connector.internal.asset.list.asset.entry.quer
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -49,15 +52,31 @@ public class AsahInterestTermAssetListAssetEntryQueryProcessor
 		boolean enableContentRecommendation = GetterUtil.getBoolean(
 			unicodeProperties.getProperty("enableContentRecommendation"));
 
-		if (enableContentRecommendation &&
-			(_asahInterestTermProvider != null)) {
+		if (!enableContentRecommendation ||
+			(_asahInterestTermProvider == null)) {
 
-			String terms = StringUtil.merge(
-				_asahInterestTermProvider.getInterestTerms(userId));
-
-			assetEntryQuery.setKeywords(terms);
+			return;
 		}
+
+		String terms = StringUtil.merge(
+			_asahInterestTermProvider.getInterestTerms(userId));
+
+		if (Validator.isNull(terms)) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Adding interest terms \"", terms,
+					"\" to asset query for user ID ", userId));
+		}
+
+		assetEntryQuery.setKeywords(terms);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AsahInterestTermAssetListAssetEntryQueryProcessor.class);
 
 	@Reference
 	private AsahInterestTermProvider _asahInterestTermProvider;

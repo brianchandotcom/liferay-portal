@@ -1078,7 +1078,7 @@ definition {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
 		AssertTextEquals(
-			locator1 = "Portlet#H2_HEADER",
+			locator1 = "WikiEntry#TITLE",
 			value1 = "${wikiPageTitle}");
 
 		AssertTextEquals(

@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -60,8 +59,8 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		_ddmJSONStorageAdapter = new DDMJSONStorageAdapter();
 
 		_ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		_ddmJSONStorageAdapter.ddmFormValuesDeserializerTracker =
-			_ddmFormValuesDeserializerTracker;
+		_ddmJSONStorageAdapter.jsonDDMFormValuesDeserializer =
+			_ddmFormValuesDeserializer;
 		_ddmJSONStorageAdapter.ddmFormValuesSerializerTracker =
 			_ddmFormValuesSerializerTracker;
 
@@ -70,13 +69,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 				Matchers.anyString())
 		).thenReturn(
 			_ddmFormValuesSerializer
-		);
-
-		when(
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormValuesDeserializer
 		);
 	}
 
@@ -360,9 +352,6 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 
 	@Mock
 	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
-
-	@Mock
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 	@Mock
 	private DDMFormValuesSerializer _ddmFormValuesSerializer;

@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -51,15 +50,8 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 
 		_ddmDataProviderInstanceSettings.ddmDataProviderTracker =
 			_ddmDataProviderTracker;
-		_ddmDataProviderInstanceSettings.ddmFormValuesDeserializerTracker =
-			_ddmFormValuesDeserializerTracker;
-
-		when(
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormValuesDeserializer
-		);
+		_ddmDataProviderInstanceSettings.jsonDDMFormValuesDeserializer =
+			_ddmFormValuesDeserializer;
 	}
 
 	@Test
@@ -150,8 +142,5 @@ public class DDMDataProviderInstanceSettingsImplTest extends PowerMockito {
 
 	@Mock
 	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
-
-	@Mock
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 }

@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -62,17 +61,13 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -219,13 +214,6 @@ public class DDLRecordSetStagedModelDataHandler
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesDeserializerTracker(
-		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
-
-		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
 		unbind = "-"
@@ -237,7 +225,10 @@ public class DDLRecordSetStagedModelDataHandler
 	}
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
 	private StagedModelRepository<DDLRecordSet> _stagedModelRepository;
 
 }

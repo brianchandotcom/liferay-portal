@@ -16,61 +16,31 @@ package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(immediate = true, service = DDMFormValuesDeserializerTracker.class)
+@Deprecated
 public class DDMFormValuesDeserializerTrackerImpl
 	implements DDMFormValuesDeserializerTracker {
 
 	@Override
 	public DDMFormValuesDeserializer getDDMFormValuesDeserializer(String type) {
-		return _ddmFormValuesDeserializers.get(type);
+		if (Objects.equals(type, "json")) {
+			return _jsonDDMFormValuesDeserializer;
+		}
+
+		return null;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMFormValuesDeserializer(
-		DDMFormValuesDeserializer ddmFormValuesDeserializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.values.deserializer.type");
-
-		_ddmFormValuesDeserializers.put(type, ddmFormValuesDeserializer);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_ddmFormValuesDeserializers.clear();
-	}
-
-	protected void removeDDMFormValuesDeserializer(
-		DDMFormValuesDeserializer ddmFormValuesDeserializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.values.deserializer.type");
-
-		_ddmFormValuesDeserializers.remove(type);
-	}
-
-	private final Map<String, DDMFormValuesDeserializer>
-		_ddmFormValuesDeserializers = new TreeMap<>();
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 }

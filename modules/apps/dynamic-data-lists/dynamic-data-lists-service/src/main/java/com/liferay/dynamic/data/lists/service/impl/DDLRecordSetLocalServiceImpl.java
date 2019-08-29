@@ -27,7 +27,6 @@ import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseI
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -798,17 +797,13 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -1024,9 +1019,6 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Reference
-	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
-
-	@Reference
 	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
 
 	@Reference
@@ -1046,5 +1038,8 @@ public class DDLRecordSetLocalServiceImpl
 
 	@Reference
 	private DDLRecordSetVersionLocalService _ddlRecordSetVersionLocalService;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 }

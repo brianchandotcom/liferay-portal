@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -118,17 +117,13 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 	}
 
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -179,8 +174,8 @@ public class DDMDataProviderInstanceOutputParametersDataProvider
 	@Reference
 	protected DDMDataProviderTracker ddmDataProviderTracker;
 
-	@Reference
-	protected DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker;
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	protected DDMFormValuesDeserializer jsonDDMFormValuesDeserializer;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInstanceOutputParametersDataProvider.class);

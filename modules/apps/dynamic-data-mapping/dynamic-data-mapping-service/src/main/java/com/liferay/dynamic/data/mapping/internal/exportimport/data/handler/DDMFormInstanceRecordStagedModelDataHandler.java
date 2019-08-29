@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.internal.exportimport.staged.model.repos
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -70,17 +69,13 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	}
 
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm) {
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				content, ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -277,9 +272,6 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 	private DDMFormInstanceRecordStagedModelRepository
 		_ddmFormInstanceRecordStagedModelRepository;
 
-	@Reference(service = DDMFormValuesDeserializerTracker.class)
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
-
 	@Reference(
 		service = ExportImportContentProcessor.class,
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"
@@ -289,5 +281,8 @@ public class DDMFormInstanceRecordStagedModelDataHandler
 
 	@Reference(service = DDMFormValuesSerializerTracker.class)
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 }

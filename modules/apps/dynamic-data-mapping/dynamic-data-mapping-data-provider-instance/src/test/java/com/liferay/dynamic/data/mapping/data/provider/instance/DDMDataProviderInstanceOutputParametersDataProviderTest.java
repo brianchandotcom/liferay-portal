@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -78,15 +77,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 		_ddmDataProviderInstanceOutputParametersDataProvider.
 			ddmDataProviderTracker = _ddmDataProviderTracker;
 		_ddmDataProviderInstanceOutputParametersDataProvider.
-			ddmFormValuesDeserializerTracker =
-				_ddmFormValuesDeserializerTracker;
-
-		when(
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormValuesDeserializer
-		);
+			jsonDDMFormValuesDeserializer = _ddmFormValuesDeserializer;
 	}
 
 	@Test
@@ -381,8 +372,5 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest
 
 	@Mock
 	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
-
-	@Mock
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 
 }

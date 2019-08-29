@@ -26,7 +26,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -233,17 +232,13 @@ public class DDMImpl implements DDM {
 	public DDMFormValues getDDMFormValues(
 		DDMForm ddmForm, String serializedJSONDDMFormValues) {
 
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				serializedJSONDDMFormValues, ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -1255,13 +1250,6 @@ public class DDMImpl implements DDM {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormValuesDeserializerTracker(
-		DDMFormValuesDeserializerTracker ddmFormValuesDeserializerTracker) {
-
-		_ddmFormValuesDeserializerTracker = ddmFormValuesDeserializerTracker;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMFormValuesSerializerTracker(
 		DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker) {
 
@@ -1362,7 +1350,6 @@ public class DDMImpl implements DDM {
 	private static final Log _log = LogFactoryUtil.getLog(DDMImpl.class);
 
 	private DDMFormSerializerTracker _ddmFormSerializerTracker;
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
 	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private DLAppLocalService _dlAppLocalService;
@@ -1379,6 +1366,9 @@ public class DDMImpl implements DDM {
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 	private LayoutLocalService _layoutLocalService;
 

@@ -145,7 +145,8 @@ public class FragmentEntryLinkStagingTest {
 
 		FragmentStagingTestUtil.publishLayouts(_stagingGroup, _liveGroup);
 
-		//StagingLocalServiceUtil.disableStaging(_liveGroup, new ServiceContext());
+		StagingLocalServiceUtil.disableStaging(
+			_liveGroup, new ServiceContext());
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(

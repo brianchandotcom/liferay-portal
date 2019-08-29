@@ -616,6 +616,8 @@ xpack.monitoring.collection.enabled: true</echo>
 	<target name="start-elasticsearch">
 		<lstopwatch action="start" name="start.elasticsearch" />
 
+		<configure-elasticsearch7-test-properties />
+
 		<unzip-elasticsearch />
 
 		<prepare-elasticsearch />
@@ -797,6 +799,8 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="stop-elasticsearch">
+		<configure-elasticsearch7-test-properties />
+
 		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
 		<if>
@@ -865,6 +869,8 @@ xpack.monitoring.collection.enabled: true</echo>
 	</target>
 
 	<target name="stop-kibana">
+		<configure-elasticsearch7-test-properties />
+
 		<if>
 			<os family="unix" />
 			<then>

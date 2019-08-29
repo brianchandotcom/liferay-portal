@@ -15,19 +15,19 @@
 package com.liferay.dynamic.data.mapping.internal.storage;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -40,6 +40,14 @@ import java.util.Locale;
  * @author Bruno Basto
  */
 public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
+
+	protected DocumentLibraryFieldRenderer(
+		DLAppService dlAppService, JSONFactory jsonFactory, Language language) {
+
+		_dlAppService = dlAppService;
+		_jsonFactory = jsonFactory;
+		_language = language;
+	}
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -73,7 +81,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = JSONFactoryUtil.createJSONObject(json);
+			jsonObject = _jsonFactory.createJSONObject(json);
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
@@ -87,7 +95,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 		String fileEntryUUID = jsonObject.getString("uuid");
 
 		try {
-			FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 				fileEntryUUID, fileEntryGroupId);
 
 			return fileEntry.getTitle();
@@ -96,7 +104,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 			if (e instanceof NoSuchFileEntryException ||
 				e instanceof PrincipalException) {
 
-				return LanguageUtil.format(
+				return _language.format(
 					locale, "is-temporarily-unavailable", "content");
 			}
 		}
@@ -106,5 +114,9 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryFieldRenderer.class);
+
+	private final DLAppService _dlAppService;
+	private final JSONFactory _jsonFactory;
+	private final Language _language;
 
 }

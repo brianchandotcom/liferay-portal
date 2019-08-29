@@ -23,10 +23,10 @@ import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -39,6 +39,10 @@ import java.util.Locale;
  * @author Bruno Basto
  */
 public class StringFieldRenderer extends BaseFieldRenderer {
+
+	protected StringFieldRenderer(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -134,7 +138,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 			Field field, String json, Locale locale)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		if (jsonArray.length() == 0) {
 			return StringPool.BLANK;
@@ -160,5 +164,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		return sb.toString();
 	}
+
+	private final JSONFactory _jsonFactory;
 
 }

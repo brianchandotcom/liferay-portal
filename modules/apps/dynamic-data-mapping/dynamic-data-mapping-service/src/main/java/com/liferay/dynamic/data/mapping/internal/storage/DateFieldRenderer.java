@@ -17,11 +17,11 @@ package com.liferay.dynamic.data.mapping.internal.storage;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -35,6 +35,10 @@ import java.util.Locale;
  * @author Manuel de la Peña
  */
 public class DateFieldRenderer extends BaseFieldRenderer {
+
+	protected DateFieldRenderer(Language language) {
+		_language = language;
+	}
 
 	@Override
 	protected String doRender(Field field, Locale locale) throws Exception {
@@ -71,12 +75,14 @@ public class DateFieldRenderer extends BaseFieldRenderer {
 				_log.warn(e, e);
 			}
 
-			return LanguageUtil.format(
+			return _language.format(
 				locale, "is-temporarily-unavailable", "content");
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateFieldRenderer.class);
+
+	private final Language _language;
 
 }

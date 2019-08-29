@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
@@ -140,7 +141,11 @@ public class SLATaskResultWorkflowMetricsIndexer
 						}
 					}));
 
-		searchEngineAdapter.execute(bulkDocumentRequest);
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
 	}
 
 	@Override

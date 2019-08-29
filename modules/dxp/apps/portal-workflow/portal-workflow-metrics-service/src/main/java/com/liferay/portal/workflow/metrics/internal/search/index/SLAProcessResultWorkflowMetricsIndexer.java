@@ -465,7 +465,11 @@ public class SLAProcessResultWorkflowMetricsIndexer
 			bulkDocumentRequest::addBulkableDocumentRequest
 		);
 
-		searchEngineAdapter.execute(bulkDocumentRequest);
+		if (ListUtil.isNotEmpty(
+				bulkDocumentRequest.getBulkableDocumentRequests())) {
+
+			searchEngineAdapter.execute(bulkDocumentRequest);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

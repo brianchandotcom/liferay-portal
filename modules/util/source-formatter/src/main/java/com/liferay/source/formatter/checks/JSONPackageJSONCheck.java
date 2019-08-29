@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.util.FileUtil;
@@ -24,7 +23,6 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -141,9 +139,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 		JSONObject dependenciesJSONObject = jsonObject.getJSONObject(
 			"dependencies");
 
-		List<String> enforceMinorReleaseRangePackageNames = getAttributeValues(
-			_ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES, absolutePath);
-
 		Iterator<String> keys = dependenciesJSONObject.keys();
 
 		while (keys.hasNext()) {
@@ -163,16 +158,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 						"\"", dependencyName, "\": \"", actualVersion, "\""),
 					StringBundler.concat(
 						"\"", dependencyName, "\": \"", expectedVersion, "\""));
-			}
-
-			if (!actualVersion.startsWith(StringPool.CARET) &&
-				enforceMinorReleaseRangePackageNames.contains(dependencyName)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Version for '", dependencyName,
-						"' should start with '^'"));
 			}
 		}
 
@@ -246,9 +231,6 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		return _expectedDependencyVersionsMap;
 	}
-
-	private static final String _ENFORCE_MINOR_RELEASE_RANGE_DEPENDENCY_NAMES =
-		"enforceMinorReleaseRangeDependencyNames";
 
 	private Map<String, String> _expectedDependencyVersionsMap;
 

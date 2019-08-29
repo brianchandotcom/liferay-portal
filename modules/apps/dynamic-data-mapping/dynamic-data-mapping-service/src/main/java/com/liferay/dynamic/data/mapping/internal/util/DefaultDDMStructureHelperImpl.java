@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRespons
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -223,17 +222,13 @@ public class DefaultDDMStructureHelperImpl
 			"layout");
 
 		if (structureElementLayoutElement != null) {
-			DDMFormLayoutDeserializer ddmFormLayoutDeserializer =
-				_ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
-					"json");
-
 			DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
 				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
 					structureElementLayoutElement.getTextTrim());
 
 			DDMFormLayoutDeserializerDeserializeResponse
 				ddmFormLayoutDeserializerDeserializeResponse =
-					ddmFormLayoutDeserializer.deserialize(builder.build());
+					_jsonDDMFormLayoutDeserializer.deserialize(builder.build());
 
 			return ddmFormLayoutDeserializerDeserializeResponse.
 				getDDMFormLayout();
@@ -263,13 +258,6 @@ public class DefaultDDMStructureHelperImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormLayoutDeserializerTracker(
-		DDMFormLayoutDeserializerTracker ddmFormLayoutDeserializerTracker) {
-
-		_ddmFormLayoutDeserializerTracker = ddmFormLayoutDeserializerTracker;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -289,13 +277,15 @@ public class DefaultDDMStructureHelperImpl
 	}
 
 	private DDM _ddm;
-	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMXML _ddmXML;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
+	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 	@Reference
 	private Portal _portal;

@@ -16,61 +16,31 @@ package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerTracker;
-import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
 @Component(immediate = true, service = DDMFormLayoutDeserializerTracker.class)
+@Deprecated
 public class DDMFormLayoutDeserializerTrackerImpl
 	implements DDMFormLayoutDeserializerTracker {
 
 	@Override
 	public DDMFormLayoutDeserializer getDDMFormLayoutDeserializer(String type) {
-		return _ddmFormLayoutDeserializers.get(type);
+		if (Objects.equals(type, "json")) {
+			return _jsonDDMFormLayoutDeserializer;
+		}
+
+		return null;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addDDMFormLayoutDeserializer(
-		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.layout.deserializer.type");
-
-		_ddmFormLayoutDeserializers.put(type, ddmFormLayoutDeserializer);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_ddmFormLayoutDeserializers.clear();
-	}
-
-	protected void removeDDMFormLayoutDeserializer(
-		DDMFormLayoutDeserializer ddmFormLayoutDeserializer,
-		Map<String, Object> properties) {
-
-		String type = MapUtil.getString(
-			properties, "ddm.form.layout.deserializer.type");
-
-		_ddmFormLayoutDeserializers.remove(type);
-	}
-
-	private final Map<String, DDMFormLayoutDeserializer>
-		_ddmFormLayoutDeserializers = new TreeMap<>();
+	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
+	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 }

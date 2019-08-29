@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.internal.search.util.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
@@ -207,17 +206,13 @@ public class DDMStructureLayoutLocalServiceImpl
 	public DDMFormLayout getStructureLayoutDDMFormLayout(
 		DDMStructureLayout structureLayout) {
 
-		DDMFormLayoutDeserializer ddmFormLayoutDeserializer =
-			_ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
-				"json");
-
 		DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
 			DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
 				structureLayout.getDefinition());
 
 		DDMFormLayoutDeserializerDeserializeResponse
 			ddmFormLayoutDeserializerDeserializeResponse =
-				ddmFormLayoutDeserializer.deserialize(builder.build());
+				_jsonDDMFormLayoutDeserializer.deserialize(builder.build());
 
 		return ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
 	}
@@ -356,9 +351,6 @@ public class DDMStructureLayoutLocalServiceImpl
 	}
 
 	@Reference
-	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
-
-	@Reference
 	private DDMFormLayoutSerializerTracker _ddmFormLayoutSerializerTracker;
 
 	@Reference
@@ -366,5 +358,8 @@ public class DDMStructureLayoutLocalServiceImpl
 
 	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
+
+	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
+	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 }

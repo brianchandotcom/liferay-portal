@@ -891,6 +891,58 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 			});
 
+		deployFastTask.dependsOn(
+			GradleUtil.getTask(project, JavaPlugin.CLASSES_TASK_NAME));
+
+		SourceSet mainSourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		deployFastTask.from(
+			mainSourceSet.getOutput(),
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(
+						new Action<FileCopyDetails>() {
+
+							@Override
+							public void execute(
+								FileCopyDetails fileCopyDetails) {
+
+								RelativePath relativePath =
+									fileCopyDetails.getRelativePath();
+
+								String[] segments = relativePath.getSegments();
+
+								if ((segments.length > 4) &&
+									segments[2].equals("META-INF") &&
+									segments[3].equals("resources")) {
+
+									List<String> list = new ArrayList<>();
+
+									list.add(segments[0]);
+									list.add(segments[1]);
+
+									for (int i = 4; i < segments.length; i++) {
+										list.add(segments[i]);
+									}
+
+									segments = list.toArray(new String[0]);
+								}
+
+								fileCopyDetails.setRelativePath(
+									new RelativePath(true, segments));
+							}
+
+						});
+
+					copySpec.include("**/*.js");
+					copySpec.into(pathName);
+				}
+
+			});
+
 		return deployFastTask;
 	}
 

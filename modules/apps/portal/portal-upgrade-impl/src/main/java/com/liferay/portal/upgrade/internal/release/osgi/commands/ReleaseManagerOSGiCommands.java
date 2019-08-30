@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
+import com.liferay.portal.upgrade.internal.executor.SwappedLogExecutor;
 import com.liferay.portal.upgrade.internal.executor.UpgradeExecutor;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -141,9 +142,12 @@ public class ReleaseManagerOSGiCommands {
 			_upgradeExecutor.execute(bundleSymbolicName, upgradeInfos);
 		}
 		catch (Throwable t) {
-			_log.error(
-				"Failed upgrade process for module ".concat(bundleSymbolicName),
-				t);
+			_swappedLogExecutor.execute(
+				bundleSymbolicName,
+				() -> _log.error(
+					"Failed upgrade process for module ".concat(
+						bundleSymbolicName),
+					t));
 		}
 
 		return null;
@@ -316,10 +320,12 @@ public class ReleaseManagerOSGiCommands {
 					upgradableBundleSymbolicName, upgradeInfos);
 			}
 			catch (Throwable t) {
-				_log.error(
-					"Failed upgrade process for module ".concat(
-						upgradableBundleSymbolicName),
-					t);
+				_swappedLogExecutor.execute(
+					upgradableBundleSymbolicName,
+					() -> _log.error(
+						"Failed upgrade process for module ".concat(
+							upgradableBundleSymbolicName),
+						t));
 
 				upgradeThrewExceptionBundleSymbolicNames.add(
 					upgradableBundleSymbolicName);
@@ -385,6 +391,9 @@ public class ReleaseManagerOSGiCommands {
 	private ReleaseLocalService _releaseLocalService;
 	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
+
+	@Reference
+	private SwappedLogExecutor _swappedLogExecutor;
 
 	@Reference
 	private UpgradeExecutor _upgradeExecutor;

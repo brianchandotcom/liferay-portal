@@ -94,7 +94,7 @@ if (entryId > 0) {
 				body: data,
 				method: 'POST'
 			}).then(function(response) {
-				return repsonse.json();
+				return response.json();
 			}).then(function(data) {
 				if (!data.success) {
 					var message = A.one('#<portlet:namespace />errorMessage');

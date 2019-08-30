@@ -2,12 +2,12 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_2_0.dtd">
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.layout.seo">
-	<namespace>Layout</namespace>
-	<entity local-service="true" name="LayoutCanonicalURL" remote-service="true" uuid="true">
+	<namespace>LayoutSEO</namespace>
+	<entity local-service="true" name="LayoutSEOCanonicalURL" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="layoutCanonicalURLId" primary="true" type="long" />
+		<column name="layoutSEOCanonicalURLId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -31,7 +31,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_P_L" return-type="LayoutCanonicalURL" unique="true">
+		<finder name="G_P_L" return-type="LayoutSEOCanonicalURL" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="layoutId" />

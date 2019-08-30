@@ -83,15 +83,15 @@ if (entryId > 0) {
 
 			var searchInput = A.one('.contacts-portlet #<portlet:namespace />name');
 
-			var data = new URLSearchParams({
-				<portlet:namespace />end: end,
-				<portlet:namespace />filterBy: contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>',
-				<portlet:namespace />keywords: searchInput.get('value'),
-				<portlet:namespace />start: 0
-			});
+			var url = new URL(form.attr('action'));
 
-			Liferay.Util.fetch(from.attr('action'), {
-				body: data,
+			url.searchParams.set('<portlet:namespace />end', end);
+			url.searchParams.set('<portlet:namespace />filterBy', contactFilterSelect.get('value') || '<%= ContactsConstants.FILTER_BY_DEFAULT %>');
+			url.searchParams.set('<portlet:namespace />keywords', searchInput.get('value'));
+			url.searchParams.set('<portlet:namespace />start', 0);
+
+			Liferay.Util.fetch(url, {
+				body: new FormData(form.getDOM()),
 				method: 'POST'
 			}).then(function(response) {
 				return response.json();

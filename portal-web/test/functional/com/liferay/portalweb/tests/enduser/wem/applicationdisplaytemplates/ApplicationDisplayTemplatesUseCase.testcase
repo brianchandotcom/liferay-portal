@@ -412,7 +412,7 @@ definition {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "ADT Test Page",
-			widgetName = "Site Maps");
+			widgetName = "Site Map");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

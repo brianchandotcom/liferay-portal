@@ -16,42 +16,68 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
+<c:choose>
+	<c:when test="<%= SegmentsExperimentUtil.isAnalyticsEnabled(themeDisplay.getCompanyId()) %>">
 
-String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-experiment-root";
-%>
+		<%
+		SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExperimentDisplayContext)request.getAttribute(SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT);
 
-<div id="<%= segmentsExperimentRootId %>"></div>
+		String segmentsExperimentRootId = renderResponse.getNamespace() + "-segments-experiment-root";
+		%>
 
-<aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
-	segmentsExperimentsApp.default(
-		'<%= segmentsExperimentRootId %>',
-		{
-			initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
-			segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
-			segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject(locale) %>,
-			segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoalsJSONArray(locale) %>,
-			selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>'
-		},
-		{
-			contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
-			endpoints: {
-				createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
-				createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
-				deleteSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>',
-				editSegmentsExperimentStatusURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
-				editSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
-				editSegmentsVariantLayoutURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
-				editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
-				runSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
-	},
-			namespace: '<portlet:namespace />',
-			page: {
-				classPK: '<%= themeDisplay.getPlid() %>',
-				classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
-				type: '<%= layout.getType() %>'
-			}
-		}
-	);
-</aui:script>
+		<div id="<%= segmentsExperimentRootId %>"></div>
+
+		<aui:script require='<%= npmResolvedPackageName + "/js/index.es as segmentsExperimentsApp" %>'>
+			segmentsExperimentsApp.default(
+				'<%= segmentsExperimentRootId %>',
+				{
+					initialSegmentsVariants: <%= segmentsExperimentDisplayContext.getSegmentsExperimentRelsJSONArray(locale) %>,
+					segmentsExperiences: <%= segmentsExperimentDisplayContext.getSegmentsExperiencesJSONArray(locale) %>,
+					segmentsExperiment: <%= segmentsExperimentDisplayContext.getSegmentsExperimentJSONObject(locale) %>,
+					segmentsExperimentGoals: <%= segmentsExperimentDisplayContext.getSegmentsExperimentGoalsJSONArray(locale) %>,
+					selectedSegmentsExperienceId: '<%= segmentsExperimentDisplayContext.getSelectedSegmentsExperienceId() %>'
+				},
+				{
+					contentPageEditorNamespace: '<%= segmentsExperimentDisplayContext.getContentPageEditorPortletNamespace() %>',
+					endpoints: {
+						createSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsExperimentURL() %>',
+						createSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getCreateSegmentsVariantURL() %>',
+						deleteSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getDeleteSegmentsVariantURL() %>',
+						editSegmentsExperimentStatusURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentStatusURL() %>',
+						editSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsExperimentURL() %>',
+						editSegmentsVariantLayoutURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantLayoutURL() %>',
+						editSegmentsVariantURL: '<%= segmentsExperimentDisplayContext.getEditSegmentsVariantURL() %>',
+						runSegmentsExperimentURL: '<%= segmentsExperimentDisplayContext.getRunSegmentsExperimenttURL() %>'
+			},
+					namespace: '<portlet:namespace />',
+					page: {
+						classPK: '<%= themeDisplay.getPlid() %>',
+						classNameId: '<%= PortalUtil.getClassNameId(Layout.class.getName()) %>',
+						type: '<%= layout.getType() %>'
+					}
+				}
+			);
+		</aui:script>
+	</c:when>
+	<c:otherwise>
+		<div class="p-3 pt-5 text-center">
+			<liferay-ui:icon
+				alt="connect-to-analytics-cloud"
+				src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
+			/>
+
+			<h4 class="mt-3"><liferay-ui:message key="connect-to-analytics-cloud" /></h4>
+
+			<p><liferay-ui:message key="connect-to-analytics-cloud-help" /></p>
+
+			<liferay-ui:icon
+				label="<%= true %>"
+				linkCssClass="btn btn-secondary btn-sm mb-4"
+				markupView="lexicon"
+				message="start-free-trial"
+				target="_blank"
+				url="<%= SegmentsExperimentUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
+			/>
+		</div>
+	</c:otherwise>
+</c:choose>

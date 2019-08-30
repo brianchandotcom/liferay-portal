@@ -1,6 +1,6 @@
-create table LayoutCanonicalURL (
+create table LayoutSEOCanonicalURL (
 	uuid_ VARCHAR(75) null,
-	layoutCanonicalURLId LONG not null primary key,
+	layoutSEOCanonicalURLId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

@@ -36,7 +36,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		visible && (
 			<ClayModal observer={observer} size="lg">
 				<ClayModal.Header>
-					{Liferay.Language.get('review-and-start-test')}
+					{Liferay.Language.get('review-and-run-test')}
 				</ClayModal.Header>
 				<ClayModal.Body>
 					<h3 className="sheet-subtitle border-bottom-0 text-secondary">
@@ -53,7 +53,7 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 					<hr />
 
 					<h3 className="sheet-subtitle border-bottom-0 text-secondary">
-						{Liferay.Language.get('cofidence-level')}
+						{Liferay.Language.get('confidence-level')}
 					</h3>
 
 					<SliderWithLabel

@@ -87,6 +87,8 @@ function SegmentsExperiments({
 				</div>
 			)}
 
+			<hr />
+
 			{segmentsExperiment && (
 				<>
 					<div className="d-flex justify-content-between align-items-center">

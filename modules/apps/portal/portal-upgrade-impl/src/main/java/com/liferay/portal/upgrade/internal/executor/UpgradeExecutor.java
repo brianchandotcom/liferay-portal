@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 import com.liferay.portal.upgrade.internal.index.updater.IndexUpdaterUtil;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
@@ -116,10 +115,6 @@ public class UpgradeExecutor {
 		UpgradeExecutor.class);
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private OutputStreamContainerFactoryTracker
-		_outputStreamContainerFactoryTracker;
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;

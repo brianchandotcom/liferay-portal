@@ -474,7 +474,7 @@ definition {
 		PageEditor.viewComment(fragmentComment = "Title fragment comment");
 	}
 
-	@description = "This case ensures that the comment can be added and viewed when using the comment icon at the top of the fragment."
+	@description = "This case ensures that a comment can be added and viewed using the icon in the fragment topper."
 	@priority = "5"
 	test ViewCommentViaFragment {
 		property test.name.skip.portal.instance = "ContentPageReview#ViewCommentViaFragment";

@@ -1,24 +1,35 @@
-const content = fragmentElement.querySelector('.video');
-const errorMessage = content.querySelector('.error-message');
-const loadingIndicator = content.querySelector('.loading-animation');
-const videoContainer = content.querySelector('.video-container');
-const widthOption = parseInt(content.dataset.width || 0, 10);
-const heightOption = parseInt(content.dataset.height || 0, 10);
+let configuration = {};
+let handleProviderResize = () => {};
 
-const configuration = {
-	autoPlay: content.dataset.autoPlay === 'true',
-	hideControls: content.dataset.hideControls === 'true',
-	loop: content.dataset.loop === 'true',
-	mute: content.dataset.mute === 'true',
-	url: content.dataset.url,
-	width: widthOption,
-	height: heightOption
+let content = null;
+let videoContainer = null;
+let errorMessage = null;
+let loadingIndicator = null;
+
+const resize = () => {
+	content.style.width = '';
+	content.style.height = '';
+
+	requestAnimationFrame(() => {
+		try {
+			const boundingClientRect = content.getBoundingClientRect();
+
+			const width = configuration.width || boundingClientRect.width;
+			const height = configuration.height || width * 0.5625;
+
+			content.style.height = `${height}px`;
+			content.style.width = `${width}px`;
+		} catch (error) {
+			window.removeEventListener('resize', resize);
+		}
+	});
 };
 
 const showVideo = () => {
 	videoContainer.removeAttribute('aria-hidden');
 	errorMessage.parentElement.removeChild(errorMessage);
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
+	resize();
 };
 
 const showError = () => {
@@ -26,22 +37,6 @@ const showError = () => {
 	videoContainer.parentElement.removeChild(videoContainer);
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
 };
-
-const resize = () => {
-	content.style.width = '';
-	content.style.height = '';
-
-	requestAnimationFrame(() => {
-		const boundingClientRect = content.getBoundingClientRect();
-
-		configuration.width = widthOption || boundingClientRect.width;
-		configuration.height = heightOption || configuration.width * 0.5625;
-		content.style.height = `${configuration.height}px`;
-		content.style.width = `${configuration.width}px`;
-	});
-};
-
-let handleProviderResize = () => {};
 
 const youtubeProvider = {
 	getParameters: url => {
@@ -109,23 +104,33 @@ const youtubeProvider = {
 };
 
 const main = () => {
-	const providers = [youtubeProvider];
+	content = fragmentElement.querySelector('.video');
 
-	const handleResize = () => {
-		if (document.body.contains(content)) {
-			resize();
-			handleProviderResize();
-		} else {
-			window.removeEventListener('resize', handleResize);
-		}
+	if (!content) {
+		return requestAnimationFrame(main);
+	}
+
+	videoContainer = content.querySelector('.video-container');
+	errorMessage = content.querySelector('.error-message');
+	loadingIndicator = content.querySelector('.loading-animation');
+
+	configuration = {
+		autoPlay: content.dataset.autoPlay === 'true',
+		hideControls: content.dataset.hideControls === 'true',
+		loop: content.dataset.loop === 'true',
+		mute: content.dataset.mute === 'true',
+		url: content.dataset.url,
+		width: parseInt(content.dataset.width || 0, 10),
+		height: parseInt(content.dataset.height || 0, 10)
 	};
 
-	window.addEventListener('resize', handleResize);
-	resize();
+	window.removeEventListener('resize', resize);
+	window.addEventListener('resize', resize);
 
 	try {
 		let matched = false;
 		const url = new URL(configuration.url);
+		const providers = [youtubeProvider];
 
 		for (let i = 0; i < providers.length && !matched; i++) {
 			const provider = providers[i];

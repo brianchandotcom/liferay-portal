@@ -67,10 +67,12 @@ class FragmentEntryLinkContent extends Component {
 	/**
 	 * @inheritDoc
 	 */
-	rendered(firstRender) {
-		if (this.content) {
-			this._renderContent(this.content, {evaluateJs: firstRender});
-		}
+	rendered() {
+		requestAnimationFrame(() => {
+			if (this.content) {
+				this._renderContent(this.content, {evaluateJs: true});
+			}
+		});
 	}
 
 	/**
@@ -96,7 +98,9 @@ class FragmentEntryLinkContent extends Component {
 	 */
 	syncContent(newContent, prevContent) {
 		if (newContent && newContent !== prevContent) {
-			this._renderContent(newContent, {evaluateJs: true});
+			requestAnimationFrame(() => {
+				this._renderContent(newContent, {evaluateJs: true});
+			});
 		}
 	}
 

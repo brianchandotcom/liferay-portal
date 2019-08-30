@@ -21,6 +21,7 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -182,7 +183,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			"build.exclude.", ProjectDirType.class);
 
 		Files.walkFileTree(
-			projectPathRootDirPath,
+			projectPathRootDirPath, EnumSet.of(FileVisitOption.FOLLOW_LINKS),
+			10,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

@@ -23,6 +23,7 @@ runGradleTest {
 	doLast {
 		assert file("${liferay.liferayHome}/work/com.liferay.example-1.0.0/css/main_rtl.css").exists()
 		assert file("${liferay.liferayHome}/work/com.liferay.example-1.0.0/js/main.js").exists()
+		assert file("${liferay.liferayHome}/work/com.liferay.example-1.0.0/org/apache/jsp/init_jsp.class").exists()
 		assert file("${liferay.liferayHome}/work/com.liferay.example-1.0.0/org/apache/jsp/view_jsp.class").exists()
 	}
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -57,13 +58,12 @@ public class ContentPageLayoutEditorDisplayContext
 
 	public ContentPageLayoutEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK,
 		FragmentRendererController fragmentRendererController,
 		CommentManager commentManager) {
 
 		super(
-			httpServletRequest, renderResponse, className, classPK,
-			commentManager, fragmentRendererController);
+			httpServletRequest, renderResponse, commentManager,
+            fragmentRendererController);
 	}
 
 	@Override
@@ -182,7 +182,8 @@ public class ContentPageLayoutEditorDisplayContext
 
 		List<SegmentsExperience> segmentsExperiences =
 			SegmentsExperienceServiceUtil.getSegmentsExperiences(
-				getGroupId(), classNameId, classPK, true);
+				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
+				themeDisplay.getPlid(), true);
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
 			SoyContext segmentsExperienceSoyContext =
@@ -255,7 +256,9 @@ public class ContentPageLayoutEditorDisplayContext
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
+					themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					themeDisplay.getPlid(), true);
 
 		if (layoutPageTemplateStructure == null) {
 			return Collections.emptyList();

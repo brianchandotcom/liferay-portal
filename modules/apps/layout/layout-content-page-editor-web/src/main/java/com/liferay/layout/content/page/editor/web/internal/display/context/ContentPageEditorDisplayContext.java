@@ -146,16 +146,14 @@ public class ContentPageEditorDisplayContext {
 
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK, CommentManager commentManager,
-		FragmentRendererController fragmentRendererController) {
+		CommentManager commentManager,
+        FragmentRendererController fragmentRendererController) {
 
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
-		this.classPK = classPK;
 		_commentManager = commentManager;
 		_fragmentRendererController = fragmentRendererController;
 
-		classNameId = PortalUtil.getClassNameId(className);
 		infoDisplayContributorTracker =
 			(InfoDisplayContributorTracker)httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
@@ -199,9 +197,9 @@ public class ContentPageEditorDisplayContext {
 		).put(
 			"availableLanguages", _getAvailableLanguagesSoyContext()
 		).put(
-			"classNameId", classNameId
+			"classNameId", PortalUtil.getClassNameId(Layout.class.getName())
 		).put(
-			"classPK", classPK
+			"classPK", themeDisplay.getPlid()
 		).put(
 			"contentCreationEnabled",
 			ContentCreationContentPageEditorConfigurationUtil.
@@ -223,19 +221,14 @@ public class ContentPageEditorDisplayContext {
 			"duplicateFragmentEntryLinkURL",
 			getFragmentEntryActionURL(
 				"/content_layout/duplicate_fragment_entry_link")
+		).put(
+			"discardDraftRedirectURL", themeDisplay.getURLCurrent()
+		).put(
+			"discardDraftURL",
+			getFragmentEntryActionURL("/content_layout/discard_draft_layout")
+		).put(
+			"lookAndFeelURL", _getLookAndFeelURL()
 		);
-
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			soyContext.put(
-				"discardDraftRedirectURL", themeDisplay.getURLCurrent()
-			).put(
-				"discardDraftURL",
-				getFragmentEntryActionURL(
-					"/content_layout/discard_draft_layout")
-			).put(
-				"lookAndFeelURL", _getLookAndFeelURL()
-			);
-		}
 
 		FragmentServiceConfiguration fragmentServiceConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
@@ -322,7 +315,7 @@ public class ContentPageEditorDisplayContext {
 		);
 
 		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
-			_groupId, classNameId, classPK);
+			_groupId, themeDisplay.getPlid());
 
 		soyContext.put(
 			"mappedAssetEntries",
@@ -333,15 +326,10 @@ public class ContentPageEditorDisplayContext {
 				assetEntries, themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
-		);
-
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			soyContext.put(
-				"publishURL",
-				getFragmentEntryActionURL("/content_layout/publish_layout"));
-		}
-
-		soyContext.put(
+		).put(
+			"publishURL",
+			getFragmentEntryActionURL("/content_layout/publish_layout")
+		).put(
 			"renderFragmentEntryURL",
 			getFragmentEntryActionURL("/content_layout/render_fragment_entry")
 		).put(
@@ -380,7 +368,7 @@ public class ContentPageEditorDisplayContext {
 
 		boolean draft = false;
 
-		Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+		Layout draftLayout = themeDisplay.getLayout();
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			draftLayout.getClassPK());
@@ -531,25 +519,23 @@ public class ContentPageEditorDisplayContext {
 
 		soyContexts.add(availableSoyContext);
 
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put("sidebarPanelId", "separator");
+		availableSoyContext.put("sidebarPanelId", "separator");
 
-			soyContexts.add(availableSoyContext);
+		soyContexts.add(availableSoyContext);
 
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
 
-			availableSoyContext.put(
-				"icon", "format"
-			).put(
-				"label", LanguageUtil.get(resourceBundle, "look-and-feel")
-			).put(
-				"sidebarPanelId", "lookAndFeel"
-			);
+		availableSoyContext.put(
+			"icon", "format"
+		).put(
+			"label", LanguageUtil.get(resourceBundle, "look-and-feel")
+		).put(
+			"sidebarPanelId", "lookAndFeel"
+		);
 
-			soyContexts.add(availableSoyContext);
-		}
+		soyContexts.add(availableSoyContext);
 
 		if (ContentPageEditorConfigurationUtil.isCommentsEnabled(
 				themeDisplay.getCompanyId())) {
@@ -578,8 +564,6 @@ public class ContentPageEditorDisplayContext {
 		return _sidebarPanelSoyContexts;
 	}
 
-	protected final long classNameId;
-	protected final long classPK;
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
 	protected final HttpServletRequest request;
 	protected final ThemeDisplay themeDisplay;
@@ -1025,7 +1009,8 @@ public class ContentPageEditorDisplayContext {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				getGroupId(), classNameId, classPK);
+				getGroupId(), PortalUtil.getClassNameId(Layout.class.getName()),
+				themeDisplay.getPlid());
 
 		boolean isolated = themeDisplay.isIsolated();
 
@@ -1241,7 +1226,9 @@ public class ContentPageEditorDisplayContext {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					themeDisplay.getScopeGroupId(), classNameId, classPK, true);
+					themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(Layout.class.getName()),
+					themeDisplay.getPlid(), true);
 
 		_layoutData = layoutPageTemplateStructure.getData(
 			getSegmentsExperienceId());

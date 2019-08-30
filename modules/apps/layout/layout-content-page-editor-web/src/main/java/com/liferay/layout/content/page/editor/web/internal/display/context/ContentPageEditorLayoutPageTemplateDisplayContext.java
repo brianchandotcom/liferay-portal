@@ -45,13 +45,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		String className, long classPK, boolean pageIsDisplayPage,
-		FragmentRendererController fragmentRendererController,
+		boolean pageIsDisplayPage,
+        FragmentRendererController fragmentRendererController,
 		CommentManager commentManager) {
 
 		super(
-			httpServletRequest, renderResponse, className, classPK,
-			commentManager, fragmentRendererController);
+			httpServletRequest, renderResponse, commentManager,
+            fragmentRendererController);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}
@@ -139,7 +139,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			return _layoutPageTemplateEntry;
 		}
 
-		Layout draftLayout = LayoutLocalServiceUtil.getLayout(classPK);
+		Layout draftLayout = themeDisplay.getLayout();
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			draftLayout.getClassPK());

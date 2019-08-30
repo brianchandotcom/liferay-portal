@@ -19,12 +19,9 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Objects;
 
@@ -49,22 +46,18 @@ public class ContentPageEditorDisplayContextProvider {
 		String className = (String)httpServletRequest.getAttribute(
 			ContentPageEditorWebKeys.CLASS_NAME);
 
-		long classPK = GetterUtil.getLong(
-			httpServletRequest.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
-
 		if (Objects.equals(className, Layout.class.getName())) {
 			return new ContentPageLayoutEditorDisplayContext(
-				httpServletRequest, renderResponse, className, classPK,
+				httpServletRequest, renderResponse,
 				_fragmentRendererController, _commentManager);
 		}
+
+		long classPK = GetterUtil.getLong(
+			httpServletRequest.getAttribute(ContentPageEditorWebKeys.CLASS_PK));
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				classPK);
-
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class.getName()),
-			layoutPageTemplateEntry.getPlid());
 
 		boolean pageIsDisplayPage = false;
 
@@ -76,9 +69,8 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			httpServletRequest, renderResponse, Layout.class.getName(),
-			draftLayout.getPlid(), pageIsDisplayPage,
-			_fragmentRendererController, _commentManager);
+			httpServletRequest, renderResponse, pageIsDisplayPage,
+            _commentManager, _fragmentRendererController);
 	}
 
 	@Reference
@@ -88,16 +80,7 @@ public class ContentPageEditorDisplayContextProvider {
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private LayoutCopyHelper _layoutCopyHelper;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

@@ -96,7 +96,7 @@ public class EtcdUtil {
 		}
 
 		public String getKey() {
-			return _etcdNode.getKey();
+			return _key;
 		}
 
 		public long getModifiedIndex() {
@@ -143,6 +143,7 @@ public class EtcdUtil {
 		private Node(String etcdServerURL, EtcdKeysResponse.EtcdNode etcdNode) {
 			_etcdServerURL = etcdServerURL;
 			_etcdNode = etcdNode;
+			_key = etcdNode.getKey();
 		}
 
 		private synchronized void _refreshEtcdNode() {
@@ -151,6 +152,7 @@ public class EtcdUtil {
 
 		private EtcdKeysResponse.EtcdNode _etcdNode;
 		private final String _etcdServerURL;
+		private final String _key;
 
 	}
 

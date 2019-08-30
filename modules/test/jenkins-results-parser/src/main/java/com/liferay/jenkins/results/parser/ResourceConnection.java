@@ -22,8 +22,9 @@ public class ResourceConnection implements Comparable {
 	public ResourceConnection(
 		ResourceMonitor resourceMonitor, EtcdUtil.Node node) {
 
-		_resourceMonitor = resourceMonitor;
+		_key = node.getKey();
 		_node = node;
+		_resourceMonitor = resourceMonitor;
 	}
 
 	public ResourceConnection(
@@ -38,15 +39,16 @@ public class ResourceConnection implements Comparable {
 		_resourceMonitor = resourceMonitor;
 
 		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
-		String key = _resourceMonitor.getKey() + "/" + connectionName;
+
+		_key = _resourceMonitor.getKey() + "/" + connectionName;
 
 		if (state != null) {
-			_node = EtcdUtil.put(etcdServerURL, key, state.toString());
+			_node = EtcdUtil.put(etcdServerURL, _key, state.toString());
 
 			return;
 		}
 
-		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, key);
+		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
 
 		if (node != null) {
 			_node = node;
@@ -54,7 +56,7 @@ public class ResourceConnection implements Comparable {
 			return;
 		}
 
-		_node = EtcdUtil.put(etcdServerURL, key, State.IN_QUEUE.toString());
+		_node = EtcdUtil.put(etcdServerURL, _key, State.IN_QUEUE.toString());
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class ResourceConnection implements Comparable {
 	}
 
 	public String getKey() {
-		return _node.getKey();
+		return _key;
 	}
 
 	public String getMonitorName() {
@@ -83,9 +85,7 @@ public class ResourceConnection implements Comparable {
 	}
 
 	public String getName() {
-		String key = _node.getKey();
-
-		return key.replace(_resourceMonitor.getKey() + "/", "");
+		return _key.replace(_resourceMonitor.getKey() + "/", "");
 	}
 
 	public State getState() {
@@ -95,8 +95,7 @@ public class ResourceConnection implements Comparable {
 	public void setState(State state) {
 		if (!state.equals(State.RETIRE)) {
 			_node = EtcdUtil.put(
-				_resourceMonitor.getEtcdServerURL(), _node.getKey(),
-				state.toString());
+				_resourceMonitor.getEtcdServerURL(), _key, state.toString());
 
 			return;
 		}
@@ -105,7 +104,7 @@ public class ResourceConnection implements Comparable {
 			_node.delete();
 		}
 		else {
-			System.out.println("Node " + _node.getKey() + " does not exist.");
+			System.out.println("Node " + _key + " does not exist.");
 		}
 	}
 
@@ -115,6 +114,7 @@ public class ResourceConnection implements Comparable {
 
 	}
 
+	private final String _key;
 	private EtcdUtil.Node _node;
 	private final ResourceMonitor _resourceMonitor;
 

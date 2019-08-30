@@ -355,10 +355,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private ImageLocalService _imageLocalService;
 
 	@Reference
-	private LayoutSEOCanonicalURLLocalService
-		_layoutSEOCanonicalURLLocalService;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -368,6 +364,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutSEOCanonicalURLLocalService
+		_layoutSEOCanonicalURLLocalService;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

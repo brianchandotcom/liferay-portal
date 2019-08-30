@@ -129,7 +129,7 @@ public class AddSegmentsExperimentMVCActionCommand
 		jsonObject.put(
 			"segmentsExperimentRel",
 			SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
-				segmentsExperimentRel, themeDisplay.getLocale()));
+				themeDisplay.getLocale(), segmentsExperimentRel));
 
 		return jsonObject;
 	}

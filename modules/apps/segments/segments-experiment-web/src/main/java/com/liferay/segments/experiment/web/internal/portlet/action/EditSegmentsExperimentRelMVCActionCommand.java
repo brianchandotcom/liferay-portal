@@ -75,7 +75,7 @@ public class EditSegmentsExperimentRelMVCActionCommand
 			jsonObject = JSONUtil.put(
 				"segmentsExperimentRel",
 				SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
-					segmentsExperimentRel, themeDisplay.getLocale()));
+					themeDisplay.getLocale(), segmentsExperimentRel));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

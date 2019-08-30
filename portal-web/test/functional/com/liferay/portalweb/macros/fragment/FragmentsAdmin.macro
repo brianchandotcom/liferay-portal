@@ -78,7 +78,9 @@ definition {
 	}
 
 	macro gotoCollection {
-		Navigator.gotoNavNested(navNested = "${collectionName}");
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "FragmentAdmin#FRAGMENT_COLLECTION",
+			value1 = "${collectionName}");
 	}
 
 	macro gotoEntry {

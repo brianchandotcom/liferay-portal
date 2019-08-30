@@ -153,26 +153,27 @@ class ChangeListsHistory extends PortletBase {
 	}
 
 	_getUrlProcesses() {
-		const sort = '&sort=' + this.orderByCol + ':' + this.orderByType;
-
-		let urlProcesses =
-			this.urlProcesses +
-			'&type=' +
-			this.filterStatus +
-			'&offset=0&limit=5' +
-			sort;
+		const processesParameters = {
+			sort: this.orderByCol + ':' + this.orderByType,
+			type: this.filterStatus
+		};
 
 		if (this.filterUser > 0) {
-			urlProcesses = urlProcesses + '&user=' + this.filterUser;
+			processesParameters.user = this.filterUser;
 		} else {
-			urlProcesses += '&user=' + USER_FILTER_ALL;
+			processesParameters.user = USER_FILTER_ALL;
 		}
 
 		if (this.keywords) {
-			urlProcesses = urlProcesses + '&keywords=' + this.keywords;
+			processesParameters.keywords = this.keywords;
 		}
 
-		return urlProcesses;
+		const processesURL = createPortletURL(
+			this.urlProcesses,
+			processesParameters
+		);
+
+		return processesURL.toString();
 	}
 
 	_populateProcessUsers(processUsers) {
@@ -229,37 +230,12 @@ class ChangeListsHistory extends PortletBase {
 		this.processEntries = [];
 
 		processEntries.forEach(processEntry => {
-			const viewURL = createPortletURL(this.baseURL);
-
-			const detailsParameters = {
-				backURL: viewURL.toString(),
-				ctCollectionId: processEntry.ctcollection.ctCollectionId,
-				mvcRenderCommandName: '/change_lists_history/view_details',
-				orderByCol: 'title',
-				orderByType: 'desc'
-			};
-
-			const detailsURL = createPortletURL(
-				this.baseURL,
-				detailsParameters
-			);
-
 			this.processEntries.push({
-				description: processEntry.ctcollection.description,
-				detailsLink: detailsURL.toString(),
-				name: processEntry.ctcollection.name,
-				percentage: processEntry.percentage,
-				state: ChangeListsHistory._getState(processEntry.status),
-				timestamp: new Intl.DateTimeFormat(
-					Liferay.ThemeDisplay.getBCP47LanguageId(),
-					{
-						day: 'numeric',
-						hour: 'numeric',
-						minute: 'numeric',
-						month: 'numeric',
-						year: 'numeric'
-					}
-				).format(new Date(processEntry.date)),
+				description: processEntry.description,
+				detailsLink: processEntry.detailsLink,
+				name: processEntry.name,
+				state: processEntry.state,
+				timestamp: processEntry.timestamp,
 				userInitials: processEntry.userInitials,
 				userName: processEntry.userName
 			});
@@ -309,7 +285,6 @@ ChangeListsHistory.STATE = {
 			description: Config.string(),
 			detailsLink: Config.string(),
 			name: Config.string(),
-			percentage: Config.number(),
 			state: Config.string(),
 			timestamp: Config.string(),
 			userInitials: Config.string(),

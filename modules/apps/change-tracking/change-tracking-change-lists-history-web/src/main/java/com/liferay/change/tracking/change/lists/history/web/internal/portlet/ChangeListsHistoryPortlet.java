@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.change.lists.history.web.internal.portlet;
 
+import com.liferay.change.tracking.change.lists.history.web.internal.constants.CTHistoryConstants;
+import com.liferay.change.tracking.change.lists.history.web.internal.display.context.ChangeListsHistoryDisplayContext;
 import com.liferay.change.tracking.configuration.CTConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.constants.CTWebKeys;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -102,6 +105,14 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 			SessionErrors.add(renderRequest, pe.getClass());
 		}
 
+		ChangeListsHistoryDisplayContext changeListsHistoryDisplayContext =
+			new ChangeListsHistoryDisplayContext(
+				_portal.getHttpServletRequest(renderRequest), renderResponse);
+
+		renderRequest.setAttribute(
+			CTHistoryConstants.CHANGE_LISTS_HISTORY_DISPLAY_CONTEXT,
+			changeListsHistoryDisplayContext);
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -144,5 +155,8 @@ public class ChangeListsHistoryPortlet extends MVCPortlet {
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	private CTConfiguration _ctConfiguration;
+
+	@Reference
+	private Portal _portal;
 
 }

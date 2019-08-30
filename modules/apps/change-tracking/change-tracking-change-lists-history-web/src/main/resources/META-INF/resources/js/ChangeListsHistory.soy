@@ -6,7 +6,6 @@
 		name: string,
 		description: string,
 		detailsLink: string,
-		percentage: int,
 		state: string,
 		timestamp: string,
 		userInitials: string,
@@ -32,7 +31,6 @@
 						{param changeListDetailsLink: $processEntry.detailsLink /}
 						{param labelState: $labelState /}
 						{param labelText: $processEntry.state /}
-						{param percentage: $processEntry.percentage /}
 						{param spritemap: $spritemap /}
 						{param timestamp: $processEntry.timestamp /}
 						{param userName: $processEntry.userName /}
@@ -60,7 +58,6 @@
 	{@param? changeListDetailsLink: string}
 	{@param? labelState: string}
 	{@param? labelText: string}
-	{@param? percentage: int}
 	{@param? timestamp: string}
 	{@param? userName: string}
 	{@param? userInitials: string}
@@ -86,13 +83,6 @@
 				</div>
 
 				<div class="col-sm-6">
-					{if $percentage and $labelText == 'in-progress'}
-						{call ClayProgressBar.render}
-							{param spritemap: $spritemap /}
-							{param value: $percentage /}
-						{/call}
-					{/if}
-
 					<div class="text-bottom text-rigth">
 						{$timestamp} {msg desc=""}by{/msg} {$userName}
 

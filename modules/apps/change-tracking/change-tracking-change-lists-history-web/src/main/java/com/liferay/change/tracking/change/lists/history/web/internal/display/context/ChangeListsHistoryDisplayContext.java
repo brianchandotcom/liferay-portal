@@ -15,9 +15,12 @@
 package com.liferay.change.tracking.change.lists.history.web.internal.display.context;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,9 +31,10 @@ import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,8 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ChangeListsHistoryDisplayContext {
 
 	public ChangeListsHistoryDisplayContext(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
@@ -50,7 +53,7 @@ public class ChangeListsHistoryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SoyContext getChangeListsHistoryContext() {
+	public SoyContext getChangeListsHistoryContext() throws PortalException {
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
@@ -69,16 +72,19 @@ public class ChangeListsHistoryDisplayContext {
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
-			"urlProcesses",
-			_themeDisplay.getPortalURL() +
-				"/o/change-tracking-legacy/processes?companyId=" +
-					_themeDisplay.getCompanyId()
-		).put(
 			"urlProcessUsers",
 			_themeDisplay.getPortalURL() +
 				"/o/change-tracking-legacy/processes/users?companyId=" +
 					_themeDisplay.getCompanyId()
 		);
+
+		ResourceURL processesURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, CTPortletKeys.CHANGE_LISTS_HISTORY,
+			PortletRequest.RESOURCE_PHASE);
+
+		processesURL.setResourceID("/change_lists_history/get_ct_processes");
+
+		soyContext.put("urlProcesses", processesURL.toString());
 
 		return soyContext;
 	}

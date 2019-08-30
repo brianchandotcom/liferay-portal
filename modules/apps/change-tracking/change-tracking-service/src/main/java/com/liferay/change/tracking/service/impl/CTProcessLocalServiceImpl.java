@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 
 import java.io.Serializable;
@@ -108,6 +109,15 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			companyId, userId, keywords, queryDefinition.getStatus(),
 			queryDefinition.getStart(), queryDefinition.getEnd(),
 			queryDefinition.getOrderByComparator());
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<CTProcess> orderByComparator) {
+
+		return ctProcessFinder.findByC_U_N_D_S(
+			companyId, userId, keywords, status, start, end, orderByComparator);
 	}
 
 	private long _addBackgroundTask(

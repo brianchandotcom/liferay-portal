@@ -12,7 +12,7 @@
  * details.
  */
 
-package test.portlet.portlet;
+package com.liferay.example.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=Test",
+		"javax.portlet.display-name=Example",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=test_portlet_TestPortlet",
+		"javax.portlet.name=com_liferay_example_portlet_ExamplePortlet",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class TestPortlet extends MVCPortlet {
+public class ExamplePortlet extends MVCPortlet {
 }

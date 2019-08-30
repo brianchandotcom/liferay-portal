@@ -74,8 +74,11 @@ generatePomCompileOnly {
 			else if (it.equals("service-wrapper")) {
 				mainArgs += ["--service", "com.liferay.portal.kernel.service.UserLocalServiceWrapper"]
 			}
+			else if (it.equals("spring-mvc-portlet")) {
+				return
+			}
 
-			mainArgs += ["--liferayVersion", project.property("gradle.releng.pom.project.templates.version")]
+			mainArgs += ["--liferay-version", project.property("gradle.releng.pom.project.templates.version")]
 
 			javaexec {
 				args mainArgs

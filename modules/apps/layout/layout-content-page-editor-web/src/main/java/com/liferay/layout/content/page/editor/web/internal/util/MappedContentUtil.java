@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -121,18 +122,16 @@ public class MappedContentUtil {
 			layoutPageTemplateStructure, new HashSet<>());
 	}
 
-	public static Set<AssetEntry> getMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK)
+	public static Set<AssetEntry> getMappedAssetEntries(long groupId, long plid)
 		throws PortalException {
 
 		Set<Long> mappedClassPKs = new HashSet<>();
 
 		Set<AssetEntry> assetEntries = _getFragmentEntryLinksMappedAssetEntries(
-			groupId, layoutClassNameId, layoutClassPK, mappedClassPKs);
+			groupId, plid, mappedClassPKs);
 
 		assetEntries.addAll(
-			_getLayoutMappedAssetEntries(
-				groupId, layoutClassNameId, layoutClassPK, mappedClassPKs));
+			_getLayoutMappedAssetEntries(groupId, plid, mappedClassPKs));
 
 		return assetEntries;
 	}
@@ -293,14 +292,14 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getFragmentEntryLinksMappedAssetEntries(
-		long groupId, long layoutClassNameId, long layoutClassPK,
-		Set<Long> mappedClassPKs) {
+		long groupId, long plid, Set<Long> mappedClassPKs) {
 
 		Set<AssetEntry> assetEntries = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				groupId, layoutClassNameId, layoutClassPK);
+				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+				plid);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			assetEntries.addAll(
@@ -355,14 +354,14 @@ public class MappedContentUtil {
 	}
 
 	private static Set<AssetEntry> _getLayoutMappedAssetEntries(
-			long groupId, long layoutClassNameId, long layoutClassPK,
-			Set<Long> mappedClassPKs)
+			long groupId, long plid, Set<Long> mappedClassPKs)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					groupId, layoutClassNameId, layoutClassPK, false);
+					groupId, PortalUtil.getClassNameId(Layout.class.getName()),
+					plid, false);
 
 		return _getLayoutMappedAssetEntries(
 			layoutPageTemplateStructure, mappedClassPKs);

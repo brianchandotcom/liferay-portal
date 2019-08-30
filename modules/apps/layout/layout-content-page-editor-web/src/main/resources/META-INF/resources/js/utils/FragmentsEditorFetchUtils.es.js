@@ -205,7 +205,7 @@ function getExperienceUsedPortletIds(segmentsExperienceId) {
 
 function getMappedContents() {
 	const state = _store.getState();
-	const {classNameId, classPK, getMappedContentsURL} = state;
+	const {getMappedContentsURL} = state;
 
 	const url = new URL(window.location.href);
 
@@ -215,11 +215,7 @@ function getMappedContents() {
 
 	const backURL = `${url.pathname}${url.search}`;
 
-	return _fetch(getMappedContentsURL, {
-		backURL,
-		classNameId,
-		classPK
-	});
+	return _fetch(getMappedContentsURL, {backURL});
 }
 
 function getStructureMappingFields(classNameId, classTypeId) {

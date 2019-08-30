@@ -32,7 +32,7 @@
 	</div>
 </div>
 
-<aui:script use="io-request,liferay-store,parse-content">
+<aui:script use="io-request,parse-content">
 	var segmentsExperimentPanelToggle = document.getElementById('<portlet:namespace />segmentsExperimentPanelToggleId');
 
 	var sidenavInstance = Liferay.SideNavigation.initialize(segmentsExperimentPanelToggle);
@@ -40,14 +40,14 @@
 	sidenavInstance.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.segments.experiment.web_panelState', 'open');
+			Liferay.Util.Session.set('com.liferay.segments.experiment.web_panelState', 'open');
 		}
 	);
 
 	sidenavInstance.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('com.liferay.segments.experiment.web_panelState', 'closed');
+			Liferay.Util.Session.set('com.liferay.segments.experiment.web_panelState', 'closed');
 		}
 	);
 

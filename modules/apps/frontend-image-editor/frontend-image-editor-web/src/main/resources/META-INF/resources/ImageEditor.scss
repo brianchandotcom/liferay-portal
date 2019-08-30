@@ -1,4 +1,4 @@
-@import 'bourbon';
+@import 'atlas-variables';
 
 $imageeditor-btn-padding: 8px 4px !default;
 $imageeditor-controls-height: 52px !default;
@@ -94,7 +94,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 			width: 100%;
 			z-index: 1;
 
-			@include transition(height 0.6s $ease-out-quint);
+			@include transition(height 0.6s cubic-bezier(0.23, 1, 0.32, 1));
 
 			.tool-controls {
 				overflow: visible;
@@ -138,15 +138,13 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 					}
 
 					.carousel-left-arrow {
-						@include transform(translate(-100%, -50%));
-
 						left: 0;
+						transform: translate(-100%, -50%);
 					}
 
 					.carousel-right-arrow {
-						@include transform(translate(100%, -50%));
-
 						right: 0;
+						transform: translate(100%, -50%);
 					}
 				}
 
@@ -156,7 +154,9 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 				}
 
 				.carousel {
-					@include transition(margin 0.6s $ease-out-quint);
+					@include transition(
+						margin 0.6s cubic-bezier(0.23, 1, 0.32, 1)
+					);
 
 					display: table;
 

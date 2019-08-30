@@ -225,6 +225,24 @@ definition {
 		}
 	}
 
+	@description = "Can see contributed fragment collections in fragment administration"
+	@priority = "5"
+	test ViewContributedFragmentCollections {
+		property portal.acceptance = "true";
+
+		FragmentsAdmin.gotoCollection(collectionName = "Basic Components");
+
+		task ("Assert a fragments appears in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Button");
+		}
+
+		FragmentsAdmin.gotoCollection(collectionName = "Basic Sections");
+
+		task ("Assert a fragment appears in Fragments Admin") {
+			FragmentsAdmin.viewEntryPresent(entry = "Banner Center");
+		}
+	}
+
 	@description = "Once fragments are published, they can no longer be saved as draft."
 	@priority = "4"
 	test ViewOnlyDraftFragmentsCanBeSaved {

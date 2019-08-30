@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -74,10 +75,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.File;
 import java.io.InputStream;
@@ -93,7 +90,6 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -111,25 +107,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("(&(model.class.name=");
-		sb.append("com.liferay.dynamic.data.mapping.storage.DDMFormValues)");
-		sb.append("(objectClass=");
-		sb.append(ExportImportContentProcessor.class.getName());
-		sb.append("))");
-
-		Filter filter = registry.getFilter(sb.toString());
-
-		_serviceTracker = registry.trackServices(filter);
-
-		_serviceTracker.open();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -179,8 +156,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
 
 		rootElement.addElement("entry");
-
-		_exportImportContentProcessor = _serviceTracker.getService();
 	}
 
 	@After
@@ -529,10 +504,6 @@ public class DDMFormValuesExportImportContentProcessorTest {
 			dlFileEntry.getFileEntryId());
 	}
 
-	private static ServiceTracker
-		<ExportImportContentProcessor, ExportImportContentProcessor>
-			_serviceTracker;
-
 	private DDMStructure _ddmStructure;
 
 	@Inject
@@ -552,8 +523,12 @@ public class DDMFormValuesExportImportContentProcessorTest {
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
+	@Inject(
+		filter = "model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues"
+	)
 	private ExportImportContentProcessor<DDMFormValues>
 		_exportImportContentProcessor;
+
 	private FileEntry _fileEntry;
 	private DDMFormInstance _formInstance;
 	private JournalArticle _journalArticle;
@@ -562,7 +537,10 @@ public class DDMFormValuesExportImportContentProcessorTest {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private DDMFormValues _journalDDMFormValues;
+
+	@DeleteAfterTestRun
 	private Group _liveGroup;
+
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private Group _stagingGroup;

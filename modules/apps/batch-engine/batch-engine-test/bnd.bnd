@@ -1,0 +1,45 @@
+Bundle-ClassPath:\
+	.,\
+	lib/commons-collections4.jar,\
+	lib/commons-compress.jar,\
+	lib/poi.jar,\
+	lib/poi-ooxml.jar,\
+	lib/poi-ooxml-schemas.jar,\
+	lib/xmlbeans.jar
+Bundle-Name: Liferay Batch Engine Test
+Bundle-SymbolicName: com.liferay.batch.engine.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.github.luben.*,\
+	\
+	!com.graphbuilder.*,\
+	\
+	!com.microsoft.schemas.office.*,\
+	\
+	!com.sun.*,\
+	\
+	!net.sf.*,\
+	\
+	!org.apache.batik.*,\
+	!org.apache.commons.math3.*,\
+	!org.apache.jcp.*,\
+	!org.apache.xmlbeans.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	!org.brotli.*,\
+	\
+	!org.etsi.*,\
+	\
+	!org.openxmlformats.*,\
+	\
+	!org.tukaani.*
+\
+	*
+-includeresource:\
+	lib/commons-collections4.jar=commons-collections4-[0-9.]*.jar,\
+	lib/commons-compress.jar=commons-compress-[0-9.]*.jar,\
+	lib/poi-ooxml-schemas.jar=poi-ooxml-schemas-[0-9.]*.jar,\
+	lib/poi-ooxml.jar=poi-ooxml-[0-9.]*.jar,\
+	lib/poi.jar=poi-[0-9.]*.jar,\
+	lib/xmlbeans.jar=xmlbeans-[0-9.]*.jar

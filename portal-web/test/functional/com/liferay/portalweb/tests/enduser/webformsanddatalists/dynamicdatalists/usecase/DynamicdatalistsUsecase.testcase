@@ -1524,6 +1524,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Pages");
 
+		Refresh();
+
 		SitePages.addPublicPage(pageName = "Data Definition Page Name");
 
 		Navigator.gotoPage(pageName = "Data Definition Page Name");

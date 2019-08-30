@@ -146,6 +146,8 @@ definition {
 			panel = "Site Administration",
 			portlet = "Documents and Media");
 
+		Refresh();
+
 		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name");

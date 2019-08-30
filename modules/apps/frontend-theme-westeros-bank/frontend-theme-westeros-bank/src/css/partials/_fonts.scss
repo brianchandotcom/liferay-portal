@@ -1,53 +1,53 @@
 @at-root {
 	@font-face {
 		font-family: open_sanslight;
-		src: url(../fonts/opensans-light-webfont.woff);
 		font-weight: normal;
+		src: url(../fonts/opensans-light-webfont.woff);
 	}
 
 	@font-face {
 		font-family: open_sanslight;
+		font-style: italic;
+		font-weight: normal;
 		src: url(../fonts/opensans-lightitalic-webfont.woff);
-		font-weight: normal;
-		font-style: italic;
 	}
 
 	@font-face {
 		font-family: open_sansregular;
+		font-weight: bold;
 		src: url(../fonts/opensans-bold-webfont.woff);
-		font-weight: bold;
 	}
 
 	@font-face {
 		font-family: open_sansregular;
+		font-style: italic;
+		font-weight: bold;
 		src: url(../fonts/opensans-bolditalic-webfont.woff);
-		font-weight: bold;
-		font-style: italic;
 	}
 
 	@font-face {
 		font-family: open_sansregular;
+		font-style: italic;
+		font-weight: normal;
 		src: url(../fonts/opensans-italic-webfont.woff);
-		font-weight: normal;
-		font-style: italic;
 	}
 
 	@font-face {
 		font-family: open_sansregular;
+		font-weight: normal;
 		src: url(../fonts/opensans-regular-webfont.woff);
-		font-weight: normal;
 	}
 
 	@font-face {
 		font-family: open_sanssemibold;
+		font-weight: normal;
 		src: url(../fonts/opensans-semibold-webfont.woff);
-		font-weight: normal;
 	}
 
 	@font-face {
 		font-family: open_sanssemibold;
-		src: url(../fonts/opensans-semibolditalic-webfont.woff);
-		font-weight: normal;
 		font-style: italic;
+		font-weight: normal;
+		src: url(../fonts/opensans-semibolditalic-webfont.woff);
 	}
 }

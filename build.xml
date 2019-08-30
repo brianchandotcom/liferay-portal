@@ -1049,49 +1049,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 	</target>
 
 	<target name="snapshot-bundle">
-		<antelope:stringutil property="snapshot.bundle.file.beginindex" string="${snapshot.bundle.url}">
-			<antelope:lastindexof string="/" />
-		</antelope:stringutil>
-
-		<antelope:math
-			datatype="int"
-			operand1="${snapshot.bundle.file.beginindex}"
-			operand2="1"
-			operation="+"
-			result="snapshot.bundle.file.beginindex"
-		/>
-
-		<antelope:stringutil property="snapshot.bundle.file" string="${snapshot.bundle.url}">
-			<antelope:substring beginindex="${snapshot.bundle.file.beginindex}" />
-		</antelope:stringutil>
-
-		<property name="snapshot.bundle.sha256.original" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.original" />
-		<property name="snapshot.bundle.sha256.new" value="${project.dir}/tmp/${snapshot.bundle.file}.snapshot.bundle.sha256.new" />
-
-		<mirrors-get
-			dest="${snapshot.bundle.sha256.original}"
-			force="false"
-			skipChecksum="true"
-			src="${snapshot.bundle.url}.sha256"
-		/>
-
-		<mirrors-get
-			dest="${snapshot.bundle.sha256.new}"
-			force="true"
-			skipChecksum="true"
-			src="${snapshot.bundle.url}.sha256"
-		/>
-
-		<condition else="true" property="snapshot.bundle.force" value="false">
-			<filesmatch file1="${snapshot.bundle.sha256.original}" file2="${snapshot.bundle.sha256.new}" />
-		</condition>
-
-		<mirrors-get
-			dest="${project.dir}/tmp/${snapshot.bundle.file}"
-			force="${snapshot.bundle.force}"
-			skipChecksum="true"
-			src="${snapshot.bundle.url}"
-		/>
+		<download-latest-snapshot snapshot.bundle.file="" />
 
 		<clean-liferay-home />
 
@@ -1146,6 +1104,25 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 						dir="${liferay.home}/work"
 					/>
 				</touch>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${snapshot.bundle.install.repo}" arg2="true" />
+			<then>
+				<for parallel="false" param="snapshot.jar.file" threadCount="2">
+					<fileset
+						casesensitive="yes"
+						dir="${liferay.home}"
+					>
+						<include name="**/com.liferay*.jar" />
+						<include name="**/portal*.jar" />
+						<exclude name="**/tools/**/*.jar" />
+					</fileset>
+					<sequential>
+						<install-snapshot-artifact snapshot.jar.file="@{snapshot.jar.file}" />
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>

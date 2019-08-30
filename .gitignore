@@ -25,6 +25,7 @@
 /.checkstyle
 /.idea
 /.m2
+/.m2-tmp/com/liferay/snapshot
 /.sonar
 /.xmlcatalog
 /ActiveMQ

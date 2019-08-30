@@ -102,7 +102,7 @@ public class SegmentsExperimentUtil {
 	}
 
 	public static JSONObject toSegmentsExperimentRelJSONObject(
-			SegmentsExperimentRel segmentsExperimentRel, Locale locale)
+			Locale locale, SegmentsExperimentRel segmentsExperimentRel)
 		throws PortalException {
 
 		if (segmentsExperimentRel == null) {

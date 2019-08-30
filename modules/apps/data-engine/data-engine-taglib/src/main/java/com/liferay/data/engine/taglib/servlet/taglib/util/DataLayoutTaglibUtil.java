@@ -33,11 +33,9 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -487,13 +485,7 @@ public class DataLayoutTaglibUtil {
 	private DDMFormBuilderContextFactory _ddmFormBuilderContextFactory;
 
 	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-
-	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Reference
-	private DDMFormLayoutDeserializerTracker _ddmFormLayoutDeserializerTracker;
 
 	@Reference
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
@@ -509,6 +501,12 @@ public class DataLayoutTaglibUtil {
 
 	@Reference
 	private FieldTypeTracker _fieldTypeTracker;
+
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.layout.deserializer.type=json)")
+	private DDMFormLayoutDeserializer _jsonDDMFormLayoutDeserializer;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -689,32 +687,25 @@ public class DataLayoutTaglibUtil {
 		}
 
 		private DDMForm _deserializeDDMForm(String content) {
-			DDMFormDeserializer ddmFormDeserializer =
-				_ddmFormDeserializerTracker.getDDMFormDeserializer("json");
-
 			DDMFormDeserializerDeserializeRequest.Builder builder =
 				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
 					content);
 
 			DDMFormDeserializerDeserializeResponse
 				ddmFormDeserializerDeserializeResponse =
-					ddmFormDeserializer.deserialize(builder.build());
+					_jsonDDMFormDeserializer.deserialize(builder.build());
 
 			return ddmFormDeserializerDeserializeResponse.getDDMForm();
 		}
 
 		private DDMFormLayout _deserializeDDMFormLayout(String content) {
-			DDMFormLayoutDeserializer ddmFormLayoutDeserializer =
-				_ddmFormLayoutDeserializerTracker.getDDMFormLayoutDeserializer(
-					"json");
-
 			DDMFormLayoutDeserializerDeserializeRequest.Builder builder =
 				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
 					content);
 
 			DDMFormLayoutDeserializerDeserializeResponse
 				ddmFormLayoutDeserializerDeserializeResponse =
-					ddmFormLayoutDeserializer.deserialize(builder.build());
+					_jsonDDMFormLayoutDeserializer.deserialize(builder.build());
 
 			return ddmFormLayoutDeserializerDeserializeResponse.
 				getDDMFormLayout();

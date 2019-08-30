@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
@@ -121,17 +120,13 @@ public class DDMFormTaglibUtil {
 		List<DDMFormFieldType> formFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
-			_ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
-				"json");
-
 		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
 			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
 				formFieldTypes);
 
 		DDMFormFieldTypesSerializerSerializeResponse
 			ddmFormFieldTypesSerializerSerializeResponse =
-				ddmFormFieldTypesSerializer.serialize(builder.build());
+				_ddmFormFieldTypesSerializer.serialize(builder.build());
 
 		String serializedFormFieldTypes =
 			ddmFormFieldTypesSerializerSerializeResponse.getContent();
@@ -283,12 +278,13 @@ public class DDMFormTaglibUtil {
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormFieldTypesSerializerTracker(
-		DDMFormFieldTypesSerializerTracker ddmFormFieldTypesSerializerTracker) {
+	@Reference(
+		target = "(ddm.form.field.types.serializer.type=json)", unbind = "-"
+	)
+	protected void setDDMFormFieldTypesSerializer(
+		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer) {
 
-		_ddmFormFieldTypesSerializerTracker =
-			ddmFormFieldTypesSerializerTracker;
+		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
 	}
 
 	@Reference(unbind = "-")
@@ -383,8 +379,7 @@ public class DDMFormTaglibUtil {
 		_ddmFormBuilderSettingsRetriever;
 	private static DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
-	private static DDMFormFieldTypesSerializerTracker
-		_ddmFormFieldTypesSerializerTracker;
+	private static DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 	private static DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private static DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

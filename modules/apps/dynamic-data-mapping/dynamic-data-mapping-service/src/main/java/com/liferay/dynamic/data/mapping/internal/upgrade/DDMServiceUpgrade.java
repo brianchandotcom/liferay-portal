@@ -46,15 +46,10 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplate
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_0.UpgradeDDMStructureLayout;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_1.UpgradeDDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -276,30 +271,27 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	protected DDMFormDeserializer getDDMFormJSONDeserializer() {
-		return _ddmFormDeserializerTracker.getDDMFormDeserializer("json");
+		return _jsonDDMFormDeserializer;
 	}
 
 	protected DDMFormLayoutSerializer getDDMFormLayoutSerializer() {
-		return _ddmFormLayoutSerializerTracker.getDDMFormLayoutSerializer(
-			"json");
+		return _jsonDDMFormLayoutSerializer;
 	}
 
 	protected DDMFormSerializer getDDMFormSerializer() {
-		return _ddmFormSerializerTracker.getDDMFormSerializer("json");
+		return _jsonDDMFormSerializer;
 	}
 
 	protected DDMFormValuesDeserializer getDDMFormValuesDeserializer() {
-		return _ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-			"json");
+		return _jsonDDMFormValuesDeserializer;
 	}
 
 	protected DDMFormValuesSerializer getDDMFormValuesSerializer() {
-		return _ddmFormValuesSerializerTracker.getDDMFormValuesSerializer(
-			"json");
+		return _jsonDDMFormValuesSerializer;
 	}
 
 	protected DDMFormDeserializer getDDMFormXSDDeserializer() {
-		return _ddmFormDeserializerTracker.getDDMFormDeserializer("xsd");
+		return _xsdDDMFormDeserializer;
 	}
 
 	@Reference
@@ -321,21 +313,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
-	private DDMFormDeserializerTracker _ddmFormDeserializerTracker;
-
-	@Reference
-	private DDMFormLayoutSerializerTracker _ddmFormLayoutSerializerTracker;
-
-	@Reference
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
-
-	@Reference
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
-
-	@Reference
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
-
-	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
@@ -352,6 +329,21 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Reference(target = "(ddm.form.deserializer.type=json)")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
+	@Reference(target = "(ddm.form.layout.serializer.type=json)")
+	private DDMFormLayoutSerializer _jsonDDMFormLayoutSerializer;
+
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
+
+	@Reference(target = "(ddm.form.values.deserializer.type=json)")
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -370,5 +362,8 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;
+
+	@Reference(target = "(ddm.form.deserializer.type=xsd)")
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

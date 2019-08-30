@@ -20,11 +20,11 @@ import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceEx
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -37,15 +37,21 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance",
+	service = AopService.class
+)
 public class DDMDataProviderInstanceLocalServiceImpl
 	extends DDMDataProviderInstanceLocalServiceBaseImpl {
 
@@ -319,16 +325,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	protected String serialize(DDMFormValues ddmFormValues) {
-		DDMFormValuesSerializer ddmFormValuesSerializer =
-			ddmFormValuesSerializerTracker.getDDMFormValuesSerializer("json");
-
 		DDMFormValuesSerializerSerializeRequest.Builder builder =
 			DDMFormValuesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormValues);
 
 		DDMFormValuesSerializerSerializeResponse
 			ddmFormValuesSerializerSerializeResponse =
-				ddmFormValuesSerializer.serialize(builder.build());
+				_jsonDDMFormValuesSerializer.serialize(builder.build());
 
 		return ddmFormValuesSerializerSerializeResponse.getContent();
 	}
@@ -346,13 +349,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 				"Name is null for locale " + locale.getDisplayName());
 		}
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	@ServiceReference(type = DDMFormValuesSerializerTracker.class)
-	protected DDMFormValuesSerializerTracker ddmFormValuesSerializerTracker;
+	@Reference
+	private DDMFormValuesValidator _ddmFormValuesValidator;
 
-	@ServiceReference(type = DDMFormValuesValidator.class)
-	protected DDMFormValuesValidator ddmFormValuesValidator;
+	@Reference(target = "(ddm.form.values.serializer.type=json)")
+	private DDMFormValuesSerializer _jsonDDMFormValuesSerializer;
 
 }

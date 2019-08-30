@@ -105,21 +105,6 @@ public class DDMStorageLinkModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.entity.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStorageLink"),
-		true);
-
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.finder.cache.enabled.com.liferay.dynamic.data.mapping.model.DDMStorageLink"),
-		true);
-
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStorageLink"),
-		true);
-
 	public static final long CLASSPK_COLUMN_BITMASK = 1L;
 
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
@@ -132,9 +117,13 @@ public class DDMStorageLinkModelImpl
 
 	public static final long STORAGELINKID_COLUMN_BITMASK = 32L;
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
-		com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
-			"lock.expiration.time.com.liferay.dynamic.data.mapping.model.DDMStorageLink"));
+	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
+		_entityCacheEnabled = entityCacheEnabled;
+	}
+
+	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
+		_finderCacheEnabled = finderCacheEnabled;
+	}
 
 	public DDMStorageLinkModelImpl() {
 	}
@@ -563,12 +552,12 @@ public class DDMStorageLinkModelImpl
 
 	@Override
 	public boolean isEntityCacheEnabled() {
-		return ENTITY_CACHE_ENABLED;
+		return _entityCacheEnabled;
 	}
 
 	@Override
 	public boolean isFinderCacheEnabled() {
-		return FINDER_CACHE_ENABLED;
+		return _finderCacheEnabled;
 	}
 
 	@Override
@@ -699,6 +688,9 @@ public class DDMStorageLinkModelImpl
 			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
 
 	}
+
+	private static boolean _entityCacheEnabled;
+	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
 	private String _uuid;

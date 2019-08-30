@@ -18,11 +18,9 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMContentLocalService;
@@ -60,24 +58,10 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 		_ddmJSONStorageAdapter = new DDMJSONStorageAdapter();
 
 		_ddmJSONStorageAdapter.ddmContentLocalService = _ddmContentLocalService;
-		_ddmJSONStorageAdapter.ddmFormValuesDeserializerTracker =
-			_ddmFormValuesDeserializerTracker;
-		_ddmJSONStorageAdapter.ddmFormValuesSerializerTracker =
-			_ddmFormValuesSerializerTracker;
-
-		when(
-			_ddmFormValuesSerializerTracker.getDDMFormValuesSerializer(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormValuesSerializer
-		);
-
-		when(
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormValuesDeserializer
-		);
+		_ddmJSONStorageAdapter.jsonDDMFormValuesDeserializer =
+			_ddmFormValuesDeserializer;
+		_ddmJSONStorageAdapter.jsonDDMFormValuesSerializer =
+			_ddmFormValuesSerializer;
 	}
 
 	@Test
@@ -362,13 +346,7 @@ public class DDMJSONStorageAdapterTest extends PowerMockito {
 	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 
 	@Mock
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
-
-	@Mock
 	private DDMFormValuesSerializer _ddmFormValuesSerializer;
-
-	@Mock
-	private DDMFormValuesSerializerTracker _ddmFormValuesSerializerTracker;
 
 	private DDMJSONStorageAdapter _ddmJSONStorageAdapter;
 

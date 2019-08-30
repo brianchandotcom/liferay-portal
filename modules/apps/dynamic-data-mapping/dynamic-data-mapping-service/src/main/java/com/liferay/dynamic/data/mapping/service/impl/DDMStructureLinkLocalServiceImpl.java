@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLinkLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -27,11 +28,17 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructureLink",
+	service = AopService.class
+)
 public class DDMStructureLinkLocalServiceImpl
 	extends DDMStructureLinkLocalServiceBaseImpl {
 

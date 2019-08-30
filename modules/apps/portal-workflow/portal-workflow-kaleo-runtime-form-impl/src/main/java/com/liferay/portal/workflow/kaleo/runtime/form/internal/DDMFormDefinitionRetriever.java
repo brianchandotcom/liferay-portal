@@ -19,8 +19,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormSerializerTracker;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
@@ -47,16 +45,12 @@ public class DDMFormDefinitionRetriever implements FormDefinitionRetriever {
 
 		DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		DDMFormSerializer ddmFormSerializer =
-			_ddmFormSerializerTracker.getDDMFormSerializer("json");
-
 		DDMFormSerializerSerializeRequest.Builder builder =
-			DDMFormSerializerSerializeRequest.Builder.newBuilder(ddmForm);
+			DDMFormSerializerSerializeRequest.Builder.newBuilder(
+				ddmStructure.getDDMForm());
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
-			ddmFormSerializer.serialize(builder.build());
+			_jsonDDMFormSerializer.serialize(builder.build());
 
 		return ddmFormSerializerSerializeResponse.getContent();
 	}
@@ -64,7 +58,7 @@ public class DDMFormDefinitionRetriever implements FormDefinitionRetriever {
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
-	@Reference
-	private DDMFormSerializerTracker _ddmFormSerializerTracker;
+	@Reference(target = "(ddm.form.serializer.type=json)")
+	private DDMFormSerializer _jsonDDMFormSerializer;
 
 }

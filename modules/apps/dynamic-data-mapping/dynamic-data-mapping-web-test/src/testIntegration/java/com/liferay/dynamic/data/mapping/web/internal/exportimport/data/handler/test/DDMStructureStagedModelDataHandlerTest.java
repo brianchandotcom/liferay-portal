@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -393,17 +392,13 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
 
-		DDMFormValuesDeserializer ddmFormValuesDeserializer =
-			_ddmFormValuesDeserializerTracker.getDDMFormValuesDeserializer(
-				"json");
-
 		DDMFormValuesDeserializerDeserializeRequest.Builder builder =
 			DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
 				ddmDataProviderInstance.getDefinition(), ddmForm);
 
 		DDMFormValuesDeserializerDeserializeResponse
 			ddmFormValuesDeserializerDeserializeResponse =
-				ddmFormValuesDeserializer.deserialize(builder.build());
+				_jsonDDMFormValuesDeserializer.deserialize(builder.build());
 
 		return ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 	}
@@ -561,10 +556,10 @@ public class DDMStructureStagedModelDataHandlerTest
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 
-	private DDMDataProvider _ddmDataProvider;
+	@Inject(filter = "ddm.form.values.deserializer.type=json")
+	private static DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
-	@Inject
-	private DDMFormValuesDeserializerTracker _ddmFormValuesDeserializerTracker;
+	private DDMDataProvider _ddmDataProvider;
 
 	@DeleteAfterTestRun
 	private Company _targetCompany;

@@ -16,133 +16,74 @@ package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry;
-import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Pablo Carvalho
  */
+@Component(immediate = true, service = DDMFormFieldRendererRegistry.class)
 public class DDMFormFieldRendererRegistryImpl
 	implements DDMFormFieldRendererRegistry {
 
-	public DDMFormFieldRendererRegistryImpl() {
-		Class<?> clazz = getClass();
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			DDMFormFieldRenderer.class, new DDMFormFieldFreeMarkerRenderer(),
+			null);
 
-		Bundle bundle = FrameworkUtil.getBundle(clazz);
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMFormFieldRenderer.class, null,
+			(serviceReference, emitter) -> {
+				DDMFormFieldRenderer ddmFormFieldRenderer =
+					bundleContext.getService(serviceReference);
 
-		_bundleContext = bundle.getBundleContext();
+				try {
+					for (String supportedDDMFormFieldType :
+							ddmFormFieldRenderer.
+								getSupportedDDMFormFieldTypes()) {
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			StringBundler.concat(
-				"(&(objectClass=", DDMFormFieldRenderer.class.getName(),
-				")(!(objectClass=", clazz.getName(), ")))"),
-			new DDMFormFieldRendererServiceTrackerCustomizer());
+						emitter.emit(supportedDDMFormFieldType);
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
+
+		DDMFormFieldRendererRegistryUtil ddmFormFieldRendererRegistryUtil =
+			new DDMFormFieldRendererRegistryUtil();
+
+		ddmFormFieldRendererRegistryUtil.setDDMFormFieldRendererRegistry(this);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_ddmFormFieldRendererRegistryUtil.setDDMFormFieldRendererRegistry(null);
+
+		_serviceTrackerMap.close();
+
+		_serviceRegistration.unregister();
 	}
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer(
 		String ddmFormFieldType) {
 
-		List<DDMFormFieldRenderer> ddmFormFieldRenders =
-			_ddmFormFieldRenderersMap.get(ddmFormFieldType);
-
-		if ((ddmFormFieldRenders == null) || ddmFormFieldRenders.isEmpty()) {
-			return null;
-		}
-
-		return ddmFormFieldRenders.get(ddmFormFieldRenders.size() - 1);
+		return _serviceTrackerMap.getService(ddmFormFieldType);
 	}
 
-	public void setDefaultDDMFormFieldRenderer(
-		DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-		ServiceRegistration<DDMFormFieldRenderer> serviceRegistration =
-			_bundleContext.registerService(
-				DDMFormFieldRenderer.class, ddmFormFieldRenderer, null);
-
-		_serviceRegistrations.put(ddmFormFieldRenderer, serviceRegistration);
-	}
-
-	private final BundleContext _bundleContext;
-	private final Map<String, List<DDMFormFieldRenderer>>
-		_ddmFormFieldRenderersMap = new ConcurrentHashMap<>();
-	private final Map
-		<DDMFormFieldRenderer, ServiceRegistration<DDMFormFieldRenderer>>
-			_serviceRegistrations = new ConcurrentHashMap<>();
-	private final ServiceTracker<DDMFormFieldRenderer, DDMFormFieldRenderer>
-		_serviceTracker;
-
-	private class DDMFormFieldRendererServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<DDMFormFieldRenderer, DDMFormFieldRenderer> {
-
-		@Override
-		public DDMFormFieldRenderer addingService(
-			ServiceReference<DDMFormFieldRenderer> serviceReference) {
-
-			DDMFormFieldRenderer ddmFormFieldRenderer =
-				_bundleContext.getService(serviceReference);
-
-			for (String supportedDDMFormFieldType :
-					ddmFormFieldRenderer.getSupportedDDMFormFieldTypes()) {
-
-				List<DDMFormFieldRenderer> ddmFormFieldRenderers =
-					_ddmFormFieldRenderersMap.get(supportedDDMFormFieldType);
-
-				if (ddmFormFieldRenderers == null) {
-					ddmFormFieldRenderers = new ArrayList<>();
-
-					_ddmFormFieldRenderersMap.put(
-						supportedDDMFormFieldType, ddmFormFieldRenderers);
-				}
-
-				ddmFormFieldRenderers.add(ddmFormFieldRenderer);
-			}
-
-			return ddmFormFieldRenderer;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<DDMFormFieldRenderer> serviceReference,
-			DDMFormFieldRenderer ddmFormFieldRenderer) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<DDMFormFieldRenderer> serviceReference,
-			DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-			_bundleContext.ungetService(serviceReference);
-
-			for (String supportedDDMFormFieldType :
-					ddmFormFieldRenderer.getSupportedDDMFormFieldTypes()) {
-
-				List<DDMFormFieldRenderer> ddmFormFieldRenderers =
-					_ddmFormFieldRenderersMap.get(supportedDDMFormFieldType);
-
-				if (ddmFormFieldRenderers == null) {
-					return;
-				}
-
-				ddmFormFieldRenderers.remove(ddmFormFieldRenderer);
-			}
-		}
-
-	}
+	private final DDMFormFieldRendererRegistryUtil
+		_ddmFormFieldRendererRegistryUtil =
+			new DDMFormFieldRendererRegistryUtil();
+	private ServiceRegistration<?> _serviceRegistration;
+	private ServiceTrackerMap<String, DDMFormFieldRenderer> _serviceTrackerMap;
 
 }

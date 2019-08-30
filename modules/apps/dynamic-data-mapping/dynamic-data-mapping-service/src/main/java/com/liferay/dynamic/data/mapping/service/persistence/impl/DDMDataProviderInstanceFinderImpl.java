@@ -31,14 +31,17 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
+@Component(service = DDMDataProviderInstanceFinder.class)
 public class DDMDataProviderInstanceFinderImpl
 	extends DDMDataProviderInstanceFinderBaseImpl
 	implements DDMDataProviderInstanceFinder {
@@ -335,7 +338,7 @@ public class DDMDataProviderInstanceFinderImpl
 		return sb.toString();
 	}
 
-	@ServiceReference(type = CustomSQL.class)
+	@Reference
 	private CustomSQL _customSQL;
 
 }

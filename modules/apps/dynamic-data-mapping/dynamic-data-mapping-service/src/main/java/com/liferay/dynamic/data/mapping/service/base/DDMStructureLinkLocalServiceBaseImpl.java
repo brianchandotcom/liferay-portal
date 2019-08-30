@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
@@ -36,11 +36,10 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -49,6 +48,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the base implementation for the ddm structure link local service.
@@ -64,7 +64,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class DDMStructureLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements DDMStructureLinkLocalService, IdentifiableOSGiService {
+	implements DDMStructureLinkLocalService, AopService,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -337,98 +338,17 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 		return ddmStructureLinkPersistence.update(ddmStructureLink);
 	}
 
-	/**
-	 * Returns the ddm structure link local service.
-	 *
-	 * @return the ddm structure link local service
-	 */
-	public DDMStructureLinkLocalService getDDMStructureLinkLocalService() {
-		return ddmStructureLinkLocalService;
+	@Override
+	public Class<?>[] getAopInterfaces() {
+		return new Class<?>[] {
+			DDMStructureLinkLocalService.class, IdentifiableOSGiService.class,
+			PersistedModelLocalService.class
+		};
 	}
 
-	/**
-	 * Sets the ddm structure link local service.
-	 *
-	 * @param ddmStructureLinkLocalService the ddm structure link local service
-	 */
-	public void setDDMStructureLinkLocalService(
-		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
-
-		this.ddmStructureLinkLocalService = ddmStructureLinkLocalService;
-	}
-
-	/**
-	 * Returns the ddm structure link persistence.
-	 *
-	 * @return the ddm structure link persistence
-	 */
-	public DDMStructureLinkPersistence getDDMStructureLinkPersistence() {
-		return ddmStructureLinkPersistence;
-	}
-
-	/**
-	 * Sets the ddm structure link persistence.
-	 *
-	 * @param ddmStructureLinkPersistence the ddm structure link persistence
-	 */
-	public void setDDMStructureLinkPersistence(
-		DDMStructureLinkPersistence ddmStructureLinkPersistence) {
-
-		this.ddmStructureLinkPersistence = ddmStructureLinkPersistence;
-	}
-
-	/**
-	 * Returns the ddm structure link finder.
-	 *
-	 * @return the ddm structure link finder
-	 */
-	public DDMStructureLinkFinder getDDMStructureLinkFinder() {
-		return ddmStructureLinkFinder;
-	}
-
-	/**
-	 * Sets the ddm structure link finder.
-	 *
-	 * @param ddmStructureLinkFinder the ddm structure link finder
-	 */
-	public void setDDMStructureLinkFinder(
-		DDMStructureLinkFinder ddmStructureLinkFinder) {
-
-		this.ddmStructureLinkFinder = ddmStructureLinkFinder;
-	}
-
-	/**
-	 * Returns the counter local service.
-	 *
-	 * @return the counter local service
-	 */
-	public com.liferay.counter.kernel.service.CounterLocalService
-		getCounterLocalService() {
-
-		return counterLocalService;
-	}
-
-	/**
-	 * Sets the counter local service.
-	 *
-	 * @param counterLocalService the counter local service
-	 */
-	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService
-			counterLocalService) {
-
-		this.counterLocalService = counterLocalService;
-	}
-
-	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.dynamic.data.mapping.model.DDMStructureLink",
-			ddmStructureLinkLocalService);
-	}
-
-	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.dynamic.data.mapping.model.DDMStructureLink");
+	@Override
+	public void setAopProxy(Object aopProxy) {
+		ddmStructureLinkLocalService = (DDMStructureLinkLocalService)aopProxy;
 	}
 
 	/**
@@ -473,23 +393,16 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMStructureLinkLocalService.class)
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
-	@BeanReference(type = DDMStructureLinkPersistence.class)
+	@Reference
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;
 
-	@BeanReference(type = DDMStructureLinkFinder.class)
+	@Reference
 	protected DDMStructureLinkFinder ddmStructureLinkFinder;
 
-	@ServiceReference(
-		type = com.liferay.counter.kernel.service.CounterLocalService.class
-	)
+	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

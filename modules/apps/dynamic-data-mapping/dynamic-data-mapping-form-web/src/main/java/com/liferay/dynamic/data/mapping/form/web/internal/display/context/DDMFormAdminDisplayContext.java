@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.form.web.internal.search.FormInstanceSea
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerSerializeResponse;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -129,7 +128,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormBuilderContextFactory ddmFormBuilderContextFactory,
 		DDMFormBuilderSettingsRetriever ddmFormBuilderSettingsRetriever,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
-		DDMFormFieldTypesSerializerTracker formFieldTypesSerializerTracker,
+		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer,
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		DDMFormInstanceRecordWriterTracker ddmFormInstanceRecordWriterTracker,
@@ -151,7 +150,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormBuilderContextFactory = ddmFormBuilderContextFactory;
 		_ddmFormBuilderSettingsRetriever = ddmFormBuilderSettingsRetriever;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-		_ddmFormFieldTypesSerializerTracker = formFieldTypesSerializerTracker;
+		_ddmFormFieldTypesSerializer = ddmFormFieldTypesSerializer;
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormInstanceRecordWriterTracker =
@@ -1328,17 +1327,13 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
-		DDMFormFieldTypesSerializer ddmFormFieldTypesSerializer =
-			_ddmFormFieldTypesSerializerTracker.getDDMFormFieldTypesSerializer(
-				"json");
-
 		DDMFormFieldTypesSerializerSerializeRequest.Builder builder =
 			DDMFormFieldTypesSerializerSerializeRequest.Builder.newBuilder(
 				ddmFormFieldTypes);
 
 		DDMFormFieldTypesSerializerSerializeResponse
 			ddmFormFieldTypesSerializerSerializeResponse =
-				ddmFormFieldTypesSerializer.serialize(builder.build());
+				_ddmFormFieldTypesSerializer.serialize(builder.build());
 
 		return ddmFormFieldTypesSerializerSerializeResponse.getContent();
 	}
@@ -1433,8 +1428,7 @@ public class DDMFormAdminDisplayContext {
 		_ddmFormBuilderSettingsRetriever;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
-	private final DDMFormFieldTypesSerializerTracker
-		_ddmFormFieldTypesSerializerTracker;
+	private final DDMFormFieldTypesSerializer _ddmFormFieldTypesSerializer;
 	private DDMFormInstance _ddmFormInstance;
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private final DDMFormInstanceRecordLocalService

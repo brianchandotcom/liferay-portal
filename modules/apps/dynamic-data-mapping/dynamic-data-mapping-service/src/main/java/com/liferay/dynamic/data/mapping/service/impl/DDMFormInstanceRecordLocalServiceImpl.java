@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
@@ -43,7 +44,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,11 +68,9 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -83,9 +82,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",
+	service = AopService.class
+)
 public class DDMFormInstanceRecordLocalServiceImpl
 	extends DDMFormInstanceRecordLocalServiceBaseImpl {
 
@@ -155,7 +161,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstanceRecordVersion, serviceContext);
 
 			if (isEmailNotificationEnabled(ddmFormInstance)) {
-				ddmFormEmailNotificationSender.sendEmailNotification(
+				_ddmFormEmailNotificationSender.sendEmailNotification(
 					serviceContext, ddmFormInstanceRecord);
 			}
 		}
@@ -189,7 +195,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 			deleteStorage(storageId);
 
-			ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
+			_ddmStorageLinkLocalService.deleteClassStorageLink(storageId);
 
 			deleteWorkflowInstanceLink(
 				ddmFormInstanceRecord.getCompanyId(),
@@ -321,7 +327,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		throws PortalException {
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			ddmFormInstanceRecordVersionLocalService.
+			_ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersion(ddmFormInstanceRecordId, version);
 
 		if (!ddmFormInstanceRecordVersion.isApproved()) {
@@ -439,7 +445,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstanceRecordVersion, serviceContext);
 
 			if (isEmailNotificationEnabled(ddmFormInstance)) {
-				ddmFormEmailNotificationSender.sendEmailNotification(
+				_ddmFormEmailNotificationSender.sendEmailNotification(
 					serviceContext, ddmFormInstanceRecord);
 			}
 		}
@@ -591,15 +597,15 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		long primaryKey = ddmStorageAdapterSaveResponse.getPrimaryKey();
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstanceLocalService.getDDMFormInstance(ddmFormInstanceId);
+			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		DDMStructureVersion ddmStructureVersion =
 			ddmStructure.getLatestStructureVersion();
 
-		ddmStorageLinkLocalService.addStorageLink(
-			portal.getClassNameId(DDMContent.class.getName()), primaryKey,
+		_ddmStorageLinkLocalService.addStorageLink(
+			_portal.getClassNameId(DDMContent.class.getName()), primaryKey,
 			ddmStructureVersion.getStructureVersionId(), serviceContext);
 
 		return primaryKey;
@@ -627,11 +633,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	protected Indexer<DDMFormInstanceRecord> getDDMFormInstanceRecordIndexer() {
-		return indexerRegistry.nullSafeGetIndexer(DDMFormInstanceRecord.class);
+		return _indexerRegistry.nullSafeGetIndexer(DDMFormInstanceRecord.class);
 	}
 
 	protected DDMStorageAdapter getDDMStorageAdapter() {
-		return ddmStorageAdapterTracker.getDDMStorageAdapter(
+		return _ddmStorageAdapterTracker.getDDMStorageAdapter(
 			StorageType.JSON.toString());
 	}
 
@@ -689,7 +695,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	protected ResourceBundle getResourceBundle(Locale defaultLocale) {
-		return PortalUtil.getResourceBundle(defaultLocale);
+		return _portal.getResourceBundle(defaultLocale);
 	}
 
 	protected boolean isEmailNotificationEnabled(
@@ -861,7 +867,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return;
 		}
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	protected void validate(long groupId, DDMFormInstance ddmFormInstance)
@@ -874,27 +880,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = DDMFormEmailNotificationSender.class)
-	protected DDMFormEmailNotificationSender ddmFormEmailNotificationSender;
-
-	@ServiceReference(type = DDMFormValuesValidator.class)
-	protected DDMFormValuesValidator ddmFormValuesValidator;
-
-	@ServiceReference(type = DDMStorageAdapterTracker.class)
-	protected DDMStorageAdapterTracker ddmStorageAdapterTracker;
-
-	@BeanReference(type = DDMStorageLinkLocalService.class)
-	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
-
-	@BeanReference(type = DDMStructureLocalService.class)
-	protected DDMStructureLocalService ddmStructureLocalService;
-
-	@ServiceReference(type = IndexerRegistry.class)
-	protected IndexerRegistry indexerRegistry;
-
-	@ServiceReference(type = Portal.class)
-	protected Portal portal;
-
 	private static final String[] _SELECTED_FIELD_NAMES = {
 		Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID
 	};
@@ -903,5 +888,30 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordLocalServiceImpl.class);
+
+	@Reference
+	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
+
+	@Reference
+	private DDMFormInstanceRecordVersionLocalService
+		_ddmFormInstanceRecordVersionLocalService;
+
+	@Reference
+	private DDMFormValuesValidator _ddmFormValuesValidator;
+
+	@Reference
+	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
+
+	@Reference
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private Portal _portal;
 
 }

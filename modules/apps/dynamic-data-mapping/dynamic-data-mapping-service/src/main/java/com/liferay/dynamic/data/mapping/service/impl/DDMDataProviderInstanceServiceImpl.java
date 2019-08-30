@@ -19,12 +19,11 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.base.DDMDataProviderInstanceServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -32,9 +31,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Leonardo Barros
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddm",
+		"json.web.service.context.path=DDMDataProviderInstance"
+	},
+	service = AopService.class
+)
 public class DDMDataProviderInstanceServiceImpl
 	extends DDMDataProviderInstanceServiceBaseImpl {
 
@@ -196,16 +205,13 @@ public class DDMDataProviderInstanceServiceImpl
 			ddmFormValues, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<DDMDataProviderInstance>
-		_ddmDataProviderInstanceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMDataProviderInstanceServiceImpl.class,
-				"_ddmDataProviderInstanceModelResourcePermission",
-				DDMDataProviderInstance.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				DDMDataProviderInstanceServiceImpl.class,
-				"_portletResourcePermission", DDMConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)"
+	)
+	private ModelResourcePermission<DDMDataProviderInstance>
+		_ddmDataProviderInstanceModelResourcePermission;
+
+	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

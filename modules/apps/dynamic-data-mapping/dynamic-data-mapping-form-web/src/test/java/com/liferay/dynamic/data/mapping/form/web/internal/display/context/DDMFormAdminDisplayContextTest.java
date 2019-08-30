@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFact
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
-import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializerTracker;
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesSerializer;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterTracker;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
@@ -300,7 +300,7 @@ public class DDMFormAdminDisplayContextTest extends PowerMockito {
 			mock(DDMFormBuilderContextFactory.class),
 			mock(DDMFormBuilderSettingsRetriever.class),
 			mock(DDMFormFieldTypeServicesTracker.class),
-			mock(DDMFormFieldTypesSerializerTracker.class),
+			mock(DDMFormFieldTypesSerializer.class),
 			mock(DDMFormInstanceLocalService.class),
 			mock(DDMFormInstanceRecordLocalService.class),
 			mock(DDMFormInstanceRecordWriterTracker.class),

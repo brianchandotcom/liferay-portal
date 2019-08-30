@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.exception.ContentException;
 import com.liferay.dynamic.data.mapping.exception.ContentNameException;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.service.base.DDMContentLocalServiceBaseImpl;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,10 +26,16 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMContent",
+	service = AopService.class
+)
 public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 
 	@Override

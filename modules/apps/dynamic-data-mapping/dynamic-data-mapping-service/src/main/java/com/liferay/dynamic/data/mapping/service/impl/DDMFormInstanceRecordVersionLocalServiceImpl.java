@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordVersio
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordVersionLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceRecordVersionVersionComparator;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -25,11 +26,17 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @see    DDMFormInstanceRecordVersionLocalServiceBaseImpl
  * @see    com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalServiceUtil
  */
+@Component(
+	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion",
+	service = AopService.class
+)
 public class DDMFormInstanceRecordVersionLocalServiceImpl
 	extends DDMFormInstanceRecordVersionLocalServiceBaseImpl {
 

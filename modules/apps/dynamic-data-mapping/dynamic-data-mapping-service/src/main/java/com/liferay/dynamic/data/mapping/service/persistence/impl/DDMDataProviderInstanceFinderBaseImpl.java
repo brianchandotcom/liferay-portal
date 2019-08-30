@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstancePersistence;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -25,11 +27,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class DDMDataProviderInstanceFinderBaseImpl
+public abstract class DDMDataProviderInstanceFinderBaseImpl
 	extends BasePersistenceImpl<DDMDataProviderInstance> {
 
 	public DDMDataProviderInstanceFinderBaseImpl() {
@@ -45,37 +51,50 @@ public class DDMDataProviderInstanceFinderBaseImpl
 
 	@Override
 	public Set<String> getBadColumnNames() {
-		return getDDMDataProviderInstancePersistence().getBadColumnNames();
+		return ddmDataProviderInstancePersistence.getBadColumnNames();
 	}
 
-	/**
-	 * Returns the ddm data provider instance persistence.
-	 *
-	 * @return the ddm data provider instance persistence
-	 */
-	public DDMDataProviderInstancePersistence
-		getDDMDataProviderInstancePersistence() {
-
-		return ddmDataProviderInstancePersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+		super.setConfiguration(configuration);
 	}
 
-	/**
-	 * Sets the ddm data provider instance persistence.
-	 *
-	 * @param ddmDataProviderInstancePersistence the ddm data provider instance persistence
-	 */
-	public void setDDMDataProviderInstancePersistence(
-		DDMDataProviderInstancePersistence ddmDataProviderInstancePersistence) {
-
-		this.ddmDataProviderInstancePersistence =
-			ddmDataProviderInstancePersistence;
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
 	}
 
-	@BeanReference(type = DDMDataProviderInstancePersistence.class)
+	@Override
+	@Reference(
+		target = DDMPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
 	protected DDMDataProviderInstancePersistence
 		ddmDataProviderInstancePersistence;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInstanceFinderBaseImpl.class);
+
+	static {
+		try {
+			Class.forName(DDMPersistenceConstants.class.getName());
+		}
+		catch (ClassNotFoundException cnfe) {
+			throw new ExceptionInInitializerError(cnfe);
+		}
+	}
 
 }

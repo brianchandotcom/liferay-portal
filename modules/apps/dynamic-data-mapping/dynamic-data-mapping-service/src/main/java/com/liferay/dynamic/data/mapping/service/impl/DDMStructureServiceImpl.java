@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.security.permission.DDMPermissionSupport
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,12 +35,14 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the remote service for accessing, adding, deleting, and updating
@@ -51,6 +53,13 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @see    DDMStructureLocalServiceImpl
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddm",
+		"json.web.service.context.path=DDMStructure"
+	},
+	service = AopService.class
+)
 public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
 	@Override
@@ -727,13 +736,13 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 				DDMStructureServiceImpl.class,
 				"_ddmStructureModelResourcePermission", DDMStructure.class);
 
-	@ServiceReference(type = DDMPermissionSupport.class)
+	@Reference
 	private DDMPermissionSupport _ddmPermissionSupport;
 
-	@ServiceReference(type = DDMSearchHelper.class)
+	@Reference
 	private DDMSearchHelper _ddmSearchHelper;
 
-	@BeanReference(type = DDMStructureFinder.class)
+	@Reference
 	private DDMStructureFinder _ddmStructureFinder;
 
 }

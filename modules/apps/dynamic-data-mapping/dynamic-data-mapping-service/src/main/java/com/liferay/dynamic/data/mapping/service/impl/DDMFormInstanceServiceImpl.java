@@ -21,12 +21,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -34,10 +33,20 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Leonardo Barros
  */
+@Component(
+	property = {
+		"json.web.service.context.name=ddm",
+		"json.web.service.context.path=DDMFormInstance"
+	},
+	service = AopService.class
+)
 public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 
 	@Override
@@ -195,16 +204,13 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 			ddmFormLayout, settingsDDMFormValues, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<DDMFormInstance>
-		_ddmFormInstanceModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				DDMFormInstanceServiceImpl.class,
-				"_ddmFormInstanceModelResourcePermission",
-				DDMFormInstance.class);
-	private static volatile PortletResourcePermission
-		_portletResourcePermission =
-			PortletResourcePermissionFactory.getInstance(
-				DDMFormInstanceServiceImpl.class, "_portletResourcePermission",
-				DDMConstants.RESOURCE_NAME);
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstance)"
+	)
+	private ModelResourcePermission<DDMFormInstance>
+		_ddmFormInstanceModelResourcePermission;
+
+	@Reference(target = "(resource.name=" + DDMConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

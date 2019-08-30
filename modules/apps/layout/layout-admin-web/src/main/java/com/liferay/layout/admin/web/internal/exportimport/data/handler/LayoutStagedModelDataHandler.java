@@ -1322,29 +1322,6 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutSEOCanonicalURLs(
-			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
-
-		List<Element> layoutSEOCanonicalURLElements =
-			portletDataContext.getReferenceDataElements(
-				layout, LayoutSEOCanonicalURL.class);
-
-		for (Element layoutSEOCanonicalURLElement :
-				layoutSEOCanonicalURLElements) {
-
-			String layoutSEOCanonicalURLPath =
-				layoutSEOCanonicalURLElement.attributeValue("path");
-
-			LayoutSEOCanonicalURL layoutSEOCanonicalURL =
-				(LayoutSEOCanonicalURL)portletDataContext.getZipEntryAsObject(
-					layoutSEOCanonicalURLPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutSEOCanonicalURL);
-		}
-	}
-
 	protected void importLayoutFriendlyURLs(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
@@ -1647,6 +1624,29 @@ public class LayoutStagedModelDataHandler
 		portletDataContext.setOldPlid(originalOldPlid);
 		portletDataContext.setPlid(originalPlid);
 		portletDataContext.setPortletId(originalPortletId);
+	}
+
+	protected void importLayoutSEOCanonicalURLs(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<Element> layoutSEOCanonicalURLElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutSEOCanonicalURL.class);
+
+		for (Element layoutSEOCanonicalURLElement :
+				layoutSEOCanonicalURLElements) {
+
+			String layoutSEOCanonicalURLPath =
+				layoutSEOCanonicalURLElement.attributeValue("path");
+
+			LayoutSEOCanonicalURL layoutSEOCanonicalURL =
+				(LayoutSEOCanonicalURL)portletDataContext.getZipEntryAsObject(
+					layoutSEOCanonicalURLPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutSEOCanonicalURL);
+		}
 	}
 
 	protected void importLinkedLayout(
@@ -2128,11 +2128,6 @@ public class LayoutStagedModelDataHandler
 
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private LayoutSEOCanonicalURLLocalService
-		_layoutSEOCanonicalURLLocalService;
-
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
@@ -2146,6 +2141,11 @@ public class LayoutStagedModelDataHandler
 		_layoutPageTemplateStructureLocalService;
 
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSEOCanonicalURLLocalService
+		_layoutSEOCanonicalURLLocalService;
+
 	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
 

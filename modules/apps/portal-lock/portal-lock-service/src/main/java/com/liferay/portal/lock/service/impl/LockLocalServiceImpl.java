@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.LockAcquisitionException;
 
@@ -319,7 +320,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				}
 
 				if (cause instanceof ConstraintViolationException ||
-					cause instanceof LockAcquisitionException) {
+					cause instanceof LockAcquisitionException ||
+					cause instanceof ObjectNotFoundException) {
 
 					continue;
 				}
@@ -434,7 +436,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				}
 
 				if (cause instanceof ConstraintViolationException ||
-					cause instanceof LockAcquisitionException) {
+					cause instanceof LockAcquisitionException ||
+					cause instanceof ObjectNotFoundException) {
 
 					continue;
 				}

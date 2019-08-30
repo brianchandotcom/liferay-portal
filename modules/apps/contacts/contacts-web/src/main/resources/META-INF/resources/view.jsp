@@ -438,6 +438,13 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 			var contactsCenter = Liferay.component('contactsCenter');
 
+			Liferay.once(
+				'beforeNavigate',
+				function() {
+					Liferay.destroyComponent('contactsCenter');
+				}
+			);
+
 			<c:if test="<%= !userPublicPage %>">
 				var contactFilterSelect = A.one('#<portlet:namespace />filterBy');
 

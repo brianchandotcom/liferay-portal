@@ -17,13 +17,16 @@ import React from 'react';
 import SegmentEdit from './components/segment_edit/SegmentEdit.es';
 import ThemeContext from './ThemeContext.es';
 
-export default function(id, props, context) {
-	render(
+function renderComponent({props, context}) {
+	return (
 		<ThemeContext.Provider value={context}>
 			<div className="segments-root">
 				<SegmentEdit {...props} />
 			</div>
-		</ThemeContext.Provider>,
-		document.getElementById(id)
+		</ThemeContext.Provider>
 	);
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
 }

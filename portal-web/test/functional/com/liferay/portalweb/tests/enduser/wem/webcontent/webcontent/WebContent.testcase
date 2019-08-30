@@ -1184,6 +1184,7 @@ definition {
 		for (var i : list "1,2,3,4,5,6") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
+				groupName = "Test Site Name",
 				title = "WC WebContent ${i} Title");
 		}
 

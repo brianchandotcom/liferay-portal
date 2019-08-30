@@ -49,6 +49,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DRAFT_PAGES-->
+<tr>
+	<td>DRAFT_PAGES_PENDING_HEADER</td>
+	<td>//h2[contains(text(),'Pending Approval')]</td>
+	<td></td>
+</tr>
 <!--DRAFT_PAGES_TABLE-->
 <tr>
 	<td>DRAFT_PAGES_WIKI_PAGE_NAME</td>

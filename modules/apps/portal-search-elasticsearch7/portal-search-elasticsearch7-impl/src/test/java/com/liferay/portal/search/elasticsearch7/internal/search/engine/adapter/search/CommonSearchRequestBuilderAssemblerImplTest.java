@@ -218,8 +218,8 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 		_liferayIndexFixture.index(
 			new HashMap<String, Object>() {
 				{
-					put("title", title);
 					put("entryClassName", entryClassName);
+					put("title", title);
 				}
 			});
 	}

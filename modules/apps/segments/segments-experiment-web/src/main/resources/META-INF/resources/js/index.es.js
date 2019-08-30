@@ -18,9 +18,7 @@ import SegmentsExperimentsUtil from './util/index.es';
 import SegmentsExperimentsSidebar from './components/SegmentsExperimentsSidebar.es';
 import SegmentsExperimentsContext from './context.es';
 
-export default function segmentsExperimentsApp(id, props, context) {
-	const rootElement = document.getElementById(id);
-
+function renderComponent({props, context}) {
 	const {page, endpoints} = context;
 	const {
 		createSegmentsExperimentURL,
@@ -33,7 +31,7 @@ export default function segmentsExperimentsApp(id, props, context) {
 		runSegmentsExperimentURL
 	} = endpoints;
 
-	render(
+	return (
 		<SegmentsExperimentsContext.Provider
 			value={{
 				editVariantLayoutURL: editSegmentsVariantLayoutURL,
@@ -63,7 +61,10 @@ export default function segmentsExperimentsApp(id, props, context) {
 					props.selectedSegmentsExperienceId
 				}
 			/>
-		</SegmentsExperimentsContext.Provider>,
-		rootElement
+		</SegmentsExperimentsContext.Provider>
 	);
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
 }

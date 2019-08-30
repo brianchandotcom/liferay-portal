@@ -16,6 +16,8 @@ import React from 'react';
 import {SegmentsExperimentType} from '../types.es';
 
 function SegmentsExperimentsDetails({segmentsExperiment}) {
+	const {confidenceLevel, goal, segmentsEntryName} = segmentsExperiment;
+
 	return (
 		<>
 			<h4 className="mb-3 mt-4 sheet-subtitle">
@@ -25,22 +27,24 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 			<dl>
 				<div className="d-flex">
 					<dt>{Liferay.Language.get('segment') + ':'} </dt>
-					<dd className="text-secondary ml-2">
-						{segmentsExperiment.segmentsEntryName}
-					</dd>
+					<dd className="text-secondary ml-2">{segmentsEntryName}</dd>
 				</div>
+
 				<div className="d-flex">
 					<dt>{Liferay.Language.get('goal') + ':'} </dt>
-					<dd className="text-secondary ml-2">
-						{segmentsExperiment.goal.label}
-					</dd>
+					<dd className="text-secondary ml-2">{goal.label}</dd>
 				</div>
-				<div className="d-flex">
-					<dt>{Liferay.Language.get('confidence-level') + ':'} </dt>
-					<dd className="text-secondary ml-2">
-						{segmentsExperiment.confidenceLevel * 100 + '%'}
-					</dd>
-				</div>
+
+				{confidenceLevel && (
+					<div className="d-flex">
+						<dt>
+							{Liferay.Language.get('confidence-level') + ':'}{' '}
+						</dt>
+						<dd className="text-secondary ml-2">
+							{confidenceLevel * 100 + '%'}
+						</dd>
+					</div>
+				)}
 			</dl>
 		</>
 	);

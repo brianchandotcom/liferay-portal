@@ -1,5 +1,4 @@
-@import 'bourbon';
-@import 'mixins';
+@import 'atlas-variables';
 
 /* ---------- Configuration ---------- */
 
@@ -120,7 +119,7 @@
 			.title {
 				display: block;
 
-				@include ellipsis;
+				@include text-truncate();
 			}
 		}
 

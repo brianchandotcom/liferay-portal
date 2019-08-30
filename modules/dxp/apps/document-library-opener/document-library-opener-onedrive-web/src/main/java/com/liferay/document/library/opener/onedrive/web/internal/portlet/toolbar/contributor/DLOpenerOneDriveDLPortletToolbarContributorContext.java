@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Collections;
 import java.util.List;
@@ -82,17 +84,21 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-word",
 					DLOpenerMimeTypes.APPLICATION_VND_DOCX, _ICON_NAME_DOCUMENT,
-					_ICON_COLOR_DOCUMENT));
+					_ICON_COLOR_DOCUMENT,
+					_translateKey(portletRequest, "create-word-document")));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-powerpoint",
 					DLOpenerMimeTypes.APPLICATION_VND_PPTX,
-					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION));
+					_ICON_NAME_PRESENTATION, _ICON_COLOR_PRESENTATION,
+					_translateKey(
+						portletRequest, "create-powerpoint-document")));
 			menuItems.add(
 				_createURLMenuItem(
 					portletRequest, folder, "onedrive-excel",
 					DLOpenerMimeTypes.APPLICATION_VND_XLSX,
-					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET));
+					_ICON_NAME_SPREADSHEET, _ICON_COLOR_SPREADSHEET,
+					_translateKey(portletRequest, "create-excel-document")));
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -101,14 +107,23 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 	private URLMenuItem _createURLMenuItem(
 		PortletRequest portletRequest, Folder folder, String key,
-		String contentType, String icon, String iconColor) {
+		String contentType, String icon, String iconColor, String modalTitle) {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setIcon(icon);
 		urlMenuItem.setLabel(_translateKey(portletRequest, key));
 		urlMenuItem.setMethod(HttpMethods.POST);
-		urlMenuItem.setURL(_getActionURL(portletRequest, folder, contentType));
+		urlMenuItem.setURL(
+			StringBundler.concat(
+				"javascript:",
+				_portal.getPortletNamespace(
+					_portal.getPortletId(portletRequest)),
+				"openCreateOfficeDocument('",
+				_getActionURL(portletRequest, folder, contentType),
+				StringPool.APOSTROPHE, StringPool.COMMA, StringPool.APOSTROPHE,
+				modalTitle, "');"));
+
 		urlMenuItem.setData(
 			Collections.singletonMap("file-icon-color", iconColor));
 

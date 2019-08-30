@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
-import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,12 +22,22 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.servlet.BrowserSnifferImpl;
+import com.liferay.portal.util.PropsImpl;
+
+import java.io.UnsupportedEncodingException;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
@@ -37,8 +46,10 @@ import org.junit.Test;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Cristina González
@@ -47,9 +58,30 @@ public class OAuth2ControllerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		_portal = Mockito.mock(Portal.class);
+		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
+
+		browserSnifferUtil.setBrowserSniffer(new BrowserSnifferImpl());
 
 		_oAuth2Manager = Mockito.mock(OAuth2Manager.class);
+
+		Mockito.when(
+			_oAuth2Manager.getAuthorizationURL(
+				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString())
+		).thenReturn(
+			"authorizationURL"
+		);
+
+		_portal = Mockito.mock(Portal.class);
+
+		Mockito.when(
+			_portal.getPortalURL((PortletRequest)Matchers.any())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
 
 		_portletURLFactory = Mockito.mock(PortletURLFactory.class);
 
@@ -62,25 +94,22 @@ public class OAuth2ControllerTest {
 		);
 
 		Mockito.when(
-			_oAuth2Manager.getAuthorizationURL(
-				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString())
-		).thenReturn(
-			"authorizationURL"
-		);
-
-		Mockito.when(
-			_portal.getPortalURL((PortletRequest)Matchers.any())
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
 			_portletURLFactory.create(
 				(PortletRequest)Matchers.any(), Matchers.anyString(),
 				Matchers.anyLong(), Matchers.anyString())
 		).thenReturn(
 			_liferayPortletURL
 		);
+
+		Mockito.when(
+			_portletURLFactory.create(
+				(PortletRequest)Matchers.any(), Matchers.anyString(),
+				Matchers.anyString())
+		).thenReturn(
+			_liferayPortletURL
+		);
+
+		PropsUtil.setProps(new PropsImpl());
 
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -91,7 +120,9 @@ public class OAuth2ControllerTest {
 	}
 
 	@Test
-	public void testExecuteWithAccessToken() throws PortalException {
+	public void testExecuteWithAccessTokenAndRedirectParam()
+		throws PortalException {
+
 		Mockito.when(
 			_oAuth2Manager.hasAccessToken(
 				Matchers.anyLong(), Matchers.anyLong())
@@ -102,24 +133,63 @@ public class OAuth2ControllerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
+		mockHttpServletRequest.addParameter(
+			"redirect", String.valueOf(Boolean.TRUE));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		JSONObject jsonObject = JSONUtil.put("key", "value");
+
+		_oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
-			portletRequest -> JSONUtil.put("key", "value"));
+			_getMockPortletResponse(mockHttpServletResponse),
+			portletRequest -> jsonObject);
 
-		Assert.assertFalse(oAuth2Result.isRedirect());
+		Assert.assertEquals(
+			_liferayPortletURL.toString(),
+			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
 
-		JSONObject jsonObject = oAuth2Result.getResponse();
-
-		Assert.assertEquals("value", jsonObject.getString("key"));
-
-		HttpSession httpSession = mockHttpServletRequest.getSession();
-
-		Assert.assertNull(
-			httpSession.getAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE));
+		Assert.assertEquals(
+			mockHttpServletRequest.getAttribute("key"), jsonObject.get("key"));
 	}
 
 	@Test
-	public void testExecuteWithoutAccessToken() throws PortalException {
+	public void testExecuteWithAccessTokenAndWithoutRedirectParam()
+		throws PortalException, UnsupportedEncodingException {
+
+		Mockito.when(
+			_oAuth2Manager.hasAccessToken(
+				Matchers.anyLong(), Matchers.anyLong())
+		).thenReturn(
+			true
+		);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		JSONObject jsonObject = JSONUtil.put("key", "value");
+
+		_oAuth2Controller.execute(
+			_getMockPortletRequest(mockHttpServletRequest),
+			_getMockPortletResponse(mockHttpServletResponse),
+			portletRequest -> jsonObject);
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
+
+		Assert.assertEquals(
+			jsonObject.toString(),
+			mockHttpServletResponse.getContentAsString());
+	}
+
+	@Test
+	public void testExecuteWithoutAccessTokenAndRedirectParam()
+		throws PortalException {
+
 		Mockito.when(
 			_oAuth2Manager.hasAccessToken(
 				Matchers.anyLong(), Matchers.anyLong())
@@ -130,19 +200,54 @@ public class OAuth2ControllerTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
+		mockHttpServletRequest.addParameter(
+			"redirect", String.valueOf(Boolean.TRUE));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
+			_getMockPortletResponse(mockHttpServletResponse),
 			portletRequest -> JSONFactoryUtil.createJSONObject());
 
-		Assert.assertTrue(oAuth2Result.isRedirect());
-		Assert.assertEquals("authorizationURL", oAuth2Result.getRedirectURL());
+		Assert.assertEquals(
+			"authorizationURL",
+			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
-		OAuth2State oAuth2State = (OAuth2State)httpSession.getAttribute(
-			DLOpenerOneDriveWebKeys.OAUTH2_STATE);
+		Assert.assertNotNull(
+			httpSession.getAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE));
+	}
 
-		Assert.assertEquals("currentURL", oAuth2State.getSuccessURL());
+	@Test
+	public void testExecuteWithoutAccessTokenAndWithoutRedirectParam()
+		throws PortalException, UnsupportedEncodingException {
+
+		Mockito.when(
+			_oAuth2Manager.hasAccessToken(
+				Matchers.anyLong(), Matchers.anyLong())
+		).thenReturn(
+			false
+		);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_oAuth2Controller.execute(
+			_getMockPortletRequest(mockHttpServletRequest),
+			_getMockPortletResponse(mockHttpServletResponse),
+			portletRequest -> JSONFactoryUtil.createJSONObject());
+
+		Assert.assertNull(
+			mockHttpServletRequest.getAttribute(WebKeys.REDIRECT));
+		Assert.assertEquals(
+			String.valueOf(JSONUtil.put("redirectURL", "authorizationURL")),
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	private PortletRequest _getMockPortletRequest(
@@ -168,7 +273,62 @@ public class OAuth2ControllerTest {
 			httpServletRequest
 		);
 
+		_portletURLFactory.create(
+			portletRequest, _portal.getPortletId(portletRequest),
+			PortletRequest.ACTION_PHASE);
+
+		Mockito.when(
+			portletRequest.getParameter(Matchers.anyString())
+		).thenAnswer(
+			invocation -> {
+				Object[] arguments = invocation.getArguments();
+
+				return httpServletRequest.getParameter(
+					String.valueOf(arguments[0]));
+			}
+		);
+
+		Mockito.when(
+			portletRequest.getAttribute(Matchers.anyString())
+		).thenAnswer(
+			invocation -> {
+				Object[] arguments = invocation.getArguments();
+
+				return httpServletRequest.getAttribute(
+					String.valueOf(arguments[0]));
+			}
+		);
+
+		Mockito.doAnswer(
+			(Answer<Void>)answerd -> {
+				Object[] arguments = answerd.getArguments();
+
+				httpServletRequest.setAttribute(
+					String.valueOf(arguments[0]), arguments[1]);
+
+				return null;
+			}
+		).when(
+			portletRequest
+		).setAttribute(
+			Matchers.anyString(), Matchers.anyObject()
+		);
+
 		return portletRequest;
+	}
+
+	private PortletResponse _getMockPortletResponse(
+		HttpServletResponse httpServletResponse) {
+
+		PortletResponse portletResponse = Mockito.mock(PortletResponse.class);
+
+		Mockito.when(
+			_portal.getHttpServletResponse(portletResponse)
+		).thenReturn(
+			httpServletResponse
+		);
+
+		return portletResponse;
 	}
 
 	private static LiferayPortletURL _liferayPortletURL;

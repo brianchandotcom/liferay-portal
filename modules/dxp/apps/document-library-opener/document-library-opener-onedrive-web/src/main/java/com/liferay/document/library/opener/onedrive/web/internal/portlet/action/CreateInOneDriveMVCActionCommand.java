@@ -20,9 +20,9 @@ import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveFileReference;
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
-import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
+import com.liferay.document.library.opener.onedrive.web.internal.portlet.action.util.DocumentLibraryURLHelper;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,7 +52,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -165,8 +164,20 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 
-			return _saveDLOpenerOneDriveFileReference(
-				actionRequest, dlOpenerOneDriveFileReference);
+			String oneDriveBackgroundTaskStatusURL =
+				_documentLibraryURLHelper.getOneDriveBackgroundTaskStatusURL(
+					actionRequest, dlOpenerOneDriveFileReference);
+
+			return JSONUtil.put(
+				"dialogMessage",
+				_translateKey(
+					_portal.getLocale(actionRequest),
+					"you-are-being-redirected-to-an-external-editor-to-" +
+						"create-this-document")
+			).put(
+				"oneDriveBackgroundTaskStatusURL",
+				oneDriveBackgroundTaskStatusURL
+			);
 		}
 		catch (PortalException pe) {
 			throw pe;
@@ -177,19 +188,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);
 		}
-	}
-
-	private JSONObject _saveDLOpenerOneDriveFileReference(
-		PortletRequest portletRequest,
-		DLOpenerOneDriveFileReference dlOpenerOneDriveFileReference) {
-
-		portletRequest.setAttribute(
-			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
-			dlOpenerOneDriveFileReference);
-
-		return JSONUtil.put(
-			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
-			dlOpenerOneDriveFileReference);
 	}
 
 	private String _translateKey(Locale locale, String key) {
@@ -204,6 +202,9 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+
+	@Reference
+	private DocumentLibraryURLHelper _documentLibraryURLHelper;
 
 	@Reference
 	private Language _language;

@@ -166,7 +166,11 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 		urlMenuItem.setLabel(LanguageUtil.get(_resourceBundle, _getLabelKey()));
 		urlMenuItem.setMethod(HttpMethods.POST);
-		urlMenuItem.setURL(_getActionURL(cmd));
+		urlMenuItem.setURL(
+			StringBundler.concat(
+				"javascript:",
+				_portal.getPortletNamespace(_portal.getPortletId(request)),
+				"editOfficeDocument('", _getActionURL(cmd), "');"));
 
 		return urlMenuItem;
 	}
@@ -205,6 +209,9 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 
 		liferayPortletURL.setParameter(
 			"folderId", String.valueOf(fileEntry.getFolderId()));
+
+		liferayPortletURL.setParameter(
+			"redirect", String.valueOf(Boolean.TRUE));
 
 		return liferayPortletURL.toString();
 	}

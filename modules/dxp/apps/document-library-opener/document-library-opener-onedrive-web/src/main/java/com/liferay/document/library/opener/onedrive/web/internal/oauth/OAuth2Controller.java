@@ -17,18 +17,24 @@ package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import java.util.Objects;
+import java.util.Optional;
 
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 /**
  * @author Cristina González
@@ -44,16 +50,32 @@ public class OAuth2Controller {
 		_portletURLFactory = portletURLFactory;
 	}
 
-	public <T extends PortletRequest, R extends ActionResponse> void execute(
+	public <T extends PortletRequest, R extends PortletResponse> void execute(
 			T t, R r,
 			UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
 		throws PortalException {
 
 		OAuth2Result oAuth2Result = _executeWithOAuth2(t, unsafeFunction);
 
-		if (!Objects.isNull(oAuth2Result.getRedirectURL())) {
+		if (ParamUtil.getBoolean(t, "redirect")) {
+			JSONObject jsonObject = oAuth2Result.getResponse();
+
+			for (String fieldName : jsonObject.keySet()) {
+				t.setAttribute(fieldName, jsonObject.getString(fieldName));
+			}
+
+			t.setAttribute(
+				WebKeys.REDIRECT,
+				Optional.ofNullable(
+					oAuth2Result.getRedirectURL()
+				).orElseGet(
+					() -> _getRenderURL(t)
+				));
+		}
+		else {
 			try {
-				r.sendRedirect(oAuth2Result.getRedirectURL());
+				JSONPortletResponseUtil.writeJSON(
+					t, r, oAuth2Result.getResponse());
 			}
 			catch (IOException ioe) {
 				throw new PortalException(ioe);
@@ -65,10 +87,12 @@ public class OAuth2Controller {
 
 		public OAuth2Result(JSONObject response) {
 			_response = response;
+			_redirectURL = null;
 		}
 
 		public OAuth2Result(String redirectURL) {
 			_redirectURL = redirectURL;
+			_response = null;
 		}
 
 		public String getRedirectURL() {
@@ -76,11 +100,19 @@ public class OAuth2Controller {
 		}
 
 		public JSONObject getResponse() {
-			return _response;
+			if (_redirectURL != null) {
+				return JSONUtil.put("redirectURL", _redirectURL);
+			}
+
+			return Optional.ofNullable(
+				_response
+			).orElseGet(
+				() -> JSONFactoryUtil.createJSONObject()
+			);
 		}
 
-		private String _redirectURL;
-		private JSONObject _response;
+		private final String _redirectURL;
+		private final JSONObject _response;
 
 	}
 
@@ -118,9 +150,30 @@ public class OAuth2Controller {
 		return liferayPortletURL.toString();
 	}
 
+	private String _getRenderURL(PortletRequest portletRequest) {
+		PortletURL portletURL = _portletURLFactory.create(
+			portletRequest, _portal.getPortletId(portletRequest),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"folderId", ParamUtil.getString(portletRequest, "folderId"));
+		portletURL.setParameter(
+			"repositoryId",
+			ParamUtil.getString(portletRequest, "repositoryId"));
+
+		return portletURL.toString();
+	}
+
 	private String _getSuccessURL(PortletRequest portletRequest) {
-		return _portal.getCurrentURL(
-			_portal.getHttpServletRequest(portletRequest));
+		LiferayPortletURL liferayPortletURL = _portletURLFactory.create(
+			portletRequest, _portal.getPortletId(portletRequest),
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameters(portletRequest.getParameterMap());
+		liferayPortletURL.setParameter(
+			"redirect", String.valueOf(Boolean.TRUE));
+
+		return liferayPortletURL.toString();
 	}
 
 	private final OAuth2Manager _oAuth2Manager;

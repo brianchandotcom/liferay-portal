@@ -13,17 +13,17 @@
  */
 
 /**
- * Example: `0.22` => `"22%"`
- */
-export function indexToPercentageString(index) {
-	return indexToPercentageNumber(index) + '%';
-}
-
-/**
  * Example: `0.22` => `22`
  */
 export function indexToPercentageNumber(index) {
 	return parseInt(index * 100, 10);
+}
+
+/**
+ * Example: `0.22` => `"22%"`
+ */
+export function indexToPercentageString(index) {
+	return indexToPercentageNumber(index) + '%';
 }
 
 /**

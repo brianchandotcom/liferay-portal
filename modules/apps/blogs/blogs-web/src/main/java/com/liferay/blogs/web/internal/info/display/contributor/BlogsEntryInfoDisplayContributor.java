@@ -83,6 +83,10 @@ public class BlogsEntryInfoDisplayContributor
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(classPK);
 
+		if (blogsEntry.isInTrash()) {
+			return null;
+		}
+
 		return new BlogsInfoDisplayObjectProvider(blogsEntry);
 	}
 
@@ -92,6 +96,10 @@ public class BlogsEntryInfoDisplayContributor
 		throws PortalException {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(groupId, urlTitle);
+
+		if (blogsEntry.isInTrash()) {
+			return null;
+		}
 
 		return new BlogsInfoDisplayObjectProvider(blogsEntry);
 	}

@@ -150,6 +150,10 @@ public class JournalArticleInfoDisplayContributor
 		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
 			classPK);
 
+		if (article.isInTrash()) {
+			return null;
+		}
+
 		return new JournalArticleInfoDisplayObjectProvider(article);
 	}
 
@@ -161,6 +165,10 @@ public class JournalArticleInfoDisplayContributor
 		JournalArticle article =
 			journalArticleLocalService.fetchArticleByUrlTitle(
 				groupId, urlTitle);
+
+		if (article.isInTrash()) {
+			return null;
+		}
 
 		return new JournalArticleInfoDisplayObjectProvider(article);
 	}
@@ -189,8 +197,13 @@ public class JournalArticleInfoDisplayContributor
 			assetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK(), type);
 
-		return new JournalArticleInfoDisplayObjectProvider(
-			assetRenderer.getAssetObject());
+		JournalArticle article = assetRenderer.getAssetObject();
+
+		if (article.isInTrash()) {
+			return null;
+		}
+
+		return new JournalArticleInfoDisplayObjectProvider(article);
 	}
 
 	@Override

@@ -197,7 +197,7 @@ public class EntityCacheImpl
 			try {
 				session = sessionFactory.openSession();
 
-				return (Serializable)session.load(clazz, primaryKey);
+				return (Serializable)session.get(clazz, primaryKey);
 			}
 			finally {
 				sessionFactory.closeSession(session);
@@ -238,7 +238,7 @@ public class EntityCacheImpl
 				try {
 					session = sessionFactory.openSession();
 
-					loadResult = (Serializable)session.load(clazz, primaryKey);
+					loadResult = (Serializable)session.get(clazz, primaryKey);
 				}
 				finally {
 					if (loadResult == null) {

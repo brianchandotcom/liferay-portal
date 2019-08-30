@@ -33,7 +33,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 import com.liferay.view.count.service.persistence.ViewCountEntryFinder;
-import com.liferay.view.count.service.persistence.ViewCountEntryPersistence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,9 +145,6 @@ public class ViewCountEntryFinderTest {
 
 	@Inject
 	private static ViewCountEntryLocalService _viewCountEntryLocalService;
-
-	@Inject
-	private static ViewCountEntryPersistence _viewCountEntryPersistence;
 
 	@DeleteAfterTestRun
 	private ClassName _className;

@@ -1336,7 +1336,7 @@ definition {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
 		AssertTextEquals(
-			locator1 = "Portlet#H2_HEADER_2",
+			locator1 = "WikiTable#DRAFT_PAGES_PENDING_HEADER",
 			value1 = "Pending Approval");
 
 		AssertTextEquals(

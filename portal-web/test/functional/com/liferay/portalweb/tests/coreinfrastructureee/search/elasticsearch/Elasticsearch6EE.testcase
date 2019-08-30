@@ -101,6 +101,71 @@ definition {
 			value1 = "There are no entries.");
 	}
 
+	test PinAndHideResults {
+		property portal.acceptance = "true";
+
+		for (var title : list "WC Title 1,WC Title 2,WC Title 3") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${title}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		SearchTuning.addResultRanking(searchQuery = "WC Title");
+
+		SearchTuning.clickResultEllipsisItem(
+			assetTitle = "WC Title 3",
+			menuItem = "Pin Result");
+
+		SearchTuning.clickResultEllipsisItem(
+			assetTitle = "WC Title 2",
+			menuItem = "Hide Result");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "WC Title 2",
+			searchAssetType = "Web Content Article");
+
+		ProductMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Control Panel",
+			portlet = "Result Rankings");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Title");
+
+		SearchTuning.clickResultEllipsisItem(
+			assetTitle = "WC Title 3",
+			menuItem = "Unpin Result");
+
+		Navigator.gotoNavTab(navTab = "Hidden");
+
+		SearchTuning.clickResultEllipsisItem(
+			assetTitle = "WC Title 2",
+			menuItem = "Show Result");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
+	}
+
 	@priority = "5"
 	test PortalClusterSmokeTest {
 		property app.server.bundles.size = "1";

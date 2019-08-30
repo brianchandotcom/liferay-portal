@@ -29,6 +29,10 @@ String languageId = LanguageUtil.getLanguageId(request);
 
 String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
 
+if (ArrayUtil.isNotEmpty(availableLanguageIds) && !ArrayUtil.contains(availableLanguageIds, languageId)) {
+	languageId = assetRenderer.getDefaultLanguageId();
+}
+
 String title = assetRenderer.getTitle(workflowTaskDisplayContext.getTaskContentLocale());
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);

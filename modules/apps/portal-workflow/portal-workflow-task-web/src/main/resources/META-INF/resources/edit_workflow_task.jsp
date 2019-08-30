@@ -29,7 +29,7 @@ if (Validator.isNull(backURL)) {
 	backURL = renderURL.toString();
 }
 
-String languageId = ParamUtil.getString(request, "languageId");
+String languageId = LanguageUtil.getLanguageId(request);
 
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
@@ -50,7 +50,9 @@ if (assetRenderer != null) {
 		assetEntry = assetRendererFactory.getAssetEntry(workflowHandler.getClassName(), assetRenderer.getClassPK());
 	}
 
-	if (languageId == null) {
+	String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
+
+	if (ArrayUtil.isNotEmpty(availableLanguageIds) && !ArrayUtil.contains(availableLanguageIds, languageId)) {
 		languageId = assetRenderer.getDefaultLanguageId();
 	}
 }

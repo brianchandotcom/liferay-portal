@@ -358,14 +358,20 @@ String viewInContextURL = assetRenderer.getURLViewInContext(liferayPortletReques
 			<c:if test="<%= showLocalization %>">
 
 				<%
+				String languageId = LanguageUtil.getLanguageId(request);
+
 				String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();
+
+				if (ArrayUtil.isNotEmpty(availableLanguageIds) && !ArrayUtil.contains(availableLanguageIds, languageId)) {
+					languageId = assetRenderer.getDefaultLanguageId();
+				}
 				%>
 
 				<c:if test="<%= availableLanguageIds.length > 1 %>">
 					<div class="autofit-col locale-actions mr-3">
 						<liferay-ui:language
 							formAction="<%= currentURL %>"
-							languageId="<%= LanguageUtil.getLanguageId(request) %>"
+							languageId="<%= languageId %>"
 							languageIds="<%= availableLanguageIds %>"
 						/>
 					</div>

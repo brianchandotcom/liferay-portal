@@ -15,7 +15,7 @@
 import PropTypes from 'prop-types';
 
 const SegmentsExperimentType = PropTypes.shape({
-	confidenceLevel: PropTypes.number,
+	confidenceLevel: PropTypes.number.isRequired,
 	description: PropTypes.string,
 	editable: PropTypes.bool.isRequired,
 	goal: SegmentsExperimentGoal,

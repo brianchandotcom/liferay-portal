@@ -138,6 +138,7 @@ function SegmentsExperimentsSidebar({
 				} = objectResponse;
 
 				const {
+					confidenceLevel,
 					description,
 					editable,
 					goal,
@@ -155,6 +156,7 @@ function SegmentsExperimentsSidebar({
 				});
 
 				setSegmentsExperiment({
+					confidenceLevel,
 					description,
 					editable,
 					goal,
@@ -202,6 +204,7 @@ function SegmentsExperimentsSidebar({
 			.editExperimentStatus(body)
 			.then(function _successCallback(objectResponse) {
 				const {
+					confidenceLevel,
 					description,
 					editable,
 					goal,
@@ -213,6 +216,7 @@ function SegmentsExperimentsSidebar({
 				} = objectResponse.segmentsExperiment;
 
 				setSegmentsExperiment({
+					confidenceLevel,
 					description,
 					editable,
 					goal,
@@ -261,6 +265,7 @@ function SegmentsExperimentsSidebar({
 			.editExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {
+					confidenceLevel,
 					description,
 					editable,
 					goal,
@@ -276,6 +281,7 @@ function SegmentsExperimentsSidebar({
 				});
 
 				setSegmentsExperiment({
+					confidenceLevel,
 					description,
 					editable,
 					goal,

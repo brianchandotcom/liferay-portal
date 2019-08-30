@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @deprecated As of Mueller (7.2.x), with no direct replacement
  */
-@Component(immediate = true, service = DDMFormValuesSerializerTracker.class)
+@Component(service = DDMFormValuesSerializerTracker.class)
 @Deprecated
 public class DDMFormValuesSerializerTrackerImpl
 	implements DDMFormValuesSerializerTracker {

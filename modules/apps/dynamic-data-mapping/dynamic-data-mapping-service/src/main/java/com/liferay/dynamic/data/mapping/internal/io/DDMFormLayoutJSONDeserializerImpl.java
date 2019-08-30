@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of Judson (7.1.x), replaced by {@link
  *             com.liferay.dynamic.data.mapping.internal.io.DDMFormLayoutJSONDeserializer}
  */
-@Component(immediate = true, service = DDMFormLayoutJSONDeserializer.class)
+@Component(service = DDMFormLayoutJSONDeserializer.class)
 @Deprecated
 public class DDMFormLayoutJSONDeserializerImpl
 	implements DDMFormLayoutJSONDeserializer {

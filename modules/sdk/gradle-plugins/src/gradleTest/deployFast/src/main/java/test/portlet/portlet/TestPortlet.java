@@ -20,8 +20,6 @@ import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
 
-import test.portlet.constants.TestPortletKeys;
-
 /**
  * @author greg
  */
@@ -34,7 +32,7 @@ import test.portlet.constants.TestPortletKeys;
 		"javax.portlet.display-name=Test",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + TestPortletKeys.TEST,
+		"javax.portlet.name=test_portlet_TestPortlet",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

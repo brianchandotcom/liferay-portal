@@ -51,7 +51,7 @@ public class LPKGIndependenceTest {
 		BundleContext bundleContext = bundle.getBundleContext();
 
 		Path tempPath = Paths.get(
-			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR, "temp");
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR, "temp");
 
 		File tempFile = tempPath.toFile();
 

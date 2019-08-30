@@ -15,6 +15,7 @@
 package com.liferay.segments.constants;
 
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 
 import java.util.Arrays;
@@ -52,6 +53,10 @@ public class SegmentsExperimentConstants {
 		MAX_SCROLL_DEPTH("max-scroll-depth"), TIME_ON_PAGE("time-on-page");
 
 		public static Goal parse(String label) {
+			if (Validator.isNull(label)) {
+				return null;
+			}
+
 			for (Goal goal : values()) {
 				if (label.equals(goal.getLabel())) {
 					return goal;
@@ -155,6 +160,10 @@ public class SegmentsExperimentConstants {
 		}
 
 		public static Optional<Status> parse(String stringValue) {
+			if (Validator.isNull(stringValue)) {
+				return Optional.empty();
+			}
+
 			for (Status status : values()) {
 				if (stringValue.equals(status.toString())) {
 					return Optional.of(status);

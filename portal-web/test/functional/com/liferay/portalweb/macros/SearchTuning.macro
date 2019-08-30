@@ -1,0 +1,23 @@
+definition {
+
+	macro addResultRanking {
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputText(
+			fieldLabel = "Search Query",
+			text = "${searchQuery}");
+
+		Button.click(button = "Customize Results");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro clickResultEllipsisItem {
+		Click(
+			assetTitle = "${assetTitle}",
+			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
+}

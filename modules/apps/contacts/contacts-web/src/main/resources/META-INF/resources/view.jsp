@@ -481,7 +481,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL')).then(
 						function(response) {
-							return response.json();
+							return response.text();
 						}
 					).then(
 						function(data) {
@@ -581,10 +581,9 @@ portletURL.setWindowState(WindowState.NORMAL);
 					data.append(<portlet:namespace />userId, userId);
 
 					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL'), {
-						body: data,
-						method: 'POST'
+						body: data
 					}).then(function(response) {
-						return response.json();
+						return response.text();
 					}).then(function(data) {
 						contactsCenter.renderContent(data);
 					}).catch(function() {

@@ -273,7 +273,7 @@ public class SegmentsExperimentLocalServiceImpl
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
-			status, 0);
+			0, status);
 	}
 
 	@Override
@@ -320,7 +320,7 @@ public class SegmentsExperimentLocalServiceImpl
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
 				segmentsExperimentKey, null),
-			status, 0);
+			0, status);
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(

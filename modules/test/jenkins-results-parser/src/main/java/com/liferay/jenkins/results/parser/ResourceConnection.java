@@ -19,34 +19,6 @@ package com.liferay.jenkins.results.parser;
  */
 public class ResourceConnection implements Comparable {
 
-	public ResourceConnection(
-		ResourceMonitor resourceMonitor, EtcdUtil.Node node) {
-
-		_key = node.getKey();
-		_node = node;
-		_resourceMonitor = resourceMonitor;
-	}
-
-	public ResourceConnection(
-		ResourceMonitor resourceMonitor, String connectionName) {
-
-		_resourceMonitor = resourceMonitor;
-
-		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
-
-		_key = _resourceMonitor.getKey() + "/" + connectionName;
-
-		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
-
-		if (node != null) {
-			_node = node;
-
-			return;
-		}
-
-		_node = EtcdUtil.put(etcdServerURL, _key, State.IN_QUEUE.toString());
-	}
-
 	@Override
 	public int compareTo(Object o) {
 		if (!(o instanceof ResourceConnection)) {
@@ -100,6 +72,35 @@ public class ResourceConnection implements Comparable {
 
 		IN_QUEUE, IN_USE, RETIRE
 
+	}
+
+	protected ResourceConnection(
+		ResourceMonitor resourceMonitor, EtcdUtil.Node node) {
+
+		_resourceMonitor = resourceMonitor;
+		_node = node;
+
+		_key = _node.getKey();
+	}
+
+	protected ResourceConnection(
+		ResourceMonitor resourceMonitor, String connectionName) {
+
+		_resourceMonitor = resourceMonitor;
+
+		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
+
+		_key = _resourceMonitor.getKey() + "/" + connectionName;
+
+		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
+
+		if (node != null) {
+			_node = node;
+
+			return;
+		}
+
+		_node = EtcdUtil.put(etcdServerURL, _key, State.IN_QUEUE.toString());
 	}
 
 	private final String _key;

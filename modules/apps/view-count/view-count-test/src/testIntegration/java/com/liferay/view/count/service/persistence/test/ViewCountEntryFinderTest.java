@@ -66,8 +66,7 @@ public class ViewCountEntryFinderTest {
 			ViewCountEntryFinderTest.class.getName());
 
 		_viewCountEntry = _viewCountEntryLocalService.addViewCountEntry(
-			TestPropsValues.getCompanyId(), _className.getClassNameId(),
-			_CLASS_PK);
+			TestPropsValues.getCompanyId(), _className.getClassNameId(), -1);
 
 		Runtime runtime = Runtime.getRuntime();
 
@@ -92,8 +91,6 @@ public class ViewCountEntryFinderTest {
 			ReflectionTestUtil.getFieldValue(
 				aopInvocationHandler, "_transactionExecutor");
 
-		long companyId = TestPropsValues.getCompanyId();
-
 		List<Callable<Void>> callables = new ArrayList<>(_INCREMENTS_COUNT);
 
 		for (int i = 0; i < _INCREMENTS_COUNT; i++) {
@@ -104,8 +101,9 @@ public class ViewCountEntryFinderTest {
 							_transactionAttributeAdapter,
 							() -> {
 								_viewCountEntryFinder.incrementViewCount(
-									companyId, _className.getClassNameId(),
-									_CLASS_PK, 1);
+									_viewCountEntry.getCompanyId(),
+									_viewCountEntry.getClassNameId(),
+									_viewCountEntry.getClassPK(), 1);
 
 								return null;
 							});
@@ -122,13 +120,15 @@ public class ViewCountEntryFinderTest {
 			future.get();
 		}
 
-		long viewCount = _viewCountEntryLocalService.getViewCount(
-			companyId, _className.getClassNameId(), _CLASS_PK);
+		ViewCountEntry reloadedViewCountEntry =
+			_viewCountEntryLocalService.fetchViewCountEntry(
+				_viewCountEntry.getPrimaryKey());
 
-		Assert.assertEquals(_INCREMENTS_COUNT, viewCount);
+		Assert.assertNotNull(reloadedViewCountEntry);
+
+		Assert.assertEquals(
+			_INCREMENTS_COUNT, reloadedViewCountEntry.getViewCount());
 	}
-
-	private static final long _CLASS_PK = -1;
 
 	private static final int _INCREMENTS_COUNT = 1000;
 

@@ -35,6 +35,9 @@ import java.util.ResourceBundle;
  */
 public class SegmentsExperimentUtil {
 
+	public static final String ANALYTICS_CLOUD_TRIAL_URL =
+		"https://www.liferay.com/products/analytics-cloud/get-started";
+
 	public static boolean isAnalyticsEnabled(long companyId) {
 		if (Validator.isNull(
 				PrefsPropsUtil.getString(

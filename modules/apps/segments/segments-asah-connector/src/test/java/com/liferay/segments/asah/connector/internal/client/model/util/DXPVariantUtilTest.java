@@ -62,7 +62,7 @@ public class DXPVariantUtilTest {
 			dxpVariant.getDXPVariantName());
 		Assert.assertEquals(
 			segmentsExperimentRel.getSplit(),
-			dxpVariant.getTrafficSplit() / 100, 0D);
+			dxpVariant.getTrafficSplit() / 100, 0.001);
 	}
 
 	private SegmentsExperimentRel _createSegmentsExperimentRel(

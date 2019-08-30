@@ -11,6 +11,7 @@ runGradleTest {
 	doLast {
 		for (String fileName in ["init_jsp.class", "view_jsp.class"]) {
 			File generatedFile = new File(buildDir.getParentFile(), "modules/foo-web/build/tmp/compileJSP/org/apache/jsp/${fileName}")
+
 			assert generatedFile.exists()
 		}
 	}

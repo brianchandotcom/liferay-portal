@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayButton from '@clayui/button';
@@ -20,8 +20,10 @@ import {SplitPicker} from './SplitPicker/SplitPicker.es';
 import {SliderWithLabel} from './SliderWithLabel.es';
 import {SegmentsVariantType} from '../types.es';
 import {percentageNumberToIndex} from '../util/percentages.es';
+import BusyButton from './BusyButton/BusyButton.es';
 
 function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
+	const [busy, setBusy] = useState(false);
 	const [confidenceLevel, setConfidenceLevel] = useState(50);
 	const [draftVariants, setDraftVariants] = useState(
 		variants.map(variant => {
@@ -31,6 +33,15 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 
 	const {observer, onClose} = useModal({
 		onClose: () => setVisible(false)
+	});
+
+	const mounted = useRef();
+
+	useEffect(() => {
+		mounted.current = true;
+		return () => {
+			mounted.current = false;
+		};
 	});
 
 	return (
@@ -76,9 +87,13 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 								{Liferay.Language.get('Cancel')}
 							</ClayButton>
 
-							<ClayButton onClick={_handleRun}>
+							<BusyButton
+								busy={busy}
+								disabled={busy}
+								onClick={_handleRun}
+							>
 								{Liferay.Language.get('Run')}
-							</ClayButton>
+							</BusyButton>
 						</ClayButton.Group>
 					}
 				/>
@@ -98,9 +113,16 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 			};
 		}, {});
 
+		setBusy(true);
+
 		onRun({
 			confidenceLevel: percentageNumberToIndex(confidenceLevel),
 			splitVariantsMap
+		}).then(() => {
+			if (mounted.current) {
+				setBusy(false);
+				setVisible(false);
+			}
 		});
 	}
 }

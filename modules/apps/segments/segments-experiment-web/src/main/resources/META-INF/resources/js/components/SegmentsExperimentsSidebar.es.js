@@ -189,9 +189,20 @@ function SegmentsExperimentsSidebar({
 			status: STATUS_RUNNING
 		};
 
-		segmentsExperimentsUtil.runExperiment(body).then(function() {
-			navigateToExperience(initialSelectedSegmentsExperienceId);
-		});
+		return segmentsExperimentsUtil
+			.runExperiment(body)
+			.then(function(response) {
+				const {segmentsExperiment} = response;
+				const updatedVariants = initialSegmentsVariants.map(
+					variant => ({
+						...variant,
+						split: splitVariantsMap[variant.segmentsExperimentRelId]
+					})
+				);
+
+				setSegmentsExperiment(segmentsExperiment);
+				setVariants(updatedVariants);
+			});
 	}
 
 	function _handleEditSegmentExperimentStatus(segmentsExperiment, status) {

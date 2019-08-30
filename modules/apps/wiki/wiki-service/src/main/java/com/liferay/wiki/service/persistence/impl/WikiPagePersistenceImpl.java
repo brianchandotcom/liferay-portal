@@ -24481,7 +24481,7 @@ public class WikiPagePersistenceImpl
 
 	@Override
 	@Reference(
-		target = WikiPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = WikiPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {

@@ -38,7 +38,6 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
@@ -215,12 +214,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				WebKeys.THEME_DISPLAY);
 
 		if (!themeDisplay.isSignedIn()) {
-			return false;
-		}
-
-		if (!SegmentsExperimentUtil.isAnalyticsEnabled(
-				themeDisplay.getCompanyId())) {
-
 			return false;
 		}
 

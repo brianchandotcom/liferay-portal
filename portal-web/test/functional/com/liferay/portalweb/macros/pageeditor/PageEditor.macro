@@ -22,6 +22,25 @@ definition {
 		Button.clickComment();
 	}
 
+	macro addCommentViaFragment {
+		PageEditor.gotoCommentViaFragment(
+			key_content = "${content}",
+			key_fragmentClass = "${fragmentClass}",
+			key_position = "${position}");
+
+		AssertElementPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME");
+
+		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
+
+		Type(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
+			value1 = "${fragmentComment}");
+
+		Button.clickComment();
+	}
+
 	macro addFragment {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -251,6 +270,16 @@ definition {
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE",
 			value1 = "Comments");
+	}
+
+	macro gotoCommentViaFragment {
+		Click(
+			key_content = "${content}",
+			key_fragmentClass = "${fragmentClass}",
+			key_position = "${position}",
+			locator1 = "Fragment#FRAGMENT");
+
+		Click(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 	}
 
 	macro gotoEditableFieldEdit {

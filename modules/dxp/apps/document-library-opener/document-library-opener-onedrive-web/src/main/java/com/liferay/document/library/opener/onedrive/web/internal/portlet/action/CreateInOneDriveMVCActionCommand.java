@@ -107,14 +107,13 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	private DLOpenerOneDriveFileReference _addDLOpenerOneDriveFileReference(
 			Locale locale, long userId, long repositoryId, long folderId,
-			String mimeType, ServiceContext serviceContext)
+			String mimeType, String title, ServiceContext serviceContext)
 		throws PortalException {
 
-		String title = _uniqueFileEntryTitleProvider.provide(
-			serviceContext.getScopeGroupId(), folderId,
-			serviceContext.getLocale());
+		String uniqueTitle = _uniqueFileEntryTitleProvider.provide(
+			serviceContext.getScopeGroupId(), folderId, title);
 
-		String sourceFileName = title;
+		String sourceFileName = uniqueTitle;
 
 		sourceFileName += DLOpenerOneDriveMimeTypes.getMimeTypeExtension(
 			mimeType);
@@ -125,11 +124,8 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		if (Objects.equals(DLOpenerMimeTypes.APPLICATION_VND_XLSX, mimeType)) {
 			XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(locale);
-
 			xssfWorkbook.createSheet(
-				_language.get(resourceBundle, "onedrive-excel-sheet"));
+				_translateKey(locale, "onedrive-excel-sheet"));
 
 			try {
 				xssfWorkbook.write(byteArrayOutputStream);
@@ -142,7 +138,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			repositoryId, folderId, sourceFileName, mimeType, title,
+			repositoryId, folderId, sourceFileName, mimeType, uniqueTitle,
 			StringPool.BLANK, StringPool.BLANK,
 			byteArrayOutputStream.toByteArray(), serviceContext);
 
@@ -173,6 +169,9 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			String contentType = ParamUtil.getString(
 				actionRequest, "contentType",
 				DLOpenerMimeTypes.APPLICATION_VND_DOCX);
+			String title = ParamUtil.getString(
+				actionRequest, "title",
+				_translateKey(_portal.getLocale(actionRequest), "untitled"));
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
@@ -183,7 +182,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 					() -> _addDLOpenerOneDriveFileReference(
 						_portal.getLocale(actionRequest),
 						_portal.getUserId(actionRequest), repositoryId,
-						folderId, contentType, serviceContext));
+						folderId, contentType, title, serviceContext));
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -220,6 +219,13 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		return JSONUtil.put(
 			DLOpenerOneDriveWebKeys.DL_OPENER_ONE_DRIVE_FILE_REFERENCE,
 			dlOpenerOneDriveFileReference);
+	}
+
+	private String _translateKey(Locale locale, String key) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, key);
 	}
 
 	@Reference

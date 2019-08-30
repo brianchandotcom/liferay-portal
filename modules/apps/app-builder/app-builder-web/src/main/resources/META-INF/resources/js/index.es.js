@@ -16,11 +16,14 @@ import {render} from 'frontend-js-react-web';
 import React from 'react';
 import App from './App.es';
 
-export default (id, constants) => {
-	render(
+function renderComponent(constants) {
+	return (
 		<div className="app-builder-root">
 			<App {...constants} />
-		</div>,
-		document.getElementById(id)
+		</div>
 	);
-};
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
+}

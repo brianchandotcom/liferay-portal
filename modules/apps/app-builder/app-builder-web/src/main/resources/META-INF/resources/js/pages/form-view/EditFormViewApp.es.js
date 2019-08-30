@@ -17,11 +17,14 @@ import React from 'react';
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 
-export default (id, {basePortletURL, ...props}) => {
-	render(
+function renderComponent({basePortletURL, ...props}) {
+	return (
 		<AppContextProvider basePortletURL={basePortletURL}>
 			<EditFormView {...props} />
-		</AppContextProvider>,
-		document.getElementById(id)
+		</AppContextProvider>
 	);
-};
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
+}

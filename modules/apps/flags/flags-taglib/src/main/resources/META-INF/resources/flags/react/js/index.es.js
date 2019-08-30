@@ -18,11 +18,14 @@ import React from 'react';
 import Flags from './components/Flags.es';
 import ThemeContext from './ThemeContext.es';
 
-export default function reactDomRenderFlags(id, props, context) {
-	render(
+function renderComponent({props, context}) {
+	return (
 		<ThemeContext.Provider value={context}>
 			<Flags {...props} />
-		</ThemeContext.Provider>,
-		document.getElementById(id)
+		</ThemeContext.Provider>
 	);
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
 }

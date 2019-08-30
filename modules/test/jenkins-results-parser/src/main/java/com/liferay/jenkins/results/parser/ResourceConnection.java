@@ -30,23 +30,11 @@ public class ResourceConnection implements Comparable {
 	public ResourceConnection(
 		ResourceMonitor resourceMonitor, String connectionName) {
 
-		this(resourceMonitor, connectionName, null);
-	}
-
-	public ResourceConnection(
-		ResourceMonitor resourceMonitor, String connectionName, State state) {
-
 		_resourceMonitor = resourceMonitor;
 
 		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
 
 		_key = _resourceMonitor.getKey() + "/" + connectionName;
-
-		if (state != null) {
-			_node = EtcdUtil.put(etcdServerURL, _key, state.toString());
-
-			return;
-		}
 
 		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
 

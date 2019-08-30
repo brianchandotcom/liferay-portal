@@ -24,8 +24,8 @@ let counter = 0;
  *
  * - Provides commonly-needed context (for example, the Clay spritemap).
  * - Unmounts when portlets are destroyed based on the received
- * `portletNamespace` value inside renderData. If none is passed, the component
- * will be automatically unmount before the next navigation
+ *   `portletId` value inside renderData. If none is passed, the
+ *   component will be automatically unmounted before the next navigation.
  *
  * The React docs advise not to rely on the render return value, so we
  * don't propagate it.

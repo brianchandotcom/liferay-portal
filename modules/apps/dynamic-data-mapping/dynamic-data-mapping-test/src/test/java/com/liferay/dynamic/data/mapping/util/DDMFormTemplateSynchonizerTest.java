@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl;
-import com.liferay.dynamic.data.mapping.service.util.ServiceProps;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -58,7 +57,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class, PropsValues.class, ServiceProps.class})
+@PrepareForTest({LocaleUtil.class, PropsValues.class})
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
 	{
@@ -84,7 +83,6 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		setUpPortalUtil();
 		setUpPropsValues();
 		setUpSAXReaderUtil();
-		setUpServiceProps();
 	}
 
 	@Test
@@ -347,10 +345,6 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		);
 
 		portalUtil.setPortal(portal);
-	}
-
-	protected void setUpServiceProps() {
-		mockStatic(ServiceProps.class);
 	}
 
 	protected void testFormTemplatesAfterAddRequiredFields() throws Exception {

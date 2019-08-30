@@ -55,7 +55,7 @@ describe('ListView', () => {
 	it('renders with 1 item', async () => {
 		fetch.mockResponse(JSON.stringify(RESPONSES.ONE_ITEM));
 
-		const {container, queryAllByTestId, queryAllByText} = render(
+		const {container, queryAllByTestId} = render(
 			<ListView
 				actions={ACTIONS}
 				columns={COLUMNS}
@@ -70,8 +70,7 @@ describe('ListView', () => {
 		);
 
 		expect(queryAllByTestId('item').length).toBe(1);
-		expect(container.querySelectorAll('li.page-item').length).toBe(3);
-		expect(queryAllByText('Showing 1 to 1 of 1').length).toBe(1);
+		expect(container.querySelectorAll('li.page-item').length).toBe(0);
 	});
 
 	it('renders with 21 items and 2 pages', async () => {

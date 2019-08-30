@@ -275,6 +275,8 @@ private Model _getModel(String artifactId) {
 
 	model.setArtifactId(artifactId)
 	model.setGroupId("com.liferay.portal")
+	model.setModelVersion("4.0.0")
+	model.setPackaging("pom")
 	model.setVersion(project.version)
 
 	Developer developer = new Developer()

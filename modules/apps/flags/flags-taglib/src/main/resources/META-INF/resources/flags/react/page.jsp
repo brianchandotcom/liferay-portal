@@ -64,21 +64,25 @@ if (Validator.isNull(message)) {
 	new FlagsComponent.default(
 		'<%= id %>',
 		{
-			baseData: <%= dataJSONObject %>,
-			companyName: '<%= companyName %>',
-			disabled: <%= !enabled %>,
-			forceLogin: <%= !flagsEnabled %>,
-			<c:if test="<%= Validator.isNotNull(message) %>">
-				message: '<%= message %>',
-			</c:if>
-			onlyIcon: <%= onlyIcon %>,
-			pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
-			reasons: <%= JSONFactoryUtil.looseSerializeDeep(reasons) %>,
-			signedIn: <%= signedIn %>,
-			uri: '<%= uri %>'
-		},
-		{
-			namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>'
+			props: {
+				baseData: <%= dataJSONObject %>,
+				companyName: '<%= companyName %>',
+				disabled: <%= !enabled %>,
+				forceLogin: <%= !flagsEnabled %>,
+
+				<c:if test="<%= Validator.isNotNull(message) %>">
+					message: '<%= message %>',
+				</c:if>
+
+				onlyIcon: <%= onlyIcon %>,
+				pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
+				reasons: <%= JSONFactoryUtil.looseSerializeDeep(reasons) %>,
+				signedIn: <%= signedIn %>,
+				uri: '<%= uri %>'
+			},
+			context: {
+				namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>'
+			}
 		}
 	);
 </aui:script>

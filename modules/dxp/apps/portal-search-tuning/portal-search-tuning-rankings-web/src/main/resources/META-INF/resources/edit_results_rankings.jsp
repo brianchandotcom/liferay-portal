@@ -97,22 +97,24 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 	ResultsRankings.default(
 		'<%= resultsRankingsRootElementId %>',
 		{
-			cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
-			fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
-			fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
-			fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
-			formName: '<portlet:namespace />editResultsRankingsFm',
-			initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
-			searchQuery: '<%= HtmlUtil.escape(keywords) %>'
-		},
-		{
-			companyId: '<%= themeDisplay.getCompanyId() %>',
-			constants: {
-				WORKFLOW_ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
-				WORKFLOW_ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
+			props: {
+				cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
+				fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
+				fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
+				fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
+				formName: '<portlet:namespace />editResultsRankingsFm',
+				initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
+				searchQuery: '<%= HtmlUtil.escape(keywords) %>'
 			},
-			namespace: '<portlet:namespace />',
-			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+			context: {
+				companyId: '<%= themeDisplay.getCompanyId() %>',
+				constants: {
+					WORKFLOW_ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
+					WORKFLOW_ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
+				},
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+			}
 		}
 	);
 </aui:script>

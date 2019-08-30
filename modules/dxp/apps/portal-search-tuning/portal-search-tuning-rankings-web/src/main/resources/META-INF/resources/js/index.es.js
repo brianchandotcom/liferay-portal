@@ -14,13 +14,16 @@ import ResultsRankingForm from './components/ResultsRankingForm.es';
 import ThemeContext from './ThemeContext.es';
 import {render} from 'frontend-js-react-web';
 
-export default function(id, props, context) {
+function renderComponent({props, context}) {
 	render(
 		<ThemeContext.Provider value={context}>
 			<div className="results-rankings-root">
 				<ResultsRankingForm {...props} />
 			</div>
-		</ThemeContext.Provider>,
-		document.getElementById(id)
+		</ThemeContext.Provider>
 	);
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
 }

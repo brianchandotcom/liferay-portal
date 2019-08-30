@@ -13,11 +13,14 @@ import React from 'react';
 import SynonymSetsForm from './components/SynonymSetsForm.es';
 import {render} from 'frontend-js-react-web';
 
-export default function(id, props) {
-	render(
+function renderComponent(props) {
+	return (
 		<div className="synonym-sets-root">
 			<SynonymSetsForm {...props} />
-		</div>,
-		document.getElementById(id)
+		</div>
 	);
+}
+
+export default function(containerId, data) {
+	render(renderComponent, data, containerId);
 }

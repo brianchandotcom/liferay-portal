@@ -30,9 +30,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Cristina González
  */
-public class OAuth2FlowHelper {
+public class OAuth2Controller {
 
-	public OAuth2FlowHelper(
+	public OAuth2Controller(
 		OAuth2Manager oAuth2Manager, Portal portal,
 		PortletURLFactory portletURLFactory) {
 
@@ -41,7 +41,7 @@ public class OAuth2FlowHelper {
 		_portletURLFactory = portletURLFactory;
 	}
 
-	public <T extends PortletRequest> OAuth2FlowResult execute(
+	public <T extends PortletRequest> OAuth2Result execute(
 			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction,
 			String successURL)
 		throws PortalException {
@@ -50,7 +50,7 @@ public class OAuth2FlowHelper {
 		long userId = _portal.getUserId(t);
 
 		if (_oAuth2Manager.hasAccessToken(companyId, userId)) {
-			return new OAuth2FlowResult(unsafeFunction.apply(t));
+			return new OAuth2Result(unsafeFunction.apply(t));
 		}
 
 		String state = PwdGenerator.getPassword(5);
@@ -59,18 +59,18 @@ public class OAuth2FlowHelper {
 			_portal.getOriginalServletRequest(_portal.getHttpServletRequest(t)),
 			new OAuth2State(userId, successURL, _getFailureURL(t), state));
 
-		return new OAuth2FlowResult(
+		return new OAuth2Result(
 			_oAuth2Manager.getAuthorizationURL(
 				companyId, _portal.getPortalURL(t), state));
 	}
 
-	public static class OAuth2FlowResult {
+	public static class OAuth2Result {
 
-		public OAuth2FlowResult(JSONObject response) {
+		public OAuth2Result(JSONObject response) {
 			_response = response;
 		}
 
-		public OAuth2FlowResult(String redirectURL) {
+		public OAuth2Result(String redirectURL) {
 			_redirectURL = redirectURL;
 		}
 

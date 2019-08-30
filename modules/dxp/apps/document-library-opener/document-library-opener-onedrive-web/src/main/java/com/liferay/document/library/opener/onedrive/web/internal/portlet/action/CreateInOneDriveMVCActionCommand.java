@@ -21,7 +21,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriv
 import com.liferay.document.library.opener.onedrive.web.internal.DLOpenerOneDriveManager;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveMimeTypes;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
-import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2FlowHelper;
+import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.onedrive.web.internal.util.DLOpenerTimestampUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
@@ -82,13 +82,13 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 
 	@Activate
 	public void activate() {
-		_oAuth2FlowHelper = new OAuth2FlowHelper(
+		_oAuth2Controller = new OAuth2Controller(
 			_oAuth2Manager, _portal, _portletURLFactory);
 	}
 
 	@Deactivate
 	public void deactivate() {
-		_oAuth2FlowHelper = null;
+		_oAuth2Controller = null;
 	}
 
 	@Override
@@ -96,13 +96,12 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		OAuth2FlowHelper.OAuth2FlowResult oAuth2FlowResult =
-			_oAuth2FlowHelper.execute(
-				actionRequest, this::_executeCommand,
-				_getSuccessURL(actionRequest));
+		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
+			actionRequest, this::_executeCommand,
+			_getSuccessURL(actionRequest));
 
-		if (oAuth2FlowResult.isRedirect()) {
-			actionResponse.sendRedirect(oAuth2FlowResult.getRedirectURL());
+		if (oAuth2Result.isRedirect()) {
+			actionResponse.sendRedirect(oAuth2Result.getRedirectURL());
 		}
 	}
 
@@ -232,7 +231,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private Language _language;
 
-	private OAuth2FlowHelper _oAuth2FlowHelper;
+	private OAuth2Controller _oAuth2Controller;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

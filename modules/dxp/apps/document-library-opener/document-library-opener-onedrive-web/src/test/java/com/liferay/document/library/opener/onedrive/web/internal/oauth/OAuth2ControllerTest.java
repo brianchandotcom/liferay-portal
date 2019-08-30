@@ -42,7 +42,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Cristina González
  */
-public class OAuth2FlowHelperTest {
+public class OAuth2ControllerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
@@ -85,7 +85,7 @@ public class OAuth2FlowHelperTest {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		_oAuth2FlowHelper = new OAuth2FlowHelper(
+		_oAuth2Controller = new OAuth2Controller(
 			_oAuth2Manager, _portal, _portletURLFactory);
 	}
 
@@ -101,14 +101,13 @@ public class OAuth2FlowHelperTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		OAuth2FlowHelper.OAuth2FlowResult oAuth2FlowResult =
-			_oAuth2FlowHelper.execute(
-				_getMockPortletRequest(mockHttpServletRequest),
-				portletRequest -> JSONUtil.put("key", "value"), "successURL");
+		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
+			_getMockPortletRequest(mockHttpServletRequest),
+			portletRequest -> JSONUtil.put("key", "value"), "successURL");
 
-		Assert.assertFalse(oAuth2FlowResult.isRedirect());
+		Assert.assertFalse(oAuth2Result.isRedirect());
 
-		JSONObject jsonObject = oAuth2FlowResult.getResponse();
+		JSONObject jsonObject = oAuth2Result.getResponse();
 
 		Assert.assertEquals("value", jsonObject.getString("key"));
 
@@ -130,15 +129,13 @@ public class OAuth2FlowHelperTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		OAuth2FlowHelper.OAuth2FlowResult oAuth2FlowResult =
-			_oAuth2FlowHelper.execute(
-				_getMockPortletRequest(mockHttpServletRequest),
-				portletRequest -> JSONFactoryUtil.createJSONObject(),
-				RandomTestUtil.randomString());
+		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
+			_getMockPortletRequest(mockHttpServletRequest),
+			portletRequest -> JSONFactoryUtil.createJSONObject(),
+			RandomTestUtil.randomString());
 
-		Assert.assertTrue(oAuth2FlowResult.isRedirect());
-		Assert.assertEquals(
-			"authorizationURL", oAuth2FlowResult.getRedirectURL());
+		Assert.assertTrue(oAuth2Result.isRedirect());
+		Assert.assertEquals("authorizationURL", oAuth2Result.getRedirectURL());
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
@@ -167,7 +164,7 @@ public class OAuth2FlowHelperTest {
 	}
 
 	private static LiferayPortletURL _liferayPortletURL;
-	private static OAuth2FlowHelper _oAuth2FlowHelper;
+	private static OAuth2Controller _oAuth2Controller;
 	private static OAuth2Manager _oAuth2Manager;
 	private static Portal _portal;
 	private static PortletURLFactory _portletURLFactory;

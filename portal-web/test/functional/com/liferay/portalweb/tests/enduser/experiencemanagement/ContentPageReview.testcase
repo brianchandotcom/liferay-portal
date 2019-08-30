@@ -175,6 +175,8 @@ definition {
 
 		ContentPages.clickPencil();
 
+		AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
+
 		AssertElementNotPresent(
 			key_tabName = "Comments",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
@@ -683,6 +685,8 @@ definition {
 			value1 = "Test Content Page Name");
 
 		ContentPages.clickPencil();
+
+		AssertElementNotPresent(locator1 = "Fragment#FRAGMENT_COMMENT_ICON");
 
 		AssertElementNotPresent(
 			key_tabName = "Comments",

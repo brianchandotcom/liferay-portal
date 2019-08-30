@@ -16,8 +16,8 @@ package com.liferay.fragment.entry.processor.editable.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
-import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -28,6 +28,9 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -156,22 +159,27 @@ public class FragmentEntryProcessorEditableTest {
 				fragmentEntry.getJs(), StringPool.BLANK, StringPool.BLANK, 0,
 				null, ServiceContextTestUtil.getServiceContext());
 
-		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
-			_group.getGroupId());
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		String editableValues = _getJsonFileAsString(
 			"fragment_entry_link_mapped_asset_field.json");
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_NAME_ID",
-			String.valueOf(_portal.getClassNameId(assetEntry.getClassName())));
+			String.valueOf(_portal.getClassNameId(JournalArticle.class)));
 
 		editableValues = StringUtil.replace(
 			editableValues, "CLASS_PK",
-			String.valueOf(assetEntry.getClassPK()));
+			String.valueOf(journalArticle.getResourcePrimKey()));
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_portal.getClassNameId(JournalArticle.class),
+			journalArticle.getResourcePrimKey());
 
 		int count = _assetEntryUsageLocalService.getAssetEntryUsagesCount(
 			assetEntry.getEntryId());
@@ -423,6 +431,9 @@ public class FragmentEntryProcessorEditableTest {
 
 		return bodyElement.html();
 	}
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private AssetEntryUsageLocalService _assetEntryUsageLocalService;

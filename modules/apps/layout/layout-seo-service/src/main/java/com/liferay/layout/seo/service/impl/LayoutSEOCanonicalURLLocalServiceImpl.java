@@ -15,8 +15,8 @@
 package com.liferay.layout.seo.service.impl;
 
 import com.liferay.layout.seo.exception.NoSuchCanonicalURLException;
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.base.LayoutCanonicalURLLocalServiceBaseImpl;
+import com.liferay.layout.seo.model.LayoutSEOCanonicalURL;
+import com.liferay.layout.seo.service.base.LayoutSEOCanonicalURLLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -33,90 +33,90 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.layout.seo.model.LayoutCanonicalURL",
+	property = "model.class.name=com.liferay.layout.seo.model.LayoutSEOCanonicalURL",
 	service = AopService.class
 )
-public class LayoutCanonicalURLLocalServiceImpl
-	extends LayoutCanonicalURLLocalServiceBaseImpl {
+public class LayoutSEOCanonicalURLLocalServiceImpl
+	extends LayoutSEOCanonicalURLLocalServiceBaseImpl {
 
 	@Override
-	public void deleteLayoutCanonicalURL(
+	public void deleteLayoutSEOCanonicalURL(
 			long groupId, boolean privateLayout, long layoutId)
 		throws NoSuchCanonicalURLException {
 
-		layoutCanonicalURLPersistence.removeByG_P_L(
+		layoutSEOCanonicalURLPersistence.removeByG_P_L(
 			groupId, privateLayout, layoutId);
 	}
 
 	@Override
-	public void deleteLayoutCanonicalURL(String uuid, long groupId)
+	public void deleteLayoutSEOCanonicalURL(String uuid, long groupId)
 		throws NoSuchCanonicalURLException {
 
-		layoutCanonicalURLPersistence.removeByUUID_G(uuid, groupId);
+		layoutSEOCanonicalURLPersistence.removeByUUID_G(uuid, groupId);
 	}
 
 	@Override
-	public LayoutCanonicalURL fetchLayoutCanonicalURL(
+	public LayoutSEOCanonicalURL fetchLayoutSEOCanonicalURL(
 		long groupId, boolean privateLayout, long layoutId) {
 
-		return layoutCanonicalURLPersistence.fetchByG_P_L(
+		return layoutSEOCanonicalURLPersistence.fetchByG_P_L(
 			groupId, privateLayout, layoutId);
 	}
 
 	@Override
-	public LayoutCanonicalURL updateLayoutCanonicalURL(
+	public LayoutSEOCanonicalURL updateLayoutSEOCanonicalURL(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean enabled, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutCanonicalURL layoutCanonicalURL =
-			layoutCanonicalURLPersistence.fetchByG_P_L(
+		LayoutSEOCanonicalURL layoutSEOCanonicalURL =
+			layoutSEOCanonicalURLPersistence.fetchByG_P_L(
 				groupId, privateLayout, layoutId);
 
-		if (layoutCanonicalURL == null) {
-			return _addLayoutCanonicalURL(
+		if (layoutSEOCanonicalURL == null) {
+			return _addLayoutSEOCanonicalURL(
 				userId, groupId, privateLayout, layoutId, enabled,
 				canonicalURLMap, serviceContext);
 		}
 
-		layoutCanonicalURL.setModifiedDate(DateUtil.newDate());
-		layoutCanonicalURL.setEnabled(enabled);
-		layoutCanonicalURL.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOCanonicalURL.setModifiedDate(DateUtil.newDate());
+		layoutSEOCanonicalURL.setEnabled(enabled);
+		layoutSEOCanonicalURL.setCanonicalURLMap(canonicalURLMap);
 
-		return layoutCanonicalURLPersistence.update(layoutCanonicalURL);
+		return layoutSEOCanonicalURLPersistence.update(layoutSEOCanonicalURL);
 	}
 
-	private LayoutCanonicalURL _addLayoutCanonicalURL(
+	private LayoutSEOCanonicalURL _addLayoutSEOCanonicalURL(
 			long userId, long groupId, boolean privateLayout, long layoutId,
 			boolean enabled, Map<Locale, String> canonicalURLMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutCanonicalURL layoutCanonicalURL =
-			layoutCanonicalURLPersistence.create(
+		LayoutSEOCanonicalURL layoutSEOCanonicalURL =
+			layoutSEOCanonicalURLPersistence.create(
 				counterLocalService.increment());
 
-		layoutCanonicalURL.setUuid(serviceContext.getUuid());
-		layoutCanonicalURL.setGroupId(groupId);
+		layoutSEOCanonicalURL.setUuid(serviceContext.getUuid());
+		layoutSEOCanonicalURL.setGroupId(groupId);
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		layoutCanonicalURL.setCompanyId(group.getCompanyId());
+		layoutSEOCanonicalURL.setCompanyId(group.getCompanyId());
 
-		layoutCanonicalURL.setUserId(userId);
+		layoutSEOCanonicalURL.setUserId(userId);
 
 		Date now = DateUtil.newDate();
 
-		layoutCanonicalURL.setCreateDate(now);
-		layoutCanonicalURL.setModifiedDate(now);
+		layoutSEOCanonicalURL.setCreateDate(now);
+		layoutSEOCanonicalURL.setModifiedDate(now);
 
-		layoutCanonicalURL.setEnabled(enabled);
-		layoutCanonicalURL.setCanonicalURLMap(canonicalURLMap);
-		layoutCanonicalURL.setPrivateLayout(privateLayout);
-		layoutCanonicalURL.setLayoutId(layoutId);
+		layoutSEOCanonicalURL.setEnabled(enabled);
+		layoutSEOCanonicalURL.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOCanonicalURL.setPrivateLayout(privateLayout);
+		layoutSEOCanonicalURL.setLayoutId(layoutId);
 
-		return layoutCanonicalURLPersistence.update(layoutCanonicalURL);
+		return layoutSEOCanonicalURLPersistence.update(layoutSEOCanonicalURL);
 	}
 
 }

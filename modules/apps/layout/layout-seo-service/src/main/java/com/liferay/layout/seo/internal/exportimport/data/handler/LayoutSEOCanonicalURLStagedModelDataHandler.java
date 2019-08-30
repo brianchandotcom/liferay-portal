@@ -18,8 +18,8 @@ import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
+import com.liferay.layout.seo.model.LayoutSEOCanonicalURL;
+import com.liferay.layout.seo.service.LayoutSEOCanonicalURLLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 
@@ -34,19 +34,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(service = StagedModelDataHandler.class)
-public class LayoutCanonicalURLStagedModelDataHandler
-	extends BaseStagedModelDataHandler<LayoutCanonicalURL> {
+public class LayoutSEOCanonicalURLStagedModelDataHandler
+	extends BaseStagedModelDataHandler<LayoutSEOCanonicalURL> {
 
 	public static final String[] CLASS_NAMES = {
-		LayoutCanonicalURL.class.getName()
+		LayoutSEOCanonicalURL.class.getName()
 	};
 
 	@Override
-	public void deleteStagedModel(LayoutCanonicalURL layoutCanonicalURL)
+	public void deleteStagedModel(LayoutSEOCanonicalURL layoutSEOCanonicalURL)
 		throws PortalException {
 
-		_layoutCanonicalURLLocalService.deleteLayoutCanonicalURL(
-			layoutCanonicalURL);
+		_layoutSEOCanonicalURLLocalService.deleteLayoutSEOCanonicalURL(
+			layoutSEOCanonicalURL);
 	}
 
 	@Override
@@ -54,16 +54,17 @@ public class LayoutCanonicalURLStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		_layoutCanonicalURLLocalService.deleteLayoutCanonicalURL(uuid, groupId);
+		_layoutSEOCanonicalURLLocalService.deleteLayoutSEOCanonicalURL(
+			uuid, groupId);
 	}
 
 	@Override
-	public List<LayoutCanonicalURL> fetchStagedModelsByUuidAndCompanyId(
+	public List<LayoutSEOCanonicalURL> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
 		return Collections.singletonList(
-			_layoutCanonicalURLLocalService.
-				fetchLayoutCanonicalURLByUuidAndGroupId(uuid, companyId));
+			_layoutSEOCanonicalURLLocalService.
+				fetchLayoutSEOCanonicalURLByUuidAndGroupId(uuid, companyId));
 	}
 
 	@Override
@@ -74,53 +75,55 @@ public class LayoutCanonicalURLStagedModelDataHandler
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
-			LayoutCanonicalURL layoutCanonicalURL)
+			LayoutSEOCanonicalURL layoutSEOCanonicalURL)
 		throws Exception {
 
 		portletDataContext.addClassedModel(
-			portletDataContext.getExportDataElement(layoutCanonicalURL),
-			ExportImportPathUtil.getModelPath(layoutCanonicalURL),
-			layoutCanonicalURL);
+			portletDataContext.getExportDataElement(layoutSEOCanonicalURL),
+			ExportImportPathUtil.getModelPath(layoutSEOCanonicalURL),
+			layoutSEOCanonicalURL);
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			LayoutCanonicalURL layoutCanonicalURL)
+			LayoutSEOCanonicalURL layoutSEOCanonicalURL)
 		throws Exception {
 
-		LayoutCanonicalURL existingLayoutCanonicalURL =
+		LayoutSEOCanonicalURL existingLayoutSEOCanonicalURL =
 			fetchStagedModelByUuidAndGroupId(
-				layoutCanonicalURL.getUuid(), layoutCanonicalURL.getGroupId());
+				layoutSEOCanonicalURL.getUuid(),
+				layoutSEOCanonicalURL.getGroupId());
 
-		if (existingLayoutCanonicalURL == null) {
+		if (existingLayoutSEOCanonicalURL == null) {
 			Map<Long, Layout> newPrimaryKeysMap =
 				(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 					Layout.class + ".layout");
 
 			Layout layout = newPrimaryKeysMap.get(
-				layoutCanonicalURL.getLayoutId());
+				layoutSEOCanonicalURL.getLayoutId());
 
-			_layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
-				layoutCanonicalURL.getUserId(), layout.getGroupId(),
+			_layoutSEOCanonicalURLLocalService.updateLayoutSEOCanonicalURL(
+				layoutSEOCanonicalURL.getUserId(), layout.getGroupId(),
 				layout.isPrivateLayout(), layout.getLayoutId(),
-				layoutCanonicalURL.isEnabled(),
-				layoutCanonicalURL.getCanonicalURLMap(),
-				portletDataContext.createServiceContext(layoutCanonicalURL));
+				layoutSEOCanonicalURL.isEnabled(),
+				layoutSEOCanonicalURL.getCanonicalURLMap(),
+				portletDataContext.createServiceContext(layoutSEOCanonicalURL));
 		}
 		else {
-			_layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
-				existingLayoutCanonicalURL.getUserId(),
+			_layoutSEOCanonicalURLLocalService.updateLayoutSEOCanonicalURL(
+				existingLayoutSEOCanonicalURL.getUserId(),
 				portletDataContext.getScopeGroupId(),
-				layoutCanonicalURL.isPrivateLayout(),
-				existingLayoutCanonicalURL.getLayoutId(),
-				layoutCanonicalURL.isEnabled(),
-				layoutCanonicalURL.getCanonicalURLMap(),
-				portletDataContext.createServiceContext(layoutCanonicalURL));
+				layoutSEOCanonicalURL.isPrivateLayout(),
+				existingLayoutSEOCanonicalURL.getLayoutId(),
+				layoutSEOCanonicalURL.isEnabled(),
+				layoutSEOCanonicalURL.getCanonicalURLMap(),
+				portletDataContext.createServiceContext(layoutSEOCanonicalURL));
 		}
 	}
 
 	@Reference
-	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
+	private LayoutSEOCanonicalURLLocalService
+		_layoutSEOCanonicalURLLocalService;
 
 }

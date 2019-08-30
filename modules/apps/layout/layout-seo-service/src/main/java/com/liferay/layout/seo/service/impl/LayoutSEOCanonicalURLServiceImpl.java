@@ -14,8 +14,8 @@
 
 package com.liferay.layout.seo.service.impl;
 
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.base.LayoutCanonicalURLServiceBaseImpl;
+import com.liferay.layout.seo.model.LayoutSEOCanonicalURL;
+import com.liferay.layout.seo.service.base.LayoutSEOCanonicalURLServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -33,16 +33,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"json.web.service.context.name=layout",
-		"json.web.service.context.path=LayoutCanonicalURL"
+		"json.web.service.context.name=layoutseo",
+		"json.web.service.context.path=LayoutSEOCanonicalURL"
 	},
 	service = AopService.class
 )
-public class LayoutCanonicalURLServiceImpl
-	extends LayoutCanonicalURLServiceBaseImpl {
+public class LayoutSEOCanonicalURLServiceImpl
+	extends LayoutSEOCanonicalURLServiceBaseImpl {
 
 	@Override
-	public LayoutCanonicalURL updateLayoutCanonicalURL(
+	public LayoutSEOCanonicalURL updateLayoutSEOCanonicalURL(
 			long groupId, boolean privateLayout, long layoutId, boolean enabled,
 			Map<Locale, String> canonicalURLMap, ServiceContext serviceContext)
 		throws PortalException {
@@ -53,7 +53,7 @@ public class LayoutCanonicalURLServiceImpl
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), layout, ActionKeys.UPDATE);
 
-		return layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
+		return layoutSEOCanonicalURLLocalService.updateLayoutSEOCanonicalURL(
 			getUserId(), groupId, privateLayout, layoutId, enabled,
 			canonicalURLMap, serviceContext);
 	}

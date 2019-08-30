@@ -291,7 +291,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceRecordId=");
+		msg.append("formInstanceRecordId = ");
 		msg.append(formInstanceRecordId);
 
 		msg.append("}");
@@ -347,7 +347,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceRecordId=");
+		msg.append("formInstanceRecordId = ");
 		msg.append(formInstanceRecordId);
 
 		msg.append("}");
@@ -854,10 +854,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceId=");
+		msg.append("formInstanceId = ");
 		msg.append(formInstanceId);
 
-		msg.append(", formInstanceVersion=");
+		msg.append(", formInstanceVersion = ");
 		msg.append(formInstanceVersion);
 
 		msg.append("}");
@@ -915,10 +915,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceId=");
+		msg.append("formInstanceId = ");
 		msg.append(formInstanceId);
 
-		msg.append(", formInstanceVersion=");
+		msg.append(", formInstanceVersion = ");
 		msg.append(formInstanceVersion);
 
 		msg.append("}");
@@ -1254,10 +1254,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("formInstanceRecordId=");
+			msg.append("formInstanceRecordId = ");
 			msg.append(formInstanceRecordId);
 
-			msg.append(", version=");
+			msg.append(", version = ");
 			msg.append(version);
 
 			msg.append("}");
@@ -1706,10 +1706,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceRecordId=");
+		msg.append("formInstanceRecordId = ");
 		msg.append(formInstanceRecordId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -1766,10 +1766,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("formInstanceRecordId=");
+		msg.append("formInstanceRecordId = ");
 		msg.append(formInstanceRecordId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2317,16 +2317,16 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", formInstanceId=");
+		msg.append(", formInstanceId = ");
 		msg.append(formInstanceId);
 
-		msg.append(", formInstanceVersion=");
+		msg.append(", formInstanceVersion = ");
 		msg.append(formInstanceVersion);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2392,16 +2392,16 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", formInstanceId=");
+		msg.append(", formInstanceId = ");
 		msg.append(formInstanceId);
 
-		msg.append(", formInstanceVersion=");
+		msg.append(", formInstanceVersion = ");
 		msg.append(formInstanceVersion);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

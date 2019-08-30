@@ -99,10 +99,10 @@ public class PortalPreferencesPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("ownerId=");
+			msg.append("ownerId = ");
 			msg.append(ownerId);
 
-			msg.append(", ownerType=");
+			msg.append(", ownerType = ");
 			msg.append(ownerType);
 
 			msg.append("}");

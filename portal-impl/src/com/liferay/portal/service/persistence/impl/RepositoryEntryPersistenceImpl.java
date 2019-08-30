@@ -294,7 +294,7 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -346,7 +346,7 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -653,10 +653,10 @@ public class RepositoryEntryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("uuid=");
+			msg.append("uuid = ");
 			msg.append(uuid);
 
-			msg.append(", groupId=");
+			msg.append(", groupId = ");
 			msg.append(groupId);
 
 			msg.append("}");
@@ -1103,10 +1103,10 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1163,10 +1163,10 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1672,7 +1672,7 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -1727,7 +1727,7 @@ public class RepositoryEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -2009,10 +2009,10 @@ public class RepositoryEntryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("repositoryId=");
+			msg.append("repositoryId = ");
 			msg.append(repositoryId);
 
-			msg.append(", mappedId=");
+			msg.append(", mappedId = ");
 			msg.append(mappedId);
 
 			msg.append("}");

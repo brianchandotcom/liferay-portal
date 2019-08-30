@@ -318,10 +318,10 @@ public class KaleoTimerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoClassName=");
+		msg.append("kaleoClassName = ");
 		msg.append(kaleoClassName);
 
-		msg.append(", kaleoClassPK=");
+		msg.append(", kaleoClassPK = ");
 		msg.append(kaleoClassPK);
 
 		msg.append("}");
@@ -378,10 +378,10 @@ public class KaleoTimerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoClassName=");
+		msg.append("kaleoClassName = ");
 		msg.append(kaleoClassName);
 
-		msg.append(", kaleoClassPK=");
+		msg.append(", kaleoClassPK = ");
 		msg.append(kaleoClassPK);
 
 		msg.append("}");
@@ -926,13 +926,13 @@ public class KaleoTimerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoClassName=");
+		msg.append("kaleoClassName = ");
 		msg.append(kaleoClassName);
 
-		msg.append(", kaleoClassPK=");
+		msg.append(", kaleoClassPK = ");
 		msg.append(kaleoClassPK);
 
-		msg.append(", blocking=");
+		msg.append(", blocking = ");
 		msg.append(blocking);
 
 		msg.append("}");
@@ -991,13 +991,13 @@ public class KaleoTimerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoClassName=");
+		msg.append("kaleoClassName = ");
 		msg.append(kaleoClassName);
 
-		msg.append(", kaleoClassPK=");
+		msg.append(", kaleoClassPK = ");
 		msg.append(kaleoClassPK);
 
-		msg.append(", blocking=");
+		msg.append(", blocking = ");
 		msg.append(blocking);
 
 		msg.append("}");

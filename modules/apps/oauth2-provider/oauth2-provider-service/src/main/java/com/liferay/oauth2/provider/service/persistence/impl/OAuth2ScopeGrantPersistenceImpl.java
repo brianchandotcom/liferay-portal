@@ -313,7 +313,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2ApplicationScopeAliasesId=");
+		msg.append("oAuth2ApplicationScopeAliasesId = ");
 		msg.append(oAuth2ApplicationScopeAliasesId);
 
 		msg.append("}");
@@ -369,7 +369,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2ApplicationScopeAliasesId=");
+		msg.append("oAuth2ApplicationScopeAliasesId = ");
 		msg.append(oAuth2ApplicationScopeAliasesId);
 
 		msg.append("}");
@@ -670,19 +670,19 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", oAuth2ApplicationScopeAliasesId=");
+			msg.append(", oAuth2ApplicationScopeAliasesId = ");
 			msg.append(oAuth2ApplicationScopeAliasesId);
 
-			msg.append(", applicationName=");
+			msg.append(", applicationName = ");
 			msg.append(applicationName);
 
-			msg.append(", bundleSymbolicName=");
+			msg.append(", bundleSymbolicName = ");
 			msg.append(bundleSymbolicName);
 
-			msg.append(", scope=");
+			msg.append(", scope = ");
 			msg.append(scope);
 
 			msg.append("}");

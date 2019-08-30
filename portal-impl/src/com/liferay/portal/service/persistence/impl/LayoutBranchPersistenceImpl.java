@@ -281,7 +281,7 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
 		msg.append("}");
@@ -336,7 +336,7 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
 		msg.append("}");
@@ -810,10 +810,10 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -870,10 +870,10 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -1172,13 +1172,13 @@ public class LayoutBranchPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("layoutSetBranchId=");
+			msg.append("layoutSetBranchId = ");
 			msg.append(layoutSetBranchId);
 
-			msg.append(", plid=");
+			msg.append(", plid = ");
 			msg.append(plid);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
 			msg.append("}");
@@ -1646,13 +1646,13 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
-		msg.append(", master=");
+		msg.append(", master = ");
 		msg.append(master);
 
 		msg.append("}");
@@ -1711,13 +1711,13 @@ public class LayoutBranchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("layoutSetBranchId=");
+		msg.append("layoutSetBranchId = ");
 		msg.append(layoutSetBranchId);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
-		msg.append(", master=");
+		msg.append(", master = ");
 		msg.append(master);
 
 		msg.append("}");

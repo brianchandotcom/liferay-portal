@@ -297,7 +297,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceId=");
+		msg.append("kaleoInstanceId = ");
 		msg.append(kaleoInstanceId);
 
 		msg.append("}");
@@ -352,7 +352,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceId=");
+		msg.append("kaleoInstanceId = ");
 		msg.append(kaleoInstanceId);
 
 		msg.append("}");
@@ -640,10 +640,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("kaleoInstanceTokenId=");
+			msg.append("kaleoInstanceTokenId = ");
 			msg.append(kaleoInstanceTokenId);
 
-			msg.append(", kaleoTimerId=");
+			msg.append(", kaleoTimerId = ");
 			msg.append(kaleoTimerId);
 
 			msg.append("}");
@@ -1070,10 +1070,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceTokenId=");
+		msg.append("kaleoInstanceTokenId = ");
 		msg.append(kaleoInstanceTokenId);
 
-		msg.append(", completed=");
+		msg.append(", completed = ");
 		msg.append(completed);
 
 		msg.append("}");
@@ -1130,10 +1130,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceTokenId=");
+		msg.append("kaleoInstanceTokenId = ");
 		msg.append(kaleoInstanceTokenId);
 
-		msg.append(", completed=");
+		msg.append(", completed = ");
 		msg.append(completed);
 
 		msg.append("}");
@@ -1648,13 +1648,13 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceTokenId=");
+		msg.append("kaleoInstanceTokenId = ");
 		msg.append(kaleoInstanceTokenId);
 
-		msg.append(", blocking=");
+		msg.append(", blocking = ");
 		msg.append(blocking);
 
-		msg.append(", completed=");
+		msg.append(", completed = ");
 		msg.append(completed);
 
 		msg.append("}");
@@ -1713,13 +1713,13 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceTokenId=");
+		msg.append("kaleoInstanceTokenId = ");
 		msg.append(kaleoInstanceTokenId);
 
-		msg.append(", blocking=");
+		msg.append(", blocking = ");
 		msg.append(blocking);
 
-		msg.append(", completed=");
+		msg.append(", completed = ");
 		msg.append(completed);
 
 		msg.append("}");

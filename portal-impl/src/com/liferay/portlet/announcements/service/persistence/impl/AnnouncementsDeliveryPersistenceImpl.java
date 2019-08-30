@@ -279,7 +279,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -334,7 +334,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -617,10 +617,10 @@ public class AnnouncementsDeliveryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("userId=");
+			msg.append("userId = ");
 			msg.append(userId);
 
-			msg.append(", type=");
+			msg.append(", type = ");
 			msg.append(type);
 
 			msg.append("}");

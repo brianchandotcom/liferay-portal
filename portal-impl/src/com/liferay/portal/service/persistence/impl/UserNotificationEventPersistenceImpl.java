@@ -294,7 +294,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -349,7 +349,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -863,10 +863,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -923,10 +923,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1431,7 +1431,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -1486,7 +1486,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -1958,7 +1958,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("type=");
+		msg.append("type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2013,7 +2013,7 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("type=");
+		msg.append("type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2514,10 +2514,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
 		msg.append("}");
@@ -2574,10 +2574,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
 		msg.append("}");
@@ -3069,10 +3069,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -3129,10 +3129,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -3624,10 +3624,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -3684,10 +3684,10 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -4191,13 +4191,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -4256,13 +4256,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -4785,13 +4785,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -4850,13 +4850,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -5381,13 +5381,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
 		msg.append("}");
@@ -5446,13 +5446,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
 		msg.append("}");
@@ -5979,13 +5979,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -6044,13 +6044,13 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -6604,16 +6604,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -6674,16 +6674,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
 		msg.append("}");
@@ -7275,16 +7275,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
 		msg.append("}");
@@ -7348,16 +7348,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", delivered=");
+		msg.append(", delivered = ");
 		msg.append(delivered);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
 		msg.append("}");
@@ -7925,16 +7925,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");
@@ -7997,16 +7997,16 @@ public class UserNotificationEventPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", deliveryType=");
+		msg.append(", deliveryType = ");
 		msg.append(deliveryType);
 
-		msg.append(", actionRequired=");
+		msg.append(", actionRequired = ");
 		msg.append(actionRequired);
 
-		msg.append(", archived=");
+		msg.append(", archived = ");
 		msg.append(archived);
 
 		msg.append("}");

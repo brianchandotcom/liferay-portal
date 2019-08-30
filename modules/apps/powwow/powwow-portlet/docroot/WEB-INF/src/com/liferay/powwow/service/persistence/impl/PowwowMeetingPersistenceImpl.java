@@ -278,7 +278,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -331,7 +331,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -1166,7 +1166,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("powwowServerId=");
+		msg.append("powwowServerId = ");
 		msg.append(powwowServerId);
 
 		msg.append("}");
@@ -1221,7 +1221,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("powwowServerId=");
+		msg.append("powwowServerId = ");
 		msg.append(powwowServerId);
 
 		msg.append("}");
@@ -1676,7 +1676,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("status=");
+		msg.append("status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -1729,7 +1729,7 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("status=");
+		msg.append("status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2197,10 +2197,10 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2257,10 +2257,10 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2748,10 +2748,10 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("powwowServerId=");
+		msg.append("powwowServerId = ");
 		msg.append(powwowServerId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -2808,10 +2808,10 @@ public class PowwowMeetingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("powwowServerId=");
+		msg.append("powwowServerId = ");
 		msg.append(powwowServerId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

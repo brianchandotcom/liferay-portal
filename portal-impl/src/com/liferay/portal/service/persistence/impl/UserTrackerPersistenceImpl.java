@@ -276,7 +276,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -329,7 +329,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -778,7 +778,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -829,7 +829,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -1296,7 +1296,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("sessionId=");
+		msg.append("sessionId = ");
 		msg.append(sessionId);
 
 		msg.append("}");
@@ -1349,7 +1349,7 @@ public class UserTrackerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("sessionId=");
+		msg.append("sessionId = ");
 		msg.append(sessionId);
 
 		msg.append("}");

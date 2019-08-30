@@ -296,7 +296,7 @@ public class OAuthConsumerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("gadgetKey=");
+		msg.append("gadgetKey = ");
 		msg.append(gadgetKey);
 
 		msg.append("}");
@@ -350,7 +350,7 @@ public class OAuthConsumerPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("gadgetKey=");
+		msg.append("gadgetKey = ");
 		msg.append(gadgetKey);
 
 		msg.append("}");
@@ -657,10 +657,10 @@ public class OAuthConsumerPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("gadgetKey=");
+			msg.append("gadgetKey = ");
 			msg.append(gadgetKey);
 
-			msg.append(", serviceName=");
+			msg.append(", serviceName = ");
 			msg.append(serviceName);
 
 			msg.append("}");

@@ -293,7 +293,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -348,7 +348,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -822,7 +822,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoDefinitionVersionId=");
+		msg.append("kaleoDefinitionVersionId = ");
 		msg.append(kaleoDefinitionVersionId);
 
 		msg.append("}");
@@ -878,7 +878,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoDefinitionVersionId=");
+		msg.append("kaleoDefinitionVersionId = ");
 		msg.append(kaleoDefinitionVersionId);
 
 		msg.append("}");
@@ -1351,7 +1351,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceId=");
+		msg.append("kaleoInstanceId = ");
 		msg.append(kaleoInstanceId);
 
 		msg.append("}");
@@ -1406,7 +1406,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoInstanceId=");
+		msg.append("kaleoInstanceId = ");
 		msg.append(kaleoInstanceId);
 
 		msg.append("}");
@@ -1693,10 +1693,10 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("kaleoInstanceId=");
+			msg.append("kaleoInstanceId = ");
 			msg.append(kaleoInstanceId);
 
-			msg.append(", kaleoTaskId=");
+			msg.append(", kaleoTaskId = ");
 			msg.append(kaleoTaskId);
 
 			msg.append("}");
@@ -2131,10 +2131,10 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
+		msg.append("className = ");
 		msg.append(className);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");
@@ -2191,10 +2191,10 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("className=");
+		msg.append("className = ");
 		msg.append(className);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");

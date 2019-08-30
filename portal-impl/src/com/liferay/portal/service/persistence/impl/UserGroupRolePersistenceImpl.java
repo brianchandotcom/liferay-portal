@@ -275,7 +275,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -328,7 +328,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -780,7 +780,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -833,7 +833,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -1284,7 +1284,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("roleId=");
+		msg.append("roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -1337,7 +1337,7 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("roleId=");
+		msg.append("roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -1805,10 +1805,10 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", groupId=");
+		msg.append(", groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -1865,10 +1865,10 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
-		msg.append(", groupId=");
+		msg.append(", groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -2355,10 +2355,10 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -2415,10 +2415,10 @@ public class UserGroupRolePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");

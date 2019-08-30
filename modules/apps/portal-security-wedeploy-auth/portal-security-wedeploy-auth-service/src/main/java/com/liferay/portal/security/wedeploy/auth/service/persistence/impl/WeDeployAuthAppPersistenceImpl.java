@@ -114,10 +114,10 @@ public class WeDeployAuthAppPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("redirectURI=");
+			msg.append("redirectURI = ");
 			msg.append(redirectURI);
 
-			msg.append(", clientId=");
+			msg.append(", clientId = ");
 			msg.append(clientId);
 
 			msg.append("}");
@@ -398,10 +398,10 @@ public class WeDeployAuthAppPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("clientId=");
+			msg.append("clientId = ");
 			msg.append(clientId);
 
-			msg.append(", clientSecret=");
+			msg.append(", clientSecret = ");
 			msg.append(clientSecret);
 
 			msg.append("}");

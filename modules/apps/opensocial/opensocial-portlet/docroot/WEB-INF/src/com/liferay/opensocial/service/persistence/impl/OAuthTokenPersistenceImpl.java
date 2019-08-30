@@ -317,10 +317,10 @@ public class OAuthTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("gadgetKey=");
+		msg.append("gadgetKey = ");
 		msg.append(gadgetKey);
 
-		msg.append(", serviceName=");
+		msg.append(", serviceName = ");
 		msg.append(serviceName);
 
 		msg.append("}");
@@ -377,10 +377,10 @@ public class OAuthTokenPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("gadgetKey=");
+		msg.append("gadgetKey = ");
 		msg.append(gadgetKey);
 
-		msg.append(", serviceName=");
+		msg.append(", serviceName = ");
 		msg.append(serviceName);
 
 		msg.append("}");
@@ -739,19 +739,19 @@ public class OAuthTokenPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("userId=");
+			msg.append("userId = ");
 			msg.append(userId);
 
-			msg.append(", gadgetKey=");
+			msg.append(", gadgetKey = ");
 			msg.append(gadgetKey);
 
-			msg.append(", serviceName=");
+			msg.append(", serviceName = ");
 			msg.append(serviceName);
 
-			msg.append(", moduleId=");
+			msg.append(", moduleId = ");
 			msg.append(moduleId);
 
-			msg.append(", tokenName=");
+			msg.append(", tokenName = ");
 			msg.append(tokenName);
 
 			msg.append("}");

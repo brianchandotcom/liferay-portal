@@ -304,10 +304,10 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -364,10 +364,10 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -878,13 +878,13 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", path=");
+		msg.append(", path = ");
 		msg.append(path);
 
 		msg.append("}");
@@ -943,13 +943,13 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", path=");
+		msg.append(", path = ");
 		msg.append(path);
 
 		msg.append("}");
@@ -1496,13 +1496,13 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", path=");
+		msg.append(", path LIKE ");
 		msg.append(path);
 
 		msg.append("}");
@@ -1561,13 +1561,13 @@ public class DLContentPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", path=");
+		msg.append(", path LIKE ");
 		msg.append(path);
 
 		msg.append("}");
@@ -1915,16 +1915,16 @@ public class DLContentPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", repositoryId=");
+			msg.append(", repositoryId = ");
 			msg.append(repositoryId);
 
-			msg.append(", path=");
+			msg.append(", path = ");
 			msg.append(path);
 
-			msg.append(", version=");
+			msg.append(", version = ");
 			msg.append(version);
 
 			msg.append("}");

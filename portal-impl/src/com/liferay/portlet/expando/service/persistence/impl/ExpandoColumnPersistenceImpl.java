@@ -282,7 +282,7 @@ public class ExpandoColumnPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("tableId=");
+		msg.append("tableId = ");
 		msg.append(tableId);
 
 		msg.append("}");
@@ -335,7 +335,7 @@ public class ExpandoColumnPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("tableId=");
+		msg.append("tableId = ");
 		msg.append(tableId);
 
 		msg.append("}");
@@ -1223,10 +1223,10 @@ public class ExpandoColumnPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("tableId=");
+			msg.append("tableId = ");
 			msg.append(tableId);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
 			msg.append("}");

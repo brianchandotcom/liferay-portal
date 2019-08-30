@@ -278,7 +278,7 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
 		msg.append("}");
@@ -333,7 +333,7 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
 		msg.append("}");
@@ -793,7 +793,7 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
 		msg.append("}");
@@ -848,7 +848,7 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
 		msg.append("}");
@@ -1319,10 +1319,10 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");
@@ -1379,10 +1379,10 @@ public class DDMStructureLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");
@@ -1682,13 +1682,13 @@ public class DDMStructureLinkPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("classNameId=");
+			msg.append("classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", classPK=");
+			msg.append(", classPK = ");
 			msg.append(classPK);
 
-			msg.append(", structureId=");
+			msg.append(", structureId = ");
 			msg.append(structureId);
 
 			msg.append("}");

@@ -281,7 +281,7 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -334,7 +334,7 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -782,7 +782,7 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -833,7 +833,7 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -1109,10 +1109,10 @@ public class MBStatsUserPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", userId=");
+			msg.append(", userId = ");
 			msg.append(userId);
 
 			msg.append("}");
@@ -1519,13 +1519,13 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", userId=");
+		msg.append(", userId != ");
 		msg.append(userId);
 
-		msg.append(", messageCount=");
+		msg.append(", messageCount != ");
 		msg.append(messageCount);
 
 		msg.append("}");
@@ -1584,13 +1584,13 @@ public class MBStatsUserPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", userId=");
+		msg.append(", userId != ");
 		msg.append(userId);
 
-		msg.append(", messageCount=");
+		msg.append(", messageCount != ");
 		msg.append(messageCount);
 
 		msg.append("}");

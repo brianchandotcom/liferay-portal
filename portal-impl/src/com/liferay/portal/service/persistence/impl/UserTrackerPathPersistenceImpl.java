@@ -282,7 +282,7 @@ public class UserTrackerPathPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userTrackerId=");
+		msg.append("userTrackerId = ");
 		msg.append(userTrackerId);
 
 		msg.append("}");
@@ -337,7 +337,7 @@ public class UserTrackerPathPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userTrackerId=");
+		msg.append("userTrackerId = ");
 		msg.append(userTrackerId);
 
 		msg.append("}");

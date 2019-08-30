@@ -282,7 +282,7 @@ public class DDMStructureVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
 		msg.append("}");
@@ -337,7 +337,7 @@ public class DDMStructureVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
 		msg.append("}");
@@ -621,10 +621,10 @@ public class DDMStructureVersionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("structureId=");
+			msg.append("structureId = ");
 			msg.append(structureId);
 
-			msg.append(", version=");
+			msg.append(", version = ");
 			msg.append(version);
 
 			msg.append("}");
@@ -1058,10 +1058,10 @@ public class DDMStructureVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -1118,10 +1118,10 @@ public class DDMStructureVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("structureId=");
+		msg.append("structureId = ");
 		msg.append(structureId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

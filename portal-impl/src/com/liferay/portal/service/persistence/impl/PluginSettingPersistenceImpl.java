@@ -281,7 +281,7 @@ public class PluginSettingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -334,7 +334,7 @@ public class PluginSettingPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -615,13 +615,13 @@ public class PluginSettingPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", pluginId=");
+			msg.append(", pluginId = ");
 			msg.append(pluginId);
 
-			msg.append(", pluginType=");
+			msg.append(", pluginType = ");
 			msg.append(pluginType);
 
 			msg.append("}");

@@ -291,7 +291,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("assetEntryId=");
+		msg.append("assetEntryId = ");
 		msg.append(assetEntryId);
 
 		msg.append("}");
@@ -346,7 +346,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("assetEntryId=");
+		msg.append("assetEntryId = ");
 		msg.append(assetEntryId);
 
 		msg.append("}");
@@ -808,7 +808,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("assetTagId=");
+		msg.append("assetTagId = ");
 		msg.append(assetTagId);
 
 		msg.append("}");
@@ -863,7 +863,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("assetTagId=");
+		msg.append("assetTagId = ");
 		msg.append(assetTagId);
 
 		msg.append("}");
@@ -1147,10 +1147,10 @@ public class AssetAutoTaggerEntryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("assetEntryId=");
+			msg.append("assetEntryId = ");
 			msg.append(assetEntryId);
 
-			msg.append(", assetTagId=");
+			msg.append(", assetTagId = ");
 			msg.append(assetTagId);
 
 			msg.append("}");

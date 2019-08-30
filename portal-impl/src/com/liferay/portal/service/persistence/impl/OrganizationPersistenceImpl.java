@@ -303,7 +303,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -354,7 +354,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -1282,10 +1282,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1342,10 +1342,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -2287,7 +2287,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -2340,7 +2340,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -3170,7 +3170,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -3223,7 +3223,7 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -4070,10 +4070,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
 		msg.append("}");
@@ -4130,10 +4130,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
 		msg.append("}");
@@ -5027,10 +5027,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", treePath=");
+		msg.append(", treePath LIKE ");
 		msg.append(treePath);
 
 		msg.append("}");
@@ -5087,10 +5087,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", treePath=");
+		msg.append(", treePath LIKE ");
 		msg.append(treePath);
 
 		msg.append("}");
@@ -5852,10 +5852,10 @@ public class OrganizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
 			msg.append("}");
@@ -6291,10 +6291,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name LIKE ");
 		msg.append(name);
 
 		msg.append("}");
@@ -6351,10 +6351,10 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name LIKE ");
 		msg.append(name);
 
 		msg.append("}");
@@ -7312,13 +7312,13 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("organizationId=");
+		msg.append("organizationId > ");
 		msg.append(organizationId);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
 		msg.append("}");
@@ -7378,13 +7378,13 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("organizationId=");
+		msg.append("organizationId > ");
 		msg.append(organizationId);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
 		msg.append("}");
@@ -7964,13 +7964,13 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
-		msg.append(", name=");
+		msg.append(", name LIKE ");
 		msg.append(name);
 
 		msg.append("}");
@@ -8029,13 +8029,13 @@ public class OrganizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentOrganizationId=");
+		msg.append(", parentOrganizationId = ");
 		msg.append(parentOrganizationId);
 
-		msg.append(", name=");
+		msg.append(", name LIKE ");
 		msg.append(name);
 
 		msg.append("}");
@@ -8848,10 +8848,10 @@ public class OrganizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", externalReferenceCode=");
+			msg.append(", externalReferenceCode = ");
 			msg.append(externalReferenceCode);
 
 			msg.append("}");

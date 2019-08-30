@@ -292,7 +292,7 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("recordSetId=");
+		msg.append("recordSetId = ");
 		msg.append(recordSetId);
 
 		msg.append("}");
@@ -347,7 +347,7 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("recordSetId=");
+		msg.append("recordSetId = ");
 		msg.append(recordSetId);
 
 		msg.append("}");
@@ -631,10 +631,10 @@ public class DDLRecordSetVersionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("recordSetId=");
+			msg.append("recordSetId = ");
 			msg.append(recordSetId);
 
-			msg.append(", version=");
+			msg.append(", version = ");
 			msg.append(version);
 
 			msg.append("}");
@@ -1068,10 +1068,10 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("recordSetId=");
+		msg.append("recordSetId = ");
 		msg.append(recordSetId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -1128,10 +1128,10 @@ public class DDLRecordSetVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("recordSetId=");
+		msg.append("recordSetId = ");
 		msg.append(recordSetId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

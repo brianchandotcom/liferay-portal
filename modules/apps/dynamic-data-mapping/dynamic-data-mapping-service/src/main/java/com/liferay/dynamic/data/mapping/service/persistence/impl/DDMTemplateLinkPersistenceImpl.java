@@ -278,7 +278,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
 		msg.append("}");
@@ -333,7 +333,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
 		msg.append("}");
@@ -792,7 +792,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("templateId=");
+		msg.append("templateId = ");
 		msg.append(templateId);
 
 		msg.append("}");
@@ -846,7 +846,7 @@ public class DDMTemplateLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("templateId=");
+		msg.append("templateId = ");
 		msg.append(templateId);
 
 		msg.append("}");
@@ -1124,10 +1124,10 @@ public class DDMTemplateLinkPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("classNameId=");
+			msg.append("classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", classPK=");
+			msg.append(", classPK = ");
 			msg.append(classPK);
 
 			msg.append("}");

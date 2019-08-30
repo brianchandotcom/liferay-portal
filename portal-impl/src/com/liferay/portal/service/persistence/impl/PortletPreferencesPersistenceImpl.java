@@ -278,7 +278,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
 		msg.append("}");
@@ -332,7 +332,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
 		msg.append("}");
@@ -785,7 +785,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("plid=");
+		msg.append("plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -838,7 +838,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("plid=");
+		msg.append("plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -1309,7 +1309,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("portletId=");
+		msg.append("portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -1364,7 +1364,7 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("portletId=");
+		msg.append("portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -1880,10 +1880,10 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerType=");
+		msg.append("ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -1940,10 +1940,10 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerType=");
+		msg.append("ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -2475,10 +2475,10 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("plid=");
+		msg.append("plid = ");
 		msg.append(plid);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -2535,10 +2535,10 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("plid=");
+		msg.append("plid = ");
 		msg.append(plid);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -3071,13 +3071,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -3136,13 +3136,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
 		msg.append("}");
@@ -3674,13 +3674,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -3739,13 +3739,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerId=");
+		msg.append("ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -4307,13 +4307,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerType=");
+		msg.append("ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -4372,13 +4372,13 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ownerType=");
+		msg.append("ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", plid=");
+		msg.append(", plid = ");
 		msg.append(plid);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -4948,16 +4948,16 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", ownerId=");
+		msg.append(", ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId LIKE ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -5018,16 +5018,16 @@ public class PortletPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", ownerId=");
+		msg.append(", ownerId = ");
 		msg.append(ownerId);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
-		msg.append(", portletId=");
+		msg.append(", portletId LIKE ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -5399,16 +5399,16 @@ public class PortletPreferencesPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("ownerId=");
+			msg.append("ownerId = ");
 			msg.append(ownerId);
 
-			msg.append(", ownerType=");
+			msg.append(", ownerType = ");
 			msg.append(ownerType);
 
-			msg.append(", plid=");
+			msg.append(", plid = ");
 			msg.append(plid);
 
-			msg.append(", portletId=");
+			msg.append(", portletId = ");
 			msg.append(portletId);
 
 			msg.append("}");

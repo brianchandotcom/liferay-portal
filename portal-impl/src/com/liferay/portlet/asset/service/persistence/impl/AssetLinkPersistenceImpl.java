@@ -272,7 +272,7 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
 		msg.append("}");
@@ -323,7 +323,7 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
 		msg.append("}");
@@ -771,7 +771,7 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId2=");
+		msg.append("entryId2 = ");
 		msg.append(entryId2);
 
 		msg.append("}");
@@ -822,7 +822,7 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId2=");
+		msg.append("entryId2 = ");
 		msg.append(entryId2);
 
 		msg.append("}");
@@ -1288,10 +1288,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
-		msg.append(", entryId2=");
+		msg.append(", entryId2 = ");
 		msg.append(entryId2);
 
 		msg.append("}");
@@ -1348,10 +1348,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
-		msg.append(", entryId2=");
+		msg.append(", entryId2 = ");
 		msg.append(entryId2);
 
 		msg.append("}");
@@ -1836,10 +1836,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -1896,10 +1896,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId1=");
+		msg.append("entryId1 = ");
 		msg.append(entryId1);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2382,10 +2382,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId2=");
+		msg.append("entryId2 = ");
 		msg.append(entryId2);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2442,10 +2442,10 @@ public class AssetLinkPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId2=");
+		msg.append("entryId2 = ");
 		msg.append(entryId2);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2740,13 +2740,13 @@ public class AssetLinkPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("entryId1=");
+			msg.append("entryId1 = ");
 			msg.append(entryId1);
 
-			msg.append(", entryId2=");
+			msg.append(", entryId2 = ");
 			msg.append(entryId2);
 
-			msg.append(", type=");
+			msg.append(", type = ");
 			msg.append(type);
 
 			msg.append("}");

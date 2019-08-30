@@ -299,7 +299,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("friendlyURLEntryId=");
+		msg.append("friendlyURLEntryId = ");
 		msg.append(friendlyURLEntryId);
 
 		msg.append("}");
@@ -355,7 +355,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("friendlyURLEntryId=");
+		msg.append("friendlyURLEntryId = ");
 		msg.append(friendlyURLEntryId);
 
 		msg.append("}");
@@ -646,10 +646,10 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("friendlyURLEntryId=");
+			msg.append("friendlyURLEntryId = ");
 			msg.append(friendlyURLEntryId);
 
-			msg.append(", languageId=");
+			msg.append(", languageId = ");
 			msg.append(languageId);
 
 			msg.append("}");
@@ -918,13 +918,13 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", classNameId=");
+			msg.append(", classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", urlTitle=");
+			msg.append(", urlTitle = ");
 			msg.append(urlTitle);
 
 			msg.append("}");

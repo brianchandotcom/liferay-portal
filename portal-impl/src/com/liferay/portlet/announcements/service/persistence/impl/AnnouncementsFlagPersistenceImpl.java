@@ -276,7 +276,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId=");
+		msg.append("entryId = ");
 		msg.append(entryId);
 
 		msg.append("}");
@@ -330,7 +330,7 @@ public class AnnouncementsFlagPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("entryId=");
+		msg.append("entryId = ");
 		msg.append(entryId);
 
 		msg.append("}");
@@ -611,13 +611,13 @@ public class AnnouncementsFlagPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("userId=");
+			msg.append("userId = ");
 			msg.append(userId);
 
-			msg.append(", entryId=");
+			msg.append(", entryId = ");
 			msg.append(entryId);
 
-			msg.append(", value=");
+			msg.append(", value = ");
 			msg.append(value);
 
 			msg.append("}");

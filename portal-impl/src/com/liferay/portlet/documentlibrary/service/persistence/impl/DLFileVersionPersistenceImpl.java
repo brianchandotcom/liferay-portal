@@ -294,7 +294,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -345,7 +345,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -651,10 +651,10 @@ public class DLFileVersionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("uuid=");
+			msg.append("uuid = ");
 			msg.append(uuid);
 
-			msg.append(", groupId=");
+			msg.append(", groupId = ");
 			msg.append(groupId);
 
 			msg.append("}");
@@ -1101,10 +1101,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1161,10 +1161,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1669,7 +1669,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1722,7 +1722,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -2179,7 +2179,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
 		msg.append("}");
@@ -2233,7 +2233,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
 		msg.append("}");
@@ -2700,7 +2700,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("mimeType=");
+		msg.append("mimeType = ");
 		msg.append(mimeType);
 
 		msg.append("}");
@@ -2753,7 +2753,7 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("mimeType=");
+		msg.append("mimeType = ");
 		msg.append(mimeType);
 
 		msg.append("}");
@@ -3240,10 +3240,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -3300,10 +3300,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -3601,10 +3601,10 @@ public class DLFileVersionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("fileEntryId=");
+			msg.append("fileEntryId = ");
 			msg.append(fileEntryId);
 
-			msg.append(", version=");
+			msg.append(", version = ");
 			msg.append(version);
 
 			msg.append("}");
@@ -4037,10 +4037,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4097,10 +4097,10 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4602,13 +4602,13 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4667,13 +4667,13 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -5227,16 +5227,16 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", title=");
+		msg.append(", title = ");
 		msg.append(title);
 
-		msg.append(", version=");
+		msg.append(", version = ");
 		msg.append(version);
 
 		msg.append("}");
@@ -5297,16 +5297,16 @@ public class DLFileVersionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", title=");
+		msg.append(", title = ");
 		msg.append(title);
 
-		msg.append(", version=");
+		msg.append(", version = ");
 		msg.append(version);
 
 		msg.append("}");

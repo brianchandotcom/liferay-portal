@@ -95,7 +95,7 @@ public class ClassNamePersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("value=");
+			msg.append("value = ");
 			msg.append(value);
 
 			msg.append("}");

@@ -296,7 +296,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -348,7 +348,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -654,10 +654,10 @@ public class DLFileShortcutPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("uuid=");
+			msg.append("uuid = ");
 			msg.append(uuid);
 
-			msg.append(", groupId=");
+			msg.append(", groupId = ");
 			msg.append(groupId);
 
 			msg.append("}");
@@ -1104,10 +1104,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1164,10 +1164,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1672,7 +1672,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1725,7 +1725,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -2183,7 +2183,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("toFileEntryId=");
+		msg.append("toFileEntryId = ");
 		msg.append(toFileEntryId);
 
 		msg.append("}");
@@ -2238,7 +2238,7 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("toFileEntryId=");
+		msg.append("toFileEntryId = ");
 		msg.append(toFileEntryId);
 
 		msg.append("}");
@@ -2710,10 +2710,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
 		msg.append("}");
@@ -2770,10 +2770,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
 		msg.append("}");
@@ -3648,10 +3648,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -3708,10 +3708,10 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4213,13 +4213,13 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", active=");
+		msg.append(", active = ");
 		msg.append(active);
 
 		msg.append("}");
@@ -4278,13 +4278,13 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", active=");
+		msg.append(", active = ");
 		msg.append(active);
 
 		msg.append("}");
@@ -5234,16 +5234,16 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", active=");
+		msg.append(", active = ");
 		msg.append(active);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -5304,16 +5304,16 @@ public class DLFileShortcutPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", folderId=");
+		msg.append(", folderId = ");
 		msg.append(folderId);
 
-		msg.append(", active=");
+		msg.append(", active = ");
 		msg.append(active);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

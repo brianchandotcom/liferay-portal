@@ -275,7 +275,7 @@ public class UserIdMapperPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -327,7 +327,7 @@ public class UserIdMapperPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -604,10 +604,10 @@ public class UserIdMapperPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("userId=");
+			msg.append("userId = ");
 			msg.append(userId);
 
-			msg.append(", type=");
+			msg.append(", type = ");
 			msg.append(type);
 
 			msg.append("}");
@@ -850,10 +850,10 @@ public class UserIdMapperPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("type=");
+			msg.append("type = ");
 			msg.append(type);
 
-			msg.append(", externalUserId=");
+			msg.append(", externalUserId = ");
 			msg.append(externalUserId);
 
 			msg.append("}");

@@ -283,7 +283,7 @@ public class PasswordPolicyRelPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("passwordPolicyId=");
+		msg.append("passwordPolicyId = ");
 		msg.append(passwordPolicyId);
 
 		msg.append("}");
@@ -338,7 +338,7 @@ public class PasswordPolicyRelPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("passwordPolicyId=");
+		msg.append("passwordPolicyId = ");
 		msg.append(passwordPolicyId);
 
 		msg.append("}");
@@ -624,10 +624,10 @@ public class PasswordPolicyRelPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("classNameId=");
+			msg.append("classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", classPK=");
+			msg.append(", classPK = ");
 			msg.append(classPK);
 
 			msg.append("}");

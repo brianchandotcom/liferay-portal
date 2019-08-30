@@ -300,7 +300,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -351,7 +351,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
 		msg.append("}");
@@ -656,10 +656,10 @@ public class DLFolderPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("uuid=");
+			msg.append("uuid = ");
 			msg.append(uuid);
 
-			msg.append(", groupId=");
+			msg.append(", groupId = ");
 			msg.append(groupId);
 
 			msg.append("}");
@@ -1104,10 +1104,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1164,10 +1164,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("uuid=");
+		msg.append("uuid = ");
 		msg.append(uuid);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -1661,7 +1661,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -1712,7 +1712,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -2538,7 +2538,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -2590,7 +2590,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -3043,7 +3043,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -3096,7 +3096,7 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -3563,10 +3563,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -3623,10 +3623,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -4496,10 +4496,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4556,10 +4556,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -4853,10 +4853,10 @@ public class DLFolderPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("repositoryId=");
+			msg.append("repositoryId = ");
 			msg.append(repositoryId);
 
-			msg.append(", mountPoint=");
+			msg.append(", mountPoint = ");
 			msg.append(mountPoint);
 
 			msg.append("}");
@@ -5271,10 +5271,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -5331,10 +5331,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -5832,10 +5832,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("parentFolderId=");
+		msg.append("parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -5892,10 +5892,10 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("parentFolderId=");
+		msg.append("parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -6425,13 +6425,13 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -6490,13 +6490,13 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -7238,13 +7238,13 @@ public class DLFolderPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", parentFolderId=");
+			msg.append(", parentFolderId = ");
 			msg.append(parentFolderId);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
 			msg.append("}");
@@ -7715,16 +7715,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("folderId=");
+		msg.append("folderId > ");
 		msg.append(folderId);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -7786,16 +7786,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("folderId=");
+		msg.append("folderId > ");
 		msg.append(folderId);
 
-		msg.append(", companyId=");
+		msg.append(", companyId = ");
 		msg.append(companyId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", status=");
+		msg.append(", status != ");
 		msg.append(status);
 
 		msg.append("}");
@@ -8181,16 +8181,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
 		msg.append("}");
@@ -8252,16 +8252,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
 		msg.append("}");
@@ -9260,16 +9260,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", treePath=");
+		msg.append(", treePath LIKE ");
 		msg.append(treePath);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
 		msg.append("}");
@@ -9330,16 +9330,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", treePath=");
+		msg.append(", treePath LIKE ");
 		msg.append(treePath);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
 		msg.append("}");
@@ -10400,16 +10400,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -10470,16 +10470,16 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -11489,19 +11489,19 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");
@@ -11567,19 +11567,19 @@ public class DLFolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", mountPoint=");
+		msg.append(", mountPoint = ");
 		msg.append(mountPoint);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", hidden=");
+		msg.append(", hidden = ");
 		msg.append(hidden);
 
-		msg.append(", status=");
+		msg.append(", status = ");
 		msg.append(status);
 
 		msg.append("}");

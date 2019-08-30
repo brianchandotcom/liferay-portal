@@ -296,7 +296,7 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("treePath=");
+		msg.append("treePath LIKE ");
 		msg.append(treePath);
 
 		msg.append("}");
@@ -349,7 +349,7 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("treePath=");
+		msg.append("treePath LIKE ");
 		msg.append(treePath);
 
 		msg.append("}");
@@ -835,10 +835,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedTime=");
+		msg.append("modifiedTime > ");
 		msg.append(modifiedTime);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -895,10 +895,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedTime=");
+		msg.append("modifiedTime > ");
 		msg.append(modifiedTime);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
 		msg.append("}");
@@ -1387,10 +1387,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -1447,10 +1447,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
 		msg.append("}");
@@ -1938,10 +1938,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -1998,10 +1998,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -2528,10 +2528,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -2588,10 +2588,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -3122,10 +3122,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("treePath=");
+		msg.append("treePath LIKE ");
 		msg.append(treePath);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -3182,10 +3182,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("treePath=");
+		msg.append("treePath LIKE ");
 		msg.append(treePath);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -3751,10 +3751,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("version=");
+		msg.append("version = ");
 		msg.append(version);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -3811,10 +3811,10 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("version=");
+		msg.append("version = ");
 		msg.append(version);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -4163,10 +4163,10 @@ public class SyncDLObjectPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("type=");
+			msg.append("type = ");
 			msg.append(type);
 
-			msg.append(", typePK=");
+			msg.append(", typePK = ");
 			msg.append(typePK);
 
 			msg.append("}");
@@ -4616,13 +4616,13 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedTime=");
+		msg.append("modifiedTime > ");
 		msg.append(modifiedTime);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -4681,13 +4681,13 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedTime=");
+		msg.append("modifiedTime > ");
 		msg.append(modifiedTime);
 
-		msg.append(", repositoryId=");
+		msg.append(", repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", event=");
+		msg.append(", event != ");
 		msg.append(event);
 
 		msg.append("}");
@@ -5595,13 +5595,13 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");
@@ -5660,13 +5660,13 @@ public class SyncDLObjectPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("repositoryId=");
+		msg.append("repositoryId = ");
 		msg.append(repositoryId);
 
-		msg.append(", parentFolderId=");
+		msg.append(", parentFolderId = ");
 		msg.append(parentFolderId);
 
-		msg.append(", type=");
+		msg.append(", type = ");
 		msg.append(type);
 
 		msg.append("}");

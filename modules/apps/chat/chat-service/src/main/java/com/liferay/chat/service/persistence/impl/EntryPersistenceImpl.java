@@ -281,7 +281,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
 		msg.append("}");
@@ -333,7 +333,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
 		msg.append("}");
@@ -782,7 +782,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
 		msg.append("}");
@@ -834,7 +834,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
 		msg.append("}");
@@ -1281,7 +1281,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("toUserId=");
+		msg.append("toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -1332,7 +1332,7 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("toUserId=");
+		msg.append("toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -1796,10 +1796,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", fromUserId=");
+		msg.append(", fromUserId = ");
 		msg.append(fromUserId);
 
 		msg.append("}");
@@ -1856,10 +1856,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", fromUserId=");
+		msg.append(", fromUserId = ");
 		msg.append(fromUserId);
 
 		msg.append("}");
@@ -2341,10 +2341,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -2400,10 +2400,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -2883,10 +2883,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -2942,10 +2942,10 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -3440,13 +3440,13 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", fromUserId=");
+		msg.append(", fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -3505,13 +3505,13 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("createDate=");
+		msg.append("createDate = ");
 		msg.append(createDate);
 
-		msg.append(", fromUserId=");
+		msg.append(", fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
 		msg.append("}");
@@ -4038,13 +4038,13 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
-		msg.append(", content=");
+		msg.append(", content = ");
 		msg.append(content);
 
 		msg.append("}");
@@ -4103,13 +4103,13 @@ public class EntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fromUserId=");
+		msg.append("fromUserId = ");
 		msg.append(fromUserId);
 
-		msg.append(", toUserId=");
+		msg.append(", toUserId = ");
 		msg.append(toUserId);
 
-		msg.append(", content=");
+		msg.append(", content = ");
 		msg.append(content);
 
 		msg.append("}");

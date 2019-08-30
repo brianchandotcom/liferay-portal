@@ -293,7 +293,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
 		msg.append("}");
@@ -348,7 +348,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("fileEntryId=");
+		msg.append("fileEntryId = ");
 		msg.append(fileEntryId);
 
 		msg.append("}");
@@ -816,7 +816,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("expirationDate=");
+		msg.append("expirationDate < ");
 		msg.append(expirationDate);
 
 		msg.append("}");
@@ -871,7 +871,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("expirationDate=");
+		msg.append("expirationDate < ");
 		msg.append(expirationDate);
 
 		msg.append("}");
@@ -1184,13 +1184,13 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("fileEntryId=");
+			msg.append("fileEntryId = ");
 			msg.append(fileEntryId);
 
-			msg.append(", sourceFileVersionId=");
+			msg.append(", sourceFileVersionId = ");
 			msg.append(sourceFileVersionId);
 
-			msg.append(", targetFileVersionId=");
+			msg.append(", targetFileVersionId = ");
 			msg.append(targetFileVersionId);
 
 			msg.append("}");

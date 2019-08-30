@@ -258,7 +258,7 @@ public class ImagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("size=");
+		msg.append("size < ");
 		msg.append(size);
 
 		msg.append("}");
@@ -309,7 +309,7 @@ public class ImagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("size=");
+		msg.append("size < ");
 		msg.append(size);
 
 		msg.append("}");

@@ -286,7 +286,7 @@ public class FolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("accountId=");
+		msg.append("accountId = ");
 		msg.append(accountId);
 
 		msg.append("}");
@@ -337,7 +337,7 @@ public class FolderPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("accountId=");
+		msg.append("accountId = ");
 		msg.append(accountId);
 
 		msg.append("}");
@@ -613,10 +613,10 @@ public class FolderPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("accountId=");
+			msg.append("accountId = ");
 			msg.append(accountId);
 
-			msg.append(", fullName=");
+			msg.append(", fullName = ");
 			msg.append(fullName);
 
 			msg.append("}");

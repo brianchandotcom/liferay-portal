@@ -293,7 +293,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -347,7 +347,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -815,7 +815,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoDefinitionVersionId=");
+		msg.append("kaleoDefinitionVersionId = ");
 		msg.append(kaleoDefinitionVersionId);
 
 		msg.append("}");
@@ -870,7 +870,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoDefinitionVersionId=");
+		msg.append("kaleoDefinitionVersionId = ");
 		msg.append(kaleoDefinitionVersionId);
 
 		msg.append("}");
@@ -1337,7 +1337,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoNodeId=");
+		msg.append("kaleoNodeId = ");
 		msg.append(kaleoNodeId);
 
 		msg.append("}");
@@ -1392,7 +1392,7 @@ public class KaleoTransitionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("kaleoNodeId=");
+		msg.append("kaleoNodeId = ");
 		msg.append(kaleoNodeId);
 
 		msg.append("}");
@@ -1672,10 +1672,10 @@ public class KaleoTransitionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("kaleoNodeId=");
+			msg.append("kaleoNodeId = ");
 			msg.append(kaleoNodeId);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
 			msg.append("}");
@@ -1930,10 +1930,10 @@ public class KaleoTransitionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("kaleoNodeId=");
+			msg.append("kaleoNodeId = ");
 			msg.append(kaleoNodeId);
 
-			msg.append(", defaultTransition=");
+			msg.append(", defaultTransition = ");
 			msg.append(defaultTransition);
 
 			msg.append("}");

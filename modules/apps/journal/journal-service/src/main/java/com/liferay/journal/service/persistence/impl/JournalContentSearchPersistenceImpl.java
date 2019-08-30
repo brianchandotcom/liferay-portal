@@ -289,7 +289,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -344,7 +344,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
 		msg.append("}");
@@ -819,7 +819,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("portletId=");
+		msg.append("portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -874,7 +874,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("portletId=");
+		msg.append("portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -1378,7 +1378,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("articleId=");
+		msg.append("articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -1433,7 +1433,7 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("articleId=");
+		msg.append("articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -1937,10 +1937,10 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
 		msg.append("}");
@@ -1997,10 +1997,10 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
 		msg.append("}");
@@ -2504,10 +2504,10 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", articleId=");
+		msg.append(", articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -2564,10 +2564,10 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", articleId=");
+		msg.append(", articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -3100,13 +3100,13 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", layoutId=");
+		msg.append(", layoutId = ");
 		msg.append(layoutId);
 
 		msg.append("}");
@@ -3165,13 +3165,13 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", layoutId=");
+		msg.append(", layoutId = ");
 		msg.append(layoutId);
 
 		msg.append("}");
@@ -3709,13 +3709,13 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", articleId=");
+		msg.append(", articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -3774,13 +3774,13 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", articleId=");
+		msg.append(", articleId = ");
 		msg.append(articleId);
 
 		msg.append("}");
@@ -4365,16 +4365,16 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", layoutId=");
+		msg.append(", layoutId = ");
 		msg.append(layoutId);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -4437,16 +4437,16 @@ public class JournalContentSearchPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", privateLayout=");
+		msg.append(", privateLayout = ");
 		msg.append(privateLayout);
 
-		msg.append(", layoutId=");
+		msg.append(", layoutId = ");
 		msg.append(layoutId);
 
-		msg.append(", portletId=");
+		msg.append(", portletId = ");
 		msg.append(portletId);
 
 		msg.append("}");
@@ -4818,19 +4818,19 @@ public class JournalContentSearchPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", privateLayout=");
+			msg.append(", privateLayout = ");
 			msg.append(privateLayout);
 
-			msg.append(", layoutId=");
+			msg.append(", layoutId = ");
 			msg.append(layoutId);
 
-			msg.append(", portletId=");
+			msg.append(", portletId = ");
 			msg.append(portletId);
 
-			msg.append(", articleId=");
+			msg.append(", articleId = ");
 			msg.append(articleId);
 
 			msg.append("}");

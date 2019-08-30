@@ -107,7 +107,7 @@ public class StatusPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("userId=");
+			msg.append("userId = ");
 			msg.append(userId);
 
 			msg.append("}");
@@ -475,7 +475,7 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedDate=");
+		msg.append("modifiedDate = ");
 		msg.append(modifiedDate);
 
 		msg.append("}");
@@ -528,7 +528,7 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedDate=");
+		msg.append("modifiedDate = ");
 		msg.append(modifiedDate);
 
 		msg.append("}");
@@ -974,7 +974,7 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("online=");
+		msg.append("online = ");
 		msg.append(online);
 
 		msg.append("}");
@@ -1025,7 +1025,7 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("online=");
+		msg.append("online = ");
 		msg.append(online);
 
 		msg.append("}");
@@ -1489,10 +1489,10 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedDate=");
+		msg.append("modifiedDate = ");
 		msg.append(modifiedDate);
 
-		msg.append(", online=");
+		msg.append(", online = ");
 		msg.append(online);
 
 		msg.append("}");
@@ -1549,10 +1549,10 @@ public class StatusPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("modifiedDate=");
+		msg.append("modifiedDate = ");
 		msg.append(modifiedDate);
 
-		msg.append(", online=");
+		msg.append(", online = ");
 		msg.append(online);
 
 		msg.append("}");

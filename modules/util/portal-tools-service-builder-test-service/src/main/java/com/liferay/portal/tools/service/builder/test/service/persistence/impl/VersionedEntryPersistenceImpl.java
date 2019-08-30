@@ -277,7 +277,7 @@ public class VersionedEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -330,7 +330,7 @@ public class VersionedEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -796,10 +796,10 @@ public class VersionedEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", head=");
+		msg.append(", head = ");
 		msg.append(head);
 
 		msg.append("}");
@@ -856,10 +856,10 @@ public class VersionedEntryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", head=");
+		msg.append(", head = ");
 		msg.append(head);
 
 		msg.append("}");
@@ -1155,7 +1155,7 @@ public class VersionedEntryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("headId=");
+			msg.append("headId = ");
 			msg.append(headId);
 
 			msg.append("}");

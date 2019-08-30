@@ -285,7 +285,7 @@ public class ResourceActionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("name=");
+		msg.append("name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -337,7 +337,7 @@ public class ResourceActionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("name=");
+		msg.append("name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -643,10 +643,10 @@ public class ResourceActionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("name=");
+			msg.append("name = ");
 			msg.append(name);
 
-			msg.append(", actionId=");
+			msg.append(", actionId = ");
 			msg.append(actionId);
 
 			msg.append("}");

@@ -280,7 +280,7 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -335,7 +335,7 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
 		msg.append("}");
@@ -811,10 +811,10 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");
@@ -871,10 +871,10 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("classNameId=");
+		msg.append("classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
 		msg.append("}");
@@ -1394,16 +1394,16 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", classNameId=");
+		msg.append(", classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
 		msg.append("}");
@@ -1464,16 +1464,16 @@ public class SocialActivityCounterPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
+		msg.append("groupId = ");
 		msg.append(groupId);
 
-		msg.append(", classNameId=");
+		msg.append(", classNameId = ");
 		msg.append(classNameId);
 
-		msg.append(", classPK=");
+		msg.append(", classPK = ");
 		msg.append(classPK);
 
-		msg.append(", ownerType=");
+		msg.append(", ownerType = ");
 		msg.append(ownerType);
 
 		msg.append("}");
@@ -1818,22 +1818,22 @@ public class SocialActivityCounterPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", classNameId=");
+			msg.append(", classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", classPK=");
+			msg.append(", classPK = ");
 			msg.append(classPK);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
-			msg.append(", ownerType=");
+			msg.append(", ownerType = ");
 			msg.append(ownerType);
 
-			msg.append(", startPeriod=");
+			msg.append(", startPeriod = ");
 			msg.append(startPeriod);
 
 			msg.append("}");
@@ -2164,22 +2164,22 @@ public class SocialActivityCounterPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("groupId=");
+			msg.append("groupId = ");
 			msg.append(groupId);
 
-			msg.append(", classNameId=");
+			msg.append(", classNameId = ");
 			msg.append(classNameId);
 
-			msg.append(", classPK=");
+			msg.append(", classPK = ");
 			msg.append(classPK);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
-			msg.append(", ownerType=");
+			msg.append(", ownerType = ");
 			msg.append(ownerType);
 
-			msg.append(", endPeriod=");
+			msg.append(", endPeriod = ");
 			msg.append(endPeriod);
 
 			msg.append("}");

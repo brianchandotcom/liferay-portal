@@ -287,7 +287,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("localizedEntryId=");
+		msg.append("localizedEntryId = ");
 		msg.append(localizedEntryId);
 
 		msg.append("}");
@@ -342,7 +342,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("localizedEntryId=");
+		msg.append("localizedEntryId = ");
 		msg.append(localizedEntryId);
 
 		msg.append("}");
@@ -630,10 +630,10 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("localizedEntryId=");
+			msg.append("localizedEntryId = ");
 			msg.append(localizedEntryId);
 
-			msg.append(", languageId=");
+			msg.append(", languageId = ");
 			msg.append(languageId);
 
 			msg.append("}");

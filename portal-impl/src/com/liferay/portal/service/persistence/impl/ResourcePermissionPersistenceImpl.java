@@ -292,7 +292,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("name=");
+		msg.append("name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -346,7 +346,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("name=");
+		msg.append("name = ");
 		msg.append(name);
 
 		msg.append("}");
@@ -828,7 +828,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("scope=");
+		msg.append("scope = ");
 		msg.append(scope);
 
 		msg.append("}");
@@ -881,7 +881,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("scope=");
+		msg.append("scope = ");
 		msg.append(scope);
 
 		msg.append("}");
@@ -1598,7 +1598,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("roleId=");
+		msg.append("roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -1652,7 +1652,7 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("roleId=");
+		msg.append("roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -2129,10 +2129,10 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", primKey=");
+		msg.append(", primKey LIKE ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -2189,10 +2189,10 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", primKey=");
+		msg.append(", primKey LIKE ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -2737,13 +2737,13 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKey=");
+		msg.append(", primKey = ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -2802,13 +2802,13 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKey=");
+		msg.append(", primKey = ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -3393,16 +3393,16 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKey=");
+		msg.append(", primKey = ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -3463,16 +3463,16 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKey=");
+		msg.append(", primKey = ");
 		msg.append(primKey);
 
 		msg.append("}");
@@ -4092,16 +4092,16 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -4162,16 +4162,16 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
 		msg.append("}");
@@ -4861,19 +4861,19 @@ public class ResourcePermissionPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", name=");
+			msg.append(", name = ");
 			msg.append(name);
 
-			msg.append(", scope=");
+			msg.append(", scope = ");
 			msg.append(scope);
 
-			msg.append(", primKey=");
+			msg.append(", primKey = ");
 			msg.append(primKey);
 
-			msg.append(", roleId=");
+			msg.append(", roleId = ");
 			msg.append(roleId);
 
 			msg.append("}");
@@ -5622,22 +5622,22 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKeyId=");
+		msg.append(", primKeyId = ");
 		msg.append(primKeyId);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
-		msg.append(", viewActionId=");
+		msg.append(", viewActionId = ");
 		msg.append(viewActionId);
 
 		msg.append("}");
@@ -5706,22 +5706,22 @@ public class ResourcePermissionPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("companyId=");
+		msg.append("companyId = ");
 		msg.append(companyId);
 
-		msg.append(", name=");
+		msg.append(", name = ");
 		msg.append(name);
 
-		msg.append(", scope=");
+		msg.append(", scope = ");
 		msg.append(scope);
 
-		msg.append(", primKeyId=");
+		msg.append(", primKeyId = ");
 		msg.append(primKeyId);
 
-		msg.append(", roleId=");
+		msg.append(", roleId = ");
 		msg.append(roleId);
 
-		msg.append(", viewActionId=");
+		msg.append(", viewActionId = ");
 		msg.append(viewActionId);
 
 		msg.append("}");

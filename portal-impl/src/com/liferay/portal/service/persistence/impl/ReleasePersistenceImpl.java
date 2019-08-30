@@ -104,7 +104,7 @@ public class ReleasePersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("servletContextName=");
+			msg.append("servletContextName = ");
 			msg.append(servletContextName);
 
 			msg.append("}");

@@ -98,7 +98,7 @@ public class CountryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("name=");
+			msg.append("name = ");
 			msg.append(name);
 
 			msg.append("}");
@@ -317,7 +317,7 @@ public class CountryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("a2=");
+			msg.append("a2 = ");
 			msg.append(a2);
 
 			msg.append("}");
@@ -535,7 +535,7 @@ public class CountryPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("a3=");
+			msg.append("a3 = ");
 			msg.append(a3);
 
 			msg.append("}");
@@ -926,7 +926,7 @@ public class CountryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("active=");
+		msg.append("active = ");
 		msg.append(active);
 
 		msg.append("}");
@@ -977,7 +977,7 @@ public class CountryPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("active=");
+		msg.append("active = ");
 		msg.append(active);
 
 		msg.append("}");

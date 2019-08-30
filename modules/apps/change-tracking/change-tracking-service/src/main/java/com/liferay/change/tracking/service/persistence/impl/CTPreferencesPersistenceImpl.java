@@ -288,7 +288,7 @@ public class CTPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ctCollectionId=");
+		msg.append("ctCollectionId = ");
 		msg.append(ctCollectionId);
 
 		msg.append("}");
@@ -343,7 +343,7 @@ public class CTPreferencesPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("ctCollectionId=");
+		msg.append("ctCollectionId = ");
 		msg.append(ctCollectionId);
 
 		msg.append("}");
@@ -624,10 +624,10 @@ public class CTPreferencesPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("companyId=");
+			msg.append("companyId = ");
 			msg.append(companyId);
 
-			msg.append(", userId=");
+			msg.append(", userId = ");
 			msg.append(userId);
 
 			msg.append("}");

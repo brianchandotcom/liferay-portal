@@ -283,7 +283,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lvEntryId=");
+		msg.append("lvEntryId = ");
 		msg.append(lvEntryId);
 
 		msg.append("}");
@@ -338,7 +338,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lvEntryId=");
+		msg.append("lvEntryId = ");
 		msg.append(lvEntryId);
 
 		msg.append("}");
@@ -623,10 +623,10 @@ public class LVEntryLocalizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("lvEntryId=");
+			msg.append("lvEntryId = ");
 			msg.append(lvEntryId);
 
-			msg.append(", languageId=");
+			msg.append(", languageId = ");
 			msg.append(languageId);
 
 			msg.append("}");
@@ -878,7 +878,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("headId=");
+			msg.append("headId = ");
 			msg.append(headId);
 
 			msg.append("}");

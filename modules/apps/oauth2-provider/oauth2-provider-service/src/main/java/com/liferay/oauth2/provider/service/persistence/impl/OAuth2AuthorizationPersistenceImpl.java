@@ -294,7 +294,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -348,7 +348,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("userId=");
+		msg.append("userId = ");
 		msg.append(userId);
 
 		msg.append("}");
@@ -813,7 +813,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2ApplicationId=");
+		msg.append("oAuth2ApplicationId = ");
 		msg.append(oAuth2ApplicationId);
 
 		msg.append("}");
@@ -869,7 +869,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("oAuth2ApplicationId=");
+		msg.append("oAuth2ApplicationId = ");
 		msg.append(oAuth2ApplicationId);
 
 		msg.append("}");
@@ -1343,7 +1343,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("accessTokenContentHash=");
+		msg.append("accessTokenContentHash = ");
 		msg.append(accessTokenContentHash);
 
 		msg.append("}");
@@ -1399,7 +1399,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("accessTokenContentHash=");
+		msg.append("accessTokenContentHash = ");
 		msg.append(accessTokenContentHash);
 
 		msg.append("}");
@@ -1876,7 +1876,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("refreshTokenContentHash=");
+		msg.append("refreshTokenContentHash = ");
 		msg.append(refreshTokenContentHash);
 
 		msg.append("}");
@@ -1932,7 +1932,7 @@ public class OAuth2AuthorizationPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("refreshTokenContentHash=");
+		msg.append("refreshTokenContentHash = ");
 		msg.append(refreshTokenContentHash);
 
 		msg.append("}");

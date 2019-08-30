@@ -117,10 +117,10 @@ public class WeDeployAuthTokenPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("token=");
+			msg.append("token = ");
 			msg.append(token);
 
-			msg.append(", type=");
+			msg.append(", type = ");
 			msg.append(type);
 
 			msg.append("}");
@@ -376,13 +376,13 @@ public class WeDeployAuthTokenPersistenceImpl
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("clientId=");
+			msg.append("clientId = ");
 			msg.append(clientId);
 
-			msg.append(", token=");
+			msg.append(", token = ");
 			msg.append(token);
 
-			msg.append(", type=");
+			msg.append(", type = ");
 			msg.append(type);
 
 			msg.append("}");

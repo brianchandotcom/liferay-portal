@@ -6,16 +6,10 @@ gradle.liferayWorkspace {
 }
 
 runGradleTest {
-	dependsOn "clean", ":modules:foo-web:assemble", ":modules:bar-web:assemble"
+	dependsOn ":modules:foo-web:assemble", ":modules:bar-web:assemble"
 
 	doLast {
-		for (String fileName in ["init_jsp.class", "view_jsp.class"]) {
-
-			File generatedFile = new File(buildDir.getParentFile(), "modules/foo-web/build/tmp/compileJSP/org/apache/jsp/${fileName}")
-			assert generatedFile.exists()
-
-			generatedFile = new File(buildDir.getParentFile(), "modules/bar-web/build/tmp/compileJSP/org/apache/jsp/${fileName}")
-			assert !generatedFile.exists()
-		}
+		assert file("modules/foo-web/build/tmp/compileJSP/org/apache/jsp/view_jsp.class").exists()
+		assert !file("modules/bar-web/build/tmp/compileJSP/org/apache/jsp/view_jsp.class").exists()
 	}
 }

@@ -83,41 +83,43 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 		SegmentEdit.default(
 			'<%= segmentEditRootElementId %>',
 			{
-				availableLocales: availableLocales,
-				contributors: <%= editSegmentsEntryDisplayContext.getContributorsJSONArray() %>,
-				defaultLanguageId: '<%= editSegmentsEntryDisplayContext.getDefaultLanguageId() %>',
-				formId: '<portlet:namespace />editSegmentFm',
-				hasUpdatePermission: <%= editSegmentsEntryDisplayContext.hasUpdatePermission() %>,
-				initialMembersCount: <%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %>,
-				initialSegmentActive: <%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>,
+				context: {
+					assetsPath: '<%= PortalUtil.getPathContext(request) + "/assets" %>',
+					namespace: '<portlet:namespace />',
+					requestFieldValueNameURL: '<%= getSegmentsFieldValueNameURL %>'
+				},
+				props: {
+					availableLocales: availableLocales,
+					contributors: <%= editSegmentsEntryDisplayContext.getContributorsJSONArray() %>,
+					defaultLanguageId: '<%= editSegmentsEntryDisplayContext.getDefaultLanguageId() %>',
+					formId: '<portlet:namespace />editSegmentFm',
+					hasUpdatePermission: <%= editSegmentsEntryDisplayContext.hasUpdatePermission() %>,
+					initialMembersCount: <%= editSegmentsEntryDisplayContext.getSegmentsEntryClassPKsCount() %>,
+					initialSegmentActive: <%= (segmentsEntry == null) ? false : segmentsEntry.isActive() %>,
 
-				<c:choose>
-					<c:when test="<%= segmentsEntry != null %>">
+					<c:choose>
+						<c:when test="<%= segmentsEntry != null %>">
 
-						<%
-						JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-						%>
+							<%
+							JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+							%>
 
-						initialSegmentName: <%= JSONFactoryUtil.createJSONObject(jsonSerializer.serializeDeep(segmentsEntry.getNameMap())) %>,
-					</c:when>
-					<c:otherwise>
-						initialSegmentName: null,
-					</c:otherwise>
-				</c:choose>
+							initialSegmentName: <%= JSONFactoryUtil.createJSONObject(jsonSerializer.serializeDeep(segmentsEntry.getNameMap())) %>,
+						</c:when>
+						<c:otherwise>
+							initialSegmentName: null,
+						</c:otherwise>
+					</c:choose>
 
-				locale: '<%= locale %>',
-				portletNamespace: '<portlet:namespace />',
-				previewMembersURL: '<%= previewMembersURL %>',
-				propertyGroups: <%= editSegmentsEntryDisplayContext.getPropertyGroupsJSONArray(locale) %>,
-				redirect: '<%= HtmlUtil.escape(redirect) %>',
-				requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>',
-				showInEditMode: <%= editSegmentsEntryDisplayContext.isShowInEditMode() %>,
-				source: '<%= editSegmentsEntryDisplayContext.getSource() %>'
-			},
-			{
-				assetsPath: '<%= PortalUtil.getPathContext(request) + "/assets" %>',
-				namespace: '<portlet:namespace />',
-				requestFieldValueNameURL: '<%= getSegmentsFieldValueNameURL %>'
+					locale: '<%= locale %>',
+					portletNamespace: '<portlet:namespace />',
+					previewMembersURL: '<%= previewMembersURL %>',
+					propertyGroups: <%= editSegmentsEntryDisplayContext.getPropertyGroupsJSONArray(locale) %>,
+					redirect: '<%= HtmlUtil.escape(redirect) %>',
+					requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>',
+					showInEditMode: <%= editSegmentsEntryDisplayContext.isShowInEditMode() %>,
+					source: '<%= editSegmentsEntryDisplayContext.getSource() %>',
+				}
 			}
 		);
 	</aui:script>

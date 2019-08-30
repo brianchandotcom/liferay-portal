@@ -23,11 +23,9 @@ import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpe
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Controller;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
-import com.liferay.document.library.opener.onedrive.web.internal.util.DLOpenerTimestampUtil;
 import com.liferay.document.library.opener.upload.UniqueFileEntryTitleProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -40,7 +38,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -151,17 +148,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	private JSONObject _executeCommand(ActionRequest actionRequest)
 		throws PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		String timestamp = ParamUtil.getString(actionRequest, "timestamp");
-
-		if (DLOpenerTimestampUtil.contains(
-				httpServletRequest, Constants.ADD, timestamp)) {
-
-			return JSONFactoryUtil.createJSONObject();
-		}
-
 		try {
 			long repositoryId = ParamUtil.getLong(
 				actionRequest, "repositoryId");
@@ -185,9 +171,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 						folderId, contentType, title, serviceContext));
 
 			hideDefaultSuccessMessage(actionRequest);
-
-			DLOpenerTimestampUtil.add(
-				httpServletRequest, Constants.ADD, timestamp);
 
 			return _saveDLOpenerOneDriveFileReference(
 				actionRequest, dlOpenerOneDriveFileReference);

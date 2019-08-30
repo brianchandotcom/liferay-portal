@@ -75,7 +75,7 @@
 }
 
 .lfr-device {
-	@include box-sizing(content-box);
+	box-sizing: content-box;
 
 	.modal-header {
 		display: none;

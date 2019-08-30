@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.storage;
+package com.liferay.dynamic.data.mapping.internal.storage;
 
-import com.liferay.dynamic.data.mapping.internal.storage.GeolocationFieldRenderer;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.FieldRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -41,19 +39,19 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Adolfo Pérez
  */
-@PrepareForTest({LanguageUtil.class, JSONFactoryUtil.class})
+@PrepareForTest({LanguageUtil.class})
 @RunWith(PowerMockRunner.class)
 public class GeolocationFieldRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 	}
 
 	@Test
 	public void testRenderedValuesFollowLocaleConventions() {
-		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
+		FieldRenderer fieldRenderer = new GeolocationFieldRenderer(
+			new JSONFactoryImpl(), _language);
 
 		if (JavaDetector.isJDK8()) {
 			Assert.assertEquals(
@@ -69,7 +67,8 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 
 	@Test
 	public void testRenderedValuesShouldHave3DecimalPlaces() {
-		FieldRenderer fieldRenderer = new GeolocationFieldRenderer();
+		FieldRenderer fieldRenderer = new GeolocationFieldRenderer(
+			new JSONFactoryImpl(), _language);
 
 		if (JavaDetector.isJDK8()) {
 			Assert.assertEquals(
@@ -84,23 +83,7 @@ public class GeolocationFieldRendererTest extends PowerMockito {
 	}
 
 	protected Field createField() {
-		JSONObject jsonObject = JSONUtil.put(
-			"latitude", 9.8765
-		).put(
-			"longitude", 1.2345
-		);
-
-		return new Field("field", jsonObject.toString());
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		spy(JSONFactoryUtil.class);
-
-		when(
-			JSONFactoryUtil.getJSONFactory()
-		).thenReturn(
-			new JSONFactoryImpl()
-		);
+		return new Field("field", "{latitude: 9.8765, longitude: 1.2345}");
 	}
 
 	protected void setUpLanguageUtil() {

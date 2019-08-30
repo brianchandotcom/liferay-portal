@@ -245,7 +245,6 @@ class List extends PureComponent {
 				{!!resultIds.length && (
 					<ul
 						className="list-group show-quick-actions-on-hover"
-						data-testid="results-list-group"
 						onKeyDown={this._handleKeyDown}
 					>
 						{resultIds.map((id, index, arr) =>

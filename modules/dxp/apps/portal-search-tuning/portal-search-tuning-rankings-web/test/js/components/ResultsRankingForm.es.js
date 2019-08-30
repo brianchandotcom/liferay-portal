@@ -26,8 +26,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 const FORM_NAME = 'testForm';
 
-const RESULTS_LIST_ID = 'results-list-group';
-
 const HIDDEN_IDS_ADDED_INPUT_SELECTOR = '#hiddenIdsAdded';
 
 const HIDDEN_IDS_REMOVED_INPUT_SELECTOR = '#hiddenIdsRemoved';
@@ -54,7 +52,7 @@ describe('ResultsRankingForm', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders the results ranking form after loading', async () => {
+	it('renders the results ranking items after loading', async () => {
 		const {getByTestId} = render(
 			<ResultsRankingForm
 				cancelUrl="cancel"
@@ -66,12 +64,13 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('100'));
 
-		expect(getByTestId(RESULTS_LIST_ID)).toBeInTheDocument();
+		expect(getByTestId('100')).toBeInTheDocument();
+		expect(getByTestId('109')).toBeInTheDocument();
 	});
 
-	it('renders the results ranking form after loading hidden tab', async () => {
+	it('renders the results ranking items after loading hidden tab', async () => {
 		const {getByTestId, getByText} = render(
 			<ResultsRankingForm
 				cancelUrl="cancel"
@@ -85,9 +84,10 @@ describe('ResultsRankingForm', () => {
 
 		fireEvent.click(getByText('hidden'));
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('200'));
 
-		expect(getByTestId(RESULTS_LIST_ID)).toBeInTheDocument();
+		expect(getByTestId('200')).toBeInTheDocument();
+		expect(getByTestId('209')).toBeInTheDocument();
 	});
 
 	it('includes the initial aliases', async () => {
@@ -197,7 +197,7 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('100'));
 
 		fireEvent.click(
 			within(getByTestId('100')).getByTitle(HIDE_BUTTON_LABEL)
@@ -220,7 +220,7 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('105'));
 
 		fireEvent.click(
 			within(getByTestId('105')).getByTitle(HIDE_BUTTON_LABEL)
@@ -251,7 +251,7 @@ describe('ResultsRankingForm', () => {
 
 		fireEvent.click(getByText('hidden'));
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('200'));
 
 		fireEvent.click(
 			within(getByTestId('200')).getByTitle(SHOW_BUTTON_LABEL)
@@ -276,7 +276,7 @@ describe('ResultsRankingForm', () => {
 
 		fireEvent.click(getByText('hidden'));
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('200'));
 
 		fireEvent.click(
 			within(getByTestId('200')).getByTitle(SHOW_BUTTON_LABEL)
@@ -305,17 +305,17 @@ describe('ResultsRankingForm', () => {
 			/>
 		);
 
-		await waitForElement(() => getByTestId(RESULTS_LIST_ID));
+		await waitForElement(() => getByTestId('100'));
 
 		fireEvent.click(container.querySelector('.load-more-button'));
 
 		await waitForElement(() => getByTestId('110'));
 
-		expect(getByTestId(RESULTS_LIST_ID)).toHaveTextContent(
-			'110 This is a Document Example'
+		expect(getByTestId('110')).toHaveTextContent(
+			'This is a Document Example'
 		);
-		expect(getByTestId(RESULTS_LIST_ID)).toHaveTextContent(
-			'119 This is a Web Content Example'
+		expect(getByTestId('119')).toHaveTextContent(
+			'This is a Web Content Example'
 		);
 	});
 

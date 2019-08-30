@@ -16,12 +16,7 @@ import List from './list/List.es';
 import PageToolbar from './PageToolbar.es';
 import React, {Component} from 'react';
 import ThemeContext from '../ThemeContext.es';
-import {
-	ClayTab,
-	ClayTabList,
-	ClayTabPanel,
-	ClayTabs
-} from './shared/ClayTabs.es';
+import ClayTabs from '@clayui/tabs';
 import {fetchDocuments} from '../utils/api.es';
 import {
 	isNil,
@@ -88,6 +83,12 @@ class ResultsRankingForm extends Component {
 	};
 
 	state = {
+		/**
+		 * Number of the active tab.
+		 * @type {number}
+		 */
+		activeTabKeyValue: 0,
+
 		/**
 		 * A list of strings of aliases.
 		 * @type {Array}
@@ -656,12 +657,23 @@ class ResultsRankingForm extends Component {
 		});
 	};
 
+	/**
+	 * Updates the active tab of the results list by changing activeTabKeyValue.
+	 * @param {number} value The number of the tab.
+	 */
+	_setActiveTabKeyValue = value => {
+		this.setState({
+			activeTabKeyValue: value
+		});
+	};
+
 	render() {
 		const {namespace} = this.context;
 
 		const {cancelUrl, fetchDocumentsSearchUrl, searchQuery} = this.props;
 
 		const {
+			activeTabKeyValue,
 			aliases,
 			dataLoadIndex,
 			dataLoadingHidden,
@@ -737,18 +749,43 @@ class ResultsRankingForm extends Component {
 
 						<ErrorBoundary>
 							<div className="form-section-results-list">
-								<ClayTabs onSelect={this._handleTabSelect}>
-									<ClayTabList className="results-ranking-tabs">
-										<ClayTab>
+								<nav
+									aria-label={Liferay.Language.get(
+										'visible-hidden-results'
+									)}
+									className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
+								>
+									<ClayTabs className="navbar-nav">
+										<ClayTabs.Item
+											active={activeTabKeyValue === 0}
+											aria-label={Liferay.Language.get(
+												'visible-results'
+											)}
+											onClick={() =>
+												this._setActiveTabKeyValue(0)
+											}
+										>
 											{Liferay.Language.get('visible')}
-										</ClayTab>
+										</ClayTabs.Item>
 
-										<ClayTab>
+										<ClayTabs.Item
+											active={activeTabKeyValue === 1}
+											aria-label={Liferay.Language.get(
+												'hidden-results'
+											)}
+											onClick={() =>
+												this._setActiveTabKeyValue(1)
+											}
+										>
 											{Liferay.Language.get('hidden')}
-										</ClayTab>
-									</ClayTabList>
+										</ClayTabs.Item>
+									</ClayTabs>
+								</nav>
 
-									<ClayTabPanel>
+								<ClayTabs.Content
+									activeIndex={activeTabKeyValue}
+								>
+									<ClayTabs.TabPane>
 										<List
 											dataLoading={dataLoadingVisible}
 											dataMap={dataMap}
@@ -775,9 +812,9 @@ class ResultsRankingForm extends Component {
 												visibleCur
 											)}
 										/>
-									</ClayTabPanel>
+									</ClayTabs.TabPane>
 
-									<ClayTabPanel>
+									<ClayTabs.TabPane>
 										<List
 											dataLoading={dataLoadingHidden}
 											dataMap={dataMap}
@@ -794,8 +831,8 @@ class ResultsRankingForm extends Component {
 												hiddenCur
 											)}
 										/>
-									</ClayTabPanel>
-								</ClayTabs>
+									</ClayTabs.TabPane>
+								</ClayTabs.Content>
 							</div>
 						</ErrorBoundary>
 					</div>

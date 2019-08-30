@@ -1035,6 +1035,14 @@
     "@clayui/link" "^3.0.0-alpha.1"
     classnames "^2.2.6"
 
+"@clayui/tabs@3.0.0-milestone.3":
+  version "3.0.0-milestone.3"
+  resolved "https://registry.yarnpkg.com/@clayui/tabs/-/tabs-3.0.0-milestone.3.tgz#89620e8d9956937ffee55944b93418e07d37d77c"
+  integrity sha512-QbfEzMfx2C7PqfOnii4tJRhQPlAYy7zlc0sRYOWtoORGGBm+gY8GMHCZU05cn8rDR8WKVjjfrYV3uEK+IhXY8g==
+  dependencies:
+    "@clayui/shared" "^3.0.0-milestone.3"
+    classnames "^2.2.6"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -4248,7 +4256,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@2.2.6, classnames@^2.2.0, classnames@^2.2.5, classnames@^2.2.6:
+classnames@2.2.6, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -11957,7 +11965,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.7.2, prop-types@^15.5.0, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -12461,14 +12469,6 @@ react-syntax-highlighter@^8.0.1:
     lowlight "~1.9.1"
     prismjs "^1.8.4"
     refractor "^2.4.1"
-
-react-tabs@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.0.0.tgz#60311a17c755eb6aa9b3310123e67db421605127"
-  integrity sha512-z90cDIb+5V7MzjXFHq1VLxYiMH7dDQWan7mXSw6BWQtw+9pYAnq/fEDvsPaXNyevYitvLetdW87C61uu27JVMA==
-  dependencies:
-    classnames "^2.2.0"
-    prop-types "^15.5.0"
 
 react-test-renderer@^16.0.0-0:
   version "16.8.6"

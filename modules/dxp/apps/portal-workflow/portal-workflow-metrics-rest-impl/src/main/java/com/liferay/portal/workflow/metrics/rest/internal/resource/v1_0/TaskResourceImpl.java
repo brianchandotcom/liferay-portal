@@ -27,7 +27,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -227,12 +227,12 @@ public class TaskResourceImpl
 			(FilterAggregationResult)bucket.getChildAggregationResult(
 				"instanceCountFilter");
 
-		CardinalityAggregationResult cardinalityAggregationResult =
-			(CardinalityAggregationResult)
+		ValueCountAggregationResult valueCountAggregationResult =
+			(ValueCountAggregationResult)
 				filterAggregationResult.getChildAggregationResult(
 					"instanceCount");
 
-		return cardinalityAggregationResult.getValue();
+		return valueCountAggregationResult.getValue();
 	}
 
 	private Map<String, Long> _getInstanceCountMap(
@@ -252,7 +252,7 @@ public class TaskResourceImpl
 				_queries.term("instanceId", "0")));
 
 		filterAggregation.addChildAggregation(
-			_aggregations.cardinality("instanceCount", "instanceId"));
+			_aggregations.valueCount("instanceCount", "instanceId"));
 
 		termsAggregation.addChildrenAggregations(filterAggregation);
 

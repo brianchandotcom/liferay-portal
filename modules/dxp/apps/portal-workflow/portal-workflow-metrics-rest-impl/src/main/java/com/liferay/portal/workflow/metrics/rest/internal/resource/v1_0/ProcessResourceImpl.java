@@ -29,8 +29,8 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
-import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
+import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -322,7 +322,7 @@ public class ProcessResourceImpl
 				_queries.term("instanceId", "0")));
 
 		filterAggregation.addChildAggregation(
-			_aggregations.cardinality("instanceCount", "instanceId"));
+			_aggregations.valueCount("instanceCount", "instanceId"));
 
 		termsAggregation.addChildrenAggregations(filterAggregation);
 
@@ -583,15 +583,15 @@ public class ProcessResourceImpl
 			(FilterAggregationResult)bucket.getChildAggregationResult(
 				"instanceCountFilter");
 
-		CardinalityAggregationResult cardinalityAggregationResult;
+		ValueCountAggregationResult valueCountAggregationResult;
 
 		if (filterAggregationResult != null) {
-			cardinalityAggregationResult =
-				(CardinalityAggregationResult)
+			valueCountAggregationResult =
+				(ValueCountAggregationResult)
 					filterAggregationResult.getChildAggregationResult(
 						"instanceCount");
 
-			process.setInstanceCount(cardinalityAggregationResult.getValue());
+			process.setInstanceCount(valueCountAggregationResult.getValue());
 		}
 		else {
 			ScriptedMetricAggregationResult scriptedMetricAggregationResult =

@@ -16,7 +16,7 @@ definition {
 	}
 
 	macro _addAssetTagNames {
-		Variables.assertDefined(parameterList = "${JSON},${assetTagName}");
+		Variables.assertDefined(parameterList = "${JSON},${assetTagNames}");
 
 		var JSON = JSONUtil2._addJSONArray(
 			JSON = "${JSON}",

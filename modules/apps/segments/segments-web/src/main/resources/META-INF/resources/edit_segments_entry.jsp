@@ -118,7 +118,7 @@ renderResponse.setTitle(editSegmentsEntryDisplayContext.getTitle(locale));
 					redirect: '<%= HtmlUtil.escape(redirect) %>',
 					requestMembersCountURL: '<%= getSegmentsEntryClassPKsCountURL %>',
 					showInEditMode: <%= editSegmentsEntryDisplayContext.isShowInEditMode() %>,
-					source: '<%= editSegmentsEntryDisplayContext.getSource() %>',
+					source: '<%= editSegmentsEntryDisplayContext.getSource() %>'
 				}
 			}
 		);

@@ -79,6 +79,8 @@ public class SegmentsExperimentUtil {
 		}
 
 		return JSONUtil.put(
+			"confidenceLevel", segmentsExperiment.getConfidenceLevel()
+		).put(
 			"description", segmentsExperiment.getDescription()
 		).put(
 			"editable", _isEditable(segmentsExperiment)

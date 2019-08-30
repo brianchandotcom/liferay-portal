@@ -131,7 +131,10 @@ public class RunSegmentsExperimentMVCActionCommand
 		return JSONUtil.put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				themeDisplay.getLocale(), segmentsExperiment));
+				themeDisplay.getLocale(), segmentsExperiment)
+		).put(
+			"segmentsExperimentRels", segmentsExperimentRelsJSONObject
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

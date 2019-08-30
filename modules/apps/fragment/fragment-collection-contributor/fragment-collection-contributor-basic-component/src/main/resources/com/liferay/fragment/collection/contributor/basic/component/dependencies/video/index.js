@@ -38,6 +38,31 @@ const showError = () => {
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
 };
 
+const rawProvider = {
+	getParameters: url => {
+		return {url};
+	},
+
+	showVideo: parameters => {
+		const video = document.createElement('video');
+		const source = document.createElement('source');
+
+		source.src = parameters.url;
+
+		video.autoplay = configuration.autoPlay;
+		video.controls = !configuration.hideControls;
+		video.loop = configuration.loop;
+		video.muted = configuration.mute;
+
+		video.style.height = '100%';
+		video.style.width = '100%';
+
+		video.appendChild(source);
+		videoContainer.appendChild(video);
+		showVideo();
+	}
+};
+
 const youtubeProvider = {
 	getParameters: url => {
 		if (['www.youtube.com', 'youtube.com'].includes(url.hostname)) {
@@ -130,7 +155,7 @@ const main = () => {
 	try {
 		let matched = false;
 		const url = new URL(configuration.url);
-		const providers = [youtubeProvider];
+		const providers = [youtubeProvider, rawProvider];
 
 		for (let i = 0; i < providers.length && !matched; i++) {
 			const provider = providers[i];

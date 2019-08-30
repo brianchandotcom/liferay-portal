@@ -17,6 +17,7 @@ package com.liferay.mail.messaging;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.util.HookFactory;
 import com.liferay.petra.mail.MailEngine;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -29,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.mail.internet.InternetAddress;
 
@@ -119,8 +121,23 @@ public class MailMessageListener extends BaseMessageListener {
 		EmailAddressGenerator emailAddressGenerator =
 			EmailAddressGeneratorFactory.getInstance();
 
-		if (emailAddressGenerator.isFake(internetAddress.getAddress())) {
+		String emailAddress = internetAddress.getAddress();
+
+		if (emailAddressGenerator.isFake(emailAddress)) {
 			return null;
+		}
+
+		for (String blacklistedEmail : PropsValues.MAIL_SEND_BLACKLIST) {
+			if (Objects.equals(emailAddress, blacklistedEmail)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Email ", emailAddress, " will be ignored as it",
+							"is included in mail.send.blacklist"));
+				}
+
+				return null;
+			}
 		}
 
 		return internetAddress;

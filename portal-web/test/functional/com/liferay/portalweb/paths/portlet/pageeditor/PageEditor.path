@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_COMMENT_ENTRY_HIGHLIGHTED</td>
+	<td>//article[contains(@class,'highlighted')]/div[contains(@class,'text-secondary')]/p[contains(.,'${key_fragmentComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING</td>
 	<td>//strong[contains(@class,'text-dark') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
@@ -107,6 +112,11 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_AUTHOR</td>
 	<td>xpath=(//article[contains(@class,'reply') and contains(.,'${key_commentReply}')]//strong[contains(@class,'portal-tooltip')])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_HIGHLIGHTED</td>
+	<td>xpath=(//article[contains(@class,'highlighted')]/div[contains(@class,'text-secondary')]/p[contains(.,'${key_commentReply}')])[last()]</td>
 	<td></td>
 </tr>
 <tr>

@@ -359,10 +359,19 @@ definition {
 
 	macro viewComment {
 		if (isSet(fragmentComment)) {
-			AssertTextEquals(
-				key_fragmentComment = "${fragmentComment}",
-				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY",
-				value1 = "${fragmentComment}");
+			if (isSet(fromNotifications)) {
+				AssertTextEquals(
+					key_fragmentComment = "${fragmentComment}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_HIGHLIGHTED",
+					value1 = "${fragmentComment}");
+			}
+
+			else {
+				AssertTextEquals(
+					key_fragmentComment = "${fragmentComment}",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY",
+					value1 = "${fragmentComment}");
+			}
 		}
 
 		else {
@@ -405,10 +414,19 @@ definition {
 	}
 
 	macro viewCommentReply {
-		AssertTextEquals(
-			key_commentReply = "${commentReply}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY",
-			value1 = "${commentReply}");
+		if (isSet(fromNotifications)) {
+			AssertTextEquals(
+				key_commentReply = "${commentReply}",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY_HIGHLIGHTED",
+				value1 = "${commentReply}");
+		}
+
+		else {
+			AssertTextEquals(
+				key_commentReply = "${commentReply}",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_REPLY_COMMENTS_ENTRY",
+				value1 = "${commentReply}");
+		}
 
 		AssertTextEquals(
 			key_commentReply = "${commentReply}",

@@ -124,7 +124,9 @@ definition {
 
 		Notifications.navigateToContent(contentBody = "Comment by User 2");
 
-		PageEditor.viewComment(fragmentComment = "Comment by User 2");
+		PageEditor.viewComment(
+			fragmentComment = "Comment by User 2",
+			fromNotifications = "true");
 	}
 
 	@description = "This case ensures that a user is notified when a reply is added to their comment."

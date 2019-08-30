@@ -20,6 +20,7 @@ import ClayList from '@clayui/list';
 import ClayButton from '@clayui/button';
 import SegmentsExperimentsContext from '../../../context.es';
 import {navigateToExperience} from '../../../util/navigation.es';
+import {indexToPercentageString} from '../../../util/percentages.es';
 
 function Variant({
 	active,
@@ -110,7 +111,7 @@ function Variant({
 						aria-label={Liferay.Language.get('traffic-split')}
 						className="text-secondary font-weight-normal list-group-title"
 					>
-						{split * 100 + '%'}
+						{indexToPercentageString(split)}
 					</span>
 				</ClayList.ItemField>
 			)}

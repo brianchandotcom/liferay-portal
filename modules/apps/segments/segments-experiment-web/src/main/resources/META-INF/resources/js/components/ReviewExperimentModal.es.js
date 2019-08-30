@@ -19,6 +19,7 @@ import ClayButton from '@clayui/button';
 import {SplitPicker} from './SplitPicker/SplitPicker.es';
 import {SliderWithLabel} from './SliderWithLabel.es';
 import {SegmentsVariantType} from '../types.es';
+import {percentageNumberToIndex} from '../util/percentages.es';
 
 function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 	const [confidenceLevel, setConfidenceLevel] = useState(50);
@@ -93,12 +94,12 @@ function ReviewExperimentModal({onRun, variants, visible, setVisible}) {
 		const splitVariantsMap = draftVariants.reduce((acc, v) => {
 			return {
 				...acc,
-				[v.segmentsExperimentRelId]: parseFloat(v.split, 2) / 100
+				[v.segmentsExperimentRelId]: percentageNumberToIndex(v.split)
 			};
 		}, {});
 
 		onRun({
-			confidenceLevel: parseFloat(confidenceLevel, 2) / 100,
+			confidenceLevel: percentageNumberToIndex(confidenceLevel),
 			splitVariantsMap
 		});
 	}

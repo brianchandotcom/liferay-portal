@@ -14,6 +14,7 @@
 
 import React from 'react';
 import {SegmentsExperimentType} from '../types.es';
+import {indexToPercentageString} from '../util/percentages.es';
 
 function SegmentsExperimentsDetails({segmentsExperiment}) {
 	const {confidenceLevel, goal, segmentsEntryName} = segmentsExperiment;
@@ -41,7 +42,7 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 							{Liferay.Language.get('confidence-level') + ':'}{' '}
 						</dt>
 						<dd className="text-secondary ml-2">
-							{confidenceLevel * 100 + '%'}
+							{indexToPercentageString(confidenceLevel)}
 						</dd>
 					</div>
 				)}

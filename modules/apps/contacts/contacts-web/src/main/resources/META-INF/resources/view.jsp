@@ -479,7 +479,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 					var node = event.currentTarget;
 
-					Liferay.Util.request(node.getAttribute('data-viewSummaryURL')).then(
+					Liferay.Util.fetch(node.getAttribute('data-viewSummaryURL')).then(
 						function(response) {
 							return response.json();
 						}

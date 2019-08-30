@@ -456,7 +456,7 @@ if (portletTitleBasedNavigation) {
 					<liferay-asset:select-asset-display-page
 						classNameId="<%= PortalUtil.getClassNameId(DLFileEntry.class) %>"
 						classPK="<%= (fileEntry != null) ? fileEntry.getFileEntryId() : 0 %>"
-						classTypeId="<%= fileEntryTypeId %>"
+						classTypeId="<%= (fileEntryTypeId < 0) ? DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT : fileEntryTypeId %>"
 						groupId="<%= scopeGroupId %>"
 						showPortletLayouts="<%= true %>"
 						showViewInContextLink="<%= true %>"

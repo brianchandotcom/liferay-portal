@@ -31,8 +31,8 @@
 	}
 
 	.blog-list-card-content {
-		position: absolute;
 		bottom: 10px;
+		position: absolute;
 
 		@include media-breakpoint-up(lg) {
 			padding: 10px 30px;

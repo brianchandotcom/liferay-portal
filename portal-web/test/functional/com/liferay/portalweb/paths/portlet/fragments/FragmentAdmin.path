@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>FragmentAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FragmentAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FRAGMENT_COLLECTION</td>
+	<td>//ul[contains(@class,'nav-nested')]//li//*[contains(@class, 'nav-link') and normalize-space(text()) =  '${collectionName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

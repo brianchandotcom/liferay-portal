@@ -17,31 +17,53 @@ import ReactDOM from 'react-dom';
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 
+let counter = 0;
+
 /**
  * Wrapper for ReactDOM render that automatically:
  *
  * - Provides commonly-needed context (for example, the Clay spritemap).
- * - Unmounts when portlets are destroyed.
+ * - Unmounts when portlets are destroyed based on the received
+ * `portletNamespace` value inside renderData. If none is passed, the component
+ * will be automatically unmount before the next navigation
  *
  * The React docs advise not to rely on the render return value, so we
  * don't propagate it.
  *
  * @see https://reactjs.org/docs/react-dom.html#render
  */
-export default function render(element, container, callback) {
+export default function render(renderFunction, renderData, containerId) {
+	const {portletId} = renderData;
+	const container = document.getElementById(containerId);
 	const spritemap =
 		Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
+
+	let {componentId} = renderData;
+
+	const destroyOnNavigate = !portletId;
+
+	if (!componentId) {
+		componentId = `__UNNAMED_COMPONENT__${portletId}__${counter++}`;
+	}
+
+	Liferay.component(
+		componentId,
+		{
+			destroy: () => {
+				ReactDOM.unmountComponentAtNode(container);
+			}
+		},
+		{
+			destroyOnNavigate,
+			portletId
+		}
+	);
 
 	// eslint-disable-next-line liferay-portal/no-react-dom-render
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={spritemap}>
-			{element}
+			{renderFunction(renderData)}
 		</ClayIconSpriteContext.Provider>,
-		container,
-		callback
-	);
-
-	Liferay.once('destroyPortlet', () =>
-		ReactDOM.unmountComponentAtNode(container)
+		container
 	);
 }

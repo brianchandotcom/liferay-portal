@@ -268,10 +268,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private LayoutSEOCanonicalURLService _layoutSEOCanonicalURLService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutSEOCanonicalURLService _layoutSEOCanonicalURLService;
 
 	@Reference
 	private LayoutService _layoutService;

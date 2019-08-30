@@ -11,6 +11,32 @@ definition {
 		}
 	}
 
+	macro AssertChartIsPresent {
+		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
+
+		AssertTextPresent(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_TOOLTIP_UNIT_VALUE",
+			value1 = "${chartVelocityUnit}");
+	}
+
+	macro assertDefaultChartRangesAndUnits {
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN",
+			value1 = "Last 30 Days");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN",
+			value1 = "Last 30 Days");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN",
+			value1 = "Inst / Day");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+			value1 = "inst / day");
+	}
+
 	macro fillSLAForm {
 		var key_slaDefinitionDays = "${slaDefinitionDays}";
 		var key_slaDefinitionDescription = "${slaDefinitionDescription}";
@@ -79,6 +105,81 @@ definition {
 
 		}
 
+	}
+
+	macro verifyDefaultUnitsForEachDateRange {
+		var key_completionVelocityDateRange = "${completionVelocityDateRange}";
+
+		for (var isUnitPresent : list "${isPresent}") {
+
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN");
+
+			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+			if ("${isUnitPresent}" == "INST_HOUR") {
+				Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+				AssertTextEquals(
+					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+					value1 = "inst / hour");
+
+				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Hour");
+			}
+
+			if ("${isUnitPresent}" == "INST_DAY") {
+				Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+				AssertTextEquals(
+					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+					value1 = "inst / day");
+
+				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Day");
+			}
+
+			if ("${isUnitPresent}" == "INST_WEEK") {
+				Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+				AssertTextEquals(
+					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+					value1 = "inst / week");
+
+				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Week");
+			}
+
+			if ("${isUnitPresent}" == "INST_MONTH") {
+				Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+				AssertTextEquals(
+					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+					value1 = "inst / month");
+
+				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Month");
+			}
+
+			if ("${isUnitPresent}" == "INST_YEAR") {
+				Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitPresent}");
+
+				AssertTextEquals(
+					locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
+					value1 = "inst / year");
+
+				WorkflowMetrics.AssertChartIsPresent(chartVelocityUnit = "Inst / Year");
+			}
+		}
+
+		for (var isUnitNotPresent : list "${isNotPresent}") {
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN");
+
+			AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_${isUnitNotPresent}");
+		}
 	}
 
 }

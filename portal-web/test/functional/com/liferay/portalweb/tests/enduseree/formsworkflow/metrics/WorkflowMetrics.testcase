@@ -85,4 +85,52 @@ definition {
 			value1 = "${key_testSLADefinitionDays}");
 	}
 
+	@description = "Verify if the default filter values are correct and if the chart is displayed (LPS-98001)"
+	@priority = "5"
+	test DefaultWorkflowMetricsFilterValues {
+		property portal.acceptance = "true";
+
+		WorkflowMetrics.goToWorkflowProcess(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		WorkflowMetrics.assertDefaultChartRangesAndUnits();
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Today",
+			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
+			isPresent = "INST_HOUR");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Yesterday",
+			isNotPresent = "INST_DAY,INST_WEEK,INST_MONTH,INST_YEAR",
+			isPresent = "INST_HOUR");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Last 7 Days",
+			isNotPresent = "INST_HOUR,INST_WEEK,INST_MONTH,INST_YEAR",
+			isPresent = "INST_DAY");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Last 30 Days",
+			isNotPresent = "INST_HOUR,INST_MONTH,INST_YEAR",
+			isPresent = "INST_DAY,INST_WEEK");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Last 90 Days",
+			isNotPresent = "INST_HOUR,INST_YEAR",
+			isPresent = "INST_DAY,INST_WEEK,INST_MONTH");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Last 180 Days",
+			isNotPresent = "INST_DAY,INST_HOUR,INST_YEAR",
+			isPresent = "INST_WEEK,INST_MONTH");
+
+		WorkflowMetrics.verifyDefaultUnitsForEachDateRange(
+			completionVelocityDateRange = "Last Year",
+			isNotPresent = "INST_DAY,INST_HOUR,INST_YEAR",
+			isPresent = "INST_WEEK,INST_MONTH");
+
+	}
+
 }

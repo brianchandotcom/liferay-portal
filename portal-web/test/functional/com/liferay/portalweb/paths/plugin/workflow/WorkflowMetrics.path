@@ -9,6 +9,76 @@
 </thead>
 <tbody>
 <tr>
+	<td>METRICS_COMPLETED_ITEMS_DATE_RANGE_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CHART</td>
+	<td>//div[contains(@class, 'velocity-chart')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CHART_TOOLTIP</td>
+	<td>//div[contains(@class, 'workflow-tooltip-chart-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CHART_TOOLTIP_UNIT_VALUE</td>
+	<td>//tbody[contains(@class, 'chart-body')]//div[contains(@class, 'workflow-tooltip-chart-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL</td>
+	<td>//span[@class='velocity-unit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION</td>
+	<td>//div[@class='dropdown-menu show dropdown-menu-right']//span[@class='dropdown-item-name'][contains(text(),'${completionVelocityDateRange}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_DAY</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Day')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_HOUR</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Hour')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_MONTH</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Month')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_WEEK</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Week')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_COMPLETION_VELOCITY_UNIT_DROPDOWN_OPTION_INST_YEAR</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(text(),'Inst / Year')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_PERFORMANCE_TAB</td>
+	<td>//a[contains(@href, 'performance')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_WORKFLOW_PROCESS_NAME</td>
 	<td>//td//span[contains(text(),'${key_workflowProcessName}')]</td>
 	<td></td>

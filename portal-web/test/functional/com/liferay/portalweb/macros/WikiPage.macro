@@ -1077,8 +1077,8 @@ definition {
 	macro viewCP {
 		var key_wikiPageTitle = "${wikiPageTitle}";
 
-		AssertTextEquals(
-			locator1 = "WikiEntry#TITLE",
+		AssertTextEquals.assertPartialText(
+			locator1 = "Wiki#PAGE_HEADER",
 			value1 = "${wikiPageTitle}");
 
 		AssertTextEquals(

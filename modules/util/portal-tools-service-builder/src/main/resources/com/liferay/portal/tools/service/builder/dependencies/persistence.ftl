@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 

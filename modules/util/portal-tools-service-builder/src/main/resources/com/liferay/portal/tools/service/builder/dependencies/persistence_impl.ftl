@@ -1072,17 +1072,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * <#include "range_comment.ftl">
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ${entity.humanNames}
 	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ${entity.humanNames}
 	 */
-	@Deprecated
 	@Override
-	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
-		return findAll(start, end, orderByComparator);
+	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1095,25 +1092,33 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 * @param start the lower bound of the range of ${entity.humanNames}
 	 * @param end the upper bound of the range of ${entity.humanNames} (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ${entity.humanNames}
 	 */
 	@Override
-	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<${entity.name}> list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
+		List<${entity.name}> list = null;
+
+		if (useFinderCache) {
+			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1156,10 +1161,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				cacheResult(list);
 
-				${finderCache}.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					${finderCache}.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				${finderCache}.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					${finderCache}.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

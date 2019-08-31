@@ -21,9 +21,9 @@ public class DefaultReadWriteResourceMonitor
 	extends BaseReadWriteResourceMonitor {
 
 	public DefaultReadWriteResourceMonitor(
-		String etcdServerURL, String monitorName, Integer readMaxConnections) {
+		String etcdServerURL, String monitorName) {
 
-		super(etcdServerURL, monitorName, readMaxConnections);
+		super(etcdServerURL, monitorName);
 	}
 
 }

@@ -19,11 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public class DefaultResourceMonitor extends BaseResourceMonitor {
 
-	public DefaultResourceMonitor(
-		String etcdServerURL, String monitorName,
-		Integer allowedResourceConnections) {
-
-		super(etcdServerURL, monitorName, allowedResourceConnections);
+	public DefaultResourceMonitor(String etcdServerURL, String monitorName) {
+		super(etcdServerURL, monitorName);
 	}
 
 }

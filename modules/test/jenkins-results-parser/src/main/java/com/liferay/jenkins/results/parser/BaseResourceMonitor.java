@@ -14,8 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -24,13 +27,9 @@ import java.util.TreeSet;
  */
 public abstract class BaseResourceMonitor implements ResourceMonitor {
 
-	public BaseResourceMonitor(
-		String etcdServerURL, String monitorName,
-		Integer allowedResourceConnection) {
-
+	public BaseResourceMonitor(String etcdServerURL, String monitorName) {
 		_etcdServerURL = etcdServerURL;
 		_monitorName = monitorName;
-		_allowedResourceConnections = allowedResourceConnection;
 
 		if (!EtcdUtil.has(_etcdServerURL, getKey())) {
 			EtcdUtil.put(_etcdServerURL, getKey());
@@ -39,6 +38,32 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 	@Override
 	public Integer getAllowedResourceConnections() {
+		if (_allowedResourceConnections != null) {
+			return _allowedResourceConnections;
+		}
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String key = JenkinsResultsParserUtil.combine(
+				"resource.monitor.allowed.resource.connections[", getType(),
+				"]");
+
+			if (!buildProperties.containsKey(key)) {
+				_allowedResourceConnections =
+					_ALLOWED_RESOURCE_CONNECTIONS_DEFAULT;
+
+				return _allowedResourceConnections;
+			}
+
+			_allowedResourceConnections = Integer.valueOf(
+				buildProperties.getProperty(key));
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
 		return _allowedResourceConnections;
 	}
 
@@ -88,6 +113,11 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		}
 
 		return new ArrayList<>(resourceConnections);
+	}
+
+	@Override
+	public String getType() {
+		return getName();
 	}
 
 	@Override
@@ -174,7 +204,9 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		}
 	}
 
-	private final Integer _allowedResourceConnections;
+	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 1;
+
+	private Integer _allowedResourceConnections;
 	private final String _etcdServerURL;
 	private final String _monitorName;
 

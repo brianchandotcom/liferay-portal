@@ -33,6 +33,8 @@ public interface ResourceMonitor {
 
 	public List<ResourceConnection> getResourceConnectionQueue();
 
+	public String getType();
+
 	public void printResourceConnectionQueue();
 
 	public void signal(String connectionName);

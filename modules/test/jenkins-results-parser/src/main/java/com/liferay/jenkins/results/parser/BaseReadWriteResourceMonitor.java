@@ -14,11 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -29,12 +26,12 @@ public abstract class BaseReadWriteResourceMonitor
 	extends BaseResourceMonitor implements ReadWriteResourceMonitor {
 
 	public BaseReadWriteResourceMonitor(
-		String etcdServerURL, String monitorName, Integer readMaxConnections) {
+		String etcdServerURL, String monitorName) {
 
-		super(etcdServerURL, monitorName, readMaxConnections);
+		super(etcdServerURL, monitorName);
 
 		_writeResourceMonitor = new DefaultResourceMonitor(
-			etcdServerURL, monitorName + "_write", 1);
+			etcdServerURL, monitorName + "_write");
 	}
 
 	@Override
@@ -61,32 +58,6 @@ public abstract class BaseReadWriteResourceMonitor
 	@Override
 	public void waitWrite(String connectionName) {
 		wait(connectionName, _writeResourceMonitor, getName());
-	}
-
-	protected static final Integer getAllowedResourceConnections(
-		String etcdBaseDirName, Integer defaultAllowedResourceConnections) {
-
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			String allowedResourceConnectionsKey =
-				JenkinsResultsParserUtil.combine(
-					"resource.monitor.allowed.resource.connections[",
-					etcdBaseDirName, "]");
-
-			if (!buildProperties.containsKey(allowedResourceConnectionsKey)) {
-				return defaultAllowedResourceConnections;
-			}
-
-			return Integer.valueOf(
-				buildProperties.getProperty(allowedResourceConnectionsKey));
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		return defaultAllowedResourceConnections;
 	}
 
 	private final ResourceMonitor _writeResourceMonitor;

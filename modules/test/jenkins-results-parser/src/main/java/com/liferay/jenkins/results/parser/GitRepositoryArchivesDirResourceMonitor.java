@@ -21,14 +21,14 @@ public class GitRepositoryArchivesDirResourceMonitor
 	extends BaseReadWriteResourceMonitor {
 
 	public GitRepositoryArchivesDirResourceMonitor(String etcdServerURL) {
-		super(
-			etcdServerURL, _NAME_ETCD_DIR,
-			getAllowedResourceConnections(
-				_NAME_ETCD_DIR, _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT));
+		super(etcdServerURL, _TYPE);
 	}
 
-	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 5;
+	@Override
+	public String getType() {
+		return _TYPE;
+	}
 
-	private static final String _NAME_ETCD_DIR = "git_repository_archives_dir";
+	private static final String _TYPE = "git_repository_archives_dir";
 
 }

@@ -4,27 +4,19 @@ definition {
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		if (!(isSet(type))) {
-			var type = "portlet";
-		}
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}");
 
-		if (isSet(parentLayoutName)) {
-			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "true"
-			);
-		}
-		else {
-			var parentLayoutId = "0";
-		}
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true");
 
-		var groupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${groupName}");
+		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			parentLayoutName = "${parentLayoutName}",
+			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "true",
 			type = "${type}");
 	}
@@ -33,27 +25,19 @@ definition {
 	macro addPrivateLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		if (isSet(parentLayoutName)) {
-			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "true"
-			);
-		}
-		else {
-			var parentLayoutId = "0";
-		}
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
-		if (!(isSet(type))) {
-			var type = "portlet";
-		}
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "true");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			parentLayoutName = "${parentLayoutName}",
+			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "true",
 			type = "${type}");
 	}
@@ -62,27 +46,19 @@ definition {
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		if (isSet(parentLayoutName)) {
-			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "false"
-			);
-		}
-		else {
-			var parentLayoutId = "0";
-		}
+		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}");
 
-		if (!(isSet(type))) {
-			var type = "portlet";
-		}
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false");
 
-		var groupId = JSONGroupAPI._getSiteIdByGroupName(groupName = "${groupName}");
+		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			parentLayoutName = "${parentLayoutName}",
+			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "false",
 			type = "${type}");
 	}
@@ -91,87 +67,60 @@ definition {
 	macro addPublicLayoutByGroupName {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
-		if (isSet(parentLayoutName)) {
-			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
-				groupId = "${groupId}",
-				layoutName = "${parentLayoutName}",
-				privateLayout = "false"
-			);
-		}
-		else {
-			var parentLayoutId = "0";
-		}
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
-		if (!(isSet(type))) {
-			var type = "portlet";
-		}
+		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
+			groupId = "${groupId}",
+			parentLayoutName = "${parentLayoutName}",
+			privateLayout = "false");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var type = JSONLayoutSetter.setType(type = "${type}");
 
 		JSONLayoutAPI._addLayout(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			parentLayoutName = "${parentLayoutName}",
+			parentLayoutId = "${parentLayoutId}",
 			privateLayout = "false",
 			type = "${type}");
 	}
 
 	@summary = "Add a widget to a private layout via widgetName"
 	macro addWidgetToPrivateLayout {
-		if (!(isSet(column))) {
-			var column = "1";
-		}
-
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
-		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}");
+
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			privateLayout = "true");
-
-		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "true");
-
-		var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
-			column = "${column}",
-			widgetName = "${widgetName}",
-			typeSettings = "${typeSettings}");
+			widgetName = "${widgetName}");
 
 		JSONLayoutUtil._updateTypeSettings(
 			groupId = "${groupId}",
 			layoutId = "${layoutId}",
-			privateLayout = "true",
+			privateLayout = "false",
 			typeSettings = "${typeSettings}");
 	}
 
 	@summary = "Add a widget to a public layout via widgetName"
 	macro addWidgetToPublicLayout {
-		if (!(isSet(column))) {
-			var column = "1";
-		}
-
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
-		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "false");
+			layoutName = "${layoutName}");
 
-		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "false");
-
-		var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
 			column = "${column}",
-			widgetName = "${widgetName}",
-			typeSettings = "${typeSettings}");
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			widgetName = "${widgetName}");
 
 		JSONLayoutUtil._updateTypeSettings(
 			groupId = "${groupId}",
@@ -185,19 +134,17 @@ definition {
 
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
 
-		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		var layoutId = JSONLayoutSetter.setLayoutId(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}");
+
+		var typeSettings = JSONLayoutSetter.setTypeSettings(
+			column = "${column}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
-			privateLayout = "false");
-
-		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			privateLayout = "false");
-
-		var typeSettings = JSONLayoutUtil._updateLayoutTemplateId(
-			layoutTemplate = "${layoutTemplate}",
-			typeSettings = "${typeSettings}");
+			layoutTemplate = "${layoutTemplate}");
 
 		JSONLayoutUtil._updateTypeSettings(
 			groupId = "${groupId}",

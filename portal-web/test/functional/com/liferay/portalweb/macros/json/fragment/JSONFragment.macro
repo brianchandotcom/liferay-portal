@@ -6,7 +6,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		JSONFragmentAPI._addFragmentCollection(
@@ -20,7 +20,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		var collectionId = JSONFragmentSetter.setCollectionId(
@@ -55,7 +55,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		var collectionNameResult = JSONFragmentAPI._getCollectionName(
@@ -74,7 +74,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		var collectionNameResult = JSONFragmentAPI._getCollectionName(
@@ -93,7 +93,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(
@@ -117,7 +117,7 @@ definition {
 
 		var groupId = JSONFragmentSetter.setGroupId(
 			groupKey = "${groupKey}",
-			groupName = "${groupName}"
+			groupName = "${groupName}",
 			site = "${site}");
 
 		var fragmentCollectionId = JSONFragmentSetter.setCollectionId(

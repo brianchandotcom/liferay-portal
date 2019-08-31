@@ -2,7 +2,7 @@ definition {
 
 	@summary = "Directly calls the JSON WS API to add a group"
 	macro _addGroup {
-		Variables.assertDefined(parameterList = "${groupName}");
+		Variables.assertDefined(parameterList = "${groupNameMap}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -135,11 +135,11 @@ definition {
 
 		var groupName = JSONCurlUtil.get("${curl}", "$['nameCurrentValue']");
 
-		return "${groupName}";
+		return "${groupNam}";
 	}
 
 	@summary = "Get the groupId from any existing parent or child site by using groupName"
-	macro _getSiteIdByGroupName {
+	macro _getSiteIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupName}");
 
 		var companyId = JSONCompany.getCompanyId();

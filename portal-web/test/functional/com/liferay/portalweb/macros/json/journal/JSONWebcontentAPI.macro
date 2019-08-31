@@ -40,6 +40,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _getArticleIdByURLTitle {
+		Variables.assertDefined(parameterList = "${groupId},${urlTitle}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d urlTitle='${urlTitle}'
+		''';
+
+		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
+		var articleId = StringUtil.replace("${articleId}", "[&quot;", "");
+		var articleId = StringUtil.replace("${articleId}", "&quot;]", "");
+
+		return "${articleId}";
+	}
+
 	@summary = "Helper function to get the 'folderId' for the folder '${folderName}'"
 	macro _getFolderIdByFolderName {
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,0 +1,45 @@
+definition {
+
+	macro setGroupDescriptionMap {
+		if (isSet(groupDescription)) {
+			var groupDescription = URLUtil.encodeUTF8("${groupDescription}");
+
+			var groupDescriptionMap = '''{"en_US":"${groupDescriptionEncoded}"}''';
+		}
+		else {
+			var groupDescriptionMap = "{}";
+		}
+
+		return "${groupDescriptionMap}";
+	}
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+
+		return "${groupId}";
+	}
+
+	macro setGroupNameMap {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var groupNameMap = URLUtil.encodeUTF8("${groupName}");
+
+		var groupNameMap = '''{"en_US":"${groupName}"}''';
+
+		return "${groupNameMap}";
+	}
+
+	macro setParentGroupId {
+		if (isSet(parentGroupName)) {
+			var parentGroupId = JSONGroupAPI._getGroupIdByName(groupName = "${parentGroupName}");
+		}
+		else {
+			var parentGroupId = "0";
+		}
+
+		return "${parentGroupId}";
+	}
+
+}

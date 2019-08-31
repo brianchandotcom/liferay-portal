@@ -389,11 +389,11 @@ definition {
 
 		var accessToken = OAuth2.getAccessToken(tokenCurl = "${tokenCurl}");
 
-		var articleId = JSONWebcontent.getWebContentIdByURLTitle(
+		var articleId = JSONWebcontentAPI._getArticleIdByURLTitle(
 			groupName = "Guest",
 			urlTitle = "wc-title");
 
-		var liferaySiteId = JSONGroupAPI._getSiteIdByGroupName(groupName = "Guest");
+		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
 
 		var deleteCurl = '''
 			-H 'Authorization: Bearer ${accessToken}' ${portalURL}/api/jsonws/journal.journalarticle/delete-article \

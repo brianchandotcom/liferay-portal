@@ -4,69 +4,34 @@ definition {
 	macro addBasicWebContentLocalized {
 		Variables.assertDefined(parameterList = "${groupName}");
 
-		if (isSet(contentMap)) {
-			var contentXML = JSONWebcontentUtil._localizedConvertToXML(contentMap = "${contentMap}");
-		}
-		else {
-			var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
-		}
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
 
-		if (isSet(description)) {
-			var descriptionMap = '''{"en_US":"${description}"}''';
-		}
-		else {
-			var descriptionMap = "{}";
-		}
+		var contentXML = JSONWebcontentSetter.setContentXML(
+			content = "${content}",
+			contentMap = "${contentMap}");
 
-		if (!(isSet(folderId))) {
-			var folderId = "0";
-		}
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(
+			description = "${description}");
 
-		if (!(isSet(serviceContext))) {
-			var serviceContext = "{}";
-		}
+		var folderId = JSONWebcontentSetter.setFolderId(
+			folderName = "${folderName}");
 
-		if (isSet(titleMap)) {
-			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
-		}
-		else {
-			var titleMap = '''{"en_US":"${title}"}''';
-		}
+		var serviceContext = JSONWebcontentSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
-
-		JSONUtil2._exclusiveOrCheck(
-			A = "${title}",
-			B = "${titleMap}",
-			failMessage = "Please only set &apos;title&apos; or only &apos;titleMap&apos; but not both or none.");
-
-		JSONUtil2._exclusiveOrCheck(
-			A = "${content}",
-			B = "${contentMap}",
-			failMessage = "Please only set &apos;content&apos; or only &apos;contentMap&apos; but not both or none.");
-
-		if (isSet(folderName)) {
-			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
-		}
-
-		if (!(isSet(serviceContext))) {
-			var serviceContext = JSONServiceContextUtil.setServiceContext(
-				addGuestPermissions = "true",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				workflowAction = "${workflowAction}");
-		}
+		var titleMap = JSONWebcontentSetter.setTitleMap(
+			title = "${title}",
+			titleMap = "${titleMap}");
 
 		JSONWebcontentAPI._addWebContent(
-			content = "${content}",
-			contentMap = "${contentMap}",
-			description = "${description}",
+			contentXML = "${contentXML}",
+			descriptionMap = "${descriptionMap}",
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			title = "${title}",
 			titleMap = "${titleMap}");
 	}
 
@@ -74,89 +39,45 @@ definition {
 	macro addFolder {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
-		if (!(isSet(parentFolderId))) {
-			var parentFolderId = "0";
-		}
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		var parentFolderId = JSONWebcontentSetter.setFolderId(folderName = "${parentFolderName}");
 
 		JSONWebcontentAPI._addFolder(
 			folderName = "${folderName}",
-			groupId = "${groupId}");
+			groupId = "${groupId}",
+			parentFolderId = "${parentFolderId}");
 	}
 
 	@summary = "Add a WC Article with Title '${title}' and Content '${content}' to the Site '${groupName}' via JSON"
 	macro addWebContent {
 		Variables.assertDefined(parameterList = "${content},${groupName},${title}");
 
-		var contentXML = JSONWebcontentUtil._convertToXML(content = "${content}");
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
 
-		if (isSet(description)) {
-			var descriptionMap = '''{"en_US":"${description}"}''';
-		}
-		else {
-			var descriptionMap = "{}";
-		}
+		var contentXML = JSONWebcontentSetter.setContentXML(content = "${content}");
 
-		if (!(isSet(folderId))) {
-			var folderId = "0";
-		}
+		var descriptionMap = JSONWebcontentSetter.setDescriptionMap(
+			description = "${description}");
 
-		if (!(isSet(serviceContext))) {
-			var serviceContext = "{}";
-		}
+		var folderId = JSONWebcontentSetter.setFolderId(
+			folderName = "${folderName}");
 
-		if (isSet(titleMap)) {
-			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = "${titleMap}");
-		}
-		else {
-			var titleMap = '''{"en_US":"${title}"}''';
-		}
+		var serviceContext = JSONWebcontentSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
 
-		if (isSet(folderName)) {
-			var folderId = JSONWebcontentAPI._getFolderIdByFolderName(
-				folderName = "${folderName}",
-				groupId = "${groupId}");
-		}
-
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
-
-		if (!(isSet(serviceContext))) {
-			var serviceContext = JSONServiceContextUtil.setServiceContext(
-				addGuestPermissions = "true",
-				assetCategoryIds = "${assetCategoryIds}",
-				assetTagNames = "${assetTagNames}",
-				workflowAction = "${workflowAction}");
-		}
+		var titleMap = JSONWebcontentSetter.setTitleMap(title = "${title}");
 
 		JSONWebcontentAPI._addWebContent(
-			content = "${content}",
-			description = "${description}",
+			contentXML = "${contentXML}",
+			descriptionMap = "${descriptionMap}",
 			folderId = "${folderId}",
 			groupId = "${groupId}",
 			serviceContext = "${serviceContext}",
-			title = "${title}");
-	}
-
-	macro getWebContentIdByURLTitle {
-		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
-
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/api/jsonws/journal.journalarticle/get-display-article-by-url-title \
-				-u test@liferay.com:test \
-				-d groupId=${groupId} \
-				-d urlTitle='${urlTitle}'
-		''';
-
-		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
-		var articleId = StringUtil.replace("${articleId}", "[&quot;", "");
-		var articleId = StringUtil.replace("${articleId}", "&quot;]", "");
-
-		return "${articleId}";
+			titleMap = "${titleMap}");
 	}
 
 }

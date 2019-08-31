@@ -6,8 +6,9 @@ definition {
 		}
 		else if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
-		} else {
-			var descriptionMap = "";
+		}
+		else {
+			var descriptionMap = "{}";
 		}
 
 		return "${descriptionMap}";
@@ -23,8 +24,9 @@ definition {
 
 	macro setParentCategoryId {
 		if (!(isSet(parentCategoryName))) {
-			var parentCategoryId = "0"
-		} else {
+			var parentCategoryId = "0";
+		}
+		else {
 			Variables.assertDefined(parameterList = "${groupId},${vocabularyId}");
 
 			var parentCategoryId = JSONCategoryAPI._getCategoryIdByName(

@@ -182,6 +182,8 @@ definition {
 
 	@summary = "Directly calls the JavaScript API to update typeSettings"
 	macro _updateTypeSettings {
+		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
+
 		var javaScript =
 		'''Liferay.Service(
 			'/layout/update-layout',

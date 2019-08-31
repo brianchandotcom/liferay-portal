@@ -26,10 +26,10 @@ definition {
 			vocabularyName = "${vocabularyName}");
 
 		JSONCategoryAPI._addCategory(
+			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			parentCategoryId = "${parentCategoryId}",
 			titleMap = "${titleMap}",
-			descriptionMap = "${descriptionMap}",
 			vocabularyId = "${vocabularyId}");
 	}
 
@@ -62,10 +62,10 @@ definition {
 			descriptionMap = "${descriptionMap}");
 
 		JSONCategoryAPI._addCategory(
+			descriptionMap = "${descriptionMap}",
 			groupId = "${groupId}",
 			parentCategoryId = "${parentCategoryId}",
 			titleMap = "${titleMap}",
-			descriptionMap = "${descriptionMap}",
 			vocabularyId = "${vocabularyId}");
 	}
 

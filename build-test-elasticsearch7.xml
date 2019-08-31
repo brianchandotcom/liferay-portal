@@ -15,9 +15,9 @@
 xpack.security.http.ssl.enabled: true
 xpack.security.transport.ssl.enabled: true
 xpack.security.transport.ssl.verification_mode: certificate
-xpack.ssl.certificate: certs/localhost/localhost.crt
-xpack.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
-xpack.ssl.key: certs/localhost/localhost.key</echo>
+xpack.security.http.ssl.certificate: certs/localhost/localhost.crt
+xpack.security.http.ssl.certificate_authorities: [ "certs/ca/ca.crt" ]
+xpack.security.http.ssl.key: certs/localhost/localhost.key</echo>
 		</sequential>
 	</macrodef>
 
@@ -69,7 +69,7 @@ xpack.ssl.key: certs/localhost/localhost.key</echo>
 
 	<macrodef name="configure-kibana-properties">
 		<sequential>
-			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.url: "http://localhost:9200"
+			<echo append="true" file="${elastic.kibana.dir}/config/kibana.yml">${line.separator}elasticsearch.hosts: "http://localhost:9200"
 pid.file: ${elastic.kibana.dir}/bin/pid-kibana
 server.basePath: "/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy"
 server.rewriteBasePath: false</echo>
@@ -90,8 +90,8 @@ xpack.security.sessionTimeout: 600000</echo>
 			<replace
 				file="${elastic.kibana.dir}/config/kibana.yml"
 			>
-				<replacetoken><![CDATA[elasticsearch.url: "http://localhost:9200"]]></replacetoken>
-				<replacevalue><![CDATA[elasticsearch.url: "https://localhost:9200"]]></replacevalue>
+				<replacetoken><![CDATA[elasticsearch.hosts: "http://localhost:9200"]]></replacetoken>
+				<replacevalue><![CDATA[elasticsearch.hosts: "https://localhost:9200"]]></replacevalue>
 			</replace>
 		</sequential>
 	</macrodef>

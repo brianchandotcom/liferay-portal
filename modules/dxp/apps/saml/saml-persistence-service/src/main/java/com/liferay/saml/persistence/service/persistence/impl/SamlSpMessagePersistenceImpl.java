@@ -292,7 +292,7 @@ public class SamlSpMessagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("expirationDate=");
+		msg.append("expirationDate<");
 		msg.append(expirationDate);
 
 		msg.append("}");
@@ -347,7 +347,7 @@ public class SamlSpMessagePersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("expirationDate=");
+		msg.append("expirationDate<");
 		msg.append(expirationDate);
 
 		msg.append("}");

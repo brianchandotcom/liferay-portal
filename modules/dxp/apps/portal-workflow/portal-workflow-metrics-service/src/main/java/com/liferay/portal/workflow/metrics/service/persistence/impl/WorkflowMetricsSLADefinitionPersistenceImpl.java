@@ -3835,7 +3835,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		msg.append(", processId=");
 		msg.append(processId);
 
-		msg.append(", processVersion=");
+		msg.append(", processVersion!=");
 		msg.append(processVersion);
 
 		msg.append(", status=");
@@ -3908,7 +3908,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		msg.append(", processId=");
 		msg.append(processId);
 
-		msg.append(", processVersion=");
+		msg.append(", processVersion!=");
 		msg.append(processVersion);
 
 		msg.append(", status=");

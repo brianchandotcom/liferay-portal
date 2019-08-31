@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 
@@ -73,20 +72,16 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
-	@Deprecated
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63;.
@@ -99,12 +94,14 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition version in the ordered set where uuid = &#63;.
@@ -116,8 +113,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion findByUuid_First(
 			String uuid,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -129,8 +126,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByUuid_First(
 		String uuid,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63;.
@@ -142,8 +139,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion findByUuid_Last(
 			String uuid,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -155,8 +152,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByUuid_Last(
 		String uuid,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where uuid = &#63;.
@@ -169,8 +166,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion[] findByUuid_PrevAndNext(
 			long workflowMetricsSLADefinitionVersionId, String uuid,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -201,17 +198,14 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
-	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
-	@Deprecated
 	public WorkflowMetricsSLADefinitionVersion fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+		String uuid, long groupId);
 
 	/**
 	 * Returns the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -222,7 +216,7 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByUUID_G(
-		String uuid, long groupId);
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the workflow metrics sla definition version where uuid = &#63; and groupId = &#63; from the database.
@@ -277,21 +271,17 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
-	@Deprecated
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where uuid = &#63; and companyId = &#63;.
@@ -305,12 +295,14 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -323,8 +315,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -337,8 +329,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the last workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -351,8 +343,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -365,8 +357,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -381,8 +373,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion[] findByUuid_C_PrevAndNext(
 			long workflowMetricsSLADefinitionVersionId, String uuid,
 			long companyId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -435,21 +427,17 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByWorkflowMetricsSLADefinitionId(long, int, int, OrderByComparator)}
 	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
-	@Deprecated
 	public java.util.List<WorkflowMetricsSLADefinitionVersion>
 		findByWorkflowMetricsSLADefinitionId(
 			long workflowMetricsSLADefinitionId, int start, int end,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator,
-			boolean useFinderCache);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions where workflowMetricsSLADefinitionId = &#63;.
@@ -462,13 +450,15 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow metrics sla definition versions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinitionVersion>
 		findByWorkflowMetricsSLADefinitionId(
 			long workflowMetricsSLADefinitionId, int start, int end,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator,
+			boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
@@ -481,8 +471,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion
 			findByWorkflowMetricsSLADefinitionId_First(
 				long workflowMetricsSLADefinitionId,
-				OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-					orderByComparator)
+				com.liferay.portal.kernel.util.OrderByComparator
+					<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -495,8 +485,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion
 		fetchByWorkflowMetricsSLADefinitionId_First(
 			long workflowMetricsSLADefinitionId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the last workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
@@ -509,8 +499,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion
 			findByWorkflowMetricsSLADefinitionId_Last(
 				long workflowMetricsSLADefinitionId,
-				OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-					orderByComparator)
+				com.liferay.portal.kernel.util.OrderByComparator
+					<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -523,8 +513,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	public WorkflowMetricsSLADefinitionVersion
 		fetchByWorkflowMetricsSLADefinitionId_Last(
 			long workflowMetricsSLADefinitionId,
-			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-				orderByComparator);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns the workflow metrics sla definition versions before and after the current workflow metrics sla definition version in the ordered set where workflowMetricsSLADefinitionId = &#63;.
@@ -539,8 +529,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 			findByWorkflowMetricsSLADefinitionId_PrevAndNext(
 				long workflowMetricsSLADefinitionVersionId,
 				long workflowMetricsSLADefinitionId,
-				OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-					orderByComparator)
+				com.liferay.portal.kernel.util.OrderByComparator
+					<WorkflowMetricsSLADefinitionVersion> orderByComparator)
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
@@ -573,18 +563,14 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		throws NoSuchSLADefinitionVersionException;
 
 	/**
-	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByWMSLAD_V(long,String)}
 	 * @param workflowMetricsSLADefinitionId the workflow metrics sla definition ID
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
-	@Deprecated
 	public WorkflowMetricsSLADefinitionVersion fetchByWMSLAD_V(
-		long workflowMetricsSLADefinitionId, String version,
-		boolean useFinderCache);
+		long workflowMetricsSLADefinitionId, String version);
 
 	/**
 	 * Returns the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -595,7 +581,8 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @return the matching workflow metrics sla definition version, or <code>null</code> if a matching workflow metrics sla definition version could not be found
 	 */
 	public WorkflowMetricsSLADefinitionVersion fetchByWMSLAD_V(
-		long workflowMetricsSLADefinitionId, String version);
+		long workflowMetricsSLADefinitionId, String version,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the workflow metrics sla definition version where workflowMetricsSLADefinitionId = &#63; and version = &#63; from the database.
@@ -708,19 +695,15 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowMetricsSLADefinitionVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow metrics sla definition versions
 	 */
-	@Deprecated
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findAll(
 		int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow metrics sla definition versions.
@@ -732,12 +715,14 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 	 * @param start the lower bound of the range of workflow metrics sla definition versions
 	 * @param end the upper bound of the range of workflow metrics sla definition versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow metrics sla definition versions
 	 */
 	public java.util.List<WorkflowMetricsSLADefinitionVersion> findAll(
 		int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<WorkflowMetricsSLADefinitionVersion> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the workflow metrics sla definition versions from the database.

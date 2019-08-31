@@ -146,23 +146,20 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOAuth2ApplicationScopeAliasesId(long, int, int, OrderByComparator)}
 	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
-	@Deprecated
 	@Override
 	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId, int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
 
 		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, start, end, orderByComparator);
+			oAuth2ApplicationScopeAliasesId, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -176,12 +173,14 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 scope grants
 	 */
 	@Override
 	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId, int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -191,11 +190,14 @@ public class OAuth2ScopeGrantPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
-			finderArgs = new Object[] {oAuth2ApplicationScopeAliasesId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
+				finderArgs = new Object[] {oAuth2ApplicationScopeAliasesId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath =
 				_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId;
 			finderArgs = new Object[] {
@@ -203,19 +205,22 @@ public class OAuth2ScopeGrantPersistenceImpl
 			};
 		}
 
-		List<OAuth2ScopeGrant> list =
-			(List<OAuth2ScopeGrant>)finderCache.getResult(
+		List<OAuth2ScopeGrant> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuth2ScopeGrant>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (OAuth2ScopeGrant oAuth2ScopeGrant : list) {
-				if ((oAuth2ApplicationScopeAliasesId !=
-						oAuth2ScopeGrant.
-							getOAuth2ApplicationScopeAliasesId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2ScopeGrant oAuth2ScopeGrant : list) {
+					if ((oAuth2ApplicationScopeAliasesId !=
+							oAuth2ScopeGrant.
+								getOAuth2ApplicationScopeAliasesId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -272,10 +277,14 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -698,27 +707,23 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_O_A_B_S(long,long,String,String,String)}
 	 * @param companyId the company ID
 	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
 	 * @param applicationName the application name
 	 * @param bundleSymbolicName the bundle symbolic name
 	 * @param scope the scope
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
 	 */
-	@Deprecated
 	@Override
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(
 		long companyId, long oAuth2ApplicationScopeAliasesId,
-		String applicationName, String bundleSymbolicName, String scope,
-		boolean useFinderCache) {
+		String applicationName, String bundleSymbolicName, String scope) {
 
 		return fetchByC_O_A_B_S(
 			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope);
+			bundleSymbolicName, scope, true);
 	}
 
 	/**
@@ -735,19 +740,28 @@ public class OAuth2ScopeGrantPersistenceImpl
 	@Override
 	public OAuth2ScopeGrant fetchByC_O_A_B_S(
 		long companyId, long oAuth2ApplicationScopeAliasesId,
-		String applicationName, String bundleSymbolicName, String scope) {
+		String applicationName, String bundleSymbolicName, String scope,
+		boolean useFinderCache) {
 
 		applicationName = Objects.toString(applicationName, "");
 		bundleSymbolicName = Objects.toString(bundleSymbolicName, "");
 		scope = Objects.toString(scope, "");
 
-		Object[] finderArgs = new Object[] {
-			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByC_O_A_B_S, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, oAuth2ApplicationScopeAliasesId, applicationName,
+				bundleSymbolicName, scope
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_O_A_B_S, finderArgs, this);
+		}
 
 		if (result instanceof OAuth2ScopeGrant) {
 			OAuth2ScopeGrant oAuth2ScopeGrant = (OAuth2ScopeGrant)result;
@@ -839,14 +853,23 @@ public class OAuth2ScopeGrantPersistenceImpl
 				List<OAuth2ScopeGrant> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_O_A_B_S, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_O_A_B_S, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, oAuth2ApplicationScopeAliasesId,
+									applicationName, bundleSymbolicName, scope
+								};
+							}
+
 							_log.warn(
 								"OAuth2ScopeGrantPersistenceImpl.fetchByC_O_A_B_S(long, long, String, String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -862,8 +885,10 @@ public class OAuth2ScopeGrantPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchByC_O_A_B_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_O_A_B_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1502,21 +1527,17 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 scope grants
 	 */
-	@Deprecated
 	@Override
 	public List<OAuth2ScopeGrant> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1529,12 +1550,14 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 scope grants
 	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 scope grants
 	 */
 	@Override
 	public List<OAuth2ScopeGrant> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
+		OrderByComparator<OAuth2ScopeGrant> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1544,17 +1567,23 @@ public class OAuth2ScopeGrantPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<OAuth2ScopeGrant> list =
-			(List<OAuth2ScopeGrant>)finderCache.getResult(
+		List<OAuth2ScopeGrant> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuth2ScopeGrant>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1601,10 +1630,14 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -17,7 +17,6 @@ package com.liferay.expando.kernel.service.persistence;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -74,20 +73,17 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoTableModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of expando tables
 	 * @param end the upper bound of the range of expando tables (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando tables
 	 */
-	@Deprecated
 	public java.util.List<ExpandoTable> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<ExpandoTable> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the expando tables where companyId = &#63; and classNameId = &#63;.
@@ -101,11 +97,14 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 * @param start the lower bound of the range of expando tables
 	 * @param end the upper bound of the range of expando tables (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando tables
 	 */
 	public java.util.List<ExpandoTable> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<ExpandoTable> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -118,7 +117,8 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 */
 	public ExpandoTable findByC_C_First(
 			long companyId, long classNameId,
-			OrderByComparator<ExpandoTable> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+				orderByComparator)
 		throws NoSuchTableException;
 
 	/**
@@ -131,7 +131,8 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 */
 	public ExpandoTable fetchByC_C_First(
 		long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator);
 
 	/**
 	 * Returns the last expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -144,7 +145,8 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 */
 	public ExpandoTable findByC_C_Last(
 			long companyId, long classNameId,
-			OrderByComparator<ExpandoTable> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+				orderByComparator)
 		throws NoSuchTableException;
 
 	/**
@@ -157,7 +159,8 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 */
 	public ExpandoTable fetchByC_C_Last(
 		long companyId, long classNameId,
-		OrderByComparator<ExpandoTable> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator);
 
 	/**
 	 * Returns the expando tables before and after the current expando table in the ordered set where companyId = &#63; and classNameId = &#63;.
@@ -171,7 +174,8 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 */
 	public ExpandoTable[] findByC_C_PrevAndNext(
 			long tableId, long companyId, long classNameId,
-			OrderByComparator<ExpandoTable> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+				orderByComparator)
 		throws NoSuchTableException;
 
 	/**
@@ -205,18 +209,15 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 		throws NoSuchTableException;
 
 	/**
-	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C_N(long,long,String)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
-	@Deprecated
 	public ExpandoTable fetchByC_C_N(
-		long companyId, long classNameId, String name, boolean useFinderCache);
+		long companyId, long classNameId, String name);
 
 	/**
 	 * Returns the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -228,7 +229,7 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 * @return the matching expando table, or <code>null</code> if a matching expando table could not be found
 	 */
 	public ExpandoTable fetchByC_C_N(
-		long companyId, long classNameId, String name);
+		long companyId, long classNameId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the expando table where companyId = &#63; and classNameId = &#63; and name = &#63; from the database.
@@ -330,17 +331,15 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoTableModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of expando tables
 	 * @param end the upper bound of the range of expando tables (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando tables
 	 */
-	@Deprecated
 	public java.util.List<ExpandoTable> findAll(
-		int start, int end, OrderByComparator<ExpandoTable> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the expando tables.
@@ -352,10 +351,14 @@ public interface ExpandoTablePersistence extends BasePersistence<ExpandoTable> {
 	 * @param start the lower bound of the range of expando tables
 	 * @param end the upper bound of the range of expando tables (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando tables
 	 */
 	public java.util.List<ExpandoTable> findAll(
-		int start, int end, OrderByComparator<ExpandoTable> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoTable>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the expando tables from the database.

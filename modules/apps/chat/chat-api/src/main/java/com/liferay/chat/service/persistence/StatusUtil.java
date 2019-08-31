@@ -135,16 +135,13 @@ public class StatusUtil {
 	}
 
 	/**
-	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the status where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUserId(long)}
 	 * @param userId the user ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
-	@Deprecated
-	public static Status fetchByUserId(long userId, boolean useFinderCache) {
-		return getPersistence().fetchByUserId(userId, useFinderCache);
+	public static Status fetchByUserId(long userId) {
+		return getPersistence().fetchByUserId(userId);
 	}
 
 	/**
@@ -154,8 +151,8 @@ public class StatusUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching status, or <code>null</code> if a matching status could not be found
 	 */
-	public static Status fetchByUserId(long userId) {
-		return getPersistence().fetchByUserId(userId);
+	public static Status fetchByUserId(long userId, boolean useFinderCache) {
+		return getPersistence().fetchByUserId(userId, useFinderCache);
 	}
 
 	/**
@@ -215,21 +212,18 @@ public class StatusUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByModifiedDate(long, int, int, OrderByComparator)}
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
-	@Deprecated
 	public static List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
-		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Status> orderByComparator) {
 
 		return getPersistence().findByModifiedDate(
-			modifiedDate, start, end, orderByComparator, useFinderCache);
+			modifiedDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -243,14 +237,15 @@ public class StatusUtil {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public static List<Status> findByModifiedDate(
 		long modifiedDate, int start, int end,
-		OrderByComparator<Status> orderByComparator) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByModifiedDate(
-			modifiedDate, start, end, orderByComparator);
+			modifiedDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -385,21 +380,18 @@ public class StatusUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOnline(boolean, int, int, OrderByComparator)}
 	 * @param online the online
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
-	@Deprecated
 	public static List<Status> findByOnline(
 		boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Status> orderByComparator) {
 
 		return getPersistence().findByOnline(
-			online, start, end, orderByComparator, useFinderCache);
+			online, start, end, orderByComparator);
 	}
 
 	/**
@@ -413,14 +405,15 @@ public class StatusUtil {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public static List<Status> findByOnline(
 		boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByOnline(
-			online, start, end, orderByComparator);
+			online, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -553,23 +546,19 @@ public class StatusUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_O(long,boolean, int, int, OrderByComparator)}
 	 * @param modifiedDate the modified date
 	 * @param online the online
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
-	@Deprecated
 	public static List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Status> orderByComparator) {
 
 		return getPersistence().findByM_O(
-			modifiedDate, online, start, end, orderByComparator,
-			useFinderCache);
+			modifiedDate, online, start, end, orderByComparator);
 	}
 
 	/**
@@ -584,14 +573,16 @@ public class StatusUtil {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching statuses
 	 */
 	public static List<Status> findByM_O(
 		long modifiedDate, boolean online, int start, int end,
-		OrderByComparator<Status> orderByComparator) {
+		OrderByComparator<Status> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByM_O(
-			modifiedDate, online, start, end, orderByComparator);
+			modifiedDate, online, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -801,20 +792,15 @@ public class StatusUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>StatusModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
-	@Deprecated
 	public static List<Status> findAll(
-		int start, int end, OrderByComparator<Status> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Status> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -827,12 +813,15 @@ public class StatusUtil {
 	 * @param start the lower bound of the range of statuses
 	 * @param end the upper bound of the range of statuses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of statuses
 	 */
 	public static List<Status> findAll(
-		int start, int end, OrderByComparator<Status> orderByComparator) {
+		int start, int end, OrderByComparator<Status> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
@@ -72,19 +71,16 @@ public interface KaleoConditionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoConditionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
-	@Deprecated
 	public java.util.List<KaleoCondition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoCondition> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo conditions where companyId = &#63;.
@@ -97,11 +93,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoCondition> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo condition in the ordered set where companyId = &#63;.
@@ -112,7 +111,9 @@ public interface KaleoConditionPersistence
 	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition findByCompanyId_First(
-			long companyId, OrderByComparator<KaleoCondition> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -123,7 +124,9 @@ public interface KaleoConditionPersistence
 	 * @return the first matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition fetchByCompanyId_First(
-		long companyId, OrderByComparator<KaleoCondition> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo condition in the ordered set where companyId = &#63;.
@@ -134,7 +137,9 @@ public interface KaleoConditionPersistence
 	 * @throws NoSuchConditionException if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoCondition> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -145,7 +150,9 @@ public interface KaleoConditionPersistence
 	 * @return the last matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
 	public KaleoCondition fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoCondition> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo conditions before and after the current kaleo condition in the ordered set where companyId = &#63;.
@@ -158,7 +165,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition[] findByCompanyId_PrevAndNext(
 			long kaleoConditionId, long companyId,
-			OrderByComparator<KaleoCondition> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -207,19 +215,16 @@ public interface KaleoConditionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoConditionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoDefinitionVersionId(long, int, int, OrderByComparator)}
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
-	@Deprecated
 	public java.util.List<KaleoCondition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoCondition> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo conditions where kaleoDefinitionVersionId = &#63;.
@@ -232,11 +237,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoCondition> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -248,7 +256,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition findByKaleoDefinitionVersionId_First(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoCondition> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -260,7 +269,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition fetchByKaleoDefinitionVersionId_First(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoCondition> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -272,7 +282,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition findByKaleoDefinitionVersionId_Last(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoCondition> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -284,7 +295,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoCondition> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo conditions before and after the current kaleo condition in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -297,7 +309,8 @@ public interface KaleoConditionPersistence
 	 */
 	public KaleoCondition[] findByKaleoDefinitionVersionId_PrevAndNext(
 			long kaleoConditionId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoCondition> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+				orderByComparator)
 		throws NoSuchConditionException;
 
 	/**
@@ -326,16 +339,12 @@ public interface KaleoConditionPersistence
 		throws NoSuchConditionException;
 
 	/**
-	 * Returns the kaleo condition where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kaleo condition where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKaleoNodeId(long)}
 	 * @param kaleoNodeId the kaleo node ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
-	@Deprecated
-	public KaleoCondition fetchByKaleoNodeId(
-		long kaleoNodeId, boolean useFinderCache);
+	public KaleoCondition fetchByKaleoNodeId(long kaleoNodeId);
 
 	/**
 	 * Returns the kaleo condition where kaleoNodeId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -344,7 +353,8 @@ public interface KaleoConditionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo condition, or <code>null</code> if a matching kaleo condition could not be found
 	 */
-	public KaleoCondition fetchByKaleoNodeId(long kaleoNodeId);
+	public KaleoCondition fetchByKaleoNodeId(
+		long kaleoNodeId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo condition where kaleoNodeId = &#63; from the database.
@@ -442,17 +452,15 @@ public interface KaleoConditionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoConditionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo conditions
 	 */
-	@Deprecated
 	public java.util.List<KaleoCondition> findAll(
-		int start, int end, OrderByComparator<KaleoCondition> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo conditions.
@@ -464,11 +472,14 @@ public interface KaleoConditionPersistence
 	 * @param start the lower bound of the range of kaleo conditions
 	 * @param end the upper bound of the range of kaleo conditions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo conditions
 	 */
 	public java.util.List<KaleoCondition> findAll(
 		int start, int end,
-		OrderByComparator<KaleoCondition> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoCondition>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo conditions from the database.

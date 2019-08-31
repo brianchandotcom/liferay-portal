@@ -15,7 +15,6 @@
 package com.liferay.portal.security.service.access.policy.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 
@@ -70,18 +69,16 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SAPEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
-	@Deprecated
 	public java.util.List<SAPEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the sap entries where uuid = &#63;.
@@ -94,11 +91,14 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
 	public java.util.List<SAPEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sap entry in the ordered set where uuid = &#63;.
@@ -109,7 +109,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @throws NoSuchEntryException if a matching sap entry could not be found
 	 */
 	public SAPEntry findByUuid_First(
-			String uuid, OrderByComparator<SAPEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -120,7 +122,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByUuid_First(
-		String uuid, OrderByComparator<SAPEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last sap entry in the ordered set where uuid = &#63;.
@@ -131,7 +135,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @throws NoSuchEntryException if a matching sap entry could not be found
 	 */
 	public SAPEntry findByUuid_Last(
-			String uuid, OrderByComparator<SAPEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -142,7 +148,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<SAPEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set where uuid = &#63;.
@@ -155,7 +163,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] findByUuid_PrevAndNext(
 			long sapEntryId, String uuid,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -196,7 +205,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public java.util.List<SAPEntry> filterFindByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set of sap entries that the user has permission to view where uuid = &#63;.
@@ -209,7 +219,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] filterFindByUuid_PrevAndNext(
 			long sapEntryId, String uuid,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -267,19 +278,17 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SAPEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
-	@Deprecated
 	public java.util.List<SAPEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the sap entries where uuid = &#63; and companyId = &#63;.
@@ -293,11 +302,14 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
 	public java.util.List<SAPEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -310,7 +322,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -323,7 +336,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -336,7 +350,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -349,7 +364,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -363,7 +379,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] findByUuid_C_PrevAndNext(
 			long sapEntryId, String uuid, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -408,7 +425,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public java.util.List<SAPEntry> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set of sap entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -422,7 +440,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] filterFindByUuid_C_PrevAndNext(
 			long sapEntryId, String uuid, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -481,18 +500,16 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SAPEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
-	@Deprecated
 	public java.util.List<SAPEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the sap entries where companyId = &#63;.
@@ -505,11 +522,14 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
 	public java.util.List<SAPEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sap entry in the ordered set where companyId = &#63;.
@@ -520,7 +540,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @throws NoSuchEntryException if a matching sap entry could not be found
 	 */
 	public SAPEntry findByCompanyId_First(
-			long companyId, OrderByComparator<SAPEntry> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -531,7 +553,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the first matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByCompanyId_First(
-		long companyId, OrderByComparator<SAPEntry> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last sap entry in the ordered set where companyId = &#63;.
@@ -542,7 +566,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @throws NoSuchEntryException if a matching sap entry could not be found
 	 */
 	public SAPEntry findByCompanyId_Last(
-			long companyId, OrderByComparator<SAPEntry> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -553,7 +579,9 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @return the last matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
 	public SAPEntry fetchByCompanyId_Last(
-		long companyId, OrderByComparator<SAPEntry> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set where companyId = &#63;.
@@ -566,7 +594,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] findByCompanyId_PrevAndNext(
 			long sapEntryId, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -607,7 +636,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public java.util.List<SAPEntry> filterFindByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set of sap entries that the user has permission to view where companyId = &#63;.
@@ -620,7 +650,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] filterFindByCompanyId_PrevAndNext(
 			long sapEntryId, long companyId,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -679,19 +710,17 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SAPEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_D(long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param defaultSAPEntry the default sap entry
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
-	@Deprecated
 	public java.util.List<SAPEntry> findByC_D(
 		long companyId, boolean defaultSAPEntry, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the sap entries where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -705,11 +734,14 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sap entries
 	 */
 	public java.util.List<SAPEntry> findByC_D(
 		long companyId, boolean defaultSAPEntry, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -722,7 +754,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry findByC_D_First(
 			long companyId, boolean defaultSAPEntry,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -735,7 +768,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry fetchByC_D_First(
 		long companyId, boolean defaultSAPEntry,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -748,7 +782,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry findByC_D_Last(
 			long companyId, boolean defaultSAPEntry,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -761,7 +796,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry fetchByC_D_Last(
 		long companyId, boolean defaultSAPEntry,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -775,7 +811,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] findByC_D_PrevAndNext(
 			long sapEntryId, long companyId, boolean defaultSAPEntry,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -820,7 +857,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public java.util.List<SAPEntry> filterFindByC_D(
 		long companyId, boolean defaultSAPEntry, int start, int end,
-		OrderByComparator<SAPEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the sap entries before and after the current sap entry in the ordered set of sap entries that the user has permission to view where companyId = &#63; and defaultSAPEntry = &#63;.
@@ -834,7 +872,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 */
 	public SAPEntry[] filterFindByC_D_PrevAndNext(
 			long sapEntryId, long companyId, boolean defaultSAPEntry,
-			OrderByComparator<SAPEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -875,17 +914,13 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the sap entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sap entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_N(long,String)}
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
-	@Deprecated
-	public SAPEntry fetchByC_N(
-		long companyId, String name, boolean useFinderCache);
+	public SAPEntry fetchByC_N(long companyId, String name);
 
 	/**
 	 * Returns the sap entry where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -895,7 +930,8 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sap entry, or <code>null</code> if a matching sap entry could not be found
 	 */
-	public SAPEntry fetchByC_N(long companyId, String name);
+	public SAPEntry fetchByC_N(
+		long companyId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the sap entry where companyId = &#63; and name = &#63; from the database.
@@ -994,17 +1030,15 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SAPEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sap entries
 	 */
-	@Deprecated
 	public java.util.List<SAPEntry> findAll(
-		int start, int end, OrderByComparator<SAPEntry> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the sap entries.
@@ -1016,10 +1050,14 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	 * @param start the lower bound of the range of sap entries
 	 * @param end the upper bound of the range of sap entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sap entries
 	 */
 	public java.util.List<SAPEntry> findAll(
-		int start, int end, OrderByComparator<SAPEntry> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SAPEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the sap entries from the database.

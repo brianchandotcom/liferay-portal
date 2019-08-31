@@ -160,22 +160,17 @@ public class FriendlyURLEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -189,13 +184,16 @@ public class FriendlyURLEntryUtil {
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public static List<FriendlyURLEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -310,19 +308,14 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
-	@Deprecated
-	public static FriendlyURLEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -333,8 +326,10 @@ public class FriendlyURLEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
-	public static FriendlyURLEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	public static FriendlyURLEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -401,23 +396,19 @@ public class FriendlyURLEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -432,14 +423,16 @@ public class FriendlyURLEntryUtil {
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public static List<FriendlyURLEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -595,25 +588,20 @@ public class FriendlyURLEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntry> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
 		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator,
-			useFinderCache);
+			groupId, classNameId, classPK, start, end, orderByComparator);
 	}
 
 	/**
@@ -629,14 +617,17 @@ public class FriendlyURLEntryUtil {
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public static List<FriendlyURLEntry> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator);
+			groupId, classNameId, classPK, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -865,21 +856,16 @@ public class FriendlyURLEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entries
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntry> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -892,13 +878,16 @@ public class FriendlyURLEntryUtil {
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entries
 	 */
 	public static List<FriendlyURLEntry> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator) {
+		OrderByComparator<FriendlyURLEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

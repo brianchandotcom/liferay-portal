@@ -165,22 +165,18 @@ public class AssetAutoTaggerEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssetEntryId(long, int, int, OrderByComparator)}
 	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
-	@Deprecated
 	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
 
 		return getPersistence().findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator, useFinderCache);
+			assetEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -194,14 +190,16 @@ public class AssetAutoTaggerEntryUtil {
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
 	public static List<AssetAutoTaggerEntry> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator);
+			assetEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -340,22 +338,18 @@ public class AssetAutoTaggerEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssetTagId(long, int, int, OrderByComparator)}
 	 * @param assetTagId the asset tag ID
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
-	@Deprecated
 	public static List<AssetAutoTaggerEntry> findByAssetTagId(
 		long assetTagId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
 
 		return getPersistence().findByAssetTagId(
-			assetTagId, start, end, orderByComparator, useFinderCache);
+			assetTagId, start, end, orderByComparator);
 	}
 
 	/**
@@ -369,14 +363,16 @@ public class AssetAutoTaggerEntryUtil {
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset auto tagger entries
 	 */
 	public static List<AssetAutoTaggerEntry> findByAssetTagId(
 		long assetTagId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssetTagId(
-			assetTagId, start, end, orderByComparator);
+			assetTagId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -496,20 +492,16 @@ public class AssetAutoTaggerEntryUtil {
 	}
 
 	/**
-	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA_A(long,long)}
 	 * @param assetEntryId the asset entry ID
 	 * @param assetTagId the asset tag ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
 	 */
-	@Deprecated
 	public static AssetAutoTaggerEntry fetchByA_A(
-		long assetEntryId, long assetTagId, boolean useFinderCache) {
+		long assetEntryId, long assetTagId) {
 
-		return getPersistence().fetchByA_A(
-			assetEntryId, assetTagId, useFinderCache);
+		return getPersistence().fetchByA_A(assetEntryId, assetTagId);
 	}
 
 	/**
@@ -521,9 +513,10 @@ public class AssetAutoTaggerEntryUtil {
 	 * @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
 	 */
 	public static AssetAutoTaggerEntry fetchByA_A(
-		long assetEntryId, long assetTagId) {
+		long assetEntryId, long assetTagId, boolean useFinderCache) {
 
-		return getPersistence().fetchByA_A(assetEntryId, assetTagId);
+		return getPersistence().fetchByA_A(
+			assetEntryId, assetTagId, useFinderCache);
 	}
 
 	/**
@@ -657,21 +650,16 @@ public class AssetAutoTaggerEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset auto tagger entries
 	 */
-	@Deprecated
 	public static List<AssetAutoTaggerEntry> findAll(
 		int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -684,13 +672,16 @@ public class AssetAutoTaggerEntryUtil {
 	 * @param start the lower bound of the range of asset auto tagger entries
 	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset auto tagger entries
 	 */
 	public static List<AssetAutoTaggerEntry> findAll(
 		int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
+		OrderByComparator<AssetAutoTaggerEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

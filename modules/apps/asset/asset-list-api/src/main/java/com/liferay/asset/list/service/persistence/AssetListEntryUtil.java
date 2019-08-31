@@ -160,22 +160,17 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -189,13 +184,16 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public static List<AssetListEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -306,19 +304,14 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the asset list entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
-	@Deprecated
-	public static AssetListEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	public static AssetListEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -329,8 +322,10 @@ public class AssetListEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
-	public static AssetListEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	public static AssetListEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -396,23 +391,19 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -427,14 +418,16 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public static List<AssetListEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -580,22 +573,18 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -609,14 +598,16 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public static List<AssetListEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -806,20 +797,16 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry where groupId = &#63; and assetListEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_ALEK(long,String)}
 	 * @param groupId the group ID
 	 * @param assetListEntryKey the asset list entry key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
-	@Deprecated
 	public static AssetListEntry fetchByG_ALEK(
-		long groupId, String assetListEntryKey, boolean useFinderCache) {
+		long groupId, String assetListEntryKey) {
 
-		return getPersistence().fetchByG_ALEK(
-			groupId, assetListEntryKey, useFinderCache);
+		return getPersistence().fetchByG_ALEK(groupId, assetListEntryKey);
 	}
 
 	/**
@@ -831,9 +818,10 @@ public class AssetListEntryUtil {
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
 	public static AssetListEntry fetchByG_ALEK(
-		long groupId, String assetListEntryKey) {
+		long groupId, String assetListEntryKey, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_ALEK(groupId, assetListEntryKey);
+		return getPersistence().fetchByG_ALEK(
+			groupId, assetListEntryKey, useFinderCache);
 	}
 
 	/**
@@ -876,19 +864,14 @@ public class AssetListEntryUtil {
 	}
 
 	/**
-	 * Returns the asset list entry where groupId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry where groupId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_T(long,String)}
 	 * @param groupId the group ID
 	 * @param title the title
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
-	@Deprecated
-	public static AssetListEntry fetchByG_T(
-		long groupId, String title, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_T(groupId, title, useFinderCache);
+	public static AssetListEntry fetchByG_T(long groupId, String title) {
+		return getPersistence().fetchByG_T(groupId, title);
 	}
 
 	/**
@@ -899,8 +882,10 @@ public class AssetListEntryUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry, or <code>null</code> if a matching asset list entry could not be found
 	 */
-	public static AssetListEntry fetchByG_T(long groupId, String title) {
-		return getPersistence().fetchByG_T(groupId, title);
+	public static AssetListEntry fetchByG_T(
+		long groupId, String title, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_T(groupId, title, useFinderCache);
 	}
 
 	/**
@@ -966,23 +951,19 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeT(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param title the title
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findByG_LikeT(
 		long groupId, String title, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().findByG_LikeT(
-			groupId, title, start, end, orderByComparator, useFinderCache);
+			groupId, title, start, end, orderByComparator);
 	}
 
 	/**
@@ -997,14 +978,16 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public static List<AssetListEntry> findByG_LikeT(
 		long groupId, String title, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_LikeT(
-			groupId, title, start, end, orderByComparator);
+			groupId, title, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1236,23 +1219,19 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_TY(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findByG_TY(
 		long groupId, int type, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
 		return getPersistence().findByG_TY(
-			groupId, type, start, end, orderByComparator, useFinderCache);
+			groupId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -1267,14 +1246,16 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entries
 	 */
 	public static List<AssetListEntry> findByG_TY(
 		long groupId, int type, int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByG_TY(
-			groupId, type, start, end, orderByComparator);
+			groupId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1568,20 +1549,16 @@ public class AssetListEntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entries
 	 */
-	@Deprecated
 	public static List<AssetListEntry> findAll(
-		int start, int end, OrderByComparator<AssetListEntry> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<AssetListEntry> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1594,13 +1571,15 @@ public class AssetListEntryUtil {
 	 * @param start the lower bound of the range of asset list entries
 	 * @param end the upper bound of the range of asset list entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entries
 	 */
 	public static List<AssetListEntry> findAll(
-		int start, int end,
-		OrderByComparator<AssetListEntry> orderByComparator) {
+		int start, int end, OrderByComparator<AssetListEntry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -140,22 +140,18 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -169,12 +165,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -184,26 +182,32 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -259,10 +263,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -648,22 +656,18 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		return findByUserId(userId, start, end, orderByComparator);
+		return findByUserId(userId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -677,12 +681,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -692,24 +698,30 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -765,10 +777,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1157,23 +1173,19 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_T(long,int, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByU_T(
 		long userId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		return findByU_T(userId, type, start, end, orderByComparator);
+		return findByU_T(userId, type, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1188,12 +1200,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByU_T(
 		long userId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1203,28 +1217,34 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_T;
-			finderArgs = new Object[] {userId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_T;
+				finderArgs = new Object[] {userId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_T;
 			finderArgs = new Object[] {
 				userId, type, start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1284,10 +1304,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1711,24 +1735,21 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCCNI_CCPK(long,long, int, int, OrderByComparator)}
 	 * @param creatorClassNameId the creator class name ID
 	 * @param creatorClassPK the creator class pk
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByCCNI_CCPK(
-			creatorClassNameId, creatorClassPK, start, end, orderByComparator);
+			creatorClassNameId, creatorClassPK, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -1743,12 +1764,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1758,10 +1781,13 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK;
-			finderArgs = new Object[] {creatorClassNameId, creatorClassPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK;
+				finderArgs = new Object[] {creatorClassNameId, creatorClassPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCCNI_CCPK;
 			finderArgs = new Object[] {
 				creatorClassNameId, creatorClassPK, start, end,
@@ -1769,19 +1795,23 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(creatorClassPK != microblogsEntry.getCreatorClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(creatorClassPK !=
+							microblogsEntry.getCreatorClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1841,10 +1871,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2186,33 +2220,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCCNI_CCPK(long,long, int, int, OrderByComparator)}
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param start the lower bound of the range of microblogs entries
-	 * @param end the upper bound of the range of microblogs entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching microblogs entries
-	 */
-	@Deprecated
-	@Override
-	public List<MicroblogsEntry> findByCCNI_CCPK(
-		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByCCNI_CCPK(
-			creatorClassNameId, creatorClassPKs, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	 *
 	 * <p>
@@ -2230,6 +2237,32 @@ public class MicroblogsEntryPersistenceImpl
 	public List<MicroblogsEntry> findByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+
+		return findByCCNI_CCPK(
+			creatorClassNameId, creatorClassPKs, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class pk
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK(
+		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
@@ -2251,31 +2284,38 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				creatorClassNameId, StringUtil.merge(creatorClassPKs)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					creatorClassNameId, StringUtil.merge(creatorClassPKs)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				creatorClassNameId, StringUtil.merge(creatorClassPKs), start,
 				end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByCCNI_CCPK, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					!ArrayUtil.contains(
-						creatorClassPKs, microblogsEntry.getCreatorClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						!ArrayUtil.contains(
+							creatorClassPKs,
+							microblogsEntry.getCreatorClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2339,12 +2379,17 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByCCNI_CCPK, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByCCNI_CCPK, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByCCNI_CCPK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByCCNI_CCPK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2568,24 +2613,20 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCCNI_T(long,int, int, int, OrderByComparator)}
 	 * @param creatorClassNameId the creator class name ID
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByCCNI_T(
 		long creatorClassNameId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByCCNI_T(
-			creatorClassNameId, type, start, end, orderByComparator);
+			creatorClassNameId, type, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2600,12 +2641,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByCCNI_T(
 		long creatorClassNameId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2615,29 +2658,35 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCCNI_T;
-			finderArgs = new Object[] {creatorClassNameId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCCNI_T;
+				finderArgs = new Object[] {creatorClassNameId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCCNI_T;
 			finderArgs = new Object[] {
 				creatorClassNameId, type, start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2697,10 +2746,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3124,24 +3177,20 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_P(int,long, int, int, OrderByComparator)}
 	 * @param type the type
 	 * @param parentMicroblogsEntryId the parent microblogs entry ID
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByT_P(
 		int type, long parentMicroblogsEntryId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByT_P(
-			type, parentMicroblogsEntryId, start, end, orderByComparator);
+			type, parentMicroblogsEntryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3156,12 +3205,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByT_P(
 		int type, long parentMicroblogsEntryId, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3171,29 +3222,35 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByT_P;
-			finderArgs = new Object[] {type, parentMicroblogsEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByT_P;
+				finderArgs = new Object[] {type, parentMicroblogsEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByT_P;
 			finderArgs = new Object[] {
 				type, parentMicroblogsEntryId, start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((type != microblogsEntry.getType()) ||
-					(parentMicroblogsEntryId !=
-						microblogsEntry.getParentMicroblogsEntryId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((type != microblogsEntry.getType()) ||
+						(parentMicroblogsEntryId !=
+							microblogsEntry.getParentMicroblogsEntryId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -3253,10 +3310,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3685,26 +3746,22 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CCNI_CCPK(long,long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param creatorClassNameId the creator class name ID
 	 * @param creatorClassPK the creator class pk
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long creatorClassPK, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByC_CCNI_CCPK(
 			companyId, creatorClassNameId, creatorClassPK, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -3720,12 +3777,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long creatorClassPK, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3735,12 +3794,15 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId, creatorClassPK
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK;
+				finderArgs = new Object[] {
+					companyId, creatorClassNameId, creatorClassPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_CCNI_CCPK;
 			finderArgs = new Object[] {
 				companyId, creatorClassNameId, creatorClassPK, start, end,
@@ -3748,20 +3810,24 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId()) ||
-					(creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(creatorClassPK != microblogsEntry.getCreatorClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId()) ||
+						(creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(creatorClassPK !=
+							microblogsEntry.getCreatorClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -3825,10 +3891,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4190,36 +4260,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CCNI_CCPK(long,long,long, int, int, OrderByComparator)}
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param start the lower bound of the range of microblogs entries
-	 * @param end the upper bound of the range of microblogs entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching microblogs entries
-	 */
-	@Deprecated
-	@Override
-	public List<MicroblogsEntry> findByC_CCNI_CCPK(
-		long companyId, long creatorClassNameId, long[] creatorClassPKs,
-		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_CCNI_CCPK(
-			companyId, creatorClassNameId, creatorClassPKs, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	 *
 	 * <p>
@@ -4239,6 +4279,34 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long[] creatorClassPKs,
 		int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
+
+		return findByC_CCNI_CCPK(
+			companyId, creatorClassNameId, creatorClassPKs, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class pk
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByC_CCNI_CCPK(
+		long companyId, long creatorClassNameId, long[] creatorClassPKs,
+		int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
@@ -4260,32 +4328,40 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId, StringUtil.merge(creatorClassPKs)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, creatorClassNameId,
+					StringUtil.merge(creatorClassPKs)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, creatorClassNameId,
 				StringUtil.merge(creatorClassPKs), start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId()) ||
-					(creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					!ArrayUtil.contains(
-						creatorClassPKs, microblogsEntry.getCreatorClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId()) ||
+						(creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						!ArrayUtil.contains(
+							creatorClassPKs,
+							microblogsEntry.getCreatorClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -4353,13 +4429,17 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs,
-					list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4605,25 +4685,22 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CCNI_T(long,long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param creatorClassNameId the creator class name ID
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_T(
 		long companyId, long creatorClassNameId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByC_CCNI_T(
-			companyId, creatorClassNameId, type, start, end, orderByComparator);
+			companyId, creatorClassNameId, type, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -4639,12 +4716,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_T(
 		long companyId, long creatorClassNameId, int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4654,10 +4733,13 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_CCNI_T;
-			finderArgs = new Object[] {companyId, creatorClassNameId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_CCNI_T;
+				finderArgs = new Object[] {companyId, creatorClassNameId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_CCNI_T;
 			finderArgs = new Object[] {
 				companyId, creatorClassNameId, type, start, end,
@@ -4665,20 +4747,23 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId()) ||
-					(creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId()) ||
+						(creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -4742,10 +4827,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5205,26 +5294,22 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCCNI_CCPK_T(long,long,int, int, int, OrderByComparator)}
 	 * @param creatorClassNameId the creator class name ID
 	 * @param creatorClassPK the creator class pk
 	 * @param type the type
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByCCNI_CCPK_T(
 			creatorClassNameId, creatorClassPK, type, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -5240,12 +5325,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5255,12 +5342,15 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK_T;
-			finderArgs = new Object[] {
-				creatorClassNameId, creatorClassPK, type
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK_T;
+				finderArgs = new Object[] {
+					creatorClassNameId, creatorClassPK, type
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCCNI_CCPK_T;
 			finderArgs = new Object[] {
 				creatorClassNameId, creatorClassPK, type, start, end,
@@ -5268,20 +5358,24 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(creatorClassPK != microblogsEntry.getCreatorClassPK()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(creatorClassPK !=
+							microblogsEntry.getCreatorClassPK()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -5345,10 +5439,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5709,35 +5807,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCCNI_CCPK_T(long,long,int, int, int, OrderByComparator)}
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param start the lower bound of the range of microblogs entries
-	 * @param end the upper bound of the range of microblogs entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching microblogs entries
-	 */
-	@Deprecated
-	@Override
-	public List<MicroblogsEntry> findByCCNI_CCPK_T(
-		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
-		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByCCNI_CCPK_T(
-			creatorClassNameId, creatorClassPKs, type, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -5756,6 +5825,33 @@ public class MicroblogsEntryPersistenceImpl
 	public List<MicroblogsEntry> findByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator) {
+
+		return findByCCNI_CCPK_T(
+			creatorClassNameId, creatorClassPKs, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class pk
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByCCNI_CCPK_T(
+		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
@@ -5777,32 +5873,39 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				creatorClassNameId, StringUtil.merge(creatorClassPKs), type
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					creatorClassNameId, StringUtil.merge(creatorClassPKs), type
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				creatorClassNameId, StringUtil.merge(creatorClassPKs), type,
 				start, end, orderByComparator
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					!ArrayUtil.contains(
-						creatorClassPKs, microblogsEntry.getCreatorClassPK()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						!ArrayUtil.contains(
+							creatorClassPKs,
+							microblogsEntry.getCreatorClassPK()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -5872,13 +5975,17 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs,
-					list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6132,7 +6239,6 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CCNI_CCPK_T(long,long,long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param creatorClassNameId the creator class name ID
 	 * @param creatorClassPK the creator class pk
@@ -6140,20 +6246,17 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_CCPK_T(
 		long companyId, long creatorClassNameId, long creatorClassPK, int type,
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByC_CCNI_CCPK_T(
 			companyId, creatorClassNameId, creatorClassPK, type, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -6170,13 +6273,15 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByC_CCNI_CCPK_T(
 		long companyId, long creatorClassNameId, long creatorClassPK, int type,
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6186,12 +6291,15 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK_T;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId, creatorClassPK, type
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK_T;
+				finderArgs = new Object[] {
+					companyId, creatorClassNameId, creatorClassPK, type
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_CCNI_CCPK_T;
 			finderArgs = new Object[] {
 				companyId, creatorClassNameId, creatorClassPK, type, start, end,
@@ -6199,21 +6307,25 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId()) ||
-					(creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					(creatorClassPK != microblogsEntry.getCreatorClassPK()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId()) ||
+						(creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						(creatorClassPK !=
+							microblogsEntry.getCreatorClassPK()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -6281,10 +6393,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6667,37 +6783,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CCNI_CCPK_T(long,long,long,int, int, int, OrderByComparator)}
-	 * @param companyId the company ID
-	 * @param creatorClassNameId the creator class name ID
-	 * @param creatorClassPK the creator class pk
-	 * @param type the type
-	 * @param start the lower bound of the range of microblogs entries
-	 * @param end the upper bound of the range of microblogs entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching microblogs entries
-	 */
-	@Deprecated
-	@Override
-	public List<MicroblogsEntry> findByC_CCNI_CCPK_T(
-		long companyId, long creatorClassNameId, long[] creatorClassPKs,
-		int type, int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_CCNI_CCPK_T(
-			companyId, creatorClassNameId, creatorClassPKs, type, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -6719,6 +6804,35 @@ public class MicroblogsEntryPersistenceImpl
 		int type, int start, int end,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
+		return findByC_CCNI_CCPK_T(
+			companyId, creatorClassNameId, creatorClassPKs, type, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param creatorClassNameId the creator class name ID
+	 * @param creatorClassPK the creator class pk
+	 * @param type the type
+	 * @param start the lower bound of the range of microblogs entries
+	 * @param end the upper bound of the range of microblogs entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching microblogs entries
+	 */
+	@Override
+	public List<MicroblogsEntry> findByC_CCNI_CCPK_T(
+		long companyId, long creatorClassNameId, long[] creatorClassPKs,
+		int type, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
+
 		if (creatorClassPKs == null) {
 			creatorClassPKs = new long[0];
 		}
@@ -6739,12 +6853,15 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId,
-				StringUtil.merge(creatorClassPKs), type
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, creatorClassNameId,
+					StringUtil.merge(creatorClassPKs), type
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, creatorClassNameId,
 				StringUtil.merge(creatorClassPKs), type, start, end,
@@ -6752,22 +6869,26 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((companyId != microblogsEntry.getCompanyId()) ||
-					(creatorClassNameId !=
-						microblogsEntry.getCreatorClassNameId()) ||
-					!ArrayUtil.contains(
-						creatorClassPKs, microblogsEntry.getCreatorClassPK()) ||
-					(type != microblogsEntry.getType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((companyId != microblogsEntry.getCompanyId()) ||
+						(creatorClassNameId !=
+							microblogsEntry.getCreatorClassNameId()) ||
+						!ArrayUtil.contains(
+							creatorClassPKs,
+							microblogsEntry.getCreatorClassPK()) ||
+						(type != microblogsEntry.getType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -6841,13 +6962,18 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs,
-					list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByC_CCNI_CCPK_T,
+						finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByC_CCNI_CCPK_T,
+						finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7116,7 +7242,6 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_C_T_S(long,Date,int,int, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param createDate the create date
 	 * @param type the type
@@ -7124,20 +7249,17 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findByU_C_T_S(
 		long userId, Date createDate, int type, int socialRelationType,
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
 		return findByU_C_T_S(
 			userId, createDate, type, socialRelationType, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -7154,13 +7276,15 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findByU_C_T_S(
 		long userId, Date createDate, int type, int socialRelationType,
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7170,12 +7294,15 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_C_T_S;
-			finderArgs = new Object[] {
-				userId, _getTime(createDate), type, socialRelationType
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_C_T_S;
+				finderArgs = new Object[] {
+					userId, _getTime(createDate), type, socialRelationType
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_C_T_S;
 			finderArgs = new Object[] {
 				userId, _getTime(createDate), type, socialRelationType, start,
@@ -7183,22 +7310,25 @@ public class MicroblogsEntryPersistenceImpl
 			};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MicroblogsEntry microblogsEntry : list) {
-				if ((userId != microblogsEntry.getUserId()) ||
-					!Objects.equals(
-						createDate, microblogsEntry.getCreateDate()) ||
-					(type != microblogsEntry.getType()) ||
-					(socialRelationType !=
-						microblogsEntry.getSocialRelationType())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (MicroblogsEntry microblogsEntry : list) {
+					if ((userId != microblogsEntry.getUserId()) ||
+						!Objects.equals(
+							createDate, microblogsEntry.getCreateDate()) ||
+						(type != microblogsEntry.getType()) ||
+						(socialRelationType !=
+							microblogsEntry.getSocialRelationType())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -7277,10 +7407,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8473,21 +8607,17 @@ public class MicroblogsEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MicroblogsEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of microblogs entries
 	 */
-	@Deprecated
 	@Override
 	public List<MicroblogsEntry> findAll(
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -8500,12 +8630,14 @@ public class MicroblogsEntryPersistenceImpl
 	 * @param start the lower bound of the range of microblogs entries
 	 * @param end the upper bound of the range of microblogs entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of microblogs entries
 	 */
 	@Override
 	public List<MicroblogsEntry> findAll(
 		int start, int end,
-		OrderByComparator<MicroblogsEntry> orderByComparator) {
+		OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -8515,17 +8647,23 @@ public class MicroblogsEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<MicroblogsEntry> list =
-			(List<MicroblogsEntry>)finderCache.getResult(
+		List<MicroblogsEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<MicroblogsEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -8572,10 +8710,14 @@ public class MicroblogsEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

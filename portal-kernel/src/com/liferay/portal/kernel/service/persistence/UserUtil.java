@@ -153,21 +153,17 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -181,13 +177,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -319,22 +317,19 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -349,14 +344,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -502,21 +498,18 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, useFinderCache);
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -530,14 +523,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -651,18 +645,13 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where contactId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where contactId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByContactId(long)}
 	 * @param contactId the contact ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByContactId(
-		long contactId, boolean useFinderCache) {
-
-		return getPersistence().fetchByContactId(contactId, useFinderCache);
+	public static User fetchByContactId(long contactId) {
+		return getPersistence().fetchByContactId(contactId);
 	}
 
 	/**
@@ -672,8 +661,10 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByContactId(long contactId) {
-		return getPersistence().fetchByContactId(contactId);
+	public static User fetchByContactId(
+		long contactId, boolean useFinderCache) {
+
+		return getPersistence().fetchByContactId(contactId, useFinderCache);
 	}
 
 	/**
@@ -733,21 +724,18 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByEmailAddress(String, int, int, OrderByComparator)}
 	 * @param emailAddress the email address
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByEmailAddress(
 		String emailAddress, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByEmailAddress(
-			emailAddress, start, end, orderByComparator, useFinderCache);
+			emailAddress, start, end, orderByComparator);
 	}
 
 	/**
@@ -761,14 +749,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByEmailAddress(
 		String emailAddress, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByEmailAddress(
-			emailAddress, start, end, orderByComparator);
+			emailAddress, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -882,18 +871,13 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByPortraitId(long)}
 	 * @param portraitId the portrait ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByPortraitId(
-		long portraitId, boolean useFinderCache) {
-
-		return getPersistence().fetchByPortraitId(portraitId, useFinderCache);
+	public static User fetchByPortraitId(long portraitId) {
+		return getPersistence().fetchByPortraitId(portraitId);
 	}
 
 	/**
@@ -903,8 +887,10 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByPortraitId(long portraitId) {
-		return getPersistence().fetchByPortraitId(portraitId);
+	public static User fetchByPortraitId(
+		long portraitId, boolean useFinderCache) {
+
+		return getPersistence().fetchByPortraitId(portraitId, useFinderCache);
 	}
 
 	/**
@@ -966,22 +952,19 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_C(long,long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByU_C(
 		long userId, long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByU_C(
-			userId, companyId, start, end, orderByComparator, useFinderCache);
+			userId, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -996,14 +979,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByU_C(
 		long userId, long companyId, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByU_C(
-			userId, companyId, start, end, orderByComparator);
+			userId, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1110,19 +1094,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_U(long,long)}
 	 * @param companyId the company ID
 	 * @param userId the user ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_U(
-		long companyId, long userId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_U(companyId, userId, useFinderCache);
+	public static User fetchByC_U(long companyId, long userId) {
+		return getPersistence().fetchByC_U(companyId, userId);
 	}
 
 	/**
@@ -1133,8 +1112,10 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_U(long companyId, long userId) {
-		return getPersistence().fetchByC_U(companyId, userId);
+	public static User fetchByC_U(
+		long companyId, long userId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_U(companyId, userId, useFinderCache);
 	}
 
 	/**
@@ -1198,23 +1179,19 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CD(long,Date, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByC_CD(
 		long companyId, Date createDate, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByC_CD(
-			companyId, createDate, start, end, orderByComparator,
-			useFinderCache);
+			companyId, createDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -1229,14 +1206,16 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByC_CD(
 		long companyId, Date createDate, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_CD(
-			companyId, createDate, start, end, orderByComparator);
+			companyId, createDate, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1384,23 +1363,19 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_MD(long,Date, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByC_MD(
 		long companyId, Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByC_MD(
-			companyId, modifiedDate, start, end, orderByComparator,
-			useFinderCache);
+			companyId, modifiedDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -1415,14 +1390,16 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByC_MD(
 		long companyId, Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_MD(
-			companyId, modifiedDate, start, end, orderByComparator);
+			companyId, modifiedDate, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1548,20 +1525,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and defaultUser = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_DU(long,boolean)}
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_DU(
-		long companyId, boolean defaultUser, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_DU(
-			companyId, defaultUser, useFinderCache);
+	public static User fetchByC_DU(long companyId, boolean defaultUser) {
+		return getPersistence().fetchByC_DU(companyId, defaultUser);
 	}
 
 	/**
@@ -1572,8 +1543,11 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_DU(long companyId, boolean defaultUser) {
-		return getPersistence().fetchByC_DU(companyId, defaultUser);
+	public static User fetchByC_DU(
+		long companyId, boolean defaultUser, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_DU(
+			companyId, defaultUser, useFinderCache);
 	}
 
 	/**
@@ -1615,20 +1589,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and screenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and screenName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_SN(long,String)}
 	 * @param companyId the company ID
 	 * @param screenName the screen name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_SN(
-		long companyId, String screenName, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_SN(
-			companyId, screenName, useFinderCache);
+	public static User fetchByC_SN(long companyId, String screenName) {
+		return getPersistence().fetchByC_SN(companyId, screenName);
 	}
 
 	/**
@@ -1639,8 +1607,11 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_SN(long companyId, String screenName) {
-		return getPersistence().fetchByC_SN(companyId, screenName);
+	public static User fetchByC_SN(
+		long companyId, String screenName, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_SN(
+			companyId, screenName, useFinderCache);
 	}
 
 	/**
@@ -1682,20 +1653,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_EA(long,String)}
 	 * @param companyId the company ID
 	 * @param emailAddress the email address
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_EA(
-		long companyId, String emailAddress, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_EA(
-			companyId, emailAddress, useFinderCache);
+	public static User fetchByC_EA(long companyId, String emailAddress) {
+		return getPersistence().fetchByC_EA(companyId, emailAddress);
 	}
 
 	/**
@@ -1706,8 +1671,11 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_EA(long companyId, String emailAddress) {
-		return getPersistence().fetchByC_EA(companyId, emailAddress);
+	public static User fetchByC_EA(
+		long companyId, String emailAddress, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_EA(
+			companyId, emailAddress, useFinderCache);
 	}
 
 	/**
@@ -1749,20 +1717,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and facebookId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and facebookId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_FID(long,long)}
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_FID(
-		long companyId, long facebookId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_FID(
-			companyId, facebookId, useFinderCache);
+	public static User fetchByC_FID(long companyId, long facebookId) {
+		return getPersistence().fetchByC_FID(companyId, facebookId);
 	}
 
 	/**
@@ -1773,8 +1735,11 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_FID(long companyId, long facebookId) {
-		return getPersistence().fetchByC_FID(companyId, facebookId);
+	public static User fetchByC_FID(
+		long companyId, long facebookId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_FID(
+			companyId, facebookId, useFinderCache);
 	}
 
 	/**
@@ -1816,20 +1781,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and googleUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_GUID(long,String)}
 	 * @param companyId the company ID
 	 * @param googleUserId the google user ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_GUID(
-		long companyId, String googleUserId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_GUID(
-			companyId, googleUserId, useFinderCache);
+	public static User fetchByC_GUID(long companyId, String googleUserId) {
+		return getPersistence().fetchByC_GUID(companyId, googleUserId);
 	}
 
 	/**
@@ -1840,8 +1799,11 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_GUID(long companyId, String googleUserId) {
-		return getPersistence().fetchByC_GUID(companyId, googleUserId);
+	public static User fetchByC_GUID(
+		long companyId, String googleUserId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_GUID(
+			companyId, googleUserId, useFinderCache);
 	}
 
 	/**
@@ -1883,19 +1845,14 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_O(long,String)}
 	 * @param companyId the company ID
 	 * @param openId the open ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
-	public static User fetchByC_O(
-		long companyId, String openId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_O(companyId, openId, useFinderCache);
+	public static User fetchByC_O(long companyId, String openId) {
+		return getPersistence().fetchByC_O(companyId, openId);
 	}
 
 	/**
@@ -1906,8 +1863,10 @@ public class UserUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public static User fetchByC_O(long companyId, String openId) {
-		return getPersistence().fetchByC_O(companyId, openId);
+	public static User fetchByC_O(
+		long companyId, String openId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_O(companyId, openId, useFinderCache);
 	}
 
 	/**
@@ -1971,22 +1930,19 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator, useFinderCache);
+			companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -2001,14 +1957,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_S(
-			companyId, status, start, end, orderByComparator);
+			companyId, status, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2161,24 +2118,20 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_CD_MD(long,Date,Date, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByC_CD_MD(
 		long companyId, Date createDate, Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByC_CD_MD(
-			companyId, createDate, modifiedDate, start, end, orderByComparator,
-			useFinderCache);
+			companyId, createDate, modifiedDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -2194,14 +2147,16 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByC_CD_MD(
 		long companyId, Date createDate, Date modifiedDate, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_CD_MD(
-			companyId, createDate, modifiedDate, start, end, orderByComparator);
+			companyId, createDate, modifiedDate, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2366,24 +2321,20 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_DU_S(long,boolean,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param defaultUser the default user
 	 * @param status the status
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
-	@Deprecated
 	public static List<User> findByC_DU_S(
 		long companyId, boolean defaultUser, int status, int start, int end,
-		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<User> orderByComparator) {
 
 		return getPersistence().findByC_DU_S(
-			companyId, defaultUser, status, start, end, orderByComparator,
-			useFinderCache);
+			companyId, defaultUser, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -2399,14 +2350,16 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching users
 	 */
 	public static List<User> findByC_DU_S(
 		long companyId, boolean defaultUser, int status, int start, int end,
-		OrderByComparator<User> orderByComparator) {
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_DU_S(
-			companyId, defaultUser, status, start, end, orderByComparator);
+			companyId, defaultUser, status, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2543,20 +2496,16 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_ERC(long,String)}
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
-	@Deprecated
 	public static User fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache) {
+		long companyId, String externalReferenceCode) {
 
-		return getPersistence().fetchByC_ERC(
-			companyId, externalReferenceCode, useFinderCache);
+		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**
@@ -2568,9 +2517,10 @@ public class UserUtil {
 	 * @return the matching user, or <code>null</code> if a matching user could not be found
 	 */
 	public static User fetchByC_ERC(
-		long companyId, String externalReferenceCode) {
+		long companyId, String externalReferenceCode, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+		return getPersistence().fetchByC_ERC(
+			companyId, externalReferenceCode, useFinderCache);
 	}
 
 	/**
@@ -2699,20 +2649,15 @@ public class UserUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of users
 	 */
-	@Deprecated
 	public static List<User> findAll(
-		int start, int end, OrderByComparator<User> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<User> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -2725,12 +2670,15 @@ public class UserUtil {
 	 * @param start the lower bound of the range of users
 	 * @param end the upper bound of the range of users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of users
 	 */
 	public static List<User> findAll(
-		int start, int end, OrderByComparator<User> orderByComparator) {
+		int start, int end, OrderByComparator<User> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

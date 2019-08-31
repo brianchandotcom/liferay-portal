@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service.persistence;
 import com.liferay.asset.kernel.exception.NoSuchCategoryPropertyException;
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -75,19 +74,16 @@ public interface AssetCategoryPropertyPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
-	@Deprecated
 	public java.util.List<AssetCategoryProperty> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset category properties where companyId = &#63;.
@@ -100,11 +96,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where companyId = &#63;.
@@ -116,7 +115,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByCompanyId_First(
 			long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -128,7 +128,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByCompanyId_First(
 		long companyId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset category property in the ordered set where companyId = &#63;.
@@ -140,7 +141,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByCompanyId_Last(
 			long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -152,7 +154,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByCompanyId_Last(
 		long companyId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63;.
@@ -165,7 +168,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty[] findByCompanyId_PrevAndNext(
 			long categoryPropertyId, long companyId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -214,19 +218,16 @@ public interface AssetCategoryPropertyPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCategoryId(long, int, int, OrderByComparator)}
 	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
-	@Deprecated
 	public java.util.List<AssetCategoryProperty> findByCategoryId(
 		long categoryId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset category properties where categoryId = &#63;.
@@ -239,11 +240,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByCategoryId(
 		long categoryId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where categoryId = &#63;.
@@ -255,7 +259,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByCategoryId_First(
 			long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -267,7 +272,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByCategoryId_First(
 		long categoryId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset category property in the ordered set where categoryId = &#63;.
@@ -279,7 +285,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByCategoryId_Last(
 			long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -291,7 +298,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByCategoryId_Last(
 		long categoryId,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the asset category properties before and after the current asset category property in the ordered set where categoryId = &#63;.
@@ -304,7 +312,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty[] findByCategoryId_PrevAndNext(
 			long categoryPropertyId, long categoryId,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -355,20 +364,17 @@ public interface AssetCategoryPropertyPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_K(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param key the key
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
-	@Deprecated
 	public java.util.List<AssetCategoryProperty> findByC_K(
 		long companyId, String key, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset category properties where companyId = &#63; and key = &#63;.
@@ -382,11 +388,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findByC_K(
 		long companyId, String key, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -399,7 +408,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByC_K_First(
 			long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -412,7 +422,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByC_K_First(
 		long companyId, String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -425,7 +436,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty findByC_K_Last(
 			long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -438,7 +450,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty fetchByC_K_Last(
 		long companyId, String key,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns the asset category properties before and after the current asset category property in the ordered set where companyId = &#63; and key = &#63;.
@@ -452,7 +465,8 @@ public interface AssetCategoryPropertyPersistence
 	 */
 	public AssetCategoryProperty[] findByC_K_PrevAndNext(
 			long categoryPropertyId, long companyId, String key,
-			OrderByComparator<AssetCategoryProperty> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetCategoryProperty> orderByComparator)
 		throws NoSuchCategoryPropertyException;
 
 	/**
@@ -484,17 +498,13 @@ public interface AssetCategoryPropertyPersistence
 		throws NoSuchCategoryPropertyException;
 
 	/**
-	 * Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByCA_K(long,String)}
 	 * @param categoryId the category ID
 	 * @param key the key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	 */
-	@Deprecated
-	public AssetCategoryProperty fetchByCA_K(
-		long categoryId, String key, boolean useFinderCache);
+	public AssetCategoryProperty fetchByCA_K(long categoryId, String key);
 
 	/**
 	 * Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -504,7 +514,8 @@ public interface AssetCategoryPropertyPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
 	 */
-	public AssetCategoryProperty fetchByCA_K(long categoryId, String key);
+	public AssetCategoryProperty fetchByCA_K(
+		long categoryId, String key, boolean useFinderCache);
 
 	/**
 	 * Removes the asset category property where categoryId = &#63; and key = &#63; from the database.
@@ -606,18 +617,15 @@ public interface AssetCategoryPropertyPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset category properties
 	 */
-	@Deprecated
 	public java.util.List<AssetCategoryProperty> findAll(
 		int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset category properties.
@@ -629,11 +637,14 @@ public interface AssetCategoryPropertyPersistence
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset category properties
 	 */
 	public java.util.List<AssetCategoryProperty> findAll(
 		int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetCategoryProperty>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset category properties from the database.

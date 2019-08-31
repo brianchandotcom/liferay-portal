@@ -122,23 +122,19 @@ public class ServiceComponentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ServiceComponentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByBuildNamespace(String, int, int, OrderByComparator)}
 	 * @param buildNamespace the build namespace
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service components
 	 */
-	@Deprecated
 	@Override
 	public List<ServiceComponent> findByBuildNamespace(
 		String buildNamespace, int start, int end,
-		OrderByComparator<ServiceComponent> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 
 		return findByBuildNamespace(
-			buildNamespace, start, end, orderByComparator);
+			buildNamespace, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -152,12 +148,14 @@ public class ServiceComponentPersistenceImpl
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching service components
 	 */
 	@Override
 	public List<ServiceComponent> findByBuildNamespace(
 		String buildNamespace, int start, int end,
-		OrderByComparator<ServiceComponent> orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator,
+		boolean useFinderCache) {
 
 		buildNamespace = Objects.toString(buildNamespace, "");
 
@@ -169,28 +167,34 @@ public class ServiceComponentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByBuildNamespace;
-			finderArgs = new Object[] {buildNamespace};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByBuildNamespace;
+				finderArgs = new Object[] {buildNamespace};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByBuildNamespace;
 			finderArgs = new Object[] {
 				buildNamespace, start, end, orderByComparator
 			};
 		}
 
-		List<ServiceComponent> list =
-			(List<ServiceComponent>)FinderCacheUtil.getResult(
+		List<ServiceComponent> list = null;
+
+		if (useFinderCache) {
+			list = (List<ServiceComponent>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ServiceComponent serviceComponent : list) {
-				if (!buildNamespace.equals(
-						serviceComponent.getBuildNamespace())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ServiceComponent serviceComponent : list) {
+					if (!buildNamespace.equals(
+							serviceComponent.getBuildNamespace())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -257,10 +261,14 @@ public class ServiceComponentPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -687,20 +695,17 @@ public class ServiceComponentPersistenceImpl
 	}
 
 	/**
-	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByBNS_BNU(String,long)}
 	 * @param buildNamespace the build namespace
 	 * @param buildNumber the build number
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching service component, or <code>null</code> if a matching service component could not be found
 	 */
-	@Deprecated
 	@Override
 	public ServiceComponent fetchByBNS_BNU(
-		String buildNamespace, long buildNumber, boolean useFinderCache) {
+		String buildNamespace, long buildNumber) {
 
-		return fetchByBNS_BNU(buildNamespace, buildNumber);
+		return fetchByBNS_BNU(buildNamespace, buildNumber, true);
 	}
 
 	/**
@@ -713,14 +718,22 @@ public class ServiceComponentPersistenceImpl
 	 */
 	@Override
 	public ServiceComponent fetchByBNS_BNU(
-		String buildNamespace, long buildNumber) {
+		String buildNamespace, long buildNumber, boolean useFinderCache) {
 
 		buildNamespace = Objects.toString(buildNamespace, "");
 
-		Object[] finderArgs = new Object[] {buildNamespace, buildNumber};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByBNS_BNU, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {buildNamespace, buildNumber};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByBNS_BNU, finderArgs, this);
+		}
 
 		if (result instanceof ServiceComponent) {
 			ServiceComponent serviceComponent = (ServiceComponent)result;
@@ -771,8 +784,10 @@ public class ServiceComponentPersistenceImpl
 				List<ServiceComponent> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByBNS_BNU, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByBNS_BNU, finderArgs, list);
+					}
 				}
 				else {
 					ServiceComponent serviceComponent = list.get(0);
@@ -783,8 +798,10 @@ public class ServiceComponentPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByBNS_BNU, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByBNS_BNU, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1338,21 +1355,17 @@ public class ServiceComponentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ServiceComponentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of service components
 	 */
-	@Deprecated
 	@Override
 	public List<ServiceComponent> findAll(
 		int start, int end,
-		OrderByComparator<ServiceComponent> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1365,12 +1378,14 @@ public class ServiceComponentPersistenceImpl
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of service components
 	 */
 	@Override
 	public List<ServiceComponent> findAll(
 		int start, int end,
-		OrderByComparator<ServiceComponent> orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1380,17 +1395,23 @@ public class ServiceComponentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<ServiceComponent> list =
-			(List<ServiceComponent>)FinderCacheUtil.getResult(
+		List<ServiceComponent> list = null;
+
+		if (useFinderCache) {
+			list = (List<ServiceComponent>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1437,10 +1458,14 @@ public class ServiceComponentPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

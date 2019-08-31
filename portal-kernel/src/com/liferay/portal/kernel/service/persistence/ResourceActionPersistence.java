@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,19 +70,16 @@ public interface ResourceActionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
 	 * @param name the name
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource actions
 	 */
-	@Deprecated
 	public java.util.List<ResourceAction> findByName(
 		String name, int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the resource actions where name = &#63;.
@@ -96,11 +92,14 @@ public interface ResourceActionPersistence
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource actions
 	 */
 	public java.util.List<ResourceAction> findByName(
 		String name, int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first resource action in the ordered set where name = &#63;.
@@ -111,7 +110,9 @@ public interface ResourceActionPersistence
 	 * @throws NoSuchResourceActionException if a matching resource action could not be found
 	 */
 	public ResourceAction findByName_First(
-			String name, OrderByComparator<ResourceAction> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+				orderByComparator)
 		throws NoSuchResourceActionException;
 
 	/**
@@ -122,7 +123,9 @@ public interface ResourceActionPersistence
 	 * @return the first matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
 	public ResourceAction fetchByName_First(
-		String name, OrderByComparator<ResourceAction> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator);
 
 	/**
 	 * Returns the last resource action in the ordered set where name = &#63;.
@@ -133,7 +136,9 @@ public interface ResourceActionPersistence
 	 * @throws NoSuchResourceActionException if a matching resource action could not be found
 	 */
 	public ResourceAction findByName_Last(
-			String name, OrderByComparator<ResourceAction> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+				orderByComparator)
 		throws NoSuchResourceActionException;
 
 	/**
@@ -144,7 +149,9 @@ public interface ResourceActionPersistence
 	 * @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
 	public ResourceAction fetchByName_Last(
-		String name, OrderByComparator<ResourceAction> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator);
 
 	/**
 	 * Returns the resource actions before and after the current resource action in the ordered set where name = &#63;.
@@ -157,7 +164,8 @@ public interface ResourceActionPersistence
 	 */
 	public ResourceAction[] findByName_PrevAndNext(
 			long resourceActionId, String name,
-			OrderByComparator<ResourceAction> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+				orderByComparator)
 		throws NoSuchResourceActionException;
 
 	/**
@@ -187,17 +195,13 @@ public interface ResourceActionPersistence
 		throws NoSuchResourceActionException;
 
 	/**
-	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByN_A(String,String)}
 	 * @param name the name
 	 * @param actionId the action ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
-	@Deprecated
-	public ResourceAction fetchByN_A(
-		String name, String actionId, boolean useFinderCache);
+	public ResourceAction fetchByN_A(String name, String actionId);
 
 	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -207,7 +211,8 @@ public interface ResourceActionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource action, or <code>null</code> if a matching resource action could not be found
 	 */
-	public ResourceAction fetchByN_A(String name, String actionId);
+	public ResourceAction fetchByN_A(
+		String name, String actionId, boolean useFinderCache);
 
 	/**
 	 * Removes the resource action where name = &#63; and actionId = &#63; from the database.
@@ -307,17 +312,15 @@ public interface ResourceActionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourceActionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource actions
 	 */
-	@Deprecated
 	public java.util.List<ResourceAction> findAll(
-		int start, int end, OrderByComparator<ResourceAction> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the resource actions.
@@ -329,11 +332,14 @@ public interface ResourceActionPersistence
 	 * @param start the lower bound of the range of resource actions
 	 * @param end the upper bound of the range of resource actions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource actions
 	 */
 	public java.util.List<ResourceAction> findAll(
 		int start, int end,
-		OrderByComparator<ResourceAction> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ResourceAction>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the resource actions from the database.

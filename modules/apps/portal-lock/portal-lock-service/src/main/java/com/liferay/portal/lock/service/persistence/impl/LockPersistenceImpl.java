@@ -134,21 +134,18 @@ public class LockPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
-	@Deprecated
 	@Override
 	public List<Lock> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Lock> orderByComparator) {
 
-		return findByUuid(uuid, start, end, orderByComparator);
+		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -162,12 +159,13 @@ public class LockPersistenceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	@Override
 	public List<Lock> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -179,23 +177,30 @@ public class LockPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<Lock> list = (List<Lock>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Lock> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lock lock : list) {
-				if (!uuid.equals(lock.getUuid())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Lock>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Lock lock : list) {
+					if (!uuid.equals(lock.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -262,10 +267,14 @@ public class LockPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -674,22 +683,20 @@ public class LockPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
-	@Deprecated
 	@Override
 	public List<Lock> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Lock> orderByComparator) {
 
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -704,12 +711,13 @@ public class LockPersistenceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	@Override
 	public List<Lock> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -721,27 +729,34 @@ public class LockPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Lock> list = (List<Lock>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Lock> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lock lock : list) {
-				if (!uuid.equals(lock.getUuid()) ||
-					(companyId != lock.getCompanyId())) {
+		if (useFinderCache) {
+			list = (List<Lock>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (Lock lock : list) {
+					if (!uuid.equals(lock.getUuid()) ||
+						(companyId != lock.getCompanyId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -812,10 +827,14 @@ public class LockPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1254,21 +1273,18 @@ public class LockPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassName(String, int, int, OrderByComparator)}
 	 * @param className the class name
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
-	@Deprecated
 	@Override
 	public List<Lock> findByClassName(
 		String className, int start, int end,
-		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Lock> orderByComparator) {
 
-		return findByClassName(className, start, end, orderByComparator);
+		return findByClassName(className, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1282,12 +1298,13 @@ public class LockPersistenceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	@Override
 	public List<Lock> findByClassName(
 		String className, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
 
 		className = Objects.toString(className, "");
 
@@ -1299,25 +1316,32 @@ public class LockPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByClassName;
-			finderArgs = new Object[] {className};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByClassName;
+				finderArgs = new Object[] {className};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByClassName;
 			finderArgs = new Object[] {
 				className, start, end, orderByComparator
 			};
 		}
 
-		List<Lock> list = (List<Lock>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Lock> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lock lock : list) {
-				if (!className.equals(lock.getClassName())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Lock>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Lock lock : list) {
+					if (!className.equals(lock.getClassName())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1384,10 +1408,14 @@ public class LockPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1797,22 +1825,19 @@ public class LockPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLtExpirationDate(Date, int, int, OrderByComparator)}
 	 * @param expirationDate the expiration date
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
-	@Deprecated
 	@Override
 	public List<Lock> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
-		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Lock> orderByComparator) {
 
 		return findByLtExpirationDate(
-			expirationDate, start, end, orderByComparator);
+			expirationDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1826,12 +1851,13 @@ public class LockPersistenceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching locks
 	 */
 	@Override
 	public List<Lock> findByLtExpirationDate(
 		Date expirationDate, int start, int end,
-		OrderByComparator<Lock> orderByComparator) {
+		OrderByComparator<Lock> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1842,17 +1868,21 @@ public class LockPersistenceImpl
 			_getTime(expirationDate), start, end, orderByComparator
 		};
 
-		List<Lock> list = (List<Lock>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Lock> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lock lock : list) {
-				if ((expirationDate.getTime() <=
-						lock.getExpirationDate().getTime())) {
+		if (useFinderCache) {
+			list = (List<Lock>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (Lock lock : list) {
+					if ((expirationDate.getTime() <=
+							lock.getExpirationDate().getTime())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1919,10 +1949,14 @@ public class LockPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2335,20 +2369,15 @@ public class LockPersistenceImpl
 	}
 
 	/**
-	 * Returns the lock where className = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the lock where className = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_K(String,String)}
 	 * @param className the class name
 	 * @param key the key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
 	 */
-	@Deprecated
 	@Override
-	public Lock fetchByC_K(
-		String className, String key, boolean useFinderCache) {
-
-		return fetchByC_K(className, key);
+	public Lock fetchByC_K(String className, String key) {
+		return fetchByC_K(className, key, true);
 	}
 
 	/**
@@ -2360,14 +2389,24 @@ public class LockPersistenceImpl
 	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
 	 */
 	@Override
-	public Lock fetchByC_K(String className, String key) {
+	public Lock fetchByC_K(
+		String className, String key, boolean useFinderCache) {
+
 		className = Objects.toString(className, "");
 		key = Objects.toString(key, "");
 
-		Object[] finderArgs = new Object[] {className, key};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByC_K, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {className, key};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_K, finderArgs, this);
+		}
 
 		if (result instanceof Lock) {
 			Lock lock = (Lock)result;
@@ -2428,8 +2467,10 @@ public class LockPersistenceImpl
 				List<Lock> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_K, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_K, finderArgs, list);
+					}
 				}
 				else {
 					Lock lock = list.get(0);
@@ -2440,7 +2481,9 @@ public class LockPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_K, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByC_K, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3033,20 +3076,16 @@ public class LockPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LockModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of locks
 	 */
-	@Deprecated
 	@Override
 	public List<Lock> findAll(
-		int start, int end, OrderByComparator<Lock> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Lock> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3059,11 +3098,13 @@ public class LockPersistenceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of locks
 	 */
 	@Override
 	public List<Lock> findAll(
-		int start, int end, OrderByComparator<Lock> orderByComparator) {
+		int start, int end, OrderByComparator<Lock> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3073,16 +3114,23 @@ public class LockPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Lock> list = (List<Lock>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Lock> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lock>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3129,10 +3177,14 @@ public class LockPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -158,22 +158,18 @@ public class OAuthConsumerUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGadgetKey(String, int, int, OrderByComparator)}
 	 * @param gadgetKey the gadget key
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth consumers
 	 */
-	@Deprecated
 	public static List<OAuthConsumer> findByGadgetKey(
 		String gadgetKey, int start, int end,
-		OrderByComparator<OAuthConsumer> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuthConsumer> orderByComparator) {
 
 		return getPersistence().findByGadgetKey(
-			gadgetKey, start, end, orderByComparator, useFinderCache);
+			gadgetKey, start, end, orderByComparator);
 	}
 
 	/**
@@ -187,14 +183,16 @@ public class OAuthConsumerUtil {
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth consumers
 	 */
 	public static List<OAuthConsumer> findByGadgetKey(
 		String gadgetKey, int start, int end,
-		OrderByComparator<OAuthConsumer> orderByComparator) {
+		OrderByComparator<OAuthConsumer> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByGadgetKey(
-			gadgetKey, start, end, orderByComparator);
+			gadgetKey, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -311,20 +309,16 @@ public class OAuthConsumerUtil {
 	}
 
 	/**
-	 * Returns the o auth consumer where gadgetKey = &#63; and serviceName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth consumer where gadgetKey = &#63; and serviceName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_S(String,String)}
 	 * @param gadgetKey the gadget key
 	 * @param serviceName the service name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	 */
-	@Deprecated
 	public static OAuthConsumer fetchByG_S(
-		String gadgetKey, String serviceName, boolean useFinderCache) {
+		String gadgetKey, String serviceName) {
 
-		return getPersistence().fetchByG_S(
-			gadgetKey, serviceName, useFinderCache);
+		return getPersistence().fetchByG_S(gadgetKey, serviceName);
 	}
 
 	/**
@@ -336,9 +330,10 @@ public class OAuthConsumerUtil {
 	 * @return the matching o auth consumer, or <code>null</code> if a matching o auth consumer could not be found
 	 */
 	public static OAuthConsumer fetchByG_S(
-		String gadgetKey, String serviceName) {
+		String gadgetKey, String serviceName, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_S(gadgetKey, serviceName);
+		return getPersistence().fetchByG_S(
+			gadgetKey, serviceName, useFinderCache);
 	}
 
 	/**
@@ -465,20 +460,16 @@ public class OAuthConsumerUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthConsumerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth consumers
 	 */
-	@Deprecated
 	public static List<OAuthConsumer> findAll(
-		int start, int end, OrderByComparator<OAuthConsumer> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<OAuthConsumer> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -491,13 +482,15 @@ public class OAuthConsumerUtil {
 	 * @param start the lower bound of the range of o auth consumers
 	 * @param end the upper bound of the range of o auth consumers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth consumers
 	 */
 	public static List<OAuthConsumer> findAll(
-		int start, int end,
-		OrderByComparator<OAuthConsumer> orderByComparator) {
+		int start, int end, OrderByComparator<OAuthConsumer> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

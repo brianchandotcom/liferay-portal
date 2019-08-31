@@ -17,7 +17,6 @@ package com.liferay.opensocial.service.persistence;
 import com.liferay.opensocial.exception.NoSuchOAuthTokenException;
 import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -74,20 +73,17 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S(String,String, int, int, OrderByComparator)}
 	 * @param gadgetKey the gadget key
 	 * @param serviceName the service name
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth tokens
 	 */
-	@Deprecated
 	public java.util.List<OAuthToken> findByG_S(
 		String gadgetKey, String serviceName, int start, int end,
-		OrderByComparator<OAuthToken> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth tokens where gadgetKey = &#63; and serviceName = &#63;.
@@ -101,11 +97,14 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth tokens
 	 */
 	public java.util.List<OAuthToken> findByG_S(
 		String gadgetKey, String serviceName, int start, int end,
-		OrderByComparator<OAuthToken> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth token in the ordered set where gadgetKey = &#63; and serviceName = &#63;.
@@ -118,7 +117,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken findByG_S_First(
 			String gadgetKey, String serviceName,
-			OrderByComparator<OAuthToken> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+				orderByComparator)
 		throws NoSuchOAuthTokenException;
 
 	/**
@@ -131,7 +131,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken fetchByG_S_First(
 		String gadgetKey, String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth token in the ordered set where gadgetKey = &#63; and serviceName = &#63;.
@@ -144,7 +145,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken findByG_S_Last(
 			String gadgetKey, String serviceName,
-			OrderByComparator<OAuthToken> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+				orderByComparator)
 		throws NoSuchOAuthTokenException;
 
 	/**
@@ -157,7 +159,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken fetchByG_S_Last(
 		String gadgetKey, String serviceName,
-		OrderByComparator<OAuthToken> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth tokens before and after the current o auth token in the ordered set where gadgetKey = &#63; and serviceName = &#63;.
@@ -171,7 +174,8 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken[] findByG_S_PrevAndNext(
 			long oAuthTokenId, String gadgetKey, String serviceName,
-			OrderByComparator<OAuthToken> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+				orderByComparator)
 		throws NoSuchOAuthTokenException;
 
 	/**
@@ -208,21 +212,18 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 		throws NoSuchOAuthTokenException;
 
 	/**
-	 * Returns the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_G_S_M_T(long,String,String,long,String)}
 	 * @param userId the user ID
 	 * @param gadgetKey the gadget key
 	 * @param serviceName the service name
 	 * @param moduleId the module ID
 	 * @param tokenName the token name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth token, or <code>null</code> if a matching o auth token could not be found
 	 */
-	@Deprecated
 	public OAuthToken fetchByU_G_S_M_T(
 		long userId, String gadgetKey, String serviceName, long moduleId,
-		String tokenName, boolean useFinderCache);
+		String tokenName);
 
 	/**
 	 * Returns the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -237,7 +238,7 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 */
 	public OAuthToken fetchByU_G_S_M_T(
 		long userId, String gadgetKey, String serviceName, long moduleId,
-		String tokenName);
+		String tokenName, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth token where userId = &#63; and gadgetKey = &#63; and serviceName = &#63; and moduleId = &#63; and tokenName = &#63; from the database.
@@ -347,17 +348,15 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth tokens
 	 */
-	@Deprecated
 	public java.util.List<OAuthToken> findAll(
-		int start, int end, OrderByComparator<OAuthToken> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth tokens.
@@ -369,10 +368,14 @@ public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 	 * @param start the lower bound of the range of o auth tokens
 	 * @param end the upper bound of the range of o auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth tokens
 	 */
 	public java.util.List<OAuthToken> findAll(
-		int start, int end, OrderByComparator<OAuthToken> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthToken>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth tokens from the database.

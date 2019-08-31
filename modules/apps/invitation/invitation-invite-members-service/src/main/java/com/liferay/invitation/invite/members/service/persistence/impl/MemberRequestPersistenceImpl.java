@@ -132,17 +132,14 @@ public class MemberRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the member request where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the member request where key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKey(String)}
 	 * @param key the key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
-	@Deprecated
 	@Override
-	public MemberRequest fetchByKey(String key, boolean useFinderCache) {
-		return fetchByKey(key);
+	public MemberRequest fetchByKey(String key) {
+		return fetchByKey(key, true);
 	}
 
 	/**
@@ -153,13 +150,21 @@ public class MemberRequestPersistenceImpl
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
 	@Override
-	public MemberRequest fetchByKey(String key) {
+	public MemberRequest fetchByKey(String key, boolean useFinderCache) {
 		key = Objects.toString(key, "");
 
-		Object[] finderArgs = new Object[] {key};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByKey, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {key};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByKey, finderArgs, this);
+		}
 
 		if (result instanceof MemberRequest) {
 			MemberRequest memberRequest = (MemberRequest)result;
@@ -203,14 +208,20 @@ public class MemberRequestPersistenceImpl
 				List<MemberRequest> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByKey, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByKey, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {key};
+							}
+
 							_log.warn(
 								"MemberRequestPersistenceImpl.fetchByKey(String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -226,7 +237,9 @@ public class MemberRequestPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByKey, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByKey, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -370,23 +383,19 @@ public class MemberRequestPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByReceiverUserId(long, int, int, OrderByComparator)}
 	 * @param receiverUserId the receiver user ID
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
-	@Deprecated
 	@Override
 	public List<MemberRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MemberRequest> orderByComparator) {
 
 		return findByReceiverUserId(
-			receiverUserId, start, end, orderByComparator);
+			receiverUserId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -400,12 +409,14 @@ public class MemberRequestPersistenceImpl
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
 	@Override
 	public List<MemberRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -415,25 +426,32 @@ public class MemberRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
-			finderArgs = new Object[] {receiverUserId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
+				finderArgs = new Object[] {receiverUserId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByReceiverUserId;
 			finderArgs = new Object[] {
 				receiverUserId, start, end, orderByComparator
 			};
 		}
 
-		List<MemberRequest> list = (List<MemberRequest>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<MemberRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MemberRequest memberRequest : list) {
-				if ((receiverUserId != memberRequest.getReceiverUserId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<MemberRequest>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (MemberRequest memberRequest : list) {
+					if ((receiverUserId != memberRequest.getReceiverUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -489,10 +507,14 @@ public class MemberRequestPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -887,23 +909,20 @@ public class MemberRequestPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_S(long,int, int, int, OrderByComparator)}
 	 * @param receiverUserId the receiver user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
-	@Deprecated
 	@Override
 	public List<MemberRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MemberRequest> orderByComparator) {
 
-		return findByR_S(receiverUserId, status, start, end, orderByComparator);
+		return findByR_S(
+			receiverUserId, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -918,12 +937,14 @@ public class MemberRequestPersistenceImpl
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
 	@Override
 	public List<MemberRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -933,27 +954,34 @@ public class MemberRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_S;
-			finderArgs = new Object[] {receiverUserId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_S;
+				finderArgs = new Object[] {receiverUserId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_S;
 			finderArgs = new Object[] {
 				receiverUserId, status, start, end, orderByComparator
 			};
 		}
 
-		List<MemberRequest> list = (List<MemberRequest>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<MemberRequest> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (MemberRequest memberRequest : list) {
-				if ((receiverUserId != memberRequest.getReceiverUserId()) ||
-					(status != memberRequest.getStatus())) {
+		if (useFinderCache) {
+			list = (List<MemberRequest>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (MemberRequest memberRequest : list) {
+					if ((receiverUserId != memberRequest.getReceiverUserId()) ||
+						(status != memberRequest.getStatus())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1013,10 +1041,14 @@ public class MemberRequestPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1439,21 +1471,18 @@ public class MemberRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_R_S(long,long,int)}
 	 * @param groupId the group ID
 	 * @param receiverUserId the receiver user ID
 	 * @param status the status
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
-	@Deprecated
 	@Override
 	public MemberRequest fetchByG_R_S(
-		long groupId, long receiverUserId, int status, boolean useFinderCache) {
+		long groupId, long receiverUserId, int status) {
 
-		return fetchByG_R_S(groupId, receiverUserId, status);
+		return fetchByG_R_S(groupId, receiverUserId, status, true);
 	}
 
 	/**
@@ -1467,12 +1496,20 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public MemberRequest fetchByG_R_S(
-		long groupId, long receiverUserId, int status) {
+		long groupId, long receiverUserId, int status, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {groupId, receiverUserId, status};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByG_R_S, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, receiverUserId, status};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_R_S, finderArgs, this);
+		}
 
 		if (result instanceof MemberRequest) {
 			MemberRequest memberRequest = (MemberRequest)result;
@@ -1516,14 +1553,22 @@ public class MemberRequestPersistenceImpl
 				List<MemberRequest> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_R_S, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_R_S, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, receiverUserId, status
+								};
+							}
+
 							_log.warn(
 								"MemberRequestPersistenceImpl.fetchByG_R_S(long, long, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1539,7 +1584,10 @@ public class MemberRequestPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_R_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_R_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2164,20 +2212,17 @@ public class MemberRequestPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of member requests
 	 */
-	@Deprecated
 	@Override
 	public List<MemberRequest> findAll(
-		int start, int end, OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<MemberRequest> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2190,12 +2235,13 @@ public class MemberRequestPersistenceImpl
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of member requests
 	 */
 	@Override
 	public List<MemberRequest> findAll(
-		int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		int start, int end, OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2205,16 +2251,23 @@ public class MemberRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<MemberRequest> list = (List<MemberRequest>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<MemberRequest> list = null;
+
+		if (useFinderCache) {
+			list = (List<MemberRequest>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2261,10 +2314,14 @@ public class MemberRequestPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

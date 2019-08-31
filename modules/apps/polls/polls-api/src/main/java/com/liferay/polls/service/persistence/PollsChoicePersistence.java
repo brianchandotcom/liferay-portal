@@ -17,7 +17,6 @@ package com.liferay.polls.service.persistence;
 import com.liferay.polls.exception.NoSuchChoiceException;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,19 +70,16 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PollsChoiceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
-	@Deprecated
 	public java.util.List<PollsChoice> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the polls choices where uuid = &#63;.
@@ -96,11 +92,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public java.util.List<PollsChoice> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls choice in the ordered set where uuid = &#63;.
@@ -111,7 +110,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @throws NoSuchChoiceException if a matching polls choice could not be found
 	 */
 	public PollsChoice findByUuid_First(
-			String uuid, OrderByComparator<PollsChoice> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -122,7 +123,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public PollsChoice fetchByUuid_First(
-		String uuid, OrderByComparator<PollsChoice> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the last polls choice in the ordered set where uuid = &#63;.
@@ -133,7 +136,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @throws NoSuchChoiceException if a matching polls choice could not be found
 	 */
 	public PollsChoice findByUuid_Last(
-			String uuid, OrderByComparator<PollsChoice> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -144,7 +149,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public PollsChoice fetchByUuid_Last(
-		String uuid, OrderByComparator<PollsChoice> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the polls choices before and after the current polls choice in the ordered set where uuid = &#63;.
@@ -157,7 +164,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice[] findByUuid_PrevAndNext(
 			long choiceId, String uuid,
-			OrderByComparator<PollsChoice> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -187,17 +195,13 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 		throws NoSuchChoiceException;
 
 	/**
-	 * Returns the polls choice where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the polls choice where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
-	@Deprecated
-	public PollsChoice fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public PollsChoice fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the polls choice where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -207,7 +211,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
-	public PollsChoice fetchByUUID_G(String uuid, long groupId);
+	public PollsChoice fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the polls choice where uuid = &#63; and groupId = &#63; from the database.
@@ -261,20 +266,17 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PollsChoiceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
-	@Deprecated
 	public java.util.List<PollsChoice> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the polls choices where uuid = &#63; and companyId = &#63;.
@@ -288,11 +290,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public java.util.List<PollsChoice> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -305,7 +310,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<PollsChoice> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -318,7 +324,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the last polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -331,7 +338,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<PollsChoice> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -344,7 +352,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the polls choices before and after the current polls choice in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -358,7 +367,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice[] findByUuid_C_PrevAndNext(
 			long choiceId, String uuid, long companyId,
-			OrderByComparator<PollsChoice> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -408,19 +418,16 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PollsChoiceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByQuestionId(long, int, int, OrderByComparator)}
 	 * @param questionId the question ID
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
-	@Deprecated
 	public java.util.List<PollsChoice> findByQuestionId(
 		long questionId, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the polls choices where questionId = &#63;.
@@ -433,11 +440,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching polls choices
 	 */
 	public java.util.List<PollsChoice> findByQuestionId(
 		long questionId, int start, int end,
-		OrderByComparator<PollsChoice> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first polls choice in the ordered set where questionId = &#63;.
@@ -448,7 +458,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @throws NoSuchChoiceException if a matching polls choice could not be found
 	 */
 	public PollsChoice findByQuestionId_First(
-			long questionId, OrderByComparator<PollsChoice> orderByComparator)
+			long questionId,
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -459,7 +471,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public PollsChoice fetchByQuestionId_First(
-		long questionId, OrderByComparator<PollsChoice> orderByComparator);
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the last polls choice in the ordered set where questionId = &#63;.
@@ -470,7 +484,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @throws NoSuchChoiceException if a matching polls choice could not be found
 	 */
 	public PollsChoice findByQuestionId_Last(
-			long questionId, OrderByComparator<PollsChoice> orderByComparator)
+			long questionId,
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -481,7 +497,9 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
 	public PollsChoice fetchByQuestionId_Last(
-		long questionId, OrderByComparator<PollsChoice> orderByComparator);
+		long questionId,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns the polls choices before and after the current polls choice in the ordered set where questionId = &#63;.
@@ -494,7 +512,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 */
 	public PollsChoice[] findByQuestionId_PrevAndNext(
 			long choiceId, long questionId,
-			OrderByComparator<PollsChoice> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+				orderByComparator)
 		throws NoSuchChoiceException;
 
 	/**
@@ -524,17 +543,13 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 		throws NoSuchChoiceException;
 
 	/**
-	 * Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByQ_N(long,String)}
 	 * @param questionId the question ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
-	@Deprecated
-	public PollsChoice fetchByQ_N(
-		long questionId, String name, boolean useFinderCache);
+	public PollsChoice fetchByQ_N(long questionId, String name);
 
 	/**
 	 * Returns the polls choice where questionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -544,7 +559,8 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	 */
-	public PollsChoice fetchByQ_N(long questionId, String name);
+	public PollsChoice fetchByQ_N(
+		long questionId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the polls choice where questionId = &#63; and name = &#63; from the database.
@@ -643,17 +659,15 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PollsChoiceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of polls choices
 	 */
-	@Deprecated
 	public java.util.List<PollsChoice> findAll(
-		int start, int end, OrderByComparator<PollsChoice> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the polls choices.
@@ -665,10 +679,14 @@ public interface PollsChoicePersistence extends BasePersistence<PollsChoice> {
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of polls choices
 	 */
 	public java.util.List<PollsChoice> findAll(
-		int start, int end, OrderByComparator<PollsChoice> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PollsChoice>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the polls choices from the database.

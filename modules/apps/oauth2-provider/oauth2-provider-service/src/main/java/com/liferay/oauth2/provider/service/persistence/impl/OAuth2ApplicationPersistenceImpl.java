@@ -136,22 +136,18 @@ public class OAuth2ApplicationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ApplicationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of o auth2 applications
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 applications
 	 */
-	@Deprecated
 	@Override
 	public List<OAuth2Application> findByC(
 		long companyId, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		return findByC(companyId, start, end, orderByComparator);
+		return findByC(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -165,12 +161,14 @@ public class OAuth2ApplicationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 applications
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 applications
 	 */
 	@Override
 	public List<OAuth2Application> findByC(
 		long companyId, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
+		OrderByComparator<OAuth2Application> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -180,26 +178,32 @@ public class OAuth2ApplicationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<OAuth2Application> list =
-			(List<OAuth2Application>)finderCache.getResult(
+		List<OAuth2Application> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuth2Application>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (OAuth2Application oAuth2Application : list) {
-				if ((companyId != oAuth2Application.getCompanyId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2Application oAuth2Application : list) {
+					if ((companyId != oAuth2Application.getCompanyId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -255,10 +259,14 @@ public class OAuth2ApplicationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1030,20 +1038,15 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,String)}
 	 * @param companyId the company ID
 	 * @param clientId the client ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
-	@Deprecated
 	@Override
-	public OAuth2Application fetchByC_C(
-		long companyId, String clientId, boolean useFinderCache) {
-
-		return fetchByC_C(companyId, clientId);
+	public OAuth2Application fetchByC_C(long companyId, String clientId) {
+		return fetchByC_C(companyId, clientId, true);
 	}
 
 	/**
@@ -1055,13 +1058,23 @@ public class OAuth2ApplicationPersistenceImpl
 	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
 	 */
 	@Override
-	public OAuth2Application fetchByC_C(long companyId, String clientId) {
+	public OAuth2Application fetchByC_C(
+		long companyId, String clientId, boolean useFinderCache) {
+
 		clientId = Objects.toString(clientId, "");
 
-		Object[] finderArgs = new Object[] {companyId, clientId};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByC_C, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, clientId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
+		}
 
 		if (result instanceof OAuth2Application) {
 			OAuth2Application oAuth2Application = (OAuth2Application)result;
@@ -1111,14 +1124,20 @@ public class OAuth2ApplicationPersistenceImpl
 				List<OAuth2Application> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_C, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {companyId, clientId};
+							}
+
 							_log.warn(
 								"OAuth2ApplicationPersistenceImpl.fetchByC_C(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1134,7 +1153,9 @@ public class OAuth2ApplicationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByC_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1703,21 +1724,17 @@ public class OAuth2ApplicationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ApplicationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth2 applications
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 applications
 	 */
-	@Deprecated
 	@Override
 	public List<OAuth2Application> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1730,12 +1747,14 @@ public class OAuth2ApplicationPersistenceImpl
 	 * @param start the lower bound of the range of o auth2 applications
 	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 applications
 	 */
 	@Override
 	public List<OAuth2Application> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
+		OrderByComparator<OAuth2Application> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1745,17 +1764,23 @@ public class OAuth2ApplicationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<OAuth2Application> list =
-			(List<OAuth2Application>)finderCache.getResult(
+		List<OAuth2Application> list = null;
+
+		if (useFinderCache) {
+			list = (List<OAuth2Application>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1802,10 +1827,14 @@ public class OAuth2ApplicationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

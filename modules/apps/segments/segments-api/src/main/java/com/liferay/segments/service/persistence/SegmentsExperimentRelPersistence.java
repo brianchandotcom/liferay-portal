@@ -15,7 +15,6 @@
 package com.liferay.segments.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
@@ -73,19 +72,16 @@ public interface SegmentsExperimentRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsExperimentId(long, int, int, OrderByComparator)}
 	 * @param segmentsExperimentId the segments experiment ID
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiment rels where segmentsExperimentId = &#63;.
@@ -98,11 +94,14 @@ public interface SegmentsExperimentRelPersistence
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiment rels
 	 */
 	public java.util.List<SegmentsExperimentRel> findBySegmentsExperimentId(
 		long segmentsExperimentId, int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
@@ -114,7 +113,8 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public SegmentsExperimentRel findBySegmentsExperimentId_First(
 			long segmentsExperimentId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<SegmentsExperimentRel> orderByComparator)
 		throws NoSuchExperimentRelException;
 
 	/**
@@ -126,7 +126,8 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public SegmentsExperimentRel fetchBySegmentsExperimentId_First(
 		long segmentsExperimentId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
@@ -138,7 +139,8 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public SegmentsExperimentRel findBySegmentsExperimentId_Last(
 			long segmentsExperimentId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<SegmentsExperimentRel> orderByComparator)
 		throws NoSuchExperimentRelException;
 
 	/**
@@ -150,7 +152,8 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public SegmentsExperimentRel fetchBySegmentsExperimentId_Last(
 		long segmentsExperimentId,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiment rels before and after the current segments experiment rel in the ordered set where segmentsExperimentId = &#63;.
@@ -163,7 +166,8 @@ public interface SegmentsExperimentRelPersistence
 	 */
 	public SegmentsExperimentRel[] findBySegmentsExperimentId_PrevAndNext(
 			long segmentsExperimentRelId, long segmentsExperimentId,
-			OrderByComparator<SegmentsExperimentRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<SegmentsExperimentRel> orderByComparator)
 		throws NoSuchExperimentRelException;
 
 	/**
@@ -194,18 +198,14 @@ public interface SegmentsExperimentRelPersistence
 		throws NoSuchExperimentRelException;
 
 	/**
-	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByS_S(long,long)}
 	 * @param segmentsExperimentId the segments experiment ID
 	 * @param segmentsExperienceId the segments experience ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
 	 */
-	@Deprecated
 	public SegmentsExperimentRel fetchByS_S(
-		long segmentsExperimentId, long segmentsExperienceId,
-		boolean useFinderCache);
+		long segmentsExperimentId, long segmentsExperienceId);
 
 	/**
 	 * Returns the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -216,7 +216,8 @@ public interface SegmentsExperimentRelPersistence
 	 * @return the matching segments experiment rel, or <code>null</code> if a matching segments experiment rel could not be found
 	 */
 	public SegmentsExperimentRel fetchByS_S(
-		long segmentsExperimentId, long segmentsExperienceId);
+		long segmentsExperimentId, long segmentsExperienceId,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the segments experiment rel where segmentsExperimentId = &#63; and segmentsExperienceId = &#63; from the database.
@@ -320,18 +321,15 @@ public interface SegmentsExperimentRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperimentRel> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiment rels.
@@ -343,11 +341,14 @@ public interface SegmentsExperimentRelPersistence
 	 * @param start the lower bound of the range of segments experiment rels
 	 * @param end the upper bound of the range of segments experiment rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiment rels
 	 */
 	public java.util.List<SegmentsExperimentRel> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperimentRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperimentRel>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiment rels from the database.

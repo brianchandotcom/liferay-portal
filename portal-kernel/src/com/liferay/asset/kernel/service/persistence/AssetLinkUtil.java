@@ -156,22 +156,18 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE1(long, int, int, OrderByComparator)}
 	 * @param entryId1 the entry id1
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findByE1(
 		long entryId1, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().findByE1(
-			entryId1, start, end, orderByComparator, useFinderCache);
+			entryId1, start, end, orderByComparator);
 	}
 
 	/**
@@ -185,14 +181,16 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
 	public static List<AssetLink> findByE1(
 		long entryId1, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByE1(
-			entryId1, start, end, orderByComparator);
+			entryId1, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -321,22 +319,18 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE2(long, int, int, OrderByComparator)}
 	 * @param entryId2 the entry id2
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findByE2(
 		long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().findByE2(
-			entryId2, start, end, orderByComparator, useFinderCache);
+			entryId2, start, end, orderByComparator);
 	}
 
 	/**
@@ -350,14 +344,16 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
 	public static List<AssetLink> findByE2(
 		long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByE2(
-			entryId2, start, end, orderByComparator);
+			entryId2, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -490,23 +486,19 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE_E(long,long, int, int, OrderByComparator)}
 	 * @param entryId1 the entry id1
 	 * @param entryId2 the entry id2
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findByE_E(
 		long entryId1, long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().findByE_E(
-			entryId1, entryId2, start, end, orderByComparator, useFinderCache);
+			entryId1, entryId2, start, end, orderByComparator);
 	}
 
 	/**
@@ -521,14 +513,16 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
 	public static List<AssetLink> findByE_E(
 		long entryId1, long entryId2, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByE_E(
-			entryId1, entryId2, start, end, orderByComparator);
+			entryId1, entryId2, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -676,23 +670,19 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE1_T(long,int, int, int, OrderByComparator)}
 	 * @param entryId1 the entry id1
 	 * @param type the type
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findByE1_T(
 		long entryId1, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().findByE1_T(
-			entryId1, type, start, end, orderByComparator, useFinderCache);
+			entryId1, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -707,14 +697,16 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
 	public static List<AssetLink> findByE1_T(
 		long entryId1, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByE1_T(
-			entryId1, type, start, end, orderByComparator);
+			entryId1, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -862,23 +854,19 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByE2_T(long,int, int, int, OrderByComparator)}
 	 * @param entryId2 the entry id2
 	 * @param type the type
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findByE2_T(
 		long entryId2, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetLink> orderByComparator) {
 
 		return getPersistence().findByE2_T(
-			entryId2, type, start, end, orderByComparator, useFinderCache);
+			entryId2, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -893,14 +881,16 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset links
 	 */
 	public static List<AssetLink> findByE2_T(
 		long entryId2, int type, int start, int end,
-		OrderByComparator<AssetLink> orderByComparator) {
+		OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByE2_T(
-			entryId2, type, start, end, orderByComparator);
+			entryId2, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1027,21 +1017,17 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset link where entryId1 = &#63; and entryId2 = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByE_E_T(long,long,int)}
 	 * @param entryId1 the entry id1
 	 * @param entryId2 the entry id2
 	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
-	@Deprecated
 	public static AssetLink fetchByE_E_T(
-		long entryId1, long entryId2, int type, boolean useFinderCache) {
+		long entryId1, long entryId2, int type) {
 
-		return getPersistence().fetchByE_E_T(
-			entryId1, entryId2, type, useFinderCache);
+		return getPersistence().fetchByE_E_T(entryId1, entryId2, type);
 	}
 
 	/**
@@ -1054,9 +1040,10 @@ public class AssetLinkUtil {
 	 * @return the matching asset link, or <code>null</code> if a matching asset link could not be found
 	 */
 	public static AssetLink fetchByE_E_T(
-		long entryId1, long entryId2, int type) {
+		long entryId1, long entryId2, int type, boolean useFinderCache) {
 
-		return getPersistence().fetchByE_E_T(entryId1, entryId2, type);
+		return getPersistence().fetchByE_E_T(
+			entryId1, entryId2, type, useFinderCache);
 	}
 
 	/**
@@ -1185,20 +1172,15 @@ public class AssetLinkUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset links
 	 */
-	@Deprecated
 	public static List<AssetLink> findAll(
-		int start, int end, OrderByComparator<AssetLink> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<AssetLink> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1211,12 +1193,15 @@ public class AssetLinkUtil {
 	 * @param start the lower bound of the range of asset links
 	 * @param end the upper bound of the range of asset links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset links
 	 */
 	public static List<AssetLink> findAll(
-		int start, int end, OrderByComparator<AssetLink> orderByComparator) {
+		int start, int end, OrderByComparator<AssetLink> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

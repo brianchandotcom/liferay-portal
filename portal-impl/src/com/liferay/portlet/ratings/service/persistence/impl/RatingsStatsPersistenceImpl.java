@@ -124,32 +124,6 @@ public class RatingsStatsPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the ratings statses where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RatingsStatsModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long[], int, int, OrderByComparator)}
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of ratings statses
-	 * @param end the upper bound of the range of ratings statses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ratings statses
-	 */
-	@Deprecated
-	@Override
-	public List<RatingsStats> findByC_C(
-		long classNameId, long[] classPKs, int start, int end,
-		OrderByComparator<RatingsStats> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_C(classNameId, classPKs, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ratings statses where classNameId = &#63; and classPK = any &#63;.
 	 *
 	 * <p>
@@ -167,6 +141,31 @@ public class RatingsStatsPersistenceImpl
 	public List<RatingsStats> findByC_C(
 		long classNameId, long[] classPKs, int start, int end,
 		OrderByComparator<RatingsStats> orderByComparator) {
+
+		return findByC_C(
+			classNameId, classPKs, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ratings statses where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RatingsStatsModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of ratings statses
+	 * @param end the upper bound of the range of ratings statses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ratings statses
+	 */
+	@Override
+	public List<RatingsStats> findByC_C(
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<RatingsStats> orderByComparator,
+		boolean useFinderCache) {
 
 		if (classPKs == null) {
 			classPKs = new long[0];
@@ -193,26 +192,36 @@ public class RatingsStatsPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {classNameId, StringUtil.merge(classPKs)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					classNameId, StringUtil.merge(classPKs)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				classNameId, StringUtil.merge(classPKs), start, end,
 				orderByComparator
 			};
 		}
 
-		List<RatingsStats> list = (List<RatingsStats>)FinderCacheUtil.getResult(
-			_finderPathWithPaginationFindByC_C, finderArgs, this);
+		List<RatingsStats> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (RatingsStats ratingsStats : list) {
-				if ((classNameId != ratingsStats.getClassNameId()) ||
-					!ArrayUtil.contains(classPKs, ratingsStats.getClassPK())) {
+		if (useFinderCache) {
+			list = (List<RatingsStats>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByC_C, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (RatingsStats ratingsStats : list) {
+					if ((classNameId != ratingsStats.getClassNameId()) ||
+						!ArrayUtil.contains(
+							classPKs, ratingsStats.getClassPK())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -248,12 +257,16 @@ public class RatingsStatsPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_C, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_C, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_C, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -372,20 +385,15 @@ public class RatingsStatsPersistenceImpl
 	}
 
 	/**
-	 * Returns the ratings stats where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ratings stats where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ratings stats, or <code>null</code> if a matching ratings stats could not be found
 	 */
-	@Deprecated
 	@Override
-	public RatingsStats fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache) {
-
-		return fetchByC_C(classNameId, classPK);
+	public RatingsStats fetchByC_C(long classNameId, long classPK) {
+		return fetchByC_C(classNameId, classPK, true);
 	}
 
 	/**
@@ -397,11 +405,21 @@ public class RatingsStatsPersistenceImpl
 	 * @return the matching ratings stats, or <code>null</code> if a matching ratings stats could not be found
 	 */
 	@Override
-	public RatingsStats fetchByC_C(long classNameId, long classPK) {
-		Object[] finderArgs = new Object[] {classNameId, classPK};
+	public RatingsStats fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache) {
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByC_C, finderArgs, this);
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {classNameId, classPK};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_C, finderArgs, this);
+		}
 
 		if (result instanceof RatingsStats) {
 			RatingsStats ratingsStats = (RatingsStats)result;
@@ -440,8 +458,10 @@ public class RatingsStatsPersistenceImpl
 				List<RatingsStats> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_C, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_C, finderArgs, list);
+					}
 				}
 				else {
 					RatingsStats ratingsStats = list.get(0);
@@ -452,7 +472,10 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_C, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1083,20 +1106,16 @@ public class RatingsStatsPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RatingsStatsModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ratings statses
 	 * @param end the upper bound of the range of ratings statses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ratings statses
 	 */
-	@Deprecated
 	@Override
 	public List<RatingsStats> findAll(
-		int start, int end, OrderByComparator<RatingsStats> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<RatingsStats> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1109,11 +1128,13 @@ public class RatingsStatsPersistenceImpl
 	 * @param start the lower bound of the range of ratings statses
 	 * @param end the upper bound of the range of ratings statses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ratings statses
 	 */
 	@Override
 	public List<RatingsStats> findAll(
-		int start, int end, OrderByComparator<RatingsStats> orderByComparator) {
+		int start, int end, OrderByComparator<RatingsStats> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1123,16 +1144,23 @@ public class RatingsStatsPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<RatingsStats> list = (List<RatingsStats>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<RatingsStats> list = null;
+
+		if (useFinderCache) {
+			list = (List<RatingsStats>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1179,10 +1207,14 @@ public class RatingsStatsPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

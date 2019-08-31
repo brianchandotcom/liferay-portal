@@ -134,22 +134,18 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByTreePath(String, int, int, OrderByComparator)}
 	 * @param treePath the tree path
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByTreePath(
 		String treePath, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findByTreePath(treePath, start, end, orderByComparator);
+		return findByTreePath(treePath, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -163,12 +159,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByTreePath(
 		String treePath, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		treePath = Objects.toString(treePath, "");
 
@@ -179,18 +177,22 @@ public class SyncDLObjectPersistenceImpl
 		finderPath = _finderPathWithPaginationFindByTreePath;
 		finderArgs = new Object[] {treePath, start, end, orderByComparator};
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if (!StringUtil.wildcardMatches(
-						syncDLObject.getTreePath(), treePath, '_', '%', '\\',
-						true)) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if (!StringUtil.wildcardMatches(
+							syncDLObject.getTreePath(), treePath, '_', '%',
+							'\\', true)) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -257,10 +259,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -676,24 +682,20 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_R(long,long, int, int, OrderByComparator)}
 	 * @param modifiedTime the modified time
 	 * @param repositoryId the repository ID
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByM_R(
 		long modifiedTime, long repositoryId, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
 		return findByM_R(
-			modifiedTime, repositoryId, start, end, orderByComparator);
+			modifiedTime, repositoryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -708,12 +710,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByM_R(
 		long modifiedTime, long repositoryId, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -724,17 +728,21 @@ public class SyncDLObjectPersistenceImpl
 			modifiedTime, repositoryId, start, end, orderByComparator
 		};
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
-					(repositoryId != syncDLObject.getRepositoryId())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
+						(repositoryId != syncDLObject.getRepositoryId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -794,10 +802,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1219,24 +1231,20 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_P(long,long, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param parentFolderId the parent folder ID
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByR_P(
 		long repositoryId, long parentFolderId, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
 		return findByR_P(
-			repositoryId, parentFolderId, start, end, orderByComparator);
+			repositoryId, parentFolderId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1251,12 +1259,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByR_P(
 		long repositoryId, long parentFolderId, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1266,27 +1276,34 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_P;
-			finderArgs = new Object[] {repositoryId, parentFolderId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_P;
+				finderArgs = new Object[] {repositoryId, parentFolderId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_P;
 			finderArgs = new Object[] {
 				repositoryId, parentFolderId, start, end, orderByComparator
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((repositoryId != syncDLObject.getRepositoryId()) ||
-					(parentFolderId != syncDLObject.getParentFolderId())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((repositoryId != syncDLObject.getRepositoryId()) ||
+						(parentFolderId != syncDLObject.getParentFolderId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1346,10 +1363,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1767,23 +1788,20 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_NotE(long,String, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param event the event
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByR_NotE(
 		long repositoryId, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findByR_NotE(repositoryId, event, start, end, orderByComparator);
+		return findByR_NotE(
+			repositoryId, event, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1798,12 +1816,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByR_NotE(
 		long repositoryId, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		event = Objects.toString(event, "");
 
@@ -1816,17 +1836,21 @@ public class SyncDLObjectPersistenceImpl
 			repositoryId, event, start, end, orderByComparator
 		};
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((repositoryId != syncDLObject.getRepositoryId()) ||
-					event.equals(syncDLObject.getEvent())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((repositoryId != syncDLObject.getRepositoryId()) ||
+						event.equals(syncDLObject.getEvent())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1897,10 +1921,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2348,23 +2376,20 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_T(long,String, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param type the type
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByR_T(
 		long repositoryId, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findByR_T(repositoryId, type, start, end, orderByComparator);
+		return findByR_T(
+			repositoryId, type, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2379,12 +2404,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByR_T(
 		long repositoryId, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
@@ -2396,27 +2423,34 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_T;
-			finderArgs = new Object[] {repositoryId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_T;
+				finderArgs = new Object[] {repositoryId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_T;
 			finderArgs = new Object[] {
 				repositoryId, type, start, end, orderByComparator
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((repositoryId != syncDLObject.getRepositoryId()) ||
-					!type.equals(syncDLObject.getType())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((repositoryId != syncDLObject.getRepositoryId()) ||
+						!type.equals(syncDLObject.getType())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2487,10 +2521,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2937,23 +2975,20 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_NotE(String,String, int, int, OrderByComparator)}
 	 * @param treePath the tree path
 	 * @param event the event
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByT_NotE(
 		String treePath, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findByT_NotE(treePath, event, start, end, orderByComparator);
+		return findByT_NotE(
+			treePath, event, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2968,12 +3003,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByT_NotE(
 		String treePath, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		treePath = Objects.toString(treePath, "");
 		event = Objects.toString(event, "");
@@ -2987,19 +3024,23 @@ public class SyncDLObjectPersistenceImpl
 			treePath, event, start, end, orderByComparator
 		};
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if (!StringUtil.wildcardMatches(
-						syncDLObject.getTreePath(), treePath, '_', '%', '\\',
-						true) ||
-					event.equals(syncDLObject.getEvent())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if (!StringUtil.wildcardMatches(
+							syncDLObject.getTreePath(), treePath, '_', '%',
+							'\\', true) ||
+						event.equals(syncDLObject.getEvent())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3081,10 +3122,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3559,23 +3604,19 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByV_T(String,String, int, int, OrderByComparator)}
 	 * @param version the version
 	 * @param type the type
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByV_T(
 		String version, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findByV_T(version, type, start, end, orderByComparator);
+		return findByV_T(version, type, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3590,12 +3631,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByV_T(
 		String version, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		version = Objects.toString(version, "");
 		type = Objects.toString(type, "");
@@ -3608,27 +3651,34 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByV_T;
-			finderArgs = new Object[] {version, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByV_T;
+				finderArgs = new Object[] {version, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByV_T;
 			finderArgs = new Object[] {
 				version, type, start, end, orderByComparator
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if (!version.equals(syncDLObject.getVersion()) ||
-					!type.equals(syncDLObject.getType())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if (!version.equals(syncDLObject.getVersion()) ||
+						!type.equals(syncDLObject.getType())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3710,10 +3760,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4182,20 +4236,15 @@ public class SyncDLObjectPersistenceImpl
 	}
 
 	/**
-	 * Returns the sync dl object where type = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sync dl object where type = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_T(String,long)}
 	 * @param type the type
 	 * @param typePK the type pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	 */
-	@Deprecated
 	@Override
-	public SyncDLObject fetchByT_T(
-		String type, long typePK, boolean useFinderCache) {
-
-		return fetchByT_T(type, typePK);
+	public SyncDLObject fetchByT_T(String type, long typePK) {
+		return fetchByT_T(type, typePK, true);
 	}
 
 	/**
@@ -4207,13 +4256,23 @@ public class SyncDLObjectPersistenceImpl
 	 * @return the matching sync dl object, or <code>null</code> if a matching sync dl object could not be found
 	 */
 	@Override
-	public SyncDLObject fetchByT_T(String type, long typePK) {
+	public SyncDLObject fetchByT_T(
+		String type, long typePK, boolean useFinderCache) {
+
 		type = Objects.toString(type, "");
 
-		Object[] finderArgs = new Object[] {type, typePK};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByT_T, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {type, typePK};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByT_T, finderArgs, this);
+		}
 
 		if (result instanceof SyncDLObject) {
 			SyncDLObject syncDLObject = (SyncDLObject)result;
@@ -4263,8 +4322,10 @@ public class SyncDLObjectPersistenceImpl
 				List<SyncDLObject> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByT_T, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByT_T, finderArgs, list);
+					}
 				}
 				else {
 					SyncDLObject syncDLObject = list.get(0);
@@ -4275,7 +4336,9 @@ public class SyncDLObjectPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByT_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByT_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4436,25 +4499,22 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_R_NotE(long,long,String, int, int, OrderByComparator)}
 	 * @param modifiedTime the modified time
 	 * @param repositoryId the repository ID
 	 * @param event the event
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByM_R_NotE(
 		long modifiedTime, long repositoryId, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
 		return findByM_R_NotE(
-			modifiedTime, repositoryId, event, start, end, orderByComparator);
+			modifiedTime, repositoryId, event, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -4470,12 +4530,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByM_R_NotE(
 		long modifiedTime, long repositoryId, String event, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		event = Objects.toString(event, "");
 
@@ -4488,18 +4550,22 @@ public class SyncDLObjectPersistenceImpl
 			modifiedTime, repositoryId, event, start, end, orderByComparator
 		};
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
-					(repositoryId != syncDLObject.getRepositoryId()) ||
-					event.equals(syncDLObject.getEvent())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
+						(repositoryId != syncDLObject.getRepositoryId()) ||
+						event.equals(syncDLObject.getEvent())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4574,10 +4640,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4947,34 +5017,6 @@ public class SyncDLObjectPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the sync dl objects where modifiedTime &gt; &#63; and repositoryId = &#63; and event &ne; &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByM_R_NotE(long,long,String, int, int, OrderByComparator)}
-	 * @param modifiedTime the modified time
-	 * @param repositoryId the repository ID
-	 * @param event the event
-	 * @param start the lower bound of the range of sync dl objects
-	 * @param end the upper bound of the range of sync dl objects (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching sync dl objects
-	 */
-	@Deprecated
-	@Override
-	public List<SyncDLObject> findByM_R_NotE(
-		long modifiedTime, long repositoryId, String[] events, int start,
-		int end, OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByM_R_NotE(
-			modifiedTime, repositoryId, events, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the sync dl objects where modifiedTime &gt; &#63; and repositoryId = &#63; and event &ne; all &#63;.
 	 *
 	 * <p>
@@ -4993,6 +5035,33 @@ public class SyncDLObjectPersistenceImpl
 	public List<SyncDLObject> findByM_R_NotE(
 		long modifiedTime, long repositoryId, String[] events, int start,
 		int end, OrderByComparator<SyncDLObject> orderByComparator) {
+
+		return findByM_R_NotE(
+			modifiedTime, repositoryId, events, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the sync dl objects where modifiedTime &gt; &#63; and repositoryId = &#63; and event &ne; &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param modifiedTime the modified time
+	 * @param repositoryId the repository ID
+	 * @param event the event
+	 * @param start the lower bound of the range of sync dl objects
+	 * @param end the upper bound of the range of sync dl objects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sync dl objects
+	 */
+	@Override
+	public List<SyncDLObject> findByM_R_NotE(
+		long modifiedTime, long repositoryId, String[] events, int start,
+		int end, OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		if (events == null) {
 			events = new String[0];
@@ -5018,29 +5087,36 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				modifiedTime, repositoryId, StringUtil.merge(events)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					modifiedTime, repositoryId, StringUtil.merge(events)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				modifiedTime, repositoryId, StringUtil.merge(events), start,
 				end, orderByComparator
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			_finderPathWithPaginationFindByM_R_NotE, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
-					(repositoryId != syncDLObject.getRepositoryId()) ||
-					!ArrayUtil.contains(events, syncDLObject.getEvent())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				_finderPathWithPaginationFindByM_R_NotE, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
+						(repositoryId != syncDLObject.getRepositoryId()) ||
+						!ArrayUtil.contains(events, syncDLObject.getEvent())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5123,12 +5199,17 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByM_R_NotE, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByM_R_NotE, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByM_R_NotE, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByM_R_NotE, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5405,25 +5486,22 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_P_T(long,long,String, int, int, OrderByComparator)}
 	 * @param repositoryId the repository ID
 	 * @param parentFolderId the parent folder ID
 	 * @param type the type
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findByR_P_T(
 		long repositoryId, long parentFolderId, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLObject> orderByComparator) {
 
 		return findByR_P_T(
-			repositoryId, parentFolderId, type, start, end, orderByComparator);
+			repositoryId, parentFolderId, type, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -5439,12 +5517,14 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findByR_P_T(
 		long repositoryId, long parentFolderId, String type, int start, int end,
-		OrderByComparator<SyncDLObject> orderByComparator) {
+		OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		type = Objects.toString(type, "");
 
@@ -5456,10 +5536,13 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByR_P_T;
-			finderArgs = new Object[] {repositoryId, parentFolderId, type};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByR_P_T;
+				finderArgs = new Object[] {repositoryId, parentFolderId, type};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByR_P_T;
 			finderArgs = new Object[] {
 				repositoryId, parentFolderId, type, start, end,
@@ -5467,18 +5550,22 @@ public class SyncDLObjectPersistenceImpl
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((repositoryId != syncDLObject.getRepositoryId()) ||
-					(parentFolderId != syncDLObject.getParentFolderId()) ||
-					!type.equals(syncDLObject.getType())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((repositoryId != syncDLObject.getRepositoryId()) ||
+						(parentFolderId != syncDLObject.getParentFolderId()) ||
+						!type.equals(syncDLObject.getType())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5553,10 +5640,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5926,34 +6017,6 @@ public class SyncDLObjectPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the sync dl objects where repositoryId = &#63; and parentFolderId = &#63; and type = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_P_T(long,long,String, int, int, OrderByComparator)}
-	 * @param repositoryId the repository ID
-	 * @param parentFolderId the parent folder ID
-	 * @param type the type
-	 * @param start the lower bound of the range of sync dl objects
-	 * @param end the upper bound of the range of sync dl objects (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching sync dl objects
-	 */
-	@Deprecated
-	@Override
-	public List<SyncDLObject> findByR_P_T(
-		long repositoryId, long parentFolderId, String[] types, int start,
-		int end, OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByR_P_T(
-			repositoryId, parentFolderId, types, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the sync dl objects where repositoryId = &#63; and parentFolderId = &#63; and type = any &#63;.
 	 *
 	 * <p>
@@ -5972,6 +6035,33 @@ public class SyncDLObjectPersistenceImpl
 	public List<SyncDLObject> findByR_P_T(
 		long repositoryId, long parentFolderId, String[] types, int start,
 		int end, OrderByComparator<SyncDLObject> orderByComparator) {
+
+		return findByR_P_T(
+			repositoryId, parentFolderId, types, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the sync dl objects where repositoryId = &#63; and parentFolderId = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param repositoryId the repository ID
+	 * @param parentFolderId the parent folder ID
+	 * @param type the type
+	 * @param start the lower bound of the range of sync dl objects
+	 * @param end the upper bound of the range of sync dl objects (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sync dl objects
+	 */
+	@Override
+	public List<SyncDLObject> findByR_P_T(
+		long repositoryId, long parentFolderId, String[] types, int start,
+		int end, OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		if (types == null) {
 			types = new String[0];
@@ -5997,29 +6087,36 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				repositoryId, parentFolderId, StringUtil.merge(types)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					repositoryId, parentFolderId, StringUtil.merge(types)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				repositoryId, parentFolderId, StringUtil.merge(types), start,
 				end, orderByComparator
 			};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			_finderPathWithPaginationFindByR_P_T, finderArgs, this);
+		List<SyncDLObject> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLObject syncDLObject : list) {
-				if ((repositoryId != syncDLObject.getRepositoryId()) ||
-					(parentFolderId != syncDLObject.getParentFolderId()) ||
-					!ArrayUtil.contains(types, syncDLObject.getType())) {
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				_finderPathWithPaginationFindByR_P_T, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLObject syncDLObject : list) {
+					if ((repositoryId != syncDLObject.getRepositoryId()) ||
+						(parentFolderId != syncDLObject.getParentFolderId()) ||
+						!ArrayUtil.contains(types, syncDLObject.getType())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6102,12 +6199,16 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByR_P_T, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByR_P_T, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByR_P_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByR_P_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6858,20 +6959,16 @@ public class SyncDLObjectPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLObjectModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sync dl objects
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLObject> findAll(
-		int start, int end, OrderByComparator<SyncDLObject> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -6884,11 +6981,13 @@ public class SyncDLObjectPersistenceImpl
 	 * @param start the lower bound of the range of sync dl objects
 	 * @param end the upper bound of the range of sync dl objects (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sync dl objects
 	 */
 	@Override
 	public List<SyncDLObject> findAll(
-		int start, int end, OrderByComparator<SyncDLObject> orderByComparator) {
+		int start, int end, OrderByComparator<SyncDLObject> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6898,16 +6997,23 @@ public class SyncDLObjectPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SyncDLObject> list = (List<SyncDLObject>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<SyncDLObject> list = null;
+
+		if (useFinderCache) {
+			list = (List<SyncDLObject>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -6954,10 +7060,14 @@ public class SyncDLObjectPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

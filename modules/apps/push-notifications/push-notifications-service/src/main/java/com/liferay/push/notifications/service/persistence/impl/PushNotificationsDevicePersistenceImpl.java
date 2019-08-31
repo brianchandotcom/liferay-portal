@@ -127,19 +127,14 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 	/**
-	 * Returns the push notifications device where token = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the push notifications device where token = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByToken(String)}
 	 * @param token the token
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	 */
-	@Deprecated
 	@Override
-	public PushNotificationsDevice fetchByToken(
-		String token, boolean useFinderCache) {
-
-		return fetchByToken(token);
+	public PushNotificationsDevice fetchByToken(String token) {
+		return fetchByToken(token, true);
 	}
 
 	/**
@@ -150,13 +145,23 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @return the matching push notifications device, or <code>null</code> if a matching push notifications device could not be found
 	 */
 	@Override
-	public PushNotificationsDevice fetchByToken(String token) {
+	public PushNotificationsDevice fetchByToken(
+		String token, boolean useFinderCache) {
+
 		token = Objects.toString(token, "");
 
-		Object[] finderArgs = new Object[] {token};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByToken, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {token};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByToken, finderArgs, this);
+		}
 
 		if (result instanceof PushNotificationsDevice) {
 			PushNotificationsDevice pushNotificationsDevice =
@@ -201,8 +206,10 @@ public class PushNotificationsDevicePersistenceImpl
 				List<PushNotificationsDevice> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByToken, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByToken, finderArgs, list);
+					}
 				}
 				else {
 					PushNotificationsDevice pushNotificationsDevice = list.get(
@@ -214,7 +221,10 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByToken, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByToken, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -363,23 +373,19 @@ public class PushNotificationsDevicePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PushNotificationsDeviceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_P(long,String, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param platform the platform
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
-	@Deprecated
 	@Override
 	public List<PushNotificationsDevice> findByU_P(
 		long userId, String platform, int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PushNotificationsDevice> orderByComparator) {
 
-		return findByU_P(userId, platform, start, end, orderByComparator);
+		return findByU_P(userId, platform, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -394,12 +400,14 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching push notifications devices
 	 */
 	@Override
 	public List<PushNotificationsDevice> findByU_P(
 		long userId, String platform, int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator) {
+		OrderByComparator<PushNotificationsDevice> orderByComparator,
+		boolean useFinderCache) {
 
 		platform = Objects.toString(platform, "");
 
@@ -411,28 +419,35 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByU_P;
-			finderArgs = new Object[] {userId, platform};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByU_P;
+				finderArgs = new Object[] {userId, platform};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByU_P;
 			finderArgs = new Object[] {
 				userId, platform, start, end, orderByComparator
 			};
 		}
 
-		List<PushNotificationsDevice> list =
-			(List<PushNotificationsDevice>)finderCache.getResult(
+		List<PushNotificationsDevice> list = null;
+
+		if (useFinderCache) {
+			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PushNotificationsDevice pushNotificationsDevice : list) {
-				if ((userId != pushNotificationsDevice.getUserId()) ||
-					!platform.equals(pushNotificationsDevice.getPlatform())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (PushNotificationsDevice pushNotificationsDevice : list) {
+					if ((userId != pushNotificationsDevice.getUserId()) ||
+						!platform.equals(
+							pushNotificationsDevice.getPlatform())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -503,10 +518,14 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -859,32 +878,6 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the push notifications devices where userId = &#63; and platform = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PushNotificationsDeviceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_P(long,String, int, int, OrderByComparator)}
-	 * @param userId the user ID
-	 * @param platform the platform
-	 * @param start the lower bound of the range of push notifications devices
-	 * @param end the upper bound of the range of push notifications devices (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching push notifications devices
-	 */
-	@Deprecated
-	@Override
-	public List<PushNotificationsDevice> findByU_P(
-		long[] userIds, String platform, int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByU_P(userIds, platform, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the push notifications devices where userId = any &#63; and platform = &#63;.
 	 *
 	 * <p>
@@ -902,6 +895,31 @@ public class PushNotificationsDevicePersistenceImpl
 	public List<PushNotificationsDevice> findByU_P(
 		long[] userIds, String platform, int start, int end,
 		OrderByComparator<PushNotificationsDevice> orderByComparator) {
+
+		return findByU_P(
+			userIds, platform, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the push notifications devices where userId = &#63; and platform = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PushNotificationsDeviceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param platform the platform
+	 * @param start the lower bound of the range of push notifications devices
+	 * @param end the upper bound of the range of push notifications devices (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching push notifications devices
+	 */
+	@Override
+	public List<PushNotificationsDevice> findByU_P(
+		long[] userIds, String platform, int start, int end,
+		OrderByComparator<PushNotificationsDevice> orderByComparator,
+		boolean useFinderCache) {
 
 		if (userIds == null) {
 			userIds = new long[0];
@@ -924,28 +942,35 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(userIds), platform};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(userIds), platform};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				StringUtil.merge(userIds), platform, start, end,
 				orderByComparator
 			};
 		}
 
-		List<PushNotificationsDevice> list =
-			(List<PushNotificationsDevice>)finderCache.getResult(
+		List<PushNotificationsDevice> list = null;
+
+		if (useFinderCache) {
+			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				_finderPathWithPaginationFindByU_P, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (PushNotificationsDevice pushNotificationsDevice : list) {
-				if (!ArrayUtil.contains(
-						userIds, pushNotificationsDevice.getUserId()) ||
-					!platform.equals(pushNotificationsDevice.getPlatform())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (PushNotificationsDevice pushNotificationsDevice : list) {
+					if (!ArrayUtil.contains(
+							userIds, pushNotificationsDevice.getUserId()) ||
+						!platform.equals(
+							pushNotificationsDevice.getPlatform())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1022,12 +1047,16 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByU_P, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByU_P, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByU_P, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByU_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1678,21 +1707,17 @@ public class PushNotificationsDevicePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PushNotificationsDeviceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of push notifications devices
 	 */
-	@Deprecated
 	@Override
 	public List<PushNotificationsDevice> findAll(
 		int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PushNotificationsDevice> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1705,12 +1730,14 @@ public class PushNotificationsDevicePersistenceImpl
 	 * @param start the lower bound of the range of push notifications devices
 	 * @param end the upper bound of the range of push notifications devices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of push notifications devices
 	 */
 	@Override
 	public List<PushNotificationsDevice> findAll(
 		int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator) {
+		OrderByComparator<PushNotificationsDevice> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1720,17 +1747,23 @@ public class PushNotificationsDevicePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<PushNotificationsDevice> list =
-			(List<PushNotificationsDevice>)finderCache.getResult(
+		List<PushNotificationsDevice> list = null;
+
+		if (useFinderCache) {
+			list = (List<PushNotificationsDevice>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1778,10 +1811,14 @@ public class PushNotificationsDevicePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

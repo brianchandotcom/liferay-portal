@@ -141,22 +141,18 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		return findByUuid(uuid, start, end, orderByComparator);
+		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -170,12 +166,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -187,24 +185,30 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if (!uuid.equals(segmentsExperience.getUuid())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if (!uuid.equals(segmentsExperience.getUuid())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -271,10 +275,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -691,20 +699,15 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
-	@Deprecated
 	@Override
-	public SegmentsExperience fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return fetchByUUID_G(uuid, groupId);
+	public SegmentsExperience fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -716,13 +719,23 @@ public class SegmentsExperiencePersistenceImpl
 	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
 	@Override
-	public SegmentsExperience fetchByUUID_G(String uuid, long groupId) {
+	public SegmentsExperience fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByUUID_G, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
+		}
 
 		if (result instanceof SegmentsExperience) {
 			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
@@ -772,8 +785,10 @@ public class SegmentsExperiencePersistenceImpl
 				List<SegmentsExperience> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					SegmentsExperience segmentsExperience = list.get(0);
@@ -784,7 +799,10 @@ public class SegmentsExperiencePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -939,23 +957,20 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -970,12 +985,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -987,28 +1004,34 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if (!uuid.equals(segmentsExperience.getUuid()) ||
-					(companyId != segmentsExperience.getCompanyId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if (!uuid.equals(segmentsExperience.getUuid()) ||
+						(companyId != segmentsExperience.getCompanyId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1079,10 +1102,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1530,22 +1557,18 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		return findByGroupId(groupId, start, end, orderByComparator);
+		return findByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1559,12 +1582,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1574,24 +1599,30 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1647,10 +1678,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2421,23 +2456,19 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsEntryId(long, int, int, OrderByComparator)}
 	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findBySegmentsEntryId(
-			segmentsEntryId, start, end, orderByComparator);
+			segmentsEntryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2451,12 +2482,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findBySegmentsEntryId(
 		long segmentsEntryId, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2466,28 +2499,34 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindBySegmentsEntryId;
-			finderArgs = new Object[] {segmentsEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindBySegmentsEntryId;
+				finderArgs = new Object[] {segmentsEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
 			finderArgs = new Object[] {
 				segmentsEntryId, start, end, orderByComparator
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((segmentsEntryId !=
-						segmentsExperience.getSegmentsEntryId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((segmentsEntryId !=
+							segmentsExperience.getSegmentsEntryId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2543,10 +2582,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2944,20 +2987,17 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_S(long,String)}
 	 * @param groupId the group ID
 	 * @param segmentsExperienceKey the segments experience key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
-	@Deprecated
 	@Override
 	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey, boolean useFinderCache) {
+		long groupId, String segmentsExperienceKey) {
 
-		return fetchByG_S(groupId, segmentsExperienceKey);
+		return fetchByG_S(groupId, segmentsExperienceKey, true);
 	}
 
 	/**
@@ -2970,14 +3010,22 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public SegmentsExperience fetchByG_S(
-		long groupId, String segmentsExperienceKey) {
+		long groupId, String segmentsExperienceKey, boolean useFinderCache) {
 
 		segmentsExperienceKey = Objects.toString(segmentsExperienceKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, segmentsExperienceKey};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByG_S, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, segmentsExperienceKey};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_S, finderArgs, this);
+		}
 
 		if (result instanceof SegmentsExperience) {
 			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
@@ -3029,8 +3077,10 @@ public class SegmentsExperiencePersistenceImpl
 				List<SegmentsExperience> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_S, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_S, finderArgs, list);
+					}
 				}
 				else {
 					SegmentsExperience segmentsExperience = list.get(0);
@@ -3041,7 +3091,9 @@ public class SegmentsExperiencePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3203,25 +3255,21 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator);
+			groupId, classNameId, classPK, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3237,12 +3285,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3252,29 +3302,35 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C;
-			finderArgs = new Object[] {groupId, classNameId, classPK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C;
+				finderArgs = new Object[] {groupId, classNameId, classPK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, start, end, orderByComparator
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -3338,10 +3394,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4222,7 +4282,6 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S_C_C(long,long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param segmentsEntryId the segments entry ID
 	 * @param classNameId the class name ID
@@ -4230,20 +4289,17 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByG_S_C_C(
 		long groupId, long segmentsEntryId, long classNameId, long classPK,
 		int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findByG_S_C_C(
 			groupId, segmentsEntryId, classNameId, classPK, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -4260,13 +4316,15 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByG_S_C_C(
 		long groupId, long segmentsEntryId, long classNameId, long classPK,
 		int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4276,12 +4334,15 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S_C_C;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, classNameId, classPK
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_S_C_C;
+				finderArgs = new Object[] {
+					groupId, segmentsEntryId, classNameId, classPK
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_S_C_C;
 			finderArgs = new Object[] {
 				groupId, segmentsEntryId, classNameId, classPK, start, end,
@@ -4289,21 +4350,24 @@ public class SegmentsExperiencePersistenceImpl
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					(segmentsEntryId !=
-						segmentsExperience.getSegmentsEntryId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						(segmentsEntryId !=
+							segmentsExperience.getSegmentsEntryId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -4371,10 +4435,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5307,23 +5375,19 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns the segments experience where groupId = &#63; and classNameId = &#63; and classPK = &#63; and priority = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experience where groupId = &#63; and classNameId = &#63; and classPK = &#63; and priority = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C_P(long,long,long,int)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param priority the priority
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experience, or <code>null</code> if a matching segments experience could not be found
 	 */
-	@Deprecated
 	@Override
 	public SegmentsExperience fetchByG_C_C_P(
-		long groupId, long classNameId, long classPK, int priority,
-		boolean useFinderCache) {
+		long groupId, long classNameId, long classPK, int priority) {
 
-		return fetchByG_C_C_P(groupId, classNameId, classPK, priority);
+		return fetchByG_C_C_P(groupId, classNameId, classPK, priority, true);
 	}
 
 	/**
@@ -5338,14 +5402,21 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public SegmentsExperience fetchByG_C_C_P(
-		long groupId, long classNameId, long classPK, int priority) {
+		long groupId, long classNameId, long classPK, int priority,
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, classPK, priority
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByG_C_C_P, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, classNameId, classPK, priority};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_C_P, finderArgs, this);
+		}
 
 		if (result instanceof SegmentsExperience) {
 			SegmentsExperience segmentsExperience = (SegmentsExperience)result;
@@ -5394,8 +5465,10 @@ public class SegmentsExperiencePersistenceImpl
 				List<SegmentsExperience> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_C_C_P, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_C_C_P, finderArgs, list);
+					}
 				}
 				else {
 					SegmentsExperience segmentsExperience = list.get(0);
@@ -5406,7 +5479,10 @@ public class SegmentsExperiencePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_C_C_P, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_C_C_P, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5577,7 +5653,6 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_GtP(long,long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -5585,19 +5660,16 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByG_C_C_GtP(
 		long groupId, long classNameId, long classPK, int priority, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findByG_C_C_GtP(
 			groupId, classNameId, classPK, priority, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -5614,12 +5686,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByG_C_C_GtP(
 		long groupId, long classNameId, long classPK, int priority, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+		int end, OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5631,20 +5705,23 @@ public class SegmentsExperiencePersistenceImpl
 			orderByComparator
 		};
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK()) ||
-					(priority >= segmentsExperience.getPriority())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK()) ||
+						(priority >= segmentsExperience.getPriority())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -5712,10 +5789,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6646,7 +6727,6 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_A(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -6654,19 +6734,16 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByG_C_C_A(
 		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findByG_C_C_A(
 			groupId, classNameId, classPK, active, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -6683,12 +6760,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByG_C_C_A(
 		long groupId, long classNameId, long classPK, boolean active, int start,
-		int end, OrderByComparator<SegmentsExperience> orderByComparator) {
+		int end, OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6698,10 +6777,15 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_C_A;
-			finderArgs = new Object[] {groupId, classNameId, classPK, active};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_C_A;
+				finderArgs = new Object[] {
+					groupId, classNameId, classPK, active
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_C_A;
 			finderArgs = new Object[] {
 				groupId, classNameId, classPK, active, start, end,
@@ -6709,20 +6793,23 @@ public class SegmentsExperiencePersistenceImpl
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK()) ||
-					(active != segmentsExperience.isActive())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK()) ||
+						(active != segmentsExperience.isActive())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -6790,10 +6877,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7732,7 +7823,6 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S_C_C_A(long,long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param segmentsEntryId the segments entry ID
 	 * @param classNameId the class name ID
@@ -7741,20 +7831,17 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findByG_S_C_C_A(
 		long groupId, long segmentsEntryId, long classNameId, long classPK,
 		boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
 		return findByG_S_C_C_A(
 			groupId, segmentsEntryId, classNameId, classPK, active, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -7772,13 +7859,15 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findByG_S_C_C_A(
 		long groupId, long segmentsEntryId, long classNameId, long classPK,
 		boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7788,12 +7877,15 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_S_C_C_A;
-			finderArgs = new Object[] {
-				groupId, segmentsEntryId, classNameId, classPK, active
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_S_C_C_A;
+				finderArgs = new Object[] {
+					groupId, segmentsEntryId, classNameId, classPK, active
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_S_C_C_A;
 			finderArgs = new Object[] {
 				groupId, segmentsEntryId, classNameId, classPK, active, start,
@@ -7801,22 +7893,25 @@ public class SegmentsExperiencePersistenceImpl
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					(segmentsEntryId !=
-						segmentsExperience.getSegmentsEntryId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK()) ||
-					(active != segmentsExperience.isActive())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						(segmentsEntryId !=
+							segmentsExperience.getSegmentsEntryId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK()) ||
+						(active != segmentsExperience.isActive())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -7888,10 +7983,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8871,38 +8970,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_S_C_C_A(long,long,long,long,boolean, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param active the active
-	 * @param start the lower bound of the range of segments experiences
-	 * @param end the upper bound of the range of segments experiences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching segments experiences
-	 */
-	@Deprecated
-	@Override
-	public List<SegmentsExperience> findByG_S_C_C_A(
-		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
-		boolean active, int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByG_S_C_C_A(
-			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = any &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;.
 	 *
 	 * <p>
@@ -8925,6 +8992,36 @@ public class SegmentsExperiencePersistenceImpl
 		boolean active, int start, int end,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
+		return findByG_S_C_C_A(
+			groupId, segmentsEntryIds, classNameId, classPK, active, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryId = &#63; and classNameId = &#63; and classPK = &#63; and active = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param segmentsEntryId the segments entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param active the active
+	 * @param start the lower bound of the range of segments experiences
+	 * @param end the upper bound of the range of segments experiences (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments experiences
+	 */
+	@Override
+	public List<SegmentsExperience> findByG_S_C_C_A(
+		long groupId, long[] segmentsEntryIds, long classNameId, long classPK,
+		boolean active, int start, int end,
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
+
 		if (segmentsEntryIds == null) {
 			segmentsEntryIds = new long[0];
 		}
@@ -8945,35 +9042,41 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				groupId, StringUtil.merge(segmentsEntryIds), classNameId,
-				classPK, active
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					groupId, StringUtil.merge(segmentsEntryIds), classNameId,
+					classPK, active
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				groupId, StringUtil.merge(segmentsEntryIds), classNameId,
 				classPK, active, start, end, orderByComparator
 			};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				_finderPathWithPaginationFindByG_S_C_C_A, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SegmentsExperience segmentsExperience : list) {
-				if ((groupId != segmentsExperience.getGroupId()) ||
-					!ArrayUtil.contains(
-						segmentsEntryIds,
-						segmentsExperience.getSegmentsEntryId()) ||
-					(classNameId != segmentsExperience.getClassNameId()) ||
-					(classPK != segmentsExperience.getClassPK()) ||
-					(active != segmentsExperience.isActive())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SegmentsExperience segmentsExperience : list) {
+					if ((groupId != segmentsExperience.getGroupId()) ||
+						!ArrayUtil.contains(
+							segmentsEntryIds,
+							segmentsExperience.getSegmentsEntryId()) ||
+						(classNameId != segmentsExperience.getClassNameId()) ||
+						(classPK != segmentsExperience.getClassPK()) ||
+						(active != segmentsExperience.isActive())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -9051,12 +9154,17 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_S_C_C_A, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_S_C_C_A, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_S_C_C_A, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_S_C_C_A, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -10253,21 +10361,17 @@ public class SegmentsExperiencePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperienceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiences
 	 */
-	@Deprecated
 	@Override
 	public List<SegmentsExperience> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -10280,12 +10384,14 @@ public class SegmentsExperiencePersistenceImpl
 	 * @param start the lower bound of the range of segments experiences
 	 * @param end the upper bound of the range of segments experiences (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiences
 	 */
 	@Override
 	public List<SegmentsExperience> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperience> orderByComparator) {
+		OrderByComparator<SegmentsExperience> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -10295,17 +10401,23 @@ public class SegmentsExperiencePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SegmentsExperience> list =
-			(List<SegmentsExperience>)finderCache.getResult(
+		List<SegmentsExperience> list = null;
+
+		if (useFinderCache) {
+			list = (List<SegmentsExperience>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -10352,10 +10464,14 @@ public class SegmentsExperiencePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

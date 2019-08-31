@@ -160,22 +160,18 @@ public class AnnouncementsFlagUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByEntryId(long, int, int, OrderByComparator)}
 	 * @param entryId the entry ID
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements flags
 	 */
-	@Deprecated
 	public static List<AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 
 		return getPersistence().findByEntryId(
-			entryId, start, end, orderByComparator, useFinderCache);
+			entryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -189,14 +185,16 @@ public class AnnouncementsFlagUtil {
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching announcements flags
 	 */
 	public static List<AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByEntryId(
-			entryId, start, end, orderByComparator);
+			entryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -312,21 +310,17 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_E_V(long,long,int)}
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
-	@Deprecated
 	public static AnnouncementsFlag fetchByU_E_V(
-		long userId, long entryId, int value, boolean useFinderCache) {
+		long userId, long entryId, int value) {
 
-		return getPersistence().fetchByU_E_V(
-			userId, entryId, value, useFinderCache);
+		return getPersistence().fetchByU_E_V(userId, entryId, value);
 	}
 
 	/**
@@ -339,9 +333,10 @@ public class AnnouncementsFlagUtil {
 	 * @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
 	 */
 	public static AnnouncementsFlag fetchByU_E_V(
-		long userId, long entryId, int value) {
+		long userId, long entryId, int value, boolean useFinderCache) {
 
-		return getPersistence().fetchByU_E_V(userId, entryId, value);
+		return getPersistence().fetchByU_E_V(
+			userId, entryId, value, useFinderCache);
 	}
 
 	/**
@@ -472,21 +467,16 @@ public class AnnouncementsFlagUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AnnouncementsFlagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of announcements flags
 	 */
-	@Deprecated
 	public static List<AnnouncementsFlag> findAll(
 		int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -499,13 +489,16 @@ public class AnnouncementsFlagUtil {
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of announcements flags
 	 */
 	public static List<AnnouncementsFlag> findAll(
 		int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
+		OrderByComparator<AnnouncementsFlag> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

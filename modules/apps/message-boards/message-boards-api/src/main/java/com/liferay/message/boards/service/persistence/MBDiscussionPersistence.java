@@ -17,7 +17,6 @@ package com.liferay.message.boards.service.persistence;
 import com.liferay.message.boards.exception.NoSuchDiscussionException;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,19 +70,16 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBDiscussionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
-	@Deprecated
 	public java.util.List<MBDiscussion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards discussions where uuid = &#63;.
@@ -96,11 +92,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
 	public java.util.List<MBDiscussion> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards discussion in the ordered set where uuid = &#63;.
@@ -111,7 +110,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion findByUuid_First(
-			String uuid, OrderByComparator<MBDiscussion> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -122,7 +123,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion fetchByUuid_First(
-		String uuid, OrderByComparator<MBDiscussion> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the last message boards discussion in the ordered set where uuid = &#63;.
@@ -133,7 +136,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion findByUuid_Last(
-			String uuid, OrderByComparator<MBDiscussion> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -144,7 +149,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion fetchByUuid_Last(
-		String uuid, OrderByComparator<MBDiscussion> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63;.
@@ -157,7 +164,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion[] findByUuid_PrevAndNext(
 			long discussionId, String uuid,
-			OrderByComparator<MBDiscussion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -187,17 +195,13 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 		throws NoSuchDiscussionException;
 
 	/**
-	 * Returns the message boards discussion where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message boards discussion where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	@Deprecated
-	public MBDiscussion fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public MBDiscussion fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the message boards discussion where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -207,7 +211,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	public MBDiscussion fetchByUUID_G(String uuid, long groupId);
+	public MBDiscussion fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the message boards discussion where uuid = &#63; and groupId = &#63; from the database.
@@ -261,20 +266,17 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBDiscussionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
-	@Deprecated
 	public java.util.List<MBDiscussion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards discussions where uuid = &#63; and companyId = &#63;.
@@ -288,11 +290,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
 	public java.util.List<MBDiscussion> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -305,7 +310,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<MBDiscussion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -318,7 +324,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<MBDiscussion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the last message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -331,7 +338,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<MBDiscussion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -344,7 +352,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<MBDiscussion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the message boards discussions before and after the current message boards discussion in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -358,7 +367,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion[] findByUuid_C_PrevAndNext(
 			long discussionId, String uuid, long companyId,
-			OrderByComparator<MBDiscussion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -408,19 +418,16 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBDiscussionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassNameId(long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
-	@Deprecated
 	public java.util.List<MBDiscussion> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards discussions where classNameId = &#63;.
@@ -433,11 +440,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching message boards discussions
 	 */
 	public java.util.List<MBDiscussion> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<MBDiscussion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first message boards discussion in the ordered set where classNameId = &#63;.
@@ -448,7 +458,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion findByClassNameId_First(
-			long classNameId, OrderByComparator<MBDiscussion> orderByComparator)
+			long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -459,7 +471,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion fetchByClassNameId_First(
-		long classNameId, OrderByComparator<MBDiscussion> orderByComparator);
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the last message boards discussion in the ordered set where classNameId = &#63;.
@@ -470,7 +484,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion findByClassNameId_Last(
-			long classNameId, OrderByComparator<MBDiscussion> orderByComparator)
+			long classNameId,
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -481,7 +497,9 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
 	public MBDiscussion fetchByClassNameId_Last(
-		long classNameId, OrderByComparator<MBDiscussion> orderByComparator);
+		long classNameId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns the message boards discussions before and after the current message boards discussion in the ordered set where classNameId = &#63;.
@@ -494,7 +512,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 */
 	public MBDiscussion[] findByClassNameId_PrevAndNext(
 			long discussionId, long classNameId,
-			OrderByComparator<MBDiscussion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+				orderByComparator)
 		throws NoSuchDiscussionException;
 
 	/**
@@ -523,15 +542,12 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 		throws NoSuchDiscussionException;
 
 	/**
-	 * Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByThreadId(long)}
 	 * @param threadId the thread ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	@Deprecated
-	public MBDiscussion fetchByThreadId(long threadId, boolean useFinderCache);
+	public MBDiscussion fetchByThreadId(long threadId);
 
 	/**
 	 * Returns the message boards discussion where threadId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -540,7 +556,7 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	public MBDiscussion fetchByThreadId(long threadId);
+	public MBDiscussion fetchByThreadId(long threadId, boolean useFinderCache);
 
 	/**
 	 * Removes the message boards discussion where threadId = &#63; from the database.
@@ -571,17 +587,13 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 		throws NoSuchDiscussionException;
 
 	/**
-	 * Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	@Deprecated
-	public MBDiscussion fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache);
+	public MBDiscussion fetchByC_C(long classNameId, long classPK);
 
 	/**
 	 * Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -591,7 +603,8 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	 */
-	public MBDiscussion fetchByC_C(long classNameId, long classPK);
+	public MBDiscussion fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the message boards discussion where classNameId = &#63; and classPK = &#63; from the database.
@@ -691,17 +704,15 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MBDiscussionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards discussions
 	 */
-	@Deprecated
 	public java.util.List<MBDiscussion> findAll(
-		int start, int end, OrderByComparator<MBDiscussion> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards discussions.
@@ -713,10 +724,14 @@ public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of message boards discussions
 	 */
 	public java.util.List<MBDiscussion> findAll(
-		int start, int end, OrderByComparator<MBDiscussion> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBDiscussion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the message boards discussions from the database.

@@ -17,7 +17,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchBigDecimalEntryException;
 import com.liferay.portal.tools.service.builder.test.model.BigDecimalEntry;
 
@@ -83,19 +82,16 @@ public interface BigDecimalEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByBigDecimalValue(BigDecimal, int, int, OrderByComparator)}
 	 * @param bigDecimalValue the big decimal value
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
-	@Deprecated
 	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the big decimal entries where bigDecimalValue = &#63;.
@@ -108,11 +104,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue = &#63;.
@@ -124,7 +123,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByBigDecimalValue_First(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -136,7 +136,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last big decimal entry in the ordered set where bigDecimalValue = &#63;.
@@ -148,7 +149,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByBigDecimalValue_Last(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -160,7 +162,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue = &#63;.
@@ -173,7 +176,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry[] findByBigDecimalValue_PrevAndNext(
 			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -222,19 +226,16 @@ public interface BigDecimalEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGtBigDecimalValue(BigDecimal, int, int, OrderByComparator)}
 	 * @param bigDecimalValue the big decimal value
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
-	@Deprecated
 	public java.util.List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the big decimal entries where bigDecimalValue &gt; &#63;.
@@ -247,11 +248,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByGtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
@@ -263,7 +267,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByGtBigDecimalValue_First(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -275,7 +280,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByGtBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
@@ -287,7 +293,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByGtBigDecimalValue_Last(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -299,7 +306,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByGtBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue &gt; &#63;.
@@ -312,7 +320,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry[] findByGtBigDecimalValue_PrevAndNext(
 			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -361,19 +370,16 @@ public interface BigDecimalEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLtBigDecimalValue(BigDecimal, int, int, OrderByComparator)}
 	 * @param bigDecimalValue the big decimal value
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
-	@Deprecated
 	public java.util.List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the big decimal entries where bigDecimalValue &lt; &#63;.
@@ -386,11 +392,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findByLtBigDecimalValue(
 		BigDecimal bigDecimalValue, int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
@@ -402,7 +411,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByLtBigDecimalValue_First(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -414,7 +424,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByLtBigDecimalValue_First(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
@@ -426,7 +437,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry findByLtBigDecimalValue_Last(
 			BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -438,7 +450,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry fetchByLtBigDecimalValue_Last(
 		BigDecimal bigDecimalValue,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the big decimal entries before and after the current big decimal entry in the ordered set where bigDecimalValue &lt; &#63;.
@@ -451,7 +464,8 @@ public interface BigDecimalEntryPersistence
 	 */
 	public BigDecimalEntry[] findByLtBigDecimalValue_PrevAndNext(
 			long bigDecimalEntryId, BigDecimal bigDecimalValue,
-			OrderByComparator<BigDecimalEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+				orderByComparator)
 		throws NoSuchBigDecimalEntryException;
 
 	/**
@@ -548,18 +562,15 @@ public interface BigDecimalEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>BigDecimalEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of big decimal entries
 	 */
-	@Deprecated
 	public java.util.List<BigDecimalEntry> findAll(
 		int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the big decimal entries.
@@ -571,11 +582,14 @@ public interface BigDecimalEntryPersistence
 	 * @param start the lower bound of the range of big decimal entries
 	 * @param end the upper bound of the range of big decimal entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of big decimal entries
 	 */
 	public java.util.List<BigDecimalEntry> findAll(
 		int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the big decimal entries from the database.
@@ -640,7 +654,7 @@ public interface BigDecimalEntryPersistence
 		<com.liferay.portal.tools.service.builder.test.model.LVEntry>
 			getLVEntries(
 				long pk, int start, int end,
-				OrderByComparator
+				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.tools.service.builder.test.model.
 						LVEntry> orderByComparator);
 

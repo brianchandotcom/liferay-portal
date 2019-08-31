@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.service.persistence;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,18 +69,16 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KBFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
-	@Deprecated
 	public java.util.List<KBFolder> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kb folders where uuid = &#63;.
@@ -94,11 +91,14 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public java.util.List<KBFolder> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kb folder in the ordered set where uuid = &#63;.
@@ -109,7 +109,9 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @throws NoSuchFolderException if a matching kb folder could not be found
 	 */
 	public KBFolder findByUuid_First(
-			String uuid, OrderByComparator<KBFolder> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -120,7 +122,9 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @return the first matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public KBFolder fetchByUuid_First(
-		String uuid, OrderByComparator<KBFolder> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the last kb folder in the ordered set where uuid = &#63;.
@@ -131,7 +135,9 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @throws NoSuchFolderException if a matching kb folder could not be found
 	 */
 	public KBFolder findByUuid_Last(
-			String uuid, OrderByComparator<KBFolder> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -142,7 +148,9 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @return the last matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public KBFolder fetchByUuid_Last(
-		String uuid, OrderByComparator<KBFolder> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the kb folders before and after the current kb folder in the ordered set where uuid = &#63;.
@@ -155,7 +163,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder[] findByUuid_PrevAndNext(
 			long kbFolderId, String uuid,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -185,17 +194,13 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
-	@Deprecated
-	public KBFolder fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public KBFolder fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -205,7 +210,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
-	public KBFolder fetchByUUID_G(String uuid, long groupId);
+	public KBFolder fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the kb folder where uuid = &#63; and groupId = &#63; from the database.
@@ -258,19 +264,17 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KBFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
-	@Deprecated
 	public java.util.List<KBFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kb folders where uuid = &#63; and companyId = &#63;.
@@ -284,11 +288,14 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public java.util.List<KBFolder> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kb folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -301,7 +308,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -314,7 +322,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the last kb folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -327,7 +336,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -340,7 +350,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the kb folders before and after the current kb folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -354,7 +365,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder[] findByUuid_C_PrevAndNext(
 			long kbFolderId, String uuid, long companyId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -407,19 +419,17 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KBFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentKBFolderId the parent kb folder ID
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
-	@Deprecated
 	public java.util.List<KBFolder> findByG_P(
 		long groupId, long parentKBFolderId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
@@ -433,11 +443,14 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb folders
 	 */
 	public java.util.List<KBFolder> findByG_P(
 		long groupId, long parentKBFolderId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63;.
@@ -450,7 +463,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder findByG_P_First(
 			long groupId, long parentKBFolderId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -463,7 +477,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder fetchByG_P_First(
 		long groupId, long parentKBFolderId,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the last kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63;.
@@ -476,7 +491,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder findByG_P_Last(
 			long groupId, long parentKBFolderId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -489,7 +505,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder fetchByG_P_Last(
 		long groupId, long parentKBFolderId,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the kb folders before and after the current kb folder in the ordered set where groupId = &#63; and parentKBFolderId = &#63;.
@@ -503,7 +520,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder[] findByG_P_PrevAndNext(
 			long kbFolderId, long groupId, long parentKBFolderId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -548,7 +566,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public java.util.List<KBFolder> filterFindByG_P(
 		long groupId, long parentKBFolderId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns the kb folders before and after the current kb folder in the ordered set of kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63;.
@@ -562,7 +581,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 */
 	public KBFolder[] filterFindByG_P_PrevAndNext(
 			long kbFolderId, long groupId, long parentKBFolderId,
-			OrderByComparator<KBFolder> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+				orderByComparator)
 		throws NoSuchFolderException;
 
 	/**
@@ -605,19 +625,15 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_N(long,long,String)}
 	 * @param groupId the group ID
 	 * @param parentKBFolderId the parent kb folder ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
-	@Deprecated
 	public KBFolder fetchByG_P_N(
-		long groupId, long parentKBFolderId, String name,
-		boolean useFinderCache);
+		long groupId, long parentKBFolderId, String name);
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -629,7 +645,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public KBFolder fetchByG_P_N(
-		long groupId, long parentKBFolderId, String name);
+		long groupId, long parentKBFolderId, String name,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; from the database.
@@ -667,19 +684,15 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 		throws NoSuchFolderException;
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_UT(long,long,String)}
 	 * @param groupId the group ID
 	 * @param parentKBFolderId the parent kb folder ID
 	 * @param urlTitle the url title
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
-	@Deprecated
 	public KBFolder fetchByG_P_UT(
-		long groupId, long parentKBFolderId, String urlTitle,
-		boolean useFinderCache);
+		long groupId, long parentKBFolderId, String urlTitle);
 
 	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -691,7 +704,8 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	 */
 	public KBFolder fetchByG_P_UT(
-		long groupId, long parentKBFolderId, String urlTitle);
+		long groupId, long parentKBFolderId, String urlTitle,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; from the database.
@@ -794,17 +808,15 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KBFolderModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb folders
 	 */
-	@Deprecated
 	public java.util.List<KBFolder> findAll(
-		int start, int end, OrderByComparator<KBFolder> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kb folders.
@@ -816,10 +828,14 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 	 * @param start the lower bound of the range of kb folders
 	 * @param end the upper bound of the range of kb folders (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kb folders
 	 */
 	public java.util.List<KBFolder> findAll(
-		int start, int end, OrderByComparator<KBFolder> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KBFolder>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kb folders from the database.

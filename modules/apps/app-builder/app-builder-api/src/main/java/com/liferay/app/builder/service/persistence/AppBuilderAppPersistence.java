@@ -17,7 +17,6 @@ package com.liferay.app.builder.service.persistence;
 import com.liferay.app.builder.exception.NoSuchAppException;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where uuid = &#63;.
@@ -112,7 +111,9 @@ public interface AppBuilderAppPersistence
 	 * @throws NoSuchAppException if a matching app builder app could not be found
 	 */
 	public AppBuilderApp findByUuid_First(
-			String uuid, OrderByComparator<AppBuilderApp> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -123,7 +124,9 @@ public interface AppBuilderAppPersistence
 	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public AppBuilderApp fetchByUuid_First(
-		String uuid, OrderByComparator<AppBuilderApp> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the last app builder app in the ordered set where uuid = &#63;.
@@ -134,7 +137,9 @@ public interface AppBuilderAppPersistence
 	 * @throws NoSuchAppException if a matching app builder app could not be found
 	 */
 	public AppBuilderApp findByUuid_Last(
-			String uuid, OrderByComparator<AppBuilderApp> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -145,7 +150,9 @@ public interface AppBuilderAppPersistence
 	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public AppBuilderApp fetchByUuid_Last(
-		String uuid, OrderByComparator<AppBuilderApp> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the app builder apps before and after the current app builder app in the ordered set where uuid = &#63;.
@@ -158,7 +165,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp[] findByUuid_PrevAndNext(
 			long appBuilderAppId, String uuid,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -188,17 +196,13 @@ public interface AppBuilderAppPersistence
 		throws NoSuchAppException;
 
 	/**
-	 * Returns the app builder app where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the app builder app where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
-	@Deprecated
-	public AppBuilderApp fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public AppBuilderApp fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the app builder app where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -208,7 +212,8 @@ public interface AppBuilderAppPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
-	public AppBuilderApp fetchByUUID_G(String uuid, long groupId);
+	public AppBuilderApp fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the app builder app where uuid = &#63; and groupId = &#63; from the database.
@@ -262,20 +267,17 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps where uuid = &#63; and companyId = &#63;.
@@ -289,11 +291,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -306,7 +311,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -319,7 +325,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the last app builder app in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -332,7 +339,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -345,7 +353,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the app builder apps before and after the current app builder app in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -359,7 +368,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp[] findByUuid_C_PrevAndNext(
 			long appBuilderAppId, String uuid, long companyId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -409,19 +419,16 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps where groupId = &#63;.
@@ -434,11 +441,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where groupId = &#63;.
@@ -449,7 +459,9 @@ public interface AppBuilderAppPersistence
 	 * @throws NoSuchAppException if a matching app builder app could not be found
 	 */
 	public AppBuilderApp findByGroupId_First(
-			long groupId, OrderByComparator<AppBuilderApp> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -460,7 +472,9 @@ public interface AppBuilderAppPersistence
 	 * @return the first matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public AppBuilderApp fetchByGroupId_First(
-		long groupId, OrderByComparator<AppBuilderApp> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the last app builder app in the ordered set where groupId = &#63;.
@@ -471,7 +485,9 @@ public interface AppBuilderAppPersistence
 	 * @throws NoSuchAppException if a matching app builder app could not be found
 	 */
 	public AppBuilderApp findByGroupId_Last(
-			long groupId, OrderByComparator<AppBuilderApp> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -482,7 +498,9 @@ public interface AppBuilderAppPersistence
 	 * @return the last matching app builder app, or <code>null</code> if a matching app builder app could not be found
 	 */
 	public AppBuilderApp fetchByGroupId_Last(
-		long groupId, OrderByComparator<AppBuilderApp> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the app builder apps before and after the current app builder app in the ordered set where groupId = &#63;.
@@ -495,7 +513,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp[] findByGroupId_PrevAndNext(
 			long appBuilderAppId, long groupId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -545,20 +564,17 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps where companyId = &#63; and status = &#63;.
@@ -572,11 +588,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where companyId = &#63; and status = &#63;.
@@ -589,7 +608,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByC_S_First(
 			long companyId, int status,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -602,7 +622,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByC_S_First(
 		long companyId, int status,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the last app builder app in the ordered set where companyId = &#63; and status = &#63;.
@@ -615,7 +636,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByC_S_Last(
 			long companyId, int status,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -628,7 +650,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByC_S_Last(
 		long companyId, int status,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the app builder apps before and after the current app builder app in the ordered set where companyId = &#63; and status = &#63;.
@@ -642,7 +665,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp[] findByC_S_PrevAndNext(
 			long appBuilderAppId, long companyId, int status,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -697,21 +721,18 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_D(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param ddmStructureId the ddm structure ID
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -726,11 +747,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findByG_C_D(
 		long groupId, long companyId, long ddmStructureId, int start, int end,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first app builder app in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -744,7 +768,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByG_C_D_First(
 			long groupId, long companyId, long ddmStructureId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -758,7 +783,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByG_C_D_First(
 		long groupId, long companyId, long ddmStructureId,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the last app builder app in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -772,7 +798,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp findByG_C_D_Last(
 			long groupId, long companyId, long ddmStructureId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -786,7 +813,8 @@ public interface AppBuilderAppPersistence
 	 */
 	public AppBuilderApp fetchByG_C_D_Last(
 		long groupId, long companyId, long ddmStructureId,
-		OrderByComparator<AppBuilderApp> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns the app builder apps before and after the current app builder app in the ordered set where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -802,7 +830,8 @@ public interface AppBuilderAppPersistence
 	public AppBuilderApp[] findByG_C_D_PrevAndNext(
 			long appBuilderAppId, long groupId, long companyId,
 			long ddmStructureId,
-			OrderByComparator<AppBuilderApp> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+				orderByComparator)
 		throws NoSuchAppException;
 
 	/**
@@ -903,17 +932,15 @@ public interface AppBuilderAppPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AppBuilderAppModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of app builder apps
 	 */
-	@Deprecated
 	public java.util.List<AppBuilderApp> findAll(
-		int start, int end, OrderByComparator<AppBuilderApp> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the app builder apps.
@@ -925,10 +952,14 @@ public interface AppBuilderAppPersistence
 	 * @param start the lower bound of the range of app builder apps
 	 * @param end the upper bound of the range of app builder apps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of app builder apps
 	 */
 	public java.util.List<AppBuilderApp> findAll(
-		int start, int end, OrderByComparator<AppBuilderApp> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AppBuilderApp>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the app builder apps from the database.

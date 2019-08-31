@@ -17,7 +17,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryVersionException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
 
@@ -81,19 +80,16 @@ public interface VersionedEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVersionedEntryId(long, int, int, OrderByComparator)}
 	 * @param versionedEntryId the versioned entry ID
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
-	@Deprecated
 	public java.util.List<VersionedEntryVersion> findByVersionedEntryId(
 		long versionedEntryId, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where versionedEntryId = &#63;.
@@ -106,11 +102,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByVersionedEntryId(
 		long versionedEntryId, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where versionedEntryId = &#63;.
@@ -122,7 +121,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByVersionedEntryId_First(
 			long versionedEntryId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -134,7 +134,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByVersionedEntryId_First(
 		long versionedEntryId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last versioned entry version in the ordered set where versionedEntryId = &#63;.
@@ -146,7 +147,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByVersionedEntryId_Last(
 			long versionedEntryId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -158,7 +160,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByVersionedEntryId_Last(
 		long versionedEntryId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where versionedEntryId = &#63;.
@@ -171,7 +174,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion[] findByVersionedEntryId_PrevAndNext(
 			long versionedEntryVersionId, long versionedEntryId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -202,17 +206,14 @@ public interface VersionedEntryVersionPersistence
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
-	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByVersionedEntryId_Version(long,int)}
 	 * @param versionedEntryId the versioned entry ID
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
 	 */
-	@Deprecated
 	public VersionedEntryVersion fetchByVersionedEntryId_Version(
-		long versionedEntryId, int version, boolean useFinderCache);
+		long versionedEntryId, int version);
 
 	/**
 	 * Returns the versioned entry version where versionedEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -223,7 +224,7 @@ public interface VersionedEntryVersionPersistence
 	 * @return the matching versioned entry version, or <code>null</code> if a matching versioned entry version could not be found
 	 */
 	public VersionedEntryVersion fetchByVersionedEntryId_Version(
-		long versionedEntryId, int version);
+		long versionedEntryId, int version, boolean useFinderCache);
 
 	/**
 	 * Removes the versioned entry version where versionedEntryId = &#63; and version = &#63; from the database.
@@ -276,19 +277,16 @@ public interface VersionedEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
-	@Deprecated
 	public java.util.List<VersionedEntryVersion> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where groupId = &#63;.
@@ -301,11 +299,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where groupId = &#63;.
@@ -317,7 +318,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByGroupId_First(
 			long groupId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -329,7 +331,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByGroupId_First(
 		long groupId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last versioned entry version in the ordered set where groupId = &#63;.
@@ -341,7 +344,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByGroupId_Last(
 			long groupId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -353,7 +357,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByGroupId_Last(
 		long groupId,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where groupId = &#63;.
@@ -366,7 +371,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion[] findByGroupId_PrevAndNext(
 			long versionedEntryVersionId, long groupId,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -417,20 +423,17 @@ public interface VersionedEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId_Version(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param version the version
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
-	@Deprecated
 	public java.util.List<VersionedEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions where groupId = &#63; and version = &#63;.
@@ -444,11 +447,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findByGroupId_Version(
 		long groupId, int version, int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -461,7 +467,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByGroupId_Version_First(
 			long groupId, int version,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -474,7 +481,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByGroupId_Version_First(
 		long groupId, int version,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -487,7 +495,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion findByGroupId_Version_Last(
 			long groupId, int version,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -500,7 +509,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion fetchByGroupId_Version_Last(
 		long groupId, int version,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the versioned entry versions before and after the current versioned entry version in the ordered set where groupId = &#63; and version = &#63;.
@@ -514,7 +524,8 @@ public interface VersionedEntryVersionPersistence
 	 */
 	public VersionedEntryVersion[] findByGroupId_Version_PrevAndNext(
 			long versionedEntryVersionId, long groupId, int version,
-			OrderByComparator<VersionedEntryVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<VersionedEntryVersion> orderByComparator)
 		throws NoSuchVersionedEntryVersionException;
 
 	/**
@@ -616,18 +627,15 @@ public interface VersionedEntryVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VersionedEntryVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of versioned entry versions
 	 */
-	@Deprecated
 	public java.util.List<VersionedEntryVersion> findAll(
 		int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the versioned entry versions.
@@ -639,11 +647,14 @@ public interface VersionedEntryVersionPersistence
 	 * @param start the lower bound of the range of versioned entry versions
 	 * @param end the upper bound of the range of versioned entry versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of versioned entry versions
 	 */
 	public java.util.List<VersionedEntryVersion> findAll(
 		int start, int end,
-		OrderByComparator<VersionedEntryVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<VersionedEntryVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the versioned entry versions from the database.

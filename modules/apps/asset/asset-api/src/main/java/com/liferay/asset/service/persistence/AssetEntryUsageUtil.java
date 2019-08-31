@@ -160,22 +160,17 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -189,13 +184,16 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public static List<AssetEntryUsage> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -306,19 +304,14 @@ public class AssetEntryUsageUtil {
 	}
 
 	/**
-	 * Returns the asset entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset entry usage where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
-	@Deprecated
-	public static AssetEntryUsage fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
+	public static AssetEntryUsage fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -329,8 +322,10 @@ public class AssetEntryUsageUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
-	public static AssetEntryUsage fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
+	public static AssetEntryUsage fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
 	}
 
 	/**
@@ -392,22 +387,18 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssetEntryId(long, int, int, OrderByComparator)}
 	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
 		return getPersistence().findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator, useFinderCache);
+			assetEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -421,14 +412,16 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public static List<AssetEntryUsage> findByAssetEntryId(
 		long assetEntryId, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator);
+			assetEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -567,22 +560,17 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPlid(long, int, int, OrderByComparator)}
 	 * @param plid the plid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
-		return getPersistence().findByPlid(
-			plid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByPlid(plid, start, end, orderByComparator);
 	}
 
 	/**
@@ -596,13 +584,16 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public static List<AssetEntryUsage> findByPlid(
 		long plid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findByPlid(plid, start, end, orderByComparator);
+		return getPersistence().findByPlid(
+			plid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -735,23 +726,19 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_T(long,int, int, int, OrderByComparator)}
 	 * @param assetEntryId the asset entry ID
 	 * @param type the type
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
 		return getPersistence().findByA_T(
-			assetEntryId, type, start, end, orderByComparator, useFinderCache);
+			assetEntryId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -766,14 +753,16 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public static List<AssetEntryUsage> findByA_T(
 		long assetEntryId, int type, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByA_T(
-			assetEntryId, type, start, end, orderByComparator);
+			assetEntryId, type, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -927,25 +916,20 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C_P(long,String,long, int, int, OrderByComparator)}
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
 		return getPersistence().findByC_C_P(
-			containerType, containerKey, plid, start, end, orderByComparator,
-			useFinderCache);
+			containerType, containerKey, plid, start, end, orderByComparator);
 	}
 
 	/**
@@ -961,14 +945,17 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset entry usages
 	 */
 	public static List<AssetEntryUsage> findByC_C_P(
 		long containerType, String containerKey, long plid, int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByC_C_P(
-			containerType, containerKey, plid, start, end, orderByComparator);
+			containerType, containerKey, plid, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1111,23 +1098,19 @@ public class AssetEntryUsageUtil {
 	}
 
 	/**
-	 * Returns the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset entry usage where assetEntryId = &#63; and containerType = &#63; and containerKey = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA_C_C_P(long,long,String,long)}
 	 * @param assetEntryId the asset entry ID
 	 * @param containerType the container type
 	 * @param containerKey the container key
 	 * @param plid the plid
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
-	@Deprecated
 	public static AssetEntryUsage fetchByA_C_C_P(
-		long assetEntryId, long containerType, String containerKey, long plid,
-		boolean useFinderCache) {
+		long assetEntryId, long containerType, String containerKey, long plid) {
 
 		return getPersistence().fetchByA_C_C_P(
-			assetEntryId, containerType, containerKey, plid, useFinderCache);
+			assetEntryId, containerType, containerKey, plid);
 	}
 
 	/**
@@ -1141,10 +1124,11 @@ public class AssetEntryUsageUtil {
 	 * @return the matching asset entry usage, or <code>null</code> if a matching asset entry usage could not be found
 	 */
 	public static AssetEntryUsage fetchByA_C_C_P(
-		long assetEntryId, long containerType, String containerKey, long plid) {
+		long assetEntryId, long containerType, String containerKey, long plid,
+		boolean useFinderCache) {
 
 		return getPersistence().fetchByA_C_C_P(
-			assetEntryId, containerType, containerKey, plid);
+			assetEntryId, containerType, containerKey, plid, useFinderCache);
 	}
 
 	/**
@@ -1280,21 +1264,16 @@ public class AssetEntryUsageUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetEntryUsageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
-	@Deprecated
 	public static List<AssetEntryUsage> findAll(
 		int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<AssetEntryUsage> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1307,13 +1286,16 @@ public class AssetEntryUsageUtil {
 	 * @param start the lower bound of the range of asset entry usages
 	 * @param end the upper bound of the range of asset entry usages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset entry usages
 	 */
 	public static List<AssetEntryUsage> findAll(
 		int start, int end,
-		OrderByComparator<AssetEntryUsage> orderByComparator) {
+		OrderByComparator<AssetEntryUsage> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -17,7 +17,6 @@ package com.liferay.layout.page.template.service.persistence;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where uuid = &#63;.
@@ -113,7 +112,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByUuid_First(
 			String uuid,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -125,7 +125,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByUuid_First(
 		String uuid,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where uuid = &#63;.
@@ -137,7 +138,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByUuid_Last(
 			String uuid,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -149,7 +151,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByUuid_Last(
 		String uuid,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where uuid = &#63;.
@@ -162,7 +165,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByUuid_PrevAndNext(
 			long layoutPageTemplateEntryId, String uuid,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -192,17 +196,13 @@ public interface LayoutPageTemplateEntryPersistence
 		throws NoSuchPageTemplateEntryException;
 
 	/**
-	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	@Deprecated
-	public LayoutPageTemplateEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public LayoutPageTemplateEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,7 +212,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	public LayoutPageTemplateEntry fetchByUUID_G(String uuid, long groupId);
+	public LayoutPageTemplateEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the layout page template entry where uuid = &#63; and groupId = &#63; from the database.
@@ -266,20 +267,17 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63; and companyId = &#63;.
@@ -293,11 +291,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -310,7 +311,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -323,7 +325,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -336,7 +339,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -349,7 +353,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -363,7 +368,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByUuid_C_PrevAndNext(
 			long layoutPageTemplateEntryId, String uuid, long companyId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -413,19 +419,16 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63;.
@@ -438,11 +441,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63;.
@@ -454,7 +460,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByGroupId_First(
 			long groupId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -466,7 +473,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByGroupId_First(
 		long groupId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63;.
@@ -478,7 +486,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByGroupId_Last(
 			long groupId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -490,7 +499,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByGroupId_Last(
 		long groupId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63;.
@@ -503,7 +513,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByGroupId_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -545,7 +556,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63;.
@@ -558,7 +570,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] filterFindByGroupId_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -615,19 +628,16 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutPrototypeId(long, int, int, OrderByComparator)}
 	 * @param layoutPrototypeId the layout prototype ID
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
 		long layoutPrototypeId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where layoutPrototypeId = &#63;.
@@ -640,11 +650,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
 		long layoutPrototypeId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where layoutPrototypeId = &#63;.
@@ -656,7 +669,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByLayoutPrototypeId_First(
 			long layoutPrototypeId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -668,7 +682,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByLayoutPrototypeId_First(
 		long layoutPrototypeId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where layoutPrototypeId = &#63;.
@@ -680,7 +695,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByLayoutPrototypeId_Last(
 			long layoutPrototypeId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -692,7 +708,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByLayoutPrototypeId_Last(
 		long layoutPrototypeId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where layoutPrototypeId = &#63;.
@@ -705,7 +722,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByLayoutPrototypeId_PrevAndNext(
 			long layoutPageTemplateEntryId, long layoutPrototypeId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -734,16 +752,12 @@ public interface LayoutPageTemplateEntryPersistence
 		throws NoSuchPageTemplateEntryException;
 
 	/**
-	 * Returns the layout page template entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout page template entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByPlid(long)}
 	 * @param plid the plid
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	@Deprecated
-	public LayoutPageTemplateEntry fetchByPlid(
-		long plid, boolean useFinderCache);
+	public LayoutPageTemplateEntry fetchByPlid(long plid);
 
 	/**
 	 * Returns the layout page template entry where plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -752,7 +766,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	public LayoutPageTemplateEntry fetchByPlid(long plid);
+	public LayoutPageTemplateEntry fetchByPlid(
+		long plid, boolean useFinderCache);
 
 	/**
 	 * Removes the layout page template entry where plid = &#63; from the database.
@@ -804,20 +819,17 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_L(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateCollectionId the layout page template collection ID
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_L(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -831,11 +843,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_L(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -848,7 +863,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_First(
 			long groupId, long layoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -861,7 +877,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_First(
 		long groupId, long layoutPageTemplateCollectionId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -874,7 +891,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_Last(
 			long groupId, long layoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -887,7 +905,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_Last(
 		long groupId, long layoutPageTemplateCollectionId,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -902,7 +921,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_L_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -947,7 +967,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_L(
 		long groupId, long layoutPageTemplateCollectionId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -962,7 +983,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_L_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1004,17 +1026,13 @@ public interface LayoutPageTemplateEntryPersistence
 		throws NoSuchPageTemplateEntryException;
 
 	/**
-	 * Returns the layout page template entry where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout page template entry where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_N(long,String)}
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	@Deprecated
-	public LayoutPageTemplateEntry fetchByG_N(
-		long groupId, String name, boolean useFinderCache);
+	public LayoutPageTemplateEntry fetchByG_N(long groupId, String name);
 
 	/**
 	 * Returns the layout page template entry where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1024,7 +1042,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
 	 */
-	public LayoutPageTemplateEntry fetchByG_N(long groupId, String name);
+	public LayoutPageTemplateEntry fetchByG_N(
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the layout page template entry where groupId = &#63; and name = &#63; from the database.
@@ -1078,20 +1097,17 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_T(long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_T(
 		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63;.
@@ -1105,11 +1121,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_T(
 		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -1122,7 +1141,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_First(
 			long groupId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1135,7 +1155,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_First(
 		long groupId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -1148,7 +1169,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_Last(
 			long groupId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1161,7 +1183,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_Last(
 		long groupId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and type = &#63;.
@@ -1175,7 +1198,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByG_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1220,7 +1244,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_T(
 		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and type = &#63;.
@@ -1234,7 +1259,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] filterFindByG_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1299,22 +1325,19 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_L_LikeN(long,long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateCollectionId the layout page template collection ID
 	 * @param name the name
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_LikeN(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1329,12 +1352,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_LikeN(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1348,7 +1374,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_LikeN_First(
 			long groupId, long layoutPageTemplateCollectionId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1362,7 +1389,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_LikeN_First(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1376,7 +1404,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_LikeN_Last(
 			long groupId, long layoutPageTemplateCollectionId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1390,7 +1419,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_LikeN_Last(
 		long groupId, long layoutPageTemplateCollectionId, String name,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1406,7 +1436,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_L_LikeN_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1456,7 +1487,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_L_LikeN(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63;.
@@ -1472,7 +1504,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_L_LikeN_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, String name,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1543,21 +1576,19 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_L_T(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateCollectionId the layout page template collection ID
 	 * @param type the type
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_T(
 		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1572,11 +1603,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_T(
 		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1590,7 +1625,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_T_First(
 			long groupId, long layoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1604,7 +1640,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_T_First(
 		long groupId, long layoutPageTemplateCollectionId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1618,7 +1655,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_T_Last(
 			long groupId, long layoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1632,7 +1670,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_T_Last(
 		long groupId, long layoutPageTemplateCollectionId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1648,7 +1687,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_L_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1697,7 +1737,9 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_L_T(
 		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -1713,7 +1755,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_L_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1784,22 +1827,19 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_L_S(long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateCollectionId the layout page template collection ID
 	 * @param status the status
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_S(
 		long groupId, long layoutPageTemplateCollectionId, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1814,12 +1854,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_S(
 		long groupId, long layoutPageTemplateCollectionId, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1833,7 +1876,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_S_First(
 			long groupId, long layoutPageTemplateCollectionId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1847,7 +1891,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_S_First(
 		long groupId, long layoutPageTemplateCollectionId, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1861,7 +1906,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_L_S_Last(
 			long groupId, long layoutPageTemplateCollectionId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1875,7 +1921,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_L_S_Last(
 		long groupId, long layoutPageTemplateCollectionId, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1891,7 +1938,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_L_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -1941,7 +1989,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_L_S(
 		long groupId, long layoutPageTemplateCollectionId, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -1957,7 +2006,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_L_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2027,21 +2077,18 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_T_LikeN(long,String,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param type the type
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_LikeN(
 		long groupId, String name, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2056,11 +2103,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_LikeN(
 		long groupId, String name, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2074,7 +2124,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_LikeN_First(
 			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2088,7 +2139,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_LikeN_First(
 		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2102,7 +2154,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_LikeN_Last(
 			long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2116,7 +2169,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_LikeN_Last(
 		long groupId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2131,7 +2185,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByG_T_LikeN_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2179,7 +2234,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_T_LikeN(
 		long groupId, String name, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -2194,7 +2250,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] filterFindByG_T_LikeN_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2261,21 +2318,18 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_T_S(long,int,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param status the status
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2290,11 +2344,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_S(
 		long groupId, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2308,7 +2365,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_S_First(
 			long groupId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2322,7 +2380,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_S_First(
 		long groupId, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2336,7 +2395,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_S_Last(
 			long groupId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2350,7 +2410,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_S_Last(
 		long groupId, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2365,7 +2426,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] findByG_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2413,7 +2475,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_T_S(
 		long groupId, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
@@ -2428,7 +2491,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry[] filterFindByG_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2499,7 +2563,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_L_LikeN_S(long,long,String,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param layoutPageTemplateCollectionId the layout page template collection ID
 	 * @param name the name
@@ -2507,15 +2570,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_LikeN_S(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2531,12 +2592,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_L_LikeN_S(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2552,7 +2616,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_L_LikeN_S_First(
 			long groupId, long layoutPageTemplateCollectionId, String name,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2568,7 +2633,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_L_LikeN_S_First(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2584,7 +2650,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_L_LikeN_S_Last(
 			long groupId, long layoutPageTemplateCollectionId, String name,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2600,7 +2667,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_L_LikeN_S_Last(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2617,7 +2685,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_L_LikeN_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, String name, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2671,7 +2740,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_L_LikeN_S(
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name LIKE &#63; and status = &#63;.
@@ -2688,7 +2758,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_L_LikeN_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId,
 			long layoutPageTemplateCollectionId, String name, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2767,7 +2838,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_T(long,long,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -2775,14 +2845,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_T(
 		long groupId, long classNameId, long classTypeId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
@@ -2798,11 +2867,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_T(
 		long groupId, long classNameId, long classTypeId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
@@ -2817,7 +2890,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_C_C_T_First(
 			long groupId, long classNameId, long classTypeId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2832,7 +2906,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_T_First(
 		long groupId, long classNameId, long classTypeId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
@@ -2847,7 +2922,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_C_C_T_Last(
 			long groupId, long classNameId, long classTypeId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2862,7 +2938,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_T_Last(
 		long groupId, long classNameId, long classTypeId, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
@@ -2879,7 +2956,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -2931,7 +3009,9 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_T(
 		long groupId, long classNameId, long classTypeId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63;.
@@ -2948,7 +3028,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3025,7 +3106,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_D(long,long,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -3033,15 +3113,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_D(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -3057,12 +3135,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_D(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -3078,7 +3159,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_D_First(
 			long groupId, long classNameId, long classTypeId,
 			boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3094,7 +3176,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_D_First(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -3110,7 +3193,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_D_Last(
 			long groupId, long classNameId, long classTypeId,
 			boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3126,7 +3210,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_D_Last(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -3143,7 +3228,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_D_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3197,7 +3283,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_D(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63;.
@@ -3214,7 +3301,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_D_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3293,7 +3381,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_T_D(long,long,int,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param type the type
@@ -3301,15 +3388,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_T_D(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3325,12 +3410,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_T_D(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3345,7 +3433,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_C_T_D_First(
 			long groupId, long classNameId, int type, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3360,7 +3449,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_T_D_First(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3375,7 +3465,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_C_T_D_Last(
 			long groupId, long classNameId, int type, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3390,7 +3481,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_T_D_Last(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3407,7 +3499,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_T_D_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			int type, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3460,7 +3553,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_T_D(
 		long groupId, long classNameId, int type, boolean defaultTemplate,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -3477,7 +3571,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_T_D_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			int type, boolean defaultTemplate,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3552,7 +3647,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_T_LikeN_S(long,String,int,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param type the type
@@ -3560,14 +3654,12 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_LikeN_S(
 		long groupId, String name, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -3583,11 +3675,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_T_LikeN_S(
 		long groupId, String name, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -3602,7 +3697,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_LikeN_S_First(
 			long groupId, String name, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3617,7 +3713,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_LikeN_S_First(
 		long groupId, String name, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -3632,7 +3729,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry findByG_T_LikeN_S_Last(
 			long groupId, String name, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3647,7 +3745,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_T_LikeN_S_Last(
 		long groupId, String name, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -3664,7 +3763,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_T_LikeN_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, String name, int type,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3715,7 +3815,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_T_LikeN_S(
 		long groupId, String name, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -3732,7 +3833,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_T_LikeN_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, String name, int type,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3811,7 +3913,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_LikeN_T(long,long,long,String,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -3820,15 +3921,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63;.
@@ -3845,12 +3944,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63;.
@@ -3867,7 +3969,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_First(
 			long groupId, long classNameId, long classTypeId, String name,
 			int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3883,7 +3986,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_First(
 		long groupId, long classNameId, long classTypeId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63;.
@@ -3900,7 +4004,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_Last(
 			long groupId, long classNameId, long classTypeId, String name,
 			int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3916,7 +4021,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_Last(
 		long groupId, long classNameId, long classTypeId, String name, int type,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63;.
@@ -3934,7 +4040,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_LikeN_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -3991,7 +4098,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_LikeN_T(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63;.
@@ -4009,7 +4117,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_LikeN_T_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, String name, int type,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4093,7 +4202,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_T_S(long,long,long,int,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -4102,15 +4210,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_T_S(
 		long groupId, long classNameId, long classTypeId, int type, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
@@ -4127,12 +4233,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_T_S(
 		long groupId, long classNameId, long classTypeId, int type, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
@@ -4149,7 +4258,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_T_S_First(
 			long groupId, long classNameId, long classTypeId, int type,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4165,7 +4275,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_T_S_First(
 		long groupId, long classNameId, long classTypeId, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
@@ -4182,7 +4293,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_T_S_Last(
 			long groupId, long classNameId, long classTypeId, int type,
 			int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4198,7 +4310,8 @@ public interface LayoutPageTemplateEntryPersistence
 	 */
 	public LayoutPageTemplateEntry fetchByG_C_C_T_S_Last(
 		long groupId, long classNameId, long classTypeId, int type, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
@@ -4216,7 +4329,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4272,7 +4386,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(
 		long groupId, long classNameId, long classTypeId, int type, int status,
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and type = &#63; and status = &#63;.
@@ -4290,7 +4405,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4372,7 +4488,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_D_S(long,long,long,boolean,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -4381,15 +4496,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_D_S(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4406,12 +4519,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_D_S(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4428,7 +4544,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_D_S_First(
 			long groupId, long classNameId, long classTypeId,
 			boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4445,7 +4562,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_D_S_First(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4462,7 +4580,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_D_S_Last(
 			long groupId, long classNameId, long classTypeId,
 			boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4479,7 +4598,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_D_S_Last(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4497,7 +4617,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_D_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4554,7 +4675,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(
 		long groupId, long classNameId, long classTypeId,
 		boolean defaultTemplate, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -4572,7 +4694,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_D_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, boolean defaultTemplate, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4659,7 +4782,6 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_LikeN_T_S(long,long,long,String,int,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classTypeId the class type ID
@@ -4669,15 +4791,13 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4695,12 +4815,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findByG_C_C_LikeN_T_S(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4718,7 +4841,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_S_First(
 			long groupId, long classNameId, long classTypeId, String name,
 			int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4736,7 +4860,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_S_First(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the last layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4754,7 +4879,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry findByG_C_C_LikeN_T_S_Last(
 			long groupId, long classNameId, long classTypeId, String name,
 			int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4772,7 +4898,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry fetchByG_C_C_LikeN_T_S_Last(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4791,7 +4918,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] findByG_C_C_LikeN_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, String name, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -4851,7 +4979,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public java.util.List<LayoutPageTemplateEntry> filterFindByG_C_C_LikeN_T_S(
 		long groupId, long classNameId, long classTypeId, String name, int type,
 		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns the layout page template entries before and after the current layout page template entry in the ordered set of layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeId = &#63; and name LIKE &#63; and type = &#63; and status = &#63;.
@@ -4870,7 +4999,8 @@ public interface LayoutPageTemplateEntryPersistence
 	public LayoutPageTemplateEntry[] filterFindByG_C_C_LikeN_T_S_PrevAndNext(
 			long layoutPageTemplateEntryId, long groupId, long classNameId,
 			long classTypeId, String name, int type, int status,
-			OrderByComparator<LayoutPageTemplateEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<LayoutPageTemplateEntry> orderByComparator)
 		throws NoSuchPageTemplateEntryException;
 
 	/**
@@ -5000,18 +5130,15 @@ public interface LayoutPageTemplateEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template entries
 	 */
-	@Deprecated
 	public java.util.List<LayoutPageTemplateEntry> findAll(
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layout page template entries.
@@ -5023,11 +5150,14 @@ public interface LayoutPageTemplateEntryPersistence
 	 * @param start the lower bound of the range of layout page template entries
 	 * @param end the upper bound of the range of layout page template entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout page template entries
 	 */
 	public java.util.List<LayoutPageTemplateEntry> findAll(
 		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<LayoutPageTemplateEntry> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layout page template entries from the database.

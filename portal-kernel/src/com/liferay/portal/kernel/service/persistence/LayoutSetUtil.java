@@ -158,22 +158,18 @@ public class LayoutSetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout sets
 	 */
-	@Deprecated
 	public static List<LayoutSet> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LayoutSet> orderByComparator) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -187,14 +183,16 @@ public class LayoutSetUtil {
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout sets
 	 */
 	public static List<LayoutSet> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator<LayoutSet> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -330,23 +328,18 @@ public class LayoutSetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutSetPrototypeUuid(String, int, int, OrderByComparator)}
 	 * @param layoutSetPrototypeUuid the layout set prototype uuid
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout sets
 	 */
-	@Deprecated
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LayoutSet> orderByComparator) {
 
 		return getPersistence().findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, start, end, orderByComparator,
-			useFinderCache);
+			layoutSetPrototypeUuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -360,14 +353,17 @@ public class LayoutSetUtil {
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout sets
 	 */
 	public static List<LayoutSet> findByLayoutSetPrototypeUuid(
 		String layoutSetPrototypeUuid, int start, int end,
-		OrderByComparator<LayoutSet> orderByComparator) {
+		OrderByComparator<LayoutSet> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutSetPrototypeUuid(
-			layoutSetPrototypeUuid, start, end, orderByComparator);
+			layoutSetPrototypeUuid, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -491,20 +487,14 @@ public class LayoutSetUtil {
 	}
 
 	/**
-	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P(long,boolean)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	@Deprecated
-	public static LayoutSet fetchByG_P(
-		long groupId, boolean privateLayout, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_P(
-			groupId, privateLayout, useFinderCache);
+	public static LayoutSet fetchByG_P(long groupId, boolean privateLayout) {
+		return getPersistence().fetchByG_P(groupId, privateLayout);
 	}
 
 	/**
@@ -515,8 +505,11 @@ public class LayoutSetUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public static LayoutSet fetchByG_P(long groupId, boolean privateLayout) {
-		return getPersistence().fetchByG_P(groupId, privateLayout);
+	public static LayoutSet fetchByG_P(
+		long groupId, boolean privateLayout, boolean useFinderCache) {
+
+		return getPersistence().fetchByG_P(
+			groupId, privateLayout, useFinderCache);
 	}
 
 	/**
@@ -558,20 +551,14 @@ public class LayoutSetUtil {
 	}
 
 	/**
-	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByP_L(boolean,long)}
 	 * @param privateLayout the private layout
 	 * @param logoId the logo ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	@Deprecated
-	public static LayoutSet fetchByP_L(
-		boolean privateLayout, long logoId, boolean useFinderCache) {
-
-		return getPersistence().fetchByP_L(
-			privateLayout, logoId, useFinderCache);
+	public static LayoutSet fetchByP_L(boolean privateLayout, long logoId) {
+		return getPersistence().fetchByP_L(privateLayout, logoId);
 	}
 
 	/**
@@ -582,8 +569,11 @@ public class LayoutSetUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout set, or <code>null</code> if a matching layout set could not be found
 	 */
-	public static LayoutSet fetchByP_L(boolean privateLayout, long logoId) {
-		return getPersistence().fetchByP_L(privateLayout, logoId);
+	public static LayoutSet fetchByP_L(
+		boolean privateLayout, long logoId, boolean useFinderCache) {
+
+		return getPersistence().fetchByP_L(
+			privateLayout, logoId, useFinderCache);
 	}
 
 	/**
@@ -709,20 +699,15 @@ public class LayoutSetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutSetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout sets
 	 */
-	@Deprecated
 	public static List<LayoutSet> findAll(
-		int start, int end, OrderByComparator<LayoutSet> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<LayoutSet> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -735,12 +720,15 @@ public class LayoutSetUtil {
 	 * @param start the lower bound of the range of layout sets
 	 * @param end the upper bound of the range of layout sets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout sets
 	 */
 	public static List<LayoutSet> findAll(
-		int start, int end, OrderByComparator<LayoutSet> orderByComparator) {
+		int start, int end, OrderByComparator<LayoutSet> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -131,22 +131,18 @@ public class AttachmentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByMessageId(long, int, int, OrderByComparator)}
 	 * @param messageId the message ID
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching attachments
 	 */
-	@Deprecated
 	@Override
 	public List<Attachment> findByMessageId(
 		long messageId, int start, int end,
-		OrderByComparator<Attachment> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<Attachment> orderByComparator) {
 
-		return findByMessageId(messageId, start, end, orderByComparator);
+		return findByMessageId(messageId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -160,12 +156,14 @@ public class AttachmentPersistenceImpl
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching attachments
 	 */
 	@Override
 	public List<Attachment> findByMessageId(
 		long messageId, int start, int end,
-		OrderByComparator<Attachment> orderByComparator) {
+		OrderByComparator<Attachment> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -175,25 +173,32 @@ public class AttachmentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByMessageId;
-			finderArgs = new Object[] {messageId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByMessageId;
+				finderArgs = new Object[] {messageId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByMessageId;
 			finderArgs = new Object[] {
 				messageId, start, end, orderByComparator
 			};
 		}
 
-		List<Attachment> list = (List<Attachment>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Attachment> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Attachment attachment : list) {
-				if ((messageId != attachment.getMessageId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Attachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Attachment attachment : list) {
+					if ((messageId != attachment.getMessageId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -249,10 +254,14 @@ public class AttachmentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -963,20 +972,16 @@ public class AttachmentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AttachmentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of attachments
 	 */
-	@Deprecated
 	@Override
 	public List<Attachment> findAll(
-		int start, int end, OrderByComparator<Attachment> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Attachment> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -989,11 +994,13 @@ public class AttachmentPersistenceImpl
 	 * @param start the lower bound of the range of attachments
 	 * @param end the upper bound of the range of attachments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of attachments
 	 */
 	@Override
 	public List<Attachment> findAll(
-		int start, int end, OrderByComparator<Attachment> orderByComparator) {
+		int start, int end, OrderByComparator<Attachment> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1003,16 +1010,23 @@ public class AttachmentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Attachment> list = (List<Attachment>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Attachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<Attachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1059,10 +1073,14 @@ public class AttachmentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

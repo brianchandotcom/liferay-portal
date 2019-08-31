@@ -119,22 +119,18 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification deliveries
 	 */
-	@Deprecated
 	@Override
 	public List<UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserNotificationDelivery> orderByComparator) {
 
-		return findByUserId(userId, start, end, orderByComparator);
+		return findByUserId(userId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -148,12 +144,14 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user notification deliveries
 	 */
 	@Override
 	public List<UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator<UserNotificationDelivery> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -163,24 +161,30 @@ public class UserNotificationDeliveryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUserId;
-			finderArgs = new Object[] {userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUserId;
+				finderArgs = new Object[] {userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUserId;
 			finderArgs = new Object[] {userId, start, end, orderByComparator};
 		}
 
-		List<UserNotificationDelivery> list =
-			(List<UserNotificationDelivery>)FinderCacheUtil.getResult(
+		List<UserNotificationDelivery> list = null;
+
+		if (useFinderCache) {
+			list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (UserNotificationDelivery userNotificationDelivery : list) {
-				if ((userId != userNotificationDelivery.getUserId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (UserNotificationDelivery userNotificationDelivery : list) {
+					if ((userId != userNotificationDelivery.getUserId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -236,10 +240,14 @@ public class UserNotificationDeliveryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -650,25 +658,23 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 	/**
-	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_P_C_N_D(long,String,long,int,int)}
 	 * @param userId the user ID
 	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	 */
-	@Deprecated
 	@Override
 	public UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean useFinderCache) {
+		int deliveryType) {
 
 		return fetchByU_P_C_N_D(
-			userId, portletId, classNameId, notificationType, deliveryType);
+			userId, portletId, classNameId, notificationType, deliveryType,
+			true);
 	}
 
 	/**
@@ -685,16 +691,24 @@ public class UserNotificationDeliveryPersistenceImpl
 	@Override
 	public UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, String portletId, long classNameId, int notificationType,
-		int deliveryType) {
+		int deliveryType, boolean useFinderCache) {
 
 		portletId = Objects.toString(portletId, "");
 
-		Object[] finderArgs = new Object[] {
-			userId, portletId, classNameId, notificationType, deliveryType
-		};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByU_P_C_N_D, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				userId, portletId, classNameId, notificationType, deliveryType
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByU_P_C_N_D, finderArgs, this);
+		}
 
 		if (result instanceof UserNotificationDelivery) {
 			UserNotificationDelivery userNotificationDelivery =
@@ -762,8 +776,10 @@ public class UserNotificationDeliveryPersistenceImpl
 				List<UserNotificationDelivery> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByU_P_C_N_D, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByU_P_C_N_D, finderArgs, list);
+					}
 				}
 				else {
 					UserNotificationDelivery userNotificationDelivery =
@@ -775,8 +791,10 @@ public class UserNotificationDeliveryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByU_P_C_N_D, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByU_P_C_N_D, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1397,21 +1415,17 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user notification deliveries
 	 */
-	@Deprecated
 	@Override
 	public List<UserNotificationDelivery> findAll(
 		int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<UserNotificationDelivery> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1424,12 +1438,14 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user notification deliveries
 	 */
 	@Override
 	public List<UserNotificationDelivery> findAll(
 		int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
+		OrderByComparator<UserNotificationDelivery> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1439,17 +1455,23 @@ public class UserNotificationDeliveryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<UserNotificationDelivery> list =
-			(List<UserNotificationDelivery>)FinderCacheUtil.getResult(
+		List<UserNotificationDelivery> list = null;
+
+		if (useFinderCache) {
+			list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1497,10 +1519,14 @@ public class UserNotificationDeliveryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

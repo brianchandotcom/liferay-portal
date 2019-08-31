@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface DDMStructureLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassNameId(long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
-	@Deprecated
 	public java.util.List<DDMStructureLink> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm structure links where classNameId = &#63;.
@@ -97,11 +93,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where classNameId = &#63;.
@@ -113,7 +112,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByClassNameId_First(
 			long classNameId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -125,7 +125,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByClassNameId_First(
 		long classNameId,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddm structure link in the ordered set where classNameId = &#63;.
@@ -137,7 +138,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByClassNameId_Last(
 			long classNameId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -149,7 +151,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByClassNameId_Last(
 		long classNameId,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the ddm structure links before and after the current ddm structure link in the ordered set where classNameId = &#63;.
@@ -162,7 +165,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink[] findByClassNameId_PrevAndNext(
 			long structureLinkId, long classNameId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -210,19 +214,16 @@ public interface DDMStructureLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureId(long, int, int, OrderByComparator)}
 	 * @param structureId the structure ID
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
-	@Deprecated
 	public java.util.List<DDMStructureLink> findByStructureId(
 		long structureId, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm structure links where structureId = &#63;.
@@ -235,11 +236,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByStructureId(
 		long structureId, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where structureId = &#63;.
@@ -251,7 +255,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByStructureId_First(
 			long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -263,7 +268,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByStructureId_First(
 		long structureId,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddm structure link in the ordered set where structureId = &#63;.
@@ -275,7 +281,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByStructureId_Last(
 			long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -287,7 +294,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByStructureId_Last(
 		long structureId,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the ddm structure links before and after the current ddm structure link in the ordered set where structureId = &#63;.
@@ -300,7 +308,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink[] findByStructureId_PrevAndNext(
 			long structureLinkId, long structureId,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -351,20 +360,17 @@ public interface DDMStructureLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
-	@Deprecated
 	public java.util.List<DDMStructureLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm structure links where classNameId = &#63; and classPK = &#63;.
@@ -378,11 +384,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -395,7 +404,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByC_C_First(
 			long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -408,7 +418,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByC_C_First(
 		long classNameId, long classPK,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -421,7 +432,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink findByC_C_Last(
 			long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -434,7 +446,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink fetchByC_C_Last(
 		long classNameId, long classPK,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns the ddm structure links before and after the current ddm structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -448,7 +461,8 @@ public interface DDMStructureLinkPersistence
 	 */
 	public DDMStructureLink[] findByC_C_PrevAndNext(
 			long structureLinkId, long classNameId, long classPK,
-			OrderByComparator<DDMStructureLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+				orderByComparator)
 		throws NoSuchStructureLinkException;
 
 	/**
@@ -482,19 +496,15 @@ public interface DDMStructureLinkPersistence
 		throws NoSuchStructureLinkException;
 
 	/**
-	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C_S(long,long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param structureId the structure ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
 	 */
-	@Deprecated
 	public DDMStructureLink fetchByC_C_S(
-		long classNameId, long classPK, long structureId,
-		boolean useFinderCache);
+		long classNameId, long classPK, long structureId);
 
 	/**
 	 * Returns the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -506,7 +516,8 @@ public interface DDMStructureLinkPersistence
 	 * @return the matching ddm structure link, or <code>null</code> if a matching ddm structure link could not be found
 	 */
 	public DDMStructureLink fetchByC_C_S(
-		long classNameId, long classPK, long structureId);
+		long classNameId, long classPK, long structureId,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the ddm structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; from the database.
@@ -609,18 +620,15 @@ public interface DDMStructureLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structure links
 	 */
-	@Deprecated
 	public java.util.List<DDMStructureLink> findAll(
 		int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm structure links.
@@ -632,11 +640,14 @@ public interface DDMStructureLinkPersistence
 	 * @param start the lower bound of the range of ddm structure links
 	 * @param end the upper bound of the range of ddm structure links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structure links
 	 */
 	public java.util.List<DDMStructureLink> findAll(
 		int start, int end,
-		OrderByComparator<DDMStructureLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddm structure links from the database.

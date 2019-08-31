@@ -138,21 +138,18 @@ public class HtmlPreviewEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the html preview entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C(long,long,long)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching html preview entry, or <code>null</code> if a matching html preview entry could not be found
 	 */
-	@Deprecated
 	@Override
 	public HtmlPreviewEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK, boolean useFinderCache) {
+		long groupId, long classNameId, long classPK) {
 
-		return fetchByG_C_C(groupId, classNameId, classPK);
+		return fetchByG_C_C(groupId, classNameId, classPK, true);
 	}
 
 	/**
@@ -166,12 +163,20 @@ public class HtmlPreviewEntryPersistenceImpl
 	 */
 	@Override
 	public HtmlPreviewEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, classPK};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByG_C_C, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, classNameId, classPK};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_C, finderArgs, this);
+		}
 
 		if (result instanceof HtmlPreviewEntry) {
 			HtmlPreviewEntry htmlPreviewEntry = (HtmlPreviewEntry)result;
@@ -215,14 +220,22 @@ public class HtmlPreviewEntryPersistenceImpl
 				List<HtmlPreviewEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_C_C, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_C_C, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, classNameId, classPK
+								};
+							}
+
 							_log.warn(
 								"HtmlPreviewEntryPersistenceImpl.fetchByG_C_C(long, long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -238,7 +251,10 @@ public class HtmlPreviewEntryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_C_C, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_C_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -769,21 +785,17 @@ public class HtmlPreviewEntryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>HtmlPreviewEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of html preview entries
 	 * @param end the upper bound of the range of html preview entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of html preview entries
 	 */
-	@Deprecated
 	@Override
 	public List<HtmlPreviewEntry> findAll(
 		int start, int end,
-		OrderByComparator<HtmlPreviewEntry> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<HtmlPreviewEntry> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -796,12 +808,14 @@ public class HtmlPreviewEntryPersistenceImpl
 	 * @param start the lower bound of the range of html preview entries
 	 * @param end the upper bound of the range of html preview entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of html preview entries
 	 */
 	@Override
 	public List<HtmlPreviewEntry> findAll(
 		int start, int end,
-		OrderByComparator<HtmlPreviewEntry> orderByComparator) {
+		OrderByComparator<HtmlPreviewEntry> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -811,17 +825,23 @@ public class HtmlPreviewEntryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<HtmlPreviewEntry> list =
-			(List<HtmlPreviewEntry>)finderCache.getResult(
+		List<HtmlPreviewEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<HtmlPreviewEntry>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -868,10 +888,14 @@ public class HtmlPreviewEntryPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

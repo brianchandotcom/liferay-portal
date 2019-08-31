@@ -136,24 +136,20 @@ public class DLContentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_R(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param repositoryId the repository ID
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
-	@Deprecated
 	@Override
 	public List<DLContent> findByC_R(
 		long companyId, long repositoryId, int start, int end,
-		OrderByComparator<DLContent> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLContent> orderByComparator) {
 
 		return findByC_R(
-			companyId, repositoryId, start, end, orderByComparator);
+			companyId, repositoryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -168,12 +164,14 @@ public class DLContentPersistenceImpl
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	@Override
 	public List<DLContent> findByC_R(
 		long companyId, long repositoryId, int start, int end,
-		OrderByComparator<DLContent> orderByComparator) {
+		OrderByComparator<DLContent> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -183,27 +181,34 @@ public class DLContentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_R;
-			finderArgs = new Object[] {companyId, repositoryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_R;
+				finderArgs = new Object[] {companyId, repositoryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_R;
 			finderArgs = new Object[] {
 				companyId, repositoryId, start, end, orderByComparator
 			};
 		}
 
-		List<DLContent> list = (List<DLContent>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DLContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DLContent dlContent : list) {
-				if ((companyId != dlContent.getCompanyId()) ||
-					(repositoryId != dlContent.getRepositoryId())) {
+		if (useFinderCache) {
+			list = (List<DLContent>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DLContent dlContent : list) {
+					if ((companyId != dlContent.getCompanyId()) ||
+						(repositoryId != dlContent.getRepositoryId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -263,10 +268,14 @@ public class DLContentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -689,25 +698,21 @@ public class DLContentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_R_P(long,long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
-	@Deprecated
 	@Override
 	public List<DLContent> findByC_R_P(
 		long companyId, long repositoryId, String path, int start, int end,
-		OrderByComparator<DLContent> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLContent> orderByComparator) {
 
 		return findByC_R_P(
-			companyId, repositoryId, path, start, end, orderByComparator);
+			companyId, repositoryId, path, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -723,12 +728,14 @@ public class DLContentPersistenceImpl
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	@Override
 	public List<DLContent> findByC_R_P(
 		long companyId, long repositoryId, String path, int start, int end,
-		OrderByComparator<DLContent> orderByComparator) {
+		OrderByComparator<DLContent> orderByComparator,
+		boolean useFinderCache) {
 
 		path = Objects.toString(path, "");
 
@@ -740,28 +747,35 @@ public class DLContentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_R_P;
-			finderArgs = new Object[] {companyId, repositoryId, path};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_R_P;
+				finderArgs = new Object[] {companyId, repositoryId, path};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_R_P;
 			finderArgs = new Object[] {
 				companyId, repositoryId, path, start, end, orderByComparator
 			};
 		}
 
-		List<DLContent> list = (List<DLContent>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DLContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DLContent dlContent : list) {
-				if ((companyId != dlContent.getCompanyId()) ||
-					(repositoryId != dlContent.getRepositoryId()) ||
-					!path.equals(dlContent.getPath())) {
+		if (useFinderCache) {
+			list = (List<DLContent>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DLContent dlContent : list) {
+					if ((companyId != dlContent.getCompanyId()) ||
+						(repositoryId != dlContent.getRepositoryId()) ||
+						!path.equals(dlContent.getPath())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -836,10 +850,14 @@ public class DLContentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1315,25 +1333,21 @@ public class DLContentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_R_LikeP(long,long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
-	@Deprecated
 	@Override
 	public List<DLContent> findByC_R_LikeP(
 		long companyId, long repositoryId, String path, int start, int end,
-		OrderByComparator<DLContent> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLContent> orderByComparator) {
 
 		return findByC_R_LikeP(
-			companyId, repositoryId, path, start, end, orderByComparator);
+			companyId, repositoryId, path, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1349,12 +1363,14 @@ public class DLContentPersistenceImpl
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library contents
 	 */
 	@Override
 	public List<DLContent> findByC_R_LikeP(
 		long companyId, long repositoryId, String path, int start, int end,
-		OrderByComparator<DLContent> orderByComparator) {
+		OrderByComparator<DLContent> orderByComparator,
+		boolean useFinderCache) {
 
 		path = Objects.toString(path, "");
 
@@ -1367,19 +1383,23 @@ public class DLContentPersistenceImpl
 			companyId, repositoryId, path, start, end, orderByComparator
 		};
 
-		List<DLContent> list = (List<DLContent>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DLContent> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DLContent dlContent : list) {
-				if ((companyId != dlContent.getCompanyId()) ||
-					(repositoryId != dlContent.getRepositoryId()) ||
-					!StringUtil.wildcardMatches(
-						dlContent.getPath(), path, '_', '%', '\\', true)) {
+		if (useFinderCache) {
+			list = (List<DLContent>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DLContent dlContent : list) {
+					if ((companyId != dlContent.getCompanyId()) ||
+						(repositoryId != dlContent.getRepositoryId()) ||
+						!StringUtil.wildcardMatches(
+							dlContent.getPath(), path, '_', '%', '\\', true)) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1454,10 +1474,14 @@ public class DLContentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1940,23 +1964,19 @@ public class DLContentPersistenceImpl
 	}
 
 	/**
-	 * Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_R_P_V(long,long,String,String)}
 	 * @param companyId the company ID
 	 * @param repositoryId the repository ID
 	 * @param path the path
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library content, or <code>null</code> if a matching document library content could not be found
 	 */
-	@Deprecated
 	@Override
 	public DLContent fetchByC_R_P_V(
-		long companyId, long repositoryId, String path, String version,
-		boolean useFinderCache) {
+		long companyId, long repositoryId, String path, String version) {
 
-		return fetchByC_R_P_V(companyId, repositoryId, path, version);
+		return fetchByC_R_P_V(companyId, repositoryId, path, version, true);
 	}
 
 	/**
@@ -1971,17 +1991,24 @@ public class DLContentPersistenceImpl
 	 */
 	@Override
 	public DLContent fetchByC_R_P_V(
-		long companyId, long repositoryId, String path, String version) {
+		long companyId, long repositoryId, String path, String version,
+		boolean useFinderCache) {
 
 		path = Objects.toString(path, "");
 		version = Objects.toString(version, "");
 
-		Object[] finderArgs = new Object[] {
-			companyId, repositoryId, path, version
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByC_R_P_V, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, repositoryId, path, version};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_R_P_V, finderArgs, this);
+		}
 
 		if (result instanceof DLContent) {
 			DLContent dlContent = (DLContent)result;
@@ -2052,8 +2079,10 @@ public class DLContentPersistenceImpl
 				List<DLContent> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_R_P_V, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_R_P_V, finderArgs, list);
+					}
 				}
 				else {
 					DLContent dlContent = list.get(0);
@@ -2064,7 +2093,10 @@ public class DLContentPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_R_P_V, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_R_P_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2685,20 +2717,16 @@ public class DLContentPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLContentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library contents
 	 */
-	@Deprecated
 	@Override
 	public List<DLContent> findAll(
-		int start, int end, OrderByComparator<DLContent> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DLContent> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2711,11 +2739,13 @@ public class DLContentPersistenceImpl
 	 * @param start the lower bound of the range of document library contents
 	 * @param end the upper bound of the range of document library contents (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library contents
 	 */
 	@Override
 	public List<DLContent> findAll(
-		int start, int end, OrderByComparator<DLContent> orderByComparator) {
+		int start, int end, OrderByComparator<DLContent> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2725,16 +2755,23 @@ public class DLContentPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DLContent> list = (List<DLContent>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DLContent> list = null;
+
+		if (useFinderCache) {
+			list = (List<DLContent>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2781,10 +2818,14 @@ public class DLContentPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -161,22 +161,18 @@ public class RecentLayoutSetBranchUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public static List<RecentLayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
+			groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -190,14 +186,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
+			groupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,22 +334,18 @@ public class RecentLayoutSetBranchUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public static List<RecentLayoutSetBranch> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator, useFinderCache);
+			userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -365,14 +359,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
+			userId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -513,22 +509,18 @@ public class RecentLayoutSetBranchUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutSetBranchId(long, int, int, OrderByComparator)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public static List<RecentLayoutSetBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
 
 		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator, useFinderCache);
+			layoutSetBranchId, start, end, orderByComparator);
 	}
 
 	/**
@@ -542,14 +534,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator);
+			layoutSetBranchId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -672,19 +666,16 @@ public class RecentLayoutSetBranchUtil {
 	}
 
 	/**
-	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_L(long,long)}
 	 * @param userId the user ID
 	 * @param layoutSetId the layout set ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
 	 */
-	@Deprecated
 	public static RecentLayoutSetBranch fetchByU_L(
-		long userId, long layoutSetId, boolean useFinderCache) {
+		long userId, long layoutSetId) {
 
-		return getPersistence().fetchByU_L(userId, layoutSetId, useFinderCache);
+		return getPersistence().fetchByU_L(userId, layoutSetId);
 	}
 
 	/**
@@ -696,9 +687,9 @@ public class RecentLayoutSetBranchUtil {
 	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
 	 */
 	public static RecentLayoutSetBranch fetchByU_L(
-		long userId, long layoutSetId) {
+		long userId, long layoutSetId, boolean useFinderCache) {
 
-		return getPersistence().fetchByU_L(userId, layoutSetId);
+		return getPersistence().fetchByU_L(userId, layoutSetId, useFinderCache);
 	}
 
 	/**
@@ -837,21 +828,16 @@ public class RecentLayoutSetBranchUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout set branchs
 	 */
-	@Deprecated
 	public static List<RecentLayoutSetBranch> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -864,13 +850,16 @@ public class RecentLayoutSetBranchUtil {
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout set branchs
 	 */
 	public static List<RecentLayoutSetBranch> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator) {
+		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

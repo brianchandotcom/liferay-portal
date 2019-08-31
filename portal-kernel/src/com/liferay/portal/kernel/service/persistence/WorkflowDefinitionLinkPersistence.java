@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface WorkflowDefinitionLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
-	@Deprecated
 	public java.util.List<WorkflowDefinitionLink> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where companyId = &#63;.
@@ -97,11 +93,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where companyId = &#63;.
@@ -113,7 +112,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByCompanyId_First(
 			long companyId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -125,7 +125,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByCompanyId_First(
 		long companyId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last workflow definition link in the ordered set where companyId = &#63;.
@@ -137,7 +138,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByCompanyId_Last(
 			long companyId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -149,7 +151,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByCompanyId_Last(
 		long companyId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63;.
@@ -162,7 +165,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink[] findByCompanyId_PrevAndNext(
 			long workflowDefinitionLinkId, long companyId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -215,21 +219,18 @@ public interface WorkflowDefinitionLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
-	@Deprecated
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -244,11 +245,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C(
 		long groupId, long companyId, long classNameId, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -262,7 +266,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByG_C_C_First(
 			long groupId, long companyId, long classNameId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -276,7 +281,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_First(
 		long groupId, long companyId, long classNameId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -290,7 +296,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByG_C_C_Last(
 			long groupId, long companyId, long classNameId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -304,7 +311,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_Last(
 		long groupId, long companyId, long classNameId,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the workflow definition links before and after the current workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63;.
@@ -320,7 +328,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink[] findByG_C_C_PrevAndNext(
 			long workflowDefinitionLinkId, long groupId, long companyId,
 			long classNameId,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -379,22 +388,19 @@ public interface WorkflowDefinitionLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_W_W(long,String,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param workflowDefinitionName the workflow definition name
 	 * @param workflowDefinitionVersion the workflow definition version
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
-	@Deprecated
 	public java.util.List<WorkflowDefinitionLink> findByC_W_W(
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -409,12 +415,15 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByC_W_W(
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion, int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -429,7 +438,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink findByC_W_W_First(
 			long companyId, String workflowDefinitionName,
 			int workflowDefinitionVersion,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -444,7 +454,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink fetchByC_W_W_First(
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -459,7 +470,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink findByC_W_W_Last(
 			long companyId, String workflowDefinitionName,
 			int workflowDefinitionVersion,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -474,7 +486,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink fetchByC_W_W_Last(
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the workflow definition links before and after the current workflow definition link in the ordered set where companyId = &#63; and workflowDefinitionName = &#63; and workflowDefinitionVersion = &#63;.
@@ -490,7 +503,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink[] findByC_W_W_PrevAndNext(
 			long workflowDefinitionLinkId, long companyId,
 			String workflowDefinitionName, int workflowDefinitionVersion,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -554,7 +568,6 @@ public interface WorkflowDefinitionLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C_C(long,long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
@@ -562,14 +575,13 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
-	@Deprecated
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK, int start,
-		int end, OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -585,11 +597,15 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK, int start,
-		int end, OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -604,7 +620,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByG_C_C_C_First(
 			long groupId, long companyId, long classNameId, long classPK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -619,7 +636,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_C_First(
 		long groupId, long companyId, long classNameId, long classPK,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -634,7 +652,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink findByG_C_C_C_Last(
 			long groupId, long companyId, long classNameId, long classPK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -649,7 +668,8 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_C_Last(
 		long groupId, long companyId, long classNameId, long classPK,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns the workflow definition links before and after the current workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -666,7 +686,8 @@ public interface WorkflowDefinitionLinkPersistence
 	public WorkflowDefinitionLink[] findByG_C_C_C_PrevAndNext(
 			long workflowDefinitionLinkId, long groupId, long companyId,
 			long classNameId, long classPK,
-			OrderByComparator<WorkflowDefinitionLink> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
@@ -709,21 +730,18 @@ public interface WorkflowDefinitionLinkPersistence
 		throws NoSuchWorkflowDefinitionLinkException;
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C_C_T(long,long,long,long,long)}
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	 */
-	@Deprecated
 	public WorkflowDefinitionLink fetchByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
-		long typePK, boolean useFinderCache);
+		long typePK);
 
 	/**
 	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -738,7 +756,7 @@ public interface WorkflowDefinitionLinkPersistence
 	 */
 	public WorkflowDefinitionLink fetchByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
-		long typePK);
+		long typePK, boolean useFinderCache);
 
 	/**
 	 * Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
@@ -852,18 +870,15 @@ public interface WorkflowDefinitionLinkPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow definition links
 	 */
-	@Deprecated
 	public java.util.List<WorkflowDefinitionLink> findAll(
 		int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the workflow definition links.
@@ -875,11 +890,14 @@ public interface WorkflowDefinitionLinkPersistence
 	 * @param start the lower bound of the range of workflow definition links
 	 * @param end the upper bound of the range of workflow definition links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of workflow definition links
 	 */
 	public java.util.List<WorkflowDefinitionLink> findAll(
 		int start, int end,
-		OrderByComparator<WorkflowDefinitionLink> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the workflow definition links from the database.

@@ -17,7 +17,6 @@ package com.liferay.friendly.url.service.persistence;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface FriendlyURLEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public java.util.List<FriendlyURLEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the friendly url entries where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface FriendlyURLEntryPersistence
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public java.util.List<FriendlyURLEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first friendly url entry in the ordered set where uuid = &#63;.
@@ -112,7 +111,9 @@ public interface FriendlyURLEntryPersistence
 	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	 */
 	public FriendlyURLEntry findByUuid_First(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -123,7 +124,9 @@ public interface FriendlyURLEntryPersistence
 	 * @return the first matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
 	public FriendlyURLEntry fetchByUuid_First(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last friendly url entry in the ordered set where uuid = &#63;.
@@ -134,7 +137,9 @@ public interface FriendlyURLEntryPersistence
 	 * @throws NoSuchFriendlyURLEntryException if a matching friendly url entry could not be found
 	 */
 	public FriendlyURLEntry findByUuid_Last(
-			String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -145,7 +150,9 @@ public interface FriendlyURLEntryPersistence
 	 * @return the last matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
 	public FriendlyURLEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63;.
@@ -158,7 +165,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry[] findByUuid_PrevAndNext(
 			long friendlyURLEntryId, String uuid,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -188,17 +196,13 @@ public interface FriendlyURLEntryPersistence
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
-	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
-	@Deprecated
-	public FriendlyURLEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public FriendlyURLEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the friendly url entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -208,7 +212,8 @@ public interface FriendlyURLEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry, or <code>null</code> if a matching friendly url entry could not be found
 	 */
-	public FriendlyURLEntry fetchByUUID_G(String uuid, long groupId);
+	public FriendlyURLEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the friendly url entry where uuid = &#63; and groupId = &#63; from the database.
@@ -262,20 +267,17 @@ public interface FriendlyURLEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public java.util.List<FriendlyURLEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the friendly url entries where uuid = &#63; and companyId = &#63;.
@@ -289,11 +291,14 @@ public interface FriendlyURLEntryPersistence
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public java.util.List<FriendlyURLEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -306,7 +311,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -319,7 +325,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -332,7 +339,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -345,7 +353,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -359,7 +368,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry[] findByUuid_C_PrevAndNext(
 			long friendlyURLEntryId, String uuid, long companyId,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -414,21 +424,18 @@ public interface FriendlyURLEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
-	@Deprecated
 	public java.util.List<FriendlyURLEntry> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -443,11 +450,14 @@ public interface FriendlyURLEntryPersistence
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entries
 	 */
 	public java.util.List<FriendlyURLEntry> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -461,7 +471,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry findByG_C_C_First(
 			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -475,7 +486,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry fetchByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -489,7 +501,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry findByG_C_C_Last(
 			long groupId, long classNameId, long classPK,
-			OrderByComparator<FriendlyURLEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -503,7 +516,8 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the friendly url entries before and after the current friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -518,7 +532,9 @@ public interface FriendlyURLEntryPersistence
 	 */
 	public FriendlyURLEntry[] findByG_C_C_PrevAndNext(
 			long friendlyURLEntryId, long groupId, long classNameId,
-			long classPK, OrderByComparator<FriendlyURLEntry> orderByComparator)
+			long classPK,
+			com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+				orderByComparator)
 		throws NoSuchFriendlyURLEntryException;
 
 	/**
@@ -620,18 +636,15 @@ public interface FriendlyURLEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entries
 	 */
-	@Deprecated
 	public java.util.List<FriendlyURLEntry> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the friendly url entries.
@@ -643,11 +656,14 @@ public interface FriendlyURLEntryPersistence
 	 * @param start the lower bound of the range of friendly url entries
 	 * @param end the upper bound of the range of friendly url entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entries
 	 */
 	public java.util.List<FriendlyURLEntry> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<FriendlyURLEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the friendly url entries from the database.

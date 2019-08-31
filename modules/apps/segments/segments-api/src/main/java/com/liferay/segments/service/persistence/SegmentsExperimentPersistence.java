@@ -15,7 +15,6 @@
 package com.liferay.segments.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.model.SegmentsExperiment;
 
@@ -72,19 +71,16 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where uuid = &#63;.
@@ -113,7 +112,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByUuid_First(
 			String uuid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -124,7 +124,9 @@ public interface SegmentsExperimentPersistence
 	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByUuid_First(
-		String uuid, OrderByComparator<SegmentsExperiment> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where uuid = &#63;.
@@ -136,7 +138,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByUuid_Last(
 			String uuid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -147,7 +150,9 @@ public interface SegmentsExperimentPersistence
 	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByUuid_Last(
-		String uuid, OrderByComparator<SegmentsExperiment> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where uuid = &#63;.
@@ -160,7 +165,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment[] findByUuid_PrevAndNext(
 			long segmentsExperimentId, String uuid,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -190,17 +196,13 @@ public interface SegmentsExperimentPersistence
 		throws NoSuchExperimentException;
 
 	/**
-	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
-	@Deprecated
-	public SegmentsExperiment fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public SegmentsExperiment fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the segments experiment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -210,7 +212,8 @@ public interface SegmentsExperimentPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
-	public SegmentsExperiment fetchByUUID_G(String uuid, long groupId);
+	public SegmentsExperiment fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the segments experiment where uuid = &#63; and groupId = &#63; from the database.
@@ -264,20 +267,17 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where uuid = &#63; and companyId = &#63;.
@@ -291,11 +291,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -308,7 +311,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -321,7 +325,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -334,7 +339,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -347,7 +353,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -361,7 +368,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment[] findByUuid_C_PrevAndNext(
 			long segmentsExperimentId, String uuid, long companyId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -411,19 +419,16 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where groupId = &#63;.
@@ -436,11 +441,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where groupId = &#63;.
@@ -452,7 +460,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByGroupId_First(
 			long groupId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -463,7 +472,9 @@ public interface SegmentsExperimentPersistence
 	 * @return the first matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByGroupId_First(
-		long groupId, OrderByComparator<SegmentsExperiment> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where groupId = &#63;.
@@ -475,7 +486,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByGroupId_Last(
 			long groupId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -486,7 +498,9 @@ public interface SegmentsExperimentPersistence
 	 * @return the last matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByGroupId_Last(
-		long groupId, OrderByComparator<SegmentsExperiment> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where groupId = &#63;.
@@ -499,7 +513,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment[] findByGroupId_PrevAndNext(
 			long segmentsExperimentId, long groupId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -540,7 +555,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public java.util.List<SegmentsExperiment> filterFindByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set of segments experiments that the user has permission to view where groupId = &#63;.
@@ -553,7 +569,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment[] filterFindByGroupId_PrevAndNext(
 			long segmentsExperimentId, long groupId,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -610,19 +627,16 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySegmentsExperimentKey(String, int, int, OrderByComparator)}
 	 * @param segmentsExperimentKey the segments experiment key
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findBySegmentsExperimentKey(
 		String segmentsExperimentKey, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where segmentsExperimentKey = &#63;.
@@ -635,11 +649,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findBySegmentsExperimentKey(
 		String segmentsExperimentKey, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperimentKey = &#63;.
@@ -651,7 +668,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findBySegmentsExperimentKey_First(
 			String segmentsExperimentKey,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -663,7 +681,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchBySegmentsExperimentKey_First(
 		String segmentsExperimentKey,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where segmentsExperimentKey = &#63;.
@@ -675,7 +694,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findBySegmentsExperimentKey_Last(
 			String segmentsExperimentKey,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -687,7 +707,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchBySegmentsExperimentKey_Last(
 		String segmentsExperimentKey,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where segmentsExperimentKey = &#63;.
@@ -700,7 +721,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment[] findBySegmentsExperimentKey_PrevAndNext(
 			long segmentsExperimentId, String segmentsExperimentKey,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -731,17 +753,14 @@ public interface SegmentsExperimentPersistence
 		throws NoSuchExperimentException;
 
 	/**
-	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_S(long,String)}
 	 * @param groupId the group ID
 	 * @param segmentsExperimentKey the segments experiment key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
-	@Deprecated
 	public SegmentsExperiment fetchByG_S(
-		long groupId, String segmentsExperimentKey, boolean useFinderCache);
+		long groupId, String segmentsExperimentKey);
 
 	/**
 	 * Returns the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -752,7 +771,7 @@ public interface SegmentsExperimentPersistence
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	public SegmentsExperiment fetchByG_S(
-		long groupId, String segmentsExperimentKey);
+		long groupId, String segmentsExperimentKey, boolean useFinderCache);
 
 	/**
 	 * Removes the segments experiment where groupId = &#63; and segmentsExperimentKey = &#63; from the database.
@@ -809,21 +828,18 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -838,11 +854,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -856,7 +875,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByG_C_C_First(
 			long groupId, long classNameId, long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -870,7 +890,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -884,7 +905,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByG_C_C_Last(
 			long groupId, long classNameId, long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -898,7 +920,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -914,7 +937,8 @@ public interface SegmentsExperimentPersistence
 	public SegmentsExperiment[] findByG_C_C_PrevAndNext(
 			long segmentsExperimentId, long groupId, long classNameId,
 			long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -962,7 +986,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public java.util.List<SegmentsExperiment> filterFindByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set of segments experiments that the user has permission to view where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -978,7 +1003,8 @@ public interface SegmentsExperimentPersistence
 	public SegmentsExperiment[] filterFindByG_C_C_PrevAndNext(
 			long segmentsExperimentId, long groupId, long classNameId,
 			long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1046,21 +1072,19 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByS_C_C(long,long,long, int, int, OrderByComparator)}
 	 * @param segmentsExperienceId the segments experience ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByS_C_C(
 		long segmentsExperienceId, long classNameId, long classPK, int start,
-		int end, OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1075,11 +1099,15 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByS_C_C(
 		long segmentsExperienceId, long classNameId, long classPK, int start,
-		int end, OrderByComparator<SegmentsExperiment> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1093,7 +1121,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByS_C_C_First(
 			long segmentsExperienceId, long classNameId, long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1107,7 +1136,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByS_C_C_First(
 		long segmentsExperienceId, long classNameId, long classPK,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1121,7 +1151,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByS_C_C_Last(
 			long segmentsExperienceId, long classNameId, long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1135,7 +1166,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByS_C_C_Last(
 		long segmentsExperienceId, long classNameId, long classPK,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1151,7 +1183,8 @@ public interface SegmentsExperimentPersistence
 	public SegmentsExperiment[] findByS_C_C_PrevAndNext(
 			long segmentsExperimentId, long segmentsExperienceId,
 			long classNameId, long classPK,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1213,7 +1246,6 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByS_C_C_S(long,long,long,int, int, int, OrderByComparator)}
 	 * @param segmentsExperienceId the segments experience ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
@@ -1221,15 +1253,13 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findByS_C_C_S(
 		long segmentsExperienceId, long classNameId, long classPK, int status,
 		int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -1245,12 +1275,15 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findByS_C_C_S(
 		long segmentsExperienceId, long classNameId, long classPK, int status,
 		int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -1265,7 +1298,9 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByS_C_C_S_First(
 			long segmentsExperienceId, long classNameId, long classPK,
-			int status, OrderByComparator<SegmentsExperiment> orderByComparator)
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1280,7 +1315,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByS_C_C_S_First(
 		long segmentsExperienceId, long classNameId, long classPK, int status,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the last segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -1295,7 +1331,9 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment findByS_C_C_S_Last(
 			long segmentsExperienceId, long classNameId, long classPK,
-			int status, OrderByComparator<SegmentsExperiment> orderByComparator)
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1310,7 +1348,8 @@ public interface SegmentsExperimentPersistence
 	 */
 	public SegmentsExperiment fetchByS_C_C_S_Last(
 		long segmentsExperienceId, long classNameId, long classPK, int status,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns the segments experiments before and after the current segments experiment in the ordered set where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;.
@@ -1327,7 +1366,8 @@ public interface SegmentsExperimentPersistence
 	public SegmentsExperiment[] findByS_C_C_S_PrevAndNext(
 			long segmentsExperimentId, long segmentsExperienceId,
 			long classNameId, long classPK, int status,
-			OrderByComparator<SegmentsExperiment> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator)
 		throws NoSuchExperimentException;
 
 	/**
@@ -1367,31 +1407,6 @@ public interface SegmentsExperimentPersistence
 		int[] statuses, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByS_C_C_S(long,long,long,int, int, int, OrderByComparator)}
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param status the status
-	 * @param start the lower bound of the range of segments experiments
-	 * @param end the upper bound of the range of segments experiments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching segments experiments
-	 */
-	@Deprecated
-	public java.util.List<SegmentsExperiment> findByS_C_C_S(
-		long[] segmentsExperienceIds, long classNameId, long classPK,
-		int[] statuses, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the segments experiments where segmentsExperienceId = any &#63; and classNameId = &#63; and classPK = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -1410,7 +1425,32 @@ public interface SegmentsExperimentPersistence
 	public java.util.List<SegmentsExperiment> findByS_C_C_S(
 		long[] segmentsExperienceIds, long classNameId, long classPK,
 		int[] statuses, int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param segmentsExperienceId the segments experience ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param status the status
+	 * @param start the lower bound of the range of segments experiments
+	 * @param end the upper bound of the range of segments experiments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching segments experiments
+	 */
+	public java.util.List<SegmentsExperiment> findByS_C_C_S(
+		long[] segmentsExperienceIds, long classNameId, long classPK,
+		int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiments where segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
@@ -1528,18 +1568,15 @@ public interface SegmentsExperimentPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SegmentsExperimentModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiments
 	 */
-	@Deprecated
 	public java.util.List<SegmentsExperiment> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the segments experiments.
@@ -1551,11 +1588,14 @@ public interface SegmentsExperimentPersistence
 	 * @param start the lower bound of the range of segments experiments
 	 * @param end the upper bound of the range of segments experiments (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of segments experiments
 	 */
 	public java.util.List<SegmentsExperiment> findAll(
 		int start, int end,
-		OrderByComparator<SegmentsExperiment> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the segments experiments from the database.

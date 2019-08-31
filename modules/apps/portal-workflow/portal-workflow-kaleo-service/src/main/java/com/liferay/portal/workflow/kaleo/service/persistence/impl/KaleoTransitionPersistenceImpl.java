@@ -134,22 +134,18 @@ public class KaleoTransitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
-	@Deprecated
 	@Override
 	public List<KaleoTransition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTransition> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -163,12 +159,14 @@ public class KaleoTransitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	@Override
 	public List<KaleoTransition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
+		OrderByComparator<KaleoTransition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -178,26 +176,32 @@ public class KaleoTransitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<KaleoTransition> list =
-			(List<KaleoTransition>)finderCache.getResult(
+		List<KaleoTransition> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoTransition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTransition kaleoTransition : list) {
-				if ((companyId != kaleoTransition.getCompanyId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTransition kaleoTransition : list) {
+					if ((companyId != kaleoTransition.getCompanyId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -253,10 +257,14 @@ public class KaleoTransitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -650,23 +658,19 @@ public class KaleoTransitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoDefinitionVersionId(long, int, int, OrderByComparator)}
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
-	@Deprecated
 	@Override
 	public List<KaleoTransition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTransition> orderByComparator) {
 
 		return findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, start, end, orderByComparator);
+			kaleoDefinitionVersionId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -680,12 +684,14 @@ public class KaleoTransitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	@Override
 	public List<KaleoTransition> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
+		OrderByComparator<KaleoTransition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -695,11 +701,14 @@ public class KaleoTransitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
-			finderArgs = new Object[] {kaleoDefinitionVersionId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByKaleoDefinitionVersionId;
+				finderArgs = new Object[] {kaleoDefinitionVersionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath =
 				_finderPathWithPaginationFindByKaleoDefinitionVersionId;
 			finderArgs = new Object[] {
@@ -707,18 +716,21 @@ public class KaleoTransitionPersistenceImpl
 			};
 		}
 
-		List<KaleoTransition> list =
-			(List<KaleoTransition>)finderCache.getResult(
+		List<KaleoTransition> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoTransition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTransition kaleoTransition : list) {
-				if ((kaleoDefinitionVersionId !=
-						kaleoTransition.getKaleoDefinitionVersionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTransition kaleoTransition : list) {
+					if ((kaleoDefinitionVersionId !=
+							kaleoTransition.getKaleoDefinitionVersionId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -775,10 +787,14 @@ public class KaleoTransitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1178,22 +1194,19 @@ public class KaleoTransitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoNodeId(long, int, int, OrderByComparator)}
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
-	@Deprecated
 	@Override
 	public List<KaleoTransition> findByKaleoNodeId(
 		long kaleoNodeId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTransition> orderByComparator) {
 
-		return findByKaleoNodeId(kaleoNodeId, start, end, orderByComparator);
+		return findByKaleoNodeId(
+			kaleoNodeId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1207,12 +1220,14 @@ public class KaleoTransitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo transitions
 	 */
 	@Override
 	public List<KaleoTransition> findByKaleoNodeId(
 		long kaleoNodeId, int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
+		OrderByComparator<KaleoTransition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1222,26 +1237,32 @@ public class KaleoTransitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByKaleoNodeId;
-			finderArgs = new Object[] {kaleoNodeId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByKaleoNodeId;
+				finderArgs = new Object[] {kaleoNodeId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByKaleoNodeId;
 			finderArgs = new Object[] {
 				kaleoNodeId, start, end, orderByComparator
 			};
 		}
 
-		List<KaleoTransition> list =
-			(List<KaleoTransition>)finderCache.getResult(
+		List<KaleoTransition> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoTransition>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTransition kaleoTransition : list) {
-				if ((kaleoNodeId != kaleoTransition.getKaleoNodeId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoTransition kaleoTransition : list) {
+					if ((kaleoNodeId != kaleoTransition.getKaleoNodeId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1297,10 +1318,14 @@ public class KaleoTransitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1691,20 +1716,15 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKNI_N(long,String)}
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
-	@Deprecated
 	@Override
-	public KaleoTransition fetchByKNI_N(
-		long kaleoNodeId, String name, boolean useFinderCache) {
-
-		return fetchByKNI_N(kaleoNodeId, name);
+	public KaleoTransition fetchByKNI_N(long kaleoNodeId, String name) {
+		return fetchByKNI_N(kaleoNodeId, name, true);
 	}
 
 	/**
@@ -1716,13 +1736,23 @@ public class KaleoTransitionPersistenceImpl
 	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
 	@Override
-	public KaleoTransition fetchByKNI_N(long kaleoNodeId, String name) {
+	public KaleoTransition fetchByKNI_N(
+		long kaleoNodeId, String name, boolean useFinderCache) {
+
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {kaleoNodeId, name};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByKNI_N, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {kaleoNodeId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByKNI_N, finderArgs, this);
+		}
 
 		if (result instanceof KaleoTransition) {
 			KaleoTransition kaleoTransition = (KaleoTransition)result;
@@ -1772,14 +1802,20 @@ public class KaleoTransitionPersistenceImpl
 				List<KaleoTransition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByKNI_N, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByKNI_N, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {kaleoNodeId, name};
+							}
+
 							_log.warn(
 								"KaleoTransitionPersistenceImpl.fetchByKNI_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1795,7 +1831,10 @@ public class KaleoTransitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByKNI_N, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByKNI_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1949,20 +1988,17 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kaleo transition where kaleoNodeId = &#63; and defaultTransition = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKNI_DT(long,boolean)}
 	 * @param kaleoNodeId the kaleo node ID
 	 * @param defaultTransition the default transition
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
 	 */
-	@Deprecated
 	@Override
 	public KaleoTransition fetchByKNI_DT(
-		long kaleoNodeId, boolean defaultTransition, boolean useFinderCache) {
+		long kaleoNodeId, boolean defaultTransition) {
 
-		return fetchByKNI_DT(kaleoNodeId, defaultTransition);
+		return fetchByKNI_DT(kaleoNodeId, defaultTransition, true);
 	}
 
 	/**
@@ -1975,12 +2011,20 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Override
 	public KaleoTransition fetchByKNI_DT(
-		long kaleoNodeId, boolean defaultTransition) {
+		long kaleoNodeId, boolean defaultTransition, boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {kaleoNodeId, defaultTransition};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByKNI_DT, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {kaleoNodeId, defaultTransition};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByKNI_DT, finderArgs, this);
+		}
 
 		if (result instanceof KaleoTransition) {
 			KaleoTransition kaleoTransition = (KaleoTransition)result;
@@ -2019,14 +2063,22 @@ public class KaleoTransitionPersistenceImpl
 				List<KaleoTransition> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByKNI_DT, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByKNI_DT, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									kaleoNodeId, defaultTransition
+								};
+							}
+
 							_log.warn(
 								"KaleoTransitionPersistenceImpl.fetchByKNI_DT(long, boolean, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2042,7 +2094,10 @@ public class KaleoTransitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByKNI_DT, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByKNI_DT, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2689,21 +2744,17 @@ public class KaleoTransitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTransitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo transitions
 	 */
-	@Deprecated
 	@Override
 	public List<KaleoTransition> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<KaleoTransition> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2716,12 +2767,14 @@ public class KaleoTransitionPersistenceImpl
 	 * @param start the lower bound of the range of kaleo transitions
 	 * @param end the upper bound of the range of kaleo transitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo transitions
 	 */
 	@Override
 	public List<KaleoTransition> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTransition> orderByComparator) {
+		OrderByComparator<KaleoTransition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2731,17 +2784,23 @@ public class KaleoTransitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<KaleoTransition> list =
-			(List<KaleoTransition>)finderCache.getResult(
+		List<KaleoTransition> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoTransition>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2788,10 +2847,14 @@ public class KaleoTransitionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

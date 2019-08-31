@@ -143,19 +143,14 @@ public class WeDeployAuthTokenUtil {
 	}
 
 	/**
-	 * Returns the we deploy auth token where token = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the we deploy auth token where token = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_T(String,int)}
 	 * @param token the token
 	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
-	@Deprecated
-	public static WeDeployAuthToken fetchByT_T(
-		String token, int type, boolean useFinderCache) {
-
-		return getPersistence().fetchByT_T(token, type, useFinderCache);
+	public static WeDeployAuthToken fetchByT_T(String token, int type) {
+		return getPersistence().fetchByT_T(token, type);
 	}
 
 	/**
@@ -166,8 +161,10 @@ public class WeDeployAuthTokenUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
-	public static WeDeployAuthToken fetchByT_T(String token, int type) {
-		return getPersistence().fetchByT_T(token, type);
+	public static WeDeployAuthToken fetchByT_T(
+		String token, int type, boolean useFinderCache) {
+
+		return getPersistence().fetchByT_T(token, type, useFinderCache);
 	}
 
 	/**
@@ -213,21 +210,17 @@ public class WeDeployAuthTokenUtil {
 	}
 
 	/**
-	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the we deploy auth token where clientId = &#63; and token = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByCI_T_T(String,String,int)}
 	 * @param clientId the client ID
 	 * @param token the token
 	 * @param type the type
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
-	@Deprecated
 	public static WeDeployAuthToken fetchByCI_T_T(
-		String clientId, String token, int type, boolean useFinderCache) {
+		String clientId, String token, int type) {
 
-		return getPersistence().fetchByCI_T_T(
-			clientId, token, type, useFinderCache);
+		return getPersistence().fetchByCI_T_T(clientId, token, type);
 	}
 
 	/**
@@ -240,9 +233,10 @@ public class WeDeployAuthTokenUtil {
 	 * @return the matching we deploy auth token, or <code>null</code> if a matching we deploy auth token could not be found
 	 */
 	public static WeDeployAuthToken fetchByCI_T_T(
-		String clientId, String token, int type) {
+		String clientId, String token, int type, boolean useFinderCache) {
 
-		return getPersistence().fetchByCI_T_T(clientId, token, type);
+		return getPersistence().fetchByCI_T_T(
+			clientId, token, type, useFinderCache);
 	}
 
 	/**
@@ -378,21 +372,16 @@ public class WeDeployAuthTokenUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>WeDeployAuthTokenModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of we deploy auth tokens
 	 * @param end the upper bound of the range of we deploy auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth tokens
 	 */
-	@Deprecated
 	public static List<WeDeployAuthToken> findAll(
 		int start, int end,
-		OrderByComparator<WeDeployAuthToken> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<WeDeployAuthToken> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -405,13 +394,16 @@ public class WeDeployAuthTokenUtil {
 	 * @param start the lower bound of the range of we deploy auth tokens
 	 * @param end the upper bound of the range of we deploy auth tokens (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of we deploy auth tokens
 	 */
 	public static List<WeDeployAuthToken> findAll(
 		int start, int end,
-		OrderByComparator<WeDeployAuthToken> orderByComparator) {
+		OrderByComparator<WeDeployAuthToken> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

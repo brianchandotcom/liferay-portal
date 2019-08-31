@@ -114,17 +114,14 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the country where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByName(String)}
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	@Deprecated
 	@Override
-	public Country fetchByName(String name, boolean useFinderCache) {
-		return fetchByName(name);
+	public Country fetchByName(String name) {
+		return fetchByName(name, true);
 	}
 
 	/**
@@ -135,13 +132,21 @@ public class CountryPersistenceImpl
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
 	@Override
-	public Country fetchByName(String name) {
+	public Country fetchByName(String name, boolean useFinderCache) {
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {name};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByName, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByName, finderArgs, this);
+		}
 
 		if (result instanceof Country) {
 			Country country = (Country)result;
@@ -185,8 +190,10 @@ public class CountryPersistenceImpl
 				List<Country> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByName, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByName, finderArgs, list);
+					}
 				}
 				else {
 					Country country = list.get(0);
@@ -197,8 +204,10 @@ public class CountryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByName, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByName, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -333,17 +342,14 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the country where a2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA2(String)}
 	 * @param a2 the a2
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	@Deprecated
 	@Override
-	public Country fetchByA2(String a2, boolean useFinderCache) {
-		return fetchByA2(a2);
+	public Country fetchByA2(String a2) {
+		return fetchByA2(a2, true);
 	}
 
 	/**
@@ -354,13 +360,21 @@ public class CountryPersistenceImpl
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
 	@Override
-	public Country fetchByA2(String a2) {
+	public Country fetchByA2(String a2, boolean useFinderCache) {
 		a2 = Objects.toString(a2, "");
 
-		Object[] finderArgs = new Object[] {a2};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByA2, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {a2};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByA2, finderArgs, this);
+		}
 
 		if (result instanceof Country) {
 			Country country = (Country)result;
@@ -404,8 +418,10 @@ public class CountryPersistenceImpl
 				List<Country> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByA2, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByA2, finderArgs, list);
+					}
 				}
 				else {
 					Country country = list.get(0);
@@ -416,7 +432,10 @@ public class CountryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByA2, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByA2, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -551,17 +570,14 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the country where a3 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA3(String)}
 	 * @param a3 the a3
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
-	@Deprecated
 	@Override
-	public Country fetchByA3(String a3, boolean useFinderCache) {
-		return fetchByA3(a3);
+	public Country fetchByA3(String a3) {
+		return fetchByA3(a3, true);
 	}
 
 	/**
@@ -572,13 +588,21 @@ public class CountryPersistenceImpl
 	 * @return the matching country, or <code>null</code> if a matching country could not be found
 	 */
 	@Override
-	public Country fetchByA3(String a3) {
+	public Country fetchByA3(String a3, boolean useFinderCache) {
 		a3 = Objects.toString(a3, "");
 
-		Object[] finderArgs = new Object[] {a3};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByA3, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {a3};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByA3, finderArgs, this);
+		}
 
 		if (result instanceof Country) {
 			Country country = (Country)result;
@@ -622,8 +646,10 @@ public class CountryPersistenceImpl
 				List<Country> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByA3, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByA3, finderArgs, list);
+					}
 				}
 				else {
 					Country country = list.get(0);
@@ -634,7 +660,10 @@ public class CountryPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByA3, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByA3, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -773,21 +802,18 @@ public class CountryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByActive(boolean, int, int, OrderByComparator)}
 	 * @param active the active
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching countries
 	 */
-	@Deprecated
 	@Override
 	public List<Country> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Country> orderByComparator) {
 
-		return findByActive(active, start, end, orderByComparator);
+		return findByActive(active, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -801,12 +827,13 @@ public class CountryPersistenceImpl
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching countries
 	 */
 	@Override
 	public List<Country> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Country> orderByComparator) {
+		OrderByComparator<Country> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -816,23 +843,30 @@ public class CountryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByActive;
-			finderArgs = new Object[] {active};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByActive;
+				finderArgs = new Object[] {active};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByActive;
 			finderArgs = new Object[] {active, start, end, orderByComparator};
 		}
 
-		List<Country> list = (List<Country>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Country> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Country country : list) {
-				if ((active != country.isActive())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Country>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Country country : list) {
+					if ((active != country.isActive())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -888,10 +922,14 @@ public class CountryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1691,20 +1729,16 @@ public class CountryPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of countries
 	 */
-	@Deprecated
 	@Override
 	public List<Country> findAll(
-		int start, int end, OrderByComparator<Country> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Country> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1717,11 +1751,13 @@ public class CountryPersistenceImpl
 	 * @param start the lower bound of the range of countries
 	 * @param end the upper bound of the range of countries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of countries
 	 */
 	@Override
 	public List<Country> findAll(
-		int start, int end, OrderByComparator<Country> orderByComparator) {
+		int start, int end, OrderByComparator<Country> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1731,16 +1767,23 @@ public class CountryPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Country> list = (List<Country>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Country> list = null;
+
+		if (useFinderCache) {
+			list = (List<Country>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1787,10 +1830,14 @@ public class CountryPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

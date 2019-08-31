@@ -134,22 +134,19 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLFileVersionDiffModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFileEntryId(long, int, int, OrderByComparator)}
 	 * @param fileEntryId the file entry ID
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
 
-		return findByFileEntryId(fileEntryId, start, end, orderByComparator);
+		return findByFileEntryId(
+			fileEntryId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -163,12 +160,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
 	@Override
 	public List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -178,26 +177,34 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByFileEntryId;
-			finderArgs = new Object[] {fileEntryId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByFileEntryId;
+				finderArgs = new Object[] {fileEntryId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByFileEntryId;
 			finderArgs = new Object[] {
 				fileEntryId, start, end, orderByComparator
 			};
 		}
 
-		List<SyncDLFileVersionDiff> list =
-			(List<SyncDLFileVersionDiff>)finderCache.getResult(
+		List<SyncDLFileVersionDiff> list = null;
+
+		if (useFinderCache) {
+			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
-				if ((fileEntryId != syncDLFileVersionDiff.getFileEntryId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
+					if ((fileEntryId !=
+							syncDLFileVersionDiff.getFileEntryId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -253,10 +260,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -652,23 +663,19 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLFileVersionDiffModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByExpirationDate(Date, int, int, OrderByComparator)}
 	 * @param expirationDate the expiration date
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
 
 		return findByExpirationDate(
-			expirationDate, start, end, orderByComparator);
+			expirationDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -682,12 +689,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching sync dl file version diffs
 	 */
 	@Override
 	public List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -698,18 +707,22 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			_getTime(expirationDate), start, end, orderByComparator
 		};
 
-		List<SyncDLFileVersionDiff> list =
-			(List<SyncDLFileVersionDiff>)finderCache.getResult(
+		List<SyncDLFileVersionDiff> list = null;
+
+		if (useFinderCache) {
+			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
-				if ((expirationDate.getTime() <=
-						syncDLFileVersionDiff.getExpirationDate().getTime())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SyncDLFileVersionDiff syncDLFileVersionDiff : list) {
+					if ((expirationDate.getTime() <=
+							syncDLFileVersionDiff.
+								getExpirationDate().getTime())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -776,10 +789,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1206,23 +1223,19 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	}
 
 	/**
-	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByF_S_T(long,long,long)}
 	 * @param fileEntryId the file entry ID
 	 * @param sourceFileVersionId the source file version ID
 	 * @param targetFileVersionId the target file version ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	 */
-	@Deprecated
 	@Override
 	public SyncDLFileVersionDiff fetchByF_S_T(
-		long fileEntryId, long sourceFileVersionId, long targetFileVersionId,
-		boolean useFinderCache) {
+		long fileEntryId, long sourceFileVersionId, long targetFileVersionId) {
 
 		return fetchByF_S_T(
-			fileEntryId, sourceFileVersionId, targetFileVersionId);
+			fileEntryId, sourceFileVersionId, targetFileVersionId, true);
 	}
 
 	/**
@@ -1236,14 +1249,23 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 */
 	@Override
 	public SyncDLFileVersionDiff fetchByF_S_T(
-		long fileEntryId, long sourceFileVersionId, long targetFileVersionId) {
+		long fileEntryId, long sourceFileVersionId, long targetFileVersionId,
+		boolean useFinderCache) {
 
-		Object[] finderArgs = new Object[] {
-			fileEntryId, sourceFileVersionId, targetFileVersionId
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByF_S_T, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				fileEntryId, sourceFileVersionId, targetFileVersionId
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByF_S_T, finderArgs, this);
+		}
 
 		if (result instanceof SyncDLFileVersionDiff) {
 			SyncDLFileVersionDiff syncDLFileVersionDiff =
@@ -1290,8 +1312,10 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				List<SyncDLFileVersionDiff> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByF_S_T, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByF_S_T, finderArgs, list);
+					}
 				}
 				else {
 					SyncDLFileVersionDiff syncDLFileVersionDiff = list.get(0);
@@ -1302,7 +1326,10 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByF_S_T, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByF_S_T, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1867,21 +1894,17 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SyncDLFileVersionDiffModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sync dl file version diffs
 	 */
-	@Deprecated
 	@Override
 	public List<SyncDLFileVersionDiff> findAll(
 		int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1894,12 +1917,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 * @param start the lower bound of the range of sync dl file version diffs
 	 * @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of sync dl file version diffs
 	 */
 	@Override
 	public List<SyncDLFileVersionDiff> findAll(
 		int start, int end,
-		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
+		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1909,17 +1934,23 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SyncDLFileVersionDiff> list =
-			(List<SyncDLFileVersionDiff>)finderCache.getResult(
+		List<SyncDLFileVersionDiff> list = null;
+
+		if (useFinderCache) {
+			list = (List<SyncDLFileVersionDiff>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1967,10 +1998,14 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

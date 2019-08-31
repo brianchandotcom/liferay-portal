@@ -122,22 +122,18 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
 	 * @param name the name
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByName(
 		String name, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		return findByName(name, start, end, orderByComparator);
+		return findByName(name, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -151,12 +147,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByName(
 		String name, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -168,24 +166,30 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByName;
-			finderArgs = new Object[] {name};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByName;
+				finderArgs = new Object[] {name};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByName;
 			finderArgs = new Object[] {name, start, end, orderByComparator};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if (!name.equals(resourcePermission.getName())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if (!name.equals(resourcePermission.getName())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -252,10 +256,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -672,22 +680,18 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByScope(int, int, int, OrderByComparator)}
 	 * @param scope the scope
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByScope(
 		int scope, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		return findByScope(scope, start, end, orderByComparator);
+		return findByScope(scope, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -701,12 +705,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByScope(
 		int scope, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -716,24 +722,30 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByScope;
-			finderArgs = new Object[] {scope};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByScope;
+				finderArgs = new Object[] {scope};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByScope;
 			finderArgs = new Object[] {scope, start, end, orderByComparator};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((scope != resourcePermission.getScope())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((scope != resourcePermission.getScope())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -789,10 +801,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1104,31 +1120,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the resource permissions where scope = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByScope(int, int, int, OrderByComparator)}
-	 * @param scope the scope
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Deprecated
-	@Override
-	public List<ResourcePermission> findByScope(
-		int[] scopes, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByScope(scopes, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the resource permissions where scope = any &#63;.
 	 *
 	 * <p>
@@ -1145,6 +1136,29 @@ public class ResourcePermissionPersistenceImpl
 	public List<ResourcePermission> findByScope(
 		int[] scopes, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
+
+		return findByScope(scopes, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where scope = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param scope the scope
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByScope(
+		int[] scopes, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		if (scopes == null) {
 			scopes = new int[0];
@@ -1164,26 +1178,32 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(scopes)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(scopes)};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				StringUtil.merge(scopes), start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByScope, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if (!ArrayUtil.contains(
-						scopes, resourcePermission.getScope())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if (!ArrayUtil.contains(
+							scopes, resourcePermission.getScope())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1241,12 +1261,16 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByScope, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByScope, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByScope, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByScope, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1441,22 +1465,18 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRoleId(long, int, int, OrderByComparator)}
 	 * @param roleId the role ID
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByRoleId(
 		long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		return findByRoleId(roleId, start, end, orderByComparator);
+		return findByRoleId(roleId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1470,12 +1490,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByRoleId(
 		long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1485,24 +1507,30 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByRoleId;
-			finderArgs = new Object[] {roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByRoleId;
+				finderArgs = new Object[] {roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByRoleId;
 			finderArgs = new Object[] {roleId, start, end, orderByComparator};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((roleId != resourcePermission.getRoleId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((roleId != resourcePermission.getRoleId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1558,10 +1586,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1955,23 +1987,20 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LikeP(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param primKey the prim key
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByC_LikeP(
 		long companyId, String primKey, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		return findByC_LikeP(companyId, primKey, start, end, orderByComparator);
+		return findByC_LikeP(
+			companyId, primKey, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1986,12 +2015,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_LikeP(
 		long companyId, String primKey, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		primKey = Objects.toString(primKey, "");
 
@@ -2004,20 +2035,23 @@ public class ResourcePermissionPersistenceImpl
 			companyId, primKey, start, end, orderByComparator
 		};
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!StringUtil.wildcardMatches(
-						resourcePermission.getPrimKey(), primKey, '_', '%',
-						'\\', true)) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!StringUtil.wildcardMatches(
+							resourcePermission.getPrimKey(), primKey, '_', '%',
+							'\\', true)) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2088,10 +2122,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2547,25 +2585,21 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S_P(long,int,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByC_S_P(
 		long companyId, int scope, String primKey, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return findByC_S_P(
-			companyId, scope, primKey, start, end, orderByComparator);
+			companyId, scope, primKey, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2581,12 +2615,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_S_P(
 		long companyId, int scope, String primKey, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		primKey = Objects.toString(primKey, "");
 
@@ -2598,29 +2634,35 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_S_P;
-			finderArgs = new Object[] {companyId, scope, primKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S_P;
+				finderArgs = new Object[] {companyId, scope, primKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_S_P;
 			finderArgs = new Object[] {
 				companyId, scope, primKey, start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					(scope != resourcePermission.getScope()) ||
-					!primKey.equals(resourcePermission.getPrimKey())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						(scope != resourcePermission.getScope()) ||
+						!primKey.equals(resourcePermission.getPrimKey())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2695,10 +2737,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3183,7 +3229,6 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_N_S_P(long,String,int,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -3191,18 +3236,16 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByC_N_S_P(
 		long companyId, String name, int scope, String primKey, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return findByC_N_S_P(
-			companyId, name, scope, primKey, start, end, orderByComparator);
+			companyId, name, scope, primKey, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -3219,12 +3262,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_N_S_P(
 		long companyId, String name, int scope, String primKey, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator) {
+		int end, OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
@@ -3237,30 +3282,36 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_P;
-			finderArgs = new Object[] {companyId, name, scope, primKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_P;
+				finderArgs = new Object[] {companyId, name, scope, primKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_P;
 			finderArgs = new Object[] {
 				companyId, name, scope, primKey, start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!name.equals(resourcePermission.getName()) ||
-					(scope != resourcePermission.getScope()) ||
-					!primKey.equals(resourcePermission.getPrimKey())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!name.equals(resourcePermission.getName()) ||
+						(scope != resourcePermission.getScope()) ||
+						!primKey.equals(resourcePermission.getPrimKey())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -3350,10 +3401,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3894,7 +3949,6 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_N_S_R(long,String,int,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -3902,18 +3956,16 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByC_N_S_R(
 		long companyId, String name, int scope, long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return findByC_N_S_R(
-			companyId, name, scope, roleId, start, end, orderByComparator);
+			companyId, name, scope, roleId, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -3930,12 +3982,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_N_S_R(
 		long companyId, String name, int scope, long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -3947,30 +4001,36 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_R;
-			finderArgs = new Object[] {companyId, name, scope, roleId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_R;
+				finderArgs = new Object[] {companyId, name, scope, roleId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_R;
 			finderArgs = new Object[] {
 				companyId, name, scope, roleId, start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!name.equals(resourcePermission.getName()) ||
-					(scope != resourcePermission.getScope()) ||
-					(roleId != resourcePermission.getRoleId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!name.equals(resourcePermission.getName()) ||
+						(scope != resourcePermission.getScope()) ||
+						(roleId != resourcePermission.getRoleId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -4049,10 +4109,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4570,38 +4634,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_N_S_P_R(long,String,int,String,long[], int, int, OrderByComparator)}
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Deprecated
-	@Override
-	public List<ResourcePermission> findByC_N_S_P_R(
-		long companyId, String name, int scope, String primKey, long[] roleIds,
-		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_N_S_P_R(
-			companyId, name, scope, primKey, roleIds, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	 *
 	 * <p>
@@ -4623,6 +4655,36 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope, String primKey, long[] roleIds,
 		int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
+
+		return findByC_N_S_P_R(
+			companyId, name, scope, primKey, roleIds, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKey the prim key
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_N_S_P_R(
+		long companyId, String name, int scope, String primKey, long[] roleIds,
+		int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
@@ -4653,33 +4715,39 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKey, StringUtil.merge(roleIds)
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, name, scope, primKey, StringUtil.merge(roleIds)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, name, scope, primKey, StringUtil.merge(roleIds),
 				start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_N_S_P_R, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!name.equals(resourcePermission.getName()) ||
-					(scope != resourcePermission.getScope()) ||
-					!primKey.equals(resourcePermission.getPrimKey()) ||
-					!ArrayUtil.contains(
-						roleIds, resourcePermission.getRoleId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!name.equals(resourcePermission.getName()) ||
+						(scope != resourcePermission.getScope()) ||
+						!primKey.equals(resourcePermission.getPrimKey()) ||
+						!ArrayUtil.contains(
+							roleIds, resourcePermission.getRoleId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -4715,12 +4783,17 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_N_S_P_R, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_N_S_P_R, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_N_S_P_R, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_N_S_P_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4889,24 +4962,20 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_N_S_P_R(long,String,int,String,long)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
 	 * @param primKey the prim key
 	 * @param roleId the role ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	 */
-	@Deprecated
 	@Override
 	public ResourcePermission fetchByC_N_S_P_R(
-		long companyId, String name, int scope, String primKey, long roleId,
-		boolean useFinderCache) {
+		long companyId, String name, int scope, String primKey, long roleId) {
 
-		return fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId);
+		return fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId, true);
 	}
 
 	/**
@@ -4922,17 +4991,24 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public ResourcePermission fetchByC_N_S_P_R(
-		long companyId, String name, int scope, String primKey, long roleId) {
+		long companyId, String name, int scope, String primKey, long roleId,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		primKey = Objects.toString(primKey, "");
 
-		Object[] finderArgs = new Object[] {
-			companyId, name, scope, primKey, roleId
-		};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByC_N_S_P_R, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name, scope, primKey, roleId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_N_S_P_R, finderArgs, this);
+		}
 
 		if (result instanceof ResourcePermission) {
 			ResourcePermission resourcePermission = (ResourcePermission)result;
@@ -5008,8 +5084,10 @@ public class ResourcePermissionPersistenceImpl
 				List<ResourcePermission> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_N_S_P_R, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_N_S_P_R, finderArgs, list);
+					}
 				}
 				else {
 					ResourcePermission resourcePermission = list.get(0);
@@ -5020,8 +5098,10 @@ public class ResourcePermissionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByC_N_S_P_R, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_N_S_P_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5400,7 +5480,6 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_N_S_P_R_V(long,String,int,long,long,boolean, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param scope the scope
@@ -5410,20 +5489,17 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findByC_N_S_P_R_V(
 		long companyId, String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
 		return findByC_N_S_P_R_V(
 			companyId, name, scope, primKeyId, roleId, viewActionId, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -5442,13 +5518,15 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findByC_N_S_P_R_V(
 		long companyId, String name, int scope, long primKeyId, long roleId,
 		boolean viewActionId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -5460,12 +5538,15 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_N_S_P_R_V;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKeyId, roleId, viewActionId
-			};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_N_S_P_R_V;
+				finderArgs = new Object[] {
+					companyId, name, scope, primKeyId, roleId, viewActionId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_N_S_P_R_V;
 			finderArgs = new Object[] {
 				companyId, name, scope, primKeyId, roleId, viewActionId, start,
@@ -5473,22 +5554,25 @@ public class ResourcePermissionPersistenceImpl
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!name.equals(resourcePermission.getName()) ||
-					(scope != resourcePermission.getScope()) ||
-					(primKeyId != resourcePermission.getPrimKeyId()) ||
-					(roleId != resourcePermission.getRoleId()) ||
-					(viewActionId != resourcePermission.isViewActionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!name.equals(resourcePermission.getName()) ||
+						(scope != resourcePermission.getScope()) ||
+						(primKeyId != resourcePermission.getPrimKeyId()) ||
+						(roleId != resourcePermission.getRoleId()) ||
+						(viewActionId != resourcePermission.isViewActionId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -5575,10 +5659,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6014,39 +6102,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_N_S_P_R_V(long,String,int,long,long[],boolean, int, int, OrderByComparator)}
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKeyId the prim key ID
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Deprecated
-	@Override
-	public List<ResourcePermission> findByC_N_S_P_R_V(
-		long companyId, String name, int scope, long primKeyId, long[] roleIds,
-		boolean viewActionId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_N_S_P_R_V(
-			companyId, name, scope, primKeyId, roleIds, viewActionId, start,
-			end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = any &#63; and viewActionId = &#63;.
 	 *
 	 * <p>
@@ -6070,6 +6125,37 @@ public class ResourcePermissionPersistenceImpl
 		boolean viewActionId, int start, int end,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
+		return findByC_N_S_P_R_V(
+			companyId, name, scope, primKeyId, roleIds, viewActionId, start,
+			end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKeyId = &#63; and roleId = &#63; and viewActionId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param scope the scope
+	 * @param primKeyId the prim key ID
+	 * @param roleId the role ID
+	 * @param viewActionId the view action ID
+	 * @param start the lower bound of the range of resource permissions
+	 * @param end the upper bound of the range of resource permissions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching resource permissions
+	 */
+	@Override
+	public List<ResourcePermission> findByC_N_S_P_R_V(
+		long companyId, String name, int scope, long primKeyId, long[] roleIds,
+		boolean viewActionId, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
+
 		name = Objects.toString(name, "");
 
 		if (roleIds == null) {
@@ -6092,35 +6178,41 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				companyId, name, scope, primKeyId, StringUtil.merge(roleIds),
-				viewActionId
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, name, scope, primKeyId,
+					StringUtil.merge(roleIds), viewActionId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, name, scope, primKeyId, StringUtil.merge(roleIds),
 				viewActionId, start, end, orderByComparator
 			};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ResourcePermission resourcePermission : list) {
-				if ((companyId != resourcePermission.getCompanyId()) ||
-					!name.equals(resourcePermission.getName()) ||
-					(scope != resourcePermission.getScope()) ||
-					(primKeyId != resourcePermission.getPrimKeyId()) ||
-					!ArrayUtil.contains(
-						roleIds, resourcePermission.getRoleId()) ||
-					(viewActionId != resourcePermission.isViewActionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ResourcePermission resourcePermission : list) {
+					if ((companyId != resourcePermission.getCompanyId()) ||
+						!name.equals(resourcePermission.getName()) ||
+						(scope != resourcePermission.getScope()) ||
+						(primKeyId != resourcePermission.getPrimKeyId()) ||
+						!ArrayUtil.contains(
+							roleIds, resourcePermission.getRoleId()) ||
+						(viewActionId != resourcePermission.isViewActionId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -6158,13 +6250,17 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs,
-					list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_N_S_P_R_V, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7269,21 +7365,17 @@ public class ResourcePermissionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource permissions
 	 */
-	@Deprecated
 	@Override
 	public List<ResourcePermission> findAll(
 		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -7296,12 +7388,14 @@ public class ResourcePermissionPersistenceImpl
 	 * @param start the lower bound of the range of resource permissions
 	 * @param end the upper bound of the range of resource permissions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of resource permissions
 	 */
 	@Override
 	public List<ResourcePermission> findAll(
 		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
+		OrderByComparator<ResourcePermission> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -7311,17 +7405,23 @@ public class ResourcePermissionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<ResourcePermission> list =
-			(List<ResourcePermission>)FinderCacheUtil.getResult(
+		List<ResourcePermission> list = null;
+
+		if (useFinderCache) {
+			list = (List<ResourcePermission>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -7368,10 +7468,14 @@ public class ResourcePermissionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

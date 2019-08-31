@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -50,15 +49,12 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public Company findByWebId(String webId) throws NoSuchCompanyException;
 
 	/**
-	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByWebId(String)}
 	 * @param webId the web ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	@Deprecated
-	public Company fetchByWebId(String webId, boolean useFinderCache);
+	public Company fetchByWebId(String webId);
 
 	/**
 	 * Returns the company where webId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -67,7 +63,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByWebId(String webId);
+	public Company fetchByWebId(String webId, boolean useFinderCache);
 
 	/**
 	 * Removes the company where webId = &#63; from the database.
@@ -95,15 +91,12 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public Company findByMx(String mx) throws NoSuchCompanyException;
 
 	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByMx(String)}
 	 * @param mx the mx
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	@Deprecated
-	public Company fetchByMx(String mx, boolean useFinderCache);
+	public Company fetchByMx(String mx);
 
 	/**
 	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -112,7 +105,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByMx(String mx);
+	public Company fetchByMx(String mx, boolean useFinderCache);
 
 	/**
 	 * Removes the company where mx = &#63; from the database.
@@ -140,15 +133,12 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public Company findByLogoId(long logoId) throws NoSuchCompanyException;
 
 	/**
-	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLogoId(long)}
 	 * @param logoId the logo ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	@Deprecated
-	public Company fetchByLogoId(long logoId, boolean useFinderCache);
+	public Company fetchByLogoId(long logoId);
 
 	/**
 	 * Returns the company where logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -157,7 +147,7 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
 	 */
-	public Company fetchByLogoId(long logoId);
+	public Company fetchByLogoId(long logoId, boolean useFinderCache);
 
 	/**
 	 * Removes the company where logoId = &#63; from the database.
@@ -205,18 +195,16 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CompanyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySystem(boolean, int, int, OrderByComparator)}
 	 * @param system the system
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
-	@Deprecated
 	public java.util.List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the companies where system = &#63;.
@@ -229,11 +217,14 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching companies
 	 */
 	public java.util.List<Company> findBySystem(
 		boolean system, int start, int end,
-		OrderByComparator<Company> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first company in the ordered set where system = &#63;.
@@ -244,7 +235,9 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @throws NoSuchCompanyException if a matching company could not be found
 	 */
 	public Company findBySystem_First(
-			boolean system, OrderByComparator<Company> orderByComparator)
+			boolean system,
+			com.liferay.portal.kernel.util.OrderByComparator<Company>
+				orderByComparator)
 		throws NoSuchCompanyException;
 
 	/**
@@ -255,7 +248,9 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @return the first matching company, or <code>null</code> if a matching company could not be found
 	 */
 	public Company fetchBySystem_First(
-		boolean system, OrderByComparator<Company> orderByComparator);
+		boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator);
 
 	/**
 	 * Returns the last company in the ordered set where system = &#63;.
@@ -266,7 +261,9 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @throws NoSuchCompanyException if a matching company could not be found
 	 */
 	public Company findBySystem_Last(
-			boolean system, OrderByComparator<Company> orderByComparator)
+			boolean system,
+			com.liferay.portal.kernel.util.OrderByComparator<Company>
+				orderByComparator)
 		throws NoSuchCompanyException;
 
 	/**
@@ -277,7 +274,9 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @return the last matching company, or <code>null</code> if a matching company could not be found
 	 */
 	public Company fetchBySystem_Last(
-		boolean system, OrderByComparator<Company> orderByComparator);
+		boolean system,
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator);
 
 	/**
 	 * Returns the companies before and after the current company in the ordered set where system = &#63;.
@@ -290,7 +289,8 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 */
 	public Company[] findBySystem_PrevAndNext(
 			long companyId, boolean system,
-			OrderByComparator<Company> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Company>
+				orderByComparator)
 		throws NoSuchCompanyException;
 
 	/**
@@ -386,17 +386,15 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CompanyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
-	@Deprecated
 	public java.util.List<Company> findAll(
-		int start, int end, OrderByComparator<Company> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the companies.
@@ -408,10 +406,14 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of companies
 	 */
 	public java.util.List<Company> findAll(
-		int start, int end, OrderByComparator<Company> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Company>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the companies from the database.

@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 
@@ -73,19 +72,16 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances where companyId = &#63;.
@@ -98,11 +94,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form instance in the ordered set where companyId = &#63;.
@@ -114,7 +113,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByCompanyId_First(
 			long companyId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -126,7 +126,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByCompanyId_First(
 		long companyId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo task form instance in the ordered set where companyId = &#63;.
@@ -138,7 +139,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByCompanyId_Last(
 			long companyId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -150,7 +152,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByCompanyId_Last(
 		long companyId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where companyId = &#63;.
@@ -163,7 +166,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance[] findByCompanyId_PrevAndNext(
 			long kaleoTaskFormInstanceId, long companyId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -212,19 +216,16 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoDefinitionVersionId(long, int, int, OrderByComparator)}
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances where kaleoDefinitionVersionId = &#63;.
@@ -237,11 +238,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -253,7 +257,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoDefinitionVersionId_First(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -265,7 +270,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoDefinitionVersionId_First(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -277,7 +283,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoDefinitionVersionId_Last(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -289,7 +296,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -302,7 +310,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance[] findByKaleoDefinitionVersionId_PrevAndNext(
 			long kaleoTaskFormInstanceId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -351,19 +360,16 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoInstanceId(long, int, int, OrderByComparator)}
 	 * @param kaleoInstanceId the kaleo instance ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances where kaleoInstanceId = &#63;.
@@ -376,11 +382,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findByKaleoInstanceId(
 		long kaleoInstanceId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
@@ -392,7 +401,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoInstanceId_First(
 			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -404,7 +414,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoInstanceId_First(
 		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
@@ -416,7 +427,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoInstanceId_Last(
 			long kaleoInstanceId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -428,7 +440,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoInstanceId_Last(
 		long kaleoInstanceId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoInstanceId = &#63;.
@@ -441,7 +454,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance[] findByKaleoInstanceId_PrevAndNext(
 			long kaleoTaskFormInstanceId, long kaleoInstanceId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -490,19 +504,16 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoTaskId(long, int, int, OrderByComparator)}
 	 * @param kaleoTaskId the kaleo task ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances where kaleoTaskId = &#63;.
@@ -515,11 +526,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findByKaleoTaskId(
 		long kaleoTaskId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
@@ -531,7 +545,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoTaskId_First(
 			long kaleoTaskId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -543,7 +558,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoTaskId_First(
 		long kaleoTaskId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
@@ -555,7 +571,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoTaskId_Last(
 			long kaleoTaskId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -567,7 +584,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoTaskId_Last(
 		long kaleoTaskId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoTaskId = &#63;.
@@ -580,7 +598,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance[] findByKaleoTaskId_PrevAndNext(
 			long kaleoTaskFormInstanceId, long kaleoTaskId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -629,19 +648,16 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoTaskInstanceTokenId(long, int, int, OrderByComparator)}
 	 * @param kaleoTaskInstanceTokenId the kaleo task instance token ID
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances where kaleoTaskInstanceTokenId = &#63;.
@@ -654,11 +670,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findByKaleoTaskInstanceTokenId(
 		long kaleoTaskInstanceTokenId, int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
@@ -670,7 +689,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoTaskInstanceTokenId_First(
 			long kaleoTaskInstanceTokenId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -682,7 +702,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoTaskInstanceTokenId_First(
 		long kaleoTaskInstanceTokenId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
@@ -694,7 +715,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance findByKaleoTaskInstanceTokenId_Last(
 			long kaleoTaskInstanceTokenId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -706,7 +728,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance fetchByKaleoTaskInstanceTokenId_Last(
 		long kaleoTaskInstanceTokenId,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo task form instances before and after the current kaleo task form instance in the ordered set where kaleoTaskInstanceTokenId = &#63;.
@@ -719,7 +742,8 @@ public interface KaleoTaskFormInstancePersistence
 	 */
 	public KaleoTaskFormInstance[] findByKaleoTaskInstanceTokenId_PrevAndNext(
 			long kaleoTaskFormInstanceId, long kaleoTaskInstanceTokenId,
-			OrderByComparator<KaleoTaskFormInstance> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<KaleoTaskFormInstance> orderByComparator)
 		throws NoSuchTaskFormInstanceException;
 
 	/**
@@ -748,16 +772,12 @@ public interface KaleoTaskFormInstancePersistence
 		throws NoSuchTaskFormInstanceException;
 
 	/**
-	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKaleoTaskFormId(long)}
 	 * @param kaleoTaskFormId the kaleo task form ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
 	 */
-	@Deprecated
-	public KaleoTaskFormInstance fetchByKaleoTaskFormId(
-		long kaleoTaskFormId, boolean useFinderCache);
+	public KaleoTaskFormInstance fetchByKaleoTaskFormId(long kaleoTaskFormId);
 
 	/**
 	 * Returns the kaleo task form instance where kaleoTaskFormId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -766,7 +786,8 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kaleo task form instance, or <code>null</code> if a matching kaleo task form instance could not be found
 	 */
-	public KaleoTaskFormInstance fetchByKaleoTaskFormId(long kaleoTaskFormId);
+	public KaleoTaskFormInstance fetchByKaleoTaskFormId(
+		long kaleoTaskFormId, boolean useFinderCache);
 
 	/**
 	 * Removes the kaleo task form instance where kaleoTaskFormId = &#63; from the database.
@@ -867,18 +888,15 @@ public interface KaleoTaskFormInstancePersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoTaskFormInstanceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task form instances
 	 */
-	@Deprecated
 	public java.util.List<KaleoTaskFormInstance> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo task form instances.
@@ -890,11 +908,14 @@ public interface KaleoTaskFormInstancePersistence
 	 * @param start the lower bound of the range of kaleo task form instances
 	 * @param end the upper bound of the range of kaleo task form instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo task form instances
 	 */
 	public java.util.List<KaleoTaskFormInstance> findAll(
 		int start, int end,
-		OrderByComparator<KaleoTaskFormInstance> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskFormInstance>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo task form instances from the database.

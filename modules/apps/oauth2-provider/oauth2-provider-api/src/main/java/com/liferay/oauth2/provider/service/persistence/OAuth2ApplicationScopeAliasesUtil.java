@@ -166,22 +166,18 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ApplicationScopeAliasesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
-	@Deprecated
 	public static List<OAuth2ApplicationScopeAliases> findByC(
 		long companyId, int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
 		return getPersistence().findByC(
-			companyId, start, end, orderByComparator, useFinderCache);
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -195,14 +191,16 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
 	public static List<OAuth2ApplicationScopeAliases> findByC(
 		long companyId, int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByC(
-			companyId, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -343,22 +341,18 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ApplicationScopeAliasesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOAuth2ApplicationId(long, int, int, OrderByComparator)}
 	 * @param oAuth2ApplicationId the o auth2 application ID
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
-	@Deprecated
 	public static List<OAuth2ApplicationScopeAliases> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
 		return getPersistence().findByOAuth2ApplicationId(
-			oAuth2ApplicationId, start, end, orderByComparator, useFinderCache);
+			oAuth2ApplicationId, start, end, orderByComparator);
 	}
 
 	/**
@@ -372,14 +366,16 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 application scope aliaseses
 	 */
 	public static List<OAuth2ApplicationScopeAliases> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByOAuth2ApplicationId(
-			oAuth2ApplicationId, start, end, orderByComparator);
+			oAuth2ApplicationId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -608,21 +604,16 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2ApplicationScopeAliasesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 application scope aliaseses
 	 */
-	@Deprecated
 	public static List<OAuth2ApplicationScopeAliases> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -635,13 +626,16 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 * @param start the lower bound of the range of o auth2 application scope aliaseses
 	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 application scope aliaseses
 	 */
 	public static List<OAuth2ApplicationScopeAliases> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

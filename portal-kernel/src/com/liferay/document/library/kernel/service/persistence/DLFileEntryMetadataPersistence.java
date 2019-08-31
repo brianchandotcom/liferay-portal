@@ -17,7 +17,6 @@ package com.liferay.document.library.kernel.service.persistence;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface DLFileEntryMetadataPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
-	@Deprecated
 	public java.util.List<DLFileEntryMetadata> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63;.
@@ -113,7 +112,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByUuid_First(
 			String uuid,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -124,7 +124,9 @@ public interface DLFileEntryMetadataPersistence
 	 * @return the first matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
 	public DLFileEntryMetadata fetchByUuid_First(
-		String uuid, OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63;.
@@ -136,7 +138,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByUuid_Last(
 			String uuid,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -147,7 +150,9 @@ public interface DLFileEntryMetadataPersistence
 	 * @return the last matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
 	public DLFileEntryMetadata fetchByUuid_Last(
-		String uuid, OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63;.
@@ -160,7 +165,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata[] findByUuid_PrevAndNext(
 			long fileEntryMetadataId, String uuid,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -211,20 +217,17 @@ public interface DLFileEntryMetadataPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
-	@Deprecated
 	public java.util.List<DLFileEntryMetadata> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where uuid = &#63; and companyId = &#63;.
@@ -238,11 +241,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -255,7 +261,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -268,7 +275,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -281,7 +289,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -294,7 +303,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -308,7 +318,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata[] findByUuid_C_PrevAndNext(
 			long fileEntryMetadataId, String uuid, long companyId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -359,19 +370,16 @@ public interface DLFileEntryMetadataPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFileEntryId(long, int, int, OrderByComparator)}
 	 * @param fileEntryId the file entry ID
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
-	@Deprecated
 	public java.util.List<DLFileEntryMetadata> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where fileEntryId = &#63;.
@@ -384,11 +392,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByFileEntryId(
 		long fileEntryId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileEntryId = &#63;.
@@ -400,7 +411,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByFileEntryId_First(
 			long fileEntryId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -412,7 +424,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByFileEntryId_First(
 		long fileEntryId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where fileEntryId = &#63;.
@@ -424,7 +437,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByFileEntryId_Last(
 			long fileEntryId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -436,7 +450,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByFileEntryId_Last(
 		long fileEntryId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileEntryId = &#63;.
@@ -449,7 +464,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata[] findByFileEntryId_PrevAndNext(
 			long fileEntryMetadataId, long fileEntryId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -498,19 +514,16 @@ public interface DLFileEntryMetadataPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFileVersionId(long, int, int, OrderByComparator)}
 	 * @param fileVersionId the file version ID
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
-	@Deprecated
 	public java.util.List<DLFileEntryMetadata> findByFileVersionId(
 		long fileVersionId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas where fileVersionId = &#63;.
@@ -523,11 +536,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findByFileVersionId(
 		long fileVersionId, int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first document library file entry metadata in the ordered set where fileVersionId = &#63;.
@@ -539,7 +555,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByFileVersionId_First(
 			long fileVersionId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -551,7 +568,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByFileVersionId_First(
 		long fileVersionId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the last document library file entry metadata in the ordered set where fileVersionId = &#63;.
@@ -563,7 +581,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata findByFileVersionId_Last(
 			long fileVersionId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -575,7 +594,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata fetchByFileVersionId_Last(
 		long fileVersionId,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns the document library file entry metadatas before and after the current document library file entry metadata in the ordered set where fileVersionId = &#63;.
@@ -588,7 +608,8 @@ public interface DLFileEntryMetadataPersistence
 	 */
 	public DLFileEntryMetadata[] findByFileVersionId_PrevAndNext(
 			long fileEntryMetadataId, long fileVersionId,
-			OrderByComparator<DLFileEntryMetadata> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<DLFileEntryMetadata> orderByComparator)
 		throws NoSuchFileEntryMetadataException;
 
 	/**
@@ -619,17 +640,14 @@ public interface DLFileEntryMetadataPersistence
 		throws NoSuchFileEntryMetadataException;
 
 	/**
-	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByD_F(long,long)}
 	 * @param DDMStructureId the ddm structure ID
 	 * @param fileVersionId the file version ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
-	@Deprecated
 	public DLFileEntryMetadata fetchByD_F(
-		long DDMStructureId, long fileVersionId, boolean useFinderCache);
+		long DDMStructureId, long fileVersionId);
 
 	/**
 	 * Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -640,7 +658,7 @@ public interface DLFileEntryMetadataPersistence
 	 * @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	 */
 	public DLFileEntryMetadata fetchByD_F(
-		long DDMStructureId, long fileVersionId);
+		long DDMStructureId, long fileVersionId, boolean useFinderCache);
 
 	/**
 	 * Removes the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; from the database.
@@ -743,18 +761,15 @@ public interface DLFileEntryMetadataPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLFileEntryMetadataModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entry metadatas
 	 */
-	@Deprecated
 	public java.util.List<DLFileEntryMetadata> findAll(
 		int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the document library file entry metadatas.
@@ -766,11 +781,14 @@ public interface DLFileEntryMetadataPersistence
 	 * @param start the lower bound of the range of document library file entry metadatas
 	 * @param end the upper bound of the range of document library file entry metadatas (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of document library file entry metadatas
 	 */
 	public java.util.List<DLFileEntryMetadata> findAll(
 		int start, int end,
-		OrderByComparator<DLFileEntryMetadata> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DLFileEntryMetadata>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the document library file entry metadatas from the database.

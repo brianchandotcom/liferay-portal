@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,18 +69,16 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63;.
@@ -94,11 +91,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where uuid = &#63;.
@@ -109,7 +109,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
 	public UserGroup findByUuid_First(
-			String uuid, OrderByComparator<UserGroup> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -120,7 +122,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByUuid_First(
-		String uuid, OrderByComparator<UserGroup> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where uuid = &#63;.
@@ -131,7 +135,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
 	public UserGroup findByUuid_Last(
-			String uuid, OrderByComparator<UserGroup> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -142,7 +148,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByUuid_Last(
-		String uuid, OrderByComparator<UserGroup> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where uuid = &#63;.
@@ -155,7 +163,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] findByUuid_PrevAndNext(
 			long userGroupId, String uuid,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -196,7 +205,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where uuid = &#63;.
@@ -209,7 +219,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] filterFindByUuid_PrevAndNext(
 			long userGroupId, String uuid,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -267,19 +278,17 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63; and companyId = &#63;.
@@ -293,11 +302,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -310,7 +322,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -323,7 +336,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -336,7 +350,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -349,7 +364,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -363,7 +379,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] findByUuid_C_PrevAndNext(
 			long userGroupId, String uuid, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -408,7 +425,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -422,7 +440,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] filterFindByUuid_C_PrevAndNext(
 			long userGroupId, String uuid, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -481,18 +500,16 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63;.
@@ -505,11 +522,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where companyId = &#63;.
@@ -520,7 +540,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
 	public UserGroup findByCompanyId_First(
-			long companyId, OrderByComparator<UserGroup> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -531,7 +553,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByCompanyId_First(
-		long companyId, OrderByComparator<UserGroup> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where companyId = &#63;.
@@ -542,7 +566,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @throws NoSuchUserGroupException if a matching user group could not be found
 	 */
 	public UserGroup findByCompanyId_Last(
-			long companyId, OrderByComparator<UserGroup> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -553,7 +579,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
 	 */
 	public UserGroup fetchByCompanyId_Last(
-		long companyId, OrderByComparator<UserGroup> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where companyId = &#63;.
@@ -566,7 +594,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] findByCompanyId_PrevAndNext(
 			long userGroupId, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -607,7 +636,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where companyId = &#63;.
@@ -620,7 +650,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] filterFindByCompanyId_PrevAndNext(
 			long userGroupId, long companyId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -679,19 +710,17 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_P(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByC_P(
 		long companyId, long parentUserGroupId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
@@ -705,11 +734,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByC_P(
 		long companyId, long parentUserGroupId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -722,7 +754,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByC_P_First(
 			long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -735,7 +768,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByC_P_First(
 		long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -748,7 +782,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByC_P_Last(
 			long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -761,7 +796,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByC_P_Last(
 		long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and parentUserGroupId = &#63;.
@@ -775,7 +811,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] findByC_P_PrevAndNext(
 			long userGroupId, long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -820,7 +857,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByC_P(
 		long companyId, long parentUserGroupId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
@@ -834,7 +872,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] filterFindByC_P_PrevAndNext(
 			long userGroupId, long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -875,17 +914,13 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 		throws NoSuchUserGroupException;
 
 	/**
-	 * Returns the user group where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user group where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_N(long,String)}
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	@Deprecated
-	public UserGroup fetchByC_N(
-		long companyId, String name, boolean useFinderCache);
+	public UserGroup fetchByC_N(long companyId, String name);
 
 	/**
 	 * Returns the user group where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -895,7 +930,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	public UserGroup fetchByC_N(long companyId, String name);
+	public UserGroup fetchByC_N(
+		long companyId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the user group where companyId = &#63; and name = &#63; from the database.
@@ -948,19 +984,17 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_LikeN(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByC_LikeN(
 		long companyId, String name, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63; and name LIKE &#63;.
@@ -974,11 +1008,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByC_LikeN(
 		long companyId, String name, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -991,7 +1028,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByC_LikeN_First(
 			long companyId, String name,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1004,7 +1042,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByC_LikeN_First(
 		long companyId, String name,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -1017,7 +1056,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByC_LikeN_Last(
 			long companyId, String name,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1030,7 +1070,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByC_LikeN_Last(
 		long companyId, String name,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set where companyId = &#63; and name LIKE &#63;.
@@ -1044,7 +1085,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] findByC_LikeN_PrevAndNext(
 			long userGroupId, long companyId, String name,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1089,7 +1131,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByC_LikeN(
 		long companyId, String name, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the user groups before and after the current user group in the ordered set of user groups that the user has permission to view where companyId = &#63; and name LIKE &#63;.
@@ -1103,7 +1146,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup[] filterFindByC_LikeN_PrevAndNext(
 			long userGroupId, long companyId, String name,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1168,21 +1212,19 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_C_P(long,long,long, int, int, OrderByComparator)}
 	 * @param userGroupId the user group ID
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findByU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
-		int end, OrderByComparator<UserGroup> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
@@ -1197,11 +1239,15 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching user groups
 	 */
 	public java.util.List<UserGroup> findByU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
-		int end, OrderByComparator<UserGroup> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
@@ -1215,7 +1261,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByU_C_P_First(
 			long userGroupId, long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1229,7 +1276,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByU_C_P_First(
 		long userGroupId, long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns the last user group in the ordered set where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
@@ -1243,7 +1291,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup findByU_C_P_Last(
 			long userGroupId, long companyId, long parentUserGroupId,
-			OrderByComparator<UserGroup> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+				orderByComparator)
 		throws NoSuchUserGroupException;
 
 	/**
@@ -1257,7 +1306,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public UserGroup fetchByU_C_P_Last(
 		long userGroupId, long companyId, long parentUserGroupId,
-		OrderByComparator<UserGroup> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns all the user groups that the user has permission to view where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63;.
@@ -1305,7 +1355,9 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<UserGroup> filterFindByU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId, int start,
-		int end, OrderByComparator<UserGroup> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Removes all the user groups where userGroupId &gt; &#63; and companyId = &#63; and parentUserGroupId = &#63; from the database.
@@ -1351,17 +1403,13 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 		throws NoSuchUserGroupException;
 
 	/**
-	 * Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_ERC(long,String)}
 	 * @param companyId the company ID
 	 * @param externalReferenceCode the external reference code
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	@Deprecated
-	public UserGroup fetchByC_ERC(
-		long companyId, String externalReferenceCode, boolean useFinderCache);
+	public UserGroup fetchByC_ERC(long companyId, String externalReferenceCode);
 
 	/**
 	 * Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1371,7 +1419,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
 	 */
-	public UserGroup fetchByC_ERC(long companyId, String externalReferenceCode);
+	public UserGroup fetchByC_ERC(
+		long companyId, String externalReferenceCode, boolean useFinderCache);
 
 	/**
 	 * Removes the user group where companyId = &#63; and externalReferenceCode = &#63; from the database.
@@ -1470,17 +1519,15 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user groups
 	 */
-	@Deprecated
 	public java.util.List<UserGroup> findAll(
-		int start, int end, OrderByComparator<UserGroup> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user groups.
@@ -1492,10 +1539,14 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of user groups
 	 */
 	public java.util.List<UserGroup> findAll(
-		int start, int end, OrderByComparator<UserGroup> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroup>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the user groups from the database.
@@ -1556,8 +1607,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<com.liferay.portal.kernel.model.Group> getGroups(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Group>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.Group> orderByComparator);
 
 	/**
 	 * Returns the number of groups associated with the user group.
@@ -1722,8 +1773,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<com.liferay.portal.kernel.model.Team> getTeams(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.Team>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.Team> orderByComparator);
 
 	/**
 	 * Returns the number of teams associated with the user group.
@@ -1887,8 +1938,8 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	 */
 	public java.util.List<com.liferay.portal.kernel.model.User> getUsers(
 		long pk, int start, int end,
-		OrderByComparator<com.liferay.portal.kernel.model.User>
-			orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.portal.kernel.model.User> orderByComparator);
 
 	/**
 	 * Returns the number of users associated with the user group.

@@ -129,22 +129,18 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByUuid(uuid, start, end, orderByComparator);
+		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -158,12 +154,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -175,23 +173,30 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!uuid.equals(ddmStructure.getUuid())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!uuid.equals(ddmStructure.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -258,10 +263,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -670,20 +679,15 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
-	@Deprecated
 	@Override
-	public DDMStructure fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return fetchByUUID_G(uuid, groupId);
+	public DDMStructure fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -695,13 +699,23 @@ public class DDMStructurePersistenceImpl
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
-	public DDMStructure fetchByUUID_G(String uuid, long groupId) {
+	public DDMStructure fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
 		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] {uuid, groupId};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByUUID_G, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
+		}
 
 		if (result instanceof DDMStructure) {
 			DDMStructure ddmStructure = (DDMStructure)result;
@@ -751,8 +765,10 @@ public class DDMStructurePersistenceImpl
 				List<DDMStructure> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByUUID_G, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
 				}
 				else {
 					DDMStructure ddmStructure = list.get(0);
@@ -763,7 +779,10 @@ public class DDMStructurePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByUUID_G, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -918,23 +937,20 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -949,12 +965,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -966,27 +984,34 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!uuid.equals(ddmStructure.getUuid()) ||
-					(companyId != ddmStructure.getCompanyId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!uuid.equals(ddmStructure.getUuid()) ||
+						(companyId != ddmStructure.getCompanyId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1057,10 +1082,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1504,22 +1533,18 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByGroupId(groupId, start, end, orderByComparator);
+		return findByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1533,12 +1558,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1548,23 +1575,30 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((groupId != ddmStructure.getGroupId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((groupId != ddmStructure.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1620,10 +1654,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2400,31 +2438,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the ddm structures where groupId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of ddm structures
-	 * @param end the upper bound of the range of ddm structures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm structures
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByGroupId(groupIds, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm structures where groupId = any &#63;.
 	 *
 	 * <p>
@@ -2441,6 +2454,29 @@ public class DDMStructurePersistenceImpl
 	public List<DDMStructure> findByGroupId(
 		long[] groupIds, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
+
+		return findByGroupId(groupIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -2460,23 +2496,32 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(groupIds)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {StringUtil.merge(groupIds)};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			_finderPathWithPaginationFindByGroupId, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!ArrayUtil.contains(groupIds, ddmStructure.getGroupId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				_finderPathWithPaginationFindByGroupId, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!ArrayUtil.contains(
+							groupIds, ddmStructure.getGroupId())) {
+
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2534,12 +2579,17 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByGroupId, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2847,23 +2897,19 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByParentStructureId(long, int, int, OrderByComparator)}
 	 * @param parentStructureId the parent structure ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByParentStructureId(
 		long parentStructureId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return findByParentStructureId(
-			parentStructureId, start, end, orderByComparator);
+			parentStructureId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2877,12 +2923,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(
 		long parentStructureId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2892,27 +2940,35 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByParentStructureId;
-			finderArgs = new Object[] {parentStructureId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByParentStructureId;
+				finderArgs = new Object[] {parentStructureId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByParentStructureId;
 			finderArgs = new Object[] {
 				parentStructureId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((parentStructureId !=
-						ddmStructure.getParentStructureId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((parentStructureId !=
+							ddmStructure.getParentStructureId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2968,10 +3024,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3364,22 +3424,19 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByClassNameId(long, int, int, OrderByComparator)}
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByClassNameId(classNameId, start, end, orderByComparator);
+		return findByClassNameId(
+			classNameId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3393,12 +3450,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(
 		long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3408,25 +3467,32 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByClassNameId;
-			finderArgs = new Object[] {classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByClassNameId;
+				finderArgs = new Object[] {classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByClassNameId;
 			finderArgs = new Object[] {
 				classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((classNameId != ddmStructure.getClassNameId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((classNameId != ddmStructure.getClassNameId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -3482,10 +3548,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3870,22 +3940,19 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStructureKey(String, int, int, OrderByComparator)}
 	 * @param structureKey the structure key
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByStructureKey(
 		String structureKey, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByStructureKey(structureKey, start, end, orderByComparator);
+		return findByStructureKey(
+			structureKey, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3899,12 +3966,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(
 		String structureKey, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		structureKey = Objects.toString(structureKey, "");
 
@@ -3916,25 +3985,32 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByStructureKey;
-			finderArgs = new Object[] {structureKey};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByStructureKey;
+				finderArgs = new Object[] {structureKey};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByStructureKey;
 			finderArgs = new Object[] {
 				structureKey, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!structureKey.equals(ddmStructure.getStructureKey())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!structureKey.equals(ddmStructure.getStructureKey())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4001,10 +4077,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -4425,24 +4505,20 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByG_P(
 		long groupId, long parentStructureId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return findByG_P(
-			groupId, parentStructureId, start, end, orderByComparator);
+			groupId, parentStructureId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4457,12 +4533,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(
 		long groupId, long parentStructureId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -4472,28 +4550,35 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_P;
-			finderArgs = new Object[] {groupId, parentStructureId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_P;
+				finderArgs = new Object[] {groupId, parentStructureId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_P;
 			finderArgs = new Object[] {
 				groupId, parentStructureId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((groupId != ddmStructure.getGroupId()) ||
-					(parentStructureId !=
-						ddmStructure.getParentStructureId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((groupId != ddmStructure.getGroupId()) ||
+						(parentStructureId !=
+							ddmStructure.getParentStructureId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -4553,10 +4638,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -5376,23 +5465,20 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByG_C(groupId, classNameId, start, end, orderByComparator);
+		return findByG_C(
+			groupId, classNameId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -5407,12 +5493,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -5422,27 +5510,34 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C;
-			finderArgs = new Object[] {groupId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C;
+				finderArgs = new Object[] {groupId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((groupId != ddmStructure.getGroupId()) ||
-					(classNameId != ddmStructure.getClassNameId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((groupId != ddmStructure.getGroupId()) ||
+						(classNameId != ddmStructure.getClassNameId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -5502,10 +5597,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6336,32 +6435,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C(long,long, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of ddm structures
-	 * @param end the upper bound of the range of ddm structures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm structures
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> findByG_C(
-		long[] groupIds, long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByG_C(groupIds, classNameId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm structures where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
@@ -6379,6 +6452,31 @@ public class DDMStructurePersistenceImpl
 	public List<DDMStructure> findByG_C(
 		long[] groupIds, long classNameId, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
+
+		return findByG_C(
+			groupIds, classNameId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C(
+		long[] groupIds, long classNameId, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -6399,26 +6497,36 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {StringUtil.merge(groupIds), classNameId};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), classNameId, start, end,
 				orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			_finderPathWithPaginationFindByG_C, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!ArrayUtil.contains(groupIds, ddmStructure.getGroupId()) ||
-					(classNameId != ddmStructure.getClassNameId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				_finderPathWithPaginationFindByG_C, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!ArrayUtil.contains(
+							groupIds, ddmStructure.getGroupId()) ||
+						(classNameId != ddmStructure.getClassNameId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6484,12 +6592,16 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_C, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_C, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_C, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_C, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -6834,23 +6946,20 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_C(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findByC_C(companyId, classNameId, start, end, orderByComparator);
+		return findByC_C(
+			companyId, classNameId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -6865,12 +6974,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -6880,27 +6991,34 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_C;
-			finderArgs = new Object[] {companyId, classNameId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {companyId, classNameId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_C;
 			finderArgs = new Object[] {
 				companyId, classNameId, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((companyId != ddmStructure.getCompanyId()) ||
-					(classNameId != ddmStructure.getClassNameId())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((companyId != ddmStructure.getCompanyId()) ||
+						(classNameId != ddmStructure.getClassNameId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -6960,10 +7078,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7385,22 +7507,18 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_S(long,long,String)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
-	@Deprecated
 	@Override
 	public DDMStructure fetchByG_C_S(
-		long groupId, long classNameId, String structureKey,
-		boolean useFinderCache) {
+		long groupId, long classNameId, String structureKey) {
 
-		return fetchByG_C_S(groupId, classNameId, structureKey);
+		return fetchByG_C_S(groupId, classNameId, structureKey, true);
 	}
 
 	/**
@@ -7414,14 +7532,23 @@ public class DDMStructurePersistenceImpl
 	 */
 	@Override
 	public DDMStructure fetchByG_C_S(
-		long groupId, long classNameId, String structureKey) {
+		long groupId, long classNameId, String structureKey,
+		boolean useFinderCache) {
 
 		structureKey = Objects.toString(structureKey, "");
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, structureKey};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByG_C_S, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, classNameId, structureKey};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_C_S, finderArgs, this);
+		}
 
 		if (result instanceof DDMStructure) {
 			DDMStructure ddmStructure = (DDMStructure)result;
@@ -7476,8 +7603,10 @@ public class DDMStructurePersistenceImpl
 				List<DDMStructure> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByG_C_S, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_C_S, finderArgs, list);
+					}
 				}
 				else {
 					DDMStructure ddmStructure = list.get(0);
@@ -7488,7 +7617,10 @@ public class DDMStructurePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByG_C_S, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByG_C_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -7661,25 +7793,21 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_N_D(long,String,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByG_N_D(
 		long groupId, String name, String description, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return findByG_N_D(
-			groupId, name, description, start, end, orderByComparator);
+			groupId, name, description, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -7695,12 +7823,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_N_D(
 		long groupId, String name, String description, int start, int end,
-		OrderByComparator<DDMStructure> orderByComparator) {
+		OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		description = Objects.toString(description, "");
@@ -7713,28 +7843,35 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N_D;
-			finderArgs = new Object[] {groupId, name, description};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N_D;
+				finderArgs = new Object[] {groupId, name, description};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N_D;
 			finderArgs = new Object[] {
 				groupId, name, description, start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((groupId != ddmStructure.getGroupId()) ||
-					!name.equals(ddmStructure.getName()) ||
-					!description.equals(ddmStructure.getDescription())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((groupId != ddmStructure.getGroupId()) ||
+						!name.equals(ddmStructure.getName()) ||
+						!description.equals(ddmStructure.getDescription())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -7820,10 +7957,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -8826,7 +8967,6 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_N_D(long,long,String,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param name the name
@@ -8834,19 +8974,16 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findByG_C_N_D(
 		long groupId, long classNameId, String name, String description,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
 		return findByG_C_N_D(
 			groupId, classNameId, name, description, start, end,
-			orderByComparator);
+			orderByComparator, true);
 	}
 
 	/**
@@ -8863,12 +9000,14 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C_N_D(
 		long groupId, long classNameId, String name, String description,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 		description = Objects.toString(description, "");
@@ -8881,10 +9020,15 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_C_N_D;
-			finderArgs = new Object[] {groupId, classNameId, name, description};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_C_N_D;
+				finderArgs = new Object[] {
+					groupId, classNameId, name, description
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_C_N_D;
 			finderArgs = new Object[] {
 				groupId, classNameId, name, description, start, end,
@@ -8892,19 +9036,23 @@ public class DDMStructurePersistenceImpl
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if ((groupId != ddmStructure.getGroupId()) ||
-					(classNameId != ddmStructure.getClassNameId()) ||
-					!name.equals(ddmStructure.getName()) ||
-					!description.equals(ddmStructure.getDescription())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if ((groupId != ddmStructure.getGroupId()) ||
+						(classNameId != ddmStructure.getClassNameId()) ||
+						!name.equals(ddmStructure.getName()) ||
+						!description.equals(ddmStructure.getDescription())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -8994,10 +9142,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -10019,36 +10171,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_C_N_D(long,long,String,String, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param name the name
-	 * @param description the description
-	 * @param start the lower bound of the range of ddm structures
-	 * @param end the upper bound of the range of ddm structures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm structures
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructure> findByG_C_N_D(
-		long[] groupIds, long classNameId, String name, String description,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByG_C_N_D(
-			groupIds, classNameId, name, description, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm structures where groupId = any &#63; and classNameId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
@@ -10068,6 +10190,34 @@ public class DDMStructurePersistenceImpl
 	public List<DDMStructure> findByG_C_N_D(
 		long[] groupIds, long classNameId, String name, String description,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		return findByG_C_N_D(
+			groupIds, classNameId, name, description, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63; and name = &#63; and description = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param name the name
+	 * @param description the description
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm structures
+	 */
+	@Override
+	public List<DDMStructure> findByG_C_N_D(
+		long[] groupIds, long classNameId, String name, String description,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		if (groupIds == null) {
 			groupIds = new long[0];
@@ -10092,30 +10242,38 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {
-				StringUtil.merge(groupIds), classNameId, name, description
-			};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					StringUtil.merge(groupIds), classNameId, name, description
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				StringUtil.merge(groupIds), classNameId, name, description,
 				start, end, orderByComparator
 			};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			_finderPathWithPaginationFindByG_C_N_D, finderArgs, this);
+		List<DDMStructure> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (DDMStructure ddmStructure : list) {
-				if (!ArrayUtil.contains(groupIds, ddmStructure.getGroupId()) ||
-					(classNameId != ddmStructure.getClassNameId()) ||
-					!name.equals(ddmStructure.getName()) ||
-					!description.equals(ddmStructure.getDescription())) {
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				_finderPathWithPaginationFindByG_C_N_D, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (DDMStructure ddmStructure : list) {
+					if (!ArrayUtil.contains(
+							groupIds, ddmStructure.getGroupId()) ||
+						(classNameId != ddmStructure.getClassNameId()) ||
+						!name.equals(ddmStructure.getName()) ||
+						!description.equals(ddmStructure.getDescription())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -10211,12 +10369,17 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(
-					_finderPathWithPaginationFindByG_C_N_D, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByG_C_N_D, finderArgs,
+						list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathWithPaginationFindByG_C_N_D, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathWithPaginationFindByG_C_N_D, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -11488,20 +11651,16 @@ public class DDMStructurePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMStructureModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structures
 	 */
-	@Deprecated
 	@Override
 	public List<DDMStructure> findAll(
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -11514,11 +11673,13 @@ public class DDMStructurePersistenceImpl
 	 * @param start the lower bound of the range of ddm structures
 	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findAll(
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -11528,16 +11689,23 @@ public class DDMStructurePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<DDMStructure> list = (List<DDMStructure>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<DDMStructure> list = null;
+
+		if (useFinderCache) {
+			list = (List<DDMStructure>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -11584,10 +11752,14 @@ public class DDMStructurePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

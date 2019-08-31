@@ -163,22 +163,18 @@ public class PowwowParticipantUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PowwowParticipantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPowwowMeetingId(long, int, int, OrderByComparator)}
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
-	@Deprecated
 	public static List<PowwowParticipant> findByPowwowMeetingId(
 		long powwowMeetingId, int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 
 		return getPersistence().findByPowwowMeetingId(
-			powwowMeetingId, start, end, orderByComparator, useFinderCache);
+			powwowMeetingId, start, end, orderByComparator);
 	}
 
 	/**
@@ -192,14 +188,16 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
 	public static List<PowwowParticipant> findByPowwowMeetingId(
 		long powwowMeetingId, int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator) {
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByPowwowMeetingId(
-			powwowMeetingId, start, end, orderByComparator);
+			powwowMeetingId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -320,20 +318,17 @@ public class PowwowParticipantUtil {
 	}
 
 	/**
-	 * Returns the powwow participant where powwowMeetingId = &#63; and participantUserId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the powwow participant where powwowMeetingId = &#63; and participantUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByPMI_PUI(long,long)}
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param participantUserId the participant user ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
-	@Deprecated
 	public static PowwowParticipant fetchByPMI_PUI(
-		long powwowMeetingId, long participantUserId, boolean useFinderCache) {
+		long powwowMeetingId, long participantUserId) {
 
 		return getPersistence().fetchByPMI_PUI(
-			powwowMeetingId, participantUserId, useFinderCache);
+			powwowMeetingId, participantUserId);
 	}
 
 	/**
@@ -345,10 +340,10 @@ public class PowwowParticipantUtil {
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
 	public static PowwowParticipant fetchByPMI_PUI(
-		long powwowMeetingId, long participantUserId) {
+		long powwowMeetingId, long participantUserId, boolean useFinderCache) {
 
 		return getPersistence().fetchByPMI_PUI(
-			powwowMeetingId, participantUserId);
+			powwowMeetingId, participantUserId, useFinderCache);
 	}
 
 	/**
@@ -396,20 +391,16 @@ public class PowwowParticipantUtil {
 	}
 
 	/**
-	 * Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the powwow participant where powwowMeetingId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByPMI_EA(long,String)}
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param emailAddress the email address
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
-	@Deprecated
 	public static PowwowParticipant fetchByPMI_EA(
-		long powwowMeetingId, String emailAddress, boolean useFinderCache) {
+		long powwowMeetingId, String emailAddress) {
 
-		return getPersistence().fetchByPMI_EA(
-			powwowMeetingId, emailAddress, useFinderCache);
+		return getPersistence().fetchByPMI_EA(powwowMeetingId, emailAddress);
 	}
 
 	/**
@@ -421,9 +412,10 @@ public class PowwowParticipantUtil {
 	 * @return the matching powwow participant, or <code>null</code> if a matching powwow participant could not be found
 	 */
 	public static PowwowParticipant fetchByPMI_EA(
-		long powwowMeetingId, String emailAddress) {
+		long powwowMeetingId, String emailAddress, boolean useFinderCache) {
 
-		return getPersistence().fetchByPMI_EA(powwowMeetingId, emailAddress);
+		return getPersistence().fetchByPMI_EA(
+			powwowMeetingId, emailAddress, useFinderCache);
 	}
 
 	/**
@@ -490,24 +482,19 @@ public class PowwowParticipantUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PowwowParticipantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPMI_T(long,int, int, int, OrderByComparator)}
 	 * @param powwowMeetingId the powwow meeting ID
 	 * @param type the type
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
-	@Deprecated
 	public static List<PowwowParticipant> findByPMI_T(
 		long powwowMeetingId, int type, int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 
 		return getPersistence().findByPMI_T(
-			powwowMeetingId, type, start, end, orderByComparator,
-			useFinderCache);
+			powwowMeetingId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -522,14 +509,17 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching powwow participants
 	 */
 	public static List<PowwowParticipant> findByPMI_T(
 		long powwowMeetingId, int type, int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator) {
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByPMI_T(
-			powwowMeetingId, type, start, end, orderByComparator);
+			powwowMeetingId, type, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -743,21 +733,16 @@ public class PowwowParticipantUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PowwowParticipantModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of powwow participants
 	 */
-	@Deprecated
 	public static List<PowwowParticipant> findAll(
 		int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PowwowParticipant> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -770,13 +755,16 @@ public class PowwowParticipantUtil {
 	 * @param start the lower bound of the range of powwow participants
 	 * @param end the upper bound of the range of powwow participants (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of powwow participants
 	 */
 	public static List<PowwowParticipant> findAll(
 		int start, int end,
-		OrderByComparator<PowwowParticipant> orderByComparator) {
+		OrderByComparator<PowwowParticipant> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

@@ -146,18 +146,15 @@ public class DLOpenerFileEntryReferenceUtil {
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the dl opener file entry reference where fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByFileEntryId(long)}
 	 * @param fileEntryId the file entry ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
-	@Deprecated
 	public static DLOpenerFileEntryReference fetchByFileEntryId(
-		long fileEntryId, boolean useFinderCache) {
+		long fileEntryId) {
 
-		return getPersistence().fetchByFileEntryId(fileEntryId, useFinderCache);
+		return getPersistence().fetchByFileEntryId(fileEntryId);
 	}
 
 	/**
@@ -168,9 +165,9 @@ public class DLOpenerFileEntryReferenceUtil {
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
 	public static DLOpenerFileEntryReference fetchByFileEntryId(
-		long fileEntryId) {
+		long fileEntryId, boolean useFinderCache) {
 
-		return getPersistence().fetchByFileEntryId(fileEntryId);
+		return getPersistence().fetchByFileEntryId(fileEntryId, useFinderCache);
 	}
 
 	/**
@@ -214,20 +211,16 @@ public class DLOpenerFileEntryReferenceUtil {
 	}
 
 	/**
-	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the dl opener file entry reference where referenceType = &#63; and fileEntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByR_F(String,long)}
 	 * @param referenceType the reference type
 	 * @param fileEntryId the file entry ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
-	@Deprecated
 	public static DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId, boolean useFinderCache) {
+		String referenceType, long fileEntryId) {
 
-		return getPersistence().fetchByR_F(
-			referenceType, fileEntryId, useFinderCache);
+		return getPersistence().fetchByR_F(referenceType, fileEntryId);
 	}
 
 	/**
@@ -239,9 +232,10 @@ public class DLOpenerFileEntryReferenceUtil {
 	 * @return the matching dl opener file entry reference, or <code>null</code> if a matching dl opener file entry reference could not be found
 	 */
 	public static DLOpenerFileEntryReference fetchByR_F(
-		String referenceType, long fileEntryId) {
+		String referenceType, long fileEntryId, boolean useFinderCache) {
 
-		return getPersistence().fetchByR_F(referenceType, fileEntryId);
+		return getPersistence().fetchByR_F(
+			referenceType, fileEntryId, useFinderCache);
 	}
 
 	/**
@@ -383,21 +377,16 @@ public class DLOpenerFileEntryReferenceUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DLOpenerFileEntryReferenceModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of dl opener file entry references
 	 * @param end the upper bound of the range of dl opener file entry references (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl opener file entry references
 	 */
-	@Deprecated
 	public static List<DLOpenerFileEntryReference> findAll(
 		int start, int end,
-		OrderByComparator<DLOpenerFileEntryReference> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DLOpenerFileEntryReference> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -410,13 +399,16 @@ public class DLOpenerFileEntryReferenceUtil {
 	 * @param start the lower bound of the range of dl opener file entry references
 	 * @param end the upper bound of the range of dl opener file entry references (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of dl opener file entry references
 	 */
 	public static List<DLOpenerFileEntryReference> findAll(
 		int start, int end,
-		OrderByComparator<DLOpenerFileEntryReference> orderByComparator) {
+		OrderByComparator<DLOpenerFileEntryReference> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

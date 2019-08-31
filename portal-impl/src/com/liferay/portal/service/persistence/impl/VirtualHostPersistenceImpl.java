@@ -114,19 +114,14 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByHostname(String)}
 	 * @param hostname the hostname
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
-	@Deprecated
 	@Override
-	public VirtualHost fetchByHostname(
-		String hostname, boolean useFinderCache) {
-
-		return fetchByHostname(hostname);
+	public VirtualHost fetchByHostname(String hostname) {
+		return fetchByHostname(hostname, true);
 	}
 
 	/**
@@ -137,13 +132,23 @@ public class VirtualHostPersistenceImpl
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
 	@Override
-	public VirtualHost fetchByHostname(String hostname) {
+	public VirtualHost fetchByHostname(
+		String hostname, boolean useFinderCache) {
+
 		hostname = Objects.toString(hostname, "");
 
-		Object[] finderArgs = new Object[] {hostname};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByHostname, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {hostname};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByHostname, finderArgs, this);
+		}
 
 		if (result instanceof VirtualHost) {
 			VirtualHost virtualHost = (VirtualHost)result;
@@ -187,8 +192,10 @@ public class VirtualHostPersistenceImpl
 				List<VirtualHost> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByHostname, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByHostname, finderArgs, list);
+					}
 				}
 				else {
 					VirtualHost virtualHost = list.get(0);
@@ -199,8 +206,10 @@ public class VirtualHostPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByHostname, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByHostname, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -344,20 +353,15 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_L(long,long)}
 	 * @param companyId the company ID
 	 * @param layoutSetId the layout set ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
-	@Deprecated
 	@Override
-	public VirtualHost fetchByC_L(
-		long companyId, long layoutSetId, boolean useFinderCache) {
-
-		return fetchByC_L(companyId, layoutSetId);
+	public VirtualHost fetchByC_L(long companyId, long layoutSetId) {
+		return fetchByC_L(companyId, layoutSetId, true);
 	}
 
 	/**
@@ -369,11 +373,21 @@ public class VirtualHostPersistenceImpl
 	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
 	 */
 	@Override
-	public VirtualHost fetchByC_L(long companyId, long layoutSetId) {
-		Object[] finderArgs = new Object[] {companyId, layoutSetId};
+	public VirtualHost fetchByC_L(
+		long companyId, long layoutSetId, boolean useFinderCache) {
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByC_L, finderArgs, this);
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, layoutSetId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_L, finderArgs, this);
+		}
 
 		if (result instanceof VirtualHost) {
 			VirtualHost virtualHost = (VirtualHost)result;
@@ -412,8 +426,10 @@ public class VirtualHostPersistenceImpl
 				List<VirtualHost> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_L, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_L, finderArgs, list);
+					}
 				}
 				else {
 					VirtualHost virtualHost = list.get(0);
@@ -424,7 +440,10 @@ public class VirtualHostPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_L, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_L, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -943,20 +962,16 @@ public class VirtualHostPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of virtual hosts
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of virtual hosts
 	 */
-	@Deprecated
 	@Override
 	public List<VirtualHost> findAll(
-		int start, int end, OrderByComparator<VirtualHost> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<VirtualHost> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -969,11 +984,13 @@ public class VirtualHostPersistenceImpl
 	 * @param start the lower bound of the range of virtual hosts
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of virtual hosts
 	 */
 	@Override
 	public List<VirtualHost> findAll(
-		int start, int end, OrderByComparator<VirtualHost> orderByComparator) {
+		int start, int end, OrderByComparator<VirtualHost> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -983,16 +1000,23 @@ public class VirtualHostPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<VirtualHost> list = (List<VirtualHost>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<VirtualHost> list = null;
+
+		if (useFinderCache) {
+			list = (List<VirtualHost>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1039,10 +1063,14 @@ public class VirtualHostPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

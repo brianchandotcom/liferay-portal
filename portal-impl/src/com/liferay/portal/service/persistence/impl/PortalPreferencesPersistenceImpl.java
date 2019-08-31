@@ -118,20 +118,15 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByO_O(long,int)}
 	 * @param ownerId the owner ID
 	 * @param ownerType the owner type
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	 */
-	@Deprecated
 	@Override
-	public PortalPreferences fetchByO_O(
-		long ownerId, int ownerType, boolean useFinderCache) {
-
-		return fetchByO_O(ownerId, ownerType);
+	public PortalPreferences fetchByO_O(long ownerId, int ownerType) {
+		return fetchByO_O(ownerId, ownerType, true);
 	}
 
 	/**
@@ -143,11 +138,21 @@ public class PortalPreferencesPersistenceImpl
 	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
 	 */
 	@Override
-	public PortalPreferences fetchByO_O(long ownerId, int ownerType) {
-		Object[] finderArgs = new Object[] {ownerId, ownerType};
+	public PortalPreferences fetchByO_O(
+		long ownerId, int ownerType, boolean useFinderCache) {
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByO_O, finderArgs, this);
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {ownerId, ownerType};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByO_O, finderArgs, this);
+		}
 
 		if (result instanceof PortalPreferences) {
 			PortalPreferences portalPreferences = (PortalPreferences)result;
@@ -186,14 +191,20 @@ public class PortalPreferencesPersistenceImpl
 				List<PortalPreferences> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByO_O, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByO_O, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {ownerId, ownerType};
+							}
+
 							_log.warn(
 								"PortalPreferencesPersistenceImpl.fetchByO_O(long, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -209,7 +220,10 @@ public class PortalPreferencesPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByO_O, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByO_O, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -708,21 +722,17 @@ public class PortalPreferencesPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>PortalPreferencesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of portal preferenceses
 	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portal preferenceses
 	 */
-	@Deprecated
 	@Override
 	public List<PortalPreferences> findAll(
 		int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<PortalPreferences> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -735,12 +745,14 @@ public class PortalPreferencesPersistenceImpl
 	 * @param start the lower bound of the range of portal preferenceses
 	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of portal preferenceses
 	 */
 	@Override
 	public List<PortalPreferences> findAll(
 		int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
+		OrderByComparator<PortalPreferences> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -750,17 +762,23 @@ public class PortalPreferencesPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<PortalPreferences> list =
-			(List<PortalPreferences>)FinderCacheUtil.getResult(
+		List<PortalPreferences> list = null;
+
+		if (useFinderCache) {
+			list = (List<PortalPreferences>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -807,10 +825,14 @@ public class PortalPreferencesPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

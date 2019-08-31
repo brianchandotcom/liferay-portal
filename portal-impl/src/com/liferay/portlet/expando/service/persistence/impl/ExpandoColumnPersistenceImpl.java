@@ -126,22 +126,18 @@ public class ExpandoColumnPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByTableId(long, int, int, OrderByComparator)}
 	 * @param tableId the table ID
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando columns
 	 */
-	@Deprecated
 	@Override
 	public List<ExpandoColumn> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 
-		return findByTableId(tableId, start, end, orderByComparator);
+		return findByTableId(tableId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -155,12 +151,14 @@ public class ExpandoColumnPersistenceImpl
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching expando columns
 	 */
 	@Override
 	public List<ExpandoColumn> findByTableId(
 		long tableId, int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator) {
+		OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -170,24 +168,30 @@ public class ExpandoColumnPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByTableId;
-			finderArgs = new Object[] {tableId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByTableId;
+				finderArgs = new Object[] {tableId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByTableId;
 			finderArgs = new Object[] {tableId, start, end, orderByComparator};
 		}
 
-		List<ExpandoColumn> list =
-			(List<ExpandoColumn>)FinderCacheUtil.getResult(
+		List<ExpandoColumn> list = null;
+
+		if (useFinderCache) {
+			list = (List<ExpandoColumn>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ExpandoColumn expandoColumn : list) {
-				if ((tableId != expandoColumn.getTableId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (ExpandoColumn expandoColumn : list) {
+					if ((tableId != expandoColumn.getTableId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -243,10 +247,14 @@ public class ExpandoColumnPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1012,32 +1020,6 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByT_N(long,String, int, int, OrderByComparator)}
-	 * @param tableId the table ID
-	 * @param name the name
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching expando columns
-	 */
-	@Deprecated
-	@Override
-	public List<ExpandoColumn> findByT_N(
-		long tableId, String[] names, int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByT_N(tableId, names, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = any &#63;.
 	 *
 	 * <p>
@@ -1055,6 +1037,30 @@ public class ExpandoColumnPersistenceImpl
 	public List<ExpandoColumn> findByT_N(
 		long tableId, String[] names, int start, int end,
 		OrderByComparator<ExpandoColumn> orderByComparator) {
+
+		return findByT_N(tableId, names, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param name the name
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching expando columns
+	 */
+	@Override
+	public List<ExpandoColumn> findByT_N(
+		long tableId, String[] names, int start, int end,
+		OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean useFinderCache) {
 
 		if (names == null) {
 			names = new String[0];
@@ -1089,26 +1095,32 @@ public class ExpandoColumnPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {tableId, StringUtil.merge(names)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {tableId, StringUtil.merge(names)};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				tableId, StringUtil.merge(names), start, end, orderByComparator
 			};
 		}
 
-		List<ExpandoColumn> list =
-			(List<ExpandoColumn>)FinderCacheUtil.getResult(
+		List<ExpandoColumn> list = null;
+
+		if (useFinderCache) {
+			list = (List<ExpandoColumn>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByT_N, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (ExpandoColumn expandoColumn : list) {
-				if ((tableId != expandoColumn.getTableId()) ||
-					!ArrayUtil.contains(names, expandoColumn.getName())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (ExpandoColumn expandoColumn : list) {
+					if ((tableId != expandoColumn.getTableId()) ||
+						!ArrayUtil.contains(names, expandoColumn.getName())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1187,12 +1199,16 @@ public class ExpandoColumnPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByT_N, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByT_N, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByT_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByT_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1242,20 +1258,15 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 	/**
-	 * Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByT_N(long,String)}
 	 * @param tableId the table ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	 */
-	@Deprecated
 	@Override
-	public ExpandoColumn fetchByT_N(
-		long tableId, String name, boolean useFinderCache) {
-
-		return fetchByT_N(tableId, name);
+	public ExpandoColumn fetchByT_N(long tableId, String name) {
+		return fetchByT_N(tableId, name, true);
 	}
 
 	/**
@@ -1267,13 +1278,23 @@ public class ExpandoColumnPersistenceImpl
 	 * @return the matching expando column, or <code>null</code> if a matching expando column could not be found
 	 */
 	@Override
-	public ExpandoColumn fetchByT_N(long tableId, String name) {
+	public ExpandoColumn fetchByT_N(
+		long tableId, String name, boolean useFinderCache) {
+
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {tableId, name};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByT_N, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {tableId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByT_N, finderArgs, this);
+		}
 
 		if (result instanceof ExpandoColumn) {
 			ExpandoColumn expandoColumn = (ExpandoColumn)result;
@@ -1323,8 +1344,10 @@ public class ExpandoColumnPersistenceImpl
 				List<ExpandoColumn> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByT_N, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByT_N, finderArgs, list);
+					}
 				}
 				else {
 					ExpandoColumn expandoColumn = list.get(0);
@@ -1335,7 +1358,10 @@ public class ExpandoColumnPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByT_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByT_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2157,20 +2183,17 @@ public class ExpandoColumnPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ExpandoColumnModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando columns
 	 */
-	@Deprecated
 	@Override
 	public List<ExpandoColumn> findAll(
-		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<ExpandoColumn> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2183,12 +2206,13 @@ public class ExpandoColumnPersistenceImpl
 	 * @param start the lower bound of the range of expando columns
 	 * @param end the upper bound of the range of expando columns (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of expando columns
 	 */
 	@Override
 	public List<ExpandoColumn> findAll(
-		int start, int end,
-		OrderByComparator<ExpandoColumn> orderByComparator) {
+		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2198,17 +2222,23 @@ public class ExpandoColumnPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<ExpandoColumn> list =
-			(List<ExpandoColumn>)FinderCacheUtil.getResult(
+		List<ExpandoColumn> list = null;
+
+		if (useFinderCache) {
+			list = (List<ExpandoColumn>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2255,10 +2285,14 @@ public class ExpandoColumnPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

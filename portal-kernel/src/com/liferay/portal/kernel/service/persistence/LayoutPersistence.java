@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -69,18 +68,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where uuid = &#63;.
@@ -93,11 +90,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where uuid = &#63;.
@@ -108,7 +108,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByUuid_First(
-			String uuid, OrderByComparator<Layout> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -119,7 +121,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByUuid_First(
-		String uuid, OrderByComparator<Layout> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where uuid = &#63;.
@@ -130,7 +134,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByUuid_Last(
-			String uuid, OrderByComparator<Layout> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -141,7 +147,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByUuid_Last(
-		String uuid, OrderByComparator<Layout> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63;.
@@ -153,7 +161,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	public Layout[] findByUuid_PrevAndNext(
-			long plid, String uuid, OrderByComparator<Layout> orderByComparator)
+			long plid, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -185,19 +195,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G_P(String,long,boolean)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
 	public Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout,
-		boolean useFinderCache);
+		String uuid, long groupId, boolean privateLayout);
 
 	/**
 	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -209,7 +215,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout);
+		String uuid, long groupId, boolean privateLayout,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; from the database.
@@ -266,19 +273,17 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63;.
@@ -292,11 +297,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -309,7 +317,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -322,7 +331,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -335,7 +345,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -348,7 +359,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -362,7 +374,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByUuid_C_PrevAndNext(
 			long plid, String uuid, long companyId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -412,18 +425,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63;.
@@ -436,11 +447,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63;.
@@ -451,7 +465,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByGroupId_First(
-			long groupId, OrderByComparator<Layout> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -462,7 +478,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByGroupId_First(
-		long groupId, OrderByComparator<Layout> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63;.
@@ -473,7 +491,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByGroupId_Last(
-			long groupId, OrderByComparator<Layout> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -484,7 +504,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByGroupId_Last(
-		long groupId, OrderByComparator<Layout> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63;.
@@ -497,7 +519,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByGroupId_PrevAndNext(
 			long plid, long groupId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -538,7 +561,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63;.
@@ -551,7 +575,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByGroupId_PrevAndNext(
 			long plid, long groupId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -607,18 +632,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where companyId = &#63;.
@@ -631,11 +654,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where companyId = &#63;.
@@ -646,7 +672,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByCompanyId_First(
-			long companyId, OrderByComparator<Layout> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -657,7 +685,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByCompanyId_First(
-		long companyId, OrderByComparator<Layout> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where companyId = &#63;.
@@ -668,7 +698,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByCompanyId_Last(
-			long companyId, OrderByComparator<Layout> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -679,7 +711,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Layout> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where companyId = &#63;.
@@ -692,7 +726,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByCompanyId_PrevAndNext(
 			long plid, long companyId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -740,18 +775,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByParentPlid(long, int, int, OrderByComparator)}
 	 * @param parentPlid the parent plid
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByParentPlid(
 		long parentPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where parentPlid = &#63;.
@@ -764,11 +797,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByParentPlid(
 		long parentPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where parentPlid = &#63;.
@@ -779,7 +815,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByParentPlid_First(
-			long parentPlid, OrderByComparator<Layout> orderByComparator)
+			long parentPlid,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -790,7 +828,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByParentPlid_First(
-		long parentPlid, OrderByComparator<Layout> orderByComparator);
+		long parentPlid,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where parentPlid = &#63;.
@@ -801,7 +841,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	public Layout findByParentPlid_Last(
-			long parentPlid, OrderByComparator<Layout> orderByComparator)
+			long parentPlid,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -812,7 +854,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByParentPlid_Last(
-		long parentPlid, OrderByComparator<Layout> orderByComparator);
+		long parentPlid,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where parentPlid = &#63;.
@@ -825,7 +869,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByParentPlid_PrevAndNext(
 			long plid, long parentPlid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -854,15 +899,12 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByIconImageId(long)}
 	 * @param iconImageId the icon image ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
-	public Layout fetchByIconImageId(long iconImageId, boolean useFinderCache);
+	public Layout fetchByIconImageId(long iconImageId);
 
 	/**
 	 * Returns the layout where iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -871,7 +913,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public Layout fetchByIconImageId(long iconImageId);
+	public Layout fetchByIconImageId(long iconImageId, boolean useFinderCache);
 
 	/**
 	 * Removes the layout where iconImageId = &#63; from the database.
@@ -921,18 +963,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutPrototypeUuid(String, int, int, OrderByComparator)}
 	 * @param layoutPrototypeUuid the layout prototype uuid
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByLayoutPrototypeUuid(
 		String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where layoutPrototypeUuid = &#63;.
@@ -945,11 +985,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByLayoutPrototypeUuid(
 		String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where layoutPrototypeUuid = &#63;.
@@ -961,7 +1004,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByLayoutPrototypeUuid_First(
 			String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -973,7 +1017,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByLayoutPrototypeUuid_First(
 		String layoutPrototypeUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where layoutPrototypeUuid = &#63;.
@@ -985,7 +1030,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByLayoutPrototypeUuid_Last(
 			String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -997,7 +1043,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByLayoutPrototypeUuid_Last(
 		String layoutPrototypeUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where layoutPrototypeUuid = &#63;.
@@ -1010,7 +1057,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByLayoutPrototypeUuid_PrevAndNext(
 			long plid, String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1059,18 +1107,16 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySourcePrototypeLayoutUuid(String, int, int, OrderByComparator)}
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where sourcePrototypeLayoutUuid = &#63;.
@@ -1083,11 +1129,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findBySourcePrototypeLayoutUuid(
 		String sourcePrototypeLayoutUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
@@ -1099,7 +1148,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findBySourcePrototypeLayoutUuid_First(
 			String sourcePrototypeLayoutUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1111,7 +1161,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchBySourcePrototypeLayoutUuid_First(
 		String sourcePrototypeLayoutUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
@@ -1123,7 +1174,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findBySourcePrototypeLayoutUuid_Last(
 			String sourcePrototypeLayoutUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1135,7 +1187,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchBySourcePrototypeLayoutUuid_Last(
 		String sourcePrototypeLayoutUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where sourcePrototypeLayoutUuid = &#63;.
@@ -1148,7 +1201,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findBySourcePrototypeLayoutUuid_PrevAndNext(
 			long plid, String sourcePrototypeLayoutUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1201,19 +1255,17 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P(long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63;.
@@ -1227,11 +1279,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -1244,7 +1299,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_First(
 			long groupId, boolean privateLayout,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1257,7 +1313,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_First(
 		long groupId, boolean privateLayout,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -1270,7 +1327,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_Last(
 			long groupId, boolean privateLayout,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1283,7 +1341,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_Last(
 		long groupId, boolean privateLayout,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63;.
@@ -1297,7 +1356,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_P_PrevAndNext(
 			long plid, long groupId, boolean privateLayout,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1342,7 +1402,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_P(
 		long groupId, boolean privateLayout, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
@@ -1356,7 +1417,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_P_PrevAndNext(
 			long plid, long groupId, boolean privateLayout,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1417,19 +1479,17 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_T(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param type the type
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_T(
 		long groupId, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and type = &#63;.
@@ -1443,11 +1503,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_T(
 		long groupId, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and type = &#63;.
@@ -1460,7 +1523,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_T_First(
 			long groupId, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1472,7 +1536,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_T_First(
-		long groupId, String type, OrderByComparator<Layout> orderByComparator);
+		long groupId, String type,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and type = &#63;.
@@ -1485,7 +1551,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_T_Last(
 			long groupId, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1497,7 +1564,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_T_Last(
-		long groupId, String type, OrderByComparator<Layout> orderByComparator);
+		long groupId, String type,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and type = &#63;.
@@ -1511,7 +1580,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_T_PrevAndNext(
 			long plid, long groupId, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1555,7 +1625,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_T(
 		long groupId, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and type = &#63;.
@@ -1569,7 +1640,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_T_PrevAndNext(
 			long plid, long groupId, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1631,19 +1703,17 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_L(long,String, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param layoutPrototypeUuid the layout prototype uuid
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByC_L(
 		long companyId, String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where companyId = &#63; and layoutPrototypeUuid = &#63;.
@@ -1657,11 +1727,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByC_L(
 		long companyId, String layoutPrototypeUuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63;.
@@ -1674,7 +1747,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByC_L_First(
 			long companyId, String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1687,7 +1761,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByC_L_First(
 		long companyId, String layoutPrototypeUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63;.
@@ -1700,7 +1775,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByC_L_Last(
 			long companyId, String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1713,7 +1789,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByC_L_Last(
 		long companyId, String layoutPrototypeUuid,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where companyId = &#63; and layoutPrototypeUuid = &#63;.
@@ -1727,7 +1804,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByC_L_PrevAndNext(
 			long plid, long companyId, String layoutPrototypeUuid,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -1759,17 +1837,13 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByP_I(boolean,long)}
 	 * @param privateLayout the private layout
 	 * @param iconImageId the icon image ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
-	public Layout fetchByP_I(
-		boolean privateLayout, long iconImageId, boolean useFinderCache);
+	public Layout fetchByP_I(boolean privateLayout, long iconImageId);
 
 	/**
 	 * Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1779,7 +1853,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public Layout fetchByP_I(boolean privateLayout, long iconImageId);
+	public Layout fetchByP_I(
+		boolean privateLayout, long iconImageId, boolean useFinderCache);
 
 	/**
 	 * Removes the layout where privateLayout = &#63; and iconImageId = &#63; from the database.
@@ -1812,17 +1887,13 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_C(long,long)}
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
-	public Layout fetchByC_C(
-		long classNameId, long classPK, boolean useFinderCache);
+	public Layout fetchByC_C(long classNameId, long classPK);
 
 	/**
 	 * Returns the layout where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1832,7 +1903,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public Layout fetchByC_C(long classNameId, long classPK);
+	public Layout fetchByC_C(
+		long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the layout where classNameId = &#63; and classPK = &#63; from the database.
@@ -1867,19 +1939,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_L(long,boolean,long)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param layoutId the layout ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
 	public Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId,
-		boolean useFinderCache);
+		long groupId, boolean privateLayout, long layoutId);
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1891,7 +1959,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId);
+		long groupId, boolean privateLayout, long layoutId,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; from the database.
@@ -1951,21 +2020,19 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_P(long,boolean,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param parentLayoutId the parent layout ID
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_P_P(
 		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end, OrderByComparator<Layout> orderByComparator,
-		boolean useFinderCache);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -1980,11 +2047,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_P_P(
 		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end, OrderByComparator<Layout> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -1998,7 +2069,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_First(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2012,7 +2084,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_First(
 		long groupId, boolean privateLayout, long parentLayoutId,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -2026,7 +2099,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_Last(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2040,7 +2114,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_Last(
 		long groupId, boolean privateLayout, long parentLayoutId,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -2055,7 +2130,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_P_P_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2104,7 +2180,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_P_P(
 		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end, OrderByComparator<Layout> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -2119,7 +2197,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_P_P_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2168,7 +2247,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_P_P(
 		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
-		int end, OrderByComparator<Layout> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63;.
@@ -2204,29 +2285,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		int end);
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_P(long,boolean,long[], int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching layouts
-	 */
-	@Deprecated
-	public java.util.List<Layout> findByG_P_P(
-		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
-		int end, OrderByComparator<Layout> orderByComparator,
-		boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63;.
 	 *
 	 * <p>
@@ -2243,7 +2301,32 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> findByG_P_P(
 		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
-		int end, OrderByComparator<Layout> orderByComparator);
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	public java.util.List<Layout> findByG_P_P(
+		long groupId, boolean privateLayout, long[] parentLayoutIds, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; from the database.
@@ -2334,20 +2417,18 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_T(long,boolean,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param type the type
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_P_T(
 		long groupId, boolean privateLayout, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -2362,11 +2443,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_P_T(
 		long groupId, boolean privateLayout, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -2380,7 +2464,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_T_First(
 			long groupId, boolean privateLayout, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2394,7 +2479,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_T_First(
 		long groupId, boolean privateLayout, String type,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -2408,7 +2494,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_T_Last(
 			long groupId, boolean privateLayout, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2422,7 +2509,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_T_Last(
 		long groupId, boolean privateLayout, String type,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -2437,7 +2525,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_P_T_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2485,7 +2574,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_P_T(
 		long groupId, boolean privateLayout, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -2500,7 +2590,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_P_T_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, String type,
-			OrderByComparator<Layout> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2547,19 +2638,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_F(long,boolean,String)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param friendlyURL the friendly url
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
 	public Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL,
-		boolean useFinderCache);
+		long groupId, boolean privateLayout, String friendlyURL);
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -2571,7 +2658,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL);
+		long groupId, boolean privateLayout, String friendlyURL,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
@@ -2611,19 +2699,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_P_SPLU(long,boolean,String)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param sourcePrototypeLayoutUuid the source prototype layout uuid
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	@Deprecated
 	public Layout fetchByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
-		boolean useFinderCache);
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid);
 
 	/**
 	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -2635,7 +2719,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	public Layout fetchByG_P_SPLU(
-		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid);
+		long groupId, boolean privateLayout, String sourcePrototypeLayoutUuid,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the layout where groupId = &#63; and privateLayout = &#63; and sourcePrototypeLayoutUuid = &#63; from the database.
@@ -2700,7 +2785,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_P_H(long,boolean,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param parentLayoutId the parent layout ID
@@ -2708,14 +2792,13 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_P_P_H(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -2731,12 +2814,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_P_P_H(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -2751,7 +2837,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_H_First(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden, OrderByComparator<Layout> orderByComparator)
+			boolean hidden,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2766,7 +2854,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_H_First(
 		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden, OrderByComparator<Layout> orderByComparator);
+		boolean hidden,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -2781,7 +2871,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_H_Last(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden, OrderByComparator<Layout> orderByComparator)
+			boolean hidden,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2796,7 +2888,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_H_Last(
 		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden, OrderByComparator<Layout> orderByComparator);
+		boolean hidden,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -2812,7 +2906,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_P_P_H_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden, OrderByComparator<Layout> orderByComparator)
+			boolean hidden,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2866,7 +2962,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public java.util.List<Layout> filterFindByG_P_P_H(
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -2882,7 +2979,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_P_P_H_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			boolean hidden, OrderByComparator<Layout> orderByComparator)
+			boolean hidden,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -2936,7 +3035,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public java.util.List<Layout> filterFindByG_P_P_H(
 		long groupId, boolean privateLayout, long[] parentLayoutIds,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and hidden = &#63;.
@@ -2975,30 +3075,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		boolean hidden, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_P_H(long,boolean,long[],boolean, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching layouts
-	 */
-	@Deprecated
-	public java.util.List<Layout> findByG_P_P_H(
-		long groupId, boolean privateLayout, long[] parentLayoutIds,
-		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = any &#63; and hidden = &#63;.
 	 *
 	 * <p>
@@ -3017,7 +3093,32 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public java.util.List<Layout> findByG_P_P_H(
 		long groupId, boolean privateLayout, long[] parentLayoutIds,
 		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param parentLayoutId the parent layout ID
+	 * @param hidden the hidden
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	public java.util.List<Layout> findByG_P_P_H(
+		long groupId, boolean privateLayout, long[] parentLayoutIds,
+		boolean hidden, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63; from the database.
@@ -3121,7 +3222,6 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_P_P_LtP(long,boolean,long,int, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
 	 * @param parentLayoutId the parent layout ID
@@ -3129,14 +3229,13 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findByG_P_P_LtP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
-		int start, int end, OrderByComparator<Layout> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
@@ -3152,11 +3251,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
 	public java.util.List<Layout> findByG_P_P_LtP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
-		int start, int end, OrderByComparator<Layout> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
@@ -3171,7 +3274,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_LtP_First(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			int priority, OrderByComparator<Layout> orderByComparator)
+			int priority,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -3186,7 +3291,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_LtP_First(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
@@ -3201,7 +3307,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout findByG_P_P_LtP_Last(
 			long groupId, boolean privateLayout, long parentLayoutId,
-			int priority, OrderByComparator<Layout> orderByComparator)
+			int priority,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -3216,7 +3324,8 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout fetchByG_P_P_LtP_Last(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
-		OrderByComparator<Layout> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
@@ -3232,7 +3341,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] findByG_P_P_LtP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			int priority, OrderByComparator<Layout> orderByComparator)
+			int priority,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -3284,7 +3395,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public java.util.List<Layout> filterFindByG_P_P_LtP(
 		long groupId, boolean privateLayout, long parentLayoutId, int priority,
-		int start, int end, OrderByComparator<Layout> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
@@ -3300,7 +3413,9 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 */
 	public Layout[] filterFindByG_P_P_LtP_PrevAndNext(
 			long plid, long groupId, boolean privateLayout, long parentLayoutId,
-			int priority, OrderByComparator<Layout> orderByComparator)
+			int priority,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
 		throws NoSuchLayoutException;
 
 	/**
@@ -3415,17 +3530,15 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layouts
 	 */
-	@Deprecated
 	public java.util.List<Layout> findAll(
-		int start, int end, OrderByComparator<Layout> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the layouts.
@@ -3437,10 +3550,14 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layouts
 	 */
 	public java.util.List<Layout> findAll(
-		int start, int end, OrderByComparator<Layout> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Layout>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the layouts from the database.

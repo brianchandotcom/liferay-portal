@@ -120,22 +120,18 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		return findByGroupId(groupId, start, end, orderByComparator);
+		return findByGroupId(groupId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -149,12 +145,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -164,24 +162,32 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByGroupId;
+				finderArgs = new Object[] {groupId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityAchievement socialActivityAchievement : list) {
-				if ((groupId != socialActivityAchievement.getGroupId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityAchievement socialActivityAchievement :
+						list) {
 
-					break;
+					if ((groupId != socialActivityAchievement.getGroupId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -237,10 +243,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -641,23 +651,19 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U(long,long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findByG_U(
 		long groupId, long userId, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		return findByG_U(groupId, userId, start, end, orderByComparator);
+		return findByG_U(groupId, userId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -672,12 +678,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findByG_U(
 		long groupId, long userId, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -687,28 +695,36 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_U;
-			finderArgs = new Object[] {groupId, userId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_U;
+				finderArgs = new Object[] {groupId, userId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_U;
 			finderArgs = new Object[] {
 				groupId, userId, start, end, orderByComparator
 			};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityAchievement socialActivityAchievement : list) {
-				if ((groupId != socialActivityAchievement.getGroupId()) ||
-					(userId != socialActivityAchievement.getUserId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityAchievement socialActivityAchievement :
+						list) {
 
-					list = null;
+					if ((groupId != socialActivityAchievement.getGroupId()) ||
+						(userId != socialActivityAchievement.getUserId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -768,10 +784,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1197,23 +1217,19 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_N(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findByG_N(
 		long groupId, String name, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		return findByG_N(groupId, name, start, end, orderByComparator);
+		return findByG_N(groupId, name, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1228,12 +1244,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findByG_N(
 		long groupId, String name, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
@@ -1245,28 +1263,36 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_N;
-			finderArgs = new Object[] {groupId, name};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_N;
+				finderArgs = new Object[] {groupId, name};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_N;
 			finderArgs = new Object[] {
 				groupId, name, start, end, orderByComparator
 			};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityAchievement socialActivityAchievement : list) {
-				if ((groupId != socialActivityAchievement.getGroupId()) ||
-					!name.equals(socialActivityAchievement.getName())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityAchievement socialActivityAchievement :
+						list) {
 
-					list = null;
+					if ((groupId != socialActivityAchievement.getGroupId()) ||
+						!name.equals(socialActivityAchievement.getName())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1337,10 +1363,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1795,23 +1825,20 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_F(long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param firstInGroup the first in group
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findByG_F(
 		long groupId, boolean firstInGroup, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		return findByG_F(groupId, firstInGroup, start, end, orderByComparator);
+		return findByG_F(
+			groupId, firstInGroup, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1826,12 +1853,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findByG_F(
 		long groupId, boolean firstInGroup, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1841,29 +1870,37 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_F;
-			finderArgs = new Object[] {groupId, firstInGroup};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_F;
+				finderArgs = new Object[] {groupId, firstInGroup};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_F;
 			finderArgs = new Object[] {
 				groupId, firstInGroup, start, end, orderByComparator
 			};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityAchievement socialActivityAchievement : list) {
-				if ((groupId != socialActivityAchievement.getGroupId()) ||
-					(firstInGroup !=
-						socialActivityAchievement.isFirstInGroup())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityAchievement socialActivityAchievement :
+						list) {
 
-					list = null;
+					if ((groupId != socialActivityAchievement.getGroupId()) ||
+						(firstInGroup !=
+							socialActivityAchievement.isFirstInGroup())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1923,10 +1960,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2353,21 +2394,18 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
-	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the social activity achievement where groupId = &#63; and userId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_U_N(long,long,String)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching social activity achievement, or <code>null</code> if a matching social activity achievement could not be found
 	 */
-	@Deprecated
 	@Override
 	public SocialActivityAchievement fetchByG_U_N(
-		long groupId, long userId, String name, boolean useFinderCache) {
+		long groupId, long userId, String name) {
 
-		return fetchByG_U_N(groupId, userId, name);
+		return fetchByG_U_N(groupId, userId, name, true);
 	}
 
 	/**
@@ -2381,14 +2419,22 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public SocialActivityAchievement fetchByG_U_N(
-		long groupId, long userId, String name) {
+		long groupId, long userId, String name, boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {groupId, userId, name};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByG_U_N, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, userId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByG_U_N, finderArgs, this);
+		}
 
 		if (result instanceof SocialActivityAchievement) {
 			SocialActivityAchievement socialActivityAchievement =
@@ -2444,8 +2490,10 @@ public class SocialActivityAchievementPersistenceImpl
 				List<SocialActivityAchievement> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByG_U_N, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByG_U_N, finderArgs, list);
+					}
 				}
 				else {
 					SocialActivityAchievement socialActivityAchievement =
@@ -2457,8 +2505,10 @@ public class SocialActivityAchievementPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByG_U_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByG_U_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2630,25 +2680,21 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_U_F(long,long,boolean, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param userId the user ID
 	 * @param firstInGroup the first in group
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findByG_U_F(
 		long groupId, long userId, boolean firstInGroup, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
 		return findByG_U_F(
-			groupId, userId, firstInGroup, start, end, orderByComparator);
+			groupId, userId, firstInGroup, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2664,12 +2710,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findByG_U_F(
 		long groupId, long userId, boolean firstInGroup, int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2679,30 +2727,38 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByG_U_F;
-			finderArgs = new Object[] {groupId, userId, firstInGroup};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_U_F;
+				finderArgs = new Object[] {groupId, userId, firstInGroup};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByG_U_F;
 			finderArgs = new Object[] {
 				groupId, userId, firstInGroup, start, end, orderByComparator
 			};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SocialActivityAchievement socialActivityAchievement : list) {
-				if ((groupId != socialActivityAchievement.getGroupId()) ||
-					(userId != socialActivityAchievement.getUserId()) ||
-					(firstInGroup !=
-						socialActivityAchievement.isFirstInGroup())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SocialActivityAchievement socialActivityAchievement :
+						list) {
 
-					list = null;
+					if ((groupId != socialActivityAchievement.getGroupId()) ||
+						(userId != socialActivityAchievement.getUserId()) ||
+						(firstInGroup !=
+							socialActivityAchievement.isFirstInGroup())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2766,10 +2822,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3778,21 +3838,17 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SocialActivityAchievementModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity achievements
 	 */
-	@Deprecated
 	@Override
 	public List<SocialActivityAchievement> findAll(
 		int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3805,12 +3861,14 @@ public class SocialActivityAchievementPersistenceImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of social activity achievements
 	 */
 	@Override
 	public List<SocialActivityAchievement> findAll(
 		int start, int end,
-		OrderByComparator<SocialActivityAchievement> orderByComparator) {
+		OrderByComparator<SocialActivityAchievement> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3820,17 +3878,23 @@ public class SocialActivityAchievementPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SocialActivityAchievement> list =
-			(List<SocialActivityAchievement>)FinderCacheUtil.getResult(
+		List<SocialActivityAchievement> list = null;
+
+		if (useFinderCache) {
+			list = (List<SocialActivityAchievement>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3878,10 +3942,14 @@ public class SocialActivityAchievementPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

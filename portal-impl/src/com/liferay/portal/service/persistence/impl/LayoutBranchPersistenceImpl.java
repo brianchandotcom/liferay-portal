@@ -120,23 +120,19 @@ public class LayoutBranchPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutSetBranchId(long, int, int, OrderByComparator)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
-	@Deprecated
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LayoutBranch> orderByComparator) {
 
 		return findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator);
+			layoutSetBranchId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -150,12 +146,14 @@ public class LayoutBranchPersistenceImpl
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	@Override
 	public List<LayoutBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator<LayoutBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -165,27 +163,35 @@ public class LayoutBranchPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByLayoutSetBranchId;
-			finderArgs = new Object[] {layoutSetBranchId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByLayoutSetBranchId;
+				finderArgs = new Object[] {layoutSetBranchId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByLayoutSetBranchId;
 			finderArgs = new Object[] {
 				layoutSetBranchId, start, end, orderByComparator
 			};
 		}
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<LayoutBranch> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutBranch layoutBranch : list) {
-				if ((layoutSetBranchId !=
-						layoutBranch.getLayoutSetBranchId())) {
+		if (useFinderCache) {
+			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutBranch layoutBranch : list) {
+					if ((layoutSetBranchId !=
+							layoutBranch.getLayoutSetBranchId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -241,10 +247,14 @@ public class LayoutBranchPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -641,24 +651,20 @@ public class LayoutBranchPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByL_P(long,long, int, int, OrderByComparator)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
-	@Deprecated
 	@Override
 	public List<LayoutBranch> findByL_P(
 		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LayoutBranch> orderByComparator) {
 
 		return findByL_P(
-			layoutSetBranchId, plid, start, end, orderByComparator);
+			layoutSetBranchId, plid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -673,12 +679,14 @@ public class LayoutBranchPersistenceImpl
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P(
 		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator<LayoutBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -688,28 +696,35 @@ public class LayoutBranchPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByL_P;
-			finderArgs = new Object[] {layoutSetBranchId, plid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByL_P;
+				finderArgs = new Object[] {layoutSetBranchId, plid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByL_P;
 			finderArgs = new Object[] {
 				layoutSetBranchId, plid, start, end, orderByComparator
 			};
 		}
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<LayoutBranch> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutBranch layoutBranch : list) {
-				if ((layoutSetBranchId !=
-						layoutBranch.getLayoutSetBranchId()) ||
-					(plid != layoutBranch.getPlid())) {
+		if (useFinderCache) {
+			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutBranch layoutBranch : list) {
+					if ((layoutSetBranchId !=
+							layoutBranch.getLayoutSetBranchId()) ||
+						(plid != layoutBranch.getPlid())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -769,10 +784,14 @@ public class LayoutBranchPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1194,22 +1213,18 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout branch where layoutSetBranchId = &#63; and plid = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByL_P_N(long,long,String)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching layout branch, or <code>null</code> if a matching layout branch could not be found
 	 */
-	@Deprecated
 	@Override
 	public LayoutBranch fetchByL_P_N(
-		long layoutSetBranchId, long plid, String name,
-		boolean useFinderCache) {
+		long layoutSetBranchId, long plid, String name) {
 
-		return fetchByL_P_N(layoutSetBranchId, plid, name);
+		return fetchByL_P_N(layoutSetBranchId, plid, name, true);
 	}
 
 	/**
@@ -1223,14 +1238,23 @@ public class LayoutBranchPersistenceImpl
 	 */
 	@Override
 	public LayoutBranch fetchByL_P_N(
-		long layoutSetBranchId, long plid, String name) {
+		long layoutSetBranchId, long plid, String name,
+		boolean useFinderCache) {
 
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {layoutSetBranchId, plid, name};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByL_P_N, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {layoutSetBranchId, plid, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByL_P_N, finderArgs, this);
+		}
 
 		if (result instanceof LayoutBranch) {
 			LayoutBranch layoutBranch = (LayoutBranch)result;
@@ -1285,8 +1309,10 @@ public class LayoutBranchPersistenceImpl
 				List<LayoutBranch> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByL_P_N, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByL_P_N, finderArgs, list);
+					}
 				}
 				else {
 					LayoutBranch layoutBranch = list.get(0);
@@ -1297,8 +1323,10 @@ public class LayoutBranchPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByL_P_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByL_P_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1469,25 +1497,22 @@ public class LayoutBranchPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByL_P_M(long,long,boolean, int, int, OrderByComparator)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
 	 * @param master the master
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
-	@Deprecated
 	@Override
 	public List<LayoutBranch> findByL_P_M(
 		long layoutSetBranchId, long plid, boolean master, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LayoutBranch> orderByComparator) {
 
 		return findByL_P_M(
-			layoutSetBranchId, plid, master, start, end, orderByComparator);
+			layoutSetBranchId, plid, master, start, end, orderByComparator,
+			true);
 	}
 
 	/**
@@ -1503,12 +1528,14 @@ public class LayoutBranchPersistenceImpl
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layout branchs
 	 */
 	@Override
 	public List<LayoutBranch> findByL_P_M(
 		long layoutSetBranchId, long plid, boolean master, int start, int end,
-		OrderByComparator<LayoutBranch> orderByComparator) {
+		OrderByComparator<LayoutBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1518,29 +1545,36 @@ public class LayoutBranchPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByL_P_M;
-			finderArgs = new Object[] {layoutSetBranchId, plid, master};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByL_P_M;
+				finderArgs = new Object[] {layoutSetBranchId, plid, master};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByL_P_M;
 			finderArgs = new Object[] {
 				layoutSetBranchId, plid, master, start, end, orderByComparator
 			};
 		}
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<LayoutBranch> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (LayoutBranch layoutBranch : list) {
-				if ((layoutSetBranchId !=
-						layoutBranch.getLayoutSetBranchId()) ||
-					(plid != layoutBranch.getPlid()) ||
-					(master != layoutBranch.isMaster())) {
+		if (useFinderCache) {
+			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (LayoutBranch layoutBranch : list) {
+					if ((layoutSetBranchId !=
+							layoutBranch.getLayoutSetBranchId()) ||
+						(plid != layoutBranch.getPlid()) ||
+						(master != layoutBranch.isMaster())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1604,10 +1638,14 @@ public class LayoutBranchPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2507,20 +2545,16 @@ public class LayoutBranchPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LayoutBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout branchs
 	 */
-	@Deprecated
 	@Override
 	public List<LayoutBranch> findAll(
-		int start, int end, OrderByComparator<LayoutBranch> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<LayoutBranch> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2533,11 +2567,13 @@ public class LayoutBranchPersistenceImpl
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of layout branchs
 	 */
 	@Override
 	public List<LayoutBranch> findAll(
-		int start, int end, OrderByComparator<LayoutBranch> orderByComparator) {
+		int start, int end, OrderByComparator<LayoutBranch> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2547,16 +2583,23 @@ public class LayoutBranchPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<LayoutBranch> list = (List<LayoutBranch>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<LayoutBranch> list = null;
+
+		if (useFinderCache) {
+			list = (List<LayoutBranch>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2603,10 +2646,14 @@ public class LayoutBranchPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

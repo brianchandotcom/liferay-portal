@@ -169,22 +169,18 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFriendlyURLEntryId(long, int, int, OrderByComparator)}
 	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entry localizations
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 
 		return getPersistence().findByFriendlyURLEntryId(
-			friendlyURLEntryId, start, end, orderByComparator, useFinderCache);
+			friendlyURLEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -198,14 +194,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching friendly url entry localizations
 	 */
 	public static List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
 		long friendlyURLEntryId, int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByFriendlyURLEntryId(
-			friendlyURLEntryId, start, end, orderByComparator);
+			friendlyURLEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -334,22 +332,18 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByFriendlyURLEntryId_LanguageId(long,String)}
 	 * @param friendlyURLEntryId the friendly url entry ID
 	 * @param languageId the language ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
-	@Deprecated
 	public static FriendlyURLEntryLocalization
 		fetchByFriendlyURLEntryId_LanguageId(
-			long friendlyURLEntryId, String languageId,
-			boolean useFinderCache) {
+			long friendlyURLEntryId, String languageId) {
 
 		return getPersistence().fetchByFriendlyURLEntryId_LanguageId(
-			friendlyURLEntryId, languageId, useFinderCache);
+			friendlyURLEntryId, languageId);
 	}
 
 	/**
@@ -362,10 +356,11 @@ public class FriendlyURLEntryLocalizationUtil {
 	 */
 	public static FriendlyURLEntryLocalization
 		fetchByFriendlyURLEntryId_LanguageId(
-			long friendlyURLEntryId, String languageId) {
+			long friendlyURLEntryId, String languageId,
+			boolean useFinderCache) {
 
 		return getPersistence().fetchByFriendlyURLEntryId_LanguageId(
-			friendlyURLEntryId, languageId);
+			friendlyURLEntryId, languageId, useFinderCache);
 	}
 
 	/**
@@ -417,22 +412,17 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_U(long,long,String)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
-	@Deprecated
 	public static FriendlyURLEntryLocalization fetchByG_C_U(
-		long groupId, long classNameId, String urlTitle,
-		boolean useFinderCache) {
+		long groupId, long classNameId, String urlTitle) {
 
-		return getPersistence().fetchByG_C_U(
-			groupId, classNameId, urlTitle, useFinderCache);
+		return getPersistence().fetchByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
@@ -445,9 +435,11 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
 	 */
 	public static FriendlyURLEntryLocalization fetchByG_C_U(
-		long groupId, long classNameId, String urlTitle) {
+		long groupId, long classNameId, String urlTitle,
+		boolean useFinderCache) {
 
-		return getPersistence().fetchByG_C_U(groupId, classNameId, urlTitle);
+		return getPersistence().fetchByG_C_U(
+			groupId, classNameId, urlTitle, useFinderCache);
 	}
 
 	/**
@@ -597,21 +589,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry localizations
 	 */
-	@Deprecated
 	public static List<FriendlyURLEntryLocalization> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -624,13 +611,16 @@ public class FriendlyURLEntryLocalizationUtil {
 	 * @param start the lower bound of the range of friendly url entry localizations
 	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of friendly url entry localizations
 	 */
 	public static List<FriendlyURLEntryLocalization> findAll(
 		int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
+		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

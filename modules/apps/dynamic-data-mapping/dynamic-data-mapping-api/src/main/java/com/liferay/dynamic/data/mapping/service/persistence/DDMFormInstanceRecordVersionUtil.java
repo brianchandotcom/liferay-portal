@@ -170,23 +170,18 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFormInstanceRecordId(long, int, int, OrderByComparator)}
 	 * @param formInstanceRecordId the form instance record ID
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
-	@Deprecated
 	public static List<DDMFormInstanceRecordVersion> findByFormInstanceRecordId(
 		long formInstanceRecordId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
 
 		return getPersistence().findByFormInstanceRecordId(
-			formInstanceRecordId, start, end, orderByComparator,
-			useFinderCache);
+			formInstanceRecordId, start, end, orderByComparator);
 	}
 
 	/**
@@ -200,14 +195,17 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
 	public static List<DDMFormInstanceRecordVersion> findByFormInstanceRecordId(
 		long formInstanceRecordId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByFormInstanceRecordId(
-			formInstanceRecordId, start, end, orderByComparator);
+			formInstanceRecordId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -359,24 +357,19 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_F(long,String, int, int, OrderByComparator)}
 	 * @param formInstanceId the form instance ID
 	 * @param formInstanceVersion the form instance version
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
-	@Deprecated
 	public static List<DDMFormInstanceRecordVersion> findByF_F(
 		long formInstanceId, String formInstanceVersion, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
 
 		return getPersistence().findByF_F(
-			formInstanceId, formInstanceVersion, start, end, orderByComparator,
-			useFinderCache);
+			formInstanceId, formInstanceVersion, start, end, orderByComparator);
 	}
 
 	/**
@@ -391,14 +384,17 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
 	public static List<DDMFormInstanceRecordVersion> findByF_F(
 		long formInstanceId, String formInstanceVersion, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByF_F(
-			formInstanceId, formInstanceVersion, start, end, orderByComparator);
+			formInstanceId, formInstanceVersion, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -535,20 +531,16 @@ public class DDMFormInstanceRecordVersionUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm form instance record version where formInstanceRecordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByF_V(long,String)}
 	 * @param formInstanceRecordId the form instance record ID
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	 */
-	@Deprecated
 	public static DDMFormInstanceRecordVersion fetchByF_V(
-		long formInstanceRecordId, String version, boolean useFinderCache) {
+		long formInstanceRecordId, String version) {
 
-		return getPersistence().fetchByF_V(
-			formInstanceRecordId, version, useFinderCache);
+		return getPersistence().fetchByF_V(formInstanceRecordId, version);
 	}
 
 	/**
@@ -560,9 +552,10 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * @return the matching ddm form instance record version, or <code>null</code> if a matching ddm form instance record version could not be found
 	 */
 	public static DDMFormInstanceRecordVersion fetchByF_V(
-		long formInstanceRecordId, String version) {
+		long formInstanceRecordId, String version, boolean useFinderCache) {
 
-		return getPersistence().fetchByF_V(formInstanceRecordId, version);
+		return getPersistence().fetchByF_V(
+			formInstanceRecordId, version, useFinderCache);
 	}
 
 	/**
@@ -631,24 +624,19 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_S(long,int, int, int, OrderByComparator)}
 	 * @param formInstanceRecordId the form instance record ID
 	 * @param status the status
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
-	@Deprecated
 	public static List<DDMFormInstanceRecordVersion> findByF_S(
 		long formInstanceRecordId, int status, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
 
 		return getPersistence().findByF_S(
-			formInstanceRecordId, status, start, end, orderByComparator,
-			useFinderCache);
+			formInstanceRecordId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -663,14 +651,17 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddm form instance record versions
 	 */
 	public static List<DDMFormInstanceRecordVersion> findByF_S(
 		long formInstanceRecordId, int status, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByF_S(
-			formInstanceRecordId, status, start, end, orderByComparator);
+			formInstanceRecordId, status, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -833,36 +824,6 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_F_F_S(long,long,String,int, int, int, OrderByComparator)}
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance record versions
-	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching ddm form instance record versions
-	 */
-	@Deprecated
-	public static List<DDMFormInstanceRecordVersion> findByU_F_F_S(
-		long userId, long formInstanceId, String formInstanceVersion,
-		int status, int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByU_F_F_S(
-			userId, formInstanceId, formInstanceVersion, status, start, end,
-			orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param formInstanceId the form instance ID
 	 * @param formInstanceVersion the form instance version
@@ -880,6 +841,34 @@ public class DDMFormInstanceRecordVersionUtil {
 		return getPersistence().findByU_F_F_S(
 			userId, formInstanceId, formInstanceVersion, status, start, end,
 			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance record versions where userId = &#63; and formInstanceId = &#63; and formInstanceVersion = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param formInstanceVersion the form instance version
+	 * @param status the status
+	 * @param start the lower bound of the range of ddm form instance record versions
+	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching ddm form instance record versions
+	 */
+	public static List<DDMFormInstanceRecordVersion> findByU_F_F_S(
+		long userId, long formInstanceId, String formInstanceVersion,
+		int status, int start, int end,
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_F_F_S(
+			userId, formInstanceId, formInstanceVersion, status, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1140,21 +1129,16 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDMFormInstanceRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm form instance record versions
 	 */
-	@Deprecated
 	public static List<DDMFormInstanceRecordVersion> findAll(
 		int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1167,13 +1151,16 @@ public class DDMFormInstanceRecordVersionUtil {
 	 * @param start the lower bound of the range of ddm form instance record versions
 	 * @param end the upper bound of the range of ddm form instance record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddm form instance record versions
 	 */
 	public static List<DDMFormInstanceRecordVersion> findAll(
 		int start, int end,
-		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator) {
+		OrderByComparator<DDMFormInstanceRecordVersion> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

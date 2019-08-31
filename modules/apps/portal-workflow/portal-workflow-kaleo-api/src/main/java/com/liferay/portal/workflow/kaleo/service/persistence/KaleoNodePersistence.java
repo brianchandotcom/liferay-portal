@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 
@@ -71,18 +70,16 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
-	@Deprecated
 	public java.util.List<KaleoNode> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo nodes where companyId = &#63;.
@@ -95,11 +92,14 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public java.util.List<KaleoNode> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo node in the ordered set where companyId = &#63;.
@@ -110,7 +110,9 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @throws NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	public KaleoNode findByCompanyId_First(
-			long companyId, OrderByComparator<KaleoNode> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -121,7 +123,9 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @return the first matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
 	 */
 	public KaleoNode fetchByCompanyId_First(
-		long companyId, OrderByComparator<KaleoNode> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo node in the ordered set where companyId = &#63;.
@@ -132,7 +136,9 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @throws NoSuchNodeException if a matching kaleo node could not be found
 	 */
 	public KaleoNode findByCompanyId_Last(
-			long companyId, OrderByComparator<KaleoNode> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -143,7 +149,9 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @return the last matching kaleo node, or <code>null</code> if a matching kaleo node could not be found
 	 */
 	public KaleoNode fetchByCompanyId_Last(
-		long companyId, OrderByComparator<KaleoNode> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where companyId = &#63;.
@@ -156,7 +164,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode[] findByCompanyId_PrevAndNext(
 			long kaleoNodeId, long companyId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -205,18 +214,16 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByKaleoDefinitionVersionId(long, int, int, OrderByComparator)}
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
-	@Deprecated
 	public java.util.List<KaleoNode> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo nodes where kaleoDefinitionVersionId = &#63;.
@@ -229,11 +236,14 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public java.util.List<KaleoNode> findByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -245,7 +255,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode findByKaleoDefinitionVersionId_First(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -257,7 +268,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode fetchByKaleoDefinitionVersionId_First(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -269,7 +281,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode findByKaleoDefinitionVersionId_Last(
 			long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -281,7 +294,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode fetchByKaleoDefinitionVersionId_Last(
 		long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where kaleoDefinitionVersionId = &#63;.
@@ -294,7 +308,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode[] findByKaleoDefinitionVersionId_PrevAndNext(
 			long kaleoNodeId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -345,19 +360,17 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_KDVI(long,long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param kaleoDefinitionVersionId the kaleo definition version ID
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
-	@Deprecated
 	public java.util.List<KaleoNode> findByC_KDVI(
 		long companyId, long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo nodes where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
@@ -371,11 +384,14 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kaleo nodes
 	 */
 	public java.util.List<KaleoNode> findByC_KDVI(
 		long companyId, long kaleoDefinitionVersionId, int start, int end,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
@@ -388,7 +404,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode findByC_KDVI_First(
 			long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -401,7 +418,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode fetchByC_KDVI_First(
 		long companyId, long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the last kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
@@ -414,7 +432,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode findByC_KDVI_Last(
 			long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -427,7 +446,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode fetchByC_KDVI_Last(
 		long companyId, long kaleoDefinitionVersionId,
-		OrderByComparator<KaleoNode> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns the kaleo nodes before and after the current kaleo node in the ordered set where companyId = &#63; and kaleoDefinitionVersionId = &#63;.
@@ -441,7 +461,8 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 */
 	public KaleoNode[] findByC_KDVI_PrevAndNext(
 			long kaleoNodeId, long companyId, long kaleoDefinitionVersionId,
-			OrderByComparator<KaleoNode> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+				orderByComparator)
 		throws NoSuchNodeException;
 
 	/**
@@ -539,17 +560,15 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>KaleoNodeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo nodes
 	 */
-	@Deprecated
 	public java.util.List<KaleoNode> findAll(
-		int start, int end, OrderByComparator<KaleoNode> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the kaleo nodes.
@@ -561,10 +580,14 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	 * @param start the lower bound of the range of kaleo nodes
 	 * @param end the upper bound of the range of kaleo nodes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of kaleo nodes
 	 */
 	public java.util.List<KaleoNode> findAll(
-		int start, int end, OrderByComparator<KaleoNode> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNode>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the kaleo nodes from the database.

@@ -17,7 +17,6 @@ package com.liferay.oauth2.provider.service.persistence;
 import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface OAuth2AuthorizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
-	@Deprecated
 	public java.util.List<OAuth2Authorization> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63;.
@@ -97,11 +93,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where userId = &#63;.
@@ -113,7 +112,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByUserId_First(
 			long userId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -124,7 +124,9 @@ public interface OAuth2AuthorizationPersistence
 	 * @return the first matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	 */
 	public OAuth2Authorization fetchByUserId_First(
-		long userId, OrderByComparator<OAuth2Authorization> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth2 authorization in the ordered set where userId = &#63;.
@@ -136,7 +138,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByUserId_Last(
 			long userId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -147,7 +150,9 @@ public interface OAuth2AuthorizationPersistence
 	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
 	 */
 	public OAuth2Authorization fetchByUserId_Last(
-		long userId, OrderByComparator<OAuth2Authorization> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where userId = &#63;.
@@ -160,7 +165,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization[] findByUserId_PrevAndNext(
 			long oAuth2AuthorizationId, long userId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -209,19 +215,16 @@ public interface OAuth2AuthorizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOAuth2ApplicationId(long, int, int, OrderByComparator)}
 	 * @param oAuth2ApplicationId the o auth2 application ID
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
-	@Deprecated
 	public java.util.List<OAuth2Authorization> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where oAuth2ApplicationId = &#63;.
@@ -234,11 +237,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByOAuth2ApplicationId(
 		long oAuth2ApplicationId, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
@@ -250,7 +256,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByOAuth2ApplicationId_First(
 			long oAuth2ApplicationId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -262,7 +269,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByOAuth2ApplicationId_First(
 		long oAuth2ApplicationId,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
@@ -274,7 +282,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByOAuth2ApplicationId_Last(
 			long oAuth2ApplicationId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -286,7 +295,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByOAuth2ApplicationId_Last(
 		long oAuth2ApplicationId,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where oAuth2ApplicationId = &#63;.
@@ -299,7 +309,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization[] findByOAuth2ApplicationId_PrevAndNext(
 			long oAuth2AuthorizationId, long oAuth2ApplicationId,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -348,19 +359,16 @@ public interface OAuth2AuthorizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAccessTokenContentHash(long, int, int, OrderByComparator)}
 	 * @param accessTokenContentHash the access token content hash
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
-	@Deprecated
 	public java.util.List<OAuth2Authorization> findByAccessTokenContentHash(
 		long accessTokenContentHash, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where accessTokenContentHash = &#63;.
@@ -373,11 +381,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByAccessTokenContentHash(
 		long accessTokenContentHash, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
@@ -389,7 +400,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByAccessTokenContentHash_First(
 			long accessTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -401,7 +413,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByAccessTokenContentHash_First(
 		long accessTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
@@ -413,7 +426,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByAccessTokenContentHash_Last(
 			long accessTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -425,7 +439,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByAccessTokenContentHash_Last(
 		long accessTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
@@ -438,7 +453,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization[] findByAccessTokenContentHash_PrevAndNext(
 			long oAuth2AuthorizationId, long accessTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -487,19 +503,16 @@ public interface OAuth2AuthorizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRefreshTokenContentHash(long, int, int, OrderByComparator)}
 	 * @param refreshTokenContentHash the refresh token content hash
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
-	@Deprecated
 	public java.util.List<OAuth2Authorization> findByRefreshTokenContentHash(
 		long refreshTokenContentHash, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where refreshTokenContentHash = &#63;.
@@ -512,11 +525,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findByRefreshTokenContentHash(
 		long refreshTokenContentHash, int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
@@ -528,7 +544,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByRefreshTokenContentHash_First(
 			long refreshTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -540,7 +557,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByRefreshTokenContentHash_First(
 		long refreshTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
@@ -552,7 +570,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization findByRefreshTokenContentHash_Last(
 			long refreshTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -564,7 +583,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization fetchByRefreshTokenContentHash_Last(
 		long refreshTokenContentHash,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
@@ -577,7 +597,8 @@ public interface OAuth2AuthorizationPersistence
 	 */
 	public OAuth2Authorization[] findByRefreshTokenContentHash_PrevAndNext(
 			long oAuth2AuthorizationId, long refreshTokenContentHash,
-			OrderByComparator<OAuth2Authorization> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException;
 
 	/**
@@ -676,18 +697,15 @@ public interface OAuth2AuthorizationPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuth2AuthorizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 authorizations
 	 */
-	@Deprecated
 	public java.util.List<OAuth2Authorization> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations.
@@ -699,11 +717,14 @@ public interface OAuth2AuthorizationPersistence
 	 * @param start the lower bound of the range of o auth2 authorizations
 	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth2 authorizations
 	 */
 	public java.util.List<OAuth2Authorization> findAll(
 		int start, int end,
-		OrderByComparator<OAuth2Authorization> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuth2Authorization>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth2 authorizations from the database.
@@ -765,7 +786,8 @@ public interface OAuth2AuthorizationPersistence
 	public java.util.List<OAuth2Authorization>
 		getOAuth2ScopeGrantOAuth2Authorizations(
 			long pk, int start, int end,
-			OrderByComparator<OAuth2Authorization> orderByComparator);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<OAuth2Authorization> orderByComparator);
 
 	/**
 	 * Returns the number of o auth2 scope grants associated with the o auth2 authorization.

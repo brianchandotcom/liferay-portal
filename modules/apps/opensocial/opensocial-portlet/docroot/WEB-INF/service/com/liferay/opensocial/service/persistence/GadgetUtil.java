@@ -152,21 +152,17 @@ public class GadgetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	public static List<Gadget> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
-		return getPersistence().findByUuid(
-			uuid, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -180,13 +176,15 @@ public class GadgetUtil {
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	public static List<Gadget> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -396,22 +394,19 @@ public class GadgetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	public static List<Gadget> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, useFinderCache);
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -426,14 +421,15 @@ public class GadgetUtil {
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	public static List<Gadget> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -661,21 +657,18 @@ public class GadgetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	public static List<Gadget> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, useFinderCache);
+			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -689,14 +682,15 @@ public class GadgetUtil {
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	public static List<Gadget> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
+			companyId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -888,19 +882,14 @@ public class GadgetUtil {
 	}
 
 	/**
-	 * Returns the gadget where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the gadget where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_U(long,String)}
 	 * @param companyId the company ID
 	 * @param url the url
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	 */
-	@Deprecated
-	public static Gadget fetchByC_U(
-		long companyId, String url, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_U(companyId, url, useFinderCache);
+	public static Gadget fetchByC_U(long companyId, String url) {
+		return getPersistence().fetchByC_U(companyId, url);
 	}
 
 	/**
@@ -911,8 +900,10 @@ public class GadgetUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	 */
-	public static Gadget fetchByC_U(long companyId, String url) {
-		return getPersistence().fetchByC_U(companyId, url);
+	public static Gadget fetchByC_U(
+		long companyId, String url, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_U(companyId, url, useFinderCache);
 	}
 
 	/**
@@ -1038,20 +1029,15 @@ public class GadgetUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of gadgets
 	 */
-	@Deprecated
 	public static List<Gadget> findAll(
-		int start, int end, OrderByComparator<Gadget> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Gadget> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1064,12 +1050,15 @@ public class GadgetUtil {
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of gadgets
 	 */
 	public static List<Gadget> findAll(
-		int start, int end, OrderByComparator<Gadget> orderByComparator) {
+		int start, int end, OrderByComparator<Gadget> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

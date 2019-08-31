@@ -15,7 +15,6 @@
 package com.liferay.reading.time.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 
@@ -72,19 +71,16 @@ public interface ReadingTimeEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ReadingTimeEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching reading time entries
 	 */
-	@Deprecated
 	public java.util.List<ReadingTimeEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the reading time entries where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface ReadingTimeEntryPersistence
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching reading time entries
 	 */
 	public java.util.List<ReadingTimeEntry> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first reading time entry in the ordered set where uuid = &#63;.
@@ -112,7 +111,9 @@ public interface ReadingTimeEntryPersistence
 	 * @throws NoSuchEntryException if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry findByUuid_First(
-			String uuid, OrderByComparator<ReadingTimeEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -123,7 +124,9 @@ public interface ReadingTimeEntryPersistence
 	 * @return the first matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry fetchByUuid_First(
-		String uuid, OrderByComparator<ReadingTimeEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last reading time entry in the ordered set where uuid = &#63;.
@@ -134,7 +137,9 @@ public interface ReadingTimeEntryPersistence
 	 * @throws NoSuchEntryException if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry findByUuid_Last(
-			String uuid, OrderByComparator<ReadingTimeEntry> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -145,7 +150,9 @@ public interface ReadingTimeEntryPersistence
 	 * @return the last matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry fetchByUuid_Last(
-		String uuid, OrderByComparator<ReadingTimeEntry> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63;.
@@ -158,7 +165,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry[] findByUuid_PrevAndNext(
 			long readingTimeEntryId, String uuid,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -188,17 +196,13 @@ public interface ReadingTimeEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
-	@Deprecated
-	public ReadingTimeEntry fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public ReadingTimeEntry fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the reading time entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -208,7 +212,8 @@ public interface ReadingTimeEntryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
-	public ReadingTimeEntry fetchByUUID_G(String uuid, long groupId);
+	public ReadingTimeEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the reading time entry where uuid = &#63; and groupId = &#63; from the database.
@@ -262,20 +267,17 @@ public interface ReadingTimeEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ReadingTimeEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching reading time entries
 	 */
-	@Deprecated
 	public java.util.List<ReadingTimeEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the reading time entries where uuid = &#63; and companyId = &#63;.
@@ -289,11 +291,14 @@ public interface ReadingTimeEntryPersistence
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching reading time entries
 	 */
 	public java.util.List<ReadingTimeEntry> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -306,7 +311,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -319,7 +325,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<ReadingTimeEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the last reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -332,7 +339,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -345,7 +353,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<ReadingTimeEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns the reading time entries before and after the current reading time entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -359,7 +368,8 @@ public interface ReadingTimeEntryPersistence
 	 */
 	public ReadingTimeEntry[] findByUuid_C_PrevAndNext(
 			long readingTimeEntryId, String uuid, long companyId,
-			OrderByComparator<ReadingTimeEntry> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+				orderByComparator)
 		throws NoSuchEntryException;
 
 	/**
@@ -393,18 +403,15 @@ public interface ReadingTimeEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_C_C(long,long,long)}
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
-	@Deprecated
 	public ReadingTimeEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK, boolean useFinderCache);
+		long groupId, long classNameId, long classPK);
 
 	/**
 	 * Returns the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -416,7 +423,7 @@ public interface ReadingTimeEntryPersistence
 	 * @return the matching reading time entry, or <code>null</code> if a matching reading time entry could not be found
 	 */
 	public ReadingTimeEntry fetchByG_C_C(
-		long groupId, long classNameId, long classPK);
+		long groupId, long classNameId, long classPK, boolean useFinderCache);
 
 	/**
 	 * Removes the reading time entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -520,18 +527,15 @@ public interface ReadingTimeEntryPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ReadingTimeEntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of reading time entries
 	 */
-	@Deprecated
 	public java.util.List<ReadingTimeEntry> findAll(
 		int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the reading time entries.
@@ -543,11 +547,14 @@ public interface ReadingTimeEntryPersistence
 	 * @param start the lower bound of the range of reading time entries
 	 * @param end the upper bound of the range of reading time entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of reading time entries
 	 */
 	public java.util.List<ReadingTimeEntry> findAll(
 		int start, int end,
-		OrderByComparator<ReadingTimeEntry> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<ReadingTimeEntry>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the reading time entries from the database.

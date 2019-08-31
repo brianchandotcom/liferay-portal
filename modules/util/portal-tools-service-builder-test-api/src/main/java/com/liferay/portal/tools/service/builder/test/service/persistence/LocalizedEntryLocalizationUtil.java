@@ -170,22 +170,18 @@ public class LocalizedEntryLocalizationUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLocalizedEntryId(long, int, int, OrderByComparator)}
 	 * @param localizedEntryId the localized entry ID
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching localized entry localizations
 	 */
-	@Deprecated
 	public static List<LocalizedEntryLocalization> findByLocalizedEntryId(
 		long localizedEntryId, int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
 
 		return getPersistence().findByLocalizedEntryId(
-			localizedEntryId, start, end, orderByComparator, useFinderCache);
+			localizedEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -199,14 +195,16 @@ public class LocalizedEntryLocalizationUtil {
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching localized entry localizations
 	 */
 	public static List<LocalizedEntryLocalization> findByLocalizedEntryId(
 		long localizedEntryId, int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
+		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByLocalizedEntryId(
-			localizedEntryId, start, end, orderByComparator);
+			localizedEntryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -332,20 +330,17 @@ public class LocalizedEntryLocalizationUtil {
 	}
 
 	/**
-	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByLocalizedEntryId_LanguageId(long,String)}
 	 * @param localizedEntryId the localized entry ID
 	 * @param languageId the language ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
 	 */
-	@Deprecated
 	public static LocalizedEntryLocalization fetchByLocalizedEntryId_LanguageId(
-		long localizedEntryId, String languageId, boolean useFinderCache) {
+		long localizedEntryId, String languageId) {
 
 		return getPersistence().fetchByLocalizedEntryId_LanguageId(
-			localizedEntryId, languageId, useFinderCache);
+			localizedEntryId, languageId);
 	}
 
 	/**
@@ -357,10 +352,10 @@ public class LocalizedEntryLocalizationUtil {
 	 * @return the matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
 	 */
 	public static LocalizedEntryLocalization fetchByLocalizedEntryId_LanguageId(
-		long localizedEntryId, String languageId) {
+		long localizedEntryId, String languageId, boolean useFinderCache) {
 
 		return getPersistence().fetchByLocalizedEntryId_LanguageId(
-			localizedEntryId, languageId);
+			localizedEntryId, languageId, useFinderCache);
 	}
 
 	/**
@@ -507,21 +502,16 @@ public class LocalizedEntryLocalizationUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of localized entry localizations
 	 */
-	@Deprecated
 	public static List<LocalizedEntryLocalization> findAll(
 		int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -534,13 +524,16 @@ public class LocalizedEntryLocalizationUtil {
 	 * @param start the lower bound of the range of localized entry localizations
 	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of localized entry localizations
 	 */
 	public static List<LocalizedEntryLocalization> findAll(
 		int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
+		OrderByComparator<LocalizedEntryLocalization> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

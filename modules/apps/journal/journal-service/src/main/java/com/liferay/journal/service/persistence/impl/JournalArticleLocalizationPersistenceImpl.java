@@ -130,22 +130,18 @@ public class JournalArticleLocalizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>JournalArticleLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByArticlePK(long, int, int, OrderByComparator)}
 	 * @param articlePK the article pk
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal article localizations
 	 */
-	@Deprecated
 	@Override
 	public List<JournalArticleLocalization> findByArticlePK(
 		long articlePK, int start, int end,
-		OrderByComparator<JournalArticleLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<JournalArticleLocalization> orderByComparator) {
 
-		return findByArticlePK(articlePK, start, end, orderByComparator);
+		return findByArticlePK(articlePK, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -159,12 +155,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching journal article localizations
 	 */
 	@Override
 	public List<JournalArticleLocalization> findByArticlePK(
 		long articlePK, int start, int end,
-		OrderByComparator<JournalArticleLocalization> orderByComparator) {
+		OrderByComparator<JournalArticleLocalization> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -174,26 +172,36 @@ public class JournalArticleLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByArticlePK;
-			finderArgs = new Object[] {articlePK};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByArticlePK;
+				finderArgs = new Object[] {articlePK};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByArticlePK;
 			finderArgs = new Object[] {
 				articlePK, start, end, orderByComparator
 			};
 		}
 
-		List<JournalArticleLocalization> list =
-			(List<JournalArticleLocalization>)finderCache.getResult(
+		List<JournalArticleLocalization> list = null;
+
+		if (useFinderCache) {
+			list = (List<JournalArticleLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (JournalArticleLocalization journalArticleLocalization : list) {
-				if ((articlePK != journalArticleLocalization.getArticlePK())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (JournalArticleLocalization journalArticleLocalization :
+						list) {
 
-					break;
+					if ((articlePK !=
+							journalArticleLocalization.getArticlePK())) {
+
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -249,10 +257,14 @@ public class JournalArticleLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -649,20 +661,17 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the journal article localization where articlePK = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA_L(long,String)}
 	 * @param articlePK the article pk
 	 * @param languageId the language ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching journal article localization, or <code>null</code> if a matching journal article localization could not be found
 	 */
-	@Deprecated
 	@Override
 	public JournalArticleLocalization fetchByA_L(
-		long articlePK, String languageId, boolean useFinderCache) {
+		long articlePK, String languageId) {
 
-		return fetchByA_L(articlePK, languageId);
+		return fetchByA_L(articlePK, languageId, true);
 	}
 
 	/**
@@ -675,14 +684,22 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public JournalArticleLocalization fetchByA_L(
-		long articlePK, String languageId) {
+		long articlePK, String languageId, boolean useFinderCache) {
 
 		languageId = Objects.toString(languageId, "");
 
-		Object[] finderArgs = new Object[] {articlePK, languageId};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByA_L, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {articlePK, languageId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByA_L, finderArgs, this);
+		}
 
 		if (result instanceof JournalArticleLocalization) {
 			JournalArticleLocalization journalArticleLocalization =
@@ -734,8 +751,10 @@ public class JournalArticleLocalizationPersistenceImpl
 				List<JournalArticleLocalization> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByA_L, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByA_L, finderArgs, list);
+					}
 				}
 				else {
 					JournalArticleLocalization journalArticleLocalization =
@@ -747,7 +766,9 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByA_L, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByA_L, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1321,21 +1342,17 @@ public class JournalArticleLocalizationPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>JournalArticleLocalizationModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal article localizations
 	 */
-	@Deprecated
 	@Override
 	public List<JournalArticleLocalization> findAll(
 		int start, int end,
-		OrderByComparator<JournalArticleLocalization> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<JournalArticleLocalization> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1348,12 +1365,14 @@ public class JournalArticleLocalizationPersistenceImpl
 	 * @param start the lower bound of the range of journal article localizations
 	 * @param end the upper bound of the range of journal article localizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of journal article localizations
 	 */
 	@Override
 	public List<JournalArticleLocalization> findAll(
 		int start, int end,
-		OrderByComparator<JournalArticleLocalization> orderByComparator) {
+		OrderByComparator<JournalArticleLocalization> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1363,17 +1382,23 @@ public class JournalArticleLocalizationPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<JournalArticleLocalization> list =
-			(List<JournalArticleLocalization>)finderCache.getResult(
+		List<JournalArticleLocalization> list = null;
+
+		if (useFinderCache) {
+			list = (List<JournalArticleLocalization>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1421,10 +1446,14 @@ public class JournalArticleLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

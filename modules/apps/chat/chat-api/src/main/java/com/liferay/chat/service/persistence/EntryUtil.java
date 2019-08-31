@@ -156,21 +156,18 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByCreateDate(
 		long createDate, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByCreateDate(
-			createDate, start, end, orderByComparator, useFinderCache);
+			createDate, start, end, orderByComparator);
 	}
 
 	/**
@@ -184,14 +181,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByCreateDate(
 		long createDate, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCreateDate(
-			createDate, start, end, orderByComparator);
+			createDate, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -326,21 +324,18 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFromUserId(long, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByFromUserId(
 		long fromUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByFromUserId(
-			fromUserId, start, end, orderByComparator, useFinderCache);
+			fromUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -354,14 +349,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByFromUserId(
 		long fromUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByFromUserId(
-			fromUserId, start, end, orderByComparator);
+			fromUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -496,21 +492,18 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByToUserId(long, int, int, OrderByComparator)}
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByToUserId(
 		long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByToUserId(
-			toUserId, start, end, orderByComparator, useFinderCache);
+			toUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -524,14 +517,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByToUserId(
 		long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByToUserId(
-			toUserId, start, end, orderByComparator);
+			toUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -668,23 +662,19 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_F(long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param fromUserId the from user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByC_F(
 		long createDate, long fromUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByC_F(
-			createDate, fromUserId, start, end, orderByComparator,
-			useFinderCache);
+			createDate, fromUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -699,14 +689,16 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByC_F(
 		long createDate, long fromUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_F(
-			createDate, fromUserId, start, end, orderByComparator);
+			createDate, fromUserId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -854,23 +846,19 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_T(long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByC_T(
 		long createDate, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByC_T(
-			createDate, toUserId, start, end, orderByComparator,
-			useFinderCache);
+			createDate, toUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -885,14 +873,16 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByC_T(
 		long createDate, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_T(
-			createDate, toUserId, start, end, orderByComparator);
+			createDate, toUserId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1040,23 +1030,19 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_T(long,long, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByF_T(
 		long fromUserId, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByF_T(
-			fromUserId, toUserId, start, end, orderByComparator,
-			useFinderCache);
+			fromUserId, toUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1071,14 +1057,16 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByF_T(
 		long fromUserId, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByF_T(
-			fromUserId, toUserId, start, end, orderByComparator);
+			fromUserId, toUserId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1231,24 +1219,20 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_F_T(long,long,long, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByC_F_T(
 		long createDate, long fromUserId, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByC_F_T(
-			createDate, fromUserId, toUserId, start, end, orderByComparator,
-			useFinderCache);
+			createDate, fromUserId, toUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -1264,14 +1248,16 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByC_F_T(
 		long createDate, long fromUserId, long toUserId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_F_T(
-			createDate, fromUserId, toUserId, start, end, orderByComparator);
+			createDate, fromUserId, toUserId, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1435,24 +1421,20 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByF_T_C(long,long,String, int, int, OrderByComparator)}
 	 * @param fromUserId the from user ID
 	 * @param toUserId the to user ID
 	 * @param content the content
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
-	@Deprecated
 	public static List<Entry> findByF_T_C(
 		long fromUserId, long toUserId, String content, int start, int end,
-		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Entry> orderByComparator) {
 
 		return getPersistence().findByF_T_C(
-			fromUserId, toUserId, content, start, end, orderByComparator,
-			useFinderCache);
+			fromUserId, toUserId, content, start, end, orderByComparator);
 	}
 
 	/**
@@ -1468,14 +1450,16 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching entries
 	 */
 	public static List<Entry> findByF_T_C(
 		long fromUserId, long toUserId, String content, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
+		OrderByComparator<Entry> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByF_T_C(
-			fromUserId, toUserId, content, start, end, orderByComparator);
+			fromUserId, toUserId, content, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1696,20 +1680,15 @@ public class EntryUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>EntryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of entries
 	 */
-	@Deprecated
 	public static List<Entry> findAll(
-		int start, int end, OrderByComparator<Entry> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Entry> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -1722,12 +1701,15 @@ public class EntryUtil {
 	 * @param start the lower bound of the range of entries
 	 * @param end the upper bound of the range of entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of entries
 	 */
 	public static List<Entry> findAll(
-		int start, int end, OrderByComparator<Entry> orderByComparator) {
+		int start, int end, OrderByComparator<Entry> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

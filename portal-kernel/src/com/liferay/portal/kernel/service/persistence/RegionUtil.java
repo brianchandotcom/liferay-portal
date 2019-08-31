@@ -154,21 +154,18 @@ public class RegionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCountryId(long, int, int, OrderByComparator)}
 	 * @param countryId the country ID
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
-	@Deprecated
 	public static List<Region> findByCountryId(
 		long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		return getPersistence().findByCountryId(
-			countryId, start, end, orderByComparator, useFinderCache);
+			countryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -182,14 +179,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByCountryId(
 		long countryId, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByCountryId(
-			countryId, start, end, orderByComparator);
+			countryId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -324,21 +322,18 @@ public class RegionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByActive(boolean, int, int, OrderByComparator)}
 	 * @param active the active
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
-	@Deprecated
 	public static List<Region> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		return getPersistence().findByActive(
-			active, start, end, orderByComparator, useFinderCache);
+			active, start, end, orderByComparator);
 	}
 
 	/**
@@ -352,14 +347,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByActive(
 		boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByActive(
-			active, start, end, orderByComparator);
+			active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -470,20 +466,14 @@ public class RegionUtil {
 	}
 
 	/**
-	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the region where countryId = &#63; and regionCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_R(long,String)}
 	 * @param countryId the country ID
 	 * @param regionCode the region code
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
-	@Deprecated
-	public static Region fetchByC_R(
-		long countryId, String regionCode, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_R(
-			countryId, regionCode, useFinderCache);
+	public static Region fetchByC_R(long countryId, String regionCode) {
+		return getPersistence().fetchByC_R(countryId, regionCode);
 	}
 
 	/**
@@ -494,8 +484,11 @@ public class RegionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching region, or <code>null</code> if a matching region could not be found
 	 */
-	public static Region fetchByC_R(long countryId, String regionCode) {
-		return getPersistence().fetchByC_R(countryId, regionCode);
+	public static Region fetchByC_R(
+		long countryId, String regionCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_R(
+			countryId, regionCode, useFinderCache);
 	}
 
 	/**
@@ -559,22 +552,19 @@ public class RegionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_A(long,boolean, int, int, OrderByComparator)}
 	 * @param countryId the country ID
 	 * @param active the active
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
-	@Deprecated
 	public static List<Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Region> orderByComparator) {
 
 		return getPersistence().findByC_A(
-			countryId, active, start, end, orderByComparator, useFinderCache);
+			countryId, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -589,14 +579,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching regions
 	 */
 	public static List<Region> findByC_A(
 		long countryId, boolean active, int start, int end,
-		OrderByComparator<Region> orderByComparator) {
+		OrderByComparator<Region> orderByComparator, boolean useFinderCache) {
 
 		return getPersistence().findByC_A(
-			countryId, active, start, end, orderByComparator);
+			countryId, active, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -806,20 +797,15 @@ public class RegionUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RegionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of regions
 	 */
-	@Deprecated
 	public static List<Region> findAll(
-		int start, int end, OrderByComparator<Region> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Region> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -832,12 +818,15 @@ public class RegionUtil {
 	 * @param start the lower bound of the range of regions
 	 * @param end the upper bound of the range of regions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of regions
 	 */
 	public static List<Region> findAll(
-		int start, int end, OrderByComparator<Region> orderByComparator) {
+		int start, int end, OrderByComparator<Region> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

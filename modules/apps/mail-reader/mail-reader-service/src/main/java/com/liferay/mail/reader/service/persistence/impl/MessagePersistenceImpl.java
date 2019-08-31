@@ -133,21 +133,18 @@ public class MessagePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MessageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
-	@Deprecated
 	@Override
 	public List<Message> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Message> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -161,12 +158,13 @@ public class MessagePersistenceImpl
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	@Override
 	public List<Message> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Message> orderByComparator) {
+		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -176,25 +174,32 @@ public class MessagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Message> list = (List<Message>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Message> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Message message : list) {
-				if ((companyId != message.getCompanyId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Message>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Message message : list) {
+					if ((companyId != message.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -250,10 +255,14 @@ public class MessagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -634,21 +643,18 @@ public class MessagePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MessageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFolderId(long, int, int, OrderByComparator)}
 	 * @param folderId the folder ID
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
-	@Deprecated
 	@Override
 	public List<Message> findByFolderId(
 		long folderId, int start, int end,
-		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Message> orderByComparator) {
 
-		return findByFolderId(folderId, start, end, orderByComparator);
+		return findByFolderId(folderId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -662,12 +668,13 @@ public class MessagePersistenceImpl
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching messages
 	 */
 	@Override
 	public List<Message> findByFolderId(
 		long folderId, int start, int end,
-		OrderByComparator<Message> orderByComparator) {
+		OrderByComparator<Message> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -677,23 +684,30 @@ public class MessagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByFolderId;
-			finderArgs = new Object[] {folderId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByFolderId;
+				finderArgs = new Object[] {folderId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByFolderId;
 			finderArgs = new Object[] {folderId, start, end, orderByComparator};
 		}
 
-		List<Message> list = (List<Message>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Message> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Message message : list) {
-				if ((folderId != message.getFolderId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Message>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Message message : list) {
+					if ((folderId != message.getFolderId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -749,10 +763,14 @@ public class MessagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1133,20 +1151,15 @@ public class MessagePersistenceImpl
 	}
 
 	/**
-	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the message where folderId = &#63; and remoteMessageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByF_R(long,long)}
 	 * @param folderId the folder ID
 	 * @param remoteMessageId the remote message ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching message, or <code>null</code> if a matching message could not be found
 	 */
-	@Deprecated
 	@Override
-	public Message fetchByF_R(
-		long folderId, long remoteMessageId, boolean useFinderCache) {
-
-		return fetchByF_R(folderId, remoteMessageId);
+	public Message fetchByF_R(long folderId, long remoteMessageId) {
+		return fetchByF_R(folderId, remoteMessageId, true);
 	}
 
 	/**
@@ -1158,11 +1171,21 @@ public class MessagePersistenceImpl
 	 * @return the matching message, or <code>null</code> if a matching message could not be found
 	 */
 	@Override
-	public Message fetchByF_R(long folderId, long remoteMessageId) {
-		Object[] finderArgs = new Object[] {folderId, remoteMessageId};
+	public Message fetchByF_R(
+		long folderId, long remoteMessageId, boolean useFinderCache) {
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByF_R, finderArgs, this);
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {folderId, remoteMessageId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByF_R, finderArgs, this);
+		}
 
 		if (result instanceof Message) {
 			Message message = (Message)result;
@@ -1201,14 +1224,22 @@ public class MessagePersistenceImpl
 				List<Message> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByF_R, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByF_R, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									folderId, remoteMessageId
+								};
+							}
+
 							_log.warn(
 								"MessagePersistenceImpl.fetchByF_R(long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1224,7 +1255,9 @@ public class MessagePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByF_R, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(_finderPathFetchByF_R, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1781,20 +1814,16 @@ public class MessagePersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MessageModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of messages
 	 */
-	@Deprecated
 	@Override
 	public List<Message> findAll(
-		int start, int end, OrderByComparator<Message> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Message> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1807,11 +1836,13 @@ public class MessagePersistenceImpl
 	 * @param start the lower bound of the range of messages
 	 * @param end the upper bound of the range of messages (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of messages
 	 */
 	@Override
 	public List<Message> findAll(
-		int start, int end, OrderByComparator<Message> orderByComparator) {
+		int start, int end, OrderByComparator<Message> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1821,16 +1852,23 @@ public class MessagePersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Message> list = (List<Message>)finderCache.getResult(
-			finderPath, finderArgs, this);
+		List<Message> list = null;
+
+		if (useFinderCache) {
+			list = (List<Message>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1877,10 +1915,14 @@ public class MessagePersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

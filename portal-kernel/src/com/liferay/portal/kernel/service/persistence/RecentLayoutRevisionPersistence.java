@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutRevisionException;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,19 +70,16 @@ public interface RecentLayoutRevisionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutRevisionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutRevision> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout revisions where groupId = &#63;.
@@ -96,11 +92,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where groupId = &#63;.
@@ -112,7 +111,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByGroupId_First(
 			long groupId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -124,7 +124,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision fetchByGroupId_First(
 		long groupId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout revision in the ordered set where groupId = &#63;.
@@ -136,7 +137,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByGroupId_Last(
 			long groupId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -148,7 +150,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision fetchByGroupId_Last(
 		long groupId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout revisions before and after the current recent layout revision in the ordered set where groupId = &#63;.
@@ -161,7 +164,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision[] findByGroupId_PrevAndNext(
 			long recentLayoutRevisionId, long groupId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -209,19 +213,16 @@ public interface RecentLayoutRevisionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutRevisionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutRevision> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout revisions where userId = &#63;.
@@ -234,11 +235,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where userId = &#63;.
@@ -250,7 +254,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByUserId_First(
 			long userId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -261,7 +266,9 @@ public interface RecentLayoutRevisionPersistence
 	 * @return the first matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByUserId_First(
-		long userId, OrderByComparator<RecentLayoutRevision> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout revision in the ordered set where userId = &#63;.
@@ -273,7 +280,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByUserId_Last(
 			long userId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -284,7 +292,9 @@ public interface RecentLayoutRevisionPersistence
 	 * @return the last matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByUserId_Last(
-		long userId, OrderByComparator<RecentLayoutRevision> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout revisions before and after the current recent layout revision in the ordered set where userId = &#63;.
@@ -297,7 +307,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision[] findByUserId_PrevAndNext(
 			long recentLayoutRevisionId, long userId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -346,19 +357,16 @@ public interface RecentLayoutRevisionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutRevisionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutRevisionId(long, int, int, OrderByComparator)}
 	 * @param layoutRevisionId the layout revision ID
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutRevision> findByLayoutRevisionId(
 		long layoutRevisionId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout revisions where layoutRevisionId = &#63;.
@@ -371,11 +379,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findByLayoutRevisionId(
 		long layoutRevisionId, int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -387,7 +398,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByLayoutRevisionId_First(
 			long layoutRevisionId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -399,7 +411,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision fetchByLayoutRevisionId_First(
 		long layoutRevisionId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -411,7 +424,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision findByLayoutRevisionId_Last(
 			long layoutRevisionId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -423,7 +437,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision fetchByLayoutRevisionId_Last(
 		long layoutRevisionId,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout revisions before and after the current recent layout revision in the ordered set where layoutRevisionId = &#63;.
@@ -436,7 +451,8 @@ public interface RecentLayoutRevisionPersistence
 	 */
 	public RecentLayoutRevision[] findByLayoutRevisionId_PrevAndNext(
 			long recentLayoutRevisionId, long layoutRevisionId,
-			OrderByComparator<RecentLayoutRevision> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutRevision> orderByComparator)
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
@@ -468,18 +484,15 @@ public interface RecentLayoutRevisionPersistence
 		throws NoSuchRecentLayoutRevisionException;
 
 	/**
-	 * Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_L_P(long,long,long)}
 	 * @param userId the user ID
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param plid the plid
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
-	@Deprecated
 	public RecentLayoutRevision fetchByU_L_P(
-		long userId, long layoutSetBranchId, long plid, boolean useFinderCache);
+		long userId, long layoutSetBranchId, long plid);
 
 	/**
 	 * Returns the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -491,7 +504,7 @@ public interface RecentLayoutRevisionPersistence
 	 * @return the matching recent layout revision, or <code>null</code> if a matching recent layout revision could not be found
 	 */
 	public RecentLayoutRevision fetchByU_L_P(
-		long userId, long layoutSetBranchId, long plid);
+		long userId, long layoutSetBranchId, long plid, boolean useFinderCache);
 
 	/**
 	 * Removes the recent layout revision where userId = &#63; and layoutSetBranchId = &#63; and plid = &#63; from the database.
@@ -596,18 +609,15 @@ public interface RecentLayoutRevisionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutRevisionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout revisions
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutRevision> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout revisions.
@@ -619,11 +629,14 @@ public interface RecentLayoutRevisionPersistence
 	 * @param start the lower bound of the range of recent layout revisions
 	 * @param end the upper bound of the range of recent layout revisions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout revisions
 	 */
 	public java.util.List<RecentLayoutRevision> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutRevision> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutRevision>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the recent layout revisions from the database.

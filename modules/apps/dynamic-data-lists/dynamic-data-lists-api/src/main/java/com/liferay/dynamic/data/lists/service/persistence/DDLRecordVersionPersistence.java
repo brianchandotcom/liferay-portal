@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.lists.service.persistence;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface DDLRecordVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByRecordId(long, int, int, OrderByComparator)}
 	 * @param recordId the record ID
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
-	@Deprecated
 	public java.util.List<DDLRecordVersion> findByRecordId(
 		long recordId, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddl record versions where recordId = &#63;.
@@ -97,11 +93,14 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public java.util.List<DDLRecordVersion> findByRecordId(
 		long recordId, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record version in the ordered set where recordId = &#63;.
@@ -113,7 +112,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByRecordId_First(
 			long recordId,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -124,7 +124,9 @@ public interface DDLRecordVersionPersistence
 	 * @return the first matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	 */
 	public DDLRecordVersion fetchByRecordId_First(
-		long recordId, OrderByComparator<DDLRecordVersion> orderByComparator);
+		long recordId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddl record version in the ordered set where recordId = &#63;.
@@ -136,7 +138,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByRecordId_Last(
 			long recordId,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -147,7 +150,9 @@ public interface DDLRecordVersionPersistence
 	 * @return the last matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	 */
 	public DDLRecordVersion fetchByRecordId_Last(
-		long recordId, OrderByComparator<DDLRecordVersion> orderByComparator);
+		long recordId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordId = &#63;.
@@ -160,7 +165,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion[] findByRecordId_PrevAndNext(
 			long recordVersionId, long recordId,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -211,20 +217,17 @@ public interface DDLRecordVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_R(long,String, int, int, OrderByComparator)}
 	 * @param recordSetId the record set ID
 	 * @param recordSetVersion the record set version
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
-	@Deprecated
 	public java.util.List<DDLRecordVersion> findByR_R(
 		long recordSetId, String recordSetVersion, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddl record versions where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -238,11 +241,14 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public java.util.List<DDLRecordVersion> findByR_R(
 		long recordSetId, String recordSetVersion, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record version in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -255,7 +261,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByR_R_First(
 			long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -268,7 +275,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByR_R_First(
 		long recordSetId, String recordSetVersion,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddl record version in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -281,7 +289,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByR_R_Last(
 			long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -294,7 +303,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByR_R_Last(
 		long recordSetId, String recordSetVersion,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordSetId = &#63; and recordSetVersion = &#63;.
@@ -308,7 +318,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion[] findByR_R_PrevAndNext(
 			long recordVersionId, long recordSetId, String recordSetVersion,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -340,17 +351,13 @@ public interface DDLRecordVersionPersistence
 		throws NoSuchRecordVersionException;
 
 	/**
-	 * Returns the ddl record version where recordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddl record version where recordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByR_V(long,String)}
 	 * @param recordId the record ID
 	 * @param version the version
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	 */
-	@Deprecated
-	public DDLRecordVersion fetchByR_V(
-		long recordId, String version, boolean useFinderCache);
+	public DDLRecordVersion fetchByR_V(long recordId, String version);
 
 	/**
 	 * Returns the ddl record version where recordId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -360,7 +367,8 @@ public interface DDLRecordVersionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching ddl record version, or <code>null</code> if a matching ddl record version could not be found
 	 */
-	public DDLRecordVersion fetchByR_V(long recordId, String version);
+	public DDLRecordVersion fetchByR_V(
+		long recordId, String version, boolean useFinderCache);
 
 	/**
 	 * Removes the ddl record version where recordId = &#63; and version = &#63; from the database.
@@ -414,20 +422,17 @@ public interface DDLRecordVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_S(long,int, int, int, OrderByComparator)}
 	 * @param recordId the record ID
 	 * @param status the status
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
-	@Deprecated
 	public java.util.List<DDLRecordVersion> findByR_S(
 		long recordId, int status, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddl record versions where recordId = &#63; and status = &#63;.
@@ -441,11 +446,14 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public java.util.List<DDLRecordVersion> findByR_S(
 		long recordId, int status, int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -458,7 +466,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByR_S_First(
 			long recordId, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -471,7 +480,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByR_S_First(
 		long recordId, int status,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddl record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -484,7 +494,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByR_S_Last(
 			long recordId, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -497,7 +508,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByR_S_Last(
 		long recordId, int status,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where recordId = &#63; and status = &#63;.
@@ -511,7 +523,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion[] findByR_S_PrevAndNext(
 			long recordVersionId, long recordId, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -569,7 +582,6 @@ public interface DDLRecordVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByU_R_R_S(long,long,String,int, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param recordSetId the record set ID
 	 * @param recordSetVersion the record set version
@@ -577,15 +589,13 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
-	@Deprecated
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(
 		long userId, long recordSetId, String recordSetVersion, int status,
 		int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddl record versions where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -601,12 +611,15 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching ddl record versions
 	 */
 	public java.util.List<DDLRecordVersion> findByU_R_R_S(
 		long userId, long recordSetId, String recordSetVersion, int status,
 		int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -621,7 +634,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByU_R_R_S_First(
 			long userId, long recordSetId, String recordSetVersion, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -636,7 +650,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByU_R_R_S_First(
 		long userId, long recordSetId, String recordSetVersion, int status,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the last ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -651,7 +666,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion findByU_R_R_S_Last(
 			long userId, long recordSetId, String recordSetVersion, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -666,7 +682,8 @@ public interface DDLRecordVersionPersistence
 	 */
 	public DDLRecordVersion fetchByU_R_R_S_Last(
 		long userId, long recordSetId, String recordSetVersion, int status,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns the ddl record versions before and after the current ddl record version in the ordered set where userId = &#63; and recordSetId = &#63; and recordSetVersion = &#63; and status = &#63;.
@@ -683,7 +700,8 @@ public interface DDLRecordVersionPersistence
 	public DDLRecordVersion[] findByU_R_R_S_PrevAndNext(
 			long recordVersionId, long userId, long recordSetId,
 			String recordSetVersion, int status,
-			OrderByComparator<DDLRecordVersion> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+				orderByComparator)
 		throws NoSuchRecordVersionException;
 
 	/**
@@ -788,18 +806,15 @@ public interface DDLRecordVersionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>DDLRecordVersionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddl record versions
 	 */
-	@Deprecated
 	public java.util.List<DDLRecordVersion> findAll(
 		int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddl record versions.
@@ -811,11 +826,14 @@ public interface DDLRecordVersionPersistence
 	 * @param start the lower bound of the range of ddl record versions
 	 * @param end the upper bound of the range of ddl record versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of ddl record versions
 	 */
 	public java.util.List<DDLRecordVersion> findAll(
 		int start, int end,
-		OrderByComparator<DDLRecordVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDLRecordVersion>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the ddl record versions from the database.

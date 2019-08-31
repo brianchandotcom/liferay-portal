@@ -126,21 +126,18 @@ public class GadgetPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	@Override
 	public List<Gadget> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
-		return findByUuid(uuid, start, end, orderByComparator);
+		return findByUuid(uuid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -154,12 +151,13 @@ public class GadgetPersistenceImpl
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	@Override
 	public List<Gadget> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -171,23 +169,30 @@ public class GadgetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid;
-			finderArgs = new Object[] {uuid};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid;
 			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<Gadget> list = (List<Gadget>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Gadget> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Gadget gadget : list) {
-				if (!uuid.equals(gadget.getUuid())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Gadget>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Gadget gadget : list) {
+					if (!uuid.equals(gadget.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -254,10 +259,14 @@ public class GadgetPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1082,22 +1091,20 @@ public class GadgetPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	@Override
 	public List<Gadget> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1112,12 +1119,13 @@ public class GadgetPersistenceImpl
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	@Override
 	public List<Gadget> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
 		uuid = Objects.toString(uuid, "");
 
@@ -1129,27 +1137,34 @@ public class GadgetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByUuid_C;
-			finderArgs = new Object[] {uuid, companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
 				uuid, companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Gadget> list = (List<Gadget>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Gadget> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Gadget gadget : list) {
-				if (!uuid.equals(gadget.getUuid()) ||
-					(companyId != gadget.getCompanyId())) {
+		if (useFinderCache) {
+			list = (List<Gadget>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (Gadget gadget : list) {
+					if (!uuid.equals(gadget.getUuid()) ||
+						(companyId != gadget.getCompanyId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1220,10 +1235,14 @@ public class GadgetPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2096,21 +2115,18 @@ public class GadgetPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
-	@Deprecated
 	@Override
 	public List<Gadget> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
+		OrderByComparator<Gadget> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2124,12 +2140,13 @@ public class GadgetPersistenceImpl
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching gadgets
 	 */
 	@Override
 	public List<Gadget> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<Gadget> orderByComparator) {
+		OrderByComparator<Gadget> orderByComparator, boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -2139,25 +2156,32 @@ public class GadgetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<Gadget> list = (List<Gadget>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Gadget> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Gadget gadget : list) {
-				if ((companyId != gadget.getCompanyId())) {
-					list = null;
+		if (useFinderCache) {
+			list = (List<Gadget>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (Gadget gadget : list) {
+					if ((companyId != gadget.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -2213,10 +2237,14 @@ public class GadgetPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2969,20 +2997,15 @@ public class GadgetPersistenceImpl
 	}
 
 	/**
-	 * Returns the gadget where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the gadget where companyId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_U(long,String)}
 	 * @param companyId the company ID
 	 * @param url the url
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	 */
-	@Deprecated
 	@Override
-	public Gadget fetchByC_U(
-		long companyId, String url, boolean useFinderCache) {
-
-		return fetchByC_U(companyId, url);
+	public Gadget fetchByC_U(long companyId, String url) {
+		return fetchByC_U(companyId, url, true);
 	}
 
 	/**
@@ -2994,13 +3017,23 @@ public class GadgetPersistenceImpl
 	 * @return the matching gadget, or <code>null</code> if a matching gadget could not be found
 	 */
 	@Override
-	public Gadget fetchByC_U(long companyId, String url) {
+	public Gadget fetchByC_U(
+		long companyId, String url, boolean useFinderCache) {
+
 		url = Objects.toString(url, "");
 
-		Object[] finderArgs = new Object[] {companyId, url};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByC_U, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, url};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_U, finderArgs, this);
+		}
 
 		if (result instanceof Gadget) {
 			Gadget gadget = (Gadget)result;
@@ -3050,8 +3083,10 @@ public class GadgetPersistenceImpl
 				List<Gadget> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_U, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_U, finderArgs, list);
+					}
 				}
 				else {
 					Gadget gadget = list.get(0);
@@ -3062,7 +3097,10 @@ public class GadgetPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_U, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_U, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3671,20 +3709,16 @@ public class GadgetPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>GadgetModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of gadgets
 	 */
-	@Deprecated
 	@Override
 	public List<Gadget> findAll(
-		int start, int end, OrderByComparator<Gadget> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end, OrderByComparator<Gadget> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3697,11 +3731,13 @@ public class GadgetPersistenceImpl
 	 * @param start the lower bound of the range of gadgets
 	 * @param end the upper bound of the range of gadgets (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of gadgets
 	 */
 	@Override
 	public List<Gadget> findAll(
-		int start, int end, OrderByComparator<Gadget> orderByComparator) {
+		int start, int end, OrderByComparator<Gadget> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3711,16 +3747,23 @@ public class GadgetPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Gadget> list = (List<Gadget>)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		List<Gadget> list = null;
+
+		if (useFinderCache) {
+			list = (List<Gadget>)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3767,10 +3810,14 @@ public class GadgetPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -17,7 +17,6 @@ package com.liferay.asset.kernel.service.persistence;
 import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -70,18 +69,16 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags where uuid = &#63;.
@@ -94,11 +91,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where uuid = &#63;.
@@ -109,7 +109,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByUuid_First(
-			String uuid, OrderByComparator<AssetTag> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -120,7 +122,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByUuid_First(
-		String uuid, OrderByComparator<AssetTag> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset tag in the ordered set where uuid = &#63;.
@@ -131,7 +135,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByUuid_Last(
-			String uuid, OrderByComparator<AssetTag> orderByComparator)
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -142,7 +148,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByUuid_Last(
-		String uuid, OrderByComparator<AssetTag> orderByComparator);
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the asset tags before and after the current asset tag in the ordered set where uuid = &#63;.
@@ -155,7 +163,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag[] findByUuid_PrevAndNext(
 			long tagId, String uuid,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -185,17 +194,13 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		throws NoSuchTagException;
 
 	/**
-	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
-	@Deprecated
-	public AssetTag fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public AssetTag fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the asset tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -205,7 +210,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
-	public AssetTag fetchByUUID_G(String uuid, long groupId);
+	public AssetTag fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset tag where uuid = &#63; and groupId = &#63; from the database.
@@ -258,19 +264,17 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags where uuid = &#63; and companyId = &#63;.
@@ -284,11 +288,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -301,7 +308,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -314,7 +322,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -327,7 +336,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -340,7 +350,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the asset tags before and after the current asset tag in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -354,7 +365,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag[] findByUuid_C_PrevAndNext(
 			long tagId, String uuid, long companyId,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -404,18 +416,16 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags where groupId = &#63;.
@@ -428,11 +438,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -443,7 +456,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByGroupId_First(
-			long groupId, OrderByComparator<AssetTag> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -454,7 +469,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByGroupId_First(
-		long groupId, OrderByComparator<AssetTag> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset tag in the ordered set where groupId = &#63;.
@@ -465,7 +482,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByGroupId_Last(
-			long groupId, OrderByComparator<AssetTag> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -476,7 +495,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByGroupId_Last(
-		long groupId, OrderByComparator<AssetTag> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the asset tags before and after the current asset tag in the ordered set where groupId = &#63;.
@@ -489,7 +510,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag[] findByGroupId_PrevAndNext(
 			long tagId, long groupId,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -520,26 +542,6 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		long[] groupIds, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the asset tags where groupId = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset tags
-	 */
-	@Deprecated
-	public java.util.List<AssetTag> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the asset tags where groupId = any &#63;.
 	 *
 	 * <p>
@@ -554,7 +556,28 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public java.util.List<AssetTag> findByGroupId(
 		long[] groupIds, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset tags where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByGroupId(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where groupId = &#63; from the database.
@@ -608,18 +631,16 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
 	 * @param name the name
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findByName(
 		String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags where name = &#63;.
@@ -632,11 +653,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByName(
 		String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where name = &#63;.
@@ -647,7 +671,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByName_First(
-			String name, OrderByComparator<AssetTag> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -658,7 +684,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByName_First(
-		String name, OrderByComparator<AssetTag> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset tag in the ordered set where name = &#63;.
@@ -669,7 +697,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @throws NoSuchTagException if a matching asset tag could not be found
 	 */
 	public AssetTag findByName_Last(
-			String name, OrderByComparator<AssetTag> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -680,7 +710,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
 	public AssetTag fetchByName_Last(
-		String name, OrderByComparator<AssetTag> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the asset tags before and after the current asset tag in the ordered set where name = &#63;.
@@ -693,7 +725,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag[] findByName_PrevAndNext(
 			long tagId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -724,26 +757,6 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		String[] names, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the asset tags where name = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
-	 * @param name the name
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset tags
-	 */
-	@Deprecated
-	public java.util.List<AssetTag> findByName(
-		String[] names, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the asset tags where name = any &#63;.
 	 *
 	 * <p>
@@ -758,7 +771,28 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public java.util.List<AssetTag> findByName(
 		String[] names, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset tags where name = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByName(
+		String[] names, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where name = &#63; from the database.
@@ -795,17 +829,13 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		throws NoSuchTagException;
 
 	/**
-	 * Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_N(long,String)}
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
-	@Deprecated
-	public AssetTag fetchByG_N(
-		long groupId, String name, boolean useFinderCache);
+	public AssetTag fetchByG_N(long groupId, String name);
 
 	/**
 	 * Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -815,7 +845,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
 	 */
-	public AssetTag fetchByG_N(long groupId, String name);
+	public AssetTag fetchByG_N(
+		long groupId, String name, boolean useFinderCache);
 
 	/**
 	 * Removes the asset tag where groupId = &#63; and name = &#63; from the database.
@@ -868,19 +899,17 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeN(long,String, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findByG_LikeN(
 		long groupId, String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags where groupId = &#63; and name LIKE &#63;.
@@ -894,11 +923,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset tags
 	 */
 	public java.util.List<AssetTag> findByG_LikeN(
 		long groupId, String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -911,7 +943,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag findByG_LikeN_First(
 			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -924,7 +957,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag fetchByG_LikeN_First(
 		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the last asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -937,7 +971,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag findByG_LikeN_Last(
 			long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -950,7 +985,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag fetchByG_LikeN_Last(
 		long groupId, String name,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns the asset tags before and after the current asset tag in the ordered set where groupId = &#63; and name LIKE &#63;.
@@ -964,7 +1000,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public AssetTag[] findByG_LikeN_PrevAndNext(
 			long tagId, long groupId, String name,
-			OrderByComparator<AssetTag> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+				orderByComparator)
 		throws NoSuchTagException;
 
 	/**
@@ -997,27 +1034,6 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 		long[] groupIds, String name, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the asset tags where groupId = &#63; and name LIKE &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_LikeN(long,String, int, int, OrderByComparator)}
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching asset tags
-	 */
-	@Deprecated
-	public java.util.List<AssetTag> findByG_LikeN(
-		long[] groupIds, String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator, boolean useFinderCache);
-
-	/**
 	 * Returns an ordered range of all the asset tags where groupId = any &#63; and name LIKE &#63;.
 	 *
 	 * <p>
@@ -1033,7 +1049,29 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 */
 	public java.util.List<AssetTag> findByG_LikeN(
 		long[] groupIds, String name, int start, int end,
-		OrderByComparator<AssetTag> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the asset tags where groupId = &#63; and name LIKE &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset tags
+	 */
+	public java.util.List<AssetTag> findByG_LikeN(
+		long[] groupIds, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags where groupId = &#63; and name LIKE &#63; from the database.
@@ -1138,17 +1176,15 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset tags
 	 */
-	@Deprecated
 	public java.util.List<AssetTag> findAll(
-		int start, int end, OrderByComparator<AssetTag> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tags.
@@ -1160,10 +1196,14 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset tags
 	 */
 	public java.util.List<AssetTag> findAll(
-		int start, int end, OrderByComparator<AssetTag> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTag>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset tags from the database.
@@ -1225,8 +1265,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry>
 		getAssetEntries(
 			long pk, int start, int end,
-			OrderByComparator<com.liferay.asset.kernel.model.AssetEntry>
-				orderByComparator);
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.asset.kernel.model.AssetEntry> orderByComparator);
 
 	/**
 	 * Returns the number of asset entries associated with the asset tag.

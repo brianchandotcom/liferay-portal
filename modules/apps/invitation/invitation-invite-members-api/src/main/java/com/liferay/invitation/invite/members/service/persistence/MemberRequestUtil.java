@@ -140,16 +140,13 @@ public class MemberRequestUtil {
 	}
 
 	/**
-	 * Returns the member request where key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the member request where key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByKey(String)}
 	 * @param key the key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
-	@Deprecated
-	public static MemberRequest fetchByKey(String key, boolean useFinderCache) {
-		return getPersistence().fetchByKey(key, useFinderCache);
+	public static MemberRequest fetchByKey(String key) {
+		return getPersistence().fetchByKey(key);
 	}
 
 	/**
@@ -159,8 +156,8 @@ public class MemberRequestUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
-	public static MemberRequest fetchByKey(String key) {
-		return getPersistence().fetchByKey(key);
+	public static MemberRequest fetchByKey(String key, boolean useFinderCache) {
+		return getPersistence().fetchByKey(key, useFinderCache);
 	}
 
 	/**
@@ -224,22 +221,18 @@ public class MemberRequestUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByReceiverUserId(long, int, int, OrderByComparator)}
 	 * @param receiverUserId the receiver user ID
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
-	@Deprecated
 	public static List<MemberRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MemberRequest> orderByComparator) {
 
 		return getPersistence().findByReceiverUserId(
-			receiverUserId, start, end, orderByComparator, useFinderCache);
+			receiverUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -253,14 +246,16 @@ public class MemberRequestUtil {
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
 	public static List<MemberRequest> findByReceiverUserId(
 		long receiverUserId, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByReceiverUserId(
-			receiverUserId, start, end, orderByComparator);
+			receiverUserId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -406,24 +401,19 @@ public class MemberRequestUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByR_S(long,int, int, int, OrderByComparator)}
 	 * @param receiverUserId the receiver user ID
 	 * @param status the status
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
-	@Deprecated
 	public static List<MemberRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<MemberRequest> orderByComparator) {
 
 		return getPersistence().findByR_S(
-			receiverUserId, status, start, end, orderByComparator,
-			useFinderCache);
+			receiverUserId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -438,14 +428,17 @@ public class MemberRequestUtil {
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching member requests
 	 */
 	public static List<MemberRequest> findByR_S(
 		long receiverUserId, int status, int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		return getPersistence().findByR_S(
-			receiverUserId, status, start, end, orderByComparator);
+			receiverUserId, status, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -577,21 +570,17 @@ public class MemberRequestUtil {
 	}
 
 	/**
-	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_R_S(long,long,int)}
 	 * @param groupId the group ID
 	 * @param receiverUserId the receiver user ID
 	 * @param status the status
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
-	@Deprecated
 	public static MemberRequest fetchByG_R_S(
-		long groupId, long receiverUserId, int status, boolean useFinderCache) {
+		long groupId, long receiverUserId, int status) {
 
-		return getPersistence().fetchByG_R_S(
-			groupId, receiverUserId, status, useFinderCache);
+		return getPersistence().fetchByG_R_S(groupId, receiverUserId, status);
 	}
 
 	/**
@@ -604,9 +593,10 @@ public class MemberRequestUtil {
 	 * @return the matching member request, or <code>null</code> if a matching member request could not be found
 	 */
 	public static MemberRequest fetchByG_R_S(
-		long groupId, long receiverUserId, int status) {
+		long groupId, long receiverUserId, int status, boolean useFinderCache) {
 
-		return getPersistence().fetchByG_R_S(groupId, receiverUserId, status);
+		return getPersistence().fetchByG_R_S(
+			groupId, receiverUserId, status, useFinderCache);
 	}
 
 	/**
@@ -740,20 +730,16 @@ public class MemberRequestUtil {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MemberRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of member requests
 	 */
-	@Deprecated
 	public static List<MemberRequest> findAll(
-		int start, int end, OrderByComparator<MemberRequest> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<MemberRequest> orderByComparator) {
 
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
+		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
@@ -766,13 +752,15 @@ public class MemberRequestUtil {
 	 * @param start the lower bound of the range of member requests
 	 * @param end the upper bound of the range of member requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of member requests
 	 */
 	public static List<MemberRequest> findAll(
-		int start, int end,
-		OrderByComparator<MemberRequest> orderByComparator) {
+		int start, int end, OrderByComparator<MemberRequest> orderByComparator,
+		boolean useFinderCache) {
 
-		return getPersistence().findAll(start, end, orderByComparator);
+		return getPersistence().findAll(
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**

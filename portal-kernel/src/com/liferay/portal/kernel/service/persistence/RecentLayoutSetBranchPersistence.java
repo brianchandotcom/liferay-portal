@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,19 +70,16 @@ public interface RecentLayoutSetBranchPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout set branchs where groupId = &#63;.
@@ -96,11 +92,14 @@ public interface RecentLayoutSetBranchPersistence
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public java.util.List<RecentLayoutSetBranch> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout set branch in the ordered set where groupId = &#63;.
@@ -112,7 +111,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByGroupId_First(
 			long groupId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -124,7 +124,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByGroupId_First(
 		long groupId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout set branch in the ordered set where groupId = &#63;.
@@ -136,7 +137,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByGroupId_Last(
 			long groupId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -148,7 +150,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByGroupId_Last(
 		long groupId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout set branchs before and after the current recent layout set branch in the ordered set where groupId = &#63;.
@@ -161,7 +164,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch[] findByGroupId_PrevAndNext(
 			long recentLayoutSetBranchId, long groupId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -209,19 +213,16 @@ public interface RecentLayoutSetBranchPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutSetBranch> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout set branchs where userId = &#63;.
@@ -234,11 +235,14 @@ public interface RecentLayoutSetBranchPersistence
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public java.util.List<RecentLayoutSetBranch> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout set branch in the ordered set where userId = &#63;.
@@ -250,7 +254,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByUserId_First(
 			long userId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -262,7 +267,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByUserId_First(
 		long userId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout set branch in the ordered set where userId = &#63;.
@@ -274,7 +280,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByUserId_Last(
 			long userId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -286,7 +293,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByUserId_Last(
 		long userId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout set branchs before and after the current recent layout set branch in the ordered set where userId = &#63;.
@@ -299,7 +307,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch[] findByUserId_PrevAndNext(
 			long recentLayoutSetBranchId, long userId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -348,19 +357,16 @@ public interface RecentLayoutSetBranchPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLayoutSetBranchId(long, int, int, OrderByComparator)}
 	 * @param layoutSetBranchId the layout set branch ID
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutSetBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout set branchs where layoutSetBranchId = &#63;.
@@ -373,11 +379,14 @@ public interface RecentLayoutSetBranchPersistence
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching recent layout set branchs
 	 */
 	public java.util.List<RecentLayoutSetBranch> findByLayoutSetBranchId(
 		long layoutSetBranchId, int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
@@ -389,7 +398,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByLayoutSetBranchId_First(
 			long layoutSetBranchId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -401,7 +411,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByLayoutSetBranchId_First(
 		long layoutSetBranchId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the last recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
@@ -413,7 +424,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch findByLayoutSetBranchId_Last(
 			long layoutSetBranchId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -425,7 +437,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch fetchByLayoutSetBranchId_Last(
 		long layoutSetBranchId,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns the recent layout set branchs before and after the current recent layout set branch in the ordered set where layoutSetBranchId = &#63;.
@@ -438,7 +451,8 @@ public interface RecentLayoutSetBranchPersistence
 	 */
 	public RecentLayoutSetBranch[] findByLayoutSetBranchId_PrevAndNext(
 			long recentLayoutSetBranchId, long layoutSetBranchId,
-			OrderByComparator<RecentLayoutSetBranch> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<RecentLayoutSetBranch> orderByComparator)
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
@@ -468,17 +482,13 @@ public interface RecentLayoutSetBranchPersistence
 		throws NoSuchRecentLayoutSetBranchException;
 
 	/**
-	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_L(long,long)}
 	 * @param userId the user ID
 	 * @param layoutSetId the layout set ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
 	 */
-	@Deprecated
-	public RecentLayoutSetBranch fetchByU_L(
-		long userId, long layoutSetId, boolean useFinderCache);
+	public RecentLayoutSetBranch fetchByU_L(long userId, long layoutSetId);
 
 	/**
 	 * Returns the recent layout set branch where userId = &#63; and layoutSetId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -488,7 +498,8 @@ public interface RecentLayoutSetBranchPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching recent layout set branch, or <code>null</code> if a matching recent layout set branch could not be found
 	 */
-	public RecentLayoutSetBranch fetchByU_L(long userId, long layoutSetId);
+	public RecentLayoutSetBranch fetchByU_L(
+		long userId, long layoutSetId, boolean useFinderCache);
 
 	/**
 	 * Removes the recent layout set branch where userId = &#63; and layoutSetId = &#63; from the database.
@@ -591,18 +602,15 @@ public interface RecentLayoutSetBranchPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>RecentLayoutSetBranchModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout set branchs
 	 */
-	@Deprecated
 	public java.util.List<RecentLayoutSetBranch> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the recent layout set branchs.
@@ -614,11 +622,14 @@ public interface RecentLayoutSetBranchPersistence
 	 * @param start the lower bound of the range of recent layout set branchs
 	 * @param end the upper bound of the range of recent layout set branchs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of recent layout set branchs
 	 */
 	public java.util.List<RecentLayoutSetBranch> findAll(
 		int start, int end,
-		OrderByComparator<RecentLayoutSetBranch> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<RecentLayoutSetBranch>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the recent layout set branchs from the database.

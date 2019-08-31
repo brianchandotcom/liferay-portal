@@ -17,7 +17,6 @@ package com.liferay.asset.list.service.persistence;
 import com.liferay.asset.list.exception.NoSuchEntryAssetEntryRelException;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -72,19 +71,16 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63;.
@@ -97,11 +93,14 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findByUuid(
 		String uuid, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry asset entry rel in the ordered set where uuid = &#63;.
@@ -113,7 +112,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByUuid_First(
 			String uuid,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -125,7 +125,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByUuid_First(
 		String uuid,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last asset list entry asset entry rel in the ordered set where uuid = &#63;.
@@ -137,7 +138,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByUuid_Last(
 			String uuid,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -149,7 +151,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByUuid_Last(
 		String uuid,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where uuid = &#63;.
@@ -162,7 +165,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel[] findByUuid_PrevAndNext(
 			long assetListEntryAssetEntryRelId, String uuid,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -192,17 +196,13 @@ public interface AssetListEntryAssetEntryRelPersistence
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
-	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	@Deprecated
-	public AssetListEntryAssetEntryRel fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache);
+	public AssetListEntryAssetEntryRel fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -212,7 +212,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	public AssetListEntryAssetEntryRel fetchByUUID_G(String uuid, long groupId);
+	public AssetListEntryAssetEntryRel fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
 
 	/**
 	 * Removes the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; from the database.
@@ -266,20 +267,17 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
@@ -293,11 +291,14 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findByUuid_C(
 		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry asset entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -310,7 +311,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByUuid_C_First(
 			String uuid, long companyId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -323,7 +325,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByUuid_C_First(
 		String uuid, long companyId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last asset list entry asset entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -336,7 +339,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByUuid_C_Last(
 			String uuid, long companyId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -349,7 +353,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByUuid_C_Last(
 		String uuid, long companyId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -363,7 +368,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel[] findByUuid_C_PrevAndNext(
 			long assetListEntryAssetEntryRelId, String uuid, long companyId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -414,19 +420,16 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByAssetListEntryId(long, int, int, OrderByComparator)}
 	 * @param assetListEntryId the asset list entry ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findByAssetListEntryId(
 		long assetListEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63;.
@@ -439,11 +442,14 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findByAssetListEntryId(
 		long assetListEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63;.
@@ -455,7 +461,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByAssetListEntryId_First(
 			long assetListEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -467,7 +474,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByAssetListEntryId_First(
 		long assetListEntryId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63;.
@@ -479,7 +487,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByAssetListEntryId_Last(
 			long assetListEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -491,7 +500,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByAssetListEntryId_Last(
 		long assetListEntryId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63;.
@@ -504,7 +514,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel[] findByAssetListEntryId_PrevAndNext(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -555,20 +566,17 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_S(long,long, int, int, OrderByComparator)}
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
 		long assetListEntryId, long segmentsEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -582,11 +590,14 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findByA_S(
 		long assetListEntryId, long segmentsEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -599,7 +610,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByA_S_First(
 			long assetListEntryId, long segmentsEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -612,7 +624,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByA_S_First(
 		long assetListEntryId, long segmentsEntryId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -625,7 +638,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByA_S_Last(
 			long assetListEntryId, long segmentsEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -638,7 +652,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByA_S_Last(
 		long assetListEntryId, long segmentsEntryId,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -653,7 +668,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	public AssetListEntryAssetEntryRel[] findByA_S_PrevAndNext(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
 			long segmentsEntryId,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -687,19 +703,15 @@ public interface AssetListEntryAssetEntryRelPersistence
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByA_S_P(long,long,int)}
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
-	@Deprecated
 	public AssetListEntryAssetEntryRel fetchByA_S_P(
-		long assetListEntryId, long segmentsEntryId, int position,
-		boolean useFinderCache);
+		long assetListEntryId, long segmentsEntryId, int position);
 
 	/**
 	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -711,7 +723,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
 	 */
 	public AssetListEntryAssetEntryRel fetchByA_S_P(
-		long assetListEntryId, long segmentsEntryId, int position);
+		long assetListEntryId, long segmentsEntryId, int position,
+		boolean useFinderCache);
 
 	/**
 	 * Removes the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; from the database.
@@ -772,22 +785,19 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByA_S_GtP(long,long,int, int, int, OrderByComparator)}
 	 * @param assetListEntryId the asset list entry ID
 	 * @param segmentsEntryId the segments entry ID
 	 * @param position the position
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
 		long assetListEntryId, long segmentsEntryId, int position, int start,
 		int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
@@ -802,12 +812,15 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findByA_S_GtP(
 		long assetListEntryId, long segmentsEntryId, int position, int start,
 		int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
@@ -821,7 +834,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByA_S_GtP_First(
 			long assetListEntryId, long segmentsEntryId, int position,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -835,7 +849,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByA_S_GtP_First(
 		long assetListEntryId, long segmentsEntryId, int position,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the last asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
@@ -849,7 +864,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel findByA_S_GtP_Last(
 			long assetListEntryId, long segmentsEntryId, int position,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -863,7 +879,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 */
 	public AssetListEntryAssetEntryRel fetchByA_S_GtP_Last(
 		long assetListEntryId, long segmentsEntryId, int position,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns the asset list entry asset entry rels before and after the current asset list entry asset entry rel in the ordered set where assetListEntryId = &#63; and segmentsEntryId = &#63; and position &gt; &#63;.
@@ -879,7 +896,8 @@ public interface AssetListEntryAssetEntryRelPersistence
 	public AssetListEntryAssetEntryRel[] findByA_S_GtP_PrevAndNext(
 			long assetListEntryAssetEntryRelId, long assetListEntryId,
 			long segmentsEntryId, int position,
-			OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<AssetListEntryAssetEntryRel> orderByComparator)
 		throws NoSuchEntryAssetEntryRelException;
 
 	/**
@@ -991,18 +1009,15 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entry asset entry rels
 	 */
-	@Deprecated
 	public java.util.List<AssetListEntryAssetEntryRel> findAll(
 		int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels.
@@ -1014,11 +1029,14 @@ public interface AssetListEntryAssetEntryRelPersistence
 	 * @param start the lower bound of the range of asset list entry asset entry rels
 	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of asset list entry asset entry rels
 	 */
 	public java.util.List<AssetListEntryAssetEntryRel> findAll(
 		int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator
+			<AssetListEntryAssetEntryRel> orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the asset list entry asset entry rels from the database.

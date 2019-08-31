@@ -15,7 +15,6 @@
 package com.liferay.saml.persistence.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 
@@ -74,19 +73,16 @@ public interface SamlIdpSsoSessionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(Date, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
-	@Deprecated
 	public java.util.List<SamlIdpSsoSession> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the saml idp sso sessions where createDate &lt; &#63;.
@@ -99,11 +95,14 @@ public interface SamlIdpSsoSessionPersistence
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sso sessions
 	 */
 	public java.util.List<SamlIdpSsoSession> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first saml idp sso session in the ordered set where createDate &lt; &#63;.
@@ -115,7 +114,8 @@ public interface SamlIdpSsoSessionPersistence
 	 */
 	public SamlIdpSsoSession findByCreateDate_First(
 			Date createDate,
-			OrderByComparator<SamlIdpSsoSession> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+				orderByComparator)
 		throws NoSuchIdpSsoSessionException;
 
 	/**
@@ -127,7 +127,8 @@ public interface SamlIdpSsoSessionPersistence
 	 */
 	public SamlIdpSsoSession fetchByCreateDate_First(
 		Date createDate,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator);
 
 	/**
 	 * Returns the last saml idp sso session in the ordered set where createDate &lt; &#63;.
@@ -139,7 +140,8 @@ public interface SamlIdpSsoSessionPersistence
 	 */
 	public SamlIdpSsoSession findByCreateDate_Last(
 			Date createDate,
-			OrderByComparator<SamlIdpSsoSession> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+				orderByComparator)
 		throws NoSuchIdpSsoSessionException;
 
 	/**
@@ -151,7 +153,8 @@ public interface SamlIdpSsoSessionPersistence
 	 */
 	public SamlIdpSsoSession fetchByCreateDate_Last(
 		Date createDate,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator);
 
 	/**
 	 * Returns the saml idp sso sessions before and after the current saml idp sso session in the ordered set where createDate &lt; &#63;.
@@ -164,7 +167,8 @@ public interface SamlIdpSsoSessionPersistence
 	 */
 	public SamlIdpSsoSession[] findByCreateDate_PrevAndNext(
 			long samlIdpSsoSessionId, Date createDate,
-			OrderByComparator<SamlIdpSsoSession> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+				orderByComparator)
 		throws NoSuchIdpSsoSessionException;
 
 	/**
@@ -194,16 +198,13 @@ public interface SamlIdpSsoSessionPersistence
 		throws NoSuchIdpSsoSessionException;
 
 	/**
-	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySamlIdpSsoSessionKey(String)}
 	 * @param samlIdpSsoSessionKey the saml idp sso session key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
-	@Deprecated
 	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey, boolean useFinderCache);
+		String samlIdpSsoSessionKey);
 
 	/**
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -213,7 +214,7 @@ public interface SamlIdpSsoSessionPersistence
 	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
 	 */
 	public SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey);
+		String samlIdpSsoSessionKey, boolean useFinderCache);
 
 	/**
 	 * Removes the saml idp sso session where samlIdpSsoSessionKey = &#63; from the database.
@@ -313,18 +314,15 @@ public interface SamlIdpSsoSessionPersistence
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSsoSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sso sessions
 	 */
-	@Deprecated
 	public java.util.List<SamlIdpSsoSession> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator,
-		boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the saml idp sso sessions.
@@ -336,11 +334,14 @@ public interface SamlIdpSsoSessionPersistence
 	 * @param start the lower bound of the range of saml idp sso sessions
 	 * @param end the upper bound of the range of saml idp sso sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sso sessions
 	 */
 	public java.util.List<SamlIdpSsoSession> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSsoSession> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<SamlIdpSsoSession>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the saml idp sso sessions from the database.

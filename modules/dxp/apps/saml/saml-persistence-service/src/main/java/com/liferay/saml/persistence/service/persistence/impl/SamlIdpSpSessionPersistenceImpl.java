@@ -125,22 +125,19 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(Date, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
-	@Deprecated
 	@Override
 	public List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		return findByCreateDate(createDate, start, end, orderByComparator);
+		return findByCreateDate(
+			createDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -154,12 +151,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -170,18 +169,21 @@ public class SamlIdpSpSessionPersistenceImpl
 			_getTime(createDate), start, end, orderByComparator
 		};
 
-		List<SamlIdpSpSession> list =
-			(List<SamlIdpSpSession>)finderCache.getResult(
+		List<SamlIdpSpSession> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SamlIdpSpSession samlIdpSpSession : list) {
-				if ((createDate.getTime() <=
-						samlIdpSpSession.getCreateDate().getTime())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlIdpSpSession samlIdpSpSession : list) {
+					if ((createDate.getTime() <=
+							samlIdpSpSession.getCreateDate().getTime())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -248,10 +250,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -671,23 +677,19 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySamlIdpSsoSessionId(long, int, int, OrderByComparator)}
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
-	@Deprecated
 	@Override
 	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
 		return findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, start, end, orderByComparator);
+			samlIdpSsoSessionId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -701,12 +703,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findBySamlIdpSsoSessionId(
 		long samlIdpSsoSessionId, int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -716,28 +720,35 @@ public class SamlIdpSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
-			finderArgs = new Object[] {samlIdpSsoSessionId};
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindBySamlIdpSsoSessionId;
+				finderArgs = new Object[] {samlIdpSsoSessionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindBySamlIdpSsoSessionId;
 			finderArgs = new Object[] {
 				samlIdpSsoSessionId, start, end, orderByComparator
 			};
 		}
 
-		List<SamlIdpSpSession> list =
-			(List<SamlIdpSpSession>)finderCache.getResult(
+		List<SamlIdpSpSession> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SamlIdpSpSession samlIdpSpSession : list) {
-				if ((samlIdpSsoSessionId !=
-						samlIdpSpSession.getSamlIdpSsoSessionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlIdpSpSession samlIdpSpSession : list) {
+					if ((samlIdpSsoSessionId !=
+							samlIdpSpSession.getSamlIdpSsoSessionId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -794,10 +805,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1196,21 +1211,17 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySISSI_SSEI(long,String)}
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
 	 * @param samlSpEntityId the saml sp entity ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	@Deprecated
 	@Override
 	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId,
-		boolean useFinderCache) {
+		long samlIdpSsoSessionId, String samlSpEntityId) {
 
-		return fetchBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId);
+		return fetchBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId, true);
 	}
 
 	/**
@@ -1223,16 +1234,23 @@ public class SamlIdpSpSessionPersistenceImpl
 	 */
 	@Override
 	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
+		long samlIdpSsoSessionId, String samlSpEntityId,
+		boolean useFinderCache) {
 
 		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		Object[] finderArgs = new Object[] {
-			samlIdpSsoSessionId, samlSpEntityId
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchBySISSI_SSEI, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {samlIdpSsoSessionId, samlSpEntityId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchBySISSI_SSEI, finderArgs, this);
+		}
 
 		if (result instanceof SamlIdpSpSession) {
 			SamlIdpSpSession samlIdpSpSession = (SamlIdpSpSession)result;
@@ -1284,14 +1302,22 @@ public class SamlIdpSpSessionPersistenceImpl
 				List<SamlIdpSpSession> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySISSI_SSEI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySISSI_SSEI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									samlIdpSsoSessionId, samlSpEntityId
+								};
+							}
+
 							_log.warn(
 								"SamlIdpSpSessionPersistenceImpl.fetchBySISSI_SSEI(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1307,8 +1333,10 @@ public class SamlIdpSpSessionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySISSI_SSEI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySISSI_SSEI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1888,21 +1916,17 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpSessionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
-	@Deprecated
 	@Override
 	public List<SamlIdpSpSession> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1915,12 +1939,14 @@ public class SamlIdpSpSessionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp sessions
 	 * @param end the upper bound of the range of saml idp sp sessions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp sessions
 	 */
 	@Override
 	public List<SamlIdpSpSession> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSpSession> orderByComparator) {
+		OrderByComparator<SamlIdpSpSession> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1930,17 +1956,23 @@ public class SamlIdpSpSessionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SamlIdpSpSession> list =
-			(List<SamlIdpSpSession>)finderCache.getResult(
+		List<SamlIdpSpSession> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlIdpSpSession>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1987,10 +2019,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

@@ -123,22 +123,19 @@ public class SamlSpAuthRequestPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpAuthRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreateDate(Date, int, int, OrderByComparator)}
 	 * @param createDate the create date
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp auth requests
 	 */
-	@Deprecated
 	@Override
 	public List<SamlSpAuthRequest> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
 
-		return findByCreateDate(createDate, start, end, orderByComparator);
+		return findByCreateDate(
+			createDate, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -152,12 +149,14 @@ public class SamlSpAuthRequestPersistenceImpl
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml sp auth requests
 	 */
 	@Override
 	public List<SamlSpAuthRequest> findByCreateDate(
 		Date createDate, int start, int end,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
+		OrderByComparator<SamlSpAuthRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -168,18 +167,21 @@ public class SamlSpAuthRequestPersistenceImpl
 			_getTime(createDate), start, end, orderByComparator
 		};
 
-		List<SamlSpAuthRequest> list =
-			(List<SamlSpAuthRequest>)finderCache.getResult(
+		List<SamlSpAuthRequest> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlSpAuthRequest>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SamlSpAuthRequest samlSpAuthRequest : list) {
-				if ((createDate.getTime() <=
-						samlSpAuthRequest.getCreateDate().getTime())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlSpAuthRequest samlSpAuthRequest : list) {
+					if ((createDate.getTime() <=
+							samlSpAuthRequest.getCreateDate().getTime())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -246,10 +248,14 @@ public class SamlSpAuthRequestPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -669,21 +675,17 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchBySIEI_SSARK(String,String)}
 	 * @param samlIdpEntityId the saml idp entity ID
 	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
 	 */
-	@Deprecated
 	@Override
 	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		String samlIdpEntityId, String samlSpAuthRequestKey,
-		boolean useFinderCache) {
+		String samlIdpEntityId, String samlSpAuthRequestKey) {
 
-		return fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey);
+		return fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey, true);
 	}
 
 	/**
@@ -696,17 +698,24 @@ public class SamlSpAuthRequestPersistenceImpl
 	 */
 	@Override
 	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		String samlIdpEntityId, String samlSpAuthRequestKey) {
+		String samlIdpEntityId, String samlSpAuthRequestKey,
+		boolean useFinderCache) {
 
 		samlIdpEntityId = Objects.toString(samlIdpEntityId, "");
 		samlSpAuthRequestKey = Objects.toString(samlSpAuthRequestKey, "");
 
-		Object[] finderArgs = new Object[] {
-			samlIdpEntityId, samlSpAuthRequestKey
-		};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchBySIEI_SSARK, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {samlIdpEntityId, samlSpAuthRequestKey};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchBySIEI_SSARK, finderArgs, this);
+		}
 
 		if (result instanceof SamlSpAuthRequest) {
 			SamlSpAuthRequest samlSpAuthRequest = (SamlSpAuthRequest)result;
@@ -770,14 +779,22 @@ public class SamlSpAuthRequestPersistenceImpl
 				List<SamlSpAuthRequest> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchBySIEI_SSARK, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchBySIEI_SSARK, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									samlIdpEntityId, samlSpAuthRequestKey
+								};
+							}
+
 							_log.warn(
 								"SamlSpAuthRequestPersistenceImpl.fetchBySIEI_SSARK(String, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -793,8 +810,10 @@ public class SamlSpAuthRequestPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(
-					_finderPathFetchBySIEI_SSARK, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchBySIEI_SSARK, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1333,21 +1352,17 @@ public class SamlSpAuthRequestPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlSpAuthRequestModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp auth requests
 	 */
-	@Deprecated
 	@Override
 	public List<SamlSpAuthRequest> findAll(
 		int start, int end,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1360,12 +1375,14 @@ public class SamlSpAuthRequestPersistenceImpl
 	 * @param start the lower bound of the range of saml sp auth requests
 	 * @param end the upper bound of the range of saml sp auth requests (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml sp auth requests
 	 */
 	@Override
 	public List<SamlSpAuthRequest> findAll(
 		int start, int end,
-		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
+		OrderByComparator<SamlSpAuthRequest> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1375,17 +1392,23 @@ public class SamlSpAuthRequestPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SamlSpAuthRequest> list =
-			(List<SamlSpAuthRequest>)finderCache.getResult(
+		List<SamlSpAuthRequest> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlSpAuthRequest>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1432,10 +1455,14 @@ public class SamlSpAuthRequestPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

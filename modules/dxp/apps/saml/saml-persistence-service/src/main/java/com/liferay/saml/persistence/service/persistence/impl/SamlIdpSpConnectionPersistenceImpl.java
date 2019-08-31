@@ -124,22 +124,18 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp connections
 	 */
-	@Deprecated
 	@Override
 	public List<SamlIdpSpConnection> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SamlIdpSpConnection> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlIdpSpConnection> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -153,12 +149,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml idp sp connections
 	 */
 	@Override
 	public List<SamlIdpSpConnection> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SamlIdpSpConnection> orderByComparator) {
+		OrderByComparator<SamlIdpSpConnection> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -168,26 +166,32 @@ public class SamlIdpSpConnectionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<SamlIdpSpConnection> list =
-			(List<SamlIdpSpConnection>)finderCache.getResult(
+		List<SamlIdpSpConnection> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlIdpSpConnection>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SamlIdpSpConnection samlIdpSpConnection : list) {
-				if ((companyId != samlIdpSpConnection.getCompanyId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SamlIdpSpConnection samlIdpSpConnection : list) {
+					if ((companyId != samlIdpSpConnection.getCompanyId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -243,10 +247,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -642,20 +650,17 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sp connection where companyId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_SSEI(long,String)}
 	 * @param companyId the company ID
 	 * @param samlSpEntityId the saml sp entity ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp connection, or <code>null</code> if a matching saml idp sp connection could not be found
 	 */
-	@Deprecated
 	@Override
 	public SamlIdpSpConnection fetchByC_SSEI(
-		long companyId, String samlSpEntityId, boolean useFinderCache) {
+		long companyId, String samlSpEntityId) {
 
-		return fetchByC_SSEI(companyId, samlSpEntityId);
+		return fetchByC_SSEI(companyId, samlSpEntityId, true);
 	}
 
 	/**
@@ -668,14 +673,22 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 */
 	@Override
 	public SamlIdpSpConnection fetchByC_SSEI(
-		long companyId, String samlSpEntityId) {
+		long companyId, String samlSpEntityId, boolean useFinderCache) {
 
 		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
-		Object[] finderArgs = new Object[] {companyId, samlSpEntityId};
+		Object[] finderArgs = null;
 
-		Object result = finderCache.getResult(
-			_finderPathFetchByC_SSEI, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, samlSpEntityId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_SSEI, finderArgs, this);
+		}
 
 		if (result instanceof SamlIdpSpConnection) {
 			SamlIdpSpConnection samlIdpSpConnection =
@@ -727,14 +740,22 @@ public class SamlIdpSpConnectionPersistenceImpl
 				List<SamlIdpSpConnection> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(
-						_finderPathFetchByC_SSEI, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_SSEI, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									companyId, samlSpEntityId
+								};
+							}
+
 							_log.warn(
 								"SamlIdpSpConnectionPersistenceImpl.fetchByC_SSEI(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -750,7 +771,10 @@ public class SamlIdpSpConnectionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(_finderPathFetchByC_SSEI, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_SSEI, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1327,21 +1351,17 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SamlIdpSpConnectionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp connections
 	 */
-	@Deprecated
 	@Override
 	public List<SamlIdpSpConnection> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSpConnection> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SamlIdpSpConnection> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1354,12 +1374,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 * @param start the lower bound of the range of saml idp sp connections
 	 * @param end the upper bound of the range of saml idp sp connections (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of saml idp sp connections
 	 */
 	@Override
 	public List<SamlIdpSpConnection> findAll(
 		int start, int end,
-		OrderByComparator<SamlIdpSpConnection> orderByComparator) {
+		OrderByComparator<SamlIdpSpConnection> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1369,17 +1391,23 @@ public class SamlIdpSpConnectionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SamlIdpSpConnection> list =
-			(List<SamlIdpSpConnection>)finderCache.getResult(
+		List<SamlIdpSpConnection> list = null;
+
+		if (useFinderCache) {
+			list = (List<SamlIdpSpConnection>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -1427,10 +1455,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

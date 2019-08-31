@@ -17,7 +17,6 @@ package com.liferay.oauth.service.persistence;
 import com.liferay.oauth.exception.NoSuchUserException;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -71,18 +70,16 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUserId(long, int, int, OrderByComparator)}
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
-	@Deprecated
 	public java.util.List<OAuthUser> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<OAuthUser> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth users where userId = &#63;.
@@ -95,11 +92,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
 	public java.util.List<OAuthUser> findByUserId(
 		long userId, int start, int end,
-		OrderByComparator<OAuthUser> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth user in the ordered set where userId = &#63;.
@@ -110,7 +110,9 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @throws NoSuchUserException if a matching o auth user could not be found
 	 */
 	public OAuthUser findByUserId_First(
-			long userId, OrderByComparator<OAuthUser> orderByComparator)
+			long userId,
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -121,7 +123,9 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the first matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
 	public OAuthUser fetchByUserId_First(
-		long userId, OrderByComparator<OAuthUser> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth user in the ordered set where userId = &#63;.
@@ -132,7 +136,9 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @throws NoSuchUserException if a matching o auth user could not be found
 	 */
 	public OAuthUser findByUserId_Last(
-			long userId, OrderByComparator<OAuthUser> orderByComparator)
+			long userId,
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -143,7 +149,9 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @return the last matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
 	public OAuthUser fetchByUserId_Last(
-		long userId, OrderByComparator<OAuthUser> orderByComparator);
+		long userId,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth users before and after the current o auth user in the ordered set where userId = &#63;.
@@ -156,7 +164,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser[] findByUserId_PrevAndNext(
 			long oAuthUserId, long userId,
-			OrderByComparator<OAuthUser> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -205,18 +214,16 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOAuthApplicationId(long, int, int, OrderByComparator)}
 	 * @param oAuthApplicationId the o auth application ID
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
-	@Deprecated
 	public java.util.List<OAuthUser> findByOAuthApplicationId(
 		long oAuthApplicationId, int start, int end,
-		OrderByComparator<OAuthUser> orderByComparator, boolean useFinderCache);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth users where oAuthApplicationId = &#63;.
@@ -229,11 +236,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching o auth users
 	 */
 	public java.util.List<OAuthUser> findByOAuthApplicationId(
 		long oAuthApplicationId, int start, int end,
-		OrderByComparator<OAuthUser> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first o auth user in the ordered set where oAuthApplicationId = &#63;.
@@ -245,7 +255,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser findByOAuthApplicationId_First(
 			long oAuthApplicationId,
-			OrderByComparator<OAuthUser> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -257,7 +268,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser fetchByOAuthApplicationId_First(
 		long oAuthApplicationId,
-		OrderByComparator<OAuthUser> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns the last o auth user in the ordered set where oAuthApplicationId = &#63;.
@@ -269,7 +281,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser findByOAuthApplicationId_Last(
 			long oAuthApplicationId,
-			OrderByComparator<OAuthUser> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -281,7 +294,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser fetchByOAuthApplicationId_Last(
 		long oAuthApplicationId,
-		OrderByComparator<OAuthUser> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns the o auth users before and after the current o auth user in the ordered set where oAuthApplicationId = &#63;.
@@ -294,7 +308,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 */
 	public OAuthUser[] findByOAuthApplicationId_PrevAndNext(
 			long oAuthUserId, long oAuthApplicationId,
-			OrderByComparator<OAuthUser> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
@@ -323,16 +338,12 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 		throws NoSuchUserException;
 
 	/**
-	 * Returns the o auth user where accessToken = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth user where accessToken = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByAccessToken(String)}
 	 * @param accessToken the access token
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
-	@Deprecated
-	public OAuthUser fetchByAccessToken(
-		String accessToken, boolean useFinderCache);
+	public OAuthUser fetchByAccessToken(String accessToken);
 
 	/**
 	 * Returns the o auth user where accessToken = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -341,7 +352,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
-	public OAuthUser fetchByAccessToken(String accessToken);
+	public OAuthUser fetchByAccessToken(
+		String accessToken, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth user where accessToken = &#63; from the database.
@@ -372,17 +384,13 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 		throws NoSuchUserException;
 
 	/**
-	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByU_OAI(long,long)}
 	 * @param userId the user ID
 	 * @param oAuthApplicationId the o auth application ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
-	@Deprecated
-	public OAuthUser fetchByU_OAI(
-		long userId, long oAuthApplicationId, boolean useFinderCache);
+	public OAuthUser fetchByU_OAI(long userId, long oAuthApplicationId);
 
 	/**
 	 * Returns the o auth user where userId = &#63; and oAuthApplicationId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -392,7 +400,8 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth user, or <code>null</code> if a matching o auth user could not be found
 	 */
-	public OAuthUser fetchByU_OAI(long userId, long oAuthApplicationId);
+	public OAuthUser fetchByU_OAI(
+		long userId, long oAuthApplicationId, boolean useFinderCache);
 
 	/**
 	 * Removes the o auth user where userId = &#63; and oAuthApplicationId = &#63; from the database.
@@ -491,17 +500,15 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>OAuthUserModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth users
 	 */
-	@Deprecated
 	public java.util.List<OAuthUser> findAll(
-		int start, int end, OrderByComparator<OAuthUser> orderByComparator,
-		boolean useFinderCache);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the o auth users.
@@ -513,10 +520,14 @@ public interface OAuthUserPersistence extends BasePersistence<OAuthUser> {
 	 * @param start the lower bound of the range of o auth users
 	 * @param end the upper bound of the range of o auth users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of o auth users
 	 */
 	public java.util.List<OAuthUser> findAll(
-		int start, int end, OrderByComparator<OAuthUser> orderByComparator);
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<OAuthUser>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the o auth users from the database.

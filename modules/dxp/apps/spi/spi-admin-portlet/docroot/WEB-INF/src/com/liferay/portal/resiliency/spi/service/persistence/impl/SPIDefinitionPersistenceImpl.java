@@ -127,22 +127,18 @@ public class SPIDefinitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompanyId(long, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
-	@Deprecated
 	@Override
 	public List<SPIDefinition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SPIDefinition> orderByComparator) {
 
-		return findByCompanyId(companyId, start, end, orderByComparator);
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -156,12 +152,14 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findByCompanyId(
 		long companyId, int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator) {
+		OrderByComparator<SPIDefinition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -171,26 +169,32 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByCompanyId;
-			finderArgs = new Object[] {companyId};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCompanyId;
+				finderArgs = new Object[] {companyId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByCompanyId;
 			finderArgs = new Object[] {
 				companyId, start, end, orderByComparator
 			};
 		}
 
-		List<SPIDefinition> list =
-			(List<SPIDefinition>)FinderCacheUtil.getResult(
+		List<SPIDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SPIDefinition spiDefinition : list) {
-				if ((companyId != spiDefinition.getCompanyId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (SPIDefinition spiDefinition : list) {
+					if ((companyId != spiDefinition.getCompanyId())) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -246,10 +250,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1012,20 +1020,15 @@ public class SPIDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the spi definition where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the spi definition where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByC_N(long,String)}
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
-	@Deprecated
 	@Override
-	public SPIDefinition fetchByC_N(
-		long companyId, String name, boolean useFinderCache) {
-
-		return fetchByC_N(companyId, name);
+	public SPIDefinition fetchByC_N(long companyId, String name) {
+		return fetchByC_N(companyId, name, true);
 	}
 
 	/**
@@ -1037,13 +1040,23 @@ public class SPIDefinitionPersistenceImpl
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
 	@Override
-	public SPIDefinition fetchByC_N(long companyId, String name) {
+	public SPIDefinition fetchByC_N(
+		long companyId, String name, boolean useFinderCache) {
+
 		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] {companyId, name};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByC_N, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, name};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByC_N, finderArgs, this);
+		}
 
 		if (result instanceof SPIDefinition) {
 			SPIDefinition spiDefinition = (SPIDefinition)result;
@@ -1093,14 +1106,20 @@ public class SPIDefinitionPersistenceImpl
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByC_N, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByC_N, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {companyId, name};
+							}
+
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -1116,7 +1135,10 @@ public class SPIDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(_finderPathFetchByC_N, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByC_N, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -1273,23 +1295,20 @@ public class SPIDefinitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
 	 * @param companyId the company ID
 	 * @param status the status
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
-	@Deprecated
 	@Override
 	public List<SPIDefinition> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean useFinderCache) {
+		OrderByComparator<SPIDefinition> orderByComparator) {
 
-		return findByC_S(companyId, status, start, end, orderByComparator);
+		return findByC_S(
+			companyId, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1304,12 +1323,14 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findByC_S(
 		long companyId, int status, int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator) {
+		OrderByComparator<SPIDefinition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1319,28 +1340,34 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByC_S;
-			finderArgs = new Object[] {companyId, status};
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_S;
+				finderArgs = new Object[] {companyId, status};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByC_S;
 			finderArgs = new Object[] {
 				companyId, status, start, end, orderByComparator
 			};
 		}
 
-		List<SPIDefinition> list =
-			(List<SPIDefinition>)FinderCacheUtil.getResult(
+		List<SPIDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SPIDefinition spiDefinition : list) {
-				if ((companyId != spiDefinition.getCompanyId()) ||
-					(status != spiDefinition.getStatus())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SPIDefinition spiDefinition : list) {
+					if ((companyId != spiDefinition.getCompanyId()) ||
+						(status != spiDefinition.getStatus())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -1400,10 +1427,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2231,32 +2262,6 @@ public class SPIDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the spi definitions where companyId = &#63; and status = &#63;, optionally using the finder cache.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_S(long,int, int, int, OrderByComparator)}
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of spi definitions
-	 * @param end the upper bound of the range of spi definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching spi definitions
-	 */
-	@Deprecated
-	@Override
-	public List<SPIDefinition> findByC_S(
-		long companyId, int[] statuses, int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByC_S(companyId, statuses, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the spi definitions where companyId = &#63; and status = any &#63;.
 	 *
 	 * <p>
@@ -2274,6 +2279,31 @@ public class SPIDefinitionPersistenceImpl
 	public List<SPIDefinition> findByC_S(
 		long companyId, int[] statuses, int start, int end,
 		OrderByComparator<SPIDefinition> orderByComparator) {
+
+		return findByC_S(
+			companyId, statuses, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the spi definitions where companyId = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of spi definitions
+	 * @param end the upper bound of the range of spi definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching spi definitions
+	 */
+	@Override
+	public List<SPIDefinition> findByC_S(
+		long companyId, int[] statuses, int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator,
+		boolean useFinderCache) {
 
 		if (statuses == null) {
 			statuses = new int[0];
@@ -2294,27 +2324,36 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderArgs = new Object[] {companyId, StringUtil.merge(statuses)};
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, StringUtil.merge(statuses)
+				};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderArgs = new Object[] {
 				companyId, StringUtil.merge(statuses), start, end,
 				orderByComparator
 			};
 		}
 
-		List<SPIDefinition> list =
-			(List<SPIDefinition>)FinderCacheUtil.getResult(
+		List<SPIDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				_finderPathWithPaginationFindByC_S, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (SPIDefinition spiDefinition : list) {
-				if ((companyId != spiDefinition.getCompanyId()) ||
-					!ArrayUtil.contains(statuses, spiDefinition.getStatus())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (SPIDefinition spiDefinition : list) {
+					if ((companyId != spiDefinition.getCompanyId()) ||
+						!ArrayUtil.contains(
+							statuses, spiDefinition.getStatus())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
@@ -2378,12 +2417,16 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(
-					_finderPathWithPaginationFindByC_S, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByC_S, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationFindByC_S, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathWithPaginationFindByC_S, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -2723,20 +2766,17 @@ public class SPIDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Returns the spi definition where connectorAddress = &#63; and connectorPort = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the spi definition where connectorAddress = &#63; and connectorPort = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByCA_CP(String,int)}
 	 * @param connectorAddress the connector address
 	 * @param connectorPort the connector port
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching spi definition, or <code>null</code> if a matching spi definition could not be found
 	 */
-	@Deprecated
 	@Override
 	public SPIDefinition fetchByCA_CP(
-		String connectorAddress, int connectorPort, boolean useFinderCache) {
+		String connectorAddress, int connectorPort) {
 
-		return fetchByCA_CP(connectorAddress, connectorPort);
+		return fetchByCA_CP(connectorAddress, connectorPort, true);
 	}
 
 	/**
@@ -2749,14 +2789,22 @@ public class SPIDefinitionPersistenceImpl
 	 */
 	@Override
 	public SPIDefinition fetchByCA_CP(
-		String connectorAddress, int connectorPort) {
+		String connectorAddress, int connectorPort, boolean useFinderCache) {
 
 		connectorAddress = Objects.toString(connectorAddress, "");
 
-		Object[] finderArgs = new Object[] {connectorAddress, connectorPort};
+		Object[] finderArgs = null;
 
-		Object result = FinderCacheUtil.getResult(
-			_finderPathFetchByCA_CP, finderArgs, this);
+		if (useFinderCache) {
+			finderArgs = new Object[] {connectorAddress, connectorPort};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByCA_CP, finderArgs, this);
+		}
 
 		if (result instanceof SPIDefinition) {
 			SPIDefinition spiDefinition = (SPIDefinition)result;
@@ -2807,14 +2855,22 @@ public class SPIDefinitionPersistenceImpl
 				List<SPIDefinition> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(
-						_finderPathFetchByCA_CP, finderArgs, list);
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByCA_CP, finderArgs, list);
+					}
 				}
 				else {
 					if (list.size() > 1) {
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									connectorAddress, connectorPort
+								};
+							}
+
 							_log.warn(
 								"SPIDefinitionPersistenceImpl.fetchByCA_CP(String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
@@ -2830,8 +2886,10 @@ public class SPIDefinitionPersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(
-					_finderPathFetchByCA_CP, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(
+						_finderPathFetchByCA_CP, finderArgs);
+				}
 
 				throw processException(e);
 			}
@@ -3467,20 +3525,17 @@ public class SPIDefinitionPersistenceImpl
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>SPIDefinitionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of spi definitions
 	 */
-	@Deprecated
 	@Override
 	public List<SPIDefinition> findAll(
-		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
-		boolean useFinderCache) {
+		int start, int end,
+		OrderByComparator<SPIDefinition> orderByComparator) {
 
-		return findAll(start, end, orderByComparator);
+		return findAll(start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3493,12 +3548,13 @@ public class SPIDefinitionPersistenceImpl
 	 * @param start the lower bound of the range of spi definitions
 	 * @param end the upper bound of the range of spi definitions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of spi definitions
 	 */
 	@Override
 	public List<SPIDefinition> findAll(
-		int start, int end,
-		OrderByComparator<SPIDefinition> orderByComparator) {
+		int start, int end, OrderByComparator<SPIDefinition> orderByComparator,
+		boolean useFinderCache) {
 
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -3508,17 +3564,23 @@ public class SPIDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<SPIDefinition> list =
-			(List<SPIDefinition>)FinderCacheUtil.getResult(
+		List<SPIDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<SPIDefinition>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -3565,10 +3627,14 @@ public class SPIDefinitionPersistenceImpl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (useFinderCache) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(e);
 			}

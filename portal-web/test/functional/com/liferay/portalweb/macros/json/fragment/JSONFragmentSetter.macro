@@ -1,7 +1,7 @@
 definition {
 
 	macro setCollectionId {
-		Variables.assertDefined("${collectionName},${groupId}");
+		Variables.assertDefined(parameterList = "${collectionName},${groupId}");
 
 		var collectionId = JSONFragmentAPI._getCollectionIdByName(
 			collectionName = "${collectionName}",
@@ -16,14 +16,6 @@ definition {
 		}
 
 		return "${configuration}";
-	}
-
-	macro setHtml {
-		if (!(isSet(html))) {
-			var html = "test";
-		}
-
-		return "${html}";
 	}
 
 	macro setGroupId {
@@ -46,12 +38,12 @@ definition {
 		return "${groupId}";
 	}
 
-	macro setType {
-		if (!(isSet(type))) {
-			var type = "0";
+	macro setHTML {
+		if (!(isSet(html))) {
+			var html = "test";
 		}
 
-		return "${type}";
+		return "${html}";
 	}
 
 	macro setStatus {
@@ -60,6 +52,14 @@ definition {
 		}
 
 		return "${status}";
+	}
+
+	macro setType {
+		if (!(isSet(type))) {
+			var type = "0";
+		}
+
+		return "${type}";
 	}
 
 }

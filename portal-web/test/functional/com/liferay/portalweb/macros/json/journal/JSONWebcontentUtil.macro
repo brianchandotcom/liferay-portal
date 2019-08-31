@@ -2,6 +2,7 @@ definition {
 
 	@summary = "Helper function to help input content html info"
 	macro _convertToXML {
+		Variables.assertDefined(parameterList = "${content}");
 
 		var contentXML = '''<root available-locales="en_US" default-locale="en_US"> <dynamic-element name="content" type="text_area" index-type="text"> <dynamic-content language-id="en_US">${content}</dynamic-content> </dynamic-element> </root> ''';
 
@@ -10,6 +11,8 @@ definition {
 
 	@summary = "Helper function to help input localized content html info"
 	macro _localizedConvertToXML {
+		Variables.assertDefined(parameterList = "${contentMap}");
+
 		// Get list of localizations used
 
 		var localeList = "";

@@ -1,0 +1,114 @@
+definition {
+
+	macro setColumn {
+		if (!(isSet(column))) {
+			var column = "1";
+		}
+
+		return "${column}";
+	}
+
+	macro setGroupId {
+		JSONUtil2._exclusiveOrCheck(
+			A = "${groupName}",
+			B = "${groupKey}",
+			failMessage = "Please only set 'groupName' or 'groupKey' but not both or none.");
+
+		if (isSet(groupName)) {
+			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}");
+		}
+		else if (isSet(groupKey)) {
+			var site = JSONLayoutSetter.setSite(site = "${site}");
+
+			var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}");
+		}
+
+		return "${groupId}";
+	}
+
+	macro setLayoutId {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
+
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+
+		var layoutId = JSONLayoutAPI._getLayoutIdByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "${privateLayout}");
+
+		return "${layoutId}";
+	}
+
+	macro setParentLayoutId {
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+
+		if (isSet(parentLayoutName)) {
+			Variables.assertDefined(parameterList = "${groupId},${parentLayoutName}");
+
+			var parentLayoutId = JSONLayoutAPI._getLayoutIdByName(
+				groupId = "${groupId}",
+				layoutName = "${parentLayoutName}",
+				privateLayout = "${privateLayout}");
+		}
+		else {
+			var parentLayoutId = "0";
+		}
+
+		return "${parentLayoutId}";
+	}
+
+	macro setPrivateLayout {
+		if (!(isSet(privateLayout))) {
+			var privateLayout = "false";
+		}
+
+		return "${privateLayout}";
+	}
+
+	macro setSite {
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		return "${site}";
+	}
+
+	macro setType {
+		if (!(isSet(type))) {
+			var type = "portlet";
+		}
+
+		return "${type}";
+	}
+
+	macro setTypeSettings {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName}");
+
+		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = "${privateLayout}");
+
+		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(
+			groupId = "${groupId}",
+			layoutName = "${layoutName}",
+			privateLayout = "${privateLayout}");
+
+		if (isSet(layoutTemplate)) {
+			var typeSettings = JSONLayoutUtil._updateLayoutTemplateId(
+				layoutTemplate = "${layoutTemplate}",
+				typeSettings = "${typeSettings}");
+		}
+
+		if (isSet(widgetName)) {
+			var typeSettings = JSONLayoutUtil._addWidgetToTypeSettings(
+				column = "${column}",
+				widgetName = "${widgetName}",
+				typeSettings = "${typeSettings}");
+		}
+
+		if ((!(isSet(layoutTemplate))) && (!(isSet(widgetName)))) {
+			fail("typeSettings will not be updated.");
+		}
+
+		return "${typeSettings}";
+	}
+
+}

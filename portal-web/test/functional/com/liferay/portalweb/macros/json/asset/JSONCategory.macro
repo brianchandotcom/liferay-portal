@@ -63,7 +63,7 @@ definition {
 
 		JSONCategoryAPI._addCategory(
 			groupId = "${groupId}",
-			parentCategoryId = "${parentCategoryId}",
+			parentCategoryId = "${parentCategoryId}"
 			titleMap = "${titleMap}",
 			descriptionMap = "${descriptionMap}",
 			vocabularyId = "${vocabularyId}");

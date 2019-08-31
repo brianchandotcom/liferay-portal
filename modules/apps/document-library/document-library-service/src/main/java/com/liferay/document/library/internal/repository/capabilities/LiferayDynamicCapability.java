@@ -142,8 +142,7 @@ public class LiferayDynamicCapability
 		_originalLocalRepository = localRepository;
 
 		_liferayDynamicCapabilityLocalRepositoryWrapper =
-			new LiferayDynamicCapabilityLocalRepositoryWrapper(
-				_wrapLocalRepository(localRepository));
+			new LocalRepositoryWrapper(_wrapLocalRepository(localRepository));
 
 		return _liferayDynamicCapabilityLocalRepositoryWrapper;
 	}
@@ -152,9 +151,8 @@ public class LiferayDynamicCapability
 	public synchronized Repository wrapRepository(Repository repository) {
 		_originalRepository = repository;
 
-		_liferayDynamicCapabilityRepositoryWrapper =
-			new LiferayDynamicCapabilityRepositoryWrapper(
-				_wrapRepository(repository));
+		_liferayDynamicCapabilityRepositoryWrapper = new RepositoryWrapper(
+			_wrapRepository(repository));
 
 		return _liferayDynamicCapabilityRepositoryWrapper;
 	}
@@ -244,10 +242,9 @@ public class LiferayDynamicCapability
 	private final Set<Capability> _capabilities = new HashSet<>();
 	private final Map<Capability, CapabilityRegistration>
 		_capabilityRegistrations = new ConcurrentHashMap<>();
-	private LiferayDynamicCapabilityLocalRepositoryWrapper
+	private LocalRepositoryWrapper
 		_liferayDynamicCapabilityLocalRepositoryWrapper;
-	private LiferayDynamicCapabilityRepositoryWrapper
-		_liferayDynamicCapabilityRepositoryWrapper;
+	private RepositoryWrapper _liferayDynamicCapabilityRepositoryWrapper;
 	private LocalRepository _originalLocalRepository;
 	private Repository _originalRepository;
 	private volatile RepositoryEventRegistry _repositoryEventRegistry;
@@ -304,28 +301,6 @@ public class LiferayDynamicCapability
 
 		private final CapabilityRegistration _capabilityRegistration;
 		private final RepositoryEventRegistry _repositoryEventRegistry;
-
-	}
-
-	private static class LiferayDynamicCapabilityLocalRepositoryWrapper
-		extends LocalRepositoryWrapper {
-
-		public LiferayDynamicCapabilityLocalRepositoryWrapper(
-			LocalRepository localRepository) {
-
-			super(localRepository);
-		}
-
-	}
-
-	private static class LiferayDynamicCapabilityRepositoryWrapper
-		extends RepositoryWrapper {
-
-		public LiferayDynamicCapabilityRepositoryWrapper(
-			Repository repository) {
-
-			super(repository);
-		}
 
 	}
 

@@ -32,6 +32,26 @@ public class ResourceConnection implements Comparable {
 		return createdIndex.compareTo(resourceConnection.getCreatedIndex());
 	}
 
+	public Long getInQueueAge() {
+		if (_inQueueStartTime == null) {
+			return 0L;
+		}
+
+		if (_inUseStartTime == null) {
+			return System.currentTimeMillis() - _inQueueStartTime;
+		}
+
+		return _inUseStartTime - _inQueueStartTime;
+	}
+
+	public Long getInUseAge() {
+		if (_inUseStartTime == null) {
+			return 0L;
+		}
+
+		return System.currentTimeMillis() - _inUseStartTime;
+	}
+
 	public Long getCreatedIndex() {
 		return _node.getCreatedIndex();
 	}
@@ -57,6 +77,12 @@ public class ResourceConnection implements Comparable {
 			_node = EtcdUtil.put(
 				_resourceMonitor.getEtcdServerURL(), _key, state.toString());
 
+			_setInQueueStartTime();
+
+			if (state == State.IN_USE) {
+				_setInUseStartTime();
+			}
+
 			return;
 		}
 
@@ -80,7 +106,11 @@ public class ResourceConnection implements Comparable {
 		_resourceMonitor = resourceMonitor;
 		_node = node;
 
-		_key = _node.getKey();
+		_key = node.getKey();
+
+		_setInQueueStartTime();
+
+		_setInUseStartTime();
 	}
 
 	protected ResourceConnection(
@@ -101,8 +131,36 @@ public class ResourceConnection implements Comparable {
 		}
 
 		_node = EtcdUtil.put(etcdServerURL, _key, State.IN_QUEUE.toString());
+
+		_setInQueueStartTime();
+
+		_setInUseStartTime();
 	}
 
+	private void _setInQueueStartTime() {
+		if (_inQueueStartTime != null) {
+			return;
+		}
+
+		_inQueueStartTime = System.currentTimeMillis();
+	}
+
+	private void _setInUseStartTime() {
+		if (_inUseStartTime != null) {
+			return;
+		}
+
+		State state = getState();
+
+		if (state != State.IN_USE) {
+			return;
+		}
+
+		_inUseStartTime = System.currentTimeMillis();
+	}
+
+	private Long _inUseStartTime;
+	private Long _inQueueStartTime;
 	private final String _key;
 	private EtcdUtil.Node _node;
 	private final ResourceMonitor _resourceMonitor;

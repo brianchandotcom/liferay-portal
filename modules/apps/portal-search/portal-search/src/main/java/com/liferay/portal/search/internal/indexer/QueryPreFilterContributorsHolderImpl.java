@@ -18,8 +18,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+import java.util.function.Consumer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -34,8 +33,8 @@ public class QueryPreFilterContributorsHolderImpl
 	implements QueryPreFilterContributorsHolder {
 
 	@Override
-	public Stream<QueryPreFilterContributor> getAll() {
-		return StreamSupport.stream(_serviceTrackerList.spliterator(), false);
+	public void forEach(Consumer<QueryPreFilterContributor> consumer) {
+		_serviceTrackerList.forEach(consumer);
 	}
 
 	@Activate

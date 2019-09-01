@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
-import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
 import java.util.List;
@@ -139,10 +138,7 @@ public class PreFilterContributorHelperImpl
 	private void _addPreFilters(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		Stream<QueryPreFilterContributor> stream =
-			queryPreFilterContributorsHolder.getAll();
-
-		stream.forEach(
+		queryPreFilterContributorsHolder.forEach(
 			queryPreFilterContributor -> queryPreFilterContributor.contribute(
 				booleanFilter, searchContext));
 	}

@@ -16,12 +16,10 @@ package com.liferay.portal.odata.entity;
 
 import com.liferay.petra.string.StringBundler;
 
-import java.util.AbstractMap;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Models an complex entity field. A Entity field with a {@code
@@ -49,15 +47,11 @@ public class ComplexEntityField extends EntityField {
 			_entityFieldsMap = Collections.emptyMap();
 		}
 		else {
-			Stream<EntityField> stream = entityFields.stream();
+			_entityFieldsMap = new HashMap<>();
 
-			_entityFieldsMap = stream.map(
-				entityField -> new AbstractMap.SimpleEntry<>(
-					entityField.getName(), entityField)
-			).collect(
-				Collectors.toMap(
-					entry -> entry.getKey(), entry -> entry.getValue())
-			);
+			for (EntityField entityField : entityFields) {
+				_entityFieldsMap.put(entityField.getName(), entityField);
+			}
 		}
 	}
 

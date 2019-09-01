@@ -2,6 +2,10 @@ components:
     schemas:
         App:
             properties:
+                appDeployments:
+                    items:
+                        $ref: "#/components/schemas/AppDeployment"
+                    type: array
                 dataDefinitionId:
                     format: int64
                     type: integer
@@ -24,10 +28,6 @@ components:
                     additionalProperties:
                         type: object
                     type: object
-                settings:
-                    additionalProperties:
-                        type: object
-                    type: object
                 siteId:
                     format: int64
                     type: integer
@@ -36,6 +36,15 @@ components:
                 userId:
                     format: int64
                     type: integer
+            type: object
+        AppDeployment:
+            properties:
+                deploymentType:
+                    type: string
+                settings:
+                    additionalProperties:
+                        type: object
+                    type: object
             type: object
 info:
     description: ""

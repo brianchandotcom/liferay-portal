@@ -17,12 +17,15 @@ package com.liferay.app.builder.rest.internal.resource.v1_0;
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.exception.AppBuilderAppStatusException;
 import com.liferay.app.builder.model.AppBuilderApp;
+import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.rest.dto.v1_0.App;
+import com.liferay.app.builder.rest.dto.v1_0.AppDeployment;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.InvalidAppException;
 import com.liferay.app.builder.rest.internal.jaxrs.exception.NoSuchDataListViewException;
 import com.liferay.app.builder.rest.internal.odata.entity.v1_0.AppBuilderAppEntityModel;
 import com.liferay.app.builder.rest.internal.resource.v1_0.util.LocalizedValueUtil;
 import com.liferay.app.builder.rest.resource.v1_0.AppResource;
+import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.util.comparator.AppBuilderAppCreateDateComparator;
 import com.liferay.app.builder.util.comparator.AppBuilderAppModifiedDateComparator;
@@ -33,10 +36,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,8 +56,12 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -220,15 +225,20 @@ public class AppResourceImpl
 		AppBuilderAppConstants.Status appBuilderAppConstantsStatus =
 			AppBuilderAppConstants.Status.parse(app.getStatus());
 
-		return _toApp(
+		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.addAppBuilderApp(
 				ddmStructure.getGroupId(), contextCompany.getCompanyId(),
 				PrincipalThreadLocal.getUserId(), dataDefinitionId,
 				GetterUtil.getLong(app.getDataLayoutId()),
 				GetterUtil.getLong(app.getDataListViewId()),
 				LocalizedValueUtil.toLocaleStringMap(app.getName()),
-				_toJSON(app.getSettings()),
-				appBuilderAppConstantsStatus.getValue()));
+				appBuilderAppConstantsStatus.getValue());
+
+		app.setId(appBuilderApp.getAppBuilderAppId());
+
+		_createDeployments(app);
+
+		return _toApp(appBuilderApp);
 	}
 
 	@Override
@@ -247,8 +257,17 @@ public class AppResourceImpl
 				ddmStructure.getStructureId(), app.getDataLayoutId(),
 				app.getDataListViewId(),
 				LocalizedValueUtil.toLocaleStringMap(app.getName()),
-				_toJSON(app.getSettings()),
 				appBuilderAppConstantsStatus.getValue()));
+	}
+
+	private void _createDeployments(App app) {
+		AppDeployment[] appDeployments = app.getAppDeployments();
+
+		for (AppDeployment appDeployment : appDeployments) {
+			_appBuilderAppDeploymentLocalService.addAppBuilderAppDeployment(
+				app.getId(), appDeployment.getDeploymentType(),
+				_toJSONString(appDeployment.getSettings()));
+		}
 	}
 
 	private App _toApp(AppBuilderApp appBuilderApp) throws Exception {
@@ -257,6 +276,8 @@ public class AppResourceImpl
 
 		return new App() {
 			{
+				appDeployments = _toAppDeployments(
+					appBuilderApp.getAppBuilderAppId());
 				dataDefinitionId = appBuilderApp.getDdmStructureId();
 				dataLayoutId = appBuilderApp.getDdmStructureLayoutId();
 				dataListViewId = appBuilderApp.getDeDataListViewId();
@@ -265,7 +286,6 @@ public class AppResourceImpl
 				id = appBuilderApp.getAppBuilderAppId();
 				name = LocalizedValueUtil.toStringObjectMap(
 					appBuilderApp.getNameMap());
-				settings = _toSettings(appBuilderApp.getSettings());
 				siteId = appBuilderApp.getGroupId();
 				status = appBuilderAppConstantsStatus.getLabel();
 				userId = appBuilderApp.getUserId();
@@ -273,10 +293,38 @@ public class AppResourceImpl
 		};
 	}
 
-	private String _toJSON(Map<String, Object> settings) {
-		return JSONUtil.put(
-			"deploymentTypes", settings.get("deploymentTypes")
-		).toString();
+	private AppDeployment[] _toAppDeployments(long appId) throws Exception {
+		List<AppDeployment> appDeployments = new ArrayList<>();
+
+		List<AppBuilderAppDeployment> appBuilderAppDeployments =
+			_appBuilderAppDeploymentLocalService.getAppBuilderAppDeployments(
+				appId);
+
+		for (AppBuilderAppDeployment appBuilderAppDeployment :
+				appBuilderAppDeployments) {
+
+			appDeployments.add(
+				new AppDeployment() {
+					{
+						deploymentType =
+							appBuilderAppDeployment.getDeploymentType();
+						settings = _toSettings(
+							appBuilderAppDeployment.getSettings());
+					}
+				});
+		}
+
+		return appDeployments.toArray(new AppDeployment[0]);
+	}
+
+	private String _toJSONString(Map<String, Object> map) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return jsonObject.toJSONString();
 	}
 
 	private OrderByComparator<AppBuilderApp> _toOrderByComparator(Sort sort) {
@@ -295,16 +343,21 @@ public class AppResourceImpl
 	}
 
 	private Map<String, Object> _toSettings(String settings) throws Exception {
+		Map<String, Object> settingsMap = new HashMap<>();
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(settings);
 
-		return new HashMap<String, Object>() {
-			{
-				put(
-					"deploymentTypes",
-					JSONUtil.toObjectList(
-						(JSONArray)jsonObject.get("deploymentTypes")));
-			}
-		};
+		Set<String> keys = jsonObject.keySet();
+
+		Iterator<String> iterator = keys.iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			settingsMap.put(key, jsonObject.get(key));
+		}
+
+		return settingsMap;
 	}
 
 	private void _validate(
@@ -360,6 +413,10 @@ public class AppResourceImpl
 
 	private static final EntityModel _entityModel =
 		new AppBuilderAppEntityModel();
+
+	@Reference
+	private AppBuilderAppDeploymentLocalService
+		_appBuilderAppDeploymentLocalService;
 
 	@Reference
 	private AppBuilderAppLocalService _appBuilderAppLocalService;

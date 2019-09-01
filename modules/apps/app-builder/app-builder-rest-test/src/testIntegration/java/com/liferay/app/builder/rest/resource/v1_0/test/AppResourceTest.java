@@ -16,6 +16,7 @@ package com.liferay.app.builder.rest.resource.v1_0.test;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
+import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
@@ -87,19 +88,30 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 	protected App randomApp() {
 		return new App() {
 			{
+				appDeployments = new AppDeployment[] {
+					new AppDeployment() {
+						{
+							deploymentType = "productMenu";
+							settings = new HashMap<>();
+						}
+					},
+					new AppDeployment() {
+						{
+							deploymentType = "standalone";
+							settings = new HashMap<>();
+						}
+					},
+					new AppDeployment() {
+						{
+							deploymentType = "widget";
+							settings = new HashMap<>();
+						}
+					}
+				};
 				dataDefinitionId = _ddmStructure.getStructureId();
 				dataLayoutId = _ddmStructureLayout.getStructureLayoutId();
 				dataListViewId = _deDataListView.getDeDataListViewId();
 				siteId = _ddmStructure.getGroupId();
-				settings = new HashMap<String, Object>() {
-					{
-						put(
-							"deploymentTypes",
-							new String[] {
-								"productMenu", "standalone", "widget"
-							});
-					}
-				};
 				status = AppBuilderAppConstants.Status.DEPLOYED.getLabel();
 				userId = testGroup.getCreatorUserId();
 			}

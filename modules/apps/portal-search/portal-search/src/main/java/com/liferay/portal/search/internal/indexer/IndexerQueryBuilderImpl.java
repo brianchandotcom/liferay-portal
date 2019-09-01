@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
@@ -224,10 +223,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	protected void postProcessFullQuery(
 		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		Stream<IndexerPostProcessor> stream =
-			_indexerPostProcessorsHolder.stream();
-
-		stream.forEach(
+		_indexerPostProcessorsHolder.forEach(
 			indexerPostProcessor -> {
 				try {
 					indexerPostProcessor.postProcessFullQuery(
@@ -275,10 +271,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
 		SearchContext searchContext) {
 
-		Stream<IndexerPostProcessor> stream =
-			_indexerPostProcessorsHolder.stream();
-
-		stream.forEach(
+		_indexerPostProcessorsHolder.forEach(
 			indexerPostProcessor -> {
 				try {
 					indexerPostProcessor.postProcessSearchQuery(

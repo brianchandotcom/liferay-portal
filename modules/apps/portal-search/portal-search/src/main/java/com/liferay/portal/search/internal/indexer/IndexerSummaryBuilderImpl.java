@@ -15,13 +15,11 @@
 package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
 import java.util.Locale;
-import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -47,10 +45,7 @@ public class IndexerSummaryBuilderImpl implements IndexerSummaryBuilder {
 		Summary summary = _modelSummaryContributor.getSummary(
 			document, locale, snippet);
 
-		Stream<IndexerPostProcessor> stream =
-			_indexerPostProcessorsHolder.stream();
-
-		stream.forEach(
+		_indexerPostProcessorsHolder.forEach(
 			indexerPostProcessor -> indexerPostProcessor.postProcessSummary(
 				summary, document, locale, snippet));
 

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 /**
  * @author André de Oliveira
@@ -31,14 +31,18 @@ public class IndexerPostProcessorsHolder {
 		_indexerPostProcessors.add(indexerPostProcessor);
 	}
 
+	public void forEach(Consumer<IndexerPostProcessor> consumer) {
+		_indexerPostProcessors.forEach(consumer);
+	}
+
 	public void removeIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor) {
 
 		_indexerPostProcessors.remove(indexerPostProcessor);
 	}
 
-	public Stream<IndexerPostProcessor> stream() {
-		return _indexerPostProcessors.stream();
+	public IndexerPostProcessor[] toArray() {
+		return _indexerPostProcessors.toArray(new IndexerPostProcessor[0]);
 	}
 
 	private final List<IndexerPostProcessor> _indexerPostProcessors =

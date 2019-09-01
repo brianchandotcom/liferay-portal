@@ -41,7 +41,6 @@ import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -122,10 +121,7 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public IndexerPostProcessor[] getIndexerPostProcessors() {
-		Stream<IndexerPostProcessor> stream =
-			_indexerPostProcessorsHolder.stream();
-
-		return stream.toArray(IndexerPostProcessor[]::new);
+		return _indexerPostProcessorsHolder.toArray();
 	}
 
 	@Override

@@ -30,15 +30,12 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -116,14 +113,17 @@ public class PrefixHandlerFactoryImpl implements PrefixHandlerFactory {
 
 		_delimiter = bundlePrefixHandlerFactoryConfiguration.delimiter();
 
-		Stream<String> stream = Arrays.stream(
-			bundlePrefixHandlerFactoryConfiguration.excludedScopes());
+		List<String> excludedInputs = new ArrayList<>();
 
-		_excludedInputs = stream.filter(
-			e -> !Validator.isBlank(e)
-		).collect(
-			Collectors.toList()
-		);
+		for (String excludedScope :
+				bundlePrefixHandlerFactoryConfiguration.excludedScopes()) {
+
+			if (!Validator.isBlank(excludedScope)) {
+				excludedInputs.add(excludedScope);
+			}
+		}
+
+		_excludedInputs = excludedInputs;
 
 		_includeBundleSymbolicName =
 			bundlePrefixHandlerFactoryConfiguration.includeBundleSymbolicName();

@@ -15,6 +15,7 @@
 package com.liferay.app.builder.rest.client.serdes.v1_0;
 
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
+import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 import com.liferay.app.builder.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -24,7 +25,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 import java.util.TreeMap;
+
 
 import javax.annotation.Generated;
 
@@ -58,6 +61,26 @@ public class AppSerDes {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		if (app.getAppDeployments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"appDeployments\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < app.getAppDeployments().length; i++) {
+				sb.append(String.valueOf(app.getAppDeployments()[i]));
+
+				if ((i + 1) < app.getAppDeployments().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (app.getDataDefinitionId() != null) {
 			if (sb.length() > 1) {
@@ -137,16 +160,6 @@ public class AppSerDes {
 			sb.append(_toJSON(app.getName()));
 		}
 
-		if (app.getSettings() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"settings\": ");
-
-			sb.append(_toJSON(app.getSettings()));
-		}
-
 		if (app.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -202,6 +215,13 @@ public class AppSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (app.getAppDeployments() == null) {
+			map.put("appDeployments", null);
+		}
+		else {
+			map.put("appDeployments", String.valueOf(app.getAppDeployments()));
+		}
+
 		if (app.getDataDefinitionId() == null) {
 			map.put("dataDefinitionId", null);
 		}
@@ -246,13 +266,6 @@ public class AppSerDes {
 			map.put("name", String.valueOf(app.getName()));
 		}
 
-		if (app.getSettings() == null) {
-			map.put("settings", null);
-		}
-		else {
-			map.put("settings", String.valueOf(app.getSettings()));
-		}
-
 		if (app.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -293,7 +306,19 @@ public class AppSerDes {
 		protected void setField(
 			App app, String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dataDefinitionId")) {
+			if (Objects.equals(jsonParserFieldName, "appDeployments")) {
+				if (jsonParserFieldValue != null) {
+					app.setAppDeployments(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> AppDeploymentSerDes.toDTO((String)object)
+						).toArray(
+							size -> new AppDeployment[size]
+						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dataDefinitionId")) {
 				if (jsonParserFieldValue != null) {
 					app.setDataDefinitionId(
 						Long.valueOf((String)jsonParserFieldValue));
@@ -329,12 +354,6 @@ public class AppSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					app.setName(
-						(Map)AppSerDes.toMap((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				if (jsonParserFieldValue != null) {
-					app.setSettings(
 						(Map)AppSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}

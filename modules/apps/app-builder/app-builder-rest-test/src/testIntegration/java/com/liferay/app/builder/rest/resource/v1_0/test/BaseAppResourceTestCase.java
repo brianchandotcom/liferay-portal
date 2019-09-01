@@ -856,6 +856,14 @@ public abstract class BaseAppResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("appDeployments", additionalAssertFieldName)) {
+				if (app.getAppDeployments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
 				if (app.getDataDefinitionId() == null) {
 					valid = false;
@@ -882,14 +890,6 @@ public abstract class BaseAppResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (app.getName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("settings", additionalAssertFieldName)) {
-				if (app.getSettings() == null) {
 					valid = false;
 				}
 
@@ -971,6 +971,16 @@ public abstract class BaseAppResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("appDeployments", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						app1.getAppDeployments(), app2.getAppDeployments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dataDefinitionId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						app1.getDataDefinitionId(),
@@ -1032,16 +1042,6 @@ public abstract class BaseAppResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(app1.getName(), app2.getName())) {
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("settings", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						app1.getSettings(), app2.getSettings())) {
-
 					return false;
 				}
 
@@ -1205,6 +1205,11 @@ public abstract class BaseAppResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("appDeployments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dataDefinitionId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1288,11 +1293,6 @@ public abstract class BaseAppResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("settings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

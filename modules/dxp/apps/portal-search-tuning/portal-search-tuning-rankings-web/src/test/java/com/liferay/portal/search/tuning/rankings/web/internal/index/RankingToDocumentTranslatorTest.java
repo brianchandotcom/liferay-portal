@@ -75,6 +75,7 @@ public class RankingToDocumentTranslatorTest {
 		Ranking ranking2 = _documentToRankingTranslator.translate(
 			document, null);
 
+		Assert.assertEquals("[]", String.valueOf(ranking2.getAliases()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getBlockIds()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getPins()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getQueryStrings()));
@@ -106,8 +107,7 @@ public class RankingToDocumentTranslatorTest {
 	public void testQueryStrings() {
 		Ranking.RankingBuilder rankingBuilder = new Ranking.RankingBuilder();
 
-		rankingBuilder.queryStrings(
-			Arrays.asList("142857", "285714", "428571"));
+		rankingBuilder.aliases(Arrays.asList("142857", "285714", "428571"));
 
 		Ranking ranking1 = rankingBuilder.build();
 
@@ -116,7 +116,9 @@ public class RankingToDocumentTranslatorTest {
 		Map<String, Field> fieldsMap = document.getFields();
 
 		Assert.assertEquals(
-			"{queryStrings=[142857, 285714, 428571]}", fieldsMap.toString());
+			"{aliases=[142857, 285714, 428571], queryStrings=[142857, " +
+				"285714, 428571]}",
+			fieldsMap.toString());
 
 		Ranking ranking2 = _documentToRankingTranslator.translate(
 			document, null);

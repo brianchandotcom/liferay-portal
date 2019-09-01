@@ -22,9 +22,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Jeyvison Nascimento
@@ -32,7 +29,7 @@ import java.util.stream.Stream;
 public class DataListViewEntityModel implements EntityModel {
 
 	public DataListViewEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -44,10 +41,8 @@ public class DataListViewEntityModel implements EntityModel {
 			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
-					"localized_name_".concat(LocaleUtil.toLanguageId(locale))))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+					"localized_name_".concat(
+						LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

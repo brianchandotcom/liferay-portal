@@ -23,9 +23,6 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -33,7 +30,7 @@ import java.util.stream.Stream;
 public class OrganizationEntityModel implements EntityModel {
 
 	public OrganizationEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
@@ -45,10 +42,7 @@ public class OrganizationEntityModel implements EntityModel {
 				"parentOrganizationId", locale -> "parentOrganizationId",
 				String::valueOf),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.NAME))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				"name", locale -> Field.getSortableFieldName(Field.NAME)));
 	}
 
 	@Override

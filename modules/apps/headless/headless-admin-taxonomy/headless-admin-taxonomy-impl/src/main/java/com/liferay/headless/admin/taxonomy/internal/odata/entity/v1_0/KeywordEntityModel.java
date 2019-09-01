@@ -23,9 +23,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Cristina González
@@ -33,7 +30,7 @@ import java.util.stream.Stream;
 public class KeywordEntityModel implements EntityModel {
 
 	public KeywordEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -46,10 +43,7 @@ public class KeywordEntityModel implements EntityModel {
 				Field.NAME,
 				locale -> Field.getSortableFieldName(
 					StringBundler.concat(
-						Field.NAME, StringPool.UNDERLINE, "String")))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+						Field.NAME, StringPool.UNDERLINE, "String"))));
 	}
 
 	@Override

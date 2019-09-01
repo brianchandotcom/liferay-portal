@@ -25,9 +25,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Víctor Galán
@@ -35,7 +32,7 @@ import java.util.stream.Stream;
 public class StructuredContentFolderEntityModel implements EntityModel {
 
 	public StructuredContentFolderEntityModel(List<EntityField> entityFields) {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new ComplexEntityField("customFields", entityFields),
 			new DateTimeEntityField(
 				"dateCreated",
@@ -49,10 +46,8 @@ public class StructuredContentFolderEntityModel implements EntityModel {
 			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
-					"localized_title_".concat(LocaleUtil.toLanguageId(locale))))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+					"localized_title_".concat(
+						LocaleUtil.toLanguageId(locale)))));
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.odata.entity;
 
 import com.liferay.petra.string.CharPool;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,6 +26,18 @@ import java.util.Map;
  * @review
  */
 public interface EntityModel {
+
+	public static Map<String, EntityField> toEntityFieldsMap(
+		EntityField... entityFields) {
+
+		Map<String, EntityField> entityFieldsMap = new HashMap<>();
+
+		for (EntityField entityField : entityFields) {
+			entityFieldsMap.put(entityField.getName(), entityField);
+		}
+
+		return entityFieldsMap;
+	}
 
 	/**
 	 * Returns a Map with all the entity fields used to create the EDM.

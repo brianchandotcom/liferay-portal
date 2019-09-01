@@ -23,9 +23,6 @@ import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -33,7 +30,7 @@ import java.util.stream.Stream;
 public class UserAccountEntityModel implements EntityModel {
 
 	public UserAccountEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.raw")),
@@ -57,10 +54,7 @@ public class UserAccountEntityModel implements EntityModel {
 			new StringEntityField(
 				"givenName", locale -> Field.getSortableFieldName("firstName")),
 			new StringEntityField(
-				"jobTitle", locale -> Field.getSortableFieldName("jobTitle"))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				"jobTitle", locale -> Field.getSortableFieldName("jobTitle")));
 	}
 
 	@Override

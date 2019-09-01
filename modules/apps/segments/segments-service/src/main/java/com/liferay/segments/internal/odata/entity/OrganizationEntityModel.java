@@ -24,9 +24,6 @@ import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Provides the entity data model from the Organization.
@@ -38,7 +35,7 @@ public class OrganizationEntityModel implements EntityModel {
 	public static final String NAME = "Organization";
 
 	public OrganizationEntityModel(List<EntityField> customEntityFields) {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new ComplexEntityField("customField", customEntityFields),
 			new DateTimeEntityField(
 				"dateModified",
@@ -59,10 +56,7 @@ public class OrganizationEntityModel implements EntityModel {
 			new StringEntityField(
 				"nameTreePath",
 				locale -> Field.getSortableFieldName("nameTreePath_String")),
-			new StringEntityField("type", locale -> Field.TYPE)
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+			new StringEntityField("type", locale -> Field.TYPE));
 	}
 
 	@Override

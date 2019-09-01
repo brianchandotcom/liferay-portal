@@ -22,9 +22,6 @@ import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Javier Gamarra
@@ -32,7 +29,7 @@ import java.util.stream.Stream;
 public class WikiNodeEntityModel implements EntityModel {
 
 	public WikiNodeEntityModel() {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),
@@ -43,10 +40,7 @@ public class WikiNodeEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
-				"name", locale -> Field.getSortableFieldName(Field.TITLE))
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				"name", locale -> Field.getSortableFieldName(Field.TITLE)));
 	}
 
 	@Override

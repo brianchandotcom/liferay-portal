@@ -27,9 +27,6 @@ import com.liferay.segments.context.Context;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Provides the entity data model for the context that segments users.
@@ -41,7 +38,7 @@ public class ContextEntityModel implements EntityModel {
 	public static final String NAME = "Context";
 
 	public ContextEntityModel(List<EntityField> customEntityFields) {
-		_entityFieldsMap = Stream.of(
+		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new BooleanEntityField(
 				Context.SIGNED_IN, locale -> Context.SIGNED_IN),
 			new CollectionEntityField(
@@ -77,10 +74,7 @@ public class ContextEntityModel implements EntityModel {
 				Context.REFERRER_URL, locale -> Context.REFERRER_URL),
 			new StringEntityField(Context.URL, locale -> Context.URL),
 			new StringEntityField(
-				Context.USER_AGENT, locale -> Context.USER_AGENT)
-		).collect(
-			Collectors.toMap(EntityField::getName, Function.identity())
-		);
+				Context.USER_AGENT, locale -> Context.USER_AGENT));
 	}
 
 	@Override

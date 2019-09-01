@@ -14,11 +14,9 @@
 
 package com.liferay.registry;
 
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * @author Shuyang Zhou
@@ -47,11 +45,22 @@ public class ServiceRankingUtil {
 
 		Set<Map.Entry<ServiceReference<S>, T>> entrySet = services.entrySet();
 
-		Stream<Map.Entry<ServiceReference<S>, T>> stream = entrySet.stream();
+		if (entrySet.isEmpty()) {
+			return Optional.empty();
+		}
 
-		return stream.max(
-			Comparator.comparing(
-				Map.Entry::getKey, ServiceRankingUtil::compare));
+		Map.Entry<ServiceReference<S>, T> maxEntry = null;
+
+		for (Map.Entry<ServiceReference<S>, T> entry : entrySet) {
+			if (maxEntry == null) {
+				maxEntry = entry;
+			}
+			else if (compare(entry.getKey(), maxEntry.getKey()) > 0) {
+				maxEntry = entry;
+			}
+		}
+
+		return Optional.of(maxEntry);
 	}
 
 	private static int _getServiceRanking(

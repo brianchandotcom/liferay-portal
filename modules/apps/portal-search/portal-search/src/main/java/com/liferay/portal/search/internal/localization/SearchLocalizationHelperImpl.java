@@ -21,12 +21,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,15 +63,19 @@ public class SearchLocalizationHelperImpl implements SearchLocalizationHelper {
 			return locales.toArray(new Locale[0]);
 		}
 
-		LongStream stream = Arrays.stream(groupIds);
+		if (groupIds.length == 1) {
+			Set<Locale> locales = _language.getAvailableLocales(groupIds[0]);
 
-		return stream.mapToObj(
-			_language::getAvailableLocales
-		).flatMap(
-			locales -> locales.stream()
-		).toArray(
-			size -> new Locale[size]
-		);
+			return locales.toArray(new Locale[0]);
+		}
+
+		Set<Locale> locales = new HashSet<>();
+
+		for (long groupId : groupIds) {
+			locales.addAll(_language.getAvailableLocales(groupId));
+		}
+
+		return locales.toArray(new Locale[0]);
 	}
 
 	@Override

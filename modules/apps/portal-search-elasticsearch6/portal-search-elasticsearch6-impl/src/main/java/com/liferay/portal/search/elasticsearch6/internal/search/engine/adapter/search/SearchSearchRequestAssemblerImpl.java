@@ -38,7 +38,6 @@ import com.liferay.portal.search.stats.StatsRequestBuilder;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -214,15 +213,9 @@ public class SearchSearchRequestAssemblerImpl
 		SearchRequestBuilder searchRequestBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
-		List<Sort> sorts = searchSearchRequest.getSorts();
-
-		Stream<Sort> stream = sorts.stream();
-
-		stream.map(
-			_sortFieldTranslator::translate
-		).forEach(
-			searchRequestBuilder::addSort
-		);
+		for (Sort sort : searchSearchRequest.getSorts()) {
+			searchRequestBuilder.addSort(_sortFieldTranslator.translate(sort));
+		}
 
 		_sortTranslator.translate(
 			searchRequestBuilder, searchSearchRequest.getSorts71());

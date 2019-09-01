@@ -49,6 +49,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class App {
 
 	@Schema
+	public AppDeployment[] getAppDeployments() {
+		return appDeployments;
+	}
+
+	public void setAppDeployments(AppDeployment[] appDeployments) {
+		this.appDeployments = appDeployments;
+	}
+
+	@JsonIgnore
+	public void setAppDeployments(
+		UnsafeSupplier<AppDeployment[], Exception>
+			appDeploymentsUnsafeSupplier) {
+
+		try {
+			appDeployments = appDeploymentsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected AppDeployment[] appDeployments;
+
+	@Schema
 	public Long getDataDefinitionId() {
 		return dataDefinitionId;
 	}
@@ -243,34 +272,6 @@ public class App {
 	protected Map<String, Object> name;
 
 	@Schema
-	public Map<String, Object> getSettings() {
-		return settings;
-	}
-
-	public void setSettings(Map<String, Object> settings) {
-		this.settings = settings;
-	}
-
-	@JsonIgnore
-	public void setSettings(
-		UnsafeSupplier<Map<String, Object>, Exception> settingsUnsafeSupplier) {
-
-		try {
-			settings = settingsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> settings;
-
-	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -384,6 +385,26 @@ public class App {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (appDeployments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"appDeployments\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < appDeployments.length; i++) {
+				sb.append(String.valueOf(appDeployments[i]));
+
+				if ((i + 1) < appDeployments.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (dataDefinitionId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -460,16 +481,6 @@ public class App {
 			sb.append("\"name\": ");
 
 			sb.append(_toJSON(name));
-		}
-
-		if (settings != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"settings\": ");
-
-			sb.append(_toJSON(settings));
 		}
 
 		if (siteId != null) {

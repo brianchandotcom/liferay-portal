@@ -67,14 +67,11 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -106,14 +103,13 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Stream<String[]> stream = Arrays.stream(_SAP_ENTRY_OBJECT_ARRAYS);
+		_scopeAliasesList = new ArrayList<>(_SAP_ENTRY_OBJECT_ARRAYS.length);
 
-		_scopeAliasesList = stream.map(
-			sapEntryObjectArray -> StringUtil.replaceFirst(
-				sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK)
-		).collect(
-			Collectors.toList()
-		);
+		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
+			_scopeAliasesList.add(
+				StringUtil.replaceFirst(
+					sapEntryObjectArray[0], "OAUTH2_", StringPool.BLANK));
+		}
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 

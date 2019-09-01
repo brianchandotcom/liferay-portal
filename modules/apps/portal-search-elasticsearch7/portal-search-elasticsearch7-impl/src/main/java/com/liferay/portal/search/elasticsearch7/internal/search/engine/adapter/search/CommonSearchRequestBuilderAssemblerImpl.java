@@ -32,13 +32,13 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.stats.StatsRequest;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.common.unit.TimeValue;
@@ -126,13 +126,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	}
 
 	protected void copy(List<Query> clauses, Consumer<QueryBuilder> consumer) {
-		Stream<Query> stream = clauses.stream();
-
-		stream.map(
-			this::translateQuery
-		).forEach(
-			consumer
-		);
+		for (Query query : clauses) {
+			consumer.accept(translateQuery(query));
+		}
 	}
 
 	protected QueryBuilder getQueryBuilder(
@@ -145,16 +141,37 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		List<ComplexQueryPart> complexQueryParts =
 			baseSearchRequest.getComplexQueryParts();
 
-		Stream<ComplexQueryPart> stream = complexQueryParts.stream();
+		if (complexQueryParts.isEmpty()) {
+			QueryBuilder queryBuilder2 = combine(
+				translate(Collections.emptyList()), queryBuilder1,
+				BoolQueryBuilder::must);
 
-		Map<Boolean, List<ComplexQueryPart>> map = stream.collect(
-			Collectors.partitioningBy(ComplexQueryPart::isAdditive));
+			return combine(
+				translate(Collections.emptyList()), queryBuilder2,
+				BoolQueryBuilder::should);
+		}
+
+		List<ComplexQueryPart> additiveComplexQueryParts = new ArrayList<>();
+
+		List<ComplexQueryPart> noneAdditiveComplexQueryParts =
+			new ArrayList<>();
+
+		for (ComplexQueryPart complexQueryPart : complexQueryParts) {
+			if (complexQueryPart.isAdditive()) {
+				additiveComplexQueryParts.add(complexQueryPart);
+			}
+			else {
+				noneAdditiveComplexQueryParts.add(complexQueryPart);
+			}
+		}
 
 		QueryBuilder queryBuilder2 = combine(
-			translate(map.get(false)), queryBuilder1, BoolQueryBuilder::must);
+			translate(noneAdditiveComplexQueryParts), queryBuilder1,
+			BoolQueryBuilder::must);
 
 		return combine(
-			translate(map.get(true)), queryBuilder2, BoolQueryBuilder::should);
+			translate(additiveComplexQueryParts), queryBuilder2,
+			BoolQueryBuilder::should);
 	}
 
 	protected void setAggregations(

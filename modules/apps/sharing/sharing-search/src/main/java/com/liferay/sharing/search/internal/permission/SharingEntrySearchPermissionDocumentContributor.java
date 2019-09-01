@@ -15,14 +15,12 @@
 package com.liferay.sharing.search.internal.permission;
 
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFieldContributor;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,17 +49,19 @@ public class SharingEntrySearchPermissionDocumentContributor
 			_sharingEntryLocalService.getSharingEntries(
 				_portal.getClassNameId(className), classPK);
 
-		Stream<SharingEntry> stream = sharingEntries.stream();
-
-		Long[] userIds = stream.map(
-			SharingEntry::getToUserId
-		).toArray(
-			Long[]::new
-		);
-
-		if (ArrayUtil.isNotEmpty(userIds)) {
-			document.addKeyword("sharedToUserId", userIds);
+		if (sharingEntries.isEmpty()) {
+			return;
 		}
+
+		long[] userIds = new long[sharingEntries.size()];
+
+		for (int i = 0; i < userIds.length; i++) {
+			SharingEntry sharingEntry = sharingEntries.get(i);
+
+			userIds[i] = sharingEntry.getToUserId();
+		}
+
+		document.addKeyword("sharedToUserId", userIds);
 	}
 
 	@Reference

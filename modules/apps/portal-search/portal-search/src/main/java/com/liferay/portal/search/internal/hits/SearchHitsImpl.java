@@ -21,7 +21,9 @@ import com.liferay.portal.search.hits.SearchHitsBuilder;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -29,8 +31,8 @@ import java.util.stream.Stream;
  */
 public class SearchHitsImpl implements SearchHits, Serializable {
 
-	public void addSearchHits(Stream<SearchHit> searchHitStream) {
-		searchHitStream.forEach(_searchHits::add);
+	public void addSearchHits(Collection<SearchHit> searchHits) {
+		searchHits.forEach(_searchHits::add);
 	}
 
 	@Override
@@ -91,9 +93,24 @@ public class SearchHitsImpl implements SearchHits, Serializable {
 
 		@Override
 		public SearchHitsBuilder addSearchHits(
+			Collection<SearchHit> searchHits) {
+
+			_searchHitsImpl.addSearchHits(searchHits);
+
+			return this;
+		}
+
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #addSearchHits(Collection))}
+		 */
+		@Deprecated
+		@Override
+		public SearchHitsBuilder addSearchHits(
 			Stream<SearchHit> searchHitStream) {
 
-			_searchHitsImpl.addSearchHits(searchHitStream);
+			_searchHitsImpl.addSearchHits(
+				searchHitStream.collect(Collectors.toList()));
 
 			return this;
 		}

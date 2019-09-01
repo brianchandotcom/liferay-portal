@@ -30,7 +30,8 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -72,14 +73,23 @@ public class SearchHitsTranslator {
 		SearchHitsBuilder searchHitsBuilder =
 			_searchHitsBuilderFactory.getSearchHitsBuilder();
 
-		return searchHitsBuilder.addSearchHits(
-			Stream.of(
-				elasticsearchSearchHits.getHits()
-			).map(
-				elasticsearchSearchHit -> translate(
+		org.elasticsearch.search.SearchHit[] elasticsearchSearchHitArray =
+			elasticsearchSearchHits.getHits();
+
+		List<SearchHit> searchHits = new ArrayList<>(
+			elasticsearchSearchHitArray.length);
+
+		for (org.elasticsearch.search.SearchHit elasticsearchSearchHit :
+				elasticsearchSearchHitArray) {
+
+			searchHits.add(
+				translate(
 					searchSearchRequest, elasticsearchSearchHit,
-					alternateUidFieldName)
-			)
+					alternateUidFieldName));
+		}
+
+		return searchHitsBuilder.addSearchHits(
+			searchHits
 		).maxScore(
 			elasticsearchSearchHits.getMaxScore()
 		).totalHits(
@@ -185,7 +195,7 @@ public class SearchHitsTranslator {
 		).build();
 	}
 
-	protected Stream<HighlightField> translateHighlightFields(
+	protected List<HighlightField> translateHighlightFields(
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit) {
 
 		Map
@@ -193,14 +203,15 @@ public class SearchHitsTranslator {
 			 org.elasticsearch.search.fetch.subphase.highlight.HighlightField>
 				map = elasticsearchSearchHit.getHighlightFields();
 
-		Collection
-			<org.elasticsearch.search.fetch.subphase.highlight.HighlightField>
-				values = map.values();
+		List<HighlightField> highlightFields = new ArrayList<>();
 
-		Stream<org.elasticsearch.search.fetch.subphase.highlight.HighlightField>
-			stream = values.stream();
+		for (org.elasticsearch.search.fetch.subphase.highlight.HighlightField
+				highlightField : map.values()) {
 
-		return stream.map(this::translateHighlightField);
+			highlightFields.add(translateHighlightField(highlightField));
+		}
+
+		return highlightFields;
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory;

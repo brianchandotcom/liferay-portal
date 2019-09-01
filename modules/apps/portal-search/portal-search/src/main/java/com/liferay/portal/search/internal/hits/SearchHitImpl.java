@@ -22,8 +22,10 @@ import com.liferay.portal.search.hits.SearchHitBuilder;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -32,10 +34,8 @@ import java.util.stream.Stream;
  */
 public class SearchHitImpl implements SearchHit, Serializable {
 
-	public void addHighlightFields(
-		Stream<HighlightField> highlightFieldStream) {
-
-		highlightFieldStream.forEach(this::addHighlightField);
+	public void addHighlightFields(Collection<HighlightField> highlightFields) {
+		highlightFields.forEach(this::addHighlightField);
 	}
 
 	public void addSources(Map<String, Object> sourcesMap) {
@@ -146,9 +146,24 @@ public class SearchHitImpl implements SearchHit, Serializable {
 
 		@Override
 		public SearchHitBuilder addHighlightFields(
+			Collection<HighlightField> highlightFields) {
+
+			_searchHitImpl.addHighlightFields(highlightFields);
+
+			return this;
+		}
+
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+		 *             #addHighlightFields(Collection))}
+		 */
+		@Deprecated
+		@Override
+		public SearchHitBuilder addHighlightFields(
 			Stream<HighlightField> highlightFieldStream) {
 
-			_searchHitImpl.addHighlightFields(highlightFieldStream);
+			_searchHitImpl.addHighlightFields(
+				highlightFieldStream.collect(Collectors.toList()));
 
 			return this;
 		}

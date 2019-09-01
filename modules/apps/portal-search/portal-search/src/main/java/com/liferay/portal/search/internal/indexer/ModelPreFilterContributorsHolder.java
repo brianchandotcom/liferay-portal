@@ -16,13 +16,14 @@ package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
 /**
  * @author André de Oliveira
  */
 public interface ModelPreFilterContributorsHolder {
 
-	public Stream<ModelPreFilterContributor> getByModel(String entryClassName);
+	public void forEach(
+		String entryClassName, Consumer<ModelPreFilterContributor> consumer);
 
 }

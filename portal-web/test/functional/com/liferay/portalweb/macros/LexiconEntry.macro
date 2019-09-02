@@ -180,6 +180,13 @@ definition {
 		}
 	}
 
+	macro viewEntryStatus {
+		AssertElementPresent(
+			key_rowEntry = "${rowEntry}",
+			key_rowStatus = "${rowStatus}",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_STATUS");
+	}
+
 	macro viewNoEntry {
 		AssertElementNotPresent(
 			key_rowEntry = "${rowEntry}",

@@ -15,12 +15,14 @@
 package com.liferay.document.library.opener.onedrive.web.internal.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,10 +41,20 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 		try {
 			super.onAfterRemove(dlFileEntry);
 
-			_dlOpenerFileEntryReferenceLocalService.
-				deleteDLOpenerFileEntryReference(
-					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-					new LiferayFileEntry(dlFileEntry));
+			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+			DLOpenerFileEntryReference dlOpenerFileEntryReference =
+				_dlOpenerFileEntryReferenceLocalService.
+					fetchDLOpenerFileEntryReference(
+						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+						fileEntry);
+
+			if (dlOpenerFileEntryReference != null) {
+				_dlOpenerFileEntryReferenceLocalService.
+					deleteDLOpenerFileEntryReference(
+						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+						fileEntry);
+			}
 		}
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);

@@ -1,8 +1,8 @@
 <div style="display: flex; justify-content: ${configuration.align};">
 	<div class="video" data-auto-play="${configuration.autoPlay?c}" data-height="${configuration.height}" data-hide-controls="${configuration.hideControls?c}" data-loop="${configuration.loop?c}" data-mute="${configuration.mute?c}" data-url="${configuration.url}" data-width="${configuration.width}">
-		<div class="error-message" hidden>
+		<div class="alert alert-info error-message" hidden role="alert">
 			<p>Please enter a valid video URL.</p>
-			<p>Supported providers are: Youtube.</p>
+			<p>The URL can point to any video file or a Youtube video.</p>
 		</div>
 
 		<div aria-hidden="true" class="loading-animation"></div>

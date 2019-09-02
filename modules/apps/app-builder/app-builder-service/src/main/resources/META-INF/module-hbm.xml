@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.app.builder.model.AppBuilderApp" />
+	<import class="com.liferay.app.builder.model.AppBuilderAppDeployment" />
 	<class name="com.liferay.app.builder.model.impl.AppBuilderAppImpl" table="AppBuilderApp">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="appBuilderAppId" type="long">
 			<generator class="assigned" />
@@ -18,7 +19,14 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ddmStructureLayoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="deDataListViewId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.app.builder.model.impl.AppBuilderAppDeploymentImpl" table="AppBuilderAppDeployment">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="appBuilderAppDeploymentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="appBuilderAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="deploymentType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

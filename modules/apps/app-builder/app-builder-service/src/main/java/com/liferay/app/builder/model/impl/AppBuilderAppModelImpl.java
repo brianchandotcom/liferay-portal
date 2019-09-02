@@ -87,7 +87,7 @@ public class AppBuilderAppModelImpl
 		{"ddmStructureId", Types.BIGINT},
 		{"ddmStructureLayoutId", Types.BIGINT},
 		{"deDataListViewId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"settings_", Types.CLOB}, {"status", Types.INTEGER}
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -106,12 +106,11 @@ public class AppBuilderAppModelImpl
 		TABLE_COLUMNS_MAP.put("ddmStructureLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deDataListViewId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,settings_ TEXT null,status INTEGER)";
+		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AppBuilderApp";
 
@@ -326,10 +325,6 @@ public class AppBuilderAppModelImpl
 		attributeGetterFunctions.put("name", AppBuilderApp::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<AppBuilderApp, String>)AppBuilderApp::setName);
-		attributeGetterFunctions.put("settings", AppBuilderApp::getSettings);
-		attributeSetterBiConsumers.put(
-			"settings",
-			(BiConsumer<AppBuilderApp, String>)AppBuilderApp::setSettings);
 		attributeGetterFunctions.put("status", AppBuilderApp::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
@@ -632,21 +627,6 @@ public class AppBuilderAppModelImpl
 	}
 
 	@Override
-	public String getSettings() {
-		if (_settings == null) {
-			return "";
-		}
-		else {
-			return _settings;
-		}
-	}
-
-	@Override
-	public void setSettings(String settings) {
-		_settings = settings;
-	}
-
-	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -788,7 +768,6 @@ public class AppBuilderAppModelImpl
 		appBuilderAppImpl.setDdmStructureLayoutId(getDdmStructureLayoutId());
 		appBuilderAppImpl.setDeDataListViewId(getDeDataListViewId());
 		appBuilderAppImpl.setName(getName());
-		appBuilderAppImpl.setSettings(getSettings());
 		appBuilderAppImpl.setStatus(getStatus());
 
 		appBuilderAppImpl.resetOriginalValues();
@@ -940,14 +919,6 @@ public class AppBuilderAppModelImpl
 			appBuilderAppCacheModel.name = null;
 		}
 
-		appBuilderAppCacheModel.settings = getSettings();
-
-		String settings = appBuilderAppCacheModel.settings;
-
-		if ((settings != null) && (settings.length() == 0)) {
-			appBuilderAppCacheModel.settings = null;
-		}
-
 		appBuilderAppCacheModel.status = getStatus();
 
 		return appBuilderAppCacheModel;
@@ -1047,7 +1018,6 @@ public class AppBuilderAppModelImpl
 	private long _deDataListViewId;
 	private String _name;
 	private String _nameCurrentLanguageId;
-	private String _settings;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

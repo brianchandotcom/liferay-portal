@@ -46,7 +46,6 @@ public class AppBuilderAppSoap implements Serializable {
 		soapModel.setDdmStructureLayoutId(model.getDdmStructureLayoutId());
 		soapModel.setDeDataListViewId(model.getDeDataListViewId());
 		soapModel.setName(model.getName());
-		soapModel.setSettings(model.getSettings());
 		soapModel.setStatus(model.getStatus());
 
 		return soapModel;
@@ -197,14 +196,6 @@ public class AppBuilderAppSoap implements Serializable {
 		_name = name;
 	}
 
-	public String getSettings() {
-		return _settings;
-	}
-
-	public void setSettings(String settings) {
-		_settings = settings;
-	}
-
 	public int getStatus() {
 		return _status;
 	}
@@ -225,7 +216,6 @@ public class AppBuilderAppSoap implements Serializable {
 	private long _ddmStructureLayoutId;
 	private long _deDataListViewId;
 	private String _name;
-	private String _settings;
 	private int _status;
 
 }

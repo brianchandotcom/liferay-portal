@@ -55,13 +55,12 @@ public class AppBuilderAppLocalServiceUtil {
 	public static com.liferay.app.builder.model.AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, long ddmStructureId,
 			long ddmStructureLayoutId, long deDataListViewId,
-			java.util.Map<java.util.Locale, String> nameMap, String settings,
-			int status)
+			java.util.Map<java.util.Locale, String> nameMap, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAppBuilderApp(
 			groupId, companyId, userId, ddmStructureId, ddmStructureLayoutId,
-			deDataListViewId, nameMap, settings, status);
+			deDataListViewId, nameMap, status);
 	}
 
 	/**
@@ -253,6 +252,12 @@ public class AppBuilderAppLocalServiceUtil {
 		return getService().getAppBuilderAppByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static java.util.List<Long> getAppBuilderAppIds(
+		String status, String deploymentType) {
+
+		return getService().getAppBuilderAppIds(status, deploymentType);
+	}
+
 	/**
 	 * Returns a range of all the app builder apps.
 	 *
@@ -402,13 +407,12 @@ public class AppBuilderAppLocalServiceUtil {
 			updateAppBuilderApp(
 				long userId, long appBuilderAppId, long ddmStructureId,
 				long ddmStructureLayoutId, long deDataListViewId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				String settings, int status)
+				java.util.Map<java.util.Locale, String> nameMap, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAppBuilderApp(
 			userId, appBuilderAppId, ddmStructureId, ddmStructureLayoutId,
-			deDataListViewId, nameMap, settings, status);
+			deDataListViewId, nameMap, status);
 	}
 
 	public static AppBuilderAppLocalService getService() {

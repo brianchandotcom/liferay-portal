@@ -78,7 +78,7 @@ public interface AppBuilderAppLocalService
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, long ddmStructureId,
 			long ddmStructureLayoutId, long deDataListViewId,
-			Map<Locale, String> nameMap, String settings, int status)
+			Map<Locale, String> nameMap, int status)
 		throws PortalException;
 
 	/**
@@ -224,6 +224,9 @@ public interface AppBuilderAppLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getAppBuilderAppIds(String status, String deploymentType);
+
 	/**
 	 * Returns a range of all the app builder apps.
 	 *
@@ -324,7 +327,7 @@ public interface AppBuilderAppLocalService
 	public AppBuilderApp updateAppBuilderApp(
 			long userId, long appBuilderAppId, long ddmStructureId,
 			long ddmStructureLayoutId, long deDataListViewId,
-			Map<Locale, String> nameMap, String settings, int status)
+			Map<Locale, String> nameMap, int status)
 		throws PortalException;
 
 }

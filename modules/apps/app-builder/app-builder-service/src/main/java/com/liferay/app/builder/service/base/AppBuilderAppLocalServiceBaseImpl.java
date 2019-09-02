@@ -16,6 +16,7 @@ package com.liferay.app.builder.service.base;
 
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
+import com.liferay.app.builder.service.persistence.AppBuilderAppFinder;
 import com.liferay.app.builder.service.persistence.AppBuilderAppPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -522,6 +523,9 @@ public abstract class AppBuilderAppLocalServiceBaseImpl
 
 	@Reference
 	protected AppBuilderAppPersistence appBuilderAppPersistence;
+
+	@Reference
+	protected AppBuilderAppFinder appBuilderAppFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

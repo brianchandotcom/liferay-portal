@@ -350,21 +350,6 @@ public interface AppBuilderAppModel
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the settings of this app builder app.
-	 *
-	 * @return the settings of this app builder app
-	 */
-	@AutoEscape
-	public String getSettings();
-
-	/**
-	 * Sets the settings of this app builder app.
-	 *
-	 * @param settings the settings of this app builder app
-	 */
-	public void setSettings(String settings);
-
-	/**
 	 * Returns the status of this app builder app.
 	 *
 	 * @return the status of this app builder app

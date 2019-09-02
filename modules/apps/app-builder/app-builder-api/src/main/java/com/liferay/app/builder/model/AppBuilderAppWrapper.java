@@ -58,7 +58,6 @@ public class AppBuilderAppWrapper
 		attributes.put("ddmStructureLayoutId", getDdmStructureLayoutId());
 		attributes.put("deDataListViewId", getDeDataListViewId());
 		attributes.put("name", getName());
-		attributes.put("settings", getSettings());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -137,12 +136,6 @@ public class AppBuilderAppWrapper
 
 		if (name != null) {
 			setName(name);
-		}
-
-		String settings = (String)attributes.get("settings");
-
-		if (settings != null) {
-			setSettings(settings);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -326,16 +319,6 @@ public class AppBuilderAppWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the settings of this app builder app.
-	 *
-	 * @return the settings of this app builder app
-	 */
-	@Override
-	public String getSettings() {
-		return model.getSettings();
 	}
 
 	/**
@@ -559,16 +542,6 @@ public class AppBuilderAppWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the settings of this app builder app.
-	 *
-	 * @param settings the settings of this app builder app
-	 */
-	@Override
-	public void setSettings(String settings) {
-		model.setSettings(settings);
 	}
 
 	/**

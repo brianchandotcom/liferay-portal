@@ -53,10 +53,20 @@ class DataLayoutBuilder extends Component {
 		}
 	}
 
+	dispatch(event, payload) {
+		this.refs.layoutProvider.dispatch(event, payload);
+	}
+
 	getFieldTypes() {
 		const {fieldTypes} = this.props;
 
 		return fieldTypes;
+	}
+
+	getStore() {
+		return {
+			...this.refs.layoutProvider.state
+		};
 	}
 
 	render() {

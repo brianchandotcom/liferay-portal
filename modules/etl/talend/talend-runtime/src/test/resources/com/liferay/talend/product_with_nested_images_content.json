@@ -7,6 +7,32 @@
 	},
 	"externalReferenceCode": "ext-123",
 	"id": 19770709,
+	"images": [
+		{
+			"attachment": "U29tZXRleHQsIHRoaXMgaXMgbm90IGltYWdl",
+			"id": 1977,
+			"title": {
+				"en_US": "Image of me",
+				"hr_HR": "Moja slika"
+			}
+		},
+		{
+			"attachment": "U29tZXRleHQsIHRoaXMgaXMgbm90IGltYWdl",
+			"id": 1979,
+			"title": {
+				"en_US": "Image of you",
+				"hr_HR": "Tvoja slika"
+			}
+		},
+		{
+			"attachment": "U29tZXRleHQsIHRoaXMgaXMgbm90IGltYWdl",
+			"id": 1981,
+			"title": {
+				"en_US": "Image of us",
+				"hr_HR": "Naša slika"
+			}
+		}
+	],
 	"metaDescription": {
 		"en_US": "Meta Description",
 		"hr_HR": "Meta opis"

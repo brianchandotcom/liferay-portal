@@ -92,6 +92,10 @@ public class SharingSitesFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, Group group) {
 		try {
+			if (group.isStagingGroup()) {
+				return false;
+			}
+
 			SharingConfiguration companySharingConfiguration =
 				_sharingConfigurationFactory.getCompanySharingConfiguration(
 					_companyLocalService.getCompany(group.getCompanyId()));

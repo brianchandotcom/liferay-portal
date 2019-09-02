@@ -132,6 +132,10 @@ public class SharingConfigurationFactoryImpl
 				return true;
 			}
 
+			if (_group.isStagingGroup()) {
+				return false;
+			}
+
 			UnicodeProperties typeSettingsProperties =
 				_group.getTypeSettingsProperties();
 

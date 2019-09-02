@@ -16,7 +16,6 @@ package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -154,7 +153,7 @@ public class SegmentsExperimentServiceImpl
 		long groupId, long classNameId, long classPK) {
 
 		return segmentsExperimentPersistence.filterFindByG_C_C(
-			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
+			groupId, classNameId, classPK);
 	}
 
 	@Override
@@ -216,20 +215,6 @@ public class SegmentsExperimentServiceImpl
 
 		return segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperimentKey, status);
-	}
-
-	private long _getPublishedLayoutClassPK(long classPK) {
-		Layout layout = layoutLocalService.fetchLayout(classPK);
-
-		if ((layout != null) &&
-			(layout.getClassNameId() == classNameLocalService.getClassNameId(
-				Layout.class)) &&
-			(layout.getClassPK() != 0)) {
-
-			return layout.getClassPK();
-		}
-
-		return classPK;
 	}
 
 	@Reference(

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,6 +103,7 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 		workflowMetricsSLADefinition.setCreateDate(now);
 		workflowMetricsSLADefinition.setModifiedDate(now);
 
+		workflowMetricsSLADefinition.setActive(true);
 		workflowMetricsSLADefinition.setCalendarKey(calendarKey);
 		workflowMetricsSLADefinition.setDescription(description);
 		workflowMetricsSLADefinition.setDuration(duration);
@@ -128,31 +130,18 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	}
 
 	@Override
-	public int countWorkflowMetricsSLADefinitions(
-		long companyId, long processId, int status) {
-
-		return workflowMetricsSLADefinitionPersistence.countByC_P_S(
-			companyId, processId, status);
-	}
-
-	@Override
-	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
+	public void deactivateWorkflowMetricsSLADefinition(
 			long workflowMetricsSLADefinitionId)
 		throws PortalException {
 
-		return deleteWorkflowMetricsSLADefinition(
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
 			workflowMetricsSLADefinitionPersistence.findByPrimaryKey(
-				workflowMetricsSLADefinitionId));
-	}
+				workflowMetricsSLADefinitionId);
 
-	@Override
-	public WorkflowMetricsSLADefinition deleteWorkflowMetricsSLADefinition(
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+		workflowMetricsSLADefinition.setActive(false);
 
-		workflowMetricsSLADefinitionVersionPersistence.
-			removeByWorkflowMetricsSLADefinitionId(
-				workflowMetricsSLADefinition.
-					getWorkflowMetricsSLADefinitionId());
+		workflowMetricsSLADefinitionPersistence.update(
+			workflowMetricsSLADefinition);
 
 		_workflowMetricsPortalExecutor.execute(
 			() -> _slaProcessResultWorkflowMetricsIndexer.deleteDocuments(
@@ -167,9 +156,33 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 				workflowMetricsSLADefinition.getProcessId(),
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId()));
+	}
 
-		return workflowMetricsSLADefinitionPersistence.remove(
-			workflowMetricsSLADefinition);
+	@Override
+	public WorkflowMetricsSLADefinition getWorkflowMetricsSLADefinition(
+			long workflowMetricsSLADefinitionId, boolean active)
+		throws PortalException {
+
+		return workflowMetricsSLADefinitionPersistence.findByWMSLAD_A(
+			workflowMetricsSLADefinitionId, active);
+	}
+
+	@Override
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, boolean active, long processId, int status, int start,
+		int end, OrderByComparator<WorkflowMetricsSLADefinition> obc) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_A_P_S(
+			companyId, active, processId, status, start, end, obc);
+	}
+
+	@Override
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, boolean active, long processId, String processVersion,
+		int status) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_A_P_NotPV_S(
+			companyId, active, processId, processVersion, status);
 	}
 
 	@Override
@@ -181,53 +194,19 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	}
 
 	@Override
-	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
-		long companyId, long processId) {
+	public int getWorkflowMetricsSLADefinitionsCount(
+		long companyId, boolean active, long processId) {
 
-		return workflowMetricsSLADefinitionPersistence.findByC_P(
-			companyId, processId);
-	}
-
-	@Override
-	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
-		long companyId, long processId, int status, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinition> obc) {
-
-		return workflowMetricsSLADefinitionPersistence.findByC_P_S(
-			companyId, processId, status, start, end, obc);
-	}
-
-	@Override
-	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
-		long companyId, long processId, int start, int end,
-		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
-
-		return workflowMetricsSLADefinitionPersistence.findByC_P(
-			companyId, processId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
-		long companyId, long processId, String processVersion, int status) {
-
-		return workflowMetricsSLADefinitionPersistence.findByC_P_NotPV_S(
-			companyId, processId, processVersion, status);
+		return workflowMetricsSLADefinitionPersistence.countByC_A_P(
+			companyId, active, processId);
 	}
 
 	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId) {
+		long companyId, boolean active, long processId, int status) {
 
-		return workflowMetricsSLADefinitionPersistence.countByC_P(
-			companyId, processId);
-	}
-
-	@Override
-	public int getWorkflowMetricsSLADefinitionsCount(
-		long companyId, long processId, int status) {
-
-		return workflowMetricsSLADefinitionPersistence.countByC_P_S(
-			companyId, processId, status);
+		return workflowMetricsSLADefinitionPersistence.countByC_A_P_S(
+			companyId, active, processId, status);
 	}
 
 	@Override
@@ -385,14 +364,25 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 			throw new WorkflowMetricsSLADefinitionDurationException();
 		}
 
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-			workflowMetricsSLADefinitionPersistence.fetchByC_N_P(
-				companyId, name, processId);
+		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
+			workflowMetricsSLADefinitionPersistence.findByC_A_N_P(
+				companyId, true, name, processId);
 
-		if ((workflowMetricsSLADefinition != null) &&
-			(workflowMetricsSLADefinitionId !=
-				workflowMetricsSLADefinition.
-					getWorkflowMetricsSLADefinitionId())) {
+		if (ListUtil.isNotEmpty(workflowMetricsSLADefinitions) &&
+			((workflowMetricsSLADefinitionId == 0) ||
+			 ListUtil.isNotEmpty(
+				 ListUtil.filter(
+					 workflowMetricsSLADefinitions,
+					 workflowMetricsSLADefinition -> {
+						if (workflowMetricsSLADefinition.
+								getWorkflowMetricsSLADefinitionId() ==
+									workflowMetricsSLADefinitionId) {
+
+							return false;
+						}
+
+						return true;
+					 })))) {
 
 			throw new WorkflowMetricsSLADefinitionDuplicateNameException();
 		}

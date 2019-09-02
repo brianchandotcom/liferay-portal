@@ -45,6 +45,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Task {
 
 	@Schema
+	public Long getDurationAvg() {
+		return durationAvg;
+	}
+
+	public void setDurationAvg(Long durationAvg) {
+		this.durationAvg = durationAvg;
+	}
+
+	@JsonIgnore
+	public void setDurationAvg(
+		UnsafeSupplier<Long, Exception> durationAvgUnsafeSupplier) {
+
+		try {
+			durationAvg = durationAvgUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long durationAvg;
+
+	@Schema
 	public Long getInstanceCount() {
 		return instanceCount;
 	}
@@ -206,6 +234,16 @@ public class Task {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (durationAvg != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"durationAvg\": ");
+
+			sb.append(durationAvg);
+		}
 
 		if (instanceCount != null) {
 			if (sb.length() > 1) {

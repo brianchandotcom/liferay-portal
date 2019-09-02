@@ -20,6 +20,9 @@ import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Pagination;
 import com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0.TaskSerDes;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -39,11 +42,13 @@ public interface TaskResource {
 	}
 
 	public Page<Task> getProcessTasksPage(
-			Long processId, Pagination pagination, String sortString)
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
-			Long processId, Pagination pagination, String sortString)
+			Long processId, Boolean completed, java.util.Date dateEnd,
+			java.util.Date dateStart, Pagination pagination, String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -102,12 +107,15 @@ public interface TaskResource {
 	public static class TaskResourceImpl implements TaskResource {
 
 		public Page<Task> getProcessTasksPage(
-				Long processId, Pagination pagination, String sortString)
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessTasksPageHttpResponse(
-					processId, pagination, sortString);
+					processId, completed, dateEnd, dateStart, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -121,7 +129,9 @@ public interface TaskResource {
 		}
 
 		public HttpInvoker.HttpResponse getProcessTasksPageHttpResponse(
-				Long processId, Pagination pagination, String sortString)
+				Long processId, Boolean completed, java.util.Date dateEnd,
+				java.util.Date dateStart, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -144,6 +154,23 @@ public interface TaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+			if (completed != null) {
+				httpInvoker.parameter("completed", String.valueOf(completed));
+			}
+
+			if (dateEnd != null) {
+				httpInvoker.parameter(
+					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
+			}
+
+			if (dateStart != null) {
+				httpInvoker.parameter(
+					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

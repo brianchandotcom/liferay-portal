@@ -45,6 +45,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
@@ -66,6 +67,9 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "processId"),
+			@Parameter(in = ParameterIn.QUERY, name = "completed"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
+			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -77,6 +81,12 @@ public abstract class BaseTaskResourceImpl implements TaskResource {
 	public Page<Task> getProcessTasksPage(
 			@NotNull @Parameter(hidden = true) @PathParam("processId") Long
 				processId,
+			@Parameter(hidden = true) @QueryParam("completed") Boolean
+				completed,
+			@Parameter(hidden = true) @QueryParam("dateEnd") java.util.Date
+				dateEnd,
+			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
+				dateStart,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 

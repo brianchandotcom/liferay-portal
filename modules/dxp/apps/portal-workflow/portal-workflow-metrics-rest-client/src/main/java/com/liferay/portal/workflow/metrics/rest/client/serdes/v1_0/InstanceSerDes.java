@@ -21,11 +21,11 @@ import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -241,7 +241,7 @@ public class InstanceSerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -445,11 +445,6 @@ public class InstanceSerDes {
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
 			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
 
@@ -469,7 +464,7 @@ public class InstanceSerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 

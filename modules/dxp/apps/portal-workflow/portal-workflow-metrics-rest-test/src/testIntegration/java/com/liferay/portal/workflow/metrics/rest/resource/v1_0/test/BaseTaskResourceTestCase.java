@@ -24,6 +24,9 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -52,9 +55,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -193,7 +198,9 @@ public abstract class BaseTaskResourceTestCase {
 	@Test
 	public void testGetProcessTasksPage() throws Exception {
 		Page<Task> page = taskResource.getProcessTasksPage(
-			testGetProcessTasksPage_getProcessId(), Pagination.of(1, 2), null);
+			testGetProcessTasksPage_getProcessId(), null,
+			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(),
+			Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -206,7 +213,8 @@ public abstract class BaseTaskResourceTestCase {
 				irrelevantProcessId, randomIrrelevantTask());
 
 			page = taskResource.getProcessTasksPage(
-				irrelevantProcessId, Pagination.of(1, 2), null);
+				irrelevantProcessId, null, null, null, Pagination.of(1, 2),
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -220,7 +228,7 @@ public abstract class BaseTaskResourceTestCase {
 		Task task2 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		page = taskResource.getProcessTasksPage(
-			processId, Pagination.of(1, 2), null);
+			processId, null, null, null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -240,14 +248,14 @@ public abstract class BaseTaskResourceTestCase {
 		Task task3 = testGetProcessTasksPage_addTask(processId, randomTask());
 
 		Page<Task> page1 = taskResource.getProcessTasksPage(
-			processId, Pagination.of(1, 2), null);
+			processId, null, null, null, Pagination.of(1, 2), null);
 
 		List<Task> tasks1 = (List<Task>)page1.getItems();
 
 		Assert.assertEquals(tasks1.toString(), 2, tasks1.size());
 
 		Page<Task> page2 = taskResource.getProcessTasksPage(
-			processId, Pagination.of(2, 2), null);
+			processId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -256,7 +264,7 @@ public abstract class BaseTaskResourceTestCase {
 		Assert.assertEquals(tasks2.toString(), 1, tasks2.size());
 
 		Page<Task> page3 = taskResource.getProcessTasksPage(
-			processId, Pagination.of(1, 3), null);
+			processId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(task1, task2, task3), (List<Task>)page3.getItems());
@@ -288,7 +296,7 @@ public abstract class BaseTaskResourceTestCase {
 		testGetProcessTasksPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, task1, task2) -> {
-				Class clazz = task1.getClass();
+				Class<?> clazz = task1.getClass();
 
 				Method method = clazz.getMethod(
 					"get" +
@@ -338,13 +346,14 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Task> ascPage = taskResource.getProcessTasksPage(
-				processId, Pagination.of(1, 2), entityField.getName() + ":asc");
+				processId, null, null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
 
 			assertEquals(
 				Arrays.asList(task1, task2), (List<Task>)ascPage.getItems());
 
 			Page<Task> descPage = taskResource.getProcessTasksPage(
-				processId, Pagination.of(1, 2),
+				processId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(
@@ -414,11 +423,38 @@ public abstract class BaseTaskResourceTestCase {
 		}
 	}
 
+	protected void assertEqualsJSONArray(
+		List<Task> tasks, JSONArray jsonArray) {
+
+		for (Task task : tasks) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(task, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + task, contains);
+		}
+	}
+
 	protected void assertValid(Task task) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
+				if (task.getDurationAvg() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
 				if (task.getInstanceCount() == null) {
@@ -493,6 +529,18 @@ public abstract class BaseTaskResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
@@ -504,6 +552,16 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("durationAvg", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						task1.getDurationAvg(), task2.getDurationAvg())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("instanceCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -565,6 +623,79 @@ public abstract class BaseTaskResourceTestCase {
 		return true;
 	}
 
+	protected boolean equalsJSONObject(Task task, JSONObject jsonObject) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("durationAvg", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getDurationAvg(),
+						jsonObject.getLong("durationAvg"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("instanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getInstanceCount(),
+						jsonObject.getLong("instanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("key", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getKey(), jsonObject.getString("key"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getName(), jsonObject.getString("name"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("onTimeInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getOnTimeInstanceCount(),
+						jsonObject.getLong("onTimeInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						task.getOverdueInstanceCount(),
+						jsonObject.getLong("overdueInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
+		}
+
+		return true;
+	}
+
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
@@ -615,6 +746,11 @@ public abstract class BaseTaskResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("durationAvg")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("instanceCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -650,9 +786,27 @@ public abstract class BaseTaskResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Task randomTask() throws Exception {
 		return new Task() {
 			{
+				durationAvg = RandomTestUtil.randomLong();
 				instanceCount = RandomTestUtil.randomLong();
 				key = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();
@@ -676,6 +830,64 @@ public abstract class BaseTaskResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseTaskResourceTestCase.class);

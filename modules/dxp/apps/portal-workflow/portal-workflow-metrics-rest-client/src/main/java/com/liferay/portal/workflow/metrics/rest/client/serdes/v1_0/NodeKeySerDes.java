@@ -17,11 +17,11 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.NodeKey;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Generated;
 
@@ -97,7 +97,7 @@ public class NodeKeySerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (nodeKey.getExecutionType() == null) {
 			map.put("executionType", null);
@@ -183,11 +183,6 @@ public class NodeKeySerDes {
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
 			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
 
@@ -207,7 +202,7 @@ public class NodeKeySerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 

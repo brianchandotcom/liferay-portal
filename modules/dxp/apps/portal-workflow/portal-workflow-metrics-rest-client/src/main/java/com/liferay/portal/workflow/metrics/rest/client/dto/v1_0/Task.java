@@ -28,6 +28,27 @@ import javax.annotation.Generated;
 @Generated("")
 public class Task {
 
+	public Long getDurationAvg() {
+		return durationAvg;
+	}
+
+	public void setDurationAvg(Long durationAvg) {
+		this.durationAvg = durationAvg;
+	}
+
+	public void setDurationAvg(
+		UnsafeSupplier<Long, Exception> durationAvgUnsafeSupplier) {
+
+		try {
+			durationAvg = durationAvgUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long durationAvg;
+
 	public Long getInstanceCount() {
 		return instanceCount;
 	}

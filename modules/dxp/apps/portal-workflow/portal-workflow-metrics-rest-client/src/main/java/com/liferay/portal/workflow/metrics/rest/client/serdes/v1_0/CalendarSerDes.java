@@ -17,11 +17,11 @@ package com.liferay.portal.workflow.metrics.rest.client.serdes.v1_0;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Generated;
 
@@ -107,7 +107,7 @@ public class CalendarSerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (calendar.getDefaultCalendar() == null) {
 			map.put("defaultCalendar", null);
@@ -206,11 +206,6 @@ public class CalendarSerDes {
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
 			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
-			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
 
@@ -230,7 +225,7 @@ public class CalendarSerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 

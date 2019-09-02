@@ -24,6 +24,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -52,9 +56,11 @@ import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -267,7 +273,7 @@ public abstract class BaseProcessResourceTestCase {
 		testGetProcessesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, process1, process2) -> {
-				Class clazz = process1.getClass();
+				Class<?> clazz = process1.getClass();
 
 				Method method = clazz.getMethod(
 					"get" +
@@ -340,6 +346,58 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcessesPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"processes",
+				new HashMap<String, Object>() {
+					{
+						put("page", 1);
+						put("pageSize", 2);
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject processesJSONObject = dataJSONObject.getJSONObject(
+			"processes");
+
+		Assert.assertEquals(0, processesJSONObject.get("totalCount"));
+
+		Process process1 = testGraphQLProcess_addProcess();
+		Process process2 = testGraphQLProcess_addProcess();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		processesJSONObject = dataJSONObject.getJSONObject("processes");
+
+		Assert.assertEquals(2, processesJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(process1, process2),
+			processesJSONObject.getJSONArray("items"));
+	}
+
+	@Test
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
 
@@ -356,8 +414,39 @@ public abstract class BaseProcessResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetProcess() throws Exception {
+		Process process = testGraphQLProcess_addProcess();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"process",
+				new HashMap<String, Object>() {
+					{
+						put("processId", process.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(process, dataJSONObject.getJSONObject("process")));
+	}
+
+	@Test
 	public void testGetProcessTitle() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	protected Process testGraphQLProcess_addProcess() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -405,6 +494,25 @@ public abstract class BaseProcessResourceTestCase {
 
 			Assert.assertTrue(
 				processes2 + " does not contain " + process1, contains);
+		}
+	}
+
+	protected void assertEqualsJSONArray(
+		List<Process> processes, JSONArray jsonArray) {
+
+		for (Process process : processes) {
+			boolean contains = false;
+
+			for (Object object : jsonArray) {
+				if (equalsJSONObject(process, (JSONObject)object)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				jsonArray + " does not contain " + process, contains);
 		}
 	}
 
@@ -493,6 +601,18 @@ public abstract class BaseProcessResourceTestCase {
 		return new String[0];
 	}
 
+	protected List<GraphQLField> getGraphQLFields() {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
+		}
+
+		return graphQLFields;
+	}
+
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[0];
 	}
@@ -576,6 +696,79 @@ public abstract class BaseProcessResourceTestCase {
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equalsJSONObject(Process process, JSONObject jsonObject) {
+		for (String fieldName : getAdditionalAssertFieldNames()) {
+			if (Objects.equals("id", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getId(), jsonObject.getLong("id"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("instanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getInstanceCount(),
+						jsonObject.getLong("instanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("onTimeInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getOnTimeInstanceCount(),
+						jsonObject.getLong("onTimeInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("overdueInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getOverdueInstanceCount(),
+						jsonObject.getLong("overdueInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("title", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getTitle(), jsonObject.getString("title"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("untrackedInstanceCount", fieldName)) {
+				if (!Objects.deepEquals(
+						process.getUntrackedInstanceCount(),
+						jsonObject.getLong("untrackedInstanceCount"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid field name " + fieldName);
 		}
 
 		return true;
@@ -668,6 +861,23 @@ public abstract class BaseProcessResourceTestCase {
 			"Invalid entity field " + entityFieldName);
 	}
 
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
 	protected Process randomProcess() throws Exception {
 		return new Process() {
 			{
@@ -695,6 +905,64 @@ public abstract class BaseProcessResourceTestCase {
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append(")");
+			}
+
+			if (_graphQLFields.length > 0) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final GraphQLField[] _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseProcessResourceTestCase.class);

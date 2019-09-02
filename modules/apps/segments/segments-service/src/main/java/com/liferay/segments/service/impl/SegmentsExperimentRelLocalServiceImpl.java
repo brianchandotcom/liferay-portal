@@ -148,6 +148,15 @@ public class SegmentsExperimentRelLocalServiceImpl
 	}
 
 	@Override
+	public SegmentsExperimentRel fetchSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws PortalException {
+
+		return segmentsExperimentRelPersistence.fetchByS_S(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	@Override
 	public SegmentsExperimentRel getSegmentsExperimentRel(
 			long segmentsExperimentId, long segmentsExperienceId)
 		throws PortalException {

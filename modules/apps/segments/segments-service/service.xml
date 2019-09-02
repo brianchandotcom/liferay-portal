@@ -323,5 +323,6 @@
 		<exception>SegmentsExperimentRelName</exception>
 		<exception>SegmentsExperimentRelSplit</exception>
 		<exception>SegmentsExperimentStatus</exception>
+		<exception>WinnerSegmentsExperience</exception>
 	</exceptions>
 </service-builder>

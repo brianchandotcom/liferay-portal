@@ -82,8 +82,8 @@ public class SegmentsExperimentConstants {
 
 	public enum Status {
 
-		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", true, true),
-		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true, true) {
+		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", true),
+		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -93,8 +93,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_NO_WINNER(
-			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner", false,
-			true) {
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner",
+			false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -103,7 +103,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_WINNER_DECLARED(
-			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", false, true) {
+			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", false, true,
+			true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -111,7 +112,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		PAUSED(STATUS_PAUSED, "PAUSED", "paused", false, true) {
+		PAUSED(STATUS_PAUSED, "PAUSED", "paused", false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -119,7 +120,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		RUNNING(STATUS_RUNNING, "RUNNING", "running", false, true) {
+		RUNNING(STATUS_RUNNING, "RUNNING", "running", false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -131,7 +132,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", false, true) {
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -139,7 +140,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true, true);
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true);
 
 		public static int[] exclusiveStates() {
 			Stream<Status> stream = Arrays.stream(Status.values());
@@ -231,6 +232,10 @@ public class SegmentsExperimentConstants {
 			return _exclusive;
 		}
 
+		public boolean requiresWinnerExperience() {
+			return _requiresWinnerExperience;
+		}
+
 		@Override
 		public String toString() {
 			return _stringValue;
@@ -241,19 +246,32 @@ public class SegmentsExperimentConstants {
 		}
 
 		private Status(
+			int value, String stringValue, String label, boolean editable) {
+
+			_value = value;
+			_stringValue = stringValue;
+			_label = label;
+			_editable = editable;
+			_exclusive = true;
+			_requiresWinnerExperience = false;
+		}
+
+		private Status(
 			int value, String stringValue, String label, boolean editable,
-			boolean exclusive) {
+			boolean exclusive, boolean requiresWinnerExperience) {
 
 			_value = value;
 			_stringValue = stringValue;
 			_label = label;
 			_editable = editable;
 			_exclusive = exclusive;
+			_requiresWinnerExperience = requiresWinnerExperience;
 		}
 
 		private final boolean _editable;
 		private final boolean _exclusive;
 		private final String _label;
+		private final boolean _requiresWinnerExperience;
 		private final String _stringValue;
 		private final int _value;
 

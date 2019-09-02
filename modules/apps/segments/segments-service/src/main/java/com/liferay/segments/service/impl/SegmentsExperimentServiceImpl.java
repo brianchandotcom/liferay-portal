@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 
 import java.util.List;
@@ -204,18 +206,60 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			String segmentsExperimentKey, int status)
+			long segmentsExperimentId, int status,
+			long winnerSegmentsExperienceId)
 		throws PortalException {
 
 		_segmentsExperimentResourcePermission.check(
 			getPermissionChecker(),
 			segmentsExperimentLocalService.getSegmentsExperiment(
-				segmentsExperimentKey),
+				segmentsExperimentId),
 			ActionKeys.UPDATE);
 
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
-			segmentsExperimentKey, status);
+			segmentsExperimentId, status, winnerSegmentsExperienceId);
 	}
+
+	@Override
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			String segmentsExperimentKey, int status)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentLocalService.getSegmentsExperiment(
+				segmentsExperimentKey);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(), segmentsExperiment, ActionKeys.UPDATE);
+
+		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(), status);
+	}
+
+	@Override
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			String segmentsExperimentKey, int status,
+			String winnerSegmentsExperienceKey)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentLocalService.getSegmentsExperiment(
+				segmentsExperimentKey);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(), segmentsExperiment, ActionKeys.UPDATE);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey);
+
+		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(), status,
+			segmentsExperience.getSegmentsExperienceId());
+	}
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.segments.model.SegmentsExperiment)"

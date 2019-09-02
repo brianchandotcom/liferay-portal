@@ -90,7 +90,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					segmentsExperienceId, classNameId, classPK,
-					new int[] {SegmentsExperimentConstants.STATUS_RUNNING});
+					SegmentsExperimentConstants.Status.splitStates());
 
 			if (segmentsExperiment != null) {
 				httpServletRequest.setAttribute(

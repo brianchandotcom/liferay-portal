@@ -15,6 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
@@ -58,12 +59,13 @@ public class ContentPageLayoutEditorDisplayContext
 
 	public ContentPageLayoutEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		FragmentRendererController fragmentRendererController,
-		CommentManager commentManager) {
+		CommentManager commentManager,
+		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentRendererController fragmentRendererController) {
 
 		super(
 			httpServletRequest, renderResponse, commentManager,
-            fragmentRendererController);
+			contentPageEditorSidebarPanels, fragmentRendererController);
 	}
 
 	@Override

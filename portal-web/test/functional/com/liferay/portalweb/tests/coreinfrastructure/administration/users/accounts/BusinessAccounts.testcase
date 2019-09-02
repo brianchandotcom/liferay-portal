@@ -18,6 +18,37 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CancelAccountCreation {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account");
+
+		PortletEntry.inputName(name = "Cancel Accounts Name");
+
+		Button.clickCancel();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Accounts");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Search.searchCP(searchTerm = "Cancel Accounts Name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Cancel Accounts Name");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

@@ -463,6 +463,26 @@ public class SegmentsExperimentLocalServiceImpl
 					" no found");
 		}
 
+		SegmentsExperimentConstants.Status status =
+			SegmentsExperimentConstants.Status.valueOf(statusValue);
+
+		if (status == SegmentsExperimentConstants.Status.COMPLETED) {
+			List<SegmentsExperience> segmentsExperiences =
+				_segmentsExperienceLocalService.getSegmentsExperiences(
+					segmentsExperiment.getGroupId(),
+					segmentsExperiment.getClassNameId(),
+					segmentsExperiment.getClassPK());
+
+			for (SegmentsExperience segmentsExperience : segmentsExperiences) {
+				segmentsExperience.setActive(
+					segmentsExperience.getSegmentsExperienceId() ==
+						winnerSegmentsExperienceId);
+
+				_segmentsExperienceLocalService.updateSegmentsExperience(
+					segmentsExperience);
+			}
+		}
+
 		return segmentsExperiment;
 	}
 

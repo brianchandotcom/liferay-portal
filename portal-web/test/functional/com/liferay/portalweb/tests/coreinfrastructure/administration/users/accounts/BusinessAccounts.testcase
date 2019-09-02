@@ -1,0 +1,44 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.upstream = "true";
+	property testray.main.component.name = "Users and Organizations";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = "5"
+	test Smoke {
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(accountName = "Accounts Name for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Search.searchCP(searchTerm = "Accounts Name for Test");
+
+		LexiconEntry.viewEntryName(rowEntry = "Accounts Name for Test");
+
+		LexiconEntry.viewEntryStatus(
+			rowEntry = "Accounts Name for Test",
+			rowStatus = "ACTIVE");
+	}
+
+}

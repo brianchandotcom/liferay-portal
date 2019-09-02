@@ -271,7 +271,7 @@ public class SegmentsExperimentDisplayContext {
 			_segmentsExperimentService.fetchSegmentsExperiment(
 				segmentsExperienceId, _portal.getClassNameId(Layout.class),
 				layout.getPlid(),
-				SegmentsExperimentConstants.Status.exclusiveStates()));
+				SegmentsExperimentConstants.Status.getExclusiveStatusValues()));
 	}
 
 	private String _getContentPageEditorActionURL(String action) {

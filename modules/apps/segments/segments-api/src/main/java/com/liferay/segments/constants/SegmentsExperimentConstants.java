@@ -139,7 +139,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", false, true);
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true, true);
 
 		public static int[] exclusiveStates() {
 			Stream<Status> stream = Arrays.stream(Status.values());

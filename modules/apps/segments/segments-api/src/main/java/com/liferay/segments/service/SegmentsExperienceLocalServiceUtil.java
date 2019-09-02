@@ -307,6 +307,14 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().getSegmentsExperience(segmentsExperienceId);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperience
+			getSegmentsExperience(long groupId, String segmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getSegmentsExperience(
+			groupId, segmentsExperienceKey);
+	}
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *

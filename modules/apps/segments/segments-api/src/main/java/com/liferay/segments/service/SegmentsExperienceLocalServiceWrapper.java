@@ -333,6 +333,15 @@ public class SegmentsExperienceLocalServiceWrapper
 			segmentsExperienceId);
 	}
 
+	@Override
+	public com.liferay.segments.model.SegmentsExperience getSegmentsExperience(
+			long groupId, String segmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceLocalService.getSegmentsExperience(
+			groupId, segmentsExperienceKey);
+	}
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *

@@ -12,20 +12,15 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
 import React from 'react';
 
 import Flags from './components/Flags.es';
 import ThemeContext from './ThemeContext.es';
 
-function renderComponent({props, context}) {
+export default function({props, context}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<Flags {...props} />
 		</ThemeContext.Provider>
 	);
-}
-
-export default function(containerId, data) {
-	render(renderComponent, data, document.getElementById(containerId));
 }

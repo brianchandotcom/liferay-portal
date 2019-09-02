@@ -58,31 +58,34 @@ if (Validator.isNull(message)) {
 			/>
 		</c:otherwise>
 	</c:choose>
+
+	<%
+	Map<String, Object> context = new HashMap<>();
+	context.put("namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+
+	Map<String, Object> props = new HashMap<>();
+	props.put("baseData", dataJSONObject);
+	props.put("companyName", companyName);
+	props.put("disabled", !enabled);
+	props.put("forceLogin", !flagsEnabled);
+
+	if (Validator.isNotNull(message)) {
+		props.put("message", message);
+	}
+
+	props.put("onlyIcon", onlyIcon);
+	props.put("pathTermsOfUse", PortalUtil.getPathMain() + "/portal/terms_of_use");
+	props.put("reasons", reasons);
+	props.put("signedIn", signedIn);
+	props.put("uri", uri);
+
+	Map<String, Object> data = new HashMap<>();
+	data.put("props", props);
+	data.put("context", context);
+	%>
+
+	<react:component
+		data="<%= data %>"
+		module="flags/react/js/index.es"
+	/>
 </div>
-
-<aui:script require='<%= npmResolvedPackageName + "/flags/react/js/index.es as FlagsComponent" %>'>
-	new FlagsComponent.default(
-		'<%= id %>',
-		{
-			props: {
-				baseData: <%= dataJSONObject %>,
-				companyName: '<%= companyName %>',
-				disabled: <%= !enabled %>,
-				forceLogin: <%= !flagsEnabled %>,
-
-				<c:if test="<%= Validator.isNotNull(message) %>">
-					message: '<%= message %>',
-				</c:if>
-
-				onlyIcon: <%= onlyIcon %>,
-				pathTermsOfUse: Liferay.ThemeDisplay.getPathMain() + '/portal/terms_of_use',
-				reasons: <%= JSONFactoryUtil.looseSerializeDeep(reasons) %>,
-				signedIn: <%= signedIn %>,
-				uri: '<%= uri %>'
-			},
-			context: {
-				namespace: '<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>'
-			}
-		}
-	);
-</aui:script>

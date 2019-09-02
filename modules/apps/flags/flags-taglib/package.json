@@ -6,7 +6,6 @@
 		"@clayui/modal": "3.0.0-milestone.3",
 		"clay-button": "2.18.0",
 		"clay-icon": "2.18.0",
-		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8",

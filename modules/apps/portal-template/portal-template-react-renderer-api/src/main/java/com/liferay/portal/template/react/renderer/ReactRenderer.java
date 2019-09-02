@@ -32,12 +32,12 @@ public interface ReactRenderer {
 	public void renderReact(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, ?> data)
+			ComponentDescriptor componentDescriptor, Map<String, Object> data)
 		throws IOException, TemplateException;
 
 	public void renderReact(
 			HttpServletRequest httpServletRequest, Writer writer,
-			ComponentDescriptor componentDescriptor, Map<String, ?> data)
+			ComponentDescriptor componentDescriptor, Map<String, Object> data)
 		throws IOException, TemplateException;
 
 }

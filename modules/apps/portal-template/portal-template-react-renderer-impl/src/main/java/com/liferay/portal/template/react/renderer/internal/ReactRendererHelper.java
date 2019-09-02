@@ -41,7 +41,7 @@ public class ReactRendererHelper {
 
 	public ReactRendererHelper(
 		HttpServletRequest httpServletRequest, ServletContext servletContext,
-		ComponentDescriptor componentDescriptor, Map<String, ?> data,
+		ComponentDescriptor componentDescriptor, Map<String, Object> data,
 		Portal portal) {
 
 		_httpServletRequest = httpServletRequest;

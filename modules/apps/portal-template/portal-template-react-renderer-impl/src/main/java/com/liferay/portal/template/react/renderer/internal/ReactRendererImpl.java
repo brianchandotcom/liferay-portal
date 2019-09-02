@@ -41,7 +41,7 @@ public class ReactRendererImpl implements ReactRenderer {
 	public void renderReact(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, ?> data)
+			ComponentDescriptor componentDescriptor, Map<String, Object> data)
 		throws IOException, TemplateException {
 
 		renderReact(
@@ -52,7 +52,7 @@ public class ReactRendererImpl implements ReactRenderer {
 	@Override
 	public void renderReact(
 			HttpServletRequest httpServletRequest, Writer writer,
-			ComponentDescriptor componentDescriptor, Map<String, ?> data)
+			ComponentDescriptor componentDescriptor, Map<String, Object> data)
 		throws IOException, TemplateException {
 
 		ReactRendererHelper reactRendererHelper = new ReactRendererHelper(

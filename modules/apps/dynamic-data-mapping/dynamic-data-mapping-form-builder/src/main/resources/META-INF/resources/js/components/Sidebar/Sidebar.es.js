@@ -525,7 +525,7 @@ class Sidebar extends Component {
 
 		const {fieldTypes} = this.props;
 		const {fieldSetId} = data.source.dataset;
-		const target = FormSupport.getIndexes(data.target.parentElement);
+		const indexes = FormSupport.getIndexes(data.target.parentElement);
 
 		if (fieldSetId) {
 			this._fetchFieldSet(fieldSetId).then(pages => {
@@ -533,7 +533,7 @@ class Sidebar extends Component {
 					data,
 					fieldSetId,
 					fieldSetPages: pages,
-					target
+					indexes
 				});
 			});
 		} else {
@@ -552,7 +552,7 @@ class Sidebar extends Component {
 					...fieldType,
 					editable: true
 				},
-				target
+				indexes
 			});
 		}
 	}

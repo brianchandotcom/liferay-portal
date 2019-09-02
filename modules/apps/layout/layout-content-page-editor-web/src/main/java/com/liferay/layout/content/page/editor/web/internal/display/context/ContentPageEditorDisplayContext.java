@@ -361,8 +361,6 @@ public class ContentPageEditorDisplayContext {
 			"defaultLanguageId", themeDisplay.getLanguageId()
 		);
 
-		boolean draft = false;
-
 		Layout draftLayout = themeDisplay.getLayout();
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
@@ -376,10 +374,8 @@ public class ContentPageEditorDisplayContext {
 			publishDate = modifiedDate;
 		}
 
-		draft = modifiedDate.after(publishDate);
-
 		soyContext.put(
-			"draft", draft
+			"draft", modifiedDate.after(publishDate)
 		).put(
 			"lastSaveDate", StringPool.BLANK
 		).put(

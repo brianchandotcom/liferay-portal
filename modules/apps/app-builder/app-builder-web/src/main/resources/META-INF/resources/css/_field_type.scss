@@ -11,8 +11,24 @@
 		transform: translateX(-2px);
 	}
 
+	&.dragging {
+		background-color: #e7e7ed;
+		opacity: 0.5;
+	}
+
 	.sticker {
 		background-color: #f7f8f9;
 		color: #6b6c7e;
+	}
+}
+
+.field-type-drag-preview {
+	background-color: #ffffff;
+	max-width: 375px;
+
+	.field-type {
+		border-color: #80acff;
+		box-shadow: 0px 2px 4px rgba(39, 40, 51, 0.12);
+		cursor: grabbing;
 	}
 }

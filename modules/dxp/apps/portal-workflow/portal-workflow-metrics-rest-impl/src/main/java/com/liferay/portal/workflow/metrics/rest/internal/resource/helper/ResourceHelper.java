@@ -26,6 +26,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.GapPolicy;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -66,6 +67,7 @@ public class ResourceHelper {
 
 		bucketSortPipelineAggregation.addSortFields(fieldSort);
 		bucketSortPipelineAggregation.setFrom(pagination.getStartPosition());
+		bucketSortPipelineAggregation.setGapPolicy(GapPolicy.INSTANT_ZEROS);
 		bucketSortPipelineAggregation.setSize(pagination.getPageSize() + 1);
 
 		return bucketSortPipelineAggregation;

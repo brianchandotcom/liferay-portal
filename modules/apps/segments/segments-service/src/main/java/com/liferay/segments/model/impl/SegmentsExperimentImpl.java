@@ -14,6 +14,7 @@
 
 package com.liferay.segments.model.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -130,6 +131,34 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 		}
 
 		return _typeSettingsProperties;
+	}
+
+	@Override
+	public long getWinnerSegmentsExperienceId() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		return GetterUtil.getLong(
+			typeSettingsProperties.getProperty("winnerSegmentsExperienceId"),
+			-1);
+	}
+
+	@Override
+	public String getWinnerSegmentsExperienceKey() {
+		long winnerSegmentsExperienceId = getSegmentsExperienceId();
+
+		if (winnerSegmentsExperienceId < 0) {
+			return StringPool.BLANK;
+		}
+
+		SegmentsExperience winnerSegmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				winnerSegmentsExperienceId);
+
+		if (winnerSegmentsExperience != null) {
+			return winnerSegmentsExperience.getSegmentsExperienceKey();
+		}
+
+		return SegmentsExperienceConstants.KEY_DEFAULT;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

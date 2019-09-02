@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -40,6 +41,7 @@ import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentModel;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
@@ -47,6 +49,7 @@ import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -342,8 +345,20 @@ public class SegmentsExperimentLocalServiceTest {
 
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 2, segmentsExperiments.size());
-		Assert.assertEquals(segmentsExperiment2, segmentsExperiments.get(0));
-		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(1));
+
+		Stream<SegmentsExperiment> stream = segmentsExperiments.stream();
+
+		long[] segmentsExperimentIds = stream.mapToLong(
+			SegmentsExperimentModel::getSegmentsExperimentId
+		).toArray();
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				segmentsExperimentIds,
+				new long[] {
+					segmentsExperiment1.getSegmentsExperimentId(),
+					segmentsExperiment2.getSegmentsExperimentId()
+				}));
 	}
 
 	@Test
@@ -377,10 +392,21 @@ public class SegmentsExperimentLocalServiceTest {
 
 		Assert.assertEquals(
 			segmentsExperiments.toString(), 3, segmentsExperiments.size());
-		Assert.assertEquals(segmentsExperiment2, segmentsExperiments.get(0));
-		Assert.assertEquals(segmentsExperiment1, segmentsExperiments.get(1));
-		Assert.assertEquals(
-			segmentsExperimentDefault, segmentsExperiments.get(2));
+
+		Stream<SegmentsExperiment> stream = segmentsExperiments.stream();
+
+		long[] segmentsExperimentIds = stream.mapToLong(
+			SegmentsExperimentModel::getSegmentsExperimentId
+		).toArray();
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				segmentsExperimentIds,
+				new long[] {
+					segmentsExperimentDefault.getSegmentsExperimentId(),
+					segmentsExperiment1.getSegmentsExperimentId(),
+					segmentsExperiment2.getSegmentsExperimentId()
+				}));
 	}
 
 	@Test

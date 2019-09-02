@@ -27,7 +27,6 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,18 +36,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ReactRenderer.class)
 public class ReactRendererImpl implements ReactRenderer {
-
-	@Override
-	public void renderReact(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, Object> data)
-		throws IOException, TemplateException {
-
-		renderReact(
-			httpServletRequest, httpServletResponse.getWriter(),
-			componentDescriptor, data);
-	}
 
 	@Override
 	public void renderReact(

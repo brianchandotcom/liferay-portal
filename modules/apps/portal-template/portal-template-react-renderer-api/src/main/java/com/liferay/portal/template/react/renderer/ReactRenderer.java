@@ -22,18 +22,11 @@ import java.io.Writer;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Chema Balsas
  */
 public interface ReactRenderer {
-
-	public void renderReact(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			ComponentDescriptor componentDescriptor, Map<String, Object> data)
-		throws IOException, TemplateException;
 
 	public void renderReact(
 			HttpServletRequest httpServletRequest, Writer writer,

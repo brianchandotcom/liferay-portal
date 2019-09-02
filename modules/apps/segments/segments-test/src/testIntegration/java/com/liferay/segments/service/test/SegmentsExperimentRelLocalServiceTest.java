@@ -124,6 +124,11 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
 
+		segmentsExperience.setActive(false);
+
+		_segmentsExperienceLocalService.updateSegmentsExperience(
+			segmentsExperience);
+
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),

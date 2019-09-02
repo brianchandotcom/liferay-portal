@@ -26,20 +26,14 @@ import org.osgi.service.component.annotations.Reference;
 public class ReactRendererProvider {
 
 	public static ReactRenderer getReactRenderer() {
-		if (_reactRendererProvider == null) {
-			return null;
-		}
-
-		return _reactRendererProvider._reactRenderer;
+		return _reactRenderer;
 	}
 
-	public ReactRendererProvider() {
-		_reactRendererProvider = this;
+	@Reference(unbind = "-")
+	public void setReactRenderer(ReactRenderer reactRenderer) {
+		_reactRenderer = reactRenderer;
 	}
 
-	private static ReactRendererProvider _reactRendererProvider;
-
-	@Reference
-	private ReactRenderer _reactRenderer;
+	private static ReactRenderer _reactRenderer;
 
 }

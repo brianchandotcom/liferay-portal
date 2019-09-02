@@ -24,10 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class GraphServicePortalException extends PortalException {
 
-	public GraphServicePortalException(String msg) {
-		super(msg);
-	}
-
 	public GraphServicePortalException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
@@ -42,10 +38,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class ActivityLimitReached
 		extends GraphServicePortalException {
-
-		public ActivityLimitReached(String msg) {
-			super(msg);
-		}
 
 		public ActivityLimitReached(String msg, Throwable cause) {
 			super(msg, cause);

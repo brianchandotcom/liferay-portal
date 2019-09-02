@@ -14,9 +14,10 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal;
 
-import java.io.File;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.function.Supplier;
+import java.io.File;
 
 /**
  * Represents a link between a Documents and Media {@code FileEntry} and a
@@ -26,43 +27,43 @@ import java.util.function.Supplier;
  * @author Cristina González Castellano
  * @review
  */
-public class DLOpenerOneDriveFileReference {
+public class DLOpenerOneDriveFileReference<E extends PortalException> {
 
 	/**
 	 * Creates a new {@code DLOpenerOneDriveFileReference}.
 	 *
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  titleSupplier the supplier that provides the document's title
-	 *         when invoked
-	 * @param  fileSupplier the supplier that provides the document's contents
-	 *         when invoked
+	 * @param  titleUnsafeSupplier the supplier that provides the document's
+	 *         title when invoked
+	 * @param  fileUnsafeSupplier the supplier that provides the document's
+	 *         contents when invoked
 	 * @review
 	 */
 	public DLOpenerOneDriveFileReference(
-		long fileEntryId, Supplier<String> titleSupplier,
-		Supplier<File> fileSupplier) {
+		long fileEntryId, UnsafeSupplier<String, E> titleUnsafeSupplier,
+		UnsafeSupplier<File, E> fileUnsafeSupplier) {
 
-		this(fileEntryId, titleSupplier, fileSupplier, 0);
+		this(fileEntryId, titleUnsafeSupplier, fileUnsafeSupplier, 0);
 	}
 
 	/**
 	 * Creates a new {@code DLOpenerOneDriveFileReference}.
 	 *
 	 * @param  fileEntryId the primary key of the file entry
-	 * @param  titleSupplier the supplier that provides the document's title
-	 *         when invoked
+	 * @param  titleUnsafeSupplier the supplier that provides the document's
+	 *         title when invoked
 	 * @param  fileSupplier the supplier that provides the document's contents
 	 *         when invoked
 	 * @param  backgroundTaskId the background task ID
 	 * @review
 	 */
 	public DLOpenerOneDriveFileReference(
-		long fileEntryId, Supplier<String> titleSupplier,
-		Supplier<File> fileSupplier, long backgroundTaskId) {
+		long fileEntryId, UnsafeSupplier<String, E> titleUnsafeSupplier,
+		UnsafeSupplier<File, E> fileSupplier, long backgroundTaskId) {
 
 		_fileEntryId = fileEntryId;
-		_titleSupplier = titleSupplier;
-		_fileSupplier = fileSupplier;
+		_titleUnsafeSupplier = titleUnsafeSupplier;
+		_fileUnsafeSupplier = fileSupplier;
 		_backgroundTaskId = backgroundTaskId;
 	}
 
@@ -84,8 +85,8 @@ public class DLOpenerOneDriveFileReference {
 	 * @return the file
 	 * @review
 	 */
-	public File getContentFile() {
-		return _fileSupplier.get();
+	public File getContentFile() throws PortalException {
+		return _fileUnsafeSupplier.get();
 	}
 
 	/**
@@ -104,13 +105,13 @@ public class DLOpenerOneDriveFileReference {
 	 * @return the title
 	 * @review
 	 */
-	public String getTitle() {
-		return _titleSupplier.get();
+	public String getTitle() throws PortalException {
+		return _titleUnsafeSupplier.get();
 	}
 
 	private final long _backgroundTaskId;
 	private final long _fileEntryId;
-	private final Supplier<File> _fileSupplier;
-	private final Supplier<String> _titleSupplier;
+	private final UnsafeSupplier<File, E> _fileUnsafeSupplier;
+	private final UnsafeSupplier<String, E> _titleUnsafeSupplier;
 
 }

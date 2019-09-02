@@ -21,9 +21,11 @@ import com.liferay.document.library.opener.onedrive.web.internal.configuration.D
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
+import com.liferay.document.library.opener.onedrive.web.internal.handler.GraphServiceExceptionPortalExceptionMapper;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.constants.BackgroundTaskContextMapConstants;
@@ -53,13 +55,13 @@ import com.microsoft.graph.requests.extensions.IDriveItemStreamRequest;
 import com.microsoft.graph.requests.extensions.IUserRequest;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,7 +85,7 @@ public class DLOpenerOneDriveManager {
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
-			new CachingSupplier<>(
+			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry),
 			backgroundTask.getBackgroundTaskId());
@@ -102,7 +104,7 @@ public class DLOpenerOneDriveManager {
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
-			new CachingSupplier<>(
+			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry),
 			backgroundTask.getBackgroundTaskId());
@@ -125,11 +127,17 @@ public class DLOpenerOneDriveManager {
 			_getOneDriveReferenceKey(fileEntry)
 		).buildRequest();
 
-		iDriveItemRequest.delete();
+		try {
+			iDriveItemRequest.delete();
 
-		_dlOpenerFileEntryReferenceLocalService.
-			deleteDLOpenerFileEntryReference(
-				DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE, fileEntry);
+			_dlOpenerFileEntryReferenceLocalService.
+				deleteDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
+		}
+		catch (GraphServiceException gse) {
+			throw GraphServiceExceptionPortalExceptionMapper.map(gse);
+		}
 	}
 
 	public DLOpenerOneDriveFileReference getDLOpenerOneDriveFileReference(
@@ -149,7 +157,7 @@ public class DLOpenerOneDriveManager {
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
-			new CachingSupplier<>(
+			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry));
 	}
@@ -174,11 +182,16 @@ public class DLOpenerOneDriveManager {
 				"edit", "organization"
 			).buildRequest();
 
-		Permission permission = iDriveItemCreateLinkRequest.post();
+		try {
+			Permission permission = iDriveItemCreateLinkRequest.post();
 
-		SharingLink sharingLink = permission.link;
+			SharingLink sharingLink = permission.link;
 
-		return sharingLink.webUrl;
+			return sharingLink.webUrl;
+		}
+		catch (GraphServiceException gse) {
+			throw GraphServiceExceptionPortalExceptionMapper.map(gse);
+		}
 	}
 
 	public User getUser(AccessToken accessToken) {
@@ -240,7 +253,7 @@ public class DLOpenerOneDriveManager {
 
 		return new DLOpenerOneDriveFileReference(
 			fileEntry.getFileEntryId(),
-			new CachingSupplier<>(
+			new CachingUnsafeSupplier<>(
 				() -> _getOneDriveFileTitle(userId, fileEntry)),
 			() -> _getContentFile(userId, fileEntry));
 	}
@@ -279,7 +292,9 @@ public class DLOpenerOneDriveManager {
 					" does not have a valid OneDrive access token")));
 	}
 
-	private File _getContentFile(long userId, FileEntry fileEntry) {
+	private File _getContentFile(long userId, FileEntry fileEntry)
+		throws PortalException {
+
 		try {
 			AccessToken accessToken = _getAccessToken(
 				fileEntry.getCompanyId(), userId);
@@ -302,10 +317,10 @@ public class DLOpenerOneDriveManager {
 			}
 		}
 		catch (GraphServiceException gse) {
-			throw gse;
+			throw GraphServiceExceptionPortalExceptionMapper.map(gse);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
 		}
 	}
 
@@ -321,7 +336,9 @@ public class DLOpenerOneDriveManager {
 		return dlOpenerFileEntryReference.getReferenceKey();
 	}
 
-	private String _getOneDriveFileTitle(long userId, FileEntry fileEntry) {
+	private String _getOneDriveFileTitle(long userId, FileEntry fileEntry)
+		throws PortalException {
+
 		try {
 			AccessToken accessToken = _getAccessToken(
 				fileEntry.getCompanyId(), userId);
@@ -341,24 +358,21 @@ public class DLOpenerOneDriveManager {
 
 			return driveItem.name;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (GraphServiceException gse) {
+			throw GraphServiceExceptionPortalExceptionMapper.map(gse);
 		}
 	}
 
-	private String _getOneDriveReferenceKey(FileEntry fileEntry) {
-		try {
-			DLOpenerFileEntryReference dlOpenerFileEntryReference =
-				_dlOpenerFileEntryReferenceLocalService.
-					getDLOpenerFileEntryReference(
-						DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
-						fileEntry);
+	private String _getOneDriveReferenceKey(FileEntry fileEntry)
+		throws PortalException {
 
-			return dlOpenerFileEntryReference.getReferenceKey();
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
+		DLOpenerFileEntryReference dlOpenerFileEntryReference =
+			_dlOpenerFileEntryReferenceLocalService.
+				getDLOpenerFileEntryReference(
+					DLOpenerOneDriveConstants.ONE_DRIVE_REFERENCE_TYPE,
+					fileEntry);
+
+		return dlOpenerFileEntryReference.getReferenceKey();
 	}
 
 	@Reference
@@ -374,24 +388,25 @@ public class DLOpenerOneDriveManager {
 	@Reference
 	private OAuth2Manager _oAuth2Manager;
 
-	private static class CachingSupplier<T> implements Supplier<T> {
+	private static class CachingUnsafeSupplier<T, E extends PortalException>
+		implements UnsafeSupplier<T, E> {
 
-		public CachingSupplier(Supplier<T> supplier) {
-			_supplier = supplier;
+		public CachingUnsafeSupplier(UnsafeSupplier<T, E> unsafeSupplier) {
+			_unsafeSupplier = unsafeSupplier;
 		}
 
 		@Override
-		public T get() {
+		public T get() throws E {
 			if (_value != null) {
 				return _value;
 			}
 
-			_value = _supplier.get();
+			_value = _unsafeSupplier.get();
 
 			return _value;
 		}
 
-		private final Supplier<T> _supplier;
+		private final UnsafeSupplier<T, E> _unsafeSupplier;
 		private T _value;
 
 	}

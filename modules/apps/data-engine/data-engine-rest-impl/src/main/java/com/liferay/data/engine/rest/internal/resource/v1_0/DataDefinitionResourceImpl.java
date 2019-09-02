@@ -250,7 +250,7 @@ public class DataDefinitionResourceImpl
 				LocalizedValueUtil.toLocaleStringMap(
 					dataDefinition.getDescription()),
 				DataDefinitionUtil.toJSON(dataDefinition, _fieldTypeTracker),
-				GetterUtil.get(dataDefinition.getStorageType(), "json"),
+				GetterUtil.getString(dataDefinition.getStorageType(), "json"),
 				serviceContext),
 			_fieldTypeTracker);
 

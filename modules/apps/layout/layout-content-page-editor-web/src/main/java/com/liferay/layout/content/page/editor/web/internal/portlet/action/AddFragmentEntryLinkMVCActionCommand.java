@@ -27,7 +27,6 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -136,27 +135,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
-	}
-
-	protected void updateLayoutPageTemplateStructure(
-			ActionRequest actionRequest)
-		throws PortalException {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId",
-			SegmentsExperienceConstants.ID_DEFAULT);
-		String data = ParamUtil.getString(actionRequest, "data");
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				serviceContext.getScopeGroupId(), classNameId, classPK,
-				segmentsExperienceId, data);
 	}
 
 	private FragmentEntry _getContributedFragmentEntry(
@@ -276,10 +254,6 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Reference
 	private Portal _portal;
 
 	private class AddFragmentEntryLinkCallable
@@ -287,12 +261,7 @@ public class AddFragmentEntryLinkMVCActionCommand extends BaseMVCActionCommand {
 
 		@Override
 		public FragmentEntryLink call() throws Exception {
-			FragmentEntryLink fragmentEntryLink = addFragmentEntryLink(
-				_actionRequest);
-
-			updateLayoutPageTemplateStructure(_actionRequest);
-
-			return fragmentEntryLink;
+			return addFragmentEntryLink(_actionRequest);
 		}
 
 		private AddFragmentEntryLinkCallable(ActionRequest actionRequest) {

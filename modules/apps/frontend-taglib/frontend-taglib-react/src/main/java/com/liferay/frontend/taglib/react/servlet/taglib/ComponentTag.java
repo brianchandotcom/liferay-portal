@@ -134,43 +134,34 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected boolean isPositionInLine() {
-		Boolean positionInline = null;
-
 		String fragmentId = ParamUtil.getString(request, "p_f_id");
 
 		if (Validator.isNotNull(fragmentId)) {
-			positionInline = true;
+			return true;
 		}
 
-		if (positionInline == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-			if (themeDisplay.isIsolated() ||
-				themeDisplay.isLifecycleResource() ||
-				themeDisplay.isStateExclusive()) {
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive()) {
 
-				positionInline = true;
-			}
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			String portletId = portletDisplay.getId();
-
-			if (Validator.isNotNull(portletId) &&
-				themeDisplay.isPortletEmbedded(
-					themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
-					portletId)) {
-
-				positionInline = true;
-			}
+			return true;
 		}
 
-		if (positionInline == null) {
-			positionInline = false;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
+		if (Validator.isNotNull(portletId) &&
+			themeDisplay.isPortletEmbedded(
+				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
+				portletId)) {
+
+			return true;
 		}
 
-		return positionInline;
+		return false;
 	}
 
 	protected void prepareData(Map<String, Object> data) {

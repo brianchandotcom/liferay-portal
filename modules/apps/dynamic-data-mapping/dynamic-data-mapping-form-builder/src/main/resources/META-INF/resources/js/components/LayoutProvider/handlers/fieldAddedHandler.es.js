@@ -21,7 +21,7 @@ import {generateFieldName} from '../util/fields.es';
 import {normalizeSettingsContextPages} from '../../../util/fieldSupport.es';
 
 const handleFieldAdded = (props, state, event) => {
-	const {addedToPlaceholder, fieldType, target} = event;
+	const {addedToPlaceholder, fieldType, indexes} = event;
 	const {defaultLanguageId, editingLanguageId, spritemap} = props;
 	const newFieldName = generateFieldName(state.pages, fieldType.label);
 
@@ -41,9 +41,9 @@ const handleFieldAdded = (props, state, event) => {
 	};
 
 	const {fieldName, name, settingsContext} = focusedField;
-	const {pageIndex, rowIndex} = target;
+	const {pageIndex, rowIndex} = indexes;
 	let {pages} = state;
-	let {columnIndex} = target;
+	let {columnIndex} = indexes;
 
 	const fieldProperties = {
 		...getFieldProperties(

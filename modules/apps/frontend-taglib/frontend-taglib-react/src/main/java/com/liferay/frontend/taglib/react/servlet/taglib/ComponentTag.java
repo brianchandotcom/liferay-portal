@@ -25,7 +25,6 @@ import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
-import java.util.HashSet;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -48,8 +47,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			prepareData(data);
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-				getModule(), getComponentId(), new HashSet<>(),
-				isPositionInLine());
+				getModule(), getComponentId(), null, isPositionInLine());
 
 			ReactRenderer reactRenderer =
 				ReactRendererProvider.getReactRenderer();

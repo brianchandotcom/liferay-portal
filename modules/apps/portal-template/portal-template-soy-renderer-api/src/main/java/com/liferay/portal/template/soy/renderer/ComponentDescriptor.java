@@ -49,12 +49,12 @@ public class ComponentDescriptor {
 
 		_templateNamespace = templateNamespace;
 		_module = module;
+		_componentId = componentId;
 
 		if (dependencies != null) {
 			_dependencies.addAll(dependencies);
 		}
 
-		_componentId = componentId;
 		_wrapper = wrapper;
 		_renderJavascript = renderJavascript;
 		_positionInLine = positionInLine;
@@ -89,7 +89,7 @@ public class ComponentDescriptor {
 	}
 
 	private String _componentId;
-	private Set<String> _dependencies = new HashSet<>();
+	private final Set<String> _dependencies = new HashSet<>();
 	private String _module;
 	private boolean _positionInLine;
 	private boolean _renderJavascript;

@@ -256,6 +256,11 @@ public interface SegmentsExperienceLocalService
 	public SegmentsExperience getSegmentsExperience(long segmentsExperienceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperience getSegmentsExperience(
+			long groupId, String segmentsExperienceKey)
+		throws PortalException;
+
 	/**
 	 * Returns the segments experience matching the UUID and group.
 	 *

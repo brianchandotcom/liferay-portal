@@ -198,6 +198,11 @@ public interface SegmentsExperimentRelLocalService
 		long segmentsExperimentRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsExperimentRel fetchSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

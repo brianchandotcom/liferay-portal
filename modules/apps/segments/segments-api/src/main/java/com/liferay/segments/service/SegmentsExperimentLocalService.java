@@ -349,10 +349,6 @@ public interface SegmentsExperimentLocalService
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, int status)
-		throws PortalException;
-
-	public SegmentsExperiment updateSegmentsExperiment(
 			long segmentsExperimentId, String name, String description,
 			String goal, String goalTarget)
 		throws PortalException;
@@ -367,8 +363,13 @@ public interface SegmentsExperimentLocalService
 	public SegmentsExperiment updateSegmentsExperiment(
 		SegmentsExperiment segmentsExperiment);
 
-	public SegmentsExperiment updateSegmentsExperiment(
-			String segmentsExperimentKey, int status)
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			long segmentsExperimentId, int status)
+		throws PortalException;
+
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			long segmentsExperimentId, int status,
+			long winnerSegmentsExperienceId)
 		throws PortalException;
 
 }

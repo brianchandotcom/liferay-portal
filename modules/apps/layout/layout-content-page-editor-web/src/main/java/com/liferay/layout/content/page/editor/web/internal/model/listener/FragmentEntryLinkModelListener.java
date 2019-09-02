@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -128,7 +128,7 @@ public class FragmentEntryLinkModelListener
 			fragmentEntryLink.getClassPK());
 
 		Set<AssetEntry> assetEntries =
-			MappedContentUtil.getFragmentEntryLinkMappedAssetEntries(
+			ContentUtil.getFragmentEntryLinkMappedAssetEntries(
 				fragmentEntryLink);
 
 		for (AssetEntry assetEntry : assetEntries) {

@@ -53,7 +53,7 @@ import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSid
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
-import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -285,7 +285,7 @@ public class ContentPageEditorDisplayContext {
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 		);
 
-		Set<AssetEntry> assetEntries = MappedContentUtil.getMappedAssetEntries(
+		Set<AssetEntry> assetEntries = ContentUtil.getMappedAssetEntries(
 			_groupId, themeDisplay.getPlid());
 
 		soyContext.put(
@@ -293,7 +293,7 @@ public class ContentPageEditorDisplayContext {
 			_getMappedAssetEntriesSoyContexts(assetEntries)
 		).put(
 			"mappedContents",
-			MappedContentUtil.getMappedContentsJSONArray(
+			ContentUtil.getMappedContentsJSONArray(
 				assetEntries, themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()

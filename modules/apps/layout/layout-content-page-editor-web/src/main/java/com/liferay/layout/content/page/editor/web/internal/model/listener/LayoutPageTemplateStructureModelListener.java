@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.model.listener;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
-import com.liferay.layout.content.page.editor.web.internal.util.MappedContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,7 +59,7 @@ public class LayoutPageTemplateStructureModelListener
 
 		try {
 			Set<AssetEntry> assetEntries =
-				MappedContentUtil.getLayoutMappedAssetEntries(
+				ContentUtil.getLayoutMappedAssetEntries(
 					layoutPageTemplateStructure);
 
 			for (AssetEntry assetEntry : assetEntries) {

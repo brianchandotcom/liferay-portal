@@ -63,7 +63,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
-public class MappedContentUtil {
+public class ContentUtil {
 
 	public static AssetEntry getAssetEntry(
 		JSONObject jsonObject, Set<Long> mappedClassPKs) {
@@ -451,7 +451,6 @@ public class MappedContentUtil {
 		);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		MappedContentUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);
 
 }

@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = ReactRenderer.class)
 public class ReactRendererImpl implements ReactRenderer {
 
+	@Override
 	public void renderReact(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
@@ -48,6 +49,7 @@ public class ReactRendererImpl implements ReactRenderer {
 			componentDescriptor, data);
 	}
 
+	@Override
 	public void renderReact(
 			HttpServletRequest httpServletRequest, Writer writer,
 			ComponentDescriptor componentDescriptor, Map<String, ?> data)

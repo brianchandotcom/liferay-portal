@@ -89,11 +89,6 @@ public abstract class BaseDLAppTestCase {
 	@After
 	public void tearDown() throws Exception {
 		PrincipalThreadLocal.setName(_name);
-
-		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
-			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
-			ActionKeys.VIEW);
 	}
 
 	@DeleteAfterTestRun

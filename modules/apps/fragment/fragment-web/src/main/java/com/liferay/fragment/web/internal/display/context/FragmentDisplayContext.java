@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -255,7 +254,7 @@ public class FragmentDisplayContext {
 		return _fragmentCollectionKey;
 	}
 
-	public String getFragmentCollectionName() throws PortalException {
+	public String getFragmentCollectionName() {
 		if (isSelectedFragmentCollectionContributor()) {
 			FragmentCollectionContributor fragmentCollectionContributor =
 				_getFragmentCollectionContributor();
@@ -270,17 +269,7 @@ public class FragmentDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String fragmentCollectionName = fragmentCollection.getName();
-
-		if (!_isScopeGroup()) {
-			Group group = GroupLocalServiceUtil.getGroup(
-				fragmentCollection.getGroupId());
-
-			fragmentCollectionName = StringUtil.appendParentheticalSuffix(
-				fragmentCollectionName, getGroupName(group.getGroupId()));
-		}
-
-		return HtmlUtil.escape(fragmentCollectionName);
+		return HtmlUtil.escape(fragmentCollection.getName());
 	}
 
 	public Map<String, Object> getFragmentCollectionsViewContext()

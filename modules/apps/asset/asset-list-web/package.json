@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"clay-multi-select": "2.18.0",
-		"frontend-js-web": "^4.0.0",
+		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8"

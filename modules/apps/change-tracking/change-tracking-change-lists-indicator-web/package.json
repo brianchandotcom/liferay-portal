@@ -2,7 +2,7 @@
 	"dependencies": {
 		"clay-icon": "2.18.0",
 		"clay-tooltip": "2.18.0",
-		"frontend-js-web": "^4.0.0",
+		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",
 		"metal-soy": "2.16.8",

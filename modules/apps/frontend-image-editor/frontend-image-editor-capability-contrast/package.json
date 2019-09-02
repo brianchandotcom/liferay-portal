@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "^4.0.0",
+		"frontend-js-web": "*",
 		"metal": "2.16.8",
 		"metal-component": "2.16.8",
 		"metal-soy": "2.16.8"

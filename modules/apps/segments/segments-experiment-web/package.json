@@ -7,7 +7,7 @@
 		"@clayui/modal": "3.0.0-milestone.3",
 		"@clayui/select": "3.0.0-milestone.3",
 		"classnames": "2.2.6",
-		"frontend-js-react-web": "^2.0.0",
+		"frontend-js-react-web": "*",
 		"prop-types": "15.7.2",
 		"react": "16.9.0"
 	},

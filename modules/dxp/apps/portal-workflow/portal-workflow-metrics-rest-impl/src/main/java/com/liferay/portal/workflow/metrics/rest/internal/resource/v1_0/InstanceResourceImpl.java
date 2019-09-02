@@ -33,6 +33,7 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
+import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Order;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
@@ -517,6 +518,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		assigneeIdTermsAggregation.setSize(10000);
 
+		FilterAggregation indexFilterAggregation = _aggregations.filter(
+			"index", _queries.term("_index", "workflow-metrics-instances"));
+
+		indexFilterAggregation.addChildAggregation(
+			_aggregations.topHits("topHits"));
+
 		FilterAggregation onTimeFilterAggregation = _aggregations.filter(
 			"onTime", _resourceHelper.createMustNotBooleanQuery());
 
@@ -535,9 +542,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		taskNameTermsAggregation.setSize(10000);
 
 		termsAggregation.addChildrenAggregations(
-			assigneeIdTermsAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation, taskNameTermsAggregation,
-			_aggregations.topHits("topHits"),
+			assigneeIdTermsAggregation, indexFilterAggregation,
+			onTimeFilterAggregation, overdueFilterAggregation,
+			taskNameTermsAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.toList(assigneeUserIds), dateEnd, dateStart,
 				ListUtil.toList(slaStatuses), ListUtil.toList(statuses),
@@ -573,8 +580,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			Collection::stream
 		).map(
 			bucket -> Stream.of(
-				(TopHitsAggregationResult)bucket.getChildAggregationResult(
-					"topHits")
+				(FilterAggregationResult)bucket.getChildAggregationResult(
+					"index")
+			).map(
+				filterAggregationResult ->
+					(TopHitsAggregationResult)
+						filterAggregationResult.getChildAggregationResult(
+							"topHits")
 			).map(
 				TopHitsAggregationResult::getSearchHits
 			).map(

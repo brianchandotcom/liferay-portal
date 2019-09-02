@@ -46,15 +46,13 @@ public class ReactRendererHelper {
 
 		_httpServletRequest = httpServletRequest;
 		_componentDescriptor = componentDescriptor;
-		_data = new HashMap<>(data);
+		_data = _prepareData(data);
 
 		_npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
 			servletContext);
 
 		_placeholderId = StringUtil.randomId();
 		_portal = portal;
-
-		_prepareData();
 	}
 
 	public void renderReact(Writer writer) throws IOException {
@@ -62,26 +60,51 @@ public class ReactRendererHelper {
 		_renderJavaScript(writer);
 	}
 
-	private void _prepareData() {
-		if (!_data.containsKey("componentId")) {
-			_data.put("componentId", _componentDescriptor.getComponentId());
+	private Map<String, Object> _prepareData(Map<String, Object> data) {
+		Map<String, Object> modifiedData = null;
+
+		if (!data.containsKey("componentId")) {
+			if (modifiedData == null) {
+				modifiedData = new HashMap<>(data);
+			}
+
+			modifiedData.put(
+				"componentId", _componentDescriptor.getComponentId());
 		}
 
-		if (!_data.containsKey("locale")) {
-			_data.put("locale", LocaleUtil.getMostRelevantLocale());
+		if (!data.containsKey("locale")) {
+			if (modifiedData == null) {
+				modifiedData = new HashMap<>(data);
+			}
+
+			modifiedData.put("locale", LocaleUtil.getMostRelevantLocale());
 		}
 
-		if (!_data.containsKey("portletId")) {
-			_data.put(
+		if (!data.containsKey("portletId")) {
+			if (modifiedData == null) {
+				modifiedData = new HashMap<>(data);
+			}
+
+			modifiedData.put(
 				"portletId",
 				_httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 		}
 
-		if (!_data.containsKey("portletNamespace")) {
-			_data.put(
+		if (!data.containsKey("portletNamespace")) {
+			if (modifiedData == null) {
+				modifiedData = new HashMap<>(data);
+			}
+
+			modifiedData.put(
 				"portletNamespace",
 				_httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 		}
+
+		if (modifiedData == null) {
+			return data;
+		}
+
+		return modifiedData;
 	}
 
 	private void _renderJavaScript(Writer writer) throws IOException {

@@ -56,8 +56,8 @@ public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String backURL = ParamUtil.getString(resourceRequest, "backURL");
 
-		Set<AssetEntry> assetEntries = ContentUtil.getMappedAssetEntries(
-			themeDisplay.getScopeGroupId(), themeDisplay.getPlid());
+		Set<AssetEntry> assetEntries = ContentUtil.getPageContentAssetEntries(
+			themeDisplay.getPlid());
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

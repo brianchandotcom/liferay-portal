@@ -18,7 +18,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -154,6 +156,26 @@ public class ContentUtil {
 		}
 
 		return mappedContentsJSONArray;
+	}
+
+	public static Set<AssetEntry> getPageContentAssetEntries(long plid) {
+		Set<AssetEntry> assetEntries = new HashSet<>();
+
+		List<AssetEntryUsage> assetEntryUsages =
+			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesByPlid(plid);
+
+		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				assetEntryUsage.getAssetEntryId());
+
+			if (assetEntry == null) {
+				continue;
+			}
+
+			assetEntries.add(assetEntry);
+		}
+
+		return assetEntries;
 	}
 
 	private static JSONObject _getActionsJSONObject(

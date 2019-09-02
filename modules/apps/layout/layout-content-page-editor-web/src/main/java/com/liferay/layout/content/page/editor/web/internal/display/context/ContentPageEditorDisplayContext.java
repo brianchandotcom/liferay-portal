@@ -285,16 +285,20 @@ public class ContentPageEditorDisplayContext {
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
 		);
 
-		Set<AssetEntry> assetEntries = ContentUtil.getMappedAssetEntries(
+		Set<AssetEntry> mappedAssetEntries = ContentUtil.getMappedAssetEntries(
 			_groupId, themeDisplay.getPlid());
 
 		soyContext.put(
 			"mappedAssetEntries",
-			_getMappedAssetEntriesSoyContexts(assetEntries)
-		).put(
+			_getMappedAssetEntriesSoyContexts(mappedAssetEntries));
+
+		Set<AssetEntry> pageContentAssetEntries =
+			ContentUtil.getPageContentAssetEntries(themeDisplay.getPlid());
+
+		soyContext.put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
-				assetEntries, themeDisplay.getURLCurrent(), request)
+                pageContentAssetEntries, themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		).put(

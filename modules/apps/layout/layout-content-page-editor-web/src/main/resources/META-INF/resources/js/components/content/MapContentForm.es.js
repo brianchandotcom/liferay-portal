@@ -23,7 +23,19 @@ import {
 	FRAGMENTS_EDITOR_ITEM_TYPES
 } from '../../utils/constants';
 import {getItemPath} from '../../utils/FragmentsEditorGetUtils.es';
-import {stripHtml} from '../../utils/FragmentsEditorTextUtils.es';
+
+/**
+ * @param {string} html Removes HTML from the given text
+ * @return {string} Plain text
+ * @review
+ */
+const stripHTML = html => {
+	const div = document.createElement('div');
+
+	div.innerHTML = html;
+
+	return div.innerText;
+};
 
 /**
  * MapContentForm
@@ -92,7 +104,8 @@ class MapContentForm extends PortletBase {
 							languageId
 					  ]
 					: editableValues[editableId].defaultValue.trim();
-				selectedItem.displayValue = stripHtml(selectedItem.itemValue);
+
+				selectedItem.displayValue = stripHTML(selectedItem.itemValue);
 
 				return selectedItem;
 			});

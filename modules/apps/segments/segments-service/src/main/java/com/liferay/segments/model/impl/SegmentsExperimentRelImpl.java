@@ -82,6 +82,15 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 	}
 
 	@Override
+	public boolean isActive() throws PortalException {
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.getSegmentsExperience(
+				getSegmentsExperienceId());
+
+		return segmentsExperience.isActive();
+	}
+
+	@Override
 	public boolean isControl() throws PortalException {
 		SegmentsExperiment segmentsExperiment =
 			SegmentsExperimentLocalServiceUtil.getSegmentsExperiment(

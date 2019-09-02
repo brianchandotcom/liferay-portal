@@ -17,6 +17,7 @@ package com.liferay.trash.service.webserver.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
+import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.trash.model.TrashEntry;
 
 import java.util.HashMap;

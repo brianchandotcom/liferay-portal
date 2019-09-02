@@ -550,7 +550,8 @@ public class SegmentsExperimentLocalServiceImpl
 			List<SegmentsExperiment> segmentsExperiments =
 				segmentsExperimentPersistence.findByS_C_C_S(
 					new long[] {segmentsExperienceId}, classNameId, classPK,
-					SegmentsExperimentConstants.Status.exclusiveStates());
+					SegmentsExperimentConstants.Status.
+						getExclusiveStatusValues());
 
 			if (segmentsExperiments.isEmpty()) {
 				return;

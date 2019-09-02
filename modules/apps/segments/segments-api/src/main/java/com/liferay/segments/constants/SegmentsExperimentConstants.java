@@ -93,8 +93,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_NO_WINNER(
-			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner",
-			false, true, false, true) {
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner", false,
+			true, false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -143,11 +143,21 @@ public class SegmentsExperimentConstants {
 		},
 		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true);
 
-		public static int[] exclusiveStates() {
+		public static int[] getExclusiveStatusValues() {
 			Stream<Status> stream = Arrays.stream(Status.values());
 
 			return stream.filter(
 				Status::isExclusive
+			).mapToInt(
+				Status::getValue
+			).toArray();
+		}
+
+		public static int[] getSplitStatusValues() {
+			Stream<Status> stream = Arrays.stream(Status.values());
+
+			return stream.filter(
+				Status::isSplit
 			).mapToInt(
 				Status::getValue
 			).toArray();
@@ -175,16 +185,6 @@ public class SegmentsExperimentConstants {
 			}
 
 			return Optional.empty();
-		}
-
-		public static int[] splitStates() {
-			Stream<Status> stream = Arrays.stream(Status.values());
-
-			return stream.filter(
-				Status::isSplit
-			).mapToInt(
-				Status::getValue
-			).toArray();
 		}
 
 		public static void validateTransition(

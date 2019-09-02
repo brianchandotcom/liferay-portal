@@ -258,57 +258,25 @@ public class ContentPageEditorDisplayContext {
 			fragmentServiceConfiguration.enableConfiguration()
 		).put(
 			"fragmentEntryLinks", _getFragmentEntryLinksSoyContext()
-		);
-
-		ResourceURL getAssetFieldValueURL = _renderResponse.createResourceURL();
-
-		getAssetFieldValueURL.setResourceID(
-			"/content_layout/get_asset_field_value");
-
-		soyContext.put(
-			"getAssetFieldValueURL", getAssetFieldValueURL.toString());
-
-		ResourceURL getAssetMappingFieldsURL =
-			_renderResponse.createResourceURL();
-
-		getAssetMappingFieldsURL.setResourceID(
-			"/content_layout/get_asset_mapping_fields");
-
-		ResourceURL getContentStructureMappingFieldsURL =
-			_renderResponse.createResourceURL();
-
-		getContentStructureMappingFieldsURL.setResourceID(
-			"/content_layout/get_content_structure_mapping_fields");
-
-		ResourceURL getContentStructuresURL =
-			_renderResponse.createResourceURL();
-
-		getContentStructuresURL.setResourceID(
-			"/content_layout/get_content_structures");
-
-		ResourceURL getExperienceUsedPortletsURL =
-			_renderResponse.createResourceURL();
-
-		getExperienceUsedPortletsURL.setResourceID(
-			"/content_layout/get_experience_used_portlets");
-
-		ResourceURL getMappedContentURL = _renderResponse.createResourceURL();
-
-		getMappedContentURL.setResourceID(
-			"/content_layout/get_mapped_contents");
-
-		soyContext.put(
-			"getAssetMappingFieldsURL", getAssetMappingFieldsURL.toString()
+		).put(
+			"getAssetFieldValueURL",
+			_getResourceURL("/content_layout/get_asset_field_value")
+		).put(
+			"getAssetMappingFieldsURL",
+			_getResourceURL("/content_layout/get_asset_mapping_fields")
 		).put(
 			"getContentStructureMappingFieldsURL",
-			getContentStructureMappingFieldsURL.toString()
+			_getResourceURL(
+				"/content_layout/get_content_structure_mapping_fields")
 		).put(
-			"getContentStructuresURL", getContentStructuresURL.toString()
+			"getContentStructuresURL",
+			_getResourceURL("/content_layout/get_content_structures")
 		).put(
 			"getExperienceUsedPortletsURL",
-			getExperienceUsedPortletsURL.toString()
+			_getResourceURL("/content_layout/get_experience_used_portlets")
 		).put(
-			"getMappedContentsURL", getMappedContentURL.toString()
+			"getMappedContentsURL",
+			_getResourceURL("/content_layout/get_mapped_contents")
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(
@@ -1310,6 +1278,14 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return _redirect;
+	}
+
+	private String _getResourceURL(String resourceID) {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setResourceID(resourceID);
+
+		return resourceURL.toString();
 	}
 
 	private String[] _getThemeColorsCssClasses() {

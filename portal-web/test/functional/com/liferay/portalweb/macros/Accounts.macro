@@ -1,0 +1,17 @@
+definition {
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account");
+
+		PortletEntry.inputName(name = "${accountName}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

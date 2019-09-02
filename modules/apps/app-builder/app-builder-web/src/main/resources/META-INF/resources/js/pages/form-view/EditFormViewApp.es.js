@@ -12,7 +12,6 @@
  * details.
  */
 
-import {render} from 'frontend-js-react-web';
 import React from 'react';
 import {DragDropContext as dragDropContext} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -29,10 +28,10 @@ const EditFormViewApp = dragDropContext(HTML5Backend)(
 	}
 );
 
-const renderComponent = props => {
-	return <EditFormViewApp {...props} />;
-};
-
-export default function(containerId, data) {
-	render(renderComponent, data, document.getElementById(containerId));
+export default function(props) {
+	return (
+		<div className="app-builder-root">
+			<EditFormViewApp {...props} />
+		</div>
+	);
 }

@@ -20,13 +20,17 @@
 String appBuilderRootElementId = renderResponse.getNamespace() + "-app-builder-root";
 %>
 
-<div id="<%= appBuilderRootElementId %>">
-</div>
-
 <portlet:renderURL var="basePortletURL" />
 
-<aui:script require='<%= npmResolvedPackageName + "/js/index.es as AppBuilder" %>'>
-	AppBuilder.default('<%= appBuilderRootElementId %>', {
-		basePortletURL: '<%= basePortletURL %>'
-	});
-</aui:script>
+<div id="<%= appBuilderRootElementId %>">
+
+	<%
+	Map<String, Object> data = new HashMap<>();
+	data.put("basePortletURL", basePortletURL);
+	%>
+
+	<react:component
+		data="<%= data %>"
+		module="js/index.es"
+	/>
+</div>

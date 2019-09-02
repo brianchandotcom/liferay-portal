@@ -264,14 +264,7 @@ CreateContentDialog.STATE = {
 	 * @memberOf CreateContentDialog
 	 * @private
 	 * @review
-	 * @type {Array<{
-	 *   disabled: boolean,
-	 *   editableId: string,
-	 *   fragmentEntryLinkId: string,
-	 *   key: !string,
-	 *   label: !string,
-	 *   type: !string
-	 * }>}
+	 * @type {Array<{disabled: boolean, editableId: string, fragmentEntryLinkId: string, key: !string, label: !string, type: !string}>}
 	 */
 	_fields: Config.arrayOf(
 		Config.shapeOf({

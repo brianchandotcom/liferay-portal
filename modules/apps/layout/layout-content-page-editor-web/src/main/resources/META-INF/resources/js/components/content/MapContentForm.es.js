@@ -220,11 +220,7 @@ MapContentForm.STATE = {
 	 * @memberOf MapContentForm
 	 * @private
 	 * @review
-	 * @type {Array<{
-	 *   key: !string,
-	 *   label: !string,
-	 *   type: !string
-	 * }>}
+	 * @type {Array<{key: !string, label: !string, type: !string}>}
 	 */
 	fields: Config.arrayOf(
 		Config.shapeOf({

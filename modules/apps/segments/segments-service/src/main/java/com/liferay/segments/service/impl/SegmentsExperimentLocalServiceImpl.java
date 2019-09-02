@@ -14,6 +14,7 @@
 
 package com.liferay.segments.service.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -41,7 +42,10 @@ import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
+import com.liferay.segments.exception.WinnerSegmentsExperienceException;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
@@ -290,7 +294,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
 
-		return _updateSegmentsExperimentStatus(segmentsExperiment, status);
+		return _updateSegmentsExperimentStatus(segmentsExperiment, status, -1);
 	}
 
 	@Override
@@ -331,18 +335,19 @@ public class SegmentsExperimentLocalServiceImpl
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
-			status);
+			status, -1);
 	}
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			String segmentsExperimentKey, int status)
+			long segmentsExperimentId, int status,
+			long winnerSegmentsExperienceId)
 		throws PortalException {
 
 		return _updateSegmentsExperimentStatus(
-			segmentsExperimentPersistence.findBySegmentsExperimentKey_First(
-				segmentsExperimentKey, null),
-			status);
+			segmentsExperimentPersistence.findByPrimaryKey(
+				segmentsExperimentId),
+			status, winnerSegmentsExperienceId);
 	}
 
 	protected void sendNotificationEvent(SegmentsExperiment segmentsExperiment)
@@ -402,7 +407,8 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private SegmentsExperiment _updateSegmentsExperimentStatus(
-			SegmentsExperiment segmentsExperiment, int status)
+			SegmentsExperiment segmentsExperiment, int status,
+			long winnerSegmentsExperienceId)
 		throws PortalException {
 
 		_validateStatus(
@@ -410,7 +416,12 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperiment.getSegmentsExperienceId(),
 			segmentsExperiment.getClassNameId(),
 			segmentsExperiment.getClassPK(), segmentsExperiment.getStatus(),
-			status);
+			status, winnerSegmentsExperienceId);
+
+		if (winnerSegmentsExperienceId != -1) {
+			_updateWinnerSegmentsExperienceId(
+				segmentsExperiment, status, winnerSegmentsExperienceId);
+		}
 
 		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setStatus(status);
@@ -418,6 +429,39 @@ public class SegmentsExperimentLocalServiceImpl
 		segmentsExperimentPersistence.update(segmentsExperiment);
 
 		sendNotificationEvent(segmentsExperiment);
+
+		return segmentsExperiment;
+	}
+
+	private SegmentsExperiment _updateWinnerSegmentsExperienceId(
+			SegmentsExperiment segmentsExperiment, int statusValue,
+			long winnerSegmentsExperienceId)
+		throws PortalException {
+
+		UnicodeProperties typeSettings = new UnicodeProperties(true);
+
+		typeSettings.setProperty(
+			"winnerSegmentsExperienceId",
+			String.valueOf(winnerSegmentsExperienceId));
+
+		segmentsExperiment.setTypeSettings(typeSettings.toString());
+
+		if (winnerSegmentsExperienceId ==
+				segmentsExperiment.getSegmentsExperienceId()) {
+
+			return segmentsExperiment;
+		}
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				winnerSegmentsExperienceId);
+
+		if (segmentsExperimentRel == null) {
+			throw new WinnerSegmentsExperienceException(
+				"Winner segments experience " + winnerSegmentsExperienceId +
+					" no found");
+		}
 
 		return segmentsExperiment;
 	}
@@ -432,7 +476,7 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateName(name);
 		_validateStatus(
 			segmentsExperimentId, segmentsExperienceId, classNameId, classPK,
-			currentStatus, newStatus);
+			currentStatus, newStatus, -1);
 	}
 
 	private void _validateConfidenceLevel(double confidenceLevel)
@@ -472,7 +516,8 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validateStatus(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, int statusValue, int newStatusValue)
+			long classNameId, long classPK, int statusValue, int newStatusValue,
+			long winnerSegmentsExperienceId)
 		throws SegmentsExperimentStatusException {
 
 		SegmentsExperimentConstants.Status.validateTransition(
@@ -508,6 +553,15 @@ public class SegmentsExperimentLocalServiceImpl
 					"A segments experiment with status " + newStatus.name() +
 						" already exists");
 			}
+		}
+
+		if (newStatus.requiresWinnerExperience() &&
+			(winnerSegmentsExperienceId < 0)) {
+
+			throw new SegmentsExperimentStatusException(
+				StringBundler.concat(
+					"Status ", newStatus.name(), " requires a winner segments ",
+					"experience"));
 		}
 	}
 

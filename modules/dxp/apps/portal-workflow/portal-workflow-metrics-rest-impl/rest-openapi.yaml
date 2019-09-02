@@ -195,6 +195,9 @@ components:
         Task:
             description: https://www.schema.org/Task
             properties:
+                durationAvg:
+                    format: int64
+                    type: integer
                 instanceCount:
                     format: int64
                     type: integer
@@ -559,6 +562,20 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: completed
+                  schema:
+                      type: boolean
+                - in: query
+                  name: dateEnd
+                  schema:
+                      format: date-time
+                      type: string
+                - in: query
+                  name: dateStart
+                  schema:
+                      format: date-time
+                      type: string
                 - in: query
                   name: page
                   schema:

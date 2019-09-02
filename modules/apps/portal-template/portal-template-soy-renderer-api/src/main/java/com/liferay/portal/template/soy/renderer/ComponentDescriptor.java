@@ -24,13 +24,13 @@ import java.util.Set;
 public class ComponentDescriptor {
 
 	public ComponentDescriptor(String templateNamespace, String module) {
-		this(templateNamespace, module, null, null);
+		this(templateNamespace, module, null, null, true, true, false);
 	}
 
 	public ComponentDescriptor(
 		String templateNamespace, String module, String componentId) {
 
-		this(templateNamespace, module, componentId, null);
+		this(templateNamespace, module, componentId, null, true, true, false);
 	}
 
 	public ComponentDescriptor(

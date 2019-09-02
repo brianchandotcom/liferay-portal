@@ -126,20 +126,15 @@ class MapContentForm extends PortletBase {
 				let newField = Object.assign({}, field);
 
 				if (fieldKey === '-' && field.editableId === editableId) {
-					newField = Object.assign(
-						{},
-						{
-							disabled: field.disabled,
-							key: field.key,
-							label: field.label,
-							type: field.type
-						}
-					);
+					newField = {
+						disabled: field.disabled,
+						key: field.key,
+						label: field.label,
+						type: field.type
+					};
 				} else if (field.key === fieldKey) {
-					newField = Object.assign(field, {
-						editableId,
-						fragmentEntryLinkId
-					});
+					newField.editableId = editableId;
+					newField.fragmentEntryLinkId = fragmentEntryLinkId;
 				}
 
 				return newField;

@@ -94,56 +94,59 @@ class CreateContentDialog extends Component {
 				this._title
 			)
 				.then(response => {
-					const promises = [];
-					const updateFragmentEntryLinks = {};
+					const updatedFragmentEntryLinks = {};
 
 					this._fields
 						.filter(field => field.fragmentEntryLinkId)
 						.forEach(field => {
-							const currentValues = this.fragmentEntryLinks[
-								field.fragmentEntryLinkId
-							].editableValues;
-
-							const updateFragmentEntryLink =
-								updateFragmentEntryLinks[
+							let fragmentEntryLink =
+								updatedFragmentEntryLinks.get(
 									field.fragmentEntryLinkId
-								] || Object.assign({}, currentValues);
-
-							const updateEditableValues =
-								updateFragmentEntryLink[
-									EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+								) ||
+								this.fragmentEntryLinks[
+									field.fragmentEntryLinkId
 								];
 
-							updateEditableValues[field.editableId].classNameId =
-								response.classNameId;
-							updateEditableValues[field.editableId].classPK =
-								response.classPK;
-							updateEditableValues[field.editableId].fieldId =
-								field.key;
+							const fieldPath = [
+								'editableValues',
+								EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+								field.editableId
+							];
 
-							updateFragmentEntryLinks[
+							fragmentEntryLink = setIn(
+								fragmentEntryLink,
+								[...fieldPath, 'classNameId'],
+								response.classNameId
+							);
+
+							fragmentEntryLink = setIn(
+								fragmentEntryLink,
+								[...fieldPath, 'classPK'],
+								response.classPK
+							);
+
+							fragmentEntryLink = setIn(
+								fragmentEntryLink,
+								[...fieldPath, 'fieldId'],
+								field.key
+							);
+
+							updatedFragmentEntryLinks[
 								field.fragmentEntryLinkId
-							] = updateFragmentEntryLink;
+							] = fragmentEntryLink;
 						});
 
-					const fragmentEntryLinkIds = Object.keys(
-						updateFragmentEntryLinks
-					);
-
-					fragmentEntryLinkIds.forEach(fragmentEntryLinkId => {
-						promises.push(
-							updateEditableValues(
-								fragmentEntryLinkId,
-								updateFragmentEntryLinks[fragmentEntryLinkId],
-								fragmentEntryLinkIds.indexOf(
-									fragmentEntryLinkId
-								) ===
-									fragmentEntryLinkIds.length - 1
-							)
-						);
-					});
-
-					Promise.all(promises).then(() => {
+					Promise.all(
+						Object.entries(updatedFragmentEntryLinks).map(
+							([fragmentEntryLinkId, fragmentEntryLink], index) =>
+								updateEditableValues(
+									fragmentEntryLinkId,
+									fragmentEntryLink,
+									index ===
+										updatedFragmentEntryLinks.length - 1
+								)
+						)
+					).then(() => {
 						this.store
 							.dispatch(updateMappedContentsAction())
 							.dispatch({
@@ -174,29 +177,26 @@ class CreateContentDialog extends Component {
 				response => {
 					const compatibleTypes = {};
 
-					Object.keys(COMPATIBLE_TYPES).forEach(editableType => {
-						const ddmTypes = COMPATIBLE_TYPES[editableType];
+					Object.entries(COMPATIBLE_TYPES).forEach(
+						([editableType, ddmTypes]) => {
+							ddmTypes.forEach(ddmType => {
+								compatibleTypes[ddmType] = editableType;
+							});
+						}
+					);
 
-						ddmTypes.forEach(ddmType => {
-							compatibleTypes[ddmType] = editableType;
-						});
-					});
-
-					const fields = [
+					this._fields = [
 						{
 							key: '-',
 							label: Liferay.Language.get('unmapped'),
 							type: '-'
-						}
+						},
+
+						...response.map(field => ({
+							...field,
+							type: compatibleTypes[field.type]
+						}))
 					];
-
-					response.forEach(field => {
-						field.type = compatibleTypes[field.type];
-
-						fields.push(field);
-					});
-
-					this._fields = fields;
 				}
 			);
 		}
@@ -264,7 +264,8 @@ CreateContentDialog.STATE = {
 	 * @memberOf CreateContentDialog
 	 * @private
 	 * @review
-	 * @type {Array<{disabled: boolean, editableId: string, fragmentEntryLinkId: string, key: !string, label: !string, type: !string}>}
+	 * @type {Array<{disabled: boolean, editableId: string, fragmentEntryLinkId: string, key: !string, label: !string, type: !string
+	 * }>}
 	 */
 	_fields: Config.arrayOf(
 		Config.shapeOf({

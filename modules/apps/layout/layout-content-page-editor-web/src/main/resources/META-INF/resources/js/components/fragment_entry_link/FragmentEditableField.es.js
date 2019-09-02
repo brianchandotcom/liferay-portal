@@ -256,16 +256,19 @@ class FragmentEditableField extends PortletBase {
 		const processor =
 			FragmentProcessors[this.type] || FragmentProcessors.fallback;
 
-		const buttons = processor.getFloatingToolbarButtons(
-			this.editableValues
-		);
+		let buttons = processor.getFloatingToolbarButtons(this.editableValues);
 
 		if (this.selectedItems.length > 1) {
-			buttons.forEach(button => {
-				if (button.id !== FLOATING_TOOLBAR_BUTTONS.map.id) {
-					button.cssClass +=
-						' disabled fragments-editor__floating-toolbar--disabled';
+			buttons = buttons.map(button => {
+				if (button.id === FLOATING_TOOLBAR_BUTTONS.map.id) {
+					return button;
 				}
+
+				return {
+					...button,
+
+					cssClass: `${button.cssClass} disabled fragments-editor__floating-toolbar--disabled`
+				};
 			});
 		}
 

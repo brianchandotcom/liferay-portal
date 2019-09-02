@@ -16,7 +16,7 @@ package com.liferay.document.library.test.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -61,7 +62,7 @@ public abstract class BaseDLAppTestCase {
 		targetGroup = GroupTestUtil.addGroup();
 
 		try {
-			DLAppServiceUtil.deleteFolder(
+			_dlAppService.deleteFolder(
 				group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				"Test Folder");
 		}
@@ -71,7 +72,7 @@ public abstract class BaseDLAppTestCase {
 			}
 		}
 
-		parentFolder = DLAppServiceUtil.addFolder(
+		parentFolder = _dlAppService.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Test Folder", RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(
@@ -98,6 +99,9 @@ public abstract class BaseDLAppTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseDLAppTestCase.class);
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	private String _name;
 

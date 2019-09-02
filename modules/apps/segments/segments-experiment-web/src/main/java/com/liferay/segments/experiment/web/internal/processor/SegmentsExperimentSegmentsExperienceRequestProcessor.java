@@ -38,8 +38,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
@@ -112,13 +114,17 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		_unsetCookie(httpServletRequest, httpServletResponse);
 
-		long[] allSegmentsExperienceIds = ArrayUtil.append(
-			segmentsExperienceIds, SegmentsExperienceConstants.ID_DEFAULT);
+		LongStream stream = Arrays.stream(segmentsExperienceIds);
+
+		segmentsExperienceId = stream.findFirst(
+		).orElse(
+			SegmentsExperienceConstants.ID_DEFAULT
+		);
 
 		List<SegmentsExperiment> segmentsExperiments =
 			_segmentsExperimentLocalService.
 				getSegmentsExperienceSegmentsExperiments(
-					allSegmentsExperienceIds, classNameId, classPK,
+					new long[] {segmentsExperienceId}, classNameId, classPK,
 					new int[] {SegmentsExperimentConstants.STATUS_RUNNING}, 0,
 					1);
 
@@ -126,7 +132,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No experiment running for the user experiences " +
-						StringUtil.merge(allSegmentsExperienceIds));
+						StringUtil.merge(segmentsExperienceIds));
 			}
 
 			return segmentsExperienceIds;

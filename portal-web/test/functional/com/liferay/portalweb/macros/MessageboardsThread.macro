@@ -1552,7 +1552,6 @@ definition {
 	}
 
 	macro viewWithWorkflowPG {
-		var key_repliesCount = "0";
 		var key_threadBody = "threadBody";
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${userName}";

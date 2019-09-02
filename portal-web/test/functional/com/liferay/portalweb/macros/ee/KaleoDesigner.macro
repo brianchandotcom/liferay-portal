@@ -219,6 +219,8 @@ definition {
 	macro deleteNode {
 		var key_nodeNodeLabel = "${nodeNodeLabel}";
 
+		Click(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE");
+
 		ClickNoError(locator1 = "KaleoDesignerEditWorkflow#VIEW_FORM_NODE_DELETE_ICON");
 
 		AssertConfirm(value1 = "Are you sure you want to delete the selected node(s)?");

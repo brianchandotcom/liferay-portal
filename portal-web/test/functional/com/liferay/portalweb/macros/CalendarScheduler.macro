@@ -525,6 +525,12 @@ definition {
 		AssertTextNotPresent(value1 = "${eventTitle}");
 	}
 
+	macro viewSpecificEventNotVisible {
+		var key_eventTitle = "${eventTitle}";
+
+		AssertNotVisible(locator1 = "Calendar#SCHEDULER_EVENT_SPECIFIC");
+	}
+
 	macro viewWeek {
 		CalendarNavigator.gotoView(viewType = "Week");
 

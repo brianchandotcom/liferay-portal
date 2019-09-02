@@ -12,28 +12,28 @@
  * details.
  */
 
-import PropTypes from 'prop-types';
 import React from 'react';
+import {PageContents} from './PageContents.es';
+import {NoPageContents} from './NoPageContents.es';
+import useSelector from '../../../store/hooks/useSelector.es';
+import SidebarHeader from '../SidebarHeader.es';
 
-import {MappedContent} from './MappedContent.es';
+const SidebarPageContents = () => {
+	const pageContents = useSelector(state => state.pageContents);
+	let view = <NoPageContents />;
 
-const MappedContents = props => {
+	if (pageContents.length) {
+		view = <PageContents pageContents={pageContents} />;
+	}
+
 	return (
-		<ul className="list-unstyled">
-			{props.mappedContents.map(mappedContent => (
-				<MappedContent key={mappedContent.classPK} {...mappedContent} />
-			))}
-		</ul>
+		<>
+			<SidebarHeader>{Liferay.Language.get('contents')}</SidebarHeader>
+
+			{view}
+		</>
 	);
 };
 
-MappedContents.propTypes = {
-	mappedContents: PropTypes.arrayOf(
-		PropTypes.shape({
-			classPK: PropTypes.string
-		})
-	)
-};
-
-export {MappedContents};
-export default MappedContents;
+export {SidebarPageContents};
+export default SidebarPageContents;

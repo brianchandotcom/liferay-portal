@@ -40,11 +40,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/get_mapped_contents"
+		"mvc.command.name=/content_layout/get_page_contents"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -61,7 +61,7 @@ public class GetMappedContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			ContentUtil.getMappedContentsJSONArray(
+			ContentUtil.getPageContentsJSONArray(
 				assetEntries, backURL,
 				_portal.getHttpServletRequest(resourceRequest)));
 	}

@@ -136,7 +136,7 @@ public class ContentUtil {
 		return assetEntries;
 	}
 
-	public static JSONArray getMappedContentsJSONArray(
+	public static JSONArray getPageContentsJSONArray(
 		Set<AssetEntry> assetEntries, String backURL,
 		HttpServletRequest httpServletRequest) {
 
@@ -145,7 +145,7 @@ public class ContentUtil {
 		try {
 			for (AssetEntry assetEntry : assetEntries) {
 				mappedContentsJSONArray.put(
-					_getMappedContentJSONObject(
+					_getPageContentJSONObject(
 						assetEntry, backURL, httpServletRequest));
 			}
 		}
@@ -367,7 +367,7 @@ public class ContentUtil {
 			layoutPageTemplateStructure, mappedClassPKs);
 	}
 
-	private static JSONObject _getMappedContentJSONObject(
+	private static JSONObject _getPageContentJSONObject(
 			AssetEntry assetEntry, String backURL,
 			HttpServletRequest httpServletRequest)
 		throws Exception {

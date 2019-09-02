@@ -217,9 +217,9 @@ function getExperienceUsedPortletIds(segmentsExperienceId) {
 	});
 }
 
-function getMappedContents() {
+function getPageContents() {
 	const state = _store.getState();
-	const {getMappedContentsURL} = state;
+	const {getPageContentsURL} = state;
 
 	const url = new URL(window.location.href);
 
@@ -229,7 +229,7 @@ function getMappedContents() {
 
 	const backURL = `${url.pathname}${url.search}`;
 
-	return _fetch(getMappedContentsURL, {backURL});
+	return _fetch(getPageContentsURL, {backURL});
 }
 
 function getStructureMappingFields(classNameId, classTypeId) {
@@ -357,7 +357,7 @@ export {
 	getAssetMappingFields,
 	getContentStructureMappingFields,
 	getExperienceUsedPortletIds,
-	getMappedContents,
+	getPageContents,
 	getStructureMappingFields,
 	removeExperience,
 	removeFragmentEntryLinks,

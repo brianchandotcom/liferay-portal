@@ -275,8 +275,8 @@ public class ContentPageEditorDisplayContext {
 			"getExperienceUsedPortletsURL",
 			_getResourceURL("/content_layout/get_experience_used_portlets")
 		).put(
-			"getMappedContentsURL",
-			_getResourceURL("/content_layout/get_mapped_contents")
+			"getPageContentsURL",
+			_getResourceURL("/content_layout/get_page_contents")
 		).put(
 			"imageSelectorURL", _getItemSelectorURL()
 		).put(
@@ -292,8 +292,8 @@ public class ContentPageEditorDisplayContext {
 			"mappedAssetEntries",
 			_getMappedAssetEntriesSoyContexts(assetEntries)
 		).put(
-			"mappedContents",
-			ContentUtil.getMappedContentsJSONArray(
+			"pageContents",
+			ContentUtil.getPageContentsJSONArray(
 				assetEntries, themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()

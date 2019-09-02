@@ -44,13 +44,13 @@ const getEditableValues = (itemId, fragmentEntryLinks) => {
 	return {};
 };
 
-const MappedContent = props => {
+const PageContent = props => {
 	const [active, setActive] = useState(false);
 	const {classNameId, classPK} = props;
 	const {editURL, permissionsURL, viewUsagesURL} = props.actions;
 	const itemId = `${classNameId}-${classPK}`;
 
-	const isMappedContentHovered = useSelector(state => {
+	const isPageContentHovered = useSelector(state => {
 		const {fragmentEntryLinks, hoveredItemId, hoveredItemType} = state;
 
 		if (hoveredItemType === FRAGMENTS_EDITOR_ITEM_TYPES.editable) {
@@ -83,8 +83,8 @@ const MappedContent = props => {
 	};
 
 	const className = classNames({
-		'fragments-editor__mapped-content': true,
-		'fragments-editor__mapped-content--mapped-item-hovered': isMappedContentHovered
+		'fragments-editor__page-content': true,
+		'fragments-editor__page-content--mapped-item-hovered': isPageContentHovered
 	});
 
 	return (
@@ -168,7 +168,7 @@ const MappedContent = props => {
 	);
 };
 
-MappedContent.propTypes = {
+PageContent.propTypes = {
 	actions: PropTypes.object,
 	name: PropTypes.string.isRequired,
 	status: PropTypes.shape({
@@ -180,5 +180,5 @@ MappedContent.propTypes = {
 	usagesCount: PropTypes.number.isRequired
 };
 
-export {MappedContent};
-export default MappedContent;
+export {PageContent};
+export default PageContent;

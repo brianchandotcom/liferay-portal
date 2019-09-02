@@ -474,12 +474,12 @@ const INITIAL_STATE = {
 	getInfoDisplayContributorsURL: Config.string().value(''),
 
 	/**
-	 * Get mapped content url
+	 * Get page content url
 	 * @default undefined
 	 * @review
 	 * @type {string}
 	 */
-	getMappedContentsURL: Config.string().value(''),
+	getPageContentsURL: Config.string().value(''),
 
 	/**
 	 * Id of the last element that was hovered
@@ -558,11 +558,19 @@ const INITIAL_STATE = {
 	mappedAssetEntries: Config.array().value([]),
 
 	/**
+	 * URL for getting the list of mapping fields
+	 * @default ''
+	 * @review
+	 * @type {string}
+	 */
+	mappingFieldsURL: Config.string().value(''),
+
+	/**
 	 * @default []
 	 * @review
 	 * @type {Array<{name: string, status: { label: string, style: string }, title: string, usagesCount: number}>}
 	 */
-	mappedContents: Config.arrayOf(
+	pageContents: Config.arrayOf(
 		Config.shapeOf({
 			name: Config.string(),
 			status: Config.shapeOf({
@@ -573,14 +581,6 @@ const INITIAL_STATE = {
 			usagesCount: Config.number()
 		})
 	).value([]),
-
-	/**
-	 * URL for getting the list of mapping fields
-	 * @default ''
-	 * @review
-	 * @type {string}
-	 */
-	mappingFieldsURL: Config.string().value(''),
 
 	/**
 	 * Portlet namespace needed for prefixing form inputs

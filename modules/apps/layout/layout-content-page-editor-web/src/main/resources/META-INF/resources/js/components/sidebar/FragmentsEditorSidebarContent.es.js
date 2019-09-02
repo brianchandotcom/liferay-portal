@@ -20,7 +20,7 @@ import './fragments/SidebarElementsPanel.es';
 import './fragments/SidebarSectionsPanel.es';
 import './layouts/SidebarLayoutsPanel.es';
 import './mapping/SidebarMappingPanel.es';
-import './page_content/SidebarMappedContentsPanel.es';
+import './page_content/SidebarPageContentsPanel.es';
 import './page_structure/SidebarPageStructurePanel.es';
 import './widgets/SidebarWidgetsPanel.es';
 import {getConnectedComponent} from '../../store/ConnectedComponent.es';

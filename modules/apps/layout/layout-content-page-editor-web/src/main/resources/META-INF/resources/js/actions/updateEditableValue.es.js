@@ -36,7 +36,7 @@ import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
 import debouncedAlert from '../utils/debouncedAlert.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
-import {updateMappedContentsAction} from './updateMappedContents.es';
+import {updatePageContentsAction} from './updatePageContents.es';
 
 /**
  * @type {number}
@@ -211,7 +211,7 @@ function updateEditableValuesMappingAction(
 				segmentsExperienceId,
 				false
 			)
-		).dispatch(updateMappedContentsAction());
+		).dispatch(updatePageContentsAction());
 	};
 }
 

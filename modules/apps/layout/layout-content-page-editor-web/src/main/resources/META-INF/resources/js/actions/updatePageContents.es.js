@@ -1,3 +1,6 @@
+import {getPageContents} from '../utils/FragmentsEditorFetchUtils.es';
+import {UPDATE_PAGE_CONTENTS} from './actions.es';
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +15,19 @@
  * details.
  */
 
-import SidebarMappedContents from './SidebarMappedContents.es';
-import getConnectedReactComponentAdapter from '../../../store/ReactComponentAdapter.es';
-import templates from './SidebarMappedContentsPanel.soy';
+/**
+ * @return {object}
+ * @review
+ */
+function updatePageContentsAction() {
+	return function(dispatch) {
+		getPageContents().then(pageContents => {
+			dispatch({
+				type: UPDATE_PAGE_CONTENTS,
+				value: pageContents || []
+			});
+		});
+	};
+}
 
-const SidebarMappedContentsPanel = getConnectedReactComponentAdapter(
-	SidebarMappedContents,
-	templates
-);
-
-export {SidebarMappedContentsPanel};
-export default SidebarMappedContentsPanel;
+export {updatePageContentsAction};

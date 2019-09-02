@@ -12,20 +12,28 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
+import PropTypes from 'prop-types';
 import React from 'react';
 
-const NoMappedContents = () => {
+import {PageContent} from './PageContent.es';
+
+const PageContents = props => {
 	return (
-		<ClayAlert
-			className="m-3"
-			displayType="info"
-			title={Liferay.Language.get('info')}
-		>
-			{Liferay.Language.get('there-is-no-mapped-content-on-this-page')}
-		</ClayAlert>
+		<ul className="list-unstyled">
+			{props.pageContents.map(pageContent => (
+				<PageContent key={pageContent.classPK} {...pageContent} />
+			))}
+		</ul>
 	);
 };
 
-export {NoMappedContents};
-export default NoMappedContents;
+PageContents.propTypes = {
+	pageContents: PropTypes.arrayOf(
+		PropTypes.shape({
+			classPK: PropTypes.string
+		})
+	)
+};
+
+export {PageContents};
+export default PageContents;

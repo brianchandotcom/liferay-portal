@@ -226,6 +226,15 @@ public class SegmentsExperimentRelLocalServiceUtil {
 		return getService().fetchSegmentsExperimentRel(segmentsExperimentRelId);
 	}
 
+	public static com.liferay.segments.model.SegmentsExperimentRel
+			fetchSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

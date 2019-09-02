@@ -415,6 +415,16 @@ public class SegmentsExperimentWrapper
 	}
 
 	@Override
+	public long getWinnerSegmentsExperienceId() {
+		return model.getWinnerSegmentsExperienceId();
+	}
+
+	@Override
+	public String getWinnerSegmentsExperienceKey() {
+		return model.getWinnerSegmentsExperienceKey();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

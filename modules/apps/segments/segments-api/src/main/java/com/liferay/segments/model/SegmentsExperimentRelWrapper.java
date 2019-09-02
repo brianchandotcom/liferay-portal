@@ -267,6 +267,13 @@ public class SegmentsExperimentRelWrapper
 	}
 
 	@Override
+	public boolean isActive()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.isActive();
+	}
+
+	@Override
 	public boolean isControl()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

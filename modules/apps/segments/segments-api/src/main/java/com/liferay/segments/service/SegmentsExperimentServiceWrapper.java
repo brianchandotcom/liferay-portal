@@ -138,15 +138,6 @@ public class SegmentsExperimentServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(long segmentsExperimentId, int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperimentService.updateSegmentsExperiment(
-			segmentsExperimentId, status);
-	}
-
-	@Override
-	public com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
 				long segmentsExperimentId, String name, String description,
 				String goal, String goalTarget)
@@ -158,11 +149,44 @@ public class SegmentsExperimentServiceWrapper
 
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(String segmentsExperimentKey, int status)
+			updateSegmentsExperimentStatus(
+				long segmentsExperimentId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _segmentsExperimentService.updateSegmentsExperiment(
+		return _segmentsExperimentService.updateSegmentsExperimentStatus(
+			segmentsExperimentId, status);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
+				long segmentsExperimentId, int status,
+				long winnerSegmentsExperienceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.updateSegmentsExperimentStatus(
+			segmentsExperimentId, status, winnerSegmentsExperienceId);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
+				String segmentsExperimentKey, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.updateSegmentsExperimentStatus(
 			segmentsExperimentKey, status);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
+				String segmentsExperimentKey, int status,
+				String winnerSegmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.updateSegmentsExperimentStatus(
+			segmentsExperimentKey, status, winnerSegmentsExperienceKey);
 	}
 
 	@Override

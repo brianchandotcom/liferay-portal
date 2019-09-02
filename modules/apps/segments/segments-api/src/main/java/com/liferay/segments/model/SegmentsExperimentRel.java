@@ -68,6 +68,9 @@ public interface SegmentsExperimentRel
 	public String getSegmentsExperimentKey()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isActive()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean isControl()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

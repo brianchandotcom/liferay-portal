@@ -331,8 +331,7 @@ public class AMThumbnailsOSGiCommandsTest {
 			_user.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".pdf",
-			ContentTypes.APPLICATION_PDF, _getFileContents("sample.pdf"),
-			_serviceContext);
+			ContentTypes.APPLICATION_PDF, _read("sample.pdf"), _serviceContext);
 	}
 
 	private FileEntry _addPNGFileEntry() throws Exception {
@@ -340,7 +339,7 @@ public class AMThumbnailsOSGiCommandsTest {
 			_user.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_getFileContents("sample.png"), _serviceContext);
+			_read("sample.png"), _serviceContext);
 
 		return _pngFileEntry;
 	}
@@ -359,10 +358,6 @@ public class AMThumbnailsOSGiCommandsTest {
 		return adaptiveMediaStream.count();
 	}
 
-	private byte[] _getFileContents(String fileName) throws Exception {
-		return FileUtil.getBytes(AMThumbnailsOSGiCommandsTest.class, fileName);
-	}
-
 	private int _getThumbnailCount() throws Exception {
 		String[] fileNames = DLStoreUtil.getFileNames(
 			_company.getCompanyId(), DLPreviewableProcessor.REPOSITORY_ID,
@@ -373,6 +368,10 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	private void _migrate() throws Exception {
 		_run("migrate");
+	}
+
+	private byte[] _read(String fileName) throws Exception {
+		return FileUtil.getBytes(AMThumbnailsOSGiCommandsTest.class, fileName);
 	}
 
 	private void _run(String functionName) throws Exception {

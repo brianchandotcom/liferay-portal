@@ -82,7 +82,7 @@ public class SegmentsExperimentConstants {
 
 	public enum Status {
 
-		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", false, true),
+		COMPLETED(STATUS_COMPLETED, "COMPLETED", "completed", true, true),
 		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true, true) {
 
 			@Override
@@ -139,7 +139,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", false, true);
+		TERMINATED(STATUS_TERMINATED, "TERMINATED", "terminated", true, true);
 
 		public static int[] exclusiveStates() {
 			Stream<Status> stream = Arrays.stream(Status.values());

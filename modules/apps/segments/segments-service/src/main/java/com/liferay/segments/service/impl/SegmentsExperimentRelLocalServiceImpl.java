@@ -123,7 +123,7 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 		// Segments experience
 
-		if (force || !segmentsExperimentRel.isControl()) {
+		if (force || !segmentsExperimentRel.isActive()) {
 			_segmentsExperienceLocalService.deleteSegmentsExperience(
 				segmentsExperimentRel.getSegmentsExperienceId());
 		}

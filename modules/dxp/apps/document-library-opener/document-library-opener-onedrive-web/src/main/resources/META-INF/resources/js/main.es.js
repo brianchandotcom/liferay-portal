@@ -50,13 +50,13 @@ class DocumentLibraryOpener {
 	}
 
 	edit({formSubmitURL}) {
-		this.showLoading({
+		const loadingPromise = this.showLoading({
 			dialogMessage: Liferay.Language.get(
 				'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
 			)
 		});
 
-		fetch(formSubmitURL)
+		const fetchPromise = fetch(formSubmitURL)
 			.then(response => {
 				if (!response.ok) {
 					throw DEFAULT_ERROR;
@@ -68,7 +68,7 @@ class DocumentLibraryOpener {
 				if (response.redirectURL) {
 					navigate(response.redirectURL);
 				} else if (response.oneDriveBackgroundTaskStatusURL) {
-					this.polling({
+					return this.polling({
 						pollingURL: response.oneDriveBackgroundTaskStatusURL
 					});
 				} else if (response.error) {
@@ -78,6 +78,8 @@ class DocumentLibraryOpener {
 			.catch(error => {
 				this.showError(error);
 			});
+
+		return Promise.all([loadingPromise, fetchPromise]);
 	}
 
 	hideLoading() {
@@ -112,7 +114,7 @@ class DocumentLibraryOpener {
 	}
 
 	polling({pollingURL}) {
-		fetch(pollingURL)
+		return fetch(pollingURL)
 			.then(response => {
 				if (!response.ok) {
 					throw DEFAULT_ERROR;
@@ -128,9 +130,11 @@ class DocumentLibraryOpener {
 				} else if (response.error) {
 					throw DEFAULT_ERROR;
 				} else {
-					setTimeout(() => {
-						this.polling({pollingURL});
-					}, TIME_POLLING);
+					return new Promise(resolve => {
+						setTimeout(() => {
+							this.polling({pollingURL}).then(resolve);
+						}, TIME_POLLING);
+					});
 				}
 			})
 			.catch(error => {
@@ -147,30 +151,33 @@ class DocumentLibraryOpener {
 	}
 
 	showLoading({dialogMessage, pollingURL}) {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					bodyContent: `<p>${dialogMessage}</p><div aria-hidden="true" class="loading-animation"></div>`,
-					cssClass: 'office-365-redirect-modal',
-					height: 172,
-					modal: true,
-					resizable: false,
-					title: '',
-					width: 320
+		return new Promise(resolve => {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						bodyContent: `<p>${dialogMessage}</p><div aria-hidden="true" class="loading-animation"></div>`,
+						cssClass: 'office-365-redirect-modal',
+						height: 172,
+						modal: true,
+						resizable: false,
+						title: '',
+						width: 320
+					},
+					id: this.dialogLoadingId
 				},
-				id: this.dialogLoadingId
-			},
-			() => {
-				setTimeout(() => {
-					this.isTimeConsumed = true;
-					this.navigate();
-				}, TIME_SHOW_MSG);
+				() => {
+					setTimeout(() => {
+						this.isTimeConsumed = true;
+						this.navigate();
+						resolve();
+					}, TIME_SHOW_MSG);
 
-				if (pollingURL) {
-					this.polling({pollingURL});
+					if (pollingURL) {
+						this.polling({pollingURL});
+					}
 				}
-			}
-		);
+			);
+		});
 	}
 }
 

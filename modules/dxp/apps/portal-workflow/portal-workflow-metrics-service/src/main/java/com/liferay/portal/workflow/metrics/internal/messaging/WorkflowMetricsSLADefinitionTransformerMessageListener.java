@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.metrics.internal.sla.transformer.WorkflowMetricsSLADefinitionTransformer;
-import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionLocalService;
 
 import java.util.Map;
 
@@ -113,10 +112,6 @@ public class WorkflowMetricsSLADefinitionTransformerMessageListener
 
 	@Reference
 	private TriggerFactory _triggerFactory;
-
-	@Reference
-	private WorkflowMetricsSLADefinitionLocalService
-		_workflowMetricsSLADefinitionLocalService;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionTransformer

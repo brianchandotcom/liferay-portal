@@ -57,7 +57,7 @@ export const formatWeekDate = (date, timeRange) => {
 	} else if (firstMonth === lastMonth) {
 		return `${firstDayOfWeek.format(
 			Liferay.Language.get('mmm-dd')
-		)}-${lastDayOfWeek.format('D')}`;
+		)}-${lastDayOfWeek.format('DD')}`;
 	}
 	return `${firstDayOfWeek.format(
 		Liferay.Language.get('mmm-dd')

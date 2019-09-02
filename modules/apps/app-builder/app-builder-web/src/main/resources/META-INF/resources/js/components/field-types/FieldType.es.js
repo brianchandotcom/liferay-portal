@@ -12,15 +12,47 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {useDrag} from 'react-dnd';
+import classnames from 'classnames';
+import {getEmptyImage} from 'react-dnd-html5-backend';
+import FieldTypeDragPreview from './FieldTypeDragPreview.es';
 
-export default ({description, icon, label, name}) => {
+export default props => {
+	const {description, icon, label, name} = props;
+
+	const [{dragging}, drag, preview] = useDrag({
+		collect: monitor => ({
+			dragging: monitor.isDragging()
+		}),
+		item: {
+			...props,
+			preview: () => {
+				return <FieldTypeDragPreview {...props} />;
+			},
+			type: 'fieldType'
+		}
+	});
+
+	useEffect(() => {
+		preview(getEmptyImage(), {captureDraggingState: true});
+	}, [preview]);
+
 	return (
 		<div
-			className="autofit-row autofit-row-center field-type p-0 pt-3 pb-3"
+			className={classnames({
+				'autofit-row': true,
+				'autofit-row-center': true,
+				dragging,
+				'field-type': true,
+				'p-0': true,
+				'pb-3': true,
+				'pt-3': true
+			})}
 			data-field-type-name={name}
+			ref={drag}
 		>
 			<div className="autofit-col pl-2 pr-2">
 				<ClayIcon symbol="drag" />

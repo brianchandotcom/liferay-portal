@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 @ProviderType
 public class GraphServicePortalException extends PortalException {
 
-	public GraphServicePortalException() {
-	}
-
 	public GraphServicePortalException(String msg) {
 		super(msg);
 	}
@@ -35,15 +32,7 @@ public class GraphServicePortalException extends PortalException {
 		super(msg, cause);
 	}
 
-	public GraphServicePortalException(Throwable cause) {
-		super(cause);
-	}
-
 	public static class AccessDenied extends GraphServicePortalException {
-
-		public AccessDenied(String msg) {
-			super(msg);
-		}
 
 		public AccessDenied(String msg, Throwable cause) {
 			super(msg, cause);
@@ -66,10 +55,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class InvalidRange extends GraphServicePortalException {
 
-		public InvalidRange(String msg) {
-			super(msg);
-		}
-
 		public InvalidRange(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -77,10 +62,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class InvalidRequest extends GraphServicePortalException {
-
-		public InvalidRequest(String msg) {
-			super(msg);
-		}
 
 		public InvalidRequest(String msg, Throwable cause) {
 			super(msg, cause);
@@ -90,10 +71,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class ItemNotFound extends GraphServicePortalException {
 
-		public ItemNotFound(String msg) {
-			super(msg);
-		}
-
 		public ItemNotFound(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -101,10 +78,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class MalwareDetected extends GraphServicePortalException {
-
-		public MalwareDetected(String msg) {
-			super(msg);
-		}
 
 		public MalwareDetected(String msg, Throwable cause) {
 			super(msg, cause);
@@ -114,10 +87,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class NameAlreadyExists extends GraphServicePortalException {
 
-		public NameAlreadyExists(String msg) {
-			super(msg);
-		}
-
 		public NameAlreadyExists(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -125,10 +94,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class NotAllowed extends GraphServicePortalException {
-
-		public NotAllowed(String msg) {
-			super(msg);
-		}
 
 		public NotAllowed(String msg, Throwable cause) {
 			super(msg, cause);
@@ -138,10 +103,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class NotSupported extends GraphServicePortalException {
 
-		public NotSupported(String msg) {
-			super(msg);
-		}
-
 		public NotSupported(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -149,10 +110,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class QuotaLimitReached extends GraphServicePortalException {
-
-		public QuotaLimitReached(String msg) {
-			super(msg);
-		}
 
 		public QuotaLimitReached(String msg, Throwable cause) {
 			super(msg, cause);
@@ -162,10 +119,6 @@ public class GraphServicePortalException extends PortalException {
 
 	public static class ResourceModified extends GraphServicePortalException {
 
-		public ResourceModified(String msg) {
-			super(msg);
-		}
-
 		public ResourceModified(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -173,10 +126,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class ResyncRequired extends GraphServicePortalException {
-
-		public ResyncRequired(String msg) {
-			super(msg);
-		}
 
 		public ResyncRequired(String msg, Throwable cause) {
 			super(msg, cause);
@@ -187,10 +136,6 @@ public class GraphServicePortalException extends PortalException {
 	public static class ServiceNotAvailable
 		extends GraphServicePortalException {
 
-		public ServiceNotAvailable(String msg) {
-			super(msg);
-		}
-
 		public ServiceNotAvailable(String msg, Throwable cause) {
 			super(msg, cause);
 		}
@@ -198,10 +143,6 @@ public class GraphServicePortalException extends PortalException {
 	}
 
 	public static class Unauthenticated extends GraphServicePortalException {
-
-		public Unauthenticated(String msg) {
-			super(msg);
-		}
 
 		public Unauthenticated(String msg, Throwable cause) {
 			super(msg, cause);

@@ -144,7 +144,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 	@Override
 	public String getWinnerSegmentsExperienceKey() {
-		long winnerSegmentsExperienceId = getSegmentsExperienceId();
+		long winnerSegmentsExperienceId = getWinnerSegmentsExperienceId();
 
 		if (winnerSegmentsExperienceId < 0) {
 			return StringPool.BLANK;

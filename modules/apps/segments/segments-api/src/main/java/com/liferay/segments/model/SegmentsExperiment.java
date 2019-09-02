@@ -76,4 +76,8 @@ public interface SegmentsExperiment
 	public com.liferay.portal.kernel.util.UnicodeProperties
 		getTypeSettingsProperties();
 
+	public long getWinnerSegmentsExperienceId();
+
+	public String getWinnerSegmentsExperienceKey();
+
 }

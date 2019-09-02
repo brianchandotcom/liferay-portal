@@ -244,6 +244,16 @@ public class SegmentsExperimentRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			fetchSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

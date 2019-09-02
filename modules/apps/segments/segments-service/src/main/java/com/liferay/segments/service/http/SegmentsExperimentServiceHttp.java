@@ -415,53 +415,13 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperiment(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
-				int status)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes9);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentId, status);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					e);
-			}
-
-			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(
-				HttpPrincipal httpPrincipal, long segmentsExperimentId,
 				String name, String description, String goal, String goalTarget)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes10);
+				_updateSegmentsExperimentParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentId, name, description, goal,
@@ -494,18 +454,144 @@ public class SegmentsExperimentServiceHttp {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(
+			updateSegmentsExperimentStatus(
+				HttpPrincipal httpPrincipal, long segmentsExperimentId,
+				int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentServiceUtil.class,
+				"updateSegmentsExperimentStatus",
+				_updateSegmentsExperimentStatusParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperimentId, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
+				HttpPrincipal httpPrincipal, long segmentsExperimentId,
+				int status, long winnerSegmentsExperienceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentServiceUtil.class,
+				"updateSegmentsExperimentStatus",
+				_updateSegmentsExperimentStatusParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperimentId, status,
+				winnerSegmentsExperienceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
 				HttpPrincipal httpPrincipal, String segmentsExperimentKey,
 				int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				SegmentsExperimentServiceUtil.class, "updateSegmentsExperiment",
-				_updateSegmentsExperimentParameterTypes11);
+				SegmentsExperimentServiceUtil.class,
+				"updateSegmentsExperimentStatus",
+				_updateSegmentsExperimentStatusParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsExperimentKey, status);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					e);
+			}
+
+			return (com.liferay.segments.model.SegmentsExperiment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			updateSegmentsExperimentStatus(
+				HttpPrincipal httpPrincipal, String segmentsExperimentKey,
+				int status, String winnerSegmentsExperienceKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				SegmentsExperimentServiceUtil.class,
+				"updateSegmentsExperimentStatus",
+				_updateSegmentsExperimentStatusParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, segmentsExperimentKey, status,
+				winnerSegmentsExperienceKey);
 
 			Object returnObj = null;
 
@@ -562,12 +648,24 @@ public class SegmentsExperimentServiceHttp {
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes8 =
 		new Class[] {long.class, double.class, int.class};
 	private static final Class<?>[] _updateSegmentsExperimentParameterTypes9 =
-		new Class[] {long.class, int.class};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes10 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class
 		};
-	private static final Class<?>[] _updateSegmentsExperimentParameterTypes11 =
-		new Class[] {String.class, int.class};
+	private static final Class<?>[]
+		_updateSegmentsExperimentStatusParameterTypes10 = new Class[] {
+			long.class, int.class
+		};
+	private static final Class<?>[]
+		_updateSegmentsExperimentStatusParameterTypes11 = new Class[] {
+			long.class, int.class, long.class
+		};
+	private static final Class<?>[]
+		_updateSegmentsExperimentStatusParameterTypes12 = new Class[] {
+			String.class, int.class
+		};
+	private static final Class<?>[]
+		_updateSegmentsExperimentStatusParameterTypes13 = new Class[] {
+			String.class, int.class, String.class
+		};
 
 }

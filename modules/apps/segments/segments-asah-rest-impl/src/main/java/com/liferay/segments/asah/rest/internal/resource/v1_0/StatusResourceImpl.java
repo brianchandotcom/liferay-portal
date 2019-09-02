@@ -60,7 +60,7 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 			SegmentsExperimentConstants.Status.parse(status.getStatus());
 
 		return _toExperiment(
-			_segmentsExperimentService.updateSegmentsExperiment(
+			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				String.valueOf(segmentsExperimentKey),
 				optionalStatus.map(
 					SegmentsExperimentConstants.Status::getValue

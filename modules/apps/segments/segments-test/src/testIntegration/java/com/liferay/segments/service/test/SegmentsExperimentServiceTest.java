@@ -316,7 +316,7 @@ public class SegmentsExperimentServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_segmentsExperimentService.updateSegmentsExperiment(
+			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				segmentsExperiment.getSegmentsExperimentKey(),
 				SegmentsExperimentConstants.STATUS_TERMINATED);
 		}
@@ -337,7 +337,7 @@ public class SegmentsExperimentServiceTest {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-			_segmentsExperimentService.updateSegmentsExperiment(
+			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				segmentsExperiment.getSegmentsExperimentKey(),
 				SegmentsExperimentConstants.STATUS_RUNNING);
 		}

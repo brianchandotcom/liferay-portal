@@ -106,8 +106,8 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
@@ -172,8 +172,8 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		SegmentsExperience segmentsExperience = _addSegmentsExperience();
@@ -278,8 +278,8 @@ public class SegmentsExperimentRelLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		SegmentsExperimentRel segmentsExperimentRel =

@@ -23,6 +23,7 @@
 
 		<!-- Other fields -->
 
+		<column name="active" type="boolean" />
 		<column name="calendarKey" type="String" />
 		<column name="description" type="String" />
 		<column name="duration" type="long" />
@@ -46,26 +47,34 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_P" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="processId" />
+		<finder name="WMSLAD_A" return-type="WorkflowMetricsSLADefinition">
+			<finder-column name="workflowMetricsSLADefinitionId" />
+			<finder-column name="active" />
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_N_P" return-type="WorkflowMetricsSLADefinition">
+		<finder name="C_A_P" return-type="Collection">
 			<finder-column name="companyId" />
+			<finder-column name="active" />
+			<finder-column name="processId" />
+		</finder>
+		<finder name="C_A_N_P" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="active" />
 			<finder-column name="name" />
 			<finder-column name="processId" />
 		</finder>
-		<finder name="C_P_S" return-type="Collection">
+		<finder name="C_A_P_S" return-type="Collection">
 			<finder-column name="companyId" />
+			<finder-column name="active" />
 			<finder-column name="processId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_P_NotPV_S" return-type="Collection">
+		<finder name="C_A_P_NotPV_S" return-type="Collection">
 			<finder-column name="companyId" />
+			<finder-column name="active" />
 			<finder-column name="processId" />
 			<finder-column comparator="!=" name="processVersion" />
 			<finder-column name="status" />

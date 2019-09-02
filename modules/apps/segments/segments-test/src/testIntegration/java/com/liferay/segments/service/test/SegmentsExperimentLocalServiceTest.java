@@ -189,12 +189,12 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_PAUSED);
 
 		_segmentsExperimentLocalService.addSegmentsExperiment(
@@ -223,8 +223,8 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		_segmentsExperimentLocalService.addSegmentsExperiment(
@@ -456,8 +456,8 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		_segmentsExperimentLocalService.updateSegmentsExperiment(
@@ -481,12 +481,12 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_PAUSED);
 
 		SegmentsExperiment newSegmentsExperiment =
@@ -499,12 +499,12 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			newSegmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			newSegmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			newSegmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			newSegmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_PAUSED);
 	}
 
@@ -524,8 +524,8 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		SegmentsExperiment newSegmentsExperiment =
@@ -538,8 +538,8 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			newSegmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			newSegmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 	}
 
@@ -575,8 +575,8 @@ public class SegmentsExperimentLocalServiceTest {
 				StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment2.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment2.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		segmentsExperiment1.setStatus(SegmentsExperimentConstants.STATUS_DRAFT);
@@ -584,8 +584,8 @@ public class SegmentsExperimentLocalServiceTest {
 		_segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperiment1);
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment1.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment1.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_RUNNING);
 	}
 
@@ -620,8 +620,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(), Integer.MIN_VALUE);
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(), Integer.MIN_VALUE);
 	}
 
 	@Test(expected = SegmentsExperimentStatusException.class)
@@ -630,8 +630,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
-		_segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperiment.getSegmentsExperimentKey(),
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
 			SegmentsExperimentConstants.STATUS_TERMINATED);
 	}
 
@@ -679,8 +679,8 @@ public class SegmentsExperimentLocalServiceTest {
 		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
 
 		SegmentsExperiment updatedSegmentsExperiment =
-			_segmentsExperimentLocalService.updateSegmentsExperiment(
-				segmentsExperiment.getSegmentsExperimentKey(),
+			_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+				segmentsExperiment.getSegmentsExperimentId(),
 				SegmentsExperimentConstants.STATUS_RUNNING);
 
 		Assert.assertEquals(

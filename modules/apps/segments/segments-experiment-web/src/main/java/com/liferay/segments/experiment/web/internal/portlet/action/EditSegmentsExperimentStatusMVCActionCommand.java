@@ -104,7 +104,7 @@ public class EditSegmentsExperimentStatusMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.updateSegmentsExperiment(
+			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				ParamUtil.getLong(actionRequest, "segmentsExperimentId"),
 				ParamUtil.getInteger(actionRequest, "status"));
 

@@ -31,7 +31,25 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		<aui:input name="dataDefinition" type="hidden" />
 		<aui:input name="dataLayout" type="hidden" />
 
-		<div id="<%= editFormViewRootElementId %>"></div>
+		<portlet:renderURL var="basePortletURL" />
+
+		<div id="<%= editFormViewRootElementId %>">
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+			data.put("basePortletURL", basePortletURL.toString());
+			data.put("dataDefinitionId", dataDefinitionId);
+			data.put("dataLayoutBuilderElementId", dataLayoutBuilderElementId);
+			data.put("dataLayoutBuilderId", componentId);
+			data.put("dataLayoutId", dataLayoutId);
+			data.put("newCustomObject", newCustomObject);
+			%>
+
+			<react:component
+				data="<%= data %>"
+				module="js/pages/form-view/EditFormViewApp.es"
+			/>
+		</div>
 
 		<div class="app-builder-sidebar-content" id="<%= dataLayoutBuilderElementId %>">
 			<liferay-data-engine:data-layout-builder
@@ -44,23 +62,3 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 		</div>
 	</aui:form>
 </div>
-
-<portlet:renderURL var="basePortletURL" />
-
-<aui:script require='<%= npmResolvedPackageName + "/js/pages/form-view/EditFormViewApp.es as EditFormViewApp" %>'>
-	Liferay.componentReady('<%= componentId %>').then(
-		function(dataLayoutBuilder) {
-			EditFormViewApp.default(
-				'<%= editFormViewRootElementId %>',
-				{
-					basePortletURL: '<%= basePortletURL %>',
-					dataLayoutBuilder: dataLayoutBuilder,
-					dataLayoutBuilderElementId: '<%= dataLayoutBuilderElementId %>',
-					dataDefinitionId: <%= dataDefinitionId %>,
-					dataLayoutId: <%= dataLayoutId %>,
-					newCustomObject: <%= newCustomObject %>
-				}
-			);
-		}
-	);
-</aui:script>

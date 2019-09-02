@@ -66,7 +66,7 @@ const saveDataLayoutBuilder = ({
 	}
 };
 
-export default ({
+const EditFormView = ({
 	dataDefinitionId,
 	dataLayoutBuilder,
 	dataLayoutBuilderElementId,
@@ -171,4 +171,16 @@ export default ({
 			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
 		</>
 	);
+};
+
+export default ({dataLayoutBuilderId, ...props}) => {
+	const [dataLayoutBuilder, setDataLayoutBuilder] = useState();
+
+	if (!dataLayoutBuilder) {
+		Liferay.componentReady(dataLayoutBuilderId).then(setDataLayoutBuilder);
+	}
+
+	return dataLayoutBuilder ? (
+		<EditFormView dataLayoutBuilder={dataLayoutBuilder} {...props} />
+	) : null;
 };

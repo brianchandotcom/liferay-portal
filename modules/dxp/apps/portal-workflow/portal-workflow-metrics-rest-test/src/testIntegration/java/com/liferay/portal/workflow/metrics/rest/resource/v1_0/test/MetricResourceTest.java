@@ -243,7 +243,9 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 						LocalDateTime tempLocalDateTime =
 							sundayLocalDateTime.plusDays(i);
 
-						if (tempLocalDateTime.equals(startLocalDateTime)) {
+						if (tempLocalDateTime.equals(startLocalDateTime) ||
+							tempLocalDateTime.isAfter(endLocalDateTime)) {
+
 							continue;
 						}
 

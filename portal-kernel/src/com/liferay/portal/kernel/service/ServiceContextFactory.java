@@ -368,11 +368,6 @@ public class ServiceContextFactory {
 		else {
 			serviceContext = new ServiceContext();
 
-			serviceContext.setCompanyId(themeDisplay.getCompanyId());
-			serviceContext.setLanguageId(themeDisplay.getLanguageId());
-			serviceContext.setLayoutFullURL(
-				PortalUtil.getLayoutFullURL(themeDisplay));
-			serviceContext.setLayoutURL(PortalUtil.getLayoutURL(themeDisplay));
 			serviceContext.setPathFriendlyURLPrivateGroup(
 				PortalUtil.getPathFriendlyURLPrivateGroup());
 			serviceContext.setPathFriendlyURLPrivateUser(
@@ -380,15 +375,19 @@ public class ServiceContextFactory {
 			serviceContext.setPathFriendlyURLPublic(
 				PortalUtil.getPathFriendlyURLPublic());
 			serviceContext.setPathMain(PortalUtil.getPathMain());
-			serviceContext.setPlid(themeDisplay.getPlid());
-			serviceContext.setPortalURL(
-				PortalUtil.getPortalURL(portletRequest));
-			serviceContext.setSignedIn(themeDisplay.isSignedIn());
-			serviceContext.setTimeZone(themeDisplay.getTimeZone());
-			serviceContext.setUserId(themeDisplay.getUserId());
 		}
 
+		serviceContext.setCompanyId(themeDisplay.getCompanyId());
+		serviceContext.setLanguageId(themeDisplay.getLanguageId());
+		serviceContext.setLayoutFullURL(
+			PortalUtil.getLayoutFullURL(themeDisplay));
+		serviceContext.setLayoutURL(PortalUtil.getLayoutURL(themeDisplay));
+		serviceContext.setPlid(themeDisplay.getPlid());
+		serviceContext.setPortalURL(PortalUtil.getPortalURL(portletRequest));
 		serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+		serviceContext.setSignedIn(themeDisplay.isSignedIn());
+		serviceContext.setTimeZone(themeDisplay.getTimeZone());
+		serviceContext.setUserId(themeDisplay.getUserId());
 
 		// Attributes
 

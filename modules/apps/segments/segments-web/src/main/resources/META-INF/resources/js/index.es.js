@@ -28,5 +28,5 @@ function renderComponent({props, context}) {
 }
 
 export default function(containerId, data) {
-	render(renderComponent, data, containerId);
+	render(renderComponent, data, document.getElementById(containerId));
 }

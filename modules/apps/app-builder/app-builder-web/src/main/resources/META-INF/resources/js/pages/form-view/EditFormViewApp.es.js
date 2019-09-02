@@ -26,5 +26,5 @@ function renderComponent({basePortletURL, ...props}) {
 }
 
 export default function(containerId, data) {
-	render(renderComponent, data, containerId);
+	render(renderComponent, data, document.getElementById(containerId));
 }

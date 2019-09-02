@@ -32,9 +32,8 @@ let counter = 0;
  *
  * @see https://reactjs.org/docs/react-dom.html#render
  */
-export default function render(renderFunction, renderData, containerId) {
+export default function render(renderFunction, renderData, container) {
 	const {portletId} = renderData;
-	const container = document.getElementById(containerId);
 	const spritemap =
 		Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 

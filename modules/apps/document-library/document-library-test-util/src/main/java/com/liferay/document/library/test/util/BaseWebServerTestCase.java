@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.webserver.test.util;
+package com.liferay.document.library.test.util;
 
-import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;

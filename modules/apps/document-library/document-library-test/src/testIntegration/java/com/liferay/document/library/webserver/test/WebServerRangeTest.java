@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.webserver.WebServerServlet;
-import com.liferay.portal.webserver.test.util.BaseWebServerTestCase;
+import com.liferay.document.library.test.util.BaseWebServerTestCase;
 
 import java.util.Arrays;
 import java.util.HashMap;

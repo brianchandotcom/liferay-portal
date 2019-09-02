@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.webserver.test.util.BaseWebServerTestCase;
+import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.trash.model.TrashEntry;
 
 import java.util.HashMap;

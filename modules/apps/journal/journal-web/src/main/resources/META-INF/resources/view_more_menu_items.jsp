@@ -108,7 +108,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 			Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(journalViewMoreMenuItemsDisplayContext.getEventName()) %>',
 				{
-					ddmStructureKey: event.target.getAttribute('data-ddmStructureKey')
+					ddmStructureKey: event.delegateTarget.getAttribute('data-ddmStructureKey')
 				}
 			);
 

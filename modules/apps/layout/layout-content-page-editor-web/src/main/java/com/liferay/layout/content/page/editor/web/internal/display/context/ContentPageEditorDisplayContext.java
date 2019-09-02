@@ -49,6 +49,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentCreationContentPageEditorConfigurationUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.util.ContentPageEditorConfigurationUtil;
@@ -147,11 +148,13 @@ public class ContentPageEditorDisplayContext {
 	public ContentPageEditorDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		CommentManager commentManager,
-        FragmentRendererController fragmentRendererController) {
+		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentRendererController fragmentRendererController) {
 
 		request = httpServletRequest;
 		_renderResponse = renderResponse;
 		_commentManager = commentManager;
+		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
 		_fragmentRendererController = fragmentRendererController;
 
 		infoDisplayContributorTracker =
@@ -418,8 +421,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected List<SoyContext> getSidebarPanelSoyContexts(
-			boolean pageIsDisplayPage)
-		throws PortalException {
+		boolean pageIsDisplayPage) {
 
 		if (_sidebarPanelSoyContexts != null) {
 			return _sidebarPanelSoyContexts;
@@ -427,129 +429,32 @@ public class ContentPageEditorDisplayContext {
 
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		SoyContext availableSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
+		for (ContentPageEditorSidebarPanel contentPageEditorSidebarPanel :
+				_contentPageEditorSidebarPanels) {
 
-		availableSoyContext.put("icon", "cards-full");
+			if (!contentPageEditorSidebarPanel.isVisible(pageIsDisplayPage)) {
+				continue;
+			}
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", themeDisplay.getLocale(), getClass());
+			if (contentPageEditorSidebarPanel.includeSeparator()) {
+				SoyContext availableSoyContext =
+					SoyContextFactoryUtil.createSoyContext();
 
-		availableSoyContext.put(
-			"label", LanguageUtil.get(resourceBundle, "sections")
-		).put(
-			"sidebarPanelId", "sections"
-		);
+				availableSoyContext.put("sidebarPanelId", "separator");
 
-		soyContexts.add(availableSoyContext);
+				soyContexts.add(availableSoyContext);
+			}
 
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put(
-			"icon", "cards2"
-		).put(
-			"label", LanguageUtil.get(resourceBundle, "section-builder")
-		).put(
-			"sidebarPanelId", "elements"
-		);
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put(
-			"icon", "square-hole"
-		).put(
-			"label", LanguageUtil.get(resourceBundle, "widgets")
-		).put(
-			"sidebarPanelId", "widgets"
-		);
-
-		soyContexts.add(availableSoyContext);
-
-		if (pageIsDisplayPage) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
+			SoyContext availableSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
 
 			availableSoyContext.put(
-				"icon", "bolt"
+				"icon", contentPageEditorSidebarPanel.getIcon()
 			).put(
-				"label", LanguageUtil.get(themeDisplay.getLocale(), "mapping")
+				"label",
+				contentPageEditorSidebarPanel.getLabel(themeDisplay.getLocale())
 			).put(
-				"sidebarPanelId", "mapping"
-			);
-
-			soyContexts.add(availableSoyContext);
-		}
-
-		// LPS-100647
-
-		if (false && !pageIsDisplayPage) {
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put("sidebarPanelId", "separator");
-
-			soyContexts.add(availableSoyContext);
-
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put(
-				"icon", "list-ul"
-			).put(
-				"label", LanguageUtil.get(resourceBundle, "contents")
-			).put(
-				"sidebarPanelId", "contents"
-			);
-
-			soyContexts.add(availableSoyContext);
-		}
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put(
-			"icon", "pages-tree"
-		).put(
-			"label", LanguageUtil.get(resourceBundle, "page-structure")
-		).put(
-			"sidebarPanelId", "page-structure"
-		);
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put("sidebarPanelId", "separator");
-
-		soyContexts.add(availableSoyContext);
-
-		availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-		availableSoyContext.put(
-			"icon", "format"
-		).put(
-			"label", LanguageUtil.get(resourceBundle, "look-and-feel")
-		).put(
-			"sidebarPanelId", "lookAndFeel"
-		);
-
-		soyContexts.add(availableSoyContext);
-
-		if (ContentPageEditorConfigurationUtil.isCommentsEnabled(
-				themeDisplay.getCompanyId())) {
-
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put("sidebarPanelId", "separator");
-
-			soyContexts.add(availableSoyContext);
-
-			availableSoyContext = SoyContextFactoryUtil.createSoyContext();
-
-			availableSoyContext.put(
-				"icon", "comments"
-			).put(
-				"label", LanguageUtil.get(resourceBundle, "comments")
-			).put(
-				"sidebarPanelId", "comments"
+				"sidebarPanelId", contentPageEditorSidebarPanel.getId()
 			);
 
 			soyContexts.add(availableSoyContext);
@@ -1510,6 +1415,8 @@ public class ContentPageEditorDisplayContext {
 
 	private List<SoyContext> _assetBrowserLinksSoyContexts;
 	private final CommentManager _commentManager;
+	private final List<ContentPageEditorSidebarPanel>
+		_contentPageEditorSidebarPanels;
 	private Map<String, Object> _defaultConfigurations;
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

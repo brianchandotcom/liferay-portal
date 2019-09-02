@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.soy.util.SoyContext;
 import com.liferay.portal.template.soy.util.SoyContextFactoryUtil;
 
+import java.util.List;
+
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,13 +48,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
-		boolean pageIsDisplayPage,
-        FragmentRendererController fragmentRendererController,
-		CommentManager commentManager) {
+		boolean pageIsDisplayPage, CommentManager commentManager,
+		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
+		FragmentRendererController fragmentRendererController) {
 
 		super(
 			httpServletRequest, renderResponse, commentManager,
-            fragmentRendererController);
+			contentPageEditorSidebarPanels, fragmentRendererController);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}

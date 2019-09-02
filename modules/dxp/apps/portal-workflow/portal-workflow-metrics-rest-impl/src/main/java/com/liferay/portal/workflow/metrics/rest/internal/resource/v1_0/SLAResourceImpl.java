@@ -55,7 +55,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 	@Override
 	public void deleteSLA(Long slaId) throws Exception {
 		_workflowMetricsSLADefinitionLocalService.
-			deleteWorkflowMetricsSLADefinition(slaId);
+			deactivateWorkflowMetricsSLADefinition(slaId);
 	}
 
 	@Override
@@ -68,20 +68,21 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				transform(
 					_workflowMetricsSLADefinitionLocalService.
 						getWorkflowMetricsSLADefinitions(
-							contextCompany.getCompanyId(), processId, status,
-							pagination.getStartPosition(),
+							contextCompany.getCompanyId(), true, processId,
+							status, pagination.getStartPosition(),
 							pagination.getEndPosition(), null),
 					this::_toSLA),
 				pagination,
 				_workflowMetricsSLADefinitionLocalService.
 					getWorkflowMetricsSLADefinitionsCount(
-						contextCompany.getCompanyId(), processId, status));
+						contextCompany.getCompanyId(), true, processId,
+						status));
 		}
 
 		int draftCount =
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitionsCount(
-					contextCompany.getCompanyId(), processId,
+					contextCompany.getCompanyId(), true, processId,
 					WorkflowConstants.STATUS_DRAFT);
 
 		if (draftCount == 0) {
@@ -89,7 +90,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				transform(
 					_workflowMetricsSLADefinitionLocalService.
 						getWorkflowMetricsSLADefinitions(
-							contextCompany.getCompanyId(), processId,
+							contextCompany.getCompanyId(), true, processId,
 							WorkflowConstants.STATUS_APPROVED,
 							pagination.getStartPosition(),
 							pagination.getEndPosition(), null),
@@ -97,13 +98,13 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 				pagination,
 				_workflowMetricsSLADefinitionLocalService.
 					getWorkflowMetricsSLADefinitionsCount(
-						contextCompany.getCompanyId(), processId));
+						contextCompany.getCompanyId(), true, processId));
 		}
 
 		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitions(
-					contextCompany.getCompanyId(), processId,
+					contextCompany.getCompanyId(), true, processId,
 					WorkflowConstants.STATUS_DRAFT,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null);
@@ -115,7 +116,7 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			workflowMetricsSLADefinitions.addAll(
 				_workflowMetricsSLADefinitionLocalService.
 					getWorkflowMetricsSLADefinitions(
-						contextCompany.getCompanyId(), processId,
+						contextCompany.getCompanyId(), true, processId,
 						WorkflowConstants.STATUS_APPROVED,
 						pagination.getStartPosition() +
 							workflowMetricsSLADefinitions.size() - draftCount,
@@ -126,14 +127,14 @@ public class SLAResourceImpl extends BaseSLAResourceImpl {
 			transform(workflowMetricsSLADefinitions, this::_toSLA), pagination,
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitionsCount(
-					contextCompany.getCompanyId(), processId));
+					contextCompany.getCompanyId(), true, processId));
 	}
 
 	@Override
 	public SLA getSLA(Long slaId) throws Exception {
 		return _toSLA(
 			_workflowMetricsSLADefinitionLocalService.
-				getWorkflowMetricsSLADefinition(slaId));
+				getWorkflowMetricsSLADefinition(slaId, true));
 	}
 
 	@Override

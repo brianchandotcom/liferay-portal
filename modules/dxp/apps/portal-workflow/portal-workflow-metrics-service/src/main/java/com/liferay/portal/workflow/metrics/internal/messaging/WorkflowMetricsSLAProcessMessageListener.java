@@ -94,6 +94,10 @@ public class WorkflowMetricsSLAProcessMessageListener
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
+				Property activeProperty = PropertyFactoryUtil.forName("active");
+
+				dynamicQuery.add(activeProperty.eq(true));
+
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 
 				dynamicQuery.add(

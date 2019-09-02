@@ -66,7 +66,7 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
 			_workflowMetricsSLADefinitionLocalService.
 				getWorkflowMetricsSLADefinitions(
-					companyId, processId, latestProcessVersion,
+					companyId, true, processId, latestProcessVersion,
 					WorkflowConstants.STATUS_APPROVED);
 
 		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :

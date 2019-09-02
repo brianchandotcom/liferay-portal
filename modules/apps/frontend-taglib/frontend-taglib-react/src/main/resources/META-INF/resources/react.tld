@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>react</short-name>
+	<uri>http://liferay.com/tld/react</uri>
+	<tag>
+		<name>component</name>
+		<tag-class>com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The component's ID that can be referenced by <![CDATA[<code>Liferay.component()</code>]]>.</description>
+			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The chosen template's context map.</description>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The AMD module of the component's JavaScript.</description>
+			<name>module</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The ServletContext object to use to resolve JS packages. The default value is to use the current portlet's ServletContext.</description>
+			<name>servletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

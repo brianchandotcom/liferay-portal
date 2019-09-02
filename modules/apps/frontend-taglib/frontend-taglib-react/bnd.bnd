@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Frontend Taglib React
+Bundle-SymbolicName: com.liferay.frontend.taglib.react
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.taglib.react.servlet.taglib
+Provide-Capability:\
+	osgi.extender;\
+		osgi.extender="jsp.taglib";\
+		uri="http://liferay.com/tld/react";\
+		version:Version="${Bundle-Version}"
+Web-ContextPath: /frontend-taglib-react

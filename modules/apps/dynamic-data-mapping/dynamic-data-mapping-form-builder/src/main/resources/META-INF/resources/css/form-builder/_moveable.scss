@@ -59,12 +59,42 @@ $c: '.ddm-form-builder';
 	}
 
 	.col.col-empty {
-		&.lfr-initial-col .ddm-target {
-			line-height: 57px;
+		.ddm-empty-page {
+			border-radius: 6px;
+			height: 80px;
+			line-height: 80px;
 			text-align: center;
 
-			&.targetOver {
+			&.target-droppable {
+				animation-direction: alternate;
+				animation-duration: 0.7s;
+				animation-iteration-count: infinite;
+				animation-name: drop-color;
+				animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+				background-color: $light-blue-500;
+				border-color: $active-drop-blue;
+				color: $active-drop-blue;
+			}
+
+			&.targetOver,
+			&.target-over {
+				border-color: $active-drop-blue;
+				border-style: solid;
 				color: $light-blue-500;
+
+				.ddm-empty-page-message {
+					display: none;
+				}
+			}
+
+			@keyframes drop-color {
+				0% {
+					background-color: $light-blue-100;
+				}
+
+				100% {
+					background-color: $dark-blue-100;
+				}
 			}
 		}
 
@@ -73,8 +103,9 @@ $c: '.ddm-form-builder';
 			border-radius: 4px;
 			min-height: 16px;
 
-			&.targetOver {
-				background-color: $light-100;
+			&.targetOver,
+			&.target-over {
+				background-color: $light-blue-100;
 				border-color: $light-blue-200;
 			}
 		}

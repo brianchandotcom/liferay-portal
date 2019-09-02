@@ -75,19 +75,26 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public String getModule() {
-		String namespace;
-
 		if (_setServletContext) {
-			namespace = NPMResolvedPackageNameUtil.get(servletContext);
-		}
-		else {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
+			String namespace = NPMResolvedPackageNameUtil.get(servletContext);
 
-			namespace = NPMResolvedPackageNameUtil.get(httpServletRequest);
+			return namespace.concat(
+				"/"
+			).concat(
+				_module
+			);
 		}
 
-		return namespace + "/" + _module;
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)pageContext.getRequest();
+
+		String namespace = NPMResolvedPackageNameUtil.get(httpServletRequest);
+
+		return namespace.concat(
+			"/"
+		).concat(
+			_module
+		);
 	}
 
 	@Override

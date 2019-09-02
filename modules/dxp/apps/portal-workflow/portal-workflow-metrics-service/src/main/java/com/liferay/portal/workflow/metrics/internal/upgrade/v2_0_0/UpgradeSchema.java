@@ -43,22 +43,27 @@ public class UpgradeSchema extends UpgradeProcess {
 
 			runSQLTemplateString(template, false, false);
 
-			StringBundler sb1 = new StringBundler(8);
+			if (!hasTable("WorkflowMetricsSLADefinition")) {
+				return;
+			}
+
+			StringBundler sb1 = new StringBundler(9);
 
 			sb1.append("insert into WMSLADefinition (mvccVersion, uuid_, ");
 			sb1.append("wmSLADefinitionId, groupId, companyId, userId, ");
-			sb1.append("userName, createDate, modifiedDate, calendarKey, ");
-			sb1.append("description, duration, name, pauseNodeKeys, ");
-			sb1.append("processId, processVersion, startNodeKeys, ");
-			sb1.append("stopNodeKeys, version, status, statusByUserId, ");
-			sb1.append("statusByUserName, statusDate) values(?, ?, ?, ?, ?, ");
-			sb1.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			sb1.append("userName, createDate, modifiedDate, active_, ");
+			sb1.append("calendarKey, description, duration, name, ");
+			sb1.append("pauseNodeKeys, processId, processVersion, ");
+			sb1.append("startNodeKeys, stopNodeKeys, version, status, ");
+			sb1.append("statusByUserId, statusByUserName, statusDate) ");
+			sb1.append("values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
+			sb1.append("?, ?, ?, ?, ?, ?, ?, ?)");
 
 			StringBundler sb2 = new StringBundler(10);
 
 			sb2.append("insert into WMSLADefinitionVersion (mvccVersion, ");
 			sb2.append("uuid_, wmSLADefinitionVersionId, groupId, companyId, ");
-			sb2.append("userId, userName, createDate, modifiedDate, ");
+			sb2.append("userId, userName, createDate, modifiedDate, active_, ");
 			sb2.append("calendarKey, description, duration, name, ");
 			sb2.append("pauseNodeKeys, processId, processVersion, ");
 			sb2.append("startNodeKeys, stopNodeKeys, version, ");
@@ -89,20 +94,21 @@ public class UpgradeSchema extends UpgradeProcess {
 					ps2.setString(7, rs.getString("userName"));
 					ps2.setTimestamp(8, rs.getTimestamp("createDate"));
 					ps2.setTimestamp(9, rs.getTimestamp("modifiedDate"));
-					ps2.setString(10, rs.getString("calendarKey"));
-					ps2.setString(11, rs.getString("description"));
-					ps2.setLong(12, rs.getLong("duration"));
-					ps2.setString(13, rs.getString("name"));
-					ps2.setString(14, rs.getString("pauseNodeKeys"));
-					ps2.setLong(15, rs.getLong("processId"));
-					ps2.setString(16, rs.getString("processVersion"));
-					ps2.setString(17, rs.getString("startNodeKeys"));
-					ps2.setString(18, rs.getString("stopNodeKeys"));
-					ps2.setString(19, _DEFAULT_VERSION);
-					ps2.setInt(20, rs.getInt("status"));
-					ps2.setLong(21, rs.getLong("userId"));
-					ps2.setString(22, rs.getString("userName"));
-					ps2.setTimestamp(23, rs.getTimestamp("modifiedDate"));
+					ps2.setBoolean(10, true);
+					ps2.setString(11, rs.getString("calendarKey"));
+					ps2.setString(12, rs.getString("description"));
+					ps2.setLong(13, rs.getLong("duration"));
+					ps2.setString(14, rs.getString("name"));
+					ps2.setString(15, rs.getString("pauseNodeKeys"));
+					ps2.setLong(16, rs.getLong("processId"));
+					ps2.setString(17, rs.getString("processVersion"));
+					ps2.setString(18, rs.getString("startNodeKeys"));
+					ps2.setString(19, rs.getString("stopNodeKeys"));
+					ps2.setString(20, _DEFAULT_VERSION);
+					ps2.setInt(21, rs.getInt("status"));
+					ps2.setLong(22, rs.getLong("userId"));
+					ps2.setString(23, rs.getString("userName"));
+					ps2.setTimestamp(24, rs.getTimestamp("modifiedDate"));
 
 					ps2.addBatch();
 
@@ -115,22 +121,23 @@ public class UpgradeSchema extends UpgradeProcess {
 					ps3.setString(7, rs.getString("userName"));
 					ps3.setTimestamp(8, rs.getTimestamp("createDate"));
 					ps3.setTimestamp(9, rs.getTimestamp("modifiedDate"));
-					ps3.setString(10, rs.getString("calendarKey"));
-					ps3.setString(11, rs.getString("description"));
-					ps3.setLong(12, rs.getLong("duration"));
-					ps3.setString(13, rs.getString("name"));
-					ps3.setString(14, rs.getString("pauseNodeKeys"));
-					ps3.setLong(15, rs.getLong("processId"));
-					ps3.setString(16, rs.getString("processVersion"));
-					ps3.setString(17, rs.getString("startNodeKeys"));
-					ps3.setString(18, rs.getString("stopNodeKeys"));
-					ps3.setString(19, _DEFAULT_VERSION);
+					ps3.setBoolean(10, true);
+					ps3.setString(11, rs.getString("calendarKey"));
+					ps3.setString(12, rs.getString("description"));
+					ps3.setLong(13, rs.getLong("duration"));
+					ps3.setString(14, rs.getString("name"));
+					ps3.setString(15, rs.getString("pauseNodeKeys"));
+					ps3.setLong(16, rs.getLong("processId"));
+					ps3.setString(17, rs.getString("processVersion"));
+					ps3.setString(18, rs.getString("startNodeKeys"));
+					ps3.setString(19, rs.getString("stopNodeKeys"));
+					ps3.setString(20, _DEFAULT_VERSION);
 					ps3.setLong(
-						20, rs.getLong("workflowMetricsSLADefinitionId"));
-					ps3.setInt(21, rs.getInt("status"));
-					ps3.setLong(22, rs.getLong("userId"));
-					ps3.setString(23, rs.getString("userName"));
-					ps3.setTimestamp(24, rs.getTimestamp("modifiedDate"));
+						21, rs.getLong("workflowMetricsSLADefinitionId"));
+					ps3.setInt(22, rs.getInt("status"));
+					ps3.setLong(23, rs.getLong("userId"));
+					ps3.setString(24, rs.getString("userName"));
+					ps3.setTimestamp(25, rs.getTimestamp("modifiedDate"));
 
 					ps3.addBatch();
 				}

@@ -14,11 +14,9 @@
 
 package com.liferay.talend.avro;
 
-import com.liferay.talend.BaseTest;
 import com.liferay.talend.avro.exception.ConverterException;
 import com.liferay.talend.common.oas.constants.OASConstants;
 
-import org.apache.avro.Schema;
 import org.apache.avro.generic.IndexedRecord;
 
 import org.junit.Assert;
@@ -27,17 +25,14 @@ import org.junit.Test;
 /**
  * @author Igor Beslic
  */
-public class JsonObjectIndexedRecordConverterTest extends BaseTest {
+public class JsonObjectIndexedRecordConverterTest extends BaseConverterTest {
 
 	@Test
 	public void testToIndexedRecordIfDateTimeStringPropertyPresent() {
-		String endpoint = "/v1.0/attachments/{id}";
-
-		Schema schema = getSchema(
-			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
-
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
-			new JsonObjectIndexedRecordConverter(schema);
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/attachments/{id}", OASConstants.OPERATION_GET,
+				readObject("openapi.json"));
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(
@@ -57,13 +52,10 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 	@Test(expected = ConverterException.class)
 	public void testToIndexedRecordWithInvalidDateProperty() {
-		String endpoint = "/v1.0/attachments/{id}";
-
-		Schema schema = getSchema(
-			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
-
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
-			new JsonObjectIndexedRecordConverter(schema);
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/catalogs/{siteId}/products", OASConstants.OPERATION_GET,
+				readObject("openapi.json"));
 
 		jsonObjectIndexedRecordConverter.toIndexedRecord(
 			readObject("attachment_content_invalid_date_property.json"));
@@ -71,13 +63,10 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 	@Test(expected = ConverterException.class)
 	public void testToIndexedRecordWithMissingRequiredProperty() {
-		String endpoint = "/v1.0/catalogs/{siteId}/products";
-
-		Schema schema = getSchema(
-			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
-
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
-			new JsonObjectIndexedRecordConverter(schema);
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/catalogs/{siteId}/products", OASConstants.OPERATION_GET,
+				readObject("openapi.json"));
 
 		jsonObjectIndexedRecordConverter.toIndexedRecord(
 			readObject("product_content_missing_required_property.json"));
@@ -85,13 +74,10 @@ public class JsonObjectIndexedRecordConverterTest extends BaseTest {
 
 	@Test
 	public void testToIndexedRecordWithSimpleTypeProperties() {
-		String endpoint = "/v1.0/catalogs/{siteId}/products";
-
-		Schema schema = getSchema(
-			endpoint, OASConstants.OPERATION_GET, readObject("openapi.json"));
-
 		JsonObjectIndexedRecordConverter jsonObjectIndexedRecordConverter =
-			new JsonObjectIndexedRecordConverter(schema);
+			getJsonObjectIndexedRecordConverter(
+				"/v1.0/catalogs/{siteId}/products", OASConstants.OPERATION_GET,
+				readObject("openapi.json"));
 
 		IndexedRecord indexedRecord =
 			jsonObjectIndexedRecordConverter.toIndexedRecord(

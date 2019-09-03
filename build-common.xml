@@ -1020,7 +1020,6 @@ information.
 
 			<delete dir="${project.dir}/.m2-tmp/com/liferay/snapshot/bundle/${artifact.name}" />
 
-			<echo message="Installing @{snapshot.bundle.jar.file}" />
 			<artifact:install file="@{snapshot.bundle.jar.file}">
 				<attach-files />
 				<localRepository path="${project.dir}/.m2-tmp" />

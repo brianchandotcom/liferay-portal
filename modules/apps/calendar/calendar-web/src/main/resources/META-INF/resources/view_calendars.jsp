@@ -121,7 +121,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 	</aui:form>
 </div>
 
-<aui:script>
+<aui:script use="io-upload-iframe">
 	var <portlet:namespace />importDialog;
 
 	Liferay.provide(

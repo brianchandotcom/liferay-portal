@@ -1994,6 +1994,7 @@ rerun your task.
 				<entry key="systemProp.repository.private.password" value="${build.repository.private.password}" />
 				<entry key="systemProp.repository.private.url" value="${build.repository.private.proxied.url}" />
 				<entry key="systemProp.repository.private.username" value="${build.repository.private.username}" />
+				<entry key="systemProp.snapshot.bundle.dependencies.enabled" value="${snapshot.bundle.install.artifacts}" />
 			</propertyfile>
 
 			<replaceregexp

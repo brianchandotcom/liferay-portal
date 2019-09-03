@@ -1110,6 +1110,8 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<if>
 			<equals arg1="${snapshot.bundle.install.artifacts}" arg2="true" />
 			<then>
+				<setup-sdk setupbinariescache="false" />
+
 				<for param="snapshot.bundle.jar.file">
 					<fileset
 						casesensitive="yes"

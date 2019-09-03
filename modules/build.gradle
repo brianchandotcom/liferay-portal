@@ -20,6 +20,10 @@ buildscript {
 
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
+if (Boolean.getBoolean("snapshot.bundle.dependencies.enabled")) {
+	apply from: "build-snapshot-bundle.gradle"
+}
+
 ext {
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "3.5.0",

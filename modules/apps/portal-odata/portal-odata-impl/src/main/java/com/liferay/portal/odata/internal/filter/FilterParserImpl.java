@@ -90,7 +90,8 @@ public class FilterParserImpl implements FilterParser {
 						upse.getMessageKey())) {
 
 				message =
-					"A property used in the filter criteria is not supported";
+					"A property used in the filter criteria is not " +
+						"supported: " + filterString;
 			}
 
 			throw new ExpressionVisitException(message, upse);

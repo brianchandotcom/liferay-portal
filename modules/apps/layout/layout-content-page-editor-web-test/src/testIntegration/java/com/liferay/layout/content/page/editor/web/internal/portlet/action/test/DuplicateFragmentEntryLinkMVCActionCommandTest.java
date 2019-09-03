@@ -24,7 +24,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.content.page.editor.web.internal.portlet.action.test.util.MockLiferayPortletRequest;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -296,11 +296,10 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 			jsonObject.getString("error"));
 	}
 
-	private MockLiferayPortletRequest _getMockActionRequest(
-			long fragmentEntryLinkId)
+	private MockActionRequest _getMockActionRequest(long fragmentEntryLinkId)
 		throws PortalException {
 
-		MockLiferayPortletRequest mockActionRequest = new MockActionRequest();
+		MockActionRequest mockActionRequest = new MockActionRequest();
 
 		mockActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
@@ -352,7 +351,8 @@ public class DuplicateFragmentEntryLinkMVCActionCommandTest {
 
 	private ServiceRegistration<FragmentRenderer> _serviceRegistration;
 
-	private static class MockActionRequest extends MockLiferayPortletRequest {
+	private static class MockActionRequest
+		extends MockLiferayPortletActionRequest {
 
 		@Override
 		public HttpServletRequest getHttpServletRequest() {

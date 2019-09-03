@@ -1,0 +1,42 @@
+import org.gradle.api.artifacts.component.ProjectComponentSelector
+
+File snapshotBundleDir = new File(rootDir.parentFile, ".m2-tmp/com/liferay/snapshot/bundle")
+
+allprojects {
+	Project project ->
+
+	if (!snapshotBundleDir.exists() || !project.parent || project.childProjects) {
+		return
+	}
+
+	configurations.all {
+		resolutionStrategy {
+			dependencySubstitution.all {
+				DependencySubstitution dependencySubstitution ->
+
+				if (dependencySubstitution.requested instanceof ProjectComponentSelector) {
+					String projectName = dependencySubstitution.requested.projectName
+
+					if (!projectName.startsWith(project.parent.name)) {
+						String dependencyName = "com.liferay." + projectName.replaceAll("-", ".")
+
+						File artifactDir = new File(snapshotBundleDir, dependencyName)
+
+						if (artifactDir.exists()) {
+							dependencySubstitution.useTarget("com.liferay.snapshot.bundle:" + dependencyName + ":1.0.0-SNAPSHOT")
+						}
+					}
+				}
+				else {
+					String group = dependencySubstitution.requested.group
+
+					if (group == "com.liferay.portal") {
+						String dependencyName = dependencySubstitution.requested.module.substring(12).replaceAll("\\.", "-")
+
+						dependencySubstitution.useTarget("com.liferay.snapshot.bundle:" + dependencyName + ":1.0.0-SNAPSHOT")
+					}
+				}
+			}
+		}
+	}
+}

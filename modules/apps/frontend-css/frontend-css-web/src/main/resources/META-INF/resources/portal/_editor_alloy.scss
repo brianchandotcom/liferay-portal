@@ -1,7 +1,7 @@
 * [class*='ae-toolbar-'][role='toolbar'] {
 	z-index: 980;
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		z-index: 1000;
 	}
 }

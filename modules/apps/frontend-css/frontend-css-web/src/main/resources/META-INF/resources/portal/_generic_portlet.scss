@@ -8,7 +8,7 @@
 }
 
 .js {
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		.controls-hidden {
 			.lfr-meta-actions,
 			.lfr-configurator-visibility {

@@ -30,7 +30,7 @@
 				cursor: pointer;
 				padding: 0 0 0 10px;
 
-				@include media-breakpoint-down(lg) {
+				@include media-breakpoint-down(md) {
 					clip: auto;
 					clip-path: none;
 					display: inline;
@@ -110,7 +110,7 @@
 			}
 		}
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			.lfr-drag-portlet-message {
 				display: none;
 			}

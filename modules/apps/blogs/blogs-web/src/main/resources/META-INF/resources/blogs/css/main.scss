@@ -127,7 +127,7 @@
 				vertical-align: middle;
 			}
 
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				clear: both;
 				display: block;
 
@@ -212,7 +212,7 @@
 
 	.entry-card {
 		.aspect-ratio.aspect-ratio-bg-cover {
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				padding-bottom: 50%;
 			}
 		}

@@ -42,7 +42,7 @@
 	.lfr-pagination-delta-selector {
 		float: left;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			.lfr-icon-menu-text {
 				display: none;
 			}

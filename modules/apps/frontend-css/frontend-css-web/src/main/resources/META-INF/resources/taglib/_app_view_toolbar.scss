@@ -1,6 +1,6 @@
 .app-view-taglib {
 	.form-search {
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			margin-top: 5px;
 		}
 	}
@@ -18,7 +18,7 @@
 			top: 15px;
 			z-index: 1;
 
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				top: 17px;
 			}
 		}
@@ -30,14 +30,14 @@
 		float: right;
 		margin: 8px 0 8px 15px;
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			float: none;
 			margin: 7.5px -15px;
 		}
 
 		.display-style-buttons {
 			> .dropdown {
-				@include media-breakpoint-down(md) {
+				@include media-breakpoint-down(sm) {
 					> .dropdown-menu {
 						border-width: 0;
 						display: block;

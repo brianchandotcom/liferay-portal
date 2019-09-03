@@ -109,13 +109,13 @@ img.icon {
 		top: 0;
 		z-index: 10000;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			line-height: 20px;
 			margin-bottom: 0;
 			padding: 14px 28px;
 			position: static;
 
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				margin: 0 -20px;
 			}
 		}
@@ -160,7 +160,7 @@ img.icon {
 	margin-left: 0.3em;
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.definition-of-terms {
 		dd {
 			margin-left: 10px;

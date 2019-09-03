@@ -29,7 +29,7 @@
 		.tab-pane {
 			min-height: 500px;
 
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				min-height: 100px;
 
 				.form-builder-field .btn {

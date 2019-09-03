@@ -89,7 +89,7 @@
 	max-width: 100%;
 	vertical-align: middle;
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		max-height: 65%;
 	}
 }

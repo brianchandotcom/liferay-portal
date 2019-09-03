@@ -35,7 +35,7 @@
 			top: 64px;
 		}
 
-		@include media-breakpoint-down(320px) {
+		@include media-breakpoint-down(xs) {
 			overflow: visible;
 			position: static;
 		}

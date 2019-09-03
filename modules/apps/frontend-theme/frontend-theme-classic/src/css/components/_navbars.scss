@@ -27,7 +27,7 @@
 	}
 
 	.navbar-blank {
-		@include media-breakpoint-down(sm) {
+		@include media-breakpoint-down(xs) {
 			margin-top: 1rem;
 		}
 	}

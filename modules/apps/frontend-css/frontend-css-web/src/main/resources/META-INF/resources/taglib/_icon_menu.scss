@@ -21,7 +21,7 @@
 		float: none;
 		position: relative;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			> li > a {
 				font-size: 22px;
 				line-height: 40px;
@@ -47,7 +47,7 @@
 	}
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.table-cell.last .lfr-icon-menu .dropdown-toggle {
 		text-align: center;
 

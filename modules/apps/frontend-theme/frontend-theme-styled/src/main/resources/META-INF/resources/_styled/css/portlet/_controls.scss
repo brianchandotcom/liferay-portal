@@ -80,7 +80,7 @@ body.portlet {
 }
 
 .controls-hidden .portlet .visible-interaction {
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		display: none;
 	}
 }

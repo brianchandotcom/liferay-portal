@@ -7,7 +7,7 @@
 		overflow: auto;
 		word-wrap: break-word;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			-webkit-overflow-scrolling: touch;
 		}
 

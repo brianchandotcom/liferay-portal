@@ -1,5 +1,5 @@
 .alert-notifications.alert-notifications-fixed {
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		top: inherit;
 
 		.alert {

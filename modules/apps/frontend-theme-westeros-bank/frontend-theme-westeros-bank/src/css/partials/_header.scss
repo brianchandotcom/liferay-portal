@@ -249,7 +249,7 @@
 	.navbar-form {
 		padding: 10px 20px;
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			padding: 4px;
 		}
 
@@ -271,7 +271,7 @@
 		}
 
 		.form-group-inline {
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				display: block;
 			}
 		}

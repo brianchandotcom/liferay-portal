@@ -34,7 +34,7 @@
 		}
 	}
 
-	@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(md) {
 		width: 100%;
 
 		.btn {
@@ -75,7 +75,7 @@
 
 		@include overflow-wrap(break-all);
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			font-size: 18px;
 			padding: 8px;
 		}

@@ -76,7 +76,7 @@ body {
 			.user-full-name {
 				margin-left: 0.5rem;
 
-				@include media-breakpoint-down(sm) {
+				@include media-breakpoint-down(xs) {
 					display: none;
 				}
 			}
@@ -85,7 +85,7 @@ body {
 }
 
 .btn-group + .info-panel {
-	@include media-breakpoint-up(md) {
+	@include media-breakpoint-up(sm) {
 		top: auto;
 	}
 }

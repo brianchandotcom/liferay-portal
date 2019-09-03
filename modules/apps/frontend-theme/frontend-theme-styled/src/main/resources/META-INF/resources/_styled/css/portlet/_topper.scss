@@ -142,7 +142,7 @@
 }
 
 .lfr-configurator-visibility {
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		opacity: 0.5;
 	}
 
@@ -167,7 +167,7 @@
 
 .controls-visible {
 	.portlet-content-editable {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			border-color: $portlet-topper-border;
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
@@ -175,7 +175,7 @@
 	}
 
 	.portlet-topper {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			display: -webkit-box;
 			display: -moz-box;
 			display: box;

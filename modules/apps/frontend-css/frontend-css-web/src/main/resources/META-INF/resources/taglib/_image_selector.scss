@@ -90,7 +90,7 @@
 			overflow: hidden;
 			width: 100%;
 
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				height: 150px;
 			}
 		}

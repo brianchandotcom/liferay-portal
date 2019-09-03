@@ -103,7 +103,7 @@
 		padding: 0 3px;
 	}
 
-	@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(md) {
 		font-size: 1.75em;
 		top: 4px;
 
@@ -336,7 +336,7 @@
 	.calendar-list-item-arrow {
 		top: 12px;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			top: 6px;
 		}
 	}
@@ -434,7 +434,7 @@
 		.calendar-add-event-btn {
 			margin-right: 3px;
 
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				width: 100%;
 			}
 		}
@@ -575,7 +575,7 @@
 	margin: 0 4px 4px 0;
 	width: 14px;
 
-	@include media-breakpoint-down(lg) {
+	@include media-breakpoint-down(md) {
 		height: 18px;
 		width: 18px;
 	}
@@ -702,13 +702,13 @@
 	@include transition(border-color 0s);
 }
 
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(md) {
 	.scheduler-view-table-header-day div {
 		overflow: hidden;
 	}
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.scheduler-base-content {
 		.scheduler-base-controls,
 		.scheduler-base-controls .btn-group,

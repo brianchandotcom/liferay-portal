@@ -203,7 +203,7 @@ a.control-menu-icon,
 		}
 	}
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		bottom: 0;
 		display: none;
 		left: 0;
@@ -237,7 +237,7 @@ a.control-menu-icon,
 	flex-wrap: wrap;
 	justify-content: space-between;
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		> .control-menu-nav-item {
 			margin-bottom: 55px;
 		}

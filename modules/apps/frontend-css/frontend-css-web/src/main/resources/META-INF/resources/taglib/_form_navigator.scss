@@ -15,7 +15,7 @@
 			padding: 0;
 			width: 100%;
 
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				overflow: auto;
 				white-space: nowrap;
 			}

@@ -129,7 +129,7 @@ header {
 	}
 
 	.lfr-nav-child-toggle {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			float: left;
 			padding: 0 10px;
 		}

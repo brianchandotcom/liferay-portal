@@ -548,7 +548,7 @@
 		margin: 0 auto;
 		width: 90%;
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			width: auto;
 		}
 	}

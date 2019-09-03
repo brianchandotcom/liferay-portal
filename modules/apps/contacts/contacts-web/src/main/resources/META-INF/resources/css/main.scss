@@ -716,7 +716,7 @@ $section-header-bg: #cce6f7;
 
 /* ---------- Responsive ---------- */
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.contacts-portlet {
 		.toolbar {
 			.filter-container {

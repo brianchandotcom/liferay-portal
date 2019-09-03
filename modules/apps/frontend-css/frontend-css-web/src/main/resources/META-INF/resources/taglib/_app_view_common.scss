@@ -28,7 +28,7 @@
 	.entry-metadata {
 		margin: 10px 0 20px;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			margin: 0 0 5px 15px;
 			width: 85%;
 		}
@@ -115,7 +115,7 @@
 		position: relative;
 		text-align: center;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			float: none;
 		}
 	}

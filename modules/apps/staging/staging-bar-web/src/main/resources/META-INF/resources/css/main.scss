@@ -41,7 +41,7 @@
 	}
 
 	.btn {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			font-size: 1em;
 			padding: 13px 15px;
 
@@ -54,7 +54,7 @@
 	}
 
 	.dropdown-toggle {
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			border-bottom-left-radius: 0;
 			border-top-left-radius: 0;
 			position: absolute;

@@ -2,7 +2,7 @@
 	margin-top: 1.5em;
 	overflow: auto;
 
-	@include media-breakpoint-down(md) {
+	@include media-breakpoint-down(sm) {
 		.selector-button {
 			width: auto;
 		}
@@ -45,10 +45,10 @@
 		float: right;
 		margin: 0;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			width: 100%;
 
-			@include media-breakpoint-down(md) {
+			@include media-breakpoint-down(sm) {
 				float: none;
 				margin-top: 20px;
 			}
@@ -75,7 +75,7 @@
 		float: left;
 		line-height: 46px;
 
-		@include media-breakpoint-down(md) {
+		@include media-breakpoint-down(sm) {
 			float: none;
 
 			.current-page-menu {
@@ -95,7 +95,7 @@
 		.lfr-pagination-delta-selector {
 			float: none;
 
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				display: none;
 			}
 		}
@@ -106,7 +106,7 @@
 		line-height: 46px;
 		margin-left: 10px;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			display: none;
 		}
 	}

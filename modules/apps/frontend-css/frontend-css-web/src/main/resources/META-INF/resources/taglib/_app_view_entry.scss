@@ -9,7 +9,7 @@
 		vertical-align: top;
 		width: 200px;
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			height: 230px;
 		}
 
@@ -32,7 +32,7 @@
 		.entry-action {
 			top: 14px;
 
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				bottom: 8px;
 				right: 31px;
 				top: auto;
@@ -74,7 +74,7 @@
 			@include text-truncate();
 		}
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(md) {
 			.folder-action,
 			.entry-action {
 				a {

@@ -152,27 +152,30 @@ public class VulcanFeature implements Feature {
 			javax.ws.rs.core.Configuration jaxRSConfiguration =
 				featureContext.getConfiguration();
 
-			Map property = (Map)jaxRSConfiguration.getProperty(
-				"osgi.jaxrs.application.serviceProperties");
+			if (jaxRSConfiguration != null) {
+				Map property = (Map)jaxRSConfiguration.getProperty(
+					"osgi.jaxrs.application.serviceProperties");
 
-			String name = (String)property.get("osgi.jaxrs.application.base");
+				String name = (String)property.get(
+					"osgi.jaxrs.application.base");
 
-			String filterString = String.format(
-				"(&(service.factoryPid=%s)(name=%s))",
-				VulcanConfiguration.class.getName(), name);
+				String filterString = String.format(
+					"(&(service.factoryPid=%s)(name=%s))",
+					VulcanConfiguration.class.getName(), name);
 
-			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(filterString);
+				Configuration[] configurations =
+					_configurationAdmin.listConfigurations(filterString);
 
-			if (ArrayUtil.isEmpty(configurations)) {
-				Dictionary<String, Object> dictionary =
-					new HashMapDictionary<>();
+				if (ArrayUtil.isEmpty(configurations)) {
+					Dictionary<String, Object> dictionary =
+						new HashMapDictionary<>();
 
-				dictionary.put("path", name);
-				dictionary.put("graphQLEnabled", true);
-				dictionary.put("restEnabled", true);
+					dictionary.put("path", name);
+					dictionary.put("graphQLEnabled", true);
+					dictionary.put("restEnabled", true);
 
-				configuration.update(dictionary);
+					configuration.update(dictionary);
+				}
 			}
 		}
 		catch (Exception e) {

@@ -12,7 +12,7 @@
 	line-height: 24px;
 	max-width: calc(100% - #{$topperBorderWidth * 2});
 	opacity: 0;
-	padding: 0 8px;
+	padding: 0 8px 0 4px;
 	position: absolute;
 	transform: translateY(100%);
 	transition: box-shadow ease $topperShowDuration,
@@ -22,7 +22,11 @@
 
 	&__icon {
 		fill: $topperColor;
+		height: 16px;
 		padding: 0;
+		position: relative;
+		top: 1px;
+		width: 16px;
 	}
 
 	&__item {

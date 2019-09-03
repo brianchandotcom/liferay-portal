@@ -14,10 +14,14 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
@@ -25,14 +29,23 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -55,6 +68,9 @@ public class DisplayPageManagementToolbarDisplayContext
 			liferayPortletRequest, liferayPortletResponse, httpServletRequest,
 			displayPageDisplayContext.getDisplayPagesSearchContainer());
 
+		_infoDisplayContributorTracker =
+			(InfoDisplayContributorTracker)request.getAttribute(
+				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -124,9 +140,16 @@ public class DisplayPageManagementToolbarDisplayContext
 			{
 				addDropdownItem(
 					dropdownItem -> {
-						dropdownItem.putData("action", "addDisplayPage");
-						dropdownItem.putData(
+						Map<String, Object> dropDownItemData = new HashMap<>();
+
+						dropDownItemData.put("action", "addDisplayPage");
+						dropDownItemData.put(
 							"addDisplayPageURL", addDisplayPageURL.toString());
+						dropDownItemData.put(
+							"mappingTypes", _getMappingTypes());
+
+						dropdownItem.setData(dropDownItemData);
+
 						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
 					});
 			}
@@ -173,6 +196,60 @@ public class DisplayPageManagementToolbarDisplayContext
 		return new String[] {"create-date", "name"};
 	}
 
+	private JSONArray _getMappingSubtype(
+		InfoDisplayContributor<?> infoDisplayContributor) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		try {
+			List<ClassType> classTypes = infoDisplayContributor.getClassTypes(
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getLocale());
+
+			for (ClassType classType : classTypes) {
+				JSONObject jsonObject = JSONUtil.put(
+					"id", String.valueOf(classType.getClassTypeId())
+				).put(
+					"label", classType.getName()
+				);
+
+				jsonArray.put(jsonObject);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("Error while getting mapping subtypes", pe);
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _getMappingTypes() {
+		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (InfoDisplayContributor<?> infoDisplayContributor :
+				_infoDisplayContributorTracker.getInfoDisplayContributors()) {
+
+			JSONObject jsonObject = JSONUtil.put(
+				"id",
+				String.valueOf(
+					PortalUtil.getClassNameId(
+						infoDisplayContributor.getClassName()))
+			).put(
+				"label",
+				infoDisplayContributor.getLabel(_themeDisplay.getLocale())
+			).put(
+				"subtypes", _getMappingSubtype(infoDisplayContributor)
+			);
+
+			mappingTypesJSONArray.put(jsonObject);
+		}
+
+		return mappingTypesJSONArray;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageManagementToolbarDisplayContext.class);
+
+	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final ThemeDisplay _themeDisplay;
 
 }

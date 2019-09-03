@@ -23,6 +23,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -30,6 +32,12 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLDeleteExperiment() {
+	}
 
 	@Override
 	protected Experiment testDeleteExperiment_addExperiment() throws Exception {
@@ -48,6 +56,13 @@ public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
 				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK()));
+	}
+
+	@Override
+	protected Experiment testGraphQLExperiment_addExperiment()
+		throws Exception {
+
+		return testDeleteExperiment_addExperiment();
 	}
 
 	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {

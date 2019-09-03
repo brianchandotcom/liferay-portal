@@ -518,7 +518,7 @@ public class SegmentsExperimentLocalServiceTest {
 
 		variantSegmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId());
+				variantSegmentsExperience.getSegmentsExperienceId());
 
 		Assert.assertTrue(variantSegmentsExperience.isActive());
 	}

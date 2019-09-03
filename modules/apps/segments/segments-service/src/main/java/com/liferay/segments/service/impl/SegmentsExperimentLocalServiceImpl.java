@@ -435,7 +435,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private SegmentsExperiment _updateWinnerSegmentsExperienceId(
 			SegmentsExperiment segmentsExperiment,
-			long winnerSegmentsExperienceId, int statusValue)
+			long winnerSegmentsExperienceId, int status)
 		throws PortalException {
 
 		UnicodeProperties typeSettings = new UnicodeProperties(true);
@@ -463,10 +463,10 @@ public class SegmentsExperimentLocalServiceImpl
 					" no found");
 		}
 
-		SegmentsExperimentConstants.Status status =
-			SegmentsExperimentConstants.Status.valueOf(statusValue);
+		SegmentsExperimentConstants.Status statusObject =
+			SegmentsExperimentConstants.Status.valueOf(status);
 
-		if (status == SegmentsExperimentConstants.Status.COMPLETED) {
+		if (statusObject == SegmentsExperimentConstants.Status.COMPLETED) {
 			List<SegmentsExperience> segmentsExperiences =
 				_segmentsExperienceLocalService.getSegmentsExperiences(
 					segmentsExperiment.getGroupId(),
@@ -509,16 +509,14 @@ public class SegmentsExperimentLocalServiceImpl
 		}
 	}
 
-	private void _validateEditableStatus(int statusValue)
-		throws PortalException {
+	private void _validateEditableStatus(int status) throws PortalException {
+		SegmentsExperimentConstants.Status statusObject =
+			SegmentsExperimentConstants.Status.valueOf(status);
 
-		SegmentsExperimentConstants.Status status =
-			SegmentsExperimentConstants.Status.valueOf(statusValue);
-
-		if (!status.isEditable()) {
+		if (!statusObject.isEditable()) {
 			throw new LockedSegmentsExperimentException(
 				"Segments experiment is not editable in status " +
-					SegmentsExperimentConstants.Status.parse(statusValue));
+					statusObject);
 		}
 	}
 
@@ -536,17 +534,17 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _validateStatus(
 			long segmentsExperimentId, long segmentsExperienceId,
-			long classNameId, long classPK, int statusValue, int newStatusValue,
+			long classNameId, long classPK, int status, int newStatus,
 			long winnerSegmentsExperienceId)
 		throws SegmentsExperimentStatusException {
 
 		SegmentsExperimentConstants.Status.validateTransition(
-			statusValue, newStatusValue);
+			status, newStatus);
 
-		SegmentsExperimentConstants.Status newStatus =
-			SegmentsExperimentConstants.Status.valueOf(newStatusValue);
+		SegmentsExperimentConstants.Status newStatusObject =
+			SegmentsExperimentConstants.Status.valueOf(newStatus);
 
-		if (newStatus.isExclusive()) {
+		if (newStatusObject.isExclusive()) {
 			List<SegmentsExperiment> segmentsExperiments =
 				segmentsExperimentPersistence.findByS_C_C_S(
 					new long[] {segmentsExperienceId}, classNameId, classPK,
@@ -571,18 +569,18 @@ public class SegmentsExperimentLocalServiceImpl
 					segmentsExperimentId) {
 
 				throw new SegmentsExperimentStatusException(
-					"A segments experiment with status " + newStatus.name() +
-						" already exists");
+					"A segments experiment with status " +
+						newStatusObject.name() + " already exists");
 			}
 		}
 
-		if (newStatus.requiresWinnerExperience() &&
+		if (newStatusObject.requiresWinnerExperience() &&
 			(winnerSegmentsExperienceId < 0)) {
 
 			throw new SegmentsExperimentStatusException(
 				StringBundler.concat(
-					"Status ", newStatus.name(), " requires a winner segments ",
-					"experience"));
+					"Status ", newStatusObject.name(),
+					" requires a winner segments experience"));
 		}
 	}
 

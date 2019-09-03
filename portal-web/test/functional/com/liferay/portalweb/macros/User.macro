@@ -1643,7 +1643,7 @@ definition {
 			Button.click(button = "Sign In");
 		}
 
-		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED")) {
+		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED") && (IsElementNotPresent(locator1 = "TextInput#ENTER_AGAIN"))) {
 			echo("Sign in failed due to empty required field. Retrying...");
 
 			if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {

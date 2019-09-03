@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper;
 import com.liferay.journal.internal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.internal.upgrade.v0_0_3.UpgradeJournalArticleType;
@@ -216,10 +215,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.journal.internal.upgrade.v3_0_1.
 				UpgradeJournalArticle());
 
-		registry.register(
-			"3.0.1", "3.0.2",
-			new com.liferay.journal.internal.upgrade.v3_0_2.UpgradeUrlTitle(
-				_friendlyURLEntryLocalService));
+		registry.register("3.0.1", "3.0.2", new DummyUpgradeStep());
 
 		registry.register(
 			"3.0.2", "3.1.0",
@@ -296,9 +292,6 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-
-	@Reference
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

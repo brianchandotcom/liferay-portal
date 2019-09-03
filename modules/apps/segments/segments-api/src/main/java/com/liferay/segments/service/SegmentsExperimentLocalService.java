@@ -40,6 +40,7 @@ import com.liferay.segments.model.SegmentsExperiment;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -344,8 +345,9 @@ public interface SegmentsExperimentLocalService
 		long segmentsExperienceId, long classNameId, long classPK,
 		int[] statuses);
 
-	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, double confidenceLevel, int status)
+	public SegmentsExperiment runSegmentsExperiment(
+			long segmentsExperimentId, double confidenceLevel,
+			Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(

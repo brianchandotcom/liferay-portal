@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.segments.model.SegmentsExperiment;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -98,8 +99,14 @@ public interface SegmentsExperimentService extends BaseService {
 	public List<SegmentsExperiment> getSegmentsExperiments(
 		long groupId, long classNameId, long classPK);
 
-	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, double confidenceLevel, int status)
+	public SegmentsExperiment runSegmentsExperiment(
+			long segmentsExperimentId, double confidenceLevel,
+			Map<Long, Double> segmentsExperienceIdSplitMap)
+		throws PortalException;
+
+	public SegmentsExperiment runSegmentsExperiment(
+			String segmentsExperimentKey, double confidenceLevel,
+			Map<String, Double> segmentsExperienceKeySplitMap)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperiment(

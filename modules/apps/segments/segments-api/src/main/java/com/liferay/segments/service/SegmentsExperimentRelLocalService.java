@@ -269,6 +269,10 @@ public interface SegmentsExperimentRelLocalService
 		throws PortalException;
 
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId, double split)
+		throws PortalException;
+
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, String name,
 			ServiceContext serviceContext)
 		throws PortalException;

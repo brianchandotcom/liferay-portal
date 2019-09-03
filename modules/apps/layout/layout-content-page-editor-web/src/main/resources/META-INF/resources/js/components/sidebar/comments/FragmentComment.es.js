@@ -33,6 +33,7 @@ import ReplyCommentForm from './ReplyCommentForm.es';
 import ResolveButton from './ResolveButton.es';
 import UserIcon from '../../common/UserIcon.es';
 import useSelector from '../../../store/hooks/useSelector.es';
+import useIsMounted from '../../../store/hooks/useIsMounted.es';
 
 const FragmentComment = props => {
 	const isReply = props.parentCommentId;
@@ -99,13 +100,17 @@ const FragmentComment = props => {
 			});
 	};
 
+	const isMounted = useIsMounted();
+
 	const hideComment = onHide => {
 		setHidden(true);
 
 		setTimeout(() => {
-			setShowDeleteMask(false);
-			setShowResolveMask(false);
-			onHide();
+			if (isMounted()) {
+				setShowDeleteMask(false);
+				setShowResolveMask(false);
+				onHide();
+			}
 		}, 1000);
 	};
 

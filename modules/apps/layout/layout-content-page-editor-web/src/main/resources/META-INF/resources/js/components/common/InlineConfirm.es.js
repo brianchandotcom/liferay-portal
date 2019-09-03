@@ -19,6 +19,7 @@ import React, {useState, useRef, useEffect} from 'react';
 
 import ClayButton from '@clayui/button';
 import Button from './Button.es';
+import useIsMounted from '../../store/hooks/useIsMounted.es';
 
 const CONFIRM_BUTTON_CLASS = 'fragments-editor__inline-confirm-button';
 
@@ -26,7 +27,7 @@ const InlineConfirm = props => {
 	const {onCancelButtonClick, onConfirmButtonClick} = props;
 	const [performingAction, setPerformingAction] = useState(false);
 	const wrapper = useRef(null);
-	const isMounted = useRef(false);
+	const isMounted = useIsMounted();
 
 	const _handleConfirmButtonClick = () => {
 		if (wrapper.current) {
@@ -36,18 +37,11 @@ const InlineConfirm = props => {
 		setPerformingAction(true);
 
 		onConfirmButtonClick().then(() => {
-			if (isMounted.current) {
+			if (isMounted()) {
 				setPerformingAction(false);
 			}
 		});
 	};
-
-	useEffect(() => {
-		isMounted.current = true;
-		return () => {
-			isMounted.current = false;
-		};
-	}, []);
 
 	useEffect(() => {
 		if (wrapper.current) {

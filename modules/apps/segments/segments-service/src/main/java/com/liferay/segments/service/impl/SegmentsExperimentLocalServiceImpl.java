@@ -288,12 +288,14 @@ public class SegmentsExperimentLocalServiceImpl
 			Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws PortalException {
 
-		_validateConfidenceLevel(confidenceLevel);
-		_validateSplit(segmentsExperienceIdSplitMap);
-
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId);
+
+		_validateEditableStatus(segmentsExperiment.getStatus());
+
+		_validateConfidenceLevel(confidenceLevel);
+		_validateSplit(segmentsExperienceIdSplitMap);
 
 		UnicodeProperties typeSettingsProperties =
 			segmentsExperiment.getTypeSettingsProperties();

@@ -194,7 +194,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 	private void _testGetProcess(
 			Boolean completed,
-			UnsafeBiConsumer<Process, Process, Exception> unsafeTriConsumer)
+			UnsafeBiConsumer<Process, Process, Exception> unsafeBiConsumer)
 		throws Exception {
 
 		_deleteProcesses();
@@ -219,7 +219,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		Process getProcess = processResource.getProcess(
 			postProcess.getId(), completed, null, null);
 
-		unsafeTriConsumer.accept(postProcess, getProcess);
+		unsafeBiConsumer.accept(postProcess, getProcess);
 	}
 
 	private static Document[] _documents;

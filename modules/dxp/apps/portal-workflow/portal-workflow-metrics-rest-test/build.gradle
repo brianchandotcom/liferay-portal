@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile group: "commons-codec", name: "commons-codec", version: "1.10"
 	testIntegrationCompile group: "commons-lang", name: "commons-lang", version: "2.6"
 	testIntegrationCompile group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:portal-search:portal-search-engine-adapter-api")

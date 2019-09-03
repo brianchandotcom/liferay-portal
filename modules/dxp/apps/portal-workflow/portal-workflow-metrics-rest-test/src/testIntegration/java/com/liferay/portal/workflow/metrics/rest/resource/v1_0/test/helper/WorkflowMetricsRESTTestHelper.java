@@ -258,7 +258,9 @@ public class WorkflowMetricsRESTTestHelper {
 				overdueInstanceCount--;
 			}
 
-			addToken(companyId, instance, taskId, task.getKey());
+			addToken(
+				companyId, task.getDurationAvg(), instance, taskId,
+				task.getKey());
 		}
 
 		_retryAssertCount(
@@ -269,7 +271,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	public void addToken(
-			long companyId, Instance instance, long taskId, String taskName)
+			long companyId, long durationAvg, Instance instance, long taskId,
+			String taskName)
 		throws Exception {
 
 		long tokenId = RandomTestUtil.randomLong();
@@ -277,8 +280,8 @@ public class WorkflowMetricsRESTTestHelper {
 		_invokeAddDocument(
 			_getIndexer(_CLASS_NAME_TOKEN_INDEXER),
 			_creatWorkflowMetricsTokenDocument(
-				companyId, instance.getId(), instance.getProcessId(), taskId,
-				taskName, tokenId, "1.0"));
+				companyId, durationAvg, instance.getId(),
+				instance.getProcessId(), taskId, taskName, tokenId, "1.0"));
 
 		_retryAssertCount(
 			"workflow-metrics-tokens", "companyId", companyId, "deleted", false,
@@ -529,8 +532,8 @@ public class WorkflowMetricsRESTTestHelper {
 	}
 
 	private Document _creatWorkflowMetricsTokenDocument(
-		long companyId, long instanceId, long processId, long taskId,
-		String taskName, long tokenId, String version) {
+		long companyId, long durationAvg, long instanceId, long processId,
+		long taskId, String taskName, long tokenId, String version) {
 
 		Document document = new DocumentImpl();
 
@@ -538,8 +541,9 @@ public class WorkflowMetricsRESTTestHelper {
 			"WorkflowMetricsToken",
 			_digest(companyId, instanceId, processId, taskId, tokenId));
 		document.addKeyword("companyId", companyId);
-		document.addKeyword("completed", false);
+		document.addKeyword("completed", durationAvg > 0);
 		document.addKeyword("deleted", false);
+		document.addKeyword("duration", durationAvg);
 		document.addKeyword("instanceId", instanceId);
 		document.addKeyword("processId", processId);
 		document.addKeyword("taskId", taskId);

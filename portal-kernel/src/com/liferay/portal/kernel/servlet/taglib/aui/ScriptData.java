@@ -34,6 +34,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Brian Wing Shun Chan
@@ -201,6 +203,10 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 			}
 		}
 
+		if (_reservedWords.contains(name)) {
+			name = StringPool.UNDERLINE + name;
+		}
+
 		String safeName = name;
 
 		if (modified) {
@@ -353,6 +359,17 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 	}
 
+	private static final Set<String> _reservedWords = Stream.of(
+		"do", "if", "in", "for", "let", "new", "try", "var", "case", "else",
+		"enum", "eval", "null", "this", "true", "void", "with", "await",
+		"break", "catch", "class", "const", "false", "super", "throw", "while",
+		"yield", "delete", "export", "import", "public", "return", "static",
+		"switch", "typeof", "default", "extends", "finally", "package",
+		"private", "continue", "debugger", "function", "arguments", "interface",
+		"protected", "implements", "instanceof"
+	).collect(
+		Collectors.toSet()
+	);
 	private static final Pattern _whitespacePattern = Pattern.compile("\\s+");
 	private static final long serialVersionUID = 1L;
 

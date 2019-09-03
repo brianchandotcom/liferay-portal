@@ -60,6 +60,11 @@
 		outline: none;
 	}
 
+	&-wrapper--active > .fragments-editor__topper {
+		background-color: $topperActiveBackgroundColor;
+		box-shadow: 0 0 0 $topperBorderWidth $topperActiveBorderColor;
+	}
+
 	&-wrapper--active,
 	&-wrapper--hovered {
 		outline: none;
@@ -78,7 +83,8 @@
 	}
 
 	&-wrapper--active:after {
-		box-shadow: inset 0 0 0 $topperFocusedBorderWidth $topperBorderColor;
+		box-shadow: inset 0 0 0 $topperFocusedBorderWidth
+			$topperActiveBorderColor;
 		transition: box-shadow ease ($topperShowDuration * 0.5);
 	}
 
@@ -86,7 +92,8 @@
 	&-wrapper--hovered > & {
 		opacity: 1;
 		transform: translateY(1px);
-		transition: box-shadow ease $topperShowDuration $topperShowDelay,
+		transition: background-color ease $topperShowDuration,
+			box-shadow ease $topperShowDuration,
 			transform ease ($topperShowDuration * 0.667) $topperShowDelay,
 			opacity ease $topperShowDuration $topperShowDelay,
 			z-index linear 1ms ($topperShowDuration + $topperShowDelay);

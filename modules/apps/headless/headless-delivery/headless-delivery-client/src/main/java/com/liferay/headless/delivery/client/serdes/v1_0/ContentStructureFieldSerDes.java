@@ -18,11 +18,11 @@ import com.liferay.headless.delivery.client.dto.v1_0.ContentStructureField;
 import com.liferay.headless.delivery.client.dto.v1_0.Option;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -248,7 +248,7 @@ public class ContentStructureFieldSerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (contentStructureField.getDataType() == null) {
 			map.put("dataType", null);

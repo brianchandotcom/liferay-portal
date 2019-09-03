@@ -17,11 +17,11 @@ package com.liferay.headless.admin.taxonomy.client.serdes.v1_0;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Generated;
 
@@ -98,7 +98,7 @@ public class ParentTaxonomyCategorySerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (parentTaxonomyCategory.getId() == null) {
 			map.put("id", null);

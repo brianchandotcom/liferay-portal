@@ -18,11 +18,11 @@ import com.liferay.change.tracking.rest.client.dto.v1_0.AffectedEntry;
 import com.liferay.change.tracking.rest.client.dto.v1_0.Entry;
 import com.liferay.change.tracking.rest.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Generated;
 
@@ -101,7 +101,7 @@ public class AffectedEntrySerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (affectedEntry.getContentType() == null) {
 			map.put("contentType", null);

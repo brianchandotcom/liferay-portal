@@ -18,11 +18,11 @@ import com.liferay.headless.form.client.dto.v1_0.FormFieldContext;
 import com.liferay.headless.form.client.dto.v1_0.FormFieldOption;
 import com.liferay.headless.form.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -185,7 +185,7 @@ public class FormFieldContextSerDes {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
 		if (formFieldContext.getEvaluable() == null) {
 			map.put("evaluable", null);

@@ -368,8 +368,8 @@ public interface SegmentsExperimentLocalService
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			long segmentsExperimentId, int status,
-			long winnerSegmentsExperienceId)
+			long segmentsExperimentId, long winnerSegmentsExperienceId,
+			int status)
 		throws PortalException;
 
 }

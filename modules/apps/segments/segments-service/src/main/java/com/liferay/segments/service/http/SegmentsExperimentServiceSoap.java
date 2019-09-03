@@ -291,14 +291,14 @@ public class SegmentsExperimentServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			updateSegmentsExperimentStatus(
-				long segmentsExperimentId, int status,
-				long winnerSegmentsExperienceId)
+				long segmentsExperimentId, long winnerSegmentsExperienceId,
+				int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.updateSegmentsExperimentStatus(
-					segmentsExperimentId, status, winnerSegmentsExperienceId);
+					segmentsExperimentId, winnerSegmentsExperienceId, status);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);
@@ -332,14 +332,14 @@ public class SegmentsExperimentServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentSoap
 			updateSegmentsExperimentStatus(
-				String segmentsExperimentKey, int status,
-				String winnerSegmentsExperienceKey)
+				String segmentsExperimentKey,
+				String winnerSegmentsExperienceKey, int status)
 		throws RemoteException {
 
 		try {
 			com.liferay.segments.model.SegmentsExperiment returnValue =
 				SegmentsExperimentServiceUtil.updateSegmentsExperimentStatus(
-					segmentsExperimentKey, status, winnerSegmentsExperienceKey);
+					segmentsExperimentKey, winnerSegmentsExperienceKey, status);
 
 			return com.liferay.segments.model.SegmentsExperimentSoap.
 				toSoapModel(returnValue);

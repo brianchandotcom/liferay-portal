@@ -255,8 +255,7 @@ public class SegmentsExperimentServiceImpl
 
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
-			segmentsExperience.getSegmentsExperienceId(), status
-		);
+			segmentsExperience.getSegmentsExperienceId(), status);
 	}
 
 	@Reference

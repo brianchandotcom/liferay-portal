@@ -59,6 +59,8 @@ definition {
 
 		FragmentsEditor.typeFileContent(fileName = "fragment_configuration_invalid.json");
 
+		FragmentsEditor.gotoCodeTab();
+
 		task ("Assert there is an error message in the fragment editor preview") {
 			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 

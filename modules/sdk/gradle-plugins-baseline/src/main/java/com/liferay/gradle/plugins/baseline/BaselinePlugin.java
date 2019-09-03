@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.baseline;
 
+import aQute.bnd.version.Version;
+
 import com.liferay.gradle.plugins.baseline.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -436,6 +438,24 @@ public class BaselinePlugin implements Plugin<Project> {
 		}
 		else {
 			version = "(," + newJarTask.getVersion() + ")";
+
+			if (newJarTask.getVersion() != null) {
+				Version newVersion = new Version(newJarTask.getVersion());
+
+				if ((newVersion.getMicro() > 0) &&
+					(newVersion.getQualifier() == null)) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(newVersion.getMajor());
+					sb.append('.');
+					sb.append(newVersion.getMinor());
+					sb.append('.');
+					sb.append(newVersion.getMicro() - 1);
+
+					version = sb.toString();
+				}
+			}
 		}
 
 		args.put("version", version);

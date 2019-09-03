@@ -72,6 +72,34 @@ public class Status {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
 
+	@Schema
+	public Long getWinnerVariantId() {
+		return winnerVariantId;
+	}
+
+	public void setWinnerVariantId(Long winnerVariantId) {
+		this.winnerVariantId = winnerVariantId;
+	}
+
+	@JsonIgnore
+	public void setWinnerVariantId(
+		UnsafeSupplier<Long, Exception> winnerVariantIdUnsafeSupplier) {
+
+		try {
+			winnerVariantId = winnerVariantIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long winnerVariantId;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -111,6 +139,16 @@ public class Status {
 			sb.append(_escape(status));
 
 			sb.append("\"");
+		}
+
+		if (winnerVariantId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"winnerVariantId\": ");
+
+			sb.append(winnerVariantId);
 		}
 
 		sb.append("}");

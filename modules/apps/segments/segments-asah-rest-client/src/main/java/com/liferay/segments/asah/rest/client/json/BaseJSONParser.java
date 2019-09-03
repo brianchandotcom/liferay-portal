@@ -373,7 +373,17 @@ public abstract class BaseJSONParser<T> {
 			return _readValueAsString();
 		}
 		else if (parseMaps && _lastChar == '{') {
-			return parseToMap(_readValueAsStringJSON());
+			try {
+				Class<? extends BaseJSONParser> clazz = getClass();
+
+				BaseJSONParser baseJSONParser = clazz.newInstance();
+
+				return baseJSONParser.parseToMap(_readValueAsStringJSON());
+			}
+			catch (Exception e) {
+				throw new IllegalArgumentException(
+					"Expected JSON object or map");
+			}
 		}
 		else if (_lastChar == '{') {
 			return _readValueAsStringJSON();

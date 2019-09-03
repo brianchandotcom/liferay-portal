@@ -35,9 +35,13 @@ const showVideo = () => {
 };
 
 const showError = () => {
-	errorMessage.removeAttribute('hidden');
-	videoContainer.parentElement.removeChild(videoContainer);
-	loadingIndicator.parentElement.removeChild(loadingIndicator);
+	if (document.body.classList.contains('has-edit-mode-menu')) {
+		errorMessage.removeAttribute('hidden');
+		videoContainer.parentElement.removeChild(videoContainer);
+		loadingIndicator.parentElement.removeChild(loadingIndicator);
+	} else {
+		fragmentElement.parentElement.removeChild(fragmentElement);
+	}
 };
 
 const rawProvider = {

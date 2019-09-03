@@ -155,7 +155,7 @@ public class SnapshotDevelopmentConfigurator implements Plugin<Project> {
 
 	private static final String _DEFAULT_GROUP = "com.liferay.snapshot";
 
-	private static final String _DEFAULT_VERSION = "1.0.0";
+	private static final String _DEFAULT_VERSION = "1.0.0-SNAPSHOT";
 
 	private String _projectPrefix;
 	private File _rootDir;

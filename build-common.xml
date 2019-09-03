@@ -1246,7 +1246,7 @@ information.
 					<property name="snapshot.artifact.version" value="${Bundle-Version}-SNAPSHOT" />
 				</then>
 				<else>
-					<property name="snapshot.artifact.version" value="1.0.0" />
+					<property name="snapshot.artifact.version" value="1.0.0-SNAPSHOT" />
 				</else>
 			</if>
 

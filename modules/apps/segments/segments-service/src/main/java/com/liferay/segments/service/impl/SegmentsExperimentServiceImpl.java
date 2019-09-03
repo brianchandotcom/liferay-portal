@@ -27,6 +27,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -160,8 +164,9 @@ public class SegmentsExperimentServiceImpl
 	}
 
 	@Override
-	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, double confidenceLevel, int status)
+	public SegmentsExperiment runSegmentsExperiment(
+			long segmentsExperimentId, double confidenceLevel,
+			Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws PortalException {
 
 		_segmentsExperimentResourcePermission.check(
@@ -170,8 +175,40 @@ public class SegmentsExperimentServiceImpl
 				segmentsExperimentId),
 			ActionKeys.UPDATE);
 
-		return segmentsExperimentLocalService.updateSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel, status);
+		return segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperimentId, confidenceLevel,
+			segmentsExperienceIdSplitMap);
+	}
+
+	@Override
+	public SegmentsExperiment runSegmentsExperiment(
+			String segmentsExperimentKey, double confidenceLevel,
+			Map<String, Double> segmentsExperienceKeySplitMap)
+		throws PortalException {
+
+		SegmentsExperiment segmentsExperiment =
+			segmentsExperimentLocalService.getSegmentsExperiment(
+				segmentsExperimentKey);
+
+		_segmentsExperimentResourcePermission.check(
+			getPermissionChecker(), segmentsExperiment, ActionKeys.UPDATE);
+
+		Set<Map.Entry<String, Double>> segmentsExperienceKeySplits =
+			segmentsExperienceKeySplitMap.entrySet();
+
+		Stream<Map.Entry<String, Double>> segmentsExperienceKeySplitsStream =
+			segmentsExperienceKeySplits.stream();
+
+		Map<Long, Double> segmentsExperienceIdSplitMap =
+			segmentsExperienceKeySplitsStream.collect(
+				Collectors.toMap(
+					entry -> _getSegmentsExperienceId(
+						segmentsExperiment.getGroupId(), entry.getKey()),
+					Map.Entry::getValue));
+
+		return segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
 	}
 
 	@Override

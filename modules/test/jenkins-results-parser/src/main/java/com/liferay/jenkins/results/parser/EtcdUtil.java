@@ -147,20 +147,15 @@ public class EtcdUtil {
 		}
 
 		private synchronized void _refreshEtcdNode() {
-			_etcdNode = _getEtcdNode(getEtcdServerURL(), getKey());
-
-			if (_etcdNode != null) {
-				return;
-			}
-
 			for (int i = 0; i < _RETRIES_SIZE_MAX_DEFAULT; i++) {
-				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD_DEFAULT);
 
 				_etcdNode = _getEtcdNode(getEtcdServerURL(), getKey());
 
 				if (_etcdNode != null) {
 					return;
 				}
+
+				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD_DEFAULT);
 			}
 		}
 

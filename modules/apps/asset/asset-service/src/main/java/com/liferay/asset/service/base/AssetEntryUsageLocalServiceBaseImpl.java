@@ -16,6 +16,7 @@ package com.liferay.asset.service.base;
 
 import com.liferay.asset.model.AssetEntryUsage;
 import com.liferay.asset.service.AssetEntryUsageLocalService;
+import com.liferay.asset.service.persistence.AssetEntryUsageFinder;
 import com.liferay.asset.service.persistence.AssetEntryUsagePersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -422,6 +423,9 @@ public abstract class AssetEntryUsageLocalServiceBaseImpl
 
 	@Reference
 	protected AssetEntryUsagePersistence assetEntryUsagePersistence;
+
+	@Reference
+	protected AssetEntryUsageFinder assetEntryUsageFinder;
 
 	@Reference
 	protected com.liferay.counter.kernel.service.CounterLocalService

@@ -369,6 +369,10 @@ public class AssetEntryUsageLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static int getUniqueAssetEntryUsagesCount(long assetEntryId) {
+		return getService().getUniqueAssetEntryUsagesCount(assetEntryId);
+	}
+
 	public static boolean hasDefaultAssetEntryUsage(long assetEntryId) {
 		return getService().hasDefaultAssetEntryUsage(assetEntryId);
 	}

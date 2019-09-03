@@ -293,6 +293,9 @@ public interface AssetEntryUsageLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUniqueAssetEntryUsagesCount(long assetEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDefaultAssetEntryUsage(long assetEntryId);
 
 	/**

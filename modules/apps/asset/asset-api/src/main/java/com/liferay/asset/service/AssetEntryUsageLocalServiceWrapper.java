@@ -408,6 +408,12 @@ public class AssetEntryUsageLocalServiceWrapper
 	}
 
 	@Override
+	public int getUniqueAssetEntryUsagesCount(long assetEntryId) {
+		return _assetEntryUsageLocalService.getUniqueAssetEntryUsagesCount(
+			assetEntryId);
+	}
+
+	@Override
 	public boolean hasDefaultAssetEntryUsage(long assetEntryId) {
 		return _assetEntryUsageLocalService.hasDefaultAssetEntryUsage(
 			assetEntryId);

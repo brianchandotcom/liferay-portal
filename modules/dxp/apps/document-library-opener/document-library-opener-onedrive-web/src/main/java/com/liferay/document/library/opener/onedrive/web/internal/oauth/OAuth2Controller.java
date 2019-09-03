@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
 
+import java.io.IOException;
+
 import java.util.Objects;
 
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 /**
@@ -41,7 +44,47 @@ public class OAuth2Controller {
 		_portletURLFactory = portletURLFactory;
 	}
 
-	public <T extends PortletRequest> OAuth2Result execute(
+	public <T extends PortletRequest, R extends ActionResponse> void execute(
+			T t, R r,
+			UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
+		throws PortalException {
+
+		OAuth2Result oAuth2Result = _executeWithOAuth2(t, unsafeFunction);
+
+		if (!Objects.isNull(oAuth2Result.getRedirectURL())) {
+			try {
+				r.sendRedirect(oAuth2Result.getRedirectURL());
+			}
+			catch (IOException ioe) {
+				throw new PortalException(ioe);
+			}
+		}
+	}
+
+	protected static class OAuth2Result {
+
+		public OAuth2Result(JSONObject response) {
+			_response = response;
+		}
+
+		public OAuth2Result(String redirectURL) {
+			_redirectURL = redirectURL;
+		}
+
+		public String getRedirectURL() {
+			return _redirectURL;
+		}
+
+		public JSONObject getResponse() {
+			return _response;
+		}
+
+		private String _redirectURL;
+		private JSONObject _response;
+
+	}
+
+	private <T extends PortletRequest> OAuth2Result _executeWithOAuth2(
 			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
 		throws PortalException {
 
@@ -62,33 +105,6 @@ public class OAuth2Controller {
 		return new OAuth2Result(
 			_oAuth2Manager.getAuthorizationURL(
 				companyId, _portal.getPortalURL(t), state));
-	}
-
-	public static class OAuth2Result {
-
-		public OAuth2Result(JSONObject response) {
-			_response = response;
-		}
-
-		public OAuth2Result(String redirectURL) {
-			_redirectURL = redirectURL;
-		}
-
-		public String getRedirectURL() {
-			return _redirectURL;
-		}
-
-		public JSONObject getResponse() {
-			return _response;
-		}
-
-		public boolean isRedirect() {
-			return !Objects.isNull(_redirectURL);
-		}
-
-		private String _redirectURL;
-		private JSONObject _response;
-
 	}
 
 	private String _getFailureURL(PortletRequest portletRequest)

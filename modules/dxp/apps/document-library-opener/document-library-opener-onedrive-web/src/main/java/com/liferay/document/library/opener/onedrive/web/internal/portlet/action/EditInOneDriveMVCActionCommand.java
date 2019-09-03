@@ -77,12 +77,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
-			actionRequest, this::_executeCommand);
-
-		if (oAuth2Result.isRedirect()) {
-			actionResponse.sendRedirect(oAuth2Result.getRedirectURL());
-		}
+		_oAuth2Controller.execute(
+			actionRequest, actionResponse, this::_executeCommand);
 	}
 
 	private DLOpenerOneDriveFileReference _checkOutOneDriveFileEntry(

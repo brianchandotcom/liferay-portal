@@ -39,6 +39,9 @@ describe('DocumentLibraryOpener', () => {
 		.fn()
 		.mockImplementation((_, cb) => cb());
 	global.Liferay.Util.getWindow = () => ({hide: jest.fn()});
+	global.themeDisplay = {
+		getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
+	};
 
 	describe('.edit()', () => {
 		const FETCH_STATUS_URL = '//fecthStatusURL';
@@ -97,7 +100,7 @@ describe('DocumentLibraryOpener', () => {
 			});
 		});
 
-		describe('when recive the pulling URL an pulling to it 3 times', () => {
+		describe('when recive the pulling URL an pulling to it two times', () => {
 			beforeEach(() => {
 				windowOpenSpy.mockClear();
 				global.Liferay.Util.openWindow.mockClear();
@@ -157,6 +160,67 @@ describe('DocumentLibraryOpener', () => {
 			it('windowOpenSpy', () => {
 				expect(windowOpenSpy).toHaveBeenCalledTimes(1);
 				expect(windowOpenSpy.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
+			});
+		});
+
+		describe('when recive the pulling URL an pulling to it two times and FAILS', () => {
+			beforeEach(() => {
+				windowOpenSpy.mockClear();
+				global.Liferay.Util.openWindow.mockClear();
+
+				opener = new DocumentLibraryOpener({namespace: 'namespace'});
+
+				fetch
+					.mockResponses(
+						[
+							JSON.stringify({
+								oneDriveBackgroundTaskStatusURL: STATUS_URL
+							})
+						],
+						[
+							replyAndWait({
+								body: {
+									complete: false
+								},
+								ms: 500
+							})
+						]
+					)
+					.mockResponse(
+						replyAndWait({
+							body: {
+								error: true
+							},
+							ms: 2000
+						})
+					);
+
+				return opener.edit({formSubmitURL: FETCH_STATUS_URL});
+			});
+
+			it('Launches a modal with loading', () => {
+				expect(global.Liferay.Util.openWindow).toHaveBeenCalledTimes(1);
+				expect(
+					global.Liferay.Util.openWindow.mock.calls[0][0].dialog
+						.bodyContent
+				).toContain(
+					'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
+				);
+			});
+
+			it('then fetches the status URL', () => {
+				expect(fetch.mock.calls[0][0]).toBe(FETCH_STATUS_URL);
+			});
+
+			it('then queries the status URL and is not complete', () => {
+				expect(fetch.mock.calls[1][0]).toBe(STATUS_URL);
+			});
+
+			it('then queries the status URL and FAILS', () => {
+				jest.spyOn(opener, 'showError');
+
+				expect(fetch.mock.calls[2][0]).toBe(STATUS_URL);
+				expect(opener.showError).toHaveBeenCalledTimes(1);
 			});
 		});
 	});

@@ -415,7 +415,7 @@ public class ContentUtil {
 			"title", assetEntry.getTitle(themeDisplay.getLocale())
 		).put(
 			"usagesCount",
-			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesCount(
+			AssetEntryUsageLocalServiceUtil.getUniqueAssetEntryUsagesCount(
 				assetEntry.getEntryId())
 		);
 	}

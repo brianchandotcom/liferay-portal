@@ -25,9 +25,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -35,11 +32,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
-import com.liferay.segments.service.SegmentsExperimentRelService;
+import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.Callable;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -71,14 +70,10 @@ public class RunSegmentsExperimentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Callable<JSONObject> callable = new RunSegmentsExperimentCallable(
-			actionRequest);
-
 		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = TransactionInvokerUtil.invoke(
-				_transactionConfig, callable);
+			jsonObject = _runSegmentsExperiment(actionRequest);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);
@@ -106,6 +101,9 @@ public class RunSegmentsExperimentMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long segmentsExperimentId = ParamUtil.getLong(
+			actionRequest, "segmentsExperimentId");
+
 		String segmentsExperimentRels = ParamUtil.getString(
 			actionRequest, "segmentsExperimentRels");
 
@@ -114,19 +112,25 @@ public class RunSegmentsExperimentMVCActionCommand
 
 		Iterator<String> iterator = segmentsExperimentRelsJSONObject.keys();
 
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
+
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
-			_segmentsExperimentRelService.updateSegmentsExperimentRel(
-				GetterUtil.getLong(key),
+			SegmentsExperimentRel segmentsExperimentRel =
+				_segmentsExperimentRelLocalService.getSegmentsExperimentRel(
+					GetterUtil.getLong(key));
+
+			segmentsExperienceIdSplitMap.put(
+				segmentsExperimentRel.getSegmentsExperienceId(),
 				segmentsExperimentRelsJSONObject.getDouble(key));
 		}
 
 		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.updateSegmentsExperiment(
-				ParamUtil.getLong(actionRequest, "segmentsExperimentId"),
+			_segmentsExperimentService.runSegmentsExperiment(
+				segmentsExperimentId,
 				ParamUtil.getDouble(actionRequest, "confidenceLevel"),
-				ParamUtil.getInteger(actionRequest, "status"));
+				segmentsExperienceIdSplitMap);
 
 		return JSONUtil.put(
 			"segmentsExperiment",
@@ -140,33 +144,14 @@ public class RunSegmentsExperimentMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		RunSegmentsExperimentMVCActionCommand.class);
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	@Reference
 	private Portal _portal;
 
 	@Reference
-	private SegmentsExperimentRelService _segmentsExperimentRelService;
+	private SegmentsExperimentRelLocalService
+		_segmentsExperimentRelLocalService;
 
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
-
-	private class RunSegmentsExperimentCallable
-		implements Callable<JSONObject> {
-
-		@Override
-		public JSONObject call() throws Exception {
-			return _runSegmentsExperiment(_actionRequest);
-		}
-
-		private RunSegmentsExperimentCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
-		}
-
-		private final ActionRequest _actionRequest;
-
-	}
 
 }

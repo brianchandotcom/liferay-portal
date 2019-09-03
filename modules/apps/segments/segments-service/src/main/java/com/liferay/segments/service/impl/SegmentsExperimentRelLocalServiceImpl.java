@@ -182,11 +182,19 @@ public class SegmentsExperimentRelLocalServiceImpl
 			segmentsExperimentRelPersistence.findByPrimaryKey(
 				segmentsExperimentRelId);
 
-		_validateSegmentsExperimentRelSplit(split);
+		return _updateSegmentsExperimentRelSplit(segmentsExperimentRel, split);
+	}
 
-		segmentsExperimentRel.setSplit(split);
+	@Override
+	public SegmentsExperimentRel updateSegmentsExperimentRel(
+			long segmentsExperimentId, long segmentsExperienceId, double split)
+		throws PortalException {
 
-		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+		SegmentsExperimentRel segmentsExperimentRel =
+			segmentsExperimentRelPersistence.findByS_S(
+				segmentsExperimentId, segmentsExperienceId);
+
+		return _updateSegmentsExperimentRelSplit(segmentsExperimentRel, split);
 	}
 
 	@Override
@@ -215,6 +223,17 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
 			segmentsExperience);
+
+		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
+	}
+
+	private SegmentsExperimentRel _updateSegmentsExperimentRelSplit(
+			SegmentsExperimentRel segmentsExperimentRel, double split)
+		throws PortalException {
+
+		_validateSegmentsExperimentRelSplit(split);
+
+		segmentsExperimentRel.setSplit(split);
 
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
 	}

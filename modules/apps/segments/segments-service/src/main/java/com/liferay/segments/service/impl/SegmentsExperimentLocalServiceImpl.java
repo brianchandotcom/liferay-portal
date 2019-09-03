@@ -52,6 +52,7 @@ import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -276,8 +277,9 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	@Override
-	public SegmentsExperiment updateSegmentsExperiment(
-			long segmentsExperimentId, double confidenceLevel, int status)
+	public SegmentsExperiment runSegmentsExperiment(
+			long segmentsExperimentId, double confidenceLevel,
+			Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws PortalException {
 
 		_validateConfidenceLevel(confidenceLevel);
@@ -294,7 +296,17 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
 
-		return _updateSegmentsExperimentStatus(segmentsExperiment, -1, status);
+		for (Map.Entry<Long, Double> segmentsExperienceIdSplit :
+				segmentsExperienceIdSplitMap.entrySet()) {
+
+			_segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
+				segmentsExperimentId, segmentsExperienceIdSplit.getKey(),
+				segmentsExperienceIdSplit.getValue());
+		}
+
+		return _updateSegmentsExperimentStatus(
+			segmentsExperiment, -1,
+			SegmentsExperimentConstants.Status.RUNNING.getValue());
 	}
 
 	@Override

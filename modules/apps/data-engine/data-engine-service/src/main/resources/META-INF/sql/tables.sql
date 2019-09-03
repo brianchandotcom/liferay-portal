@@ -19,7 +19,7 @@ create table DEDataListView (
 	modifiedDate DATE null,
 	appliedFilters VARCHAR(75) null,
 	ddmStructureId LONG,
-	fieldNames VARCHAR(75) null,
+	fieldNames TEXT null,
 	name STRING null,
 	sortField VARCHAR(75) null
 );

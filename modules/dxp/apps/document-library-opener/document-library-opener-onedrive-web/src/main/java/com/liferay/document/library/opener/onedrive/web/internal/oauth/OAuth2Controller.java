@@ -42,8 +42,7 @@ public class OAuth2Controller {
 	}
 
 	public <T extends PortletRequest> OAuth2Result execute(
-			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction,
-			String successURL)
+			T t, UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
 		throws PortalException {
 
 		long companyId = _portal.getCompanyId(t);
@@ -57,7 +56,8 @@ public class OAuth2Controller {
 
 		OAuth2StateUtil.save(
 			_portal.getOriginalServletRequest(_portal.getHttpServletRequest(t)),
-			new OAuth2State(userId, successURL, _getFailureURL(t), state));
+			new OAuth2State(
+				userId, _getSuccessURL(t), _getFailureURL(t), state));
 
 		return new OAuth2Result(
 			_oAuth2Manager.getAuthorizationURL(
@@ -100,6 +100,11 @@ public class OAuth2Controller {
 			PortletRequest.RENDER_PHASE);
 
 		return liferayPortletURL.toString();
+	}
+
+	private String _getSuccessURL(PortletRequest portletRequest) {
+		return _portal.getCurrentURL(
+			_portal.getHttpServletRequest(portletRequest));
 	}
 
 	private final OAuth2Manager _oAuth2Manager;

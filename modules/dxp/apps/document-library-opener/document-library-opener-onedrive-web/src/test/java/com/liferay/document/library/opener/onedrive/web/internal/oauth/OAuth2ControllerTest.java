@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.opener.onedrive.web.internal.oauth;
 
+import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveWebKeys;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -103,7 +104,7 @@ public class OAuth2ControllerTest {
 
 		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
-			portletRequest -> JSONUtil.put("key", "value"), "successURL");
+			portletRequest -> JSONUtil.put("key", "value"));
 
 		Assert.assertFalse(oAuth2Result.isRedirect());
 
@@ -131,16 +132,17 @@ public class OAuth2ControllerTest {
 
 		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
 			_getMockPortletRequest(mockHttpServletRequest),
-			portletRequest -> JSONFactoryUtil.createJSONObject(),
-			RandomTestUtil.randomString());
+			portletRequest -> JSONFactoryUtil.createJSONObject());
 
 		Assert.assertTrue(oAuth2Result.isRedirect());
 		Assert.assertEquals("authorizationURL", oAuth2Result.getRedirectURL());
 
 		HttpSession httpSession = mockHttpServletRequest.getSession();
 
-		Assert.assertNotNull(
-			httpSession.getAttribute(DLOpenerOneDriveWebKeys.OAUTH2_STATE));
+		OAuth2State oAuth2State = (OAuth2State)httpSession.getAttribute(
+			DLOpenerOneDriveWebKeys.OAUTH2_STATE);
+
+		Assert.assertEquals("currentURL", oAuth2State.getSuccessURL());
 	}
 
 	private PortletRequest _getMockPortletRequest(
@@ -158,6 +160,12 @@ public class OAuth2ControllerTest {
 			_portal.getOriginalServletRequest(Matchers.any())
 		).thenReturn(
 			httpServletRequest
+		);
+
+		Mockito.when(
+			_portal.getCurrentURL(httpServletRequest)
+		).thenReturn(
+			"currentURL"
 		);
 
 		return portletRequest;

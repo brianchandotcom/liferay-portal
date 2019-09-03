@@ -54,8 +54,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.osgi.service.component.annotations.Activate;
@@ -94,8 +92,7 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
-			actionRequest, this::_executeCommand,
-			_getSuccessURL(actionRequest));
+			actionRequest, this::_executeCommand);
 
 		if (oAuth2Result.isRedirect()) {
 			actionResponse.sendRedirect(oAuth2Result.getRedirectURL());
@@ -184,11 +181,6 @@ public class CreateInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);
 		}
-	}
-
-	private String _getSuccessURL(PortletRequest portletRequest) {
-		return _portal.getCurrentURL(
-			_portal.getHttpServletRequest(portletRequest));
 	}
 
 	private JSONObject _saveDLOpenerOneDriveFileReference(

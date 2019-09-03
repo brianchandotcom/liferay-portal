@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -67,8 +66,7 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 		throws Exception {
 
 		OAuth2Controller.OAuth2Result oAuth2Result = _oAuth2Controller.execute(
-			actionRequest, this::_executeCommand,
-			_getSuccessURL(actionRequest));
+			actionRequest, this::_executeCommand);
 
 		if (oAuth2Result.isRedirect()) {
 			actionResponse.sendRedirect(oAuth2Result.getRedirectURL());
@@ -82,11 +80,6 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 			ParamUtil.getLong(actionRequest, "fileEntryId"));
 
 		return null;
-	}
-
-	private String _getSuccessURL(PortletRequest portletRequest) {
-		return _portal.getCurrentURL(
-			_portal.getHttpServletRequest(portletRequest));
 	}
 
 	@Reference

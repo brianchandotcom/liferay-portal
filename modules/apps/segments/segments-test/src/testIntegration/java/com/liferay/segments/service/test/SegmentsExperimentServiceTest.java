@@ -43,12 +43,9 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
-import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -176,44 +173,11 @@ public class SegmentsExperimentServiceTest {
 	public void testGetSegmentsExperimentsWithoutViewPermission()
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		SegmentsExperience segmentsExperience1 =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), classNameId, layout.getPlid());
-
-		SegmentsExperience segmentsExperience2 =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), classNameId, layout.getPlid());
-
-		SegmentsExperiment segmentsExperiment1 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsExperiment segmentsExperiment2 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				segmentsExperience1.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsExperiment segmentsExperiment3 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				segmentsExperience2.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment3 = _addSegmentsExperiment(layout);
 
 		for (Role role : RoleLocalServiceUtil.getRoles(_group.getCompanyId())) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -227,6 +191,9 @@ public class SegmentsExperimentServiceTest {
 				String.valueOf(segmentsExperiment2.getSegmentsExperimentId()),
 				role.getRoleId(), ActionKeys.VIEW);
 		}
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -250,44 +217,14 @@ public class SegmentsExperimentServiceTest {
 	public void testGetSegmentsExperimentsWithViewPermission()
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			Layout.class.getName());
 		Layout layout = LayoutTestUtil.addLayout(_group);
 
-		SegmentsExperience segmentsExperience1 =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), classNameId, layout.getPlid());
+		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
+		SegmentsExperiment segmentsExperiment3 = _addSegmentsExperiment(layout);
 
-		SegmentsExperience segmentsExperience2 =
-			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), classNameId, layout.getPlid());
-
-		SegmentsExperiment segmentsExperiment1 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsExperiment segmentsExperiment2 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				segmentsExperience1.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		SegmentsExperiment segmentsExperiment3 =
-			_segmentsExperimentService.addSegmentsExperiment(
-				segmentsExperience2.getSegmentsExperienceId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				SegmentsExperimentConstants.Goal.BOUNCE_RATE.getLabel(),
-				StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
@@ -351,20 +288,26 @@ public class SegmentsExperimentServiceTest {
 		return _addSegmentsExperiment(serviceContext);
 	}
 
-	private SegmentsExperiment _addSegmentsExperiment(
-			ServiceContext serviceContext)
+	private SegmentsExperiment _addSegmentsExperiment(Layout layout)
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId());
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		return _addSegmentsExperiment(layout, serviceContext);
+	}
+
+	private SegmentsExperiment _addSegmentsExperiment(
+			Layout layout, ServiceContext serviceContext)
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceService.addSegmentsExperience(
-				segmentsEntry.getSegmentsEntryId(),
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
-				serviceContext);
+			SegmentsTestUtil.addSegmentsExperience(
+				_group.getGroupId(), classNameId, layout.getPlid());
 
 		return _segmentsExperimentService.addSegmentsExperiment(
 			segmentsExperience.getSegmentsExperienceId(),
@@ -375,6 +318,15 @@ public class SegmentsExperimentServiceTest {
 			StringPool.BLANK, serviceContext);
 	}
 
+	private SegmentsExperiment _addSegmentsExperiment(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		return _addSegmentsExperiment(layout, serviceContext);
+	}
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -383,9 +335,6 @@ public class SegmentsExperimentServiceTest {
 
 	@DeleteAfterTestRun
 	private Role _role;
-
-	@Inject
-	private SegmentsExperienceService _segmentsExperienceService;
 
 	@Inject
 	private SegmentsExperimentService _segmentsExperimentService;

@@ -12,10 +12,9 @@
  * details.
  */
 
-import classNames from 'classnames';
 import React, {useRef, useEffect, useState, useCallback} from 'react';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
+import FormField from './FormField.es';
 
 const DisplayPageModalForm = React.forwardRef((props, ref) => {
 	const [subtypes, setSubtypes] = useState([]);
@@ -26,8 +25,6 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 			nameInput.current.focus();
 		}
 	}, []);
-
-	const hasError = props.error !== null;
 
 	const onChange = useCallback(
 		event => {
@@ -48,47 +45,27 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 
 	return (
 		<form onSubmit={props.onSubmit} ref={ref}>
-			<div
-				className={classNames({
-					'form-group': true,
-					'has-error': hasError
-				})}
+			<FormField
+				error={props.error && props.error.name}
+				id={`${props.namespace}name`}
+				name={Liferay.Language.get('name')}
 			>
-				<label htmlFor={`${props.namespace}name`}>
-					{Liferay.Language.get('name')}
-					<span className="reference-mark">
-						<ClayIcon symbol="asterisk" />
-					</span>
-				</label>
-
 				<input
 					className={'form-control'}
 					defaultValue={props.displayPageName}
 					name={`${props.namespace}name`}
 					ref={nameInput}
 				/>
-
-				{hasError && (
-					<div className="form-feedback-item">
-						<span className="form-feedback-indicator mr-1">
-							<ClayIcon symbol="exclamation-full" />
-						</span>
-						{props.error}
-					</div>
-				)}
-			</div>
+			</FormField>
 
 			{Array.isArray(props.mappingTypes) &&
 				props.mappingTypes.length > 0 && (
 					<fieldset>
-						<div className="form-group">
-							<label htmlFor={`${props.namespace}classNameId`}>
-								{Liferay.Language.get('content-type')}
-								<span className="reference-mark">
-									<ClayIcon symbol="asterisk" />
-								</span>
-							</label>
-
+						<FormField
+							error={props.error && props.error.classNameId}
+							id={`${props.namespace}classNameId`}
+							name={Liferay.Language.get('content-type')}
+						>
 							<select
 								className="form-control"
 								name={`${props.namespace}classNameId`}
@@ -108,19 +85,14 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 									></option>
 								))}
 							</select>
-						</div>
+						</FormField>
 
 						{Array.isArray(subtypes) && subtypes.length > 0 && (
-							<div className="form-group">
-								<label
-									htmlFor={`${props.namespace}classTypeId`}
-								>
-									{Liferay.Language.get('subtype')}
-									<span className="reference-mark">
-										<ClayIcon symbol="asterisk" />
-									</span>
-								</label>
-
+							<FormField
+								error={props.error && props.error.classTypeId}
+								id={`${props.namespace}classTypeId`}
+								name={Liferay.Language.get('subtype')}
+							>
 								<select
 									className="form-control"
 									name={`${props.namespace}classTypeId`}
@@ -139,7 +111,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 										></option>
 									))}
 								</select>
-							</div>
+							</FormField>
 						)}
 					</fieldset>
 				)}
@@ -149,7 +121,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 
 DisplayPageModalForm.propTypes = {
 	displayPageName: PropTypes.string,
-	error: PropTypes.string,
+	error: PropTypes.object,
 	mappingType: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string,

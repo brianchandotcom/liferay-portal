@@ -64,7 +64,8 @@ public class FilterParserImplTest {
 		);
 
 		exception.hasMessage(
-			"A property used in the filter criteria is not supported");
+			"A property used in the filter criteria is not supported: %s",
+			filterString);
 	}
 
 	@Test
@@ -357,7 +358,8 @@ public class FilterParserImplTest {
 		);
 
 		exception.hasMessage(
-			"A property used in the filter criteria is not supported");
+			"A property used in the filter criteria is not supported: %s",
+			filterString);
 	}
 
 	@Test

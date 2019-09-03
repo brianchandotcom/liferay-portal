@@ -105,10 +105,7 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 
-		if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-			_dlAppService.cancelCheckOut(fileEntryId);
-		}
-		else if (cmd.equals(Constants.CHECKIN)) {
+		if (cmd.equals(Constants.CHECKIN)) {
 			DLVersionNumberIncrease dlVersionNumberIncrease =
 				DLVersionNumberIncrease.valueOf(
 					actionRequest.getParameter("versionIncrease"),

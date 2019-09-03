@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -189,6 +190,25 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		return liferayPortletURL.toString();
 	}
 
+	private String _getCancelCheckOutURL() throws PortalException {
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+			request, _portal.getPortletId(request),
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/cancel_check_out_in_office365");
+		liferayPortletURL.setParameter(
+			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		liferayPortletURL.setParameter(
+			"folderId", String.valueOf(fileEntry.getFolderId()));
+
+		return liferayPortletURL.toString();
+	}
+
 	private String _getLabelKey() {
 		String office365MimeType =
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
@@ -275,9 +295,10 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 				if (menuItem instanceof URLMenuItem) {
 					URLMenuItem urlMenuItem = (URLMenuItem)menuItem;
 
+					urlMenuItem.setData(
+						Collections.singletonMap("senna-off", "true"));
 					urlMenuItem.setMethod(HttpMethods.POST);
-					urlMenuItem.setURL(
-						_getActionURL(Constants.CANCEL_CHECKOUT));
+					urlMenuItem.setURL(_getCancelCheckOutURL());
 				}
 			}
 		}

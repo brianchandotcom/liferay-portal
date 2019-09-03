@@ -33,71 +33,9 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT
 } from './actions.es';
 import {updateEditableValues} from '../utils/FragmentsEditorFetchUtils.es';
-import debouncedAlert from '../utils/debouncedAlert.es';
 import {prefixSegmentsExperienceId} from '../utils/prefixSegmentsExperienceId.es';
 import {getFragmentEntryLinkContent} from '../reducers/fragments.es';
 import {updatePageContentsAction} from './updatePageContents.es';
-
-/**
- * @type {number}
- */
-const UPDATE_EDITABLE_VALUES_DELAY = 1500;
-
-/**
- * @param {function} dispatch
- * @param {string} fragmentEntryLinkId
- * @param {object} previousEditableValues
- * @param {object} nextEditableValues
- * @review
- */
-const debouncedUpdateEditableValues = debouncedAlert(
-	/**
-	 * @param {function} dispatch
-	 * @param {string} fragmentEntryLinkId
-	 * @param {object} previousEditableValues
-	 * @param {object} nextEditableValues
-	 * @review
-	 */
-	(
-		dispatch,
-		fragmentEntryLinkId,
-		previousEditableValues,
-		nextEditableValues
-	) => {
-		_updateEditableValues(
-			dispatch,
-			fragmentEntryLinkId,
-			previousEditableValues,
-			nextEditableValues
-		);
-	},
-
-	UPDATE_EDITABLE_VALUES_DELAY
-);
-
-function _updateEditableValues(
-	dispatch,
-	fragmentEntryLinkId,
-	previousEditableValues,
-	nextEditableValues
-) {
-	return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
-		.then(() => {
-			dispatch(updateEditableValueSuccessAction());
-			dispatch(disableSavingChangesStatusAction());
-			dispatch(updateLastSaveDateAction());
-		})
-		.catch(() => {
-			dispatch(
-				updateEditableValueErrorAction(
-					fragmentEntryLinkId,
-					previousEditableValues
-				)
-			);
-
-			dispatch(disableSavingChangesStatusAction());
-		});
-}
 
 /**
  * @param {number} fragmentEntryLinkId
@@ -142,19 +80,30 @@ function updateConfigurationValueAction(
 
 		dispatch(enableSavingChangesStatusAction());
 
-		return _updateEditableValues(
-			dispatch,
-			fragmentEntryLinkId,
-			previousEditableValues,
-			nextEditableValues
-		).then(() => {
-			dispatch(
-				updateFragmentEntryLinkContent(
-					fragmentEntryLinkId,
-					segmentsExperienceId
-				)
-			);
-		});
+		return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
+				dispatch(updateEditableValueSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+			})
+			.then(() => {
+				dispatch(
+					updateFragmentEntryLinkContent(
+						fragmentEntryLinkId,
+						segmentsExperienceId
+					)
+				);
+			})
+			.catch(() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+
+				dispatch(disableSavingChangesStatusAction());
+			});
 	};
 }
 
@@ -180,8 +129,7 @@ function updateEditableValueAction(data) {
 			}
 		],
 		data.processor,
-		data.segmentsExperienceId,
-		data.debounced
+		data.segmentsExperienceId
 	);
 }
 
@@ -208,8 +156,7 @@ function updateEditableValuesMappingAction(
 				editableId,
 				editableValues,
 				processor,
-				segmentsExperienceId,
-				false
+				segmentsExperienceId
 			)
 		).dispatch(updatePageContentsAction());
 	};
@@ -219,6 +166,7 @@ function updateEditableValuesMappingAction(
  * @param {string} fragmentEntryLinkId
  * @param {string} editableId
  * @param {Array<{editableValueId: string, content: string}>} editableValues
+ * @param {string} [processor=EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
  * @param {string} [editableValueSegmentsExperienceId='']
  * @return {function}
  * @review
@@ -228,8 +176,7 @@ function updateEditableValuesAction(
 	editableId,
 	editableValues,
 	processor = EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	segmentsExperienceId = '',
-	debounced = true
+	segmentsExperienceId = ''
 ) {
 	return function(dispatch, getState) {
 		const state = getState();
@@ -301,21 +248,22 @@ function updateEditableValuesAction(
 
 		dispatch(enableSavingChangesStatusAction());
 
-		if (debounced) {
-			debouncedUpdateEditableValues(
-				dispatch,
-				fragmentEntryLinkId,
-				previousEditableValues,
-				nextEditableValues
-			);
-		} else {
-			return _updateEditableValues(
-				dispatch,
-				fragmentEntryLinkId,
-				previousEditableValues,
-				nextEditableValues
-			);
-		}
+		return updateEditableValues(fragmentEntryLinkId, nextEditableValues)
+			.then(() => {
+				dispatch(updateEditableValueSuccessAction());
+				dispatch(disableSavingChangesStatusAction());
+				dispatch(updateLastSaveDateAction());
+			})
+			.catch(() => {
+				dispatch(
+					updateEditableValueErrorAction(
+						fragmentEntryLinkId,
+						previousEditableValues
+					)
+				);
+
+				dispatch(disableSavingChangesStatusAction());
+			});
 	};
 }
 

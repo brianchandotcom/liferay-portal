@@ -27,6 +27,7 @@ import {
 	ENABLE_FRAGMENT_EDITOR,
 	UPDATE_CONFIG_ATTRIBUTES
 } from '../../actions/actions.es';
+import debouncedAlert from '../../utils/debouncedAlert.es';
 import {
 	DEFAULT_LANGUAGE_ID_KEY,
 	EDITABLE_FIELD_CONFIG_KEYS,
@@ -57,6 +58,12 @@ import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
 
 /**
+ * @type {number}
+ * @review
+ */
+const EDITABLE_FIELD_CHANGE_DELAY = 500;
+
+/**
  * FragmentEditableField
  */
 class FragmentEditableField extends PortletBase {
@@ -72,6 +79,13 @@ class FragmentEditableField extends PortletBase {
 		this._handleFloatingToolbarButtonClicked = this._handleFloatingToolbarButtonClicked.bind(
 			this
 		);
+
+		if (['link', 'rich-text', 'text'].includes(this.type)) {
+			this._handleEditableChanged = debouncedAlert(
+				this._handleEditableChanged.bind(this),
+				EDITABLE_FIELD_CHANGE_DELAY
+			);
+		}
 	}
 
 	/**

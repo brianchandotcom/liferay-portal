@@ -16,8 +16,10 @@ package com.liferay.flags.taglib.servlet.taglib.react;
 
 import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.flags.taglib.servlet.taglib.util.FlagsTagUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -25,8 +27,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -130,42 +137,62 @@ public class FlagsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			Company company = themeDisplay.getCompany();
-
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:companyName", company.getName());
-
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:dataJSONObject",
-				_getDataJSONObject(themeDisplay));
+				"liferay-flags:flags:data", _getData());
 			httpServletRequest.setAttribute(
 				"liferay-flags:flags:elementClasses", _getElementClasses());
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:enabled", _enabled);
+				"liferay-flags:flags:message", _getMessage());
 			httpServletRequest.setAttribute(
-				"liferay-flags:flags:flagsEnabled",
-				FlagsTagUtil.isFlagsEnabled(themeDisplay));
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:message", _message);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:onlyIcon", !_label);
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:portletNamespace",
-				PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:reasons",
-				FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), request));
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:signedIn", themeDisplay.isSignedIn());
-			httpServletRequest.setAttribute(
-				"liferay-flags:flags:uri", FlagsTagUtil.getURI(request));
+				"liferay-flags:flags:onlyIcon", _isOnlyLabel());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+	}
+
+	private Map<String, Object> _getData() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Map<String, Object> context = new HashMap<>();
+
+		context.put(
+			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
+
+		Map<String, Object> props = new HashMap<>();
+
+		props.put("baseData", _getDataJSONObject(themeDisplay));
+
+		Company company = themeDisplay.getCompany();
+
+		props.put("companyName", company.getName());
+
+		props.put("disabled", !_enabled);
+		props.put("forceLogin", !FlagsTagUtil.isFlagsEnabled(themeDisplay));
+
+		String message = _getMessage();
+
+		if (Validator.isNotNull(message)) {
+			props.put("message", message);
+		}
+
+		props.put("onlyIcon", _isOnlyLabel());
+		props.put(
+			"pathTermsOfUse",
+			PortalUtil.getPathMain() + "/portal/terms_of_use");
+		props.put(
+			"reasons",
+			FlagsTagUtil.getReasons(themeDisplay.getCompanyId(), request));
+		props.put("signedIn", themeDisplay.isSignedIn());
+		props.put("uri", FlagsTagUtil.getURI(request));
+
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("context", context);
+		data.put("props", props);
+
+		return data;
 	}
 
 	private JSONObject _getDataJSONObject(ThemeDisplay themeDisplay) {
@@ -195,6 +222,23 @@ public class FlagsTag extends IncludeTag {
 
 	private String _getElementClasses() {
 		return _elementClasses;
+	}
+
+	private String _getMessage() {
+		if (Validator.isNotNull(_message)) {
+			return _message;
+		}
+
+		ResourceBundle resourceBundle =
+			(ResourceBundle)pageContext.getAttribute("resourceBundle");
+
+		_message = LanguageUtil.get(resourceBundle, "report");
+
+		return _message;
+	}
+
+	private boolean _isOnlyLabel() {
+		return !_label;
 	}
 
 	private static final String _PAGE = "/flags/page.jsp";

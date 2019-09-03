@@ -60,12 +60,12 @@ public class ResourceConnection implements Comparable {
 		return _key;
 	}
 
-	public String getMonitorName() {
-		return _resourceMonitor.getName();
-	}
-
 	public String getName() {
 		return _name;
+	}
+
+	public ResourceMonitor getResourceMonitor() {
+		return _resourceMonitor;
 	}
 
 	public State getState() {

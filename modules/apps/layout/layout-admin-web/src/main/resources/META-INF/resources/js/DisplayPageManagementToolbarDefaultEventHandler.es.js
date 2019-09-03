@@ -12,19 +12,18 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {DefaultEventHandler} from 'frontend-js-web';
+import {openDisplayPageModal} from './modal/openDisplayPageModal.es';
 import {Config} from 'metal-state';
 
 class DisplayPageManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	addDisplayPage(itemData) {
-		openSimpleInputModal({
-			dialogTitle: Liferay.Language.get('add-display-page-template'),
+		openDisplayPageModal({
 			formSubmitURL: itemData.addDisplayPageURL,
-			mainFieldLabel: Liferay.Language.get('name'),
-			mainFieldName: 'name',
-			mainFieldPlaceholder: Liferay.Language.get('name'),
+			mappingTypes: itemData.mappingTypes,
 			namespace: this.namespace,
-			spritemap: this.spritemap
+			spritemap: this.spritemap,
+			title: Liferay.Language.get('add-display-page-template')
 		});
 	}
 

@@ -35,8 +35,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.exception.LockedSegmentsExperimentException;
+import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
+import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.exception.WinnerSegmentsExperienceException;
 import com.liferay.segments.model.SegmentsEntry;
@@ -49,7 +51,9 @@ import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
@@ -439,6 +443,154 @@ public class SegmentsExperimentLocalServiceTest {
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),
 				new int[] {SegmentsExperimentConstants.STATUS_DRAFT}));
+	}
+
+	@Test
+	public void testRunSegmentsExperiment() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience variantSegmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperiment.getGroupId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK());
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		double confidenceLevel = 0.95;
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
+
+		segmentsExperienceIdSplitMap.put(
+			segmentsExperiment.getSegmentsExperienceId(), 0.70);
+		segmentsExperienceIdSplitMap.put(
+			variantSegmentsExperience.getSegmentsExperienceId(), 0.30);
+
+		segmentsExperiment =
+			_segmentsExperimentLocalService.runSegmentsExperiment(
+				segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+				segmentsExperienceIdSplitMap);
+
+		Assert.assertEquals(
+			SegmentsExperimentConstants.STATUS_RUNNING,
+			segmentsExperiment.getStatus());
+
+		Assert.assertEquals(
+			confidenceLevel, segmentsExperiment.getConfidenceLevel(), 0.001);
+
+		SegmentsExperimentRel segmentsExperimentRel =
+			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				segmentsExperiment.getSegmentsExperienceId());
+		SegmentsExperimentRel variantSegmentsExperimentRel =
+			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
+				segmentsExperiment.getSegmentsExperimentId(),
+				variantSegmentsExperience.getSegmentsExperienceId());
+
+		Assert.assertEquals(
+			segmentsExperienceIdSplitMap.get(
+				segmentsExperimentRel.getSegmentsExperienceId()),
+			segmentsExperimentRel.getSplit(), 0.001);
+		Assert.assertEquals(
+			segmentsExperienceIdSplitMap.get(
+				variantSegmentsExperimentRel.getSegmentsExperienceId()),
+			variantSegmentsExperimentRel.getSplit(), 0.001);
+	}
+
+	@Test(expected = SegmentsExperimentConfidenceLevelException.class)
+	public void testRunSegmentsExperimentWithInvalidConfidenceLevel()
+		throws Exception {
+
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience variantSegmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperiment.getGroupId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK());
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		double confidenceLevel = 1.2;
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
+
+		segmentsExperienceIdSplitMap.put(
+			segmentsExperiment.getSegmentsExperienceId(), 0.70);
+		segmentsExperienceIdSplitMap.put(
+			variantSegmentsExperience.getSegmentsExperienceId(), 0.30);
+
+		_segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
+	}
+
+	@Test(expected = SegmentsExperimentRelSplitException.class)
+	public void testRunSegmentsExperimentWithInvalidSplit() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience variantSegmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperiment.getGroupId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK());
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		double confidenceLevel = 0.95;
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
+
+		segmentsExperienceIdSplitMap.put(
+			segmentsExperiment.getSegmentsExperienceId(), 0.70);
+		segmentsExperienceIdSplitMap.put(
+			variantSegmentsExperience.getSegmentsExperienceId(), 0.40);
+
+		_segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
+	}
+
+	@Test(expected = LockedSegmentsExperimentException.class)
+	public void testRunSegmentsExperimentWithRunningStatus() throws Exception {
+		SegmentsExperiment segmentsExperiment = _addSegmentsExperiment();
+
+		SegmentsExperience variantSegmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				segmentsExperiment.getGroupId(),
+				segmentsExperiment.getClassNameId(),
+				segmentsExperiment.getClassPK());
+
+		_segmentsExperimentRelLocalService.addSegmentsExperimentRel(
+			segmentsExperiment.getSegmentsExperimentId(),
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
+			segmentsExperiment.getSegmentsExperimentId(),
+			SegmentsExperimentConstants.STATUS_RUNNING);
+
+		double confidenceLevel = 0.95;
+
+		Map<Long, Double> segmentsExperienceIdSplitMap = new HashMap<>();
+
+		segmentsExperienceIdSplitMap.put(
+			segmentsExperiment.getSegmentsExperienceId(), 0.70);
+		segmentsExperienceIdSplitMap.put(
+			variantSegmentsExperience.getSegmentsExperienceId(), 0.30);
+
+		_segmentsExperimentLocalService.runSegmentsExperiment(
+			segmentsExperiment.getSegmentsExperimentId(), confidenceLevel,
+			segmentsExperienceIdSplitMap);
 	}
 
 	@Test(expected = LockedSegmentsExperimentException.class)

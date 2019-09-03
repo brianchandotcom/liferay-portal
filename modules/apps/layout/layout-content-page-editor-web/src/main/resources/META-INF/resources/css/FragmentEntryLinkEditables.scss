@@ -13,11 +13,13 @@
 	}
 
 	&--hovered:before {
+		background-color: $fragmentEntryLinkEditableFieldSelectedColor;
 		box-shadow: inset 0 0 0 1px $fragmentEditableFieldHoverBorderColor;
 	}
 
 	&--active:before,
 	&--selected:before {
+		background-color: $fragmentEntryLinkEditableFieldSelectedColor;
 		box-shadow: inset 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
 		outline: none;
 	}

@@ -14,11 +14,14 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.NoSuchClassTypeException;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandler;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -36,9 +39,12 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -114,6 +120,8 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 	private JSONObject _addDisplayPage(
 		ActionRequest actionRequest, ServiceContext serviceContext) {
 
+		JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+
 		long layoutPageTemplateCollectionId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateCollectionId");
 
@@ -121,6 +129,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			serviceContext.getLocale(), AddDisplayPageMVCActionCommand.class);
 
 		try {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -134,15 +145,32 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 				"redirectURL",
 				getRedirectURL(actionRequest, layoutPageTemplateEntry));
 		}
+		catch (NoSuchClassNameException nscne) {
+			errorJSONObject = JSONUtil.put(
+				"classNameId",
+				ResourceBundleUtil.getString(
+					resourceBundle, "invalid-content-type"));
+		}
+		catch (NoSuchClassTypeException nscte) {
+			errorJSONObject = JSONUtil.put(
+				"classTypeId",
+				ResourceBundleUtil.getString(
+					resourceBundle, "invalid-subtype"));
+		}
 		catch (PortalException pe) {
 			SessionErrors.add(
 				actionRequest, "layoutPageTemplateEntryNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
 
-			return _layoutPageTemplateEntryExceptionRequestHandler.
-				createErrorJSONObject(actionRequest, pe);
+			JSONObject jsonObject =
+				_layoutPageTemplateEntryExceptionRequestHandler.
+					createErrorJSONObject(actionRequest, pe);
+
+			errorJSONObject = JSONUtil.put("name", jsonObject.get("error"));
 		}
+
+		return JSONUtil.put("error", errorJSONObject);
 	}
 
 	@Reference

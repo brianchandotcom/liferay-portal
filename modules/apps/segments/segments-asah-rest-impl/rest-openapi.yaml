@@ -4,26 +4,40 @@ components:
             properties:
                 dateCreated:
                     format: date-time
+                    readOnly: true
                     type: string
                 dateModified:
                     format: date-time
+                    readOnly: true
                     type: string
                 description:
+                    readOnly: true
                     type: string
                 id:
                     readOnly: true
                     type: string
                 name:
+                    readOnly: true
                     type: string
                 siteId:
                     format: int64
+                    readOnly: true
                     type: integer
                 status:
                     type: string
+                winnerVariantId:
+                    format: int64
+                    type: integer
+            type: object
         Status:
             properties:
                 status:
                     type: string
+                winnerVariantId:
+                    format: int64
+                    type: integer
+            required:
+                - status
             type: object
 info:
     description: ""

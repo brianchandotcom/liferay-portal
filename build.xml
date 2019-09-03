@@ -1115,10 +1115,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 						casesensitive="yes"
 						dir="${liferay.home}"
 					>
+						<exclude name="**/tools/**/*.jar" />
 						<include name="**/com.liferay*.jar" />
 						<include name="**/portal*.jar" />
 						<include name="**/util-*.jar" />
-						<exclude name="**/tools/**/*.jar" />
 					</fileset>
 					<sequential>
 						<install-snapshot-bundle-artifact snapshot.bundle.jar.file="@{snapshot.bundle.jar.file}" />

@@ -37,37 +37,6 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	}
 
 	@Override
-	public Integer getMaxResourceConnections() {
-		if (_maxResourceConnections != null) {
-			return _maxResourceConnections;
-		}
-
-		try {
-			Properties buildProperties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
-			String key = JenkinsResultsParserUtil.combine(
-				"resource.monitor.max.resource.connections[", getType(),
-				"]");
-
-			if (!buildProperties.containsKey(key)) {
-				_maxResourceConnections =
-					_MAX_RESOURCE_CONNECTIONS_DEFAULT;
-
-				return _maxResourceConnections;
-			}
-
-			_maxResourceConnections = Integer.valueOf(
-				buildProperties.getProperty(key));
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-
-		return _maxResourceConnections;
-	}
-
-	@Override
 	public String getEtcdServerURL() {
 		return _etcdServerURL;
 	}
@@ -87,6 +56,35 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		sb.append(name);
 
 		return sb.toString();
+	}
+
+	@Override
+	public Integer getMaxResourceConnections() {
+		if (_maxResourceConnections != null) {
+			return _maxResourceConnections;
+		}
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String key = JenkinsResultsParserUtil.combine(
+				"resource.monitor.max.resource.connections[", getType(), "]");
+
+			if (!buildProperties.containsKey(key)) {
+				_maxResourceConnections = _MAX_RESOURCE_CONNECTIONS_DEFAULT;
+
+				return _maxResourceConnections;
+			}
+
+			_maxResourceConnections = Integer.valueOf(
+				buildProperties.getProperty(key));
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		return _maxResourceConnections;
 	}
 
 	@Override
@@ -294,17 +292,16 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		return _maxInUseAge;
 	}
 
-	private static final long _MAX_IN_QUEUE_AGE_DEFAULT =
-		2 * 60 * 60 * 1000;
+	private static final long _MAX_IN_QUEUE_AGE_DEFAULT = 2 * 60 * 60 * 1000;
 
 	private static final long _MAX_IN_USE_AGE_DEFAULT = 60 * 60 * 1000;
 
 	private static final Integer _MAX_RESOURCE_CONNECTIONS_DEFAULT = 1;
 
+	private final String _etcdServerURL;
 	private Long _maxInQueueAge;
 	private Long _maxInUseAge;
 	private Integer _maxResourceConnections;
-	private final String _etcdServerURL;
 	private final String _name;
 
 }

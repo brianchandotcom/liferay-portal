@@ -21,11 +21,11 @@ import java.util.List;
  */
 public interface ResourceMonitor {
 
-	public Integer getMaxResourceConnections();
-
 	public String getEtcdServerURL();
 
 	public String getKey();
+
+	public Integer getMaxResourceConnections();
 
 	public String getName();
 

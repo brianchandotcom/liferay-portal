@@ -66,6 +66,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(ExperimentResourceImpl.class);
 
+			add(RunExperimentResourceImpl.class);
+
 			add(StatusResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

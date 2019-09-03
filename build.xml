@@ -1117,6 +1117,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 					>
 						<include name="**/com.liferay*.jar" />
 						<include name="**/portal*.jar" />
+						<include name="**/util-*.jar" />
 						<exclude name="**/tools/**/*.jar" />
 					</fileset>
 					<sequential>

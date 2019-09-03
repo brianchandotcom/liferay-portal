@@ -131,14 +131,16 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 			ResourceConnection resourceConnection = resourceConnectionQueue.get(
 				i);
 
-			table[i][0] = String.valueOf(i);
-			table[i][1] = String.valueOf(resourceConnection.getState());
-			table[i][2] = String.valueOf(resourceConnection.getCreatedIndex());
-			table[i][3] = resourceConnection.getKey();
-			table[i][4] = JenkinsResultsParserUtil.toDurationString(
-				resourceConnection.getInQueueAge());
-			table[i][5] = JenkinsResultsParserUtil.toDurationString(
-				resourceConnection.getInUseAge());
+			table[i] = new String[] {
+				String.valueOf(i),
+				String.valueOf(resourceConnection.getState()),
+				String.valueOf(resourceConnection.getCreatedIndex()),
+				resourceConnection.getKey(),
+				JenkinsResultsParserUtil.toDurationString(
+					resourceConnection.getInQueueAge()),
+				JenkinsResultsParserUtil.toDurationString(
+					resourceConnection.getInUseAge())
+			};
 		}
 
 		JenkinsResultsParserUtil.printTable(table);

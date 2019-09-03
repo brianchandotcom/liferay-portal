@@ -14,44 +14,61 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import React from "react";
 import PropTypes from "prop-types";
 
 const Header = ({handleAdd, handleClose, headerTitle}) => (
-	<div className="navigation-bar navigation-bar-light">
-		<ClayButton
-			borderless
-			displayType="secondary"
-			monospaced
-			onClick={handleClose}
-		>
-			<ClayIcon symbol="angle-left"  />
-		</ClayButton>
+	<div className="navbar navigation-bar navigation-bar-light">
+		<div className="container-fluid header">
+			<ClayNavigationBar>
+				<ClayNavigationBar.Item>
+					<ClayButton
+						borderless
+						displayType="secondary"
+						monospaced
+						onClick={handleClose}
+					>
+						<ClayIcon symbol="angle-left"  />
+					</ClayButton>
+				</ClayNavigationBar.Item>
 
-		<strong>{headerTitle}</strong>
+				<ClayNavigationBar.Item>
+					<strong>{headerTitle} </strong>
+				</ClayNavigationBar.Item>
+			</ClayNavigationBar>
 
-		<ClayButton
-			borderless
-			displayType="secondary"
-			monospaced
-		>
-			<ClayIcon symbol="pencil"  />
-		</ClayButton>
 
-		<ClayButton
-			borderless
-			displayType="secondary"
-			monospaced
-		>
-			<ClayIcon symbol="info-panel-open"  />
-		</ClayButton>
+			<ClayNavigationBar>
+				<ClayNavigationBar.Item>
+					<ClayButton
+						borderless
+						displayType="secondary"
+						monospaced
+					>
+						<ClayIcon symbol="pencil"  />
+					</ClayButton>
+				</ClayNavigationBar.Item>
 
-		<ClayButton
-			displayType="primary"
-			onClick={handleAdd}
-		>
-			{Liferay.Language.get('add')}
-		</ClayButton>
+				<ClayNavigationBar.Item>
+					<ClayButton
+						borderless
+						displayType="secondary"
+						monospaced
+					>
+						<ClayIcon symbol="info-panel-open"  />
+					</ClayButton>
+				</ClayNavigationBar.Item>
+
+				<ClayButton
+					displayType="primary"
+					onClick={handleAdd}
+				>
+					{Liferay.Language.get('done')}
+				</ClayButton>
+
+			</ClayNavigationBar>
+		</div>
 	</div>
 );
 

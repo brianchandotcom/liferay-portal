@@ -76,7 +76,7 @@ definition {
 		Bookmark.addCP(
 			bookmarkDescription = "This is another test bookmark!",
 			bookmarkName = "Test Bookmark 2",
-			bookmarkURL = "http://digg.com");
+			bookmarkURL = "http://www.wiki.com");
 
 		Navigator.openURL();
 
@@ -98,7 +98,7 @@ definition {
 
 		Bookmark.viewBookmark(
 			bookmarkName = "Test Bookmark 2",
-			bookmarkURL = "http://digg.com");
+			bookmarkURL = "http://www.wiki.com");
 	}
 
 	@priority = "4"
@@ -286,7 +286,7 @@ definition {
 		Bookmark.addCP(
 			bookmarkDescription = "This is another test bookmark!",
 			bookmarkName = "Test Bookmark 2",
-			bookmarkURL = "http://digg.com");
+			bookmarkURL = "http://www.wiki.com");
 
 		Navigator.openURL();
 
@@ -297,7 +297,7 @@ definition {
 
 		Bookmark.moveToRecycleBinCP(
 			bookmarkName = "Test Bookmark 2",
-			bookmarkURL = "http://digg.com");
+			bookmarkURL = "http://www.wiki.com");
 	}
 
 	@priority = "5"

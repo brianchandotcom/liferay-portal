@@ -197,7 +197,7 @@ public class FlagsTag extends IncludeTag {
 		return _elementClasses;
 	}
 
-	private static final String _PAGE = "/flags/react/page.jsp";
+	private static final String _PAGE = "/flags/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);
 

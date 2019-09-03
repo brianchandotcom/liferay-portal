@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/flags/react/init.jsp" %>
+<%@ include file="/flags/init.jsp" %>
 
 <%
 String companyName = (String)request.getAttribute("liferay-flags:flags:companyName");
@@ -86,6 +86,6 @@ if (Validator.isNull(message)) {
 
 	<react:component
 		data="<%= data %>"
-		module="flags/react/js/index.es"
+		module="flags/js/index.es"
 	/>
 </div>

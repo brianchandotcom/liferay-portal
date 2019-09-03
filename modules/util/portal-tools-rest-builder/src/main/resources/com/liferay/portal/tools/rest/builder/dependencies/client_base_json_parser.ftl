@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -121,7 +121,7 @@ public abstract class BaseJSONParser<T> {
 
 		_assertStartsWithAndEndsWith("{", "}");
 
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new TreeMap<>();
 
 		_setCaptureStart();
 

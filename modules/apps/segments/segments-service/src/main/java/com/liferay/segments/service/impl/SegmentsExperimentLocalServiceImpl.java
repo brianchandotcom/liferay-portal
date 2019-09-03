@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -41,6 +42,7 @@ import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.exception.SegmentsExperimentConfidenceLevelException;
 import com.liferay.segments.exception.SegmentsExperimentGoalException;
 import com.liferay.segments.exception.SegmentsExperimentNameException;
+import com.liferay.segments.exception.SegmentsExperimentRelSplitException;
 import com.liferay.segments.exception.SegmentsExperimentStatusException;
 import com.liferay.segments.exception.WinnerSegmentsExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
@@ -50,9 +52,13 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.service.base.SegmentsExperimentLocalServiceBaseImpl;
 
+import java.math.RoundingMode;
+
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -283,6 +289,7 @@ public class SegmentsExperimentLocalServiceImpl
 		throws PortalException {
 
 		_validateConfidenceLevel(confidenceLevel);
+		_validateSplit(segmentsExperienceIdSplitMap);
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentPersistence.findByPrimaryKey(
@@ -301,7 +308,9 @@ public class SegmentsExperimentLocalServiceImpl
 
 			_segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
 				segmentsExperimentId, segmentsExperienceIdSplit.getKey(),
-				segmentsExperienceIdSplit.getValue());
+				BigDecimalUtil.scale(
+					segmentsExperienceIdSplit.getValue(), 2,
+					RoundingMode.HALF_DOWN));
 		}
 
 		return _updateSegmentsExperimentStatus(
@@ -538,6 +547,27 @@ public class SegmentsExperimentLocalServiceImpl
 	private void _validateName(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SegmentsExperimentNameException();
+		}
+	}
+
+	private void _validateSplit(Map<Long, Double> segmentsExperienceIdSplitMap)
+		throws PortalException {
+
+		Collection<Double> segmentsExperienceIdSplitsValues =
+			segmentsExperienceIdSplitMap.values();
+
+		Stream<Double> segmentsExperienceIdSplitsStream =
+			segmentsExperienceIdSplitsValues.stream();
+
+		double segmentsExperienceIdSplitsSum =
+			segmentsExperienceIdSplitsStream.mapToDouble(
+				segmentsExperienceIdSplit -> BigDecimalUtil.scale(
+					segmentsExperienceIdSplit, 2, RoundingMode.HALF_DOWN)
+			).sum();
+
+		if (segmentsExperienceIdSplitsSum != 1) {
+			throw new SegmentsExperimentRelSplitException(
+				"Segments experiment rel splits must add up to " + 1);
 		}
 	}
 

@@ -17,8 +17,6 @@ package com.liferay.blogs.web.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.blogs.web.test.util.MockLiferayPortletConfig;
-import com.liferay.blogs.web.test.util.MockLiferayPortletRequest;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -27,16 +25,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -57,39 +53,24 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Writer;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import javax.portlet.ActionURL;
-import javax.portlet.CacheControl;
-import javax.portlet.MimeResponse;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.MutableResourceParameters;
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletSecurityException;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.RenderURL;
-import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -101,9 +82,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
 
 /**
  * @author Cristina González
@@ -256,8 +234,7 @@ public class BlogEntriesDisplayContextTest {
 		MockRenderRequest mockRenderRequest = new MockRenderRequest(
 			httpServletRequest);
 
-		mvcRenderCommand.render(
-			mockRenderRequest, new MockLiferayPortletResponse());
+		mvcRenderCommand.render(mockRenderRequest, new MockRenderResponse());
 
 		Object blogEntriesDisplayContext = mockRenderRequest.getAttribute(
 			"BLOG_ENTRIES_DISPLAY_CONTEXT");
@@ -295,533 +272,6 @@ public class BlogEntriesDisplayContextTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	private static class MockLiferayPortletResponse
-		implements LiferayPortletResponse, RenderResponse {
-
-		@Override
-		public void addDateHeader(String name, long date) {
-		}
-
-		@Override
-		public void addHeader(String name, String value) {
-		}
-
-		@Override
-		public void addIntHeader(String name, int value) {
-		}
-
-		@Override
-		public void addProperty(Cookie cookie) {
-		}
-
-		@Override
-		public void addProperty(String key, Element element) {
-		}
-
-		@Override
-		public void addProperty(String key, String value) {
-		}
-
-		@Override
-		public <T extends PortletURL & ActionURL> T createActionURL() {
-			return null;
-		}
-
-		@Override
-		public ActionURL createActionURL(MimeResponse.Copy copy) {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createActionURL(String portletName) {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createActionURL(
-			String portletName, MimeResponse.Copy copy) {
-
-			return null;
-		}
-
-		@Override
-		public Element createElement(String tagName) throws DOMException {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			long plid, String portletName, String lifecycle) {
-
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			long plid, String portletName, String lifecycle,
-			boolean includeLinkToLayoutUuid) {
-
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			long plid, String portletName, String lifecycle,
-			MimeResponse.Copy copy) {
-
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			long plid, String portletName, String lifecycle,
-			MimeResponse.Copy copy, boolean includeLinkToLayoutUuid) {
-
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(String lifecycle) {
-			return new LiferayPortletURL() {
-
-				@Override
-				public void addParameterIncludedInPath(String name) {
-				}
-
-				@Override
-				public void addProperty(String key, String value) {
-				}
-
-				@Override
-				public Appendable append(Appendable out) throws IOException {
-					return null;
-				}
-
-				@Override
-				public Appendable append(Appendable out, boolean escapeXML)
-					throws IOException {
-
-					return null;
-				}
-
-				@Override
-				public String getCacheability() {
-					return null;
-				}
-
-				@Override
-				public String getLifecycle() {
-					return null;
-				}
-
-				@Override
-				public String getParameter(String name) {
-					return null;
-				}
-
-				@Override
-				public Map<String, String[]> getParameterMap() {
-					return null;
-				}
-
-				@Override
-				public Set<String> getParametersIncludedInPath() {
-					return null;
-				}
-
-				@Override
-				public long getPlid() {
-					return 0;
-				}
-
-				@Override
-				public String getPortletId() {
-					return null;
-				}
-
-				@Override
-				public PortletMode getPortletMode() {
-					return null;
-				}
-
-				@Override
-				public Set<String> getRemovedParameterNames() {
-					return null;
-				}
-
-				@Override
-				public MutableRenderParameters getRenderParameters() {
-					return null;
-				}
-
-				@Override
-				public String getResourceID() {
-					return null;
-				}
-
-				@Override
-				public MutableResourceParameters getResourceParameters() {
-					return null;
-				}
-
-				@Override
-				public WindowState getWindowState() {
-					return null;
-				}
-
-				@Override
-				public boolean isAnchor() {
-					return false;
-				}
-
-				@Override
-				public boolean isCopyCurrentRenderParameters() {
-					return false;
-				}
-
-				@Override
-				public boolean isEncrypt() {
-					return false;
-				}
-
-				@Override
-				public boolean isEscapeXml() {
-					return false;
-				}
-
-				@Override
-				public boolean isParameterIncludedInPath(String name) {
-					return false;
-				}
-
-				@Override
-				public boolean isSecure() {
-					return false;
-				}
-
-				@Override
-				public void removePublicRenderParameter(String name) {
-				}
-
-				@Override
-				public void setAnchor(boolean anchor) {
-				}
-
-				@Override
-				public void setBeanParameter(PortletSerializable bean) {
-				}
-
-				@Override
-				public void setCacheability(String cacheLevel) {
-				}
-
-				@Override
-				public void setCopyCurrentRenderParameters(
-					boolean copyCurrentRenderParameters) {
-				}
-
-				@Override
-				public void setDoAsGroupId(long doAsGroupId) {
-				}
-
-				@Override
-				public void setDoAsUserId(long doAsUserId) {
-				}
-
-				@Override
-				public void setDoAsUserLanguageId(String doAsUserLanguageId) {
-				}
-
-				@Override
-				public void setEncrypt(boolean encrypt) {
-				}
-
-				@Override
-				public void setEscapeXml(boolean escapeXml) {
-				}
-
-				@Override
-				public void setLifecycle(String lifecycle) {
-				}
-
-				@Override
-				public void setParameter(String name, String value) {
-				}
-
-				@Override
-				public void setParameter(String name, String... values) {
-				}
-
-				@Override
-				public void setParameter(
-					String name, String value, boolean append) {
-				}
-
-				@Override
-				public void setParameter(
-					String name, String[] values, boolean append) {
-				}
-
-				@Override
-				public void setParameters(Map<String, String[]> parameters) {
-				}
-
-				@Override
-				public void setPlid(long plid) {
-				}
-
-				@Override
-				public void setPortletId(String portletId) {
-				}
-
-				@Override
-				public void setPortletMode(PortletMode portletMode)
-					throws PortletModeException {
-				}
-
-				@Override
-				public void setProperty(String key, String value) {
-				}
-
-				@Override
-				public void setRefererGroupId(long refererGroupId) {
-				}
-
-				@Override
-				public void setRefererPlid(long refererPlid) {
-				}
-
-				@Override
-				public void setRemovedParameterNames(
-					Set<String> removedParamNames) {
-				}
-
-				@Override
-				public void setResourceID(String resourceID) {
-				}
-
-				@Override
-				public void setSecure(boolean secure)
-					throws PortletSecurityException {
-				}
-
-				@Override
-				public void setWindowState(WindowState windowState)
-					throws WindowStateException {
-				}
-
-				@Override
-				public void setWindowStateRestoreCurrentView(
-					boolean windowStateRestoreCurrentView) {
-				}
-
-				@Override
-				public void visitReservedParameters(
-					BiConsumer<String, String> biConsumer) {
-				}
-
-				@Override
-				public void write(Writer out) throws IOException {
-				}
-
-				@Override
-				public void write(Writer out, boolean escapeXML)
-					throws IOException {
-				}
-
-			};
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			String portletName, String lifecycle) {
-
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createLiferayPortletURL(
-			String portletName, String lifecycle, MimeResponse.Copy copy) {
-
-			return null;
-		}
-
-		@Override
-		public MockLiferayPortletURL createRenderURL() {
-			return new MockLiferayPortletURL();
-		}
-
-		@Override
-		public RenderURL createRenderURL(MimeResponse.Copy copy) {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createRenderURL(String portletName) {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createRenderURL(
-			String portletName, MimeResponse.Copy copy) {
-
-			return null;
-		}
-
-		@Override
-		public ResourceURL createResourceURL() {
-			return null;
-		}
-
-		@Override
-		public LiferayPortletURL createResourceURL(String portletName) {
-			return null;
-		}
-
-		@Override
-		public String encodeURL(String path) {
-			return null;
-		}
-
-		@Override
-		public void flushBuffer() throws IOException {
-		}
-
-		@Override
-		public int getBufferSize() {
-			return 0;
-		}
-
-		@Override
-		public CacheControl getCacheControl() {
-			return null;
-		}
-
-		@Override
-		public String getCharacterEncoding() {
-			return null;
-		}
-
-		@Override
-		public String getContentType() {
-			return null;
-		}
-
-		@Override
-		public HttpServletResponse getHttpServletResponse() {
-			return null;
-		}
-
-		@Override
-		public String getLifecycle() {
-			return null;
-		}
-
-		@Override
-		public Locale getLocale() {
-			return null;
-		}
-
-		@Override
-		public String getNamespace() {
-			return null;
-		}
-
-		@Override
-		public Portlet getPortlet() {
-			return null;
-		}
-
-		@Override
-		public OutputStream getPortletOutputStream() throws IOException {
-			return null;
-		}
-
-		@Override
-		public Map<String, String[]> getProperties() {
-			return null;
-		}
-
-		@Override
-		public String getProperty(String key) {
-			return null;
-		}
-
-		@Override
-		public Collection<String> getPropertyNames() {
-			return null;
-		}
-
-		@Override
-		public Collection<String> getPropertyValues(String name) {
-			return null;
-		}
-
-		@Override
-		public PrintWriter getWriter() throws IOException {
-			return null;
-		}
-
-		@Override
-		public boolean isCommitted() {
-			return false;
-		}
-
-		@Override
-		public void reset() {
-		}
-
-		@Override
-		public void resetBuffer() {
-		}
-
-		@Override
-		public void setBufferSize(int size) {
-		}
-
-		@Override
-		public void setContentType(String type) {
-		}
-
-		@Override
-		public void setDateHeader(String name, long date) {
-		}
-
-		@Override
-		public void setHeader(String name, String value) {
-		}
-
-		@Override
-		public void setIntHeader(String name, int value) {
-		}
-
-		@Override
-		public void setNextPossiblePortletModes(
-			Collection<? extends PortletMode> portletModes) {
-		}
-
-		@Override
-		public void setProperty(String key, String value) {
-		}
-
-		@Override
-		public void setTitle(String title) {
-		}
-
-		@Override
-		public void setURLEncoder(URLEncoder urlEncoder) {
-		}
-
-		@Override
-		public void transferHeaders(HttpServletResponse httpServletResponse) {
-		}
-
-		@Override
-		public void transferMarkupHeadElements() {
-		}
-
-	}
 
 	private static class MockLiferayPortletURL implements LiferayPortletURL {
 
@@ -1068,39 +518,32 @@ public class BlogEntriesDisplayContextTest {
 	}
 
 	private static class MockRenderRequest
-		extends MockLiferayPortletRequest implements RenderRequest {
+		extends MockLiferayPortletRenderRequest {
 
 		public MockRenderRequest(HttpServletRequest httpServletRequest) {
-			this.httpServletRequest = httpServletRequest;
-		}
-
-		@Override
-		public void addParameter(String name, String value) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public Object getAttribute(String name) {
-			if (Objects.equals(name, JavaConstants.JAVAX_PORTLET_CONFIG)) {
-				return new MockLiferayPortletConfig();
-			}
-
-			return super.getAttribute(name);
-		}
-
-		@Override
-		public String getETag() {
-			return null;
+			_httpServletRequest = httpServletRequest;
 		}
 
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
-			return httpServletRequest;
+			return _httpServletRequest;
+		}
+
+		private final HttpServletRequest _httpServletRequest;
+
+	}
+
+	private static class MockRenderResponse
+		extends MockLiferayPortletRenderResponse {
+
+		@Override
+		public LiferayPortletURL createLiferayPortletURL(String lifecycle) {
+			return new MockLiferayPortletURL();
 		}
 
 		@Override
-		public HttpServletRequest getOriginalHttpServletRequest() {
-			return httpServletRequest;
+		public MockLiferayPortletURL createRenderURL() {
+			return new MockLiferayPortletURL();
 		}
 
 	}

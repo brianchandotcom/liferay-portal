@@ -78,6 +78,8 @@ public class OpenAPIResourceImpl {
 
 			add(SegmentUserResourceImpl.class);
 
+			add(SiteResourceImpl.class);
+
 			add(UserAccountResourceImpl.class);
 
 			add(WebUrlResourceImpl.class);

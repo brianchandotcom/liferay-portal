@@ -21,6 +21,7 @@ import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
+import com.liferay.headless.admin.user.dto.v1_0.Site;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.resource.v1_0.EmailAddressResource;
@@ -30,6 +31,7 @@ import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentResource;
 import com.liferay.headless.admin.user.resource.v1_0.SegmentUserResource;
+import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -117,6 +119,14 @@ public class Query {
 
 		_segmentUserResourceComponentServiceObjects =
 			segmentUserResourceComponentServiceObjects;
+	}
+
+	public static void setSiteResourceComponentServiceObjects(
+		ComponentServiceObjects<SiteResource>
+			siteResourceComponentServiceObjects) {
+
+		_siteResourceComponentServiceObjects =
+			siteResourceComponentServiceObjects;
 	}
 
 	public static void setUserAccountResourceComponentServiceObjects(
@@ -451,6 +461,38 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccounts(page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SitePage myUserAccounts(
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_siteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			siteResource -> new SitePage(
+				siteResource.getMyUserAccountSitesPage(
+					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {site(siteId: ___){availableLanguages, creator, description, id, membershipType, name, sites}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Site site(@GraphQLName("siteId") Long siteId) throws Exception {
+		return _applyComponentServiceObjects(
+			_siteResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			siteResource -> siteResource.getSite(siteId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {myUserAccount{additionalName, alternateName, birthDate, contactInformation, customFields, dashboardURL, dateCreated, dateModified, emailAddress, familyName, givenName, honorificPrefix, honorificSuffix, id, image, jobTitle, keywords, name, organizationBriefs, profileURL, roleBriefs, siteBriefs}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -605,6 +647,99 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountPhonesPageTypeExtension {
+
+		public GetUserAccountPhonesPageTypeExtension(UserAccount userAccount) {
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public PhonePage phones() throws Exception {
+			return _applyComponentServiceObjects(
+				_phoneResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				phoneResource -> new PhonePage(
+					phoneResource.getUserAccountPhonesPage(
+						_userAccount.getId())));
+		}
+
+		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(Site.class)
+	public class GetSiteSegmentsPageTypeExtension {
+
+		public GetSiteSegmentsPageTypeExtension(Site site) {
+			_site = site;
+		}
+
+		@GraphQLField
+		public SegmentPage segments(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_segmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				segmentResource -> new SegmentPage(
+					segmentResource.getSiteSegmentsPage(
+						_site.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private Site _site;
+
+	}
+
+	@GraphQLTypeExtension(Site.class)
+	public class GetSiteUserAccountSegmentsPageTypeExtension {
+
+		public GetSiteUserAccountSegmentsPageTypeExtension(Site site) {
+			_site = site;
+		}
+
+		@GraphQLField
+		public SegmentPage userAccountSegments(
+				@GraphQLName("userAccountId") Long userAccountId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_segmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				segmentResource -> new SegmentPage(
+					segmentResource.getSiteUserAccountSegmentsPage(
+						_site.getId(), userAccountId)));
+		}
+
+		private Site _site;
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
+	public class GetUserAccountPostalAddressesPageTypeExtension {
+
+		public GetUserAccountPostalAddressesPageTypeExtension(
+			UserAccount userAccount) {
+
+			_userAccount = userAccount;
+		}
+
+		@GraphQLField
+		public PostalAddressPage postalAddresses() throws Exception {
+			return _applyComponentServiceObjects(
+				_postalAddressResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				postalAddressResource -> new PostalAddressPage(
+					postalAddressResource.getUserAccountPostalAddressesPage(
+						_userAccount.getId())));
+		}
+
+		private UserAccount _userAccount;
+
+	}
+
+	@GraphQLTypeExtension(UserAccount.class)
 	public class GetUserAccountEmailAddressesPageTypeExtension {
 
 		public GetUserAccountEmailAddressesPageTypeExtension(
@@ -647,27 +782,6 @@ public class Query {
 		}
 
 		private Organization _organization;
-
-	}
-
-	@GraphQLTypeExtension(UserAccount.class)
-	public class GetUserAccountPhonesPageTypeExtension {
-
-		public GetUserAccountPhonesPageTypeExtension(UserAccount userAccount) {
-			_userAccount = userAccount;
-		}
-
-		@GraphQLField
-		public PhonePage phones() throws Exception {
-			return _applyComponentServiceObjects(
-				_phoneResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				phoneResource -> new PhonePage(
-					phoneResource.getUserAccountPhonesPage(
-						_userAccount.getId())));
-		}
-
-		private UserAccount _userAccount;
 
 	}
 
@@ -764,6 +878,25 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(Segment.class)
+	public class GetSiteTypeExtension {
+
+		public GetSiteTypeExtension(Segment segment) {
+			_segment = segment;
+		}
+
+		@GraphQLField
+		public Site site() throws Exception {
+			return _applyComponentServiceObjects(
+				_siteResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				siteResource -> siteResource.getSite(_segment.getSiteId()));
+		}
+
+		private Segment _segment;
+
+	}
+
 	@GraphQLTypeExtension(UserAccount.class)
 	public class GetUserAccountWebUrlsPageTypeExtension {
 
@@ -828,29 +961,6 @@ public class Query {
 		}
 
 		private Organization _organization;
-
-	}
-
-	@GraphQLTypeExtension(UserAccount.class)
-	public class GetUserAccountPostalAddressesPageTypeExtension {
-
-		public GetUserAccountPostalAddressesPageTypeExtension(
-			UserAccount userAccount) {
-
-			_userAccount = userAccount;
-		}
-
-		@GraphQLField
-		public PostalAddressPage postalAddresses() throws Exception {
-			return _applyComponentServiceObjects(
-				_postalAddressResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				postalAddressResource -> new PostalAddressPage(
-					postalAddressResource.getUserAccountPostalAddressesPage(
-						_userAccount.getId())));
-		}
-
-		private UserAccount _userAccount;
 
 	}
 
@@ -1022,6 +1132,30 @@ public class Query {
 
 	}
 
+	@GraphQLName("SitePage")
+	public class SitePage {
+
+		public SitePage(Page sitePage) {
+			items = sitePage.getItems();
+			page = sitePage.getPage();
+			pageSize = sitePage.getPageSize();
+			totalCount = sitePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected java.util.Collection<Site> items;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("UserAccountPage")
 	public class UserAccountPage {
 
@@ -1173,6 +1307,17 @@ public class Query {
 		segmentUserResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(SiteResource siteResource)
+		throws Exception {
+
+		siteResource.setContextAcceptLanguage(_acceptLanguage);
+		siteResource.setContextCompany(_company);
+		siteResource.setContextHttpServletRequest(_httpServletRequest);
+		siteResource.setContextHttpServletResponse(_httpServletResponse);
+		siteResource.setContextUriInfo(_uriInfo);
+		siteResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(
 			UserAccountResource userAccountResource)
 		throws Exception {
@@ -1210,6 +1355,8 @@ public class Query {
 		_segmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SegmentUserResource>
 		_segmentUserResourceComponentServiceObjects;
+	private static ComponentServiceObjects<SiteResource>
+		_siteResourceComponentServiceObjects;
 	private static ComponentServiceObjects<UserAccountResource>
 		_userAccountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<WebUrlResource>

@@ -411,6 +411,30 @@ components:
                     readOnly: true
                     type: string
             type: object
+        Site:
+            #@review
+            description: Represents the site where the content is created. Properties follow the [WebSite](https://schema.org/WebSite) specification.
+            properties:
+                availableLanguages:
+                    items:
+                        type: string
+                    type: array
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                description:
+                    type: string
+                id:
+                    format: int64
+                    type: integer
+                membershipType:
+                    type: string
+                name:
+                    type: string
+                sites:
+                    items:
+                        $ref: "#/components/schemas/Site"
+                    type: array
+            type: object
         SiteBrief:
             description: Represents a site's basic information.
             properties:
@@ -641,6 +665,32 @@ paths:
                                 $ref: "#/components/schemas/UserAccount"
                     description: ""
             tags: ["UserAccount"]
+    "/my-user-account/sites":
+        get:
+            operationId: getMyUserAccountSitesPage
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Site"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Site"
+                                type: array
+                    description: ""
     "/organizations":
         get:
             description: Retrieves the organizations. Results can be paginated, filtered, searched, and sorted.
@@ -1027,6 +1077,26 @@ paths:
                                 type: array
                     description: ""
             tags: ["SegmentUser"]
+    "/sites/{siteId}":
+        get:
+            operationId: getSite
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description: ""
     "/sites/{siteId}/segments":
         get:
             description: Gets a site's segments.

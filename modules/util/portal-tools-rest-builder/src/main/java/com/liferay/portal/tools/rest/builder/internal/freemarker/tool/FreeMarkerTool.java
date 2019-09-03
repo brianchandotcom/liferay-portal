@@ -197,7 +197,9 @@ public class FreeMarkerTool {
 				0, methodName.lastIndexOf("Page"));
 		}
 
-		methodName = methodName.replaceFirst("Site", "");
+		if (!methodName.equals("Site")) {
+			methodName = methodName.replaceFirst("Site", "");
+		}
 
 		return StringUtil.lowerCaseFirstLetter(methodName);
 	}

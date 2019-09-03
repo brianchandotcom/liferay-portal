@@ -70,8 +70,6 @@ definition {
 			exportTemplateName = "Export Template Name",
 			larFileName = "Export.Template");
 
-		Pause(locator1 = "3000");
-
 		var larFileName = LAR.getLarFileName();
 
 		LAR.downloadLar();
@@ -132,8 +130,6 @@ definition {
 			value1 = "Successful");
 
 		LAR.downloadLar();
-
-		Pause(locator1 = "5000");
 
 		LAR.importSiteCP(
 			larFileName = "${larFileName}",

@@ -1638,8 +1638,6 @@ definition {
 
 		Staging.publishToLive();
 
-		Pause(locator1 = "5000");
-
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
@@ -1737,8 +1735,6 @@ definition {
 			entryContent = "Bodzavirágból, bodzavirágból hullik a, hullik a sárga virágpor.",
 			entrySubtitle = "Nemes Nagy Ágnes",
 			entryTitle = "Tavaszi felhők");
-
-		Pause(locator1 = "1000");
 
 		PortletEntry.publish();
 
@@ -3861,8 +3857,8 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
-		var currentURL = Navigator.getCurrentURL();
-		var keywordsParameterName = StringUtil.extractLast("${currentURL}", "?");
+		var portalURL = PropsUtil.get("portal.url");
+		var keywordsParameterName = StringUtil.extractLast("${portalURL}", "?");
 		var keywordsParameter = StringUtil.extractFirst("${keywordsParameterName}", "=");
 
 		echo("## Keywords Parameter: ${keywordsParameter}");

@@ -682,7 +682,7 @@ definition {
 
 		Click(locator1 = "WCD#WEB_CONTENT_LINK");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "1000");
 
 		AssertLocation(value1 = "${portalURL}/web/site-name/page2-name");
 	}
@@ -752,8 +752,6 @@ definition {
 			portlet = "Export");
 
 		LAR.exportSiteCP(larFileName = "Export");
-
-		Pause(locator1 = "3000");
 
 		var larFileName = LAR.getLarFileName();
 

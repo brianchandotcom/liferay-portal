@@ -20,10 +20,8 @@ package com.liferay.jenkins.results.parser;
 public class DefaultReadWriteResourceMonitor
 	extends BaseReadWriteResourceMonitor {
 
-	public DefaultReadWriteResourceMonitor(
-		String etcdServerURL, String monitorName) {
-
-		super(etcdServerURL, monitorName);
+	public DefaultReadWriteResourceMonitor(String etcdServerURL, String name) {
+		super(etcdServerURL, name);
 	}
 
 }

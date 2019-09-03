@@ -27,9 +27,9 @@ import java.util.TreeSet;
  */
 public abstract class BaseResourceMonitor implements ResourceMonitor {
 
-	public BaseResourceMonitor(String etcdServerURL, String monitorName) {
+	public BaseResourceMonitor(String etcdServerURL, String name) {
 		_etcdServerURL = etcdServerURL;
-		_monitorName = monitorName;
+		_name = name;
 
 		if (!EtcdUtil.has(_etcdServerURL, getKey())) {
 			EtcdUtil.put(_etcdServerURL, getKey());
@@ -78,20 +78,20 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 		sb.append("/monitor");
 
-		String monitorName = getName();
+		String name = getName();
 
-		if (!monitorName.startsWith("/")) {
+		if (!name.startsWith("/")) {
 			sb.append("/");
 		}
 
-		sb.append(monitorName);
+		sb.append(name);
 
 		return sb.toString();
 	}
 
 	@Override
 	public String getName() {
-		return _monitorName;
+		return _name;
 	}
 
 	@Override
@@ -182,10 +182,12 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 					resourceConnectionQueue.get(i);
 
 				if (competingResourceMonitorName != null) {
-					String monitorName =
-						queuedResourceConnection.getMonitorName();
+					ResourceMonitor queuedResourceMonitor =
+						queuedResourceConnection.getResourceMonitor();
 
-					if (monitorName.equals(competingResourceMonitorName)) {
+					if (competingResourceMonitorName.equals(
+							queuedResourceMonitor.getName())) {
+
 						break;
 					}
 				}
@@ -301,6 +303,6 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	private Long _allowedInUseAge;
 	private Integer _allowedResourceConnections;
 	private final String _etcdServerURL;
-	private final String _monitorName;
+	private final String _name;
 
 }

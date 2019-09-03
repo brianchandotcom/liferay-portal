@@ -31,6 +31,8 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		int result = super.doStartTag();
+
 		Set<Locale> availableLocales = DataLayoutTaglibUtil.getAvailableLocales(
 			getDataLayoutId(), request);
 
@@ -55,7 +57,7 @@ public class DataLayoutBuilderTag extends BaseDataLayoutBuilderTag {
 			request, "fieldTypesModules",
 			DataLayoutTaglibUtil.resolveFieldTypesModules());
 
-		return super.doStartTag();
+		return result;
 	}
 
 }

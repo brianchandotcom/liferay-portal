@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.handler;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -41,10 +42,8 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LayoutPageTemplateEntryExceptionRequestHandler {
 
-	public void handlePortalException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			PortalException pe)
-		throws Exception {
+	public JSONObject createErrorJSONObject(
+		ActionRequest actionRequest, PortalException pe) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -95,8 +94,18 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 				nameMaxLength);
 		}
 
+		return JSONUtil.put("error", errorMessage);
+	}
+
+	public void handlePortalException(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			PortalException pe)
+		throws Exception {
+
+		JSONObject errorJSONObject = createErrorJSONObject(actionRequest, pe);
+
 		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, JSONUtil.put("error", errorMessage));
+			actionRequest, actionResponse, errorJSONObject);
 	}
 
 }

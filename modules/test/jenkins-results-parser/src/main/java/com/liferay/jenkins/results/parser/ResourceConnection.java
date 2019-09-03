@@ -65,7 +65,7 @@ public class ResourceConnection implements Comparable {
 	}
 
 	public String getName() {
-		return _key.replace(_resourceMonitor.getKey() + "/", "");
+		return _name;
 	}
 
 	public State getState() {
@@ -106,7 +106,9 @@ public class ResourceConnection implements Comparable {
 		_resourceMonitor = resourceMonitor;
 		_node = node;
 
-		_key = node.getKey();
+		_key = _node.getKey();
+
+		_name = _key.replace(_resourceMonitor.getKey() + "/", "");
 
 		_setInQueueStartTime();
 
@@ -121,6 +123,7 @@ public class ResourceConnection implements Comparable {
 		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
 
 		_key = _resourceMonitor.getKey() + "/" + connectionName;
+		_name = connectionName;
 
 		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
 
@@ -162,6 +165,7 @@ public class ResourceConnection implements Comparable {
 	private Long _inUseStartTime;
 	private Long _inQueueStartTime;
 	private final String _key;
+	private final String _name;
 	private EtcdUtil.Node _node;
 	private final ResourceMonitor _resourceMonitor;
 

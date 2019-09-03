@@ -24,6 +24,8 @@ allprojects {
 
 						if (artifactDir.exists()) {
 							dependencySubstitution.useTarget("com.liferay.snapshot.bundle:" + dependencyName + ":1.0.0-SNAPSHOT")
+
+							logger.lifecycle "Using snapshot bundle artifact {}", artifactDir
 						}
 					}
 				}
@@ -34,6 +36,8 @@ allprojects {
 						String dependencyName = dependencySubstitution.requested.module.substring(12).replaceAll("\\.", "-")
 
 						dependencySubstitution.useTarget("com.liferay.snapshot.bundle:" + dependencyName + ":1.0.0-SNAPSHOT")
+
+						logger.lifecycle "Using snapshot bundle artifact {}", new File(snapshotBundleDir, dependencyName)
 					}
 				}
 			}

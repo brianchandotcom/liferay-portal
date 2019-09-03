@@ -523,12 +523,12 @@ public class SegmentsExperimentLocalServiceWrapper
 	@Override
 	public com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperimentStatus(
-				long segmentsExperimentId, int status,
-				long winnerSegmentsExperienceId)
+				long segmentsExperimentId, long winnerSegmentsExperienceId,
+				int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperimentStatus(
-			segmentsExperimentId, status, winnerSegmentsExperienceId);
+			segmentsExperimentId, winnerSegmentsExperienceId, status);
 	}
 
 	@Override

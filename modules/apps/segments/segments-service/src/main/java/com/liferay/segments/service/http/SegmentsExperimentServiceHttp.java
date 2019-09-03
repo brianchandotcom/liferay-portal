@@ -497,7 +497,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperimentStatus(
 				HttpPrincipal httpPrincipal, long segmentsExperimentId,
-				int status, long winnerSegmentsExperienceId)
+				long winnerSegmentsExperienceId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -507,8 +507,8 @@ public class SegmentsExperimentServiceHttp {
 				_updateSegmentsExperimentStatusParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentId, status,
-				winnerSegmentsExperienceId);
+				methodKey, segmentsExperimentId, winnerSegmentsExperienceId,
+				status);
 
 			Object returnObj = null;
 
@@ -580,7 +580,7 @@ public class SegmentsExperimentServiceHttp {
 	public static com.liferay.segments.model.SegmentsExperiment
 			updateSegmentsExperimentStatus(
 				HttpPrincipal httpPrincipal, String segmentsExperimentKey,
-				int status, String winnerSegmentsExperienceKey)
+				String winnerSegmentsExperienceKey, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -590,8 +590,8 @@ public class SegmentsExperimentServiceHttp {
 				_updateSegmentsExperimentStatusParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsExperimentKey, status,
-				winnerSegmentsExperienceKey);
+				methodKey, segmentsExperimentKey, winnerSegmentsExperienceKey,
+				status);
 
 			Object returnObj = null;
 
@@ -657,7 +657,7 @@ public class SegmentsExperimentServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateSegmentsExperimentStatusParameterTypes11 = new Class[] {
-			long.class, int.class, long.class
+			long.class, long.class, int.class
 		};
 	private static final Class<?>[]
 		_updateSegmentsExperimentStatusParameterTypes12 = new Class[] {
@@ -665,7 +665,7 @@ public class SegmentsExperimentServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateSegmentsExperimentStatusParameterTypes13 = new Class[] {
-			String.class, int.class, String.class
+			String.class, String.class, int.class
 		};
 
 }

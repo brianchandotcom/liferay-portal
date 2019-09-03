@@ -112,8 +112,8 @@ public interface SegmentsExperimentService extends BaseService {
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			long segmentsExperimentId, int status,
-			long winnerSegmentsExperienceId)
+			long segmentsExperimentId, long winnerSegmentsExperienceId,
+			int status)
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperimentStatus(
@@ -121,8 +121,8 @@ public interface SegmentsExperimentService extends BaseService {
 		throws PortalException;
 
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			String segmentsExperimentKey, int status,
-			String winnerSegmentsExperienceKey)
+			String segmentsExperimentKey, String winnerSegmentsExperienceKey,
+			int status)
 		throws PortalException;
 
 }

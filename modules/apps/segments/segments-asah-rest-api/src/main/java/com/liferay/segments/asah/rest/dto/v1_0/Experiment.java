@@ -73,7 +73,7 @@ public class Experiment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateCreated;
 
 	@Schema
@@ -101,7 +101,7 @@ public class Experiment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
 	@Schema
@@ -129,7 +129,7 @@ public class Experiment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String description;
 
 	@Schema
@@ -181,7 +181,7 @@ public class Experiment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@Schema
@@ -209,7 +209,7 @@ public class Experiment {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long siteId;
 
 	@Schema
@@ -239,6 +239,34 @@ public class Experiment {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String status;
+
+	@Schema
+	public Long getWinnerVariantId() {
+		return winnerVariantId;
+	}
+
+	public void setWinnerVariantId(Long winnerVariantId) {
+		this.winnerVariantId = winnerVariantId;
+	}
+
+	@JsonIgnore
+	public void setWinnerVariantId(
+		UnsafeSupplier<Long, Exception> winnerVariantIdUnsafeSupplier) {
+
+		try {
+			winnerVariantId = winnerVariantIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long winnerVariantId;
 
 	@Override
 	public boolean equals(Object object) {
@@ -362,6 +390,16 @@ public class Experiment {
 			sb.append(_escape(status));
 
 			sb.append("\"");
+		}
+
+		if (winnerVariantId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"winnerVariantId\": ");
+
+			sb.append(winnerVariantId);
 		}
 
 		sb.append("}");

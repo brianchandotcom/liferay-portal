@@ -67,6 +67,16 @@ public class StatusSerDes {
 			sb.append("\"");
 		}
 
+		if (status.getWinnerVariantId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"winnerVariantId\": ");
+
+			sb.append(status.getWinnerVariantId());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -92,7 +102,51 @@ public class StatusSerDes {
 			map.put("status", String.valueOf(status.getStatus()));
 		}
 
+		if (status.getWinnerVariantId() == null) {
+			map.put("winnerVariantId", null);
+		}
+		else {
+			map.put(
+				"winnerVariantId", String.valueOf(status.getWinnerVariantId()));
+		}
+
 		return map;
+	}
+
+	public static class StatusJSONParser extends BaseJSONParser<Status> {
+
+		@Override
+		protected Status createDTO() {
+			return new Status();
+		}
+
+		@Override
+		protected Status[] createDTOArray(int size) {
+			return new Status[size];
+		}
+
+		@Override
+		protected void setField(
+			Status status, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					status.setStatus((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "winnerVariantId")) {
+				if (jsonParserFieldValue != null) {
+					status.setWinnerVariantId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
 	}
 
 	private static String _escape(Object object) {
@@ -121,15 +175,10 @@ public class StatusSerDes {
 
 			Object value = entry.getValue();
 
-			Class valueClass = value.getClass();
+			Class<?> valueClass = value.getClass();
 
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
 			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
@@ -150,7 +199,7 @@ public class StatusSerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 
@@ -162,36 +211,6 @@ public class StatusSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class StatusJSONParser extends BaseJSONParser<Status> {
-
-		@Override
-		protected Status createDTO() {
-			return new Status();
-		}
-
-		@Override
-		protected Status[] createDTOArray(int size) {
-			return new Status[size];
-		}
-
-		@Override
-		protected void setField(
-			Status status, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "status")) {
-				if (jsonParserFieldValue != null) {
-					status.setStatus((String)jsonParserFieldValue);
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

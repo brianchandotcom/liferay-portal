@@ -56,7 +56,7 @@ public abstract class BaseStatusResourceImpl implements StatusResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}/status' -d $'{"status": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/segments-asah/v1.0/experiments/{experimentId}/status' -d $'{"status": ___, "winnerVariantId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})

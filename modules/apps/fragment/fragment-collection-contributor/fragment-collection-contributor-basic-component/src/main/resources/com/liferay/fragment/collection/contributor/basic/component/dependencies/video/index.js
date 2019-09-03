@@ -29,6 +29,8 @@ const showVideo = () => {
 	videoContainer.removeAttribute('aria-hidden');
 	errorMessage.parentElement.removeChild(errorMessage);
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
+
+	window.addEventListener('resize', resize);
 	resize();
 };
 
@@ -150,7 +152,6 @@ const main = () => {
 	};
 
 	window.removeEventListener('resize', resize);
-	window.addEventListener('resize', resize);
 
 	try {
 		let matched = false;

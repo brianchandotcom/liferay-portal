@@ -19,7 +19,8 @@ import {
 } from './saveChanges.es';
 import {
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
+	FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
 } from '../utils/constants';
 import {
 	deleteIn,
@@ -253,6 +254,15 @@ function updateEditableValuesAction(
 				dispatch(updateEditableValueSuccessAction());
 				dispatch(disableSavingChangesStatusAction());
 				dispatch(updateLastSaveDateAction());
+			})
+			.then(() => {
+				if (
+					keysTreeArray.includes(
+						BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+					)
+				) {
+					dispatch(updatePageContentsAction());
+				}
 			})
 			.catch(() => {
 				dispatch(

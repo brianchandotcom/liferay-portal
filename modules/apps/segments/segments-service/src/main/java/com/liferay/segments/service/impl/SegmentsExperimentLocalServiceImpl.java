@@ -438,20 +438,6 @@ public class SegmentsExperimentLocalServiceImpl
 			long winnerSegmentsExperienceId, int status)
 		throws PortalException {
 
-		UnicodeProperties typeSettings = new UnicodeProperties(true);
-
-		typeSettings.setProperty(
-			"winnerSegmentsExperienceId",
-			String.valueOf(winnerSegmentsExperienceId));
-
-		segmentsExperiment.setTypeSettings(typeSettings.toString());
-
-		if (winnerSegmentsExperienceId ==
-				segmentsExperiment.getSegmentsExperienceId()) {
-
-			return segmentsExperiment;
-		}
-
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
@@ -463,10 +449,21 @@ public class SegmentsExperimentLocalServiceImpl
 					" no found");
 		}
 
+		UnicodeProperties typeSettings = new UnicodeProperties(true);
+
+		typeSettings.setProperty(
+			"winnerSegmentsExperienceId",
+			String.valueOf(winnerSegmentsExperienceId));
+
+		segmentsExperiment.setTypeSettings(typeSettings.toString());
+
 		SegmentsExperimentConstants.Status statusObject =
 			SegmentsExperimentConstants.Status.valueOf(status);
 
-		if (statusObject == SegmentsExperimentConstants.Status.COMPLETED) {
+		if ((winnerSegmentsExperienceId !=
+				segmentsExperiment.getSegmentsExperienceId()) &&
+			(statusObject == SegmentsExperimentConstants.Status.COMPLETED)) {
+
 			List<SegmentsExperience> segmentsExperiences =
 				_segmentsExperienceLocalService.getSegmentsExperiences(
 					segmentsExperiment.getGroupId(),

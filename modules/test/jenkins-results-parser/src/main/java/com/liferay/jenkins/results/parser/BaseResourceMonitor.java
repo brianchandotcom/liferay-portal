@@ -218,7 +218,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 							"Retiring ", key, " due to duration 'In Queue'"));
 
 					firstResourceConnection.setState(
-							ResourceConnection.State.RETIRE);
+						ResourceConnection.State.RETIRE);
 				}
 			}
 			else if (inUseAge > _getAllowedInUseAge()) {

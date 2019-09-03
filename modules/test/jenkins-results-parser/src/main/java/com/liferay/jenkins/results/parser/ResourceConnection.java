@@ -32,6 +32,10 @@ public class ResourceConnection implements Comparable {
 		return createdIndex.compareTo(resourceConnection.getCreatedIndex());
 	}
 
+	public Long getCreatedIndex() {
+		return _node.getCreatedIndex();
+	}
+
 	public Long getInQueueAge() {
 		if (_inQueueStartTime == null) {
 			return 0L;
@@ -50,10 +54,6 @@ public class ResourceConnection implements Comparable {
 		}
 
 		return System.currentTimeMillis() - _inUseStartTime;
-	}
-
-	public Long getCreatedIndex() {
-		return _node.getCreatedIndex();
 	}
 
 	public String getKey() {
@@ -162,8 +162,8 @@ public class ResourceConnection implements Comparable {
 		_inUseStartTime = System.currentTimeMillis();
 	}
 
-	private Long _inUseStartTime;
 	private Long _inQueueStartTime;
+	private Long _inUseStartTime;
 	private final String _key;
 	private final String _name;
 	private EtcdUtil.Node _node;

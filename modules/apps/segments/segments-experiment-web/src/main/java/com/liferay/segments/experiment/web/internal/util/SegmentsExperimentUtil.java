@@ -132,25 +132,24 @@ public class SegmentsExperimentUtil {
 		);
 	}
 
-	public static JSONObject toStatusJSONObject(
-		Locale locale, int statusValue) {
+	public static JSONObject toStatusJSONObject(Locale locale, int status) {
+		Optional<SegmentsExperimentConstants.Status> statusObjectOptional =
+			SegmentsExperimentConstants.Status.parse(status);
 
-		Optional<SegmentsExperimentConstants.Status> statusOptional =
-			SegmentsExperimentConstants.Status.parse(statusValue);
-
-		if (!statusOptional.isPresent()) {
+		if (!statusObjectOptional.isPresent()) {
 			return null;
 		}
 
-		SegmentsExperimentConstants.Status status = statusOptional.get();
+		SegmentsExperimentConstants.Status statusObject =
+			statusObjectOptional.get();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, SegmentsExperimentUtil.class);
 
 		return JSONUtil.put(
-			"label", LanguageUtil.get(resourceBundle, status.getLabel())
+			"label", LanguageUtil.get(resourceBundle, statusObject.getLabel())
 		).put(
-			"value", status.getValue()
+			"value", statusObject.getValue()
 		);
 	}
 

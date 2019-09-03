@@ -37,9 +37,9 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	}
 
 	@Override
-	public Integer getAllowedResourceConnections() {
-		if (_allowedResourceConnections != null) {
-			return _allowedResourceConnections;
+	public Integer getMaxResourceConnections() {
+		if (_maxResourceConnections != null) {
+			return _maxResourceConnections;
 		}
 
 		try {
@@ -47,24 +47,24 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 				JenkinsResultsParserUtil.getBuildProperties();
 
 			String key = JenkinsResultsParserUtil.combine(
-				"resource.monitor.allowed.resource.connections[", getType(),
+				"resource.monitor.max.resource.connections[", getType(),
 				"]");
 
 			if (!buildProperties.containsKey(key)) {
-				_allowedResourceConnections =
-					_ALLOWED_RESOURCE_CONNECTIONS_DEFAULT;
+				_maxResourceConnections =
+					_MAX_RESOURCE_CONNECTIONS_DEFAULT;
 
-				return _allowedResourceConnections;
+				return _maxResourceConnections;
 			}
 
-			_allowedResourceConnections = Integer.valueOf(
+			_maxResourceConnections = Integer.valueOf(
 				buildProperties.getProperty(key));
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 
-		return _allowedResourceConnections;
+		return _maxResourceConnections;
 	}
 
 	@Override
@@ -168,14 +168,14 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 			ResourceConnectionFactory.newResourceConnection(
 				connectionName, resourceMonitor);
 
-		Integer allowedResourceConnections =
-			resourceMonitor.getAllowedResourceConnections();
+		Integer maxResourceConnections =
+			resourceMonitor.getMaxResourceConnections();
 
 		while (true) {
 			List<ResourceConnection> resourceConnectionQueue =
 				getResourceConnectionQueue();
 
-			for (int i = 0; i < allowedResourceConnections; i++) {
+			for (int i = 0; i < maxResourceConnections; i++) {
 				if (i >= resourceConnectionQueue.size()) {
 					break;
 				}
@@ -216,7 +216,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 			String key = firstResourceConnection.getKey();
 
 			if (inUseAge == 0) {
-				if (inQueueAge > _getAllowedInQueueAge()) {
+				if (inQueueAge > _getMaxInQueueAge()) {
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Retiring ", key, " due to duration 'In Queue'"));
@@ -225,7 +225,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 						ResourceConnection.State.RETIRE);
 				}
 			}
-			else if (inUseAge > _getAllowedInUseAge()) {
+			else if (inUseAge > _getMaxInUseAge()) {
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Retiring ", key, " due to duration 'In Use'"));
@@ -240,9 +240,9 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		}
 	}
 
-	private Long _getAllowedInQueueAge() {
-		if (_allowedInQueueAge != null) {
-			return _allowedInQueueAge;
+	private Long _getMaxInQueueAge() {
+		if (_maxInQueueAge != null) {
+			return _maxInQueueAge;
 		}
 
 		try {
@@ -250,26 +250,26 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 				JenkinsResultsParserUtil.getBuildProperties();
 
 			String key = JenkinsResultsParserUtil.combine(
-				"resource.monitor.allowed.in.queue.age[", getType(), "]");
+				"resource.monitor.max.in.queue.age[", getType(), "]");
 
 			if (!buildProperties.containsKey(key)) {
-				_allowedInQueueAge = _ALLOWED_IN_QUEUE_AGE_DEFAULT;
+				_maxInQueueAge = _MAX_IN_QUEUE_AGE_DEFAULT;
 
-				return _allowedInQueueAge;
+				return _maxInQueueAge;
 			}
 
-			_allowedInQueueAge = Long.valueOf(buildProperties.getProperty(key));
+			_maxInQueueAge = Long.valueOf(buildProperties.getProperty(key));
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 
-		return _allowedInQueueAge;
+		return _maxInQueueAge;
 	}
 
-	private Long _getAllowedInUseAge() {
-		if (_allowedInUseAge != null) {
-			return _allowedInUseAge;
+	private Long _getMaxInUseAge() {
+		if (_maxInUseAge != null) {
+			return _maxInUseAge;
 		}
 
 		try {
@@ -277,33 +277,33 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 				JenkinsResultsParserUtil.getBuildProperties();
 
 			String key = JenkinsResultsParserUtil.combine(
-				"resource.monitor.allowed.in.use.age[", getType(), "]");
+				"resource.monitor.max.in.use.age[", getType(), "]");
 
 			if (!buildProperties.containsKey(key)) {
-				_allowedInUseAge = _ALLOWED_IN_USE_AGE_DEFAULT;
+				_maxInUseAge = _MAX_IN_USE_AGE_DEFAULT;
 
-				return _allowedInUseAge;
+				return _maxInUseAge;
 			}
 
-			_allowedInUseAge = Long.valueOf(buildProperties.getProperty(key));
+			_maxInUseAge = Long.valueOf(buildProperties.getProperty(key));
 		}
 		catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 
-		return _allowedInUseAge;
+		return _maxInUseAge;
 	}
 
-	private static final long _ALLOWED_IN_QUEUE_AGE_DEFAULT =
+	private static final long _MAX_IN_QUEUE_AGE_DEFAULT =
 		2 * 60 * 60 * 1000;
 
-	private static final long _ALLOWED_IN_USE_AGE_DEFAULT = 60 * 60 * 1000;
+	private static final long _MAX_IN_USE_AGE_DEFAULT = 60 * 60 * 1000;
 
-	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 1;
+	private static final Integer _MAX_RESOURCE_CONNECTIONS_DEFAULT = 1;
 
-	private Long _allowedInQueueAge;
-	private Long _allowedInUseAge;
-	private Integer _allowedResourceConnections;
+	private Long _maxInQueueAge;
+	private Long _maxInUseAge;
+	private Integer _maxResourceConnections;
 	private final String _etcdServerURL;
 	private final String _name;
 

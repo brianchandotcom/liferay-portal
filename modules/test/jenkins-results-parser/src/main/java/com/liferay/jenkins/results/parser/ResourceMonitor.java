@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface ResourceMonitor {
 
-	public Integer getAllowedResourceConnections();
+	public Integer getMaxResourceConnections();
 
 	public String getEtcdServerURL();
 

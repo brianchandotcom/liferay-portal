@@ -12,13 +12,18 @@
 	line-height: 24px;
 	max-width: calc(100% - #{$topperBorderWidth * 2});
 	opacity: 0;
-	padding: 0 8px;
+	padding: 0 8px 0 4px;
 	position: absolute;
 	transform: translateY(100%);
 	transition: box-shadow ease $topperShowDuration,
 		transform ease ($topperShowDuration * 2),
 		opacity ease ($topperShowDuration * 0.667);
 	z-index: $topperZIndex;
+
+	&__drag-icon {
+		height: 16px;
+		width: 16px;
+	}
 
 	&__icon {
 		fill: $topperColor;

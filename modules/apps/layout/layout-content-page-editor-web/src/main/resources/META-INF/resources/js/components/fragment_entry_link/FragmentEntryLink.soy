@@ -73,7 +73,14 @@
 		{if $showControlBar}
 			<nav class="fragments-editor__topper tbar">
 				<ul class="tbar-nav">
-					<li class="fragments-editor__drag-handler fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
+					<li class="fragments-editor__drag-handler fragments-editor__topper__item pr-0 tbar-item">
+						<div>
+							<svg class="fragments-editor__topper__drag-icon lexicon-icon">
+									<use xlink:href="{$spritemap ?: ''}#drag"></use>
+							</svg>
+						</div>
+					</li>
+					<li class="fragments-editor__topper__item fragments-editor__topper__title tbar-item tbar-item-expand">
 						{$name ?: ''}
 					</li>
 

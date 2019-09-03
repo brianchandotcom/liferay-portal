@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -249,14 +250,31 @@ public class SegmentsExperimentServiceImpl
 		_segmentsExperimentResourcePermission.check(
 			getPermissionChecker(), segmentsExperiment, ActionKeys.UPDATE);
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey);
-
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
-			segmentsExperience.getSegmentsExperienceId(), status
-		);
+			_getSegmentsExperienceId(
+				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey),
+			status);
+	}
+
+	private long _getSegmentsExperienceId(
+		long groupId, String segmentsExperienceKey) {
+
+		if (segmentsExperienceKey.equals(
+				SegmentsExperienceConstants.KEY_DEFAULT)) {
+
+			return SegmentsExperienceConstants.ID_DEFAULT;
+		}
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				groupId, segmentsExperienceKey);
+
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceId();
+		}
+
+		return -1;
 	}
 
 	@Reference

@@ -20,17 +20,23 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -42,12 +48,15 @@ import javax.portlet.PortletURL;
 public class OAuth2Controller {
 
 	public OAuth2Controller(
-		OAuth2Manager oAuth2Manager, Portal portal,
-		PortletURLFactory portletURLFactory) {
+		Language language, OAuth2Manager oAuth2Manager, Portal portal,
+		PortletURLFactory portletURLFactory,
+		ResourceBundleLoader resourceBundleLoader) {
 
+		_language = language;
 		_oAuth2Manager = oAuth2Manager;
 		_portal = portal;
 		_portletURLFactory = portletURLFactory;
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	public <T extends PortletRequest, R extends PortletResponse> void execute(
@@ -55,31 +64,53 @@ public class OAuth2Controller {
 			UnsafeFunction<T, JSONObject, PortalException> unsafeFunction)
 		throws PortalException {
 
-		OAuth2Result oAuth2Result = _executeWithOAuth2(t, unsafeFunction);
+		boolean redirect = ParamUtil.getBoolean(t, "redirect");
 
-		if (ParamUtil.getBoolean(t, "redirect")) {
-			JSONObject jsonObject = oAuth2Result.getResponse();
+		try {
+			OAuth2Result oAuth2Result = _executeWithOAuth2(t, unsafeFunction);
 
-			for (String fieldName : jsonObject.keySet()) {
-				t.setAttribute(fieldName, jsonObject.getString(fieldName));
+			if (redirect) {
+				JSONObject jsonObject = oAuth2Result.getResponse();
+
+				for (String fieldName : jsonObject.keySet()) {
+					t.setAttribute(fieldName, jsonObject.getString(fieldName));
+				}
+
+				t.setAttribute(
+					WebKeys.REDIRECT,
+					Optional.ofNullable(
+						oAuth2Result.getRedirectURL()
+					).orElseGet(
+						() -> _getRenderURL(t)
+					));
 			}
-
-			t.setAttribute(
-				WebKeys.REDIRECT,
-				Optional.ofNullable(
-					oAuth2Result.getRedirectURL()
-				).orElseGet(
-					() -> _getRenderURL(t)
-				));
-		}
-		else {
-			try {
+			else {
 				JSONPortletResponseUtil.writeJSON(
-					t, r, oAuth2Result.getResponse());
+					t, r,  oAuth2Result.getResponse());
+			}
+		}
+		catch (PortalException pe) {
+			try {
+				if (!redirect) {
+					JSONPortletResponseUtil.writeJSON(
+						t, r,
+						JSONUtil.put(
+							"error",
+							_translateKey(
+								_portal.getLocale(t),
+								"your-request-failed-to-complete")));
+				}
 			}
 			catch (IOException ioe) {
 				throw new PortalException(ioe);
 			}
+
+			_log.error(pe.getMessage(), pe);
+
+			throw pe;
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
 		}
 	}
 
@@ -176,8 +207,20 @@ public class OAuth2Controller {
 		return liferayPortletURL.toString();
 	}
 
+	private String _translateKey(Locale locale, String key) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(locale);
+
+		return _language.get(resourceBundle, key);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OAuth2Controller.class);
+
+	private final Language _language;
 	private final OAuth2Manager _oAuth2Manager;
 	private final Portal _portal;
 	private final PortletURLFactory _portletURLFactory;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -20,11 +20,13 @@ import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Con
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -52,7 +54,8 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 	@Activate
 	public void activate() {
 		_oAuth2Controller = new OAuth2Controller(
-			_oAuth2Manager, _portal, _portletURLFactory);
+			_language, _oAuth2Manager, _portal, _portletURLFactory,
+			_resourceBundleLoader);
 	}
 
 	@Deactivate
@@ -81,6 +84,9 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 	@Reference
 	private DLAppService _dlAppService;
 
+	@Reference
+	private Language _language;
+
 	private OAuth2Controller _oAuth2Controller;
 
 	@Reference
@@ -91,5 +97,10 @@ public class CancelCheckOutInOneDriveMVCActionCommand
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.opener.onedrive.web)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

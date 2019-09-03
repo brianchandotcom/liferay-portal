@@ -68,7 +68,8 @@ public class EditInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 	@Activate
 	public void activate() {
 		_oAuth2Controller = new OAuth2Controller(
-			_oAuth2Manager, _portal, _portletURLFactory);
+			_language, _oAuth2Manager, _portal, _portletURLFactory,
+			_resourceBundleLoader);
 	}
 
 	@Deactivate

@@ -1,5 +1,9 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.0.0-milestone.3",
+		"@clayui/icon": "3.0.0-milestone.3",
+		"@clayui/modal": "3.0.0-milestone.3",
+		"classnames": "2.2.6",
 		"clay-badge": "2.18.0",
 		"clay-checkbox": "2.18.0",
 		"clay-dropdown": "2.18.0",
@@ -12,7 +16,9 @@
 		"metal-position": "2.1.2",
 		"metal-soy": "2.16.8",
 		"metal-state": "2.16.8",
-		"metal-throttle": "3.0.1"
+		"metal-throttle": "3.0.1",
+		"prop-types": "15.7.2",
+		"react": "16.9.0"
 	},
 	"name": "layout-admin-web",
 	"scripts": {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.portlet.action.test.util;
+package com.liferay.portal.kernel.test.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -35,9 +35,10 @@ import javax.servlet.http.Part;
 import org.springframework.mock.web.portlet.MockActionRequest;
 
 /**
- * @author Jürgen Kappler
+ * @author Alicia García
+ * @author Cristina González
  */
-public class MockLiferayPortletRequest
+public class MockLiferayPortletActionRequest
 	extends MockActionRequest implements LiferayPortletRequest {
 
 	@Override

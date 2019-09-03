@@ -19,18 +19,20 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import {AppContextProvider} from '../../AppContext.es';
 import EditFormView from './EditFormView.es';
 
-function renderComponent({basePortletURL, ...props}) {
-	return (
-		<AppContextProvider basePortletURL={basePortletURL}>
-			<EditFormView {...props} />
-		</AppContextProvider>
-	);
-}
+const EditFormViewApp = dragDropContext(HTML5Backend)(
+	({basePortletURL, ...props}) => {
+		return (
+			<AppContextProvider basePortletURL={basePortletURL}>
+				<EditFormView {...props} />
+			</AppContextProvider>
+		);
+	}
+);
+
+const renderComponent = props => {
+	return <EditFormViewApp {...props} />;
+};
 
 export default function(containerId, data) {
-	render(
-		dragDropContext(HTML5Backend)(renderComponent),
-		data,
-		document.getElementById(containerId)
-	);
+	render(renderComponent, data, document.getElementById(containerId));
 }

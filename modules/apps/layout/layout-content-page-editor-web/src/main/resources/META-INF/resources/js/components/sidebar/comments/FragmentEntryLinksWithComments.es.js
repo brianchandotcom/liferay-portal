@@ -21,7 +21,7 @@ import {UPDATE_HOVERED_ITEM} from '../../../actions/actions.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 import useSelector from '../../../store/hooks/useSelector.es';
-import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
+import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 import SidebarHeader from '../SidebarHeader.es';
 import {updateActiveItemAction} from '../../../actions/updateActiveItem.es';
 
@@ -98,7 +98,7 @@ const FragmentEntryLinksWithComments = () => {
 		<>
 			<SidebarHeader>{Liferay.Language.get('comments')}</SidebarHeader>
 
-			<ShowResolvedCommentsToggle />
+			<ResolvedCommentsToggle />
 
 			{fragmentEntryLinksWithComments.length ? (
 				<nav className="list-group">

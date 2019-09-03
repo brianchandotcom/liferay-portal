@@ -26,7 +26,7 @@ import FragmentComment from './FragmentComment.es';
 import useDispatch from '../../../store/hooks/useDispatch.es';
 import {CLEAR_ACTIVE_ITEM} from '../../../actions/actions.es';
 import SidebarHeader from '../SidebarHeader.es';
-import ShowResolvedCommentsToggle from './ShowResolvedCommentsToggle.es';
+import ResolvedCommentsToggle from './ResolvedCommentsToggle.es';
 import useGetComments from '../../../store/hooks/useGetComments.es';
 
 const FragmentComments = props => {
@@ -57,7 +57,7 @@ const FragmentComments = props => {
 				<span>{fragmentEntryLink.name}</span>
 			</SidebarHeader>
 
-			<ShowResolvedCommentsToggle />
+			<ResolvedCommentsToggle />
 
 			<div
 				data-fragments-editor-item-id={

@@ -22,6 +22,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.seo.model.LayoutSEOCanonicalURL;
+import com.liferay.layout.seo.service.LayoutSEOCanonicalURLLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -364,6 +366,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		_layoutPageTemplateStructureLocalService;
 
 	@Reference
+	private LayoutSEOCanonicalURLLocalService
+		_layoutSEOCanonicalURLLocalService;
+
+	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
 	@Reference
@@ -415,6 +421,36 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_layoutLocalService.updateLayout(
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());
+
+			LayoutSEOCanonicalURL layoutSEOCanonicalURL =
+				_layoutSEOCanonicalURLLocalService.fetchLayoutSEOCanonicalURL(
+					_sourceLayout.getGroupId(), _sourceLayout.isPrivateLayout(),
+					_sourceLayout.getLayoutId());
+
+			if (layoutSEOCanonicalURL == null) {
+				LayoutSEOCanonicalURL targetLayoutSEOCanonicalURL =
+					_layoutSEOCanonicalURLLocalService.
+						fetchLayoutSEOCanonicalURL(
+							_targetLayout.getGroupId(),
+							_targetLayout.isPrivateLayout(),
+							_targetLayout.getLayoutId());
+
+				if (targetLayoutSEOCanonicalURL != null) {
+					_layoutSEOCanonicalURLLocalService.
+						deleteLayoutSEOCanonicalURL(
+							_targetLayout.getGroupId(),
+							_targetLayout.isPrivateLayout(),
+							_targetLayout.getLayoutId());
+				}
+			}
+			else {
+				_layoutSEOCanonicalURLLocalService.updateLayoutSEOCanonicalURL(
+					_targetLayout.getUserId(), _targetLayout.getGroupId(),
+					_targetLayout.isPrivateLayout(),
+					_targetLayout.getLayoutId(),
+					layoutSEOCanonicalURL.isEnabled(),
+					layoutSEOCanonicalURL.getCanonicalURLMap(), serviceContext);
+			}
 
 			return _layoutLocalService.updateIconImage(
 				_targetLayout.getPlid(), imageBytes);

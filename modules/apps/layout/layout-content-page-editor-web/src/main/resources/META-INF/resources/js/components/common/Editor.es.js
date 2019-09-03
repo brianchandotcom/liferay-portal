@@ -92,8 +92,8 @@ const Editor = props => {
 						newEditor.destroy();
 					});
 				}
-			} catch (err) {
-				console.error(err);
+			} catch (_err) {
+				// https://github.com/liferay/alloy-editor/issues/1306
 			}
 		};
 	}, [autoFocus, editorConfig]);

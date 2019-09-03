@@ -66,7 +66,7 @@
 		z-index: $topperHoverZIndex;
 
 		&:after {
-			box-shadow: inset 0 0 0 $topperBorderWidth $topperBorderColor;
+			box-shadow: inset 0 0 0 $topperHoveredBorderWidth $topperBorderColor;
 			transition: box-shadow ease ($topperShowDuration + $topperShowDelay);
 		}
 	}

@@ -290,15 +290,11 @@ public class ContentPageEditorDisplayContext {
 
 		soyContext.put(
 			"mappedAssetEntries",
-			_getMappedAssetEntriesSoyContexts(mappedAssetEntries));
-
-		Set<AssetEntry> pageContentAssetEntries =
-			ContentUtil.getPageContentAssetEntries(themeDisplay.getPlid());
-
-		soyContext.put(
+			_getMappedAssetEntriesSoyContexts(mappedAssetEntries)
+		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
-                pageContentAssetEntries, themeDisplay.getURLCurrent(), request)
+				themeDisplay.getPlid(), themeDisplay.getURLCurrent(), request)
 		).put(
 			"portletNamespace", _renderResponse.getNamespace()
 		).put(

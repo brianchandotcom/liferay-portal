@@ -97,13 +97,18 @@ public class ContentUtil {
 	}
 
 	public static JSONArray getPageContentsJSONArray(
-		Set<AssetEntry> assetEntries, String backURL,
-		HttpServletRequest httpServletRequest) {
+		long plid, String backURL, HttpServletRequest httpServletRequest) {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
 
+		List<AssetEntryUsage> assetEntryUsages =
+			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesByPlid(plid);
+
 		try {
-			for (AssetEntry assetEntry : assetEntries) {
+			for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					assetEntryUsage.getAssetEntryId());
+
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
 						assetEntry, backURL, httpServletRequest));
@@ -114,26 +119,6 @@ public class ContentUtil {
 		}
 
 		return mappedContentsJSONArray;
-	}
-
-	public static Set<AssetEntry> getPageContentAssetEntries(long plid) {
-		Set<AssetEntry> assetEntries = new HashSet<>();
-
-		List<AssetEntryUsage> assetEntryUsages =
-			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesByPlid(plid);
-
-		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-				assetEntryUsage.getAssetEntryId());
-
-			if (assetEntry == null) {
-				continue;
-			}
-
-			assetEntries.add(assetEntry);
-		}
-
-		return assetEntries;
 	}
 
 	private static JSONObject _getActionsJSONObject(

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -56,13 +53,10 @@ public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String backURL = ParamUtil.getString(resourceRequest, "backURL");
 
-		Set<AssetEntry> assetEntries = ContentUtil.getPageContentAssetEntries(
-			themeDisplay.getPlid());
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			ContentUtil.getPageContentsJSONArray(
-				assetEntries, backURL,
+				themeDisplay.getPlid(), backURL,
 				_portal.getHttpServletRequest(resourceRequest)));
 	}
 

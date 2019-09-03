@@ -138,45 +138,42 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 						label: '<liferay-ui:message key="import" />',
 						on: {
 							click: function() {
-								A.io.request(
-									url,
-									{
-										dataType: 'JSON',
-										form: {
-											id: '<portlet:namespace />importFm',
-											upload: true
-										},
-										method: 'POST',
-										on: {
-											complete: function(event, id, xhr) {
-												var responseData = {};
 
-												try {
-													responseData = A.JSON.parse(xhr.responseText);
-												}
-												catch (e) {
-												}
+								var data = new URLSearchParams();
+								data.append('id', '<portlet:namespace />importFm');
+								data.append('upload', true);
 
-												var portletErrorMessage = A.one('#<portlet:namespace />portletErrorMessage');
+								Liferay.Util.fetch(url, {
+									body: data,
+									method: 'POST'
+								}).then(function(response) {
+										return response.text();
+								}).then(function(data) {
+										var responseData = {};
 
-												var portletSuccessMessage = A.one('#<portlet:namespace />portletSuccessMessage');
-
-												var error = responseData && responseData.error;
-
-												if (error) {
-													portletErrorMessage.show();
-													portletSuccessMessage.hide();
-
-													portletErrorMessage.html(error);
-												}
-												else {
-													portletErrorMessage.hide();
-													portletSuccessMessage.show();
-												}
-											}
+										try {
+											responseData = JSON.parse(data);
 										}
-									}
-								);
+										catch (e) {
+										}
+
+										var portletErrorMessage = A.one('#<portlet:namespace />portletErrorMessage');
+
+										var portletSuccessMessage = A.one('#<portlet:namespace />portletSuccessMessage');
+
+										var error = responseData && responseData.error;
+
+										if (error) {
+											portletErrorMessage.show();
+											portletSuccessMessage.hide();
+
+											portletErrorMessage.html(error);
+										}
+										else {
+											portletErrorMessage.hide();
+											portletSuccessMessage.show();
+										}
+								});
 							}
 						}
 					}

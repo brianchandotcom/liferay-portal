@@ -294,6 +294,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-alert', 'liferay-util-window']
+		requires: ['aui-alert', 'liferay-alert', 'liferay-util-window']
 	}
 );

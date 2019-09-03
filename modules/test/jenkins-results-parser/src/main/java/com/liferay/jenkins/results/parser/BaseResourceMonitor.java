@@ -125,7 +125,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		List<ResourceConnection> resourceConnectionQueue =
 			getResourceConnectionQueue();
 
-		String[][] table = new String[resourceConnectionQueue.size()][4];
+		String[][] table = new String[resourceConnectionQueue.size()][6];
 
 		for (int i = 0; i < resourceConnectionQueue.size(); i++) {
 			ResourceConnection resourceConnection = resourceConnectionQueue.get(
@@ -135,6 +135,10 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 			table[i][1] = String.valueOf(resourceConnection.getState());
 			table[i][2] = String.valueOf(resourceConnection.getCreatedIndex());
 			table[i][3] = resourceConnection.getKey();
+			table[i][4] = JenkinsResultsParserUtil.toDurationString(
+				resourceConnection.getInQueueAge());
+			table[i][5] = JenkinsResultsParserUtil.toDurationString(
+				resourceConnection.getInUseAge());
 		}
 
 		JenkinsResultsParserUtil.printTable(table);
@@ -200,12 +204,101 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 				break;
 			}
 
+			ResourceConnection firstResourceConnection =
+				resourceConnectionQueue.get(0);
+
+			long inQueueAge = firstResourceConnection.getInQueueAge();
+			long inUseAge = firstResourceConnection.getInUseAge();
+			String key = firstResourceConnection.getKey();
+
+			if (inUseAge == 0) {
+				if (inQueueAge > _getAllowedInQueueAge()) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Retiring ", key, " due to duration 'In Queue'"));
+
+					firstResourceConnection.setState(
+							ResourceConnection.State.RETIRE);
+				}
+			}
+			else if (inUseAge > _getAllowedInUseAge()) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Retiring ", key, " due to duration 'In Use'"));
+
+				firstResourceConnection.setState(
+					ResourceConnection.State.RETIRE);
+
+				continue;
+			}
+
 			JenkinsResultsParserUtil.sleep(5000);
 		}
 	}
 
+	private Long _getAllowedInQueueAge() {
+		if (_allowedInQueueAge != null) {
+			return _allowedInQueueAge;
+		}
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String key = JenkinsResultsParserUtil.combine(
+				"resource.monitor.allowed.in.queue.age[", getType(), "]");
+
+			if (!buildProperties.containsKey(key)) {
+				_allowedInQueueAge = _ALLOWED_IN_QUEUE_AGE_DEFAULT;
+
+				return _allowedInQueueAge;
+			}
+
+			_allowedInQueueAge = Long.valueOf(buildProperties.getProperty(key));
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		return _allowedInQueueAge;
+	}
+
+	private Long _getAllowedInUseAge() {
+		if (_allowedInUseAge != null) {
+			return _allowedInUseAge;
+		}
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String key = JenkinsResultsParserUtil.combine(
+				"resource.monitor.allowed.in.use.age[", getType(), "]");
+
+			if (!buildProperties.containsKey(key)) {
+				_allowedInUseAge = _ALLOWED_IN_USE_AGE_DEFAULT;
+
+				return _allowedInUseAge;
+			}
+
+			_allowedInUseAge = Long.valueOf(buildProperties.getProperty(key));
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+		return _allowedInUseAge;
+	}
+
+	private static final long _ALLOWED_IN_QUEUE_AGE_DEFAULT =
+		2 * 60 * 60 * 1000;
+
+	private static final long _ALLOWED_IN_USE_AGE_DEFAULT = 60 * 60 * 1000;
+
 	private static final Integer _ALLOWED_RESOURCE_CONNECTIONS_DEFAULT = 1;
 
+	private Long _allowedInQueueAge;
+	private Long _allowedInUseAge;
 	private Integer _allowedResourceConnections;
 	private final String _etcdServerURL;
 	private final String _monitorName;

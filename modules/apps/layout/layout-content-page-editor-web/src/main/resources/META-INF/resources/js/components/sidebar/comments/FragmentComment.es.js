@@ -50,18 +50,8 @@ const FragmentComment = props => {
 		state => state.showResolvedComments
 	);
 
-	const dateDescriptionProps = {
-		className: 'm-0 text-secondary'
-	};
-
-	if (props.comment.edited && props.comment.modifiedDateDescription) {
-		dateDescriptionProps.className += ' lfr-portal-tooltip';
-
-		dateDescriptionProps['data-title'] = Liferay.Util.sub(
-			Liferay.Language.get('edited-x'),
-			props.comment.modifiedDateDescription
-		);
-	}
+	const showModifiedDateTooltip =
+		props.comment.edited && props.comment.modifiedDateDescription;
 
 	const commentClassname = classNames({
 		'fragments-editor__fragment-comment': true,
@@ -146,7 +136,18 @@ const FragmentComment = props => {
 						</strong>
 					</p>
 
-					<p {...dateDescriptionProps}>
+					<p
+						className={classNames('m-0 text-secondary', {
+							'lfr-portal-tooltip': showModifiedDateTooltip
+						})}
+						data-title={
+							showModifiedDateTooltip &&
+							Liferay.Util.sub(
+								Liferay.Language.get('edited-x'),
+								props.comment.modifiedDateDescription
+							)
+						}
+					>
 						{props.comment.dateDescription}
 					</p>
 				</div>

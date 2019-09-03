@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,6 +40,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
+import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
@@ -172,6 +174,8 @@ import org.apache.cxf.message.MessageImpl;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -415,9 +419,10 @@ public class GraphQLServletExtender {
 	private void _collectObjectFields(
 		GraphQLObjectType.Builder builder,
 		Function<ServletData, Object> function,
-		ProcessingElementsContainer processingElementsContainer) {
+		ProcessingElementsContainer processingElementsContainer,
+		List<ServletData> servletDatas) {
 
-		Stream<ServletData> stream = _servletDataList.stream();
+		Stream<ServletData> stream = servletDatas.stream();
 
 		Map<String, Optional<Method>> methods = stream.map(
 			function
@@ -777,7 +782,7 @@ public class GraphQLServletExtender {
 		return instance;
 	}
 
-	private Servlet _createServlet() {
+	private Servlet _createServlet() throws Exception {
 		Servlet servlet = _servlet;
 
 		if (servlet != null) {
@@ -795,7 +800,13 @@ public class GraphQLServletExtender {
 			Map<Class<?>, Set<Class<?>>> classesMap =
 				processingElementsContainer.getExtensionsTypeRegistry();
 
+			List<ServletData> servletDatas = new ArrayList<>();
+
 			for (ServletData servletData : _servletDataList) {
+				if (_isGraphQLEnabled(servletData.getPath())) {
+					servletDatas.add(servletData);
+				}
+
 				Object query = servletData.getQuery();
 
 				Class<?> queryClass = query.getClass();
@@ -836,11 +847,11 @@ public class GraphQLServletExtender {
 
 			_collectObjectFields(
 				mutationBuilder, ServletData::getMutation,
-				processingElementsContainer);
+				processingElementsContainer, servletDatas);
 
 			_collectObjectFields(
 				graphQLObjectTypeBuilder, ServletData::getQuery,
-				processingElementsContainer);
+				processingElementsContainer, servletDatas);
 
 			_registerInterfaces(
 				processingElementsContainer, graphQLObjectTypeBuilder,
@@ -932,6 +943,27 @@ public class GraphQLServletExtender {
 		String version = packageNames[packageNames.length - 1];
 
 		return Integer.valueOf(version.replaceAll("\\D", ""));
+	}
+
+	private boolean _isGraphQLEnabled(String path) throws Exception {
+		String filterString = String.format(
+			"(&(service.factoryPid=%s)(path=%s))",
+			VulcanConfiguration.class.getName(),
+			path.substring(0, path.indexOf("-graphql")));
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			Dictionary<String, Object> dictionary =
+				configurations[0].getProperties();
+
+			if ((Boolean)dictionary.get("graphQLEnabled")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void _registerInterfaces(
@@ -1211,6 +1243,9 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	private DefaultTypeFunction _defaultTypeFunction;
 

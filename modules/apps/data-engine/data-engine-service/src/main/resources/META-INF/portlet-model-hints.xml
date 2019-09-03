@@ -21,7 +21,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="appliedFilters" type="String" />
 		<field name="ddmStructureId" type="long" />
-		<field name="fieldNames" type="String" />
+		<field name="fieldNames" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field localized="true" name="name" type="String" />
 		<field name="sortField" type="String" />
 	</model>

@@ -15,6 +15,8 @@
 package com.liferay.segments.asah.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant;
 import com.liferay.segments.asah.rest.dto.v1_0.RunExperiment;
 import com.liferay.segments.asah.rest.resource.v1_0.RunExperimentResource;
@@ -56,6 +58,17 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 				String.valueOf(experimentVariant.getId()),
 				experimentVariant.getTrafficSplit());
 		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.popServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+		}
+
+		serviceContext.setAttribute("updateAsah", Boolean.FALSE);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		return _toRunExperiment(
 			_segmentsExperimentService.runSegmentsExperiment(

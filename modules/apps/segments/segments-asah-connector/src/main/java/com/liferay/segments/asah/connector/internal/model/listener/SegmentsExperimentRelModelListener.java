@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientFactory;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
@@ -108,6 +111,16 @@ public class SegmentsExperimentRelModelListener
 	private void _processUpdateSegmentsExperimentRel(
 			SegmentsExperimentRel segmentsExperimentRel)
 		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			!GetterUtil.getBoolean(
+				serviceContext.getAttribute("updateAsah"), true)) {
+
+			return;
+		}
 
 		_asahSegmentsExperimentProcessor.processUpdateSegmentsExperimentRel(
 			segmentsExperimentRel.getSegmentsExperimentKey(),

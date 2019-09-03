@@ -72,7 +72,7 @@ class DocumentLibraryOpener {
 						pollingURL: response.oneDriveBackgroundTaskStatusURL
 					});
 				} else if (response.error) {
-					throw DEFAULT_ERROR;
+					throw response.error.errorMessage || DEFAULT_ERROR;
 				}
 			})
 			.catch(error => {

@@ -90,7 +90,7 @@ generatePomCompileOnly {
 	}
 
 	doLast {
-		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".compile.only")
+		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -227,7 +227,7 @@ generatePomRelease {
 
 generatePomThirdParty {
 	doLast {
-		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".third.party")
+		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.third.party")
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 

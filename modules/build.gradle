@@ -20,10 +20,6 @@ buildscript {
 
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
-if (Boolean.getBoolean("snapshot.bundle.dependencies.enabled")) {
-	apply from: "build-snapshot-bundle.gradle"
-}
-
 ext {
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "3.5.0",
@@ -38,6 +34,10 @@ ext {
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
 		"com.liferay.portal.tools.theme.builder.version": "1.1.7"
 	]
+}
+
+if (Boolean.getBoolean("snapshot.bundle.dependencies.enabled")) {
+	apply from: "build-snapshot-bundle.gradle"
 }
 
 Set<File> bndPrintJarFiles = null

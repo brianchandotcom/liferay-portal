@@ -4,10 +4,21 @@
 		height: 100%;
 		left: 0;
 		position: fixed;
-		text-align: center;
 		top: 0;
 		width: 100%;
 		z-index: 1;
+	}
+
+	.header > nav {
+		padding: .5rem 0;
+
+		strong {
+			font-size: 1rem;
+		}
+	}
+
+	.carousel {
+		text-align: center;
 	}
 
 	.footer {

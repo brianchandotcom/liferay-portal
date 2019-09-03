@@ -125,8 +125,7 @@ public class DisplayPageManagementToolbarDisplayContext
 		PortletURL addDisplayPageURL = liferayPortletResponse.createActionURL();
 
 		addDisplayPageURL.setParameter(
-			ActionRequest.ACTION_NAME,
-			"/layout/add_layout_page_template_entry");
+			ActionRequest.ACTION_NAME, "/layout/add_display_page");
 		addDisplayPageURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
 		addDisplayPageURL.setParameter(

@@ -2,11 +2,15 @@
 
 .fragments-editor__editable {
 	cursor: pointer;
-	display: block;
+	display: inline-block;
 	min-height: 1em;
 	min-width: 2ch;
 	outline: 0;
 	position: relative;
+
+	&[type='image'] {
+		display: block;
+	}
 
 	&--highlighted:before {
 		box-shadow: inset 0 0 0 1px $fragmentEntryLinkEditableFieldBorderColor;

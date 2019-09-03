@@ -115,7 +115,7 @@ public class ModulesPropertiesUtil {
 
 					if (Validator.isNotNull(bundleVersion)) {
 						bundleInformationMap.put(
-							"bnd.version[" + bundleSymbolicName + "]",
+							"bundle.version[" + bundleSymbolicName + "]",
 							bundleVersion);
 					}
 

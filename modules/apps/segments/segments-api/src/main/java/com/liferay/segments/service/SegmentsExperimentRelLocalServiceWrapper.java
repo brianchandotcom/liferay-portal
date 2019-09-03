@@ -364,6 +364,17 @@ public class SegmentsExperimentRelLocalServiceWrapper
 	@Override
 	public com.liferay.segments.model.SegmentsExperimentRel
 			updateSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId,
+				double split)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId, split);
+	}
+
+	@Override
+	public com.liferay.segments.model.SegmentsExperimentRel
+			updateSegmentsExperimentRel(
 				long segmentsExperimentRelId, String name,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

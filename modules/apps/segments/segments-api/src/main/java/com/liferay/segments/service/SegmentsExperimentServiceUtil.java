@@ -117,12 +117,25 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(
-				long segmentsExperimentId, double confidenceLevel, int status)
+			runSegmentsExperiment(
+				long segmentsExperimentId, double confidenceLevel,
+				java.util.Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel, status);
+		return getService().runSegmentsExperiment(
+			segmentsExperimentId, confidenceLevel,
+			segmentsExperienceIdSplitMap);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperiment
+			runSegmentsExperiment(
+				String segmentsExperimentKey, double confidenceLevel,
+				java.util.Map<String, Double> segmentsExperienceKeySplitMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().runSegmentsExperiment(
+			segmentsExperimentKey, confidenceLevel,
+			segmentsExperienceKeySplitMap);
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment

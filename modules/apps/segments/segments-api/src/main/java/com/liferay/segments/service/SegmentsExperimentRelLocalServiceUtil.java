@@ -332,6 +332,16 @@ public class SegmentsExperimentRelLocalServiceUtil {
 
 	public static com.liferay.segments.model.SegmentsExperimentRel
 			updateSegmentsExperimentRel(
+				long segmentsExperimentId, long segmentsExperienceId,
+				double split)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateSegmentsExperimentRel(
+			segmentsExperimentId, segmentsExperienceId, split);
+	}
+
+	public static com.liferay.segments.model.SegmentsExperimentRel
+			updateSegmentsExperimentRel(
 				long segmentsExperimentRelId, String name,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -431,12 +431,14 @@ public class SegmentsExperimentLocalServiceUtil {
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(
-				long segmentsExperimentId, double confidenceLevel, int status)
+			runSegmentsExperiment(
+				long segmentsExperimentId, double confidenceLevel,
+				java.util.Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().updateSegmentsExperiment(
-			segmentsExperimentId, confidenceLevel, status);
+		return getService().runSegmentsExperiment(
+			segmentsExperimentId, confidenceLevel,
+			segmentsExperienceIdSplitMap);
 	}
 
 	public static com.liferay.segments.model.SegmentsExperiment

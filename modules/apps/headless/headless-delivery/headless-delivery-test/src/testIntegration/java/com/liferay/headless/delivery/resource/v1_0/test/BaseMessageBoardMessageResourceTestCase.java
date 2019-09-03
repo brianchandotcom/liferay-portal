@@ -218,10 +218,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
 				messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.getMessageBoardMessageHttpResponse(0L));
 	}
 
 	protected MessageBoardMessage
@@ -418,11 +414,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			messageBoardMessageResource.
 				getMessageBoardMessageMyRatingHttpResponse(
 					messageBoardMessage.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardMessageResource.
-				getMessageBoardMessageMyRatingHttpResponse(0L));
 	}
 
 	protected MessageBoardMessage

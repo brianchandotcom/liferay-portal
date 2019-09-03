@@ -527,9 +527,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document.getId()));
-
-		assertHttpResponseStatusCode(
-			404, documentResource.getDocumentHttpResponse(0L));
 	}
 
 	protected Document testDeleteDocument_addDocument() throws Exception {
@@ -697,9 +694,6 @@ public abstract class BaseDocumentResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			documentResource.getDocumentMyRatingHttpResponse(document.getId()));
-
-		assertHttpResponseStatusCode(
-			404, documentResource.getDocumentMyRatingHttpResponse(0L));
 	}
 
 	protected Document testDeleteDocumentMyRating_addDocument()

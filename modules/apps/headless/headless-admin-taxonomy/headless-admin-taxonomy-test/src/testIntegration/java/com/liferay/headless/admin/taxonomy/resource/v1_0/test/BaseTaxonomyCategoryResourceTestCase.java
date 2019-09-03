@@ -564,9 +564,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory.getId()));
-
-		assertHttpResponseStatusCode(
-			404, taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(0L));
 	}
 
 	protected TaxonomyCategory testDeleteTaxonomyCategory_addTaxonomyCategory()

@@ -207,9 +207,6 @@ public abstract class BaseKeywordResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword.getId()));
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(0L));
 	}
 
 	protected Keyword testDeleteKeyword_addKeyword() throws Exception {

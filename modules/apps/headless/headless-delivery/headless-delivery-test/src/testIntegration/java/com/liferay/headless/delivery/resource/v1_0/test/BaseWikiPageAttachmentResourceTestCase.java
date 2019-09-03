@@ -213,10 +213,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			404,
 			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(
 				wikiPageAttachment.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			wikiPageAttachmentResource.getWikiPageAttachmentHttpResponse(0L));
 	}
 
 	protected WikiPageAttachment

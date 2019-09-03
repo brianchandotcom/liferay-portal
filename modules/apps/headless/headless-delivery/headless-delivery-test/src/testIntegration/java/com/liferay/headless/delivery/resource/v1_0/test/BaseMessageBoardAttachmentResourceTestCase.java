@@ -221,11 +221,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			messageBoardAttachmentResource.
 				getMessageBoardAttachmentHttpResponse(
 					messageBoardAttachment.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			messageBoardAttachmentResource.
-				getMessageBoardAttachmentHttpResponse(0L));
 	}
 
 	protected MessageBoardAttachment

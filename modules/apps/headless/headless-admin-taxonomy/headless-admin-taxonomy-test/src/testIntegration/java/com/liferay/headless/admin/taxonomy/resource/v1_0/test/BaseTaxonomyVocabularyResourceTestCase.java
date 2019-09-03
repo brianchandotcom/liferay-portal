@@ -617,10 +617,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
 				taxonomyVocabulary.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(0L));
 	}
 
 	protected TaxonomyVocabulary

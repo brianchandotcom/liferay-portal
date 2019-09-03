@@ -18,19 +18,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.blogs.web.test.util.MockLiferayPortletConfig;
-import com.liferay.blogs.web.test.util.MockLiferayPortletRequest;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -38,10 +32,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -55,7 +45,6 @@ import com.liferay.trash.kernel.service.TrashEntryLocalService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -115,19 +104,13 @@ public class EditEntryMVCActionCommandTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
-		_layout = LayoutTestUtil.addLayout(_group);
 	}
 
 	@Test(expected = NoSuchEntryException.class)
 	public void testDeleteEntries() throws PortalException {
 		BlogsEntry blogsEntry = _addBlogEntry(RandomTestUtil.randomString());
 
-		_deleteEntries(
-			new MockActionRequest(
-				_getMockHttpServletRequest(), blogsEntry.getEntryId()),
-			false);
+		_deleteEntries(new MockActionRequest(blogsEntry.getEntryId()), false);
 
 		_blogsEntryService.getEntry(blogsEntry.getEntryId());
 	}
@@ -136,10 +119,7 @@ public class EditEntryMVCActionCommandTest {
 	public void testDeleteEntriesToTrash() throws PortalException {
 		BlogsEntry blogsEntry = _addBlogEntry(RandomTestUtil.randomString());
 
-		_deleteEntries(
-			new MockActionRequest(
-				_getMockHttpServletRequest(), blogsEntry.getEntryId()),
-			true);
+		_deleteEntries(new MockActionRequest(blogsEntry.getEntryId()), true);
 
 		Assert.assertNotNull(
 			_blogsEntryService.getEntry(blogsEntry.getEntryId()));
@@ -169,88 +149,42 @@ public class EditEntryMVCActionCommandTest {
 			moveToTrash);
 	}
 
-	private MockHttpServletRequest _getMockHttpServletRequest()
-		throws PortalException {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		return mockHttpServletRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay() throws PortalException {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setScopeGroupId(_layout.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
-	}
-
 	private static ServiceTracker<MVCActionCommand, MVCActionCommand>
 		_serviceTracker;
 
 	@Inject
 	private BlogsEntryService _blogsEntryService;
 
-	private Company _company;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Layout _layout;
 	private ServiceContext _serviceContext;
 
 	@Inject
 	private TrashEntryLocalService _trashEntryLocalService;
 
 	private static class MockActionRequest
-		extends MockLiferayPortletRequest implements ActionRequest {
+		extends MockLiferayPortletActionRequest {
 
-		public MockActionRequest(
-			HttpServletRequest httpServletRequest, long entryId) {
-
-			this.httpServletRequest = httpServletRequest;
-			this.entryId = entryId;
-		}
-
-		@Override
-		public Object getAttribute(String name) {
-			if (Objects.equals(name, JavaConstants.JAVAX_PORTLET_CONFIG)) {
-				return new MockLiferayPortletConfig();
-			}
-
-			return super.getAttribute(name);
+		public MockActionRequest(long entryId) {
+			_entryId = entryId;
 		}
 
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
-			return httpServletRequest;
+			return new MockHttpServletRequest();
 		}
 
 		@Override
 		public Map<String, String[]> getParameterMap() {
 			Map<String, String[]> parameters = new HashMap<>();
 
-			parameters.put("entryId", new String[] {String.valueOf(entryId)});
+			parameters.put("entryId", new String[] {String.valueOf(_entryId)});
 
 			return parameters;
 		}
 
-		@Override
-		public void setPortletRequestDispatcherRequest(
-			HttpServletRequest httpServletRequest) {
-		}
+		private final long _entryId;
 
 	}
 

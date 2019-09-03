@@ -137,6 +137,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CONTENT_IMAGE_VIEW-->
+<tr>
+	<td>CONTENT_IMAGE_NAME</td>
+	<td>//img[contains(@src,'${key_contentImageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DESCRIPTIVE_VIEW-->
 <tr>
 	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>

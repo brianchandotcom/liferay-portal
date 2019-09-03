@@ -101,10 +101,10 @@ public class ResourceConnection implements Comparable {
 	}
 
 	protected ResourceConnection(
-		ResourceMonitor resourceMonitor, EtcdUtil.Node node) {
+		EtcdUtil.Node node, ResourceMonitor resourceMonitor) {
 
-		_resourceMonitor = resourceMonitor;
 		_node = node;
+		_resourceMonitor = resourceMonitor;
 
 		_key = _node.getKey();
 
@@ -115,15 +115,14 @@ public class ResourceConnection implements Comparable {
 		_setInUseStartTime();
 	}
 
-	protected ResourceConnection(
-		ResourceMonitor resourceMonitor, String connectionName) {
-
+	protected ResourceConnection(String name, ResourceMonitor resourceMonitor) {
+		_name = name;
 		_resourceMonitor = resourceMonitor;
 
-		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
+		_key = JenkinsResultsParserUtil.combine(
+			_resourceMonitor.getKey(), "/", name);
 
-		_key = _resourceMonitor.getKey() + "/" + connectionName;
-		_name = connectionName;
+		String etcdServerURL = _resourceMonitor.getEtcdServerURL();
 
 		EtcdUtil.Node node = EtcdUtil.get(etcdServerURL, _key);
 

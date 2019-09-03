@@ -23,7 +23,7 @@ import java.util.Map;
 public class ResourceConnectionFactory {
 
 	public static ResourceConnection newResourceConnection(
-		ResourceMonitor resourceMonitor, EtcdUtil.Node node) {
+		EtcdUtil.Node node, ResourceMonitor resourceMonitor) {
 
 		String key = node.getKey();
 
@@ -31,22 +31,22 @@ public class ResourceConnectionFactory {
 
 		if (resourceConnection == null) {
 			_resourceConnections.put(
-				key, new ResourceConnection(resourceMonitor, node));
+				key, new ResourceConnection(node, resourceMonitor));
 		}
 
 		return _resourceConnections.get(key);
 	}
 
 	public static ResourceConnection newResourceConnection(
-		ResourceMonitor resourceMonitor, String connectionName) {
+		String name, ResourceMonitor resourceMonitor) {
 
-		String key = resourceMonitor.getKey() + "/" + connectionName;
+		String key = resourceMonitor.getKey() + "/" + name;
 
 		ResourceConnection resourceConnection = _resourceConnections.get(key);
 
 		if (resourceConnection == null) {
 			_resourceConnections.put(
-				key, new ResourceConnection(resourceMonitor, connectionName));
+				key, new ResourceConnection(name, resourceMonitor));
 		}
 
 		return _resourceConnections.get(key);

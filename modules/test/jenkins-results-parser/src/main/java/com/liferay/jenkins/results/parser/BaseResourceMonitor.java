@@ -109,7 +109,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 		for (EtcdUtil.Node childNode : node.getNodes()) {
 			resourceConnections.add(
 				ResourceConnectionFactory.newResourceConnection(
-					this, childNode));
+					childNode, this));
 		}
 
 		return new ArrayList<>(resourceConnections);
@@ -148,7 +148,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 	public void signal(String connectionName) {
 		ResourceConnection resourceConnection =
 			ResourceConnectionFactory.newResourceConnection(
-				this, connectionName);
+				connectionName, this);
 
 		resourceConnection.setState(ResourceConnection.State.RETIRE);
 	}
@@ -164,7 +164,7 @@ public abstract class BaseResourceMonitor implements ResourceMonitor {
 
 		ResourceConnection resourceConnection =
 			ResourceConnectionFactory.newResourceConnection(
-				resourceMonitor, connectionName);
+				connectionName, resourceMonitor);
 
 		Integer allowedResourceConnections =
 			resourceMonitor.getAllowedResourceConnections();

@@ -86,7 +86,7 @@ definition {
 
 		OneDrive.editTitle(
 			dmDocumentTitle = "Excel Sheet Title",
-			key_documentType = "xlsx");
+			key_documentTitle = "Untitled.xlsx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -124,7 +124,7 @@ definition {
 
 		OneDrive.editTitle(
 			dmDocumentTitle = "PowerPoint Presentation Title",
-			key_documentType = "pptx");
+			key_documentTitle = "Untitled.pptx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -162,7 +162,7 @@ definition {
 
 		OneDrive.editTitle(
 			dmDocumentTitle = "Word Doc Title",
-			key_documentType = "docx");
+			key_documentTitle = "Untitled.docx");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

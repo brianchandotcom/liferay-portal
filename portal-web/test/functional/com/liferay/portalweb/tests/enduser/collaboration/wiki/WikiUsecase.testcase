@@ -114,6 +114,34 @@ definition {
 		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
 	}
 
+	@description = "This test covers LPS-95711. It Asserts to add an image for wiki content via URL."
+	@priority = "4"
+	test AddWikiContentArticleWithImageViaURL {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiNavigator.gotoBodyLinkPG(wikiPageContent = "This page is empty. Edit it to add some text.");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.addFromURL(
+			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			navTab = "URL");
+
+		AssertElementPresent(
+			key_contentImageName = "Document_1.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		AssertElementPresent(
+			key_contentImageName = "Document_1.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+	}
+
 	@priority = "4"
 	test ConfigurePortletDisplaySettings {
 		Navigator.gotoPage(pageName = "Wiki Test Page");

@@ -155,12 +155,12 @@ public class FlagsTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, Object> context = new HashMap<>();
+		Map<String, Object> context = new HashMap<>(1);
 
 		context.put(
 			"namespace", PortalUtil.getPortletNamespace(PortletKeys.FLAGS));
 
-		Map<String, Object> props = new HashMap<>();
+		Map<String, Object> props = new HashMap<>(10);
 
 		props.put("baseData", _getDataJSONObject(themeDisplay));
 
@@ -187,7 +187,7 @@ public class FlagsTag extends IncludeTag {
 		props.put("signedIn", themeDisplay.isSignedIn());
 		props.put("uri", FlagsTagUtil.getURI(request));
 
-		Map<String, Object> data = new HashMap<>();
+		Map<String, Object> data = new HashMap<>(2);
 
 		data.put("context", context);
 		data.put("props", props);

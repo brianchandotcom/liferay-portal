@@ -23,10 +23,18 @@ public abstract class Retryable<T> {
 		this(5, 30, true);
 	}
 
-	public Retryable(int maxRetries, int retryPeriod, boolean verbose) {
+	public Retryable(
+		boolean exceptionOnFail, int maxRetries, int retryPeriod,
+		boolean verbose) {
+
+		_exceptionOnFail = exceptionOnFail;
 		_maxRetries = maxRetries;
 		_retryPeriod = retryPeriod;
 		_verbose = verbose;
+	}
+
+	public Retryable(int maxRetries, int retryPeriod, boolean verbose) {
+		this(true, maxRetries, retryPeriod, verbose);
 	}
 
 	public abstract T execute();
@@ -46,7 +54,11 @@ public abstract class Retryable<T> {
 				}
 
 				if ((_maxRetries >= 0) && (retryCount > _maxRetries)) {
-					throw e;
+					if (_exceptionOnFail) {
+						throw e;
+					}
+
+					return null;
 				}
 
 				sleep(_retryPeriod * 1000);
@@ -68,6 +80,7 @@ public abstract class Retryable<T> {
 		}
 	}
 
+	private boolean _exceptionOnFail;
 	private int _maxRetries;
 	private int _retryPeriod;
 	private boolean _verbose;

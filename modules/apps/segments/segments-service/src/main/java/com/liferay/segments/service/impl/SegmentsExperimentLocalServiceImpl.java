@@ -294,7 +294,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		segmentsExperiment.setTypeSettings(typeSettingsProperties.toString());
 
-		return _updateSegmentsExperimentStatus(segmentsExperiment, status, -1);
+		return _updateSegmentsExperimentStatus(segmentsExperiment, -1, status);
 	}
 
 	@Override
@@ -335,19 +335,19 @@ public class SegmentsExperimentLocalServiceImpl
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
-			status, -1);
+			-1, status);
 	}
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			long segmentsExperimentId, int status,
-			long winnerSegmentsExperienceId)
+			long segmentsExperimentId, long winnerSegmentsExperienceId,
+			int status)
 		throws PortalException {
 
 		return _updateSegmentsExperimentStatus(
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
-			status, winnerSegmentsExperienceId);
+			winnerSegmentsExperienceId, status);
 	}
 
 	protected void sendNotificationEvent(SegmentsExperiment segmentsExperiment)
@@ -407,8 +407,8 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private SegmentsExperiment _updateSegmentsExperimentStatus(
-			SegmentsExperiment segmentsExperiment, int status,
-			long winnerSegmentsExperienceId)
+			SegmentsExperiment segmentsExperiment,
+			long winnerSegmentsExperienceId, int status)
 		throws PortalException {
 
 		_validateStatus(
@@ -420,7 +420,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 		if (winnerSegmentsExperienceId != -1) {
 			_updateWinnerSegmentsExperienceId(
-				segmentsExperiment, status, winnerSegmentsExperienceId);
+				segmentsExperiment, winnerSegmentsExperienceId, status);
 		}
 
 		segmentsExperiment.setModifiedDate(new Date());
@@ -434,8 +434,8 @@ public class SegmentsExperimentLocalServiceImpl
 	}
 
 	private SegmentsExperiment _updateWinnerSegmentsExperienceId(
-			SegmentsExperiment segmentsExperiment, int statusValue,
-			long winnerSegmentsExperienceId)
+			SegmentsExperiment segmentsExperiment,
+			long winnerSegmentsExperienceId, int statusValue)
 		throws PortalException {
 
 		UnicodeProperties typeSettings = new UnicodeProperties(true);

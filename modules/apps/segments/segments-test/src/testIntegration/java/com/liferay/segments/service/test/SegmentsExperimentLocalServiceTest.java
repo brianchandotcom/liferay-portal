@@ -504,13 +504,15 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
-			SegmentsExperimentConstants.STATUS_FINISHED_WINNER,
-			variantSegmentsExperience.getSegmentsExperienceId());
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			SegmentsExperimentConstants.STATUS_FINISHED_WINNER
+		);
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
-			SegmentsExperimentConstants.STATUS_COMPLETED,
-			variantSegmentsExperience.getSegmentsExperienceId());
+			variantSegmentsExperience.getSegmentsExperienceId(),
+			SegmentsExperimentConstants.STATUS_COMPLETED
+		);
 
 		segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -547,8 +549,8 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperiment.getSegmentsExperimentId(),
-			SegmentsExperimentConstants.STATUS_FINISHED_WINNER,
-			RandomTestUtil.nextLong());
+			RandomTestUtil.nextLong(), SegmentsExperimentConstants.STATUS_FINISHED_WINNER
+		);
 	}
 
 	@Test(expected = SegmentsExperimentStatusException.class)
@@ -631,8 +633,9 @@ public class SegmentsExperimentLocalServiceTest {
 		segmentsExperiment =
 			_segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 				segmentsExperiment.getSegmentsExperimentId(),
-				SegmentsExperimentConstants.STATUS_FINISHED_WINNER,
-				variantSegmentsExperience.getSegmentsExperienceId());
+				variantSegmentsExperience.getSegmentsExperienceId(),
+				SegmentsExperimentConstants.STATUS_FINISHED_WINNER
+			);
 
 		Assert.assertEquals(
 			segmentsExperiment.getWinnerSegmentsExperienceId(),

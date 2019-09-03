@@ -206,8 +206,8 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			long segmentsExperimentId, int status,
-			long winnerSegmentsExperienceId)
+			long segmentsExperimentId, long winnerSegmentsExperienceId,
+			int status)
 		throws PortalException {
 
 		_segmentsExperimentResourcePermission.check(
@@ -217,7 +217,7 @@ public class SegmentsExperimentServiceImpl
 			ActionKeys.UPDATE);
 
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
-			segmentsExperimentId, status, winnerSegmentsExperienceId);
+			segmentsExperimentId, winnerSegmentsExperienceId, status);
 	}
 
 	@Override
@@ -238,8 +238,8 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment updateSegmentsExperimentStatus(
-			String segmentsExperimentKey, int status,
-			String winnerSegmentsExperienceKey)
+			String segmentsExperimentKey, String winnerSegmentsExperienceKey,
+			int status)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
@@ -254,8 +254,9 @@ public class SegmentsExperimentServiceImpl
 				segmentsExperiment.getGroupId(), winnerSegmentsExperienceKey);
 
 		return segmentsExperimentLocalService.updateSegmentsExperimentStatus(
-			segmentsExperiment.getSegmentsExperimentId(), status,
-			segmentsExperience.getSegmentsExperienceId());
+			segmentsExperiment.getSegmentsExperimentId(),
+			segmentsExperience.getSegmentsExperienceId(), status
+		);
 	}
 
 	@Reference

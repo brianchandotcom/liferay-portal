@@ -20,7 +20,7 @@
 	&--active:before,
 	&--selected:before {
 		background-color: $fragmentEntryLinkEditableFieldSelectedColor;
-		box-shadow: inset 0 0 0 2px $fragmentEditableFieldActiveBorderColor;
+		box-shadow: inset 0 0 0 1px $fragmentEditableFieldActiveBorderColor;
 		outline: none;
 	}
 
@@ -43,7 +43,7 @@
 
 	&--mapped.fragments-editor__editable--active:before {
 		background-color: fade_out($fragmentEditableFieldGridMappedColor, 0.9);
-		box-shadow: inset 0 0 0 2px $fragmentEditableFieldGridMappedColor;
+		box-shadow: inset 0 0 0 1px $fragmentEditableFieldGridMappedColor;
 	}
 
 	&--mapped-item-hovered:before {

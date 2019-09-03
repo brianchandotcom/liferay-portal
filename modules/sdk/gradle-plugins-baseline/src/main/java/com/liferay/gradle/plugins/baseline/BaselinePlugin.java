@@ -442,18 +442,28 @@ public class BaselinePlugin implements Plugin<Project> {
 			if (newJarTask.getVersion() != null) {
 				Version newVersion = new Version(newJarTask.getVersion());
 
-				if ((newVersion.getMicro() > 0) &&
-					(newVersion.getQualifier() == null)) {
+				if (newVersion.getQualifier() == null) {
+					if (newVersion.getMicro() > 0) {
+						StringBuilder sb = new StringBuilder();
 
-					StringBuilder sb = new StringBuilder();
+						sb.append(newVersion.getMajor());
+						sb.append('.');
+						sb.append(newVersion.getMinor());
+						sb.append('.');
+						sb.append(newVersion.getMicro() - 1);
 
-					sb.append(newVersion.getMajor());
-					sb.append('.');
-					sb.append(newVersion.getMinor());
-					sb.append('.');
-					sb.append(newVersion.getMicro() - 1);
+						version = sb.toString();
+					}
+					else if (newVersion.getMinor() > 0) {
+						StringBuilder sb = new StringBuilder();
 
-					version = sb.toString();
+						sb.append(newVersion.getMajor());
+						sb.append('.');
+						sb.append(newVersion.getMinor() - 1);
+						sb.append(".0");
+
+						version = sb.toString();
+					}
 				}
 			}
 		}

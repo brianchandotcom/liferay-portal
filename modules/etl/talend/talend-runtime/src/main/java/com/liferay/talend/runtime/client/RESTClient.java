@@ -51,6 +51,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.client.HttpUrlConnectorProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +81,8 @@ public class RESTClient {
 		_target = targetURL;
 
 		_client = ClientBuilder.newClient(_getClientConfig());
+
+		_client.property(HttpUrlConnectorProvider.SET_METHOD_WORKAROUND, true);
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Created new REST Client for endpoint {}", target);

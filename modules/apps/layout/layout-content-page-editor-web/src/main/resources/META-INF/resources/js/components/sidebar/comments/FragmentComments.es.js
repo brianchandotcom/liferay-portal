@@ -71,18 +71,24 @@ const FragmentComments = props => {
 					fragmentEntryLinkId={fragmentEntryLink.fragmentEntryLinkId}
 				/>
 
-				{[...fragmentEntryLinkComments].reverse().map(comment => (
-					<FragmentComment
-						comment={comment}
-						fragmentEntryLinkId={
-							fragmentEntryLink.fragmentEntryLinkId
-						}
-						key={comment.commentId}
-						onDelete={deleteComment}
-						onEdit={editComment}
-						onEditReply={editCommentReply}
-					/>
-				))}
+				{fragmentEntryLinkComments.map((_, i) => {
+					const comment =
+						fragmentEntryLinkComments[
+							fragmentEntryLinkComments.length - 1 - i
+						];
+					return (
+						<FragmentComment
+							comment={comment}
+							fragmentEntryLinkId={
+								fragmentEntryLink.fragmentEntryLinkId
+							}
+							key={comment.commentId}
+							onDelete={deleteComment}
+							onEdit={editComment}
+							onEditReply={editCommentReply}
+						/>
+					);
+				})}
 			</div>
 		</>
 	);

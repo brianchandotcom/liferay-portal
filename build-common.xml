@@ -1006,28 +1006,28 @@ information.
 		</sequential>
 	</macrodef>
 
-	<macrodef name="install-snapshot-artifact">
-		<attribute name="snapshot.jar.file" />
+	<macrodef name="install-snapshot-bundle-artifact">
+		<attribute name="snapshot.bundle.jar.file" />
 
 		<element implicit="true" name="attach-files" optional="true" />
 
 		<sequential>
-			<local name="snapshot.artifact.name" />
+			<local name="artifact.name" />
 
-			<basename file="@{snapshot.jar.file}" property="snapshot.artifact.name" suffix=".jar" />
+			<basename file="@{snapshot.bundle.jar.file}" property="artifact.name" suffix=".jar" />
 
-			<prepare-snapshot-artifact-pom snapshot.artifact.name="${snapshot.artifact.name}" />
+			<prepare-snapshot-bundle-artifact-pom artifact.name="${artifact.name}" />
 
-			<delete dir="${project.dir}/.m2-tmp/com/liferay/snapshots/${snapshot.artifact.name}" />
+			<delete dir="${project.dir}/.m2-tmp/com/liferay/snapshot/bundle/${artifact.name}" />
 
-			<echo message="Installing @{snapshot.jar.file}" />
-			<artifact:install file="@{snapshot.jar.file}">
+			<echo message="Installing @{snapshot.bundle.jar.file}" />
+			<artifact:install file="@{snapshot.bundle.jar.file}">
 				<attach-files />
 				<localRepository path="${project.dir}/.m2-tmp" />
-				<pom file="${project.dir}/tmp/${snapshot.artifact.name}.xml" />
+				<pom file="${project.dir}/tmp/${artifact.name}.xml" />
 			</artifact:install>
 
-			<delete file="${project.dir}/tmp/${snapshot.artifact.name}.xml" />
+			<delete file="${project.dir}/tmp/${artifact.name}.xml" />
 		</sequential>
 	</macrodef>
 
@@ -1232,34 +1232,34 @@ information.
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-snapshot-artifact-pom">
-		<attribute name="snapshot.artifact.name" />
+	<macrodef name="prepare-snapshot-bundle-artifact-pom">
+		<attribute name="artifact.name" />
 
 		<sequential>
-			<local name="snapshot.artifact.version" />
+			<local name="artifact.version" />
 
 			<if>
-				<available file="@{snapshot.artifact.name}/bnd.bnd" />
+				<available file="@{artifact.name}/bnd.bnd" />
 				<then>
-					<property file="@{snapshot.artifact.name}/bnd.bnd" />
+					<property file="@{artifact.name}/bnd.bnd" />
 
-					<property name="snapshot.artifact.version" value="${Bundle-Version}-SNAPSHOT" />
+					<property name="artifact.version" value="${Bundle-Version}-SNAPSHOT" />
 				</then>
 				<else>
-					<property name="snapshot.artifact.version" value="1.0.0-SNAPSHOT" />
+					<property name="artifact.version" value="1.0.0-SNAPSHOT" />
 				</else>
 			</if>
 
 			<copy
-				file="${project.dir}/tools/maven/snapshot.xml"
-				tofile="${project.dir}/tmp/@{snapshot.artifact.name}.xml"
+				file="${project.dir}/tools/maven/snapshot-bundle.xml"
+				tofile="${project.dir}/tmp/@{artifact.name}.xml"
 			>
 				<filterchain>
 					<expandproperties />
 				</filterchain>
 				<filterset>
-					<filter token="snapshot.version" value="${snapshot.artifact.version}" />
-					<filter token="snapshot.artifact.name" value="@{snapshot.artifact.name}" />
+					<filter token="artifact.name" value="@{artifact.name}" />
+					<filter token="artifact.version" value="${artifact.version}" />
 				</filterset>
 			</copy>
 		</sequential>

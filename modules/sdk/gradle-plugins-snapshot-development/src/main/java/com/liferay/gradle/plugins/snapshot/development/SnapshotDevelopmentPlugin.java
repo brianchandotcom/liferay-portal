@@ -27,7 +27,8 @@ import org.gradle.api.logging.Logger;
  */
 public class SnapshotDevelopmentPlugin implements Plugin<Project> {
 
-	public static final String M2_REPO_PATH = ".m2-tmp/com/liferay/snapshot";
+	public static final String M2_REPO_PATH =
+		".m2-tmp/com/liferay/snapshot/bundle";
 
 	@Override
 	public void apply(Project project) {

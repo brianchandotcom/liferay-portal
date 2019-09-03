@@ -209,6 +209,25 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 		return liferayPortletURL.toString();
 	}
 
+	private String _getCheckInURL() throws PortalException {
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
+			request, _portal.getPortletId(request),
+			PortletRequest.ACTION_PHASE);
+
+		liferayPortletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/document_library/check_in_in_office365");
+		liferayPortletURL.setParameter(
+			"fileEntryId", String.valueOf(fileVersion.getFileEntryId()));
+
+		FileEntry fileEntry = fileVersion.getFileEntry();
+
+		liferayPortletURL.setParameter(
+			"folderId", String.valueOf(fileEntry.getFolderId()));
+
+		return liferayPortletURL.toString();
+	}
+
 	private String _getLabelKey() {
 		String office365MimeType =
 			DLOpenerOneDriveMimeTypes.getOffice365MimeType(
@@ -280,14 +299,14 @@ public class DLOpenerOneDriveDLViewFileVersionDisplayContext
 					if (_isCheckingInNewFile()) {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
-								"window.location.href = '",
-								_getActionURL(Constants.CHECKIN), "'"));
+								"window.location.href = '", _getCheckInURL(),
+								"'"));
 					}
 					else {
 						javaScriptUIItem.setOnClick(
 							StringBundler.concat(
 								_getNamespace(), "showVersionDetailsDialog('",
-								_getActionURL(Constants.CHECKIN), "');"));
+								_getCheckInURL(), "');"));
 					}
 				}
 			}

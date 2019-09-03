@@ -62,6 +62,7 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 		return _toExperiment(
 			_segmentsExperimentService.updateSegmentsExperimentStatus(
 				String.valueOf(segmentsExperimentKey),
+				String.valueOf(status.getWinnerVariantId()),
 				optionalStatus.map(
 					SegmentsExperimentConstants.Status::getValue
 				).orElseThrow(
@@ -84,6 +85,8 @@ public class StatusResourceImpl extends BaseStatusResourceImpl {
 				name = segmentsExperiment.getName();
 				siteId = segmentsExperiment.getGroupId();
 				status = segmentsExperimentConstantsStatus.toString();
+				winnerVariantId =
+					segmentsExperiment.getWinnerSegmentsExperienceId();
 			}
 		};
 	}

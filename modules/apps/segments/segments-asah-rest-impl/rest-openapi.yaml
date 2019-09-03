@@ -29,6 +29,35 @@ components:
                     format: int64
                     type: integer
             type: object
+        ExperimentVariant:
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                trafficSplit:
+                    format: double
+                    maximum: 1
+                    minimum: 0
+                    type: number
+            type: object
+        RunExperiment:
+            properties:
+                confidenceLevel:
+                    format: double
+                    maximum: 1
+                    minimum: 0
+                    type: number
+                status:
+                    readOnly: true
+                    type: string
+                variants:
+                    items:
+                        $ref: '#/components/schemas/ExperimentVariant'
+                    type: array
+            required:
+                - confidenceLevel
+                - variants
+            type: object
         Status:
             properties:
                 status:
@@ -63,6 +92,35 @@ paths:
                         application/json: {}
                     description: ""
             tags: ["Experiment"]
+    "/experiments/{experimentId}/run":
+        post:
+            operationId: postExperimentRun
+            parameters:
+                - in: path
+                  name: experimentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/RunExperiment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/RunExperiment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/RunExperiment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/RunExperiment"
+                    description: ""
+            tags: ["RunExperiment"]
     "/experiments/{experimentId}/status":
         post:
             operationId: postExperimentStatus

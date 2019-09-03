@@ -97,15 +97,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 	ResultsRankings.default(
 		'<%= resultsRankingsRootElementId %>',
 		{
-			props: {
-				cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
-				fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
-				fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
-				fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
-				formName: '<portlet:namespace />editResultsRankingsFm',
-				initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
-				searchQuery: '<%= HtmlUtil.escape(keywords) %>'
-			},
 			context: {
 				companyId: '<%= themeDisplay.getCompanyId() %>',
 				constants: {
@@ -114,6 +105,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 				},
 				namespace: '<portlet:namespace />',
 				spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+			},
+			props: {
+				cancelUrl: '<%= HtmlUtil.escape(redirect) %>',
+				fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
+				fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
+				fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
+				formName: '<portlet:namespace />editResultsRankingsFm',
+				initialAliases: <%= (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]" %>,
+				searchQuery: '<%= HtmlUtil.escape(keywords) %>'
 			}
 		}
 	);

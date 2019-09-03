@@ -4,6 +4,8 @@ definition {
 		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
 		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
+		Pause(locator1 = "10000");
+
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
 		}

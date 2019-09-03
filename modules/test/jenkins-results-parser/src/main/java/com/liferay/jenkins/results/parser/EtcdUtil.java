@@ -147,16 +147,29 @@ public class EtcdUtil {
 		}
 
 		private synchronized void _refreshEtcdNode() {
-			for (int i = 0; i < _RETRIES_SIZE_MAX_DEFAULT; i++) {
+			Retryable<EtcdKeysResponse.EtcdNode> etcdNodeRefreshRetryable =
+				new Retryable<EtcdKeysResponse.EtcdNode>(
+					false, _RETRIES_SIZE_MAX_DEFAULT,
+					_SECONDS_RETRY_PERIOD_DEFAULT, true) {
 
-				_etcdNode = _getEtcdNode(getEtcdServerURL(), getKey());
+					public EtcdKeysResponse.EtcdNode execute() {
+						EtcdKeysResponse.EtcdNode etcdNode = _getEtcdNode(
+							getEtcdServerURL(), getKey());
 
-				if (_etcdNode != null) {
-					return;
-				}
+						if (etcdNode == null) {
+							throw new RuntimeException(
+								JenkinsResultsParserUtil.combine(
+									"Unable to get EtcdNode from ",
+									getEtcdServerURL(), " with key ",
+									getKey()));
+						}
 
-				JenkinsResultsParserUtil.sleep(_SECONDS_RETRY_PERIOD_DEFAULT);
-			}
+						return etcdNode;
+					}
+
+				};
+
+			_etcdNode = etcdNodeRefreshRetryable.executeWithRetries();
 		}
 
 		private EtcdKeysResponse.EtcdNode _etcdNode;

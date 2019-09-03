@@ -185,8 +185,9 @@ public class ProjectTemplates {
 
 		JCommander jCommander = builder.build();
 
-		jCommander.parseWithoutValidation(args);
 		jCommander.setAcceptUnknownOptions(true);
+
+		jCommander.parseWithoutValidation(args);
 
 		File templateFile = ProjectTemplatesUtil.getTemplateFile(
 			projectTemplatesArgs);

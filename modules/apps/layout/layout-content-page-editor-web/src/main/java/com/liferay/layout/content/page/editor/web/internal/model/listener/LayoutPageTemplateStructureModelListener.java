@@ -41,18 +41,6 @@ public class LayoutPageTemplateStructureModelListener
 	extends BaseModelListener<LayoutPageTemplateStructure> {
 
 	@Override
-	public void onAfterRemove(
-			LayoutPageTemplateStructure layoutPageTemplateStructure)
-		throws ModelListenerException {
-
-		_assetEntryUsageLocalService.deleteAssetEntryUsages(
-			_portal.getClassNameId(LayoutPageTemplateStructure.class),
-			String.valueOf(
-				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
-			layoutPageTemplateStructure.getClassPK());
-	}
-
-	@Override
 	public void onAfterUpdate(
 			LayoutPageTemplateStructure layoutPageTemplateStructure)
 		throws ModelListenerException {
@@ -96,6 +84,18 @@ public class LayoutPageTemplateStructureModelListener
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
 		}
+	}
+
+	@Override
+	public void onBeforeRemove(
+			LayoutPageTemplateStructure layoutPageTemplateStructure)
+		throws ModelListenerException {
+
+		_assetEntryUsageLocalService.deleteAssetEntryUsages(
+			_portal.getClassNameId(LayoutPageTemplateStructure.class),
+			String.valueOf(
+				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
+			layoutPageTemplateStructure.getClassPK());
 	}
 
 	@Reference

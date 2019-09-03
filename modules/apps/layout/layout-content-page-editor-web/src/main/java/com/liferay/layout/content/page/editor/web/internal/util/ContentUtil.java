@@ -105,13 +105,21 @@ public class ContentUtil {
 			AssetEntryUsageLocalServiceUtil.getAssetEntryUsagesByPlid(plid);
 
 		try {
+			Set<Long> assetEntryIds = new HashSet<>();
+
 			for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
+				if (assetEntryIds.contains(assetEntryUsage.getAssetEntryId())) {
+					continue;
+				}
+
 				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 					assetEntryUsage.getAssetEntryId());
 
 				mappedContentsJSONArray.put(
 					_getPageContentJSONObject(
 						assetEntry, backURL, httpServletRequest));
+
+				assetEntryIds.add(assetEntryUsage.getAssetEntryId());
 			}
 		}
 		catch (Exception e) {

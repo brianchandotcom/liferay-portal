@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.asset.service.persistence.AssetEntryUsageFinder.countByAssetEntryId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT AssetEntryUsage.plid) AS COUNT_VALUE
+			FROM
+				AssetEntryUsage
+			WHERE
+				AssetEntryUsage.assetEntryId = ?
+		]]>
+	</sql>
+</custom-sql>

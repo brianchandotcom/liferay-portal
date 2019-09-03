@@ -138,6 +138,11 @@ public class AssetEntryUsageLocalServiceImpl
 	}
 
 	@Override
+	public int getUniqueAssetEntryUsagesCount(long assetEntryId) {
+		return assetEntryUsageFinder.countByAssetEntryId(assetEntryId);
+	}
+
+	@Override
 	public boolean hasDefaultAssetEntryUsage(long assetEntryId) {
 		AssetEntryUsage assetEntryUsage =
 			assetEntryUsageLocalService.fetchAssetEntryUsage(

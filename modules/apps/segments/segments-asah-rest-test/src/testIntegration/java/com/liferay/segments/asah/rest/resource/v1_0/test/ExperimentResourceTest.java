@@ -50,6 +50,13 @@ public class ExperimentResourceTest extends BaseExperimentResourceTestCase {
 				segmentsExperience.getClassPK()));
 	}
 
+	@Override
+	protected Experiment testGraphQLExperiment_addExperiment()
+		throws Exception {
+
+		return testDeleteExperiment_addExperiment();
+	}
+
 	private Experiment _toExperiment(SegmentsExperiment segmentsExperiment) {
 		return new Experiment() {
 			{

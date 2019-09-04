@@ -17,7 +17,7 @@ package com.liferay.layout.seo.internal.xstream.configurator;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.layout.seo.model.impl.LayoutCanonicalURLImpl;
+import com.liferay.layout.seo.model.impl.LayoutSEOEntryImpl;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(service = XStreamConfigurator.class)
-public class LayoutCanonicalURLXStreamConfigurator
+public class LayoutSEOEntryXStreamConfigurator
 	implements XStreamConfigurator {
 
 	@Override
@@ -51,7 +51,7 @@ public class LayoutCanonicalURLXStreamConfigurator
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
-			new XStreamAlias(LayoutCanonicalURLImpl.class, "LayoutCanonicalURL")
+			new XStreamAlias(LayoutSEOEntryImpl.class, "LayoutSEOEntry")
 		};
 	}
 

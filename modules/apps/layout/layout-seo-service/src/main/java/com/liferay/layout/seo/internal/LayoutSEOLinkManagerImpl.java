@@ -17,8 +17,8 @@ package com.liferay.layout.seo.internal;
 import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -108,16 +108,16 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	}
 
 	private String _getLayoutCanonicalURL(Locale locale, Layout layout) {
-		LayoutCanonicalURL layoutCanonicalURL =
-			_layoutCanonicalURLLocalService.fetchLayoutCanonicalURL(
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		if ((layoutCanonicalURL == null) || !layoutCanonicalURL.isEnabled()) {
+		if ((layoutSEOEntry == null) || !layoutSEOEntry.isEnabled()) {
 			return StringPool.BLANK;
 		}
 
-		return layoutCanonicalURL.getCanonicalURL(locale);
+		return layoutSEOEntry.getCanonicalURL(locale);
 	}
 
 	@Reference
@@ -127,6 +127,6 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 	private Html _html;
 
 	@Reference
-	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 }

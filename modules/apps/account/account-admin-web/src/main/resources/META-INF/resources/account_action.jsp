@@ -33,36 +33,38 @@ long accountEntryId = accountDisplay.getAccountId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
-		<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
-	</portlet:actionURL>
-
-	<liferay-ui:icon-delete
-		url="<%= deleteAccountURL %>"
-	/>
-
-	<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "active") %>'>
-		<portlet:actionURL name="/account_admin/update_account_status" var="deactivateAccountURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
-			<portlet:param name="navigation" value="<%= navigation %>" />
+	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
+		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">
 			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-deactivate
-			url="<%= deactivateAccountURL %>"
+		<liferay-ui:icon-delete
+			url="<%= deleteAccountURL %>"
 		/>
-	</c:if>
 
-	<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "inactive") %>'>
-		<portlet:actionURL name="/account_admin/update_account_status" var="activateAccountURL">
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
-			<portlet:param name="navigation" value="<%= navigation %>" />
-			<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
-		</portlet:actionURL>
+		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "active") %>'>
+			<portlet:actionURL name="/account_admin/update_account_status" var="deactivateAccountURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
+				<portlet:param name="navigation" value="<%= navigation %>" />
+				<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
+			</portlet:actionURL>
 
-		<liferay-ui:icon
-			message="activate"
-			url="<%= activateAccountURL %>"
-		/>
+			<liferay-ui:icon-deactivate
+				url="<%= deactivateAccountURL %>"
+			/>
+		</c:if>
+
+		<c:if test='<%= Objects.equals(accountDisplay.getStatusLabel(), "inactive") %>'>
+			<portlet:actionURL name="/account_admin/update_account_status" var="activateAccountURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+				<portlet:param name="navigation" value="<%= navigation %>" />
+				<portlet:param name="accountEntryIds" value="<%= String.valueOf(accountEntryId) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				message="activate"
+				url="<%= activateAccountURL %>"
+			/>
+		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

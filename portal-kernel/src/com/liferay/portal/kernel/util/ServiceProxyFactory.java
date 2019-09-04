@@ -18,6 +18,7 @@ import com.liferay.petra.memory.FinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.internal.util.SystemCheckerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Registry;
@@ -227,6 +228,8 @@ public class ServiceProxyFactory {
 		public Object invoke(Object proxy, Method method, Object[] arguments)
 			throws Throwable {
 
+			boolean calledSystemCheckers = false;
+
 			while (true) {
 				_lock.lock();
 
@@ -271,6 +274,12 @@ public class ServiceProxyFactory {
 						sb.append("\", will retry...");
 
 						_log.error(sb.toString());
+
+						if (!calledSystemCheckers) {
+							SystemCheckerUtil.runSystemCheckers(_log);
+
+							calledSystemCheckers = true;
+						}
 					}
 				}
 				finally {

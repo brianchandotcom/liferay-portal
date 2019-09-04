@@ -12,9 +12,8 @@
 import React from 'react';
 import ResultsRankingForm from './components/ResultsRankingForm.es';
 import ThemeContext from './ThemeContext.es';
-import {render} from 'frontend-js-react-web';
 
-function renderComponent({props, context}) {
+export default function({props, context}) {
 	return (
 		<ThemeContext.Provider value={context}>
 			<div className="results-rankings-root">
@@ -22,8 +21,4 @@ function renderComponent({props, context}) {
 			</div>
 		</ThemeContext.Provider>
 	);
-}
-
-export default function(containerId, data) {
-	render(renderComponent, data, document.getElementById(containerId));
 }

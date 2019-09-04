@@ -19,6 +19,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
@@ -32,6 +33,9 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -76,53 +80,54 @@ renderResponse.setTitle(LanguageUtil.get(request, "customize-results"));
 		<div class="loading-animation-container">
 			<span aria-hidden="true" class="loading-animation"></span>
 		</div>
+
+		<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="resultsRankingResourceURL">
+			<portlet:param name="resultsRankingUid" value="<%= resultsRankingUid %>" />
+			<portlet:param name="companyId" value="<%= companyId %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="getVisibleResults" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="hiddenResultsRankingResourceURL">
+			<portlet:param name="resultsRankingUid" value="<%= resultsRankingUid %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="getHiddenResults" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="searchResultsRankingResourceURL">
+			<portlet:param name="companyId" value="<%= companyId %>" />
+			<portlet:param name="<%= Constants.CMD %>" value="getSearchResults" />
+		</liferay-portlet:resourceURL>
+
+		<%
+		Map<String, Object> context = new HashMap<>();
+		context.put("companyId", themeDisplay.getCompanyId());
+		context.put("namespace", renderResponse.getNamespace());
+		context.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
+
+		Map<String, Object> constants = new HashMap<>();
+
+		constants.put("WORKFLOW_ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH);
+		constants.put("WORKFLOW_ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		context.put("constants", constants);
+
+		Map<String, Object> props = new HashMap<>();
+
+		props.put("cancelUrl", HtmlUtil.escape(redirect));
+		props.put("fetchDocumentsHiddenUrl", hiddenResultsRankingResourceURL.toString());
+		props.put("fetchDocumentsSearchUrl", searchResultsRankingResourceURL.toString());
+		props.put("fetchDocumentsVisibleUrl", resultsRankingResourceURL.toString());
+		props.put("formName", renderResponse.getNamespace() + "editResultsRankingsFm");
+		props.put("initialAliases", (aliases.length > 0) ? "['" + StringUtil.merge(aliases, "','") + "']" : "[]");
+		props.put("searchQuery", HtmlUtil.escape(keywords));
+
+		Map<String, Object> data = new HashMap<>();
+		data.put("context", context);
+		data.put("props", props);
+		%>
+
+		<react:component
+			data="<%= data %>"
+			module="js/ResultsRankingApp.es"
+		/>
 	</div>
 </aui:form>
-
-<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="resultsRankingResourceURL">
-	<portlet:param name="resultsRankingUid" value="<%= resultsRankingUid %>" />
-	<portlet:param name="companyId" value="<%= companyId %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="getVisibleResults" />
-</liferay-portlet:resourceURL>
-
-<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="hiddenResultsRankingResourceURL">
-	<portlet:param name="resultsRankingUid" value="<%= resultsRankingUid %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="getHiddenResults" />
-</liferay-portlet:resourceURL>
-
-<liferay-portlet:resourceURL id="/results_ranking/get_results" portletName="<%= ResultRankingsPortletKeys.RESULT_RANKINGS %>" var="searchResultsRankingResourceURL">
-	<portlet:param name="companyId" value="<%= companyId %>" />
-	<portlet:param name="<%= Constants.CMD %>" value="getSearchResults" />
-</liferay-portlet:resourceURL>
-
-<aui:script require='<%= npmResolvedPackageName + "/js/index.es as ResultsRankings" %>'>
-	ResultsRankings.default(
-		'<%= resultsRankingsRootElementId %>',
-		{
-			context: {
-				companyId: '<%= themeDisplay.getCompanyId() %>',
-				constants: {
-					WORKFLOW_ACTION_PUBLISH: '<%= WorkflowConstants.ACTION_PUBLISH %>',
-					WORKFLOW_ACTION_SAVE_DRAFT: '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>'
-				},
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
-			},
-			props: {
-				cancelUrl: '<%= HtmlUtil.escapeJS(redirect) %>',
-				fetchDocumentsHiddenUrl: '<%= hiddenResultsRankingResourceURL %>',
-				fetchDocumentsSearchUrl: '<%= searchResultsRankingResourceURL %>',
-				fetchDocumentsVisibleUrl: '<%= resultsRankingResourceURL %>',
-				formName: '<portlet:namespace />editResultsRankingsFm',
-
-				<%
-				JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-				%>
-
-				initialAliases: <%= jsonSerializer.serialize(aliases) %>,
-
-				searchQuery: '<%= HtmlUtil.escapeJS(keywords) %>'
-			}
-		}
-	);
-</aui:script>

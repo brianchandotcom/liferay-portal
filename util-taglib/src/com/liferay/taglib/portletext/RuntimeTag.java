@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.DirectTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.PortalIncludeUtil;
+import com.liferay.taglib.util.ThreadLocalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -478,7 +479,9 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	private static final Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 
 	private static final ThreadLocal<Stack<String>> _embeddedPortletIds =
-		new CentralizedThreadLocal<>(RuntimeTag.class + "._embeddedPortletIds");
+		ThreadLocalUtil.create(
+			RuntimeTag.class, "_embeddedPortletIds",
+			name -> new CentralizedThreadLocal<>(name));
 
 	private String _defaultPreferences;
 	private String _instanceId;

@@ -47,11 +47,11 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 				row.setData(rowData);
 				%>
 
-				<liferay-portlet:renderURL varImpl="rowURL">
+				<portlet:renderURL var="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
 					<portlet:param name="redirect" value="<%= accountDisplaySearchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
-				</liferay-portlet:renderURL>
+				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"

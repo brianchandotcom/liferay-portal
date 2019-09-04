@@ -28,7 +28,7 @@ const useProcessStep = (processId, processStepKeys) => {
 		setError(null);
 		setLoading(true);
 
-		client
+		return client
 			.get(`/processes/${processId}/tasks?page=0&pageSize=0`)
 			.then(({data}) => {
 				const items = data.items || [];
@@ -65,7 +65,7 @@ const useProcessStep = (processId, processStepKeys) => {
 		);
 	};
 
-	useEffect(fetchData, []);
+	useEffect(() => fetchData(), []);
 
 	const previousKeys = usePrevious(processStepKeys);
 
@@ -78,6 +78,7 @@ const useProcessStep = (processId, processStepKeys) => {
 	}, [processStepKeys]);
 
 	return {
+		fetchData,
 		getSelectedProcessSteps,
 		processSteps
 	};

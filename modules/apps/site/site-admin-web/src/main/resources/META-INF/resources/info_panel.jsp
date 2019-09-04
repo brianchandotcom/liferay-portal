@@ -67,7 +67,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				/>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-items" /></h5>
+					<h5><liferay-ui:message key="num-of-sites" /></h5>
 
 					<p>
 						<%= GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), siteAdminDisplayContext.getGroupId(), true) %>

@@ -14,15 +14,15 @@
 
 package com.liferay.layout.seo.internal;
 
-import com.liferay.layout.seo.kernel.SEOLink;
+import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Adolfo Pérez
  */
-public class SEOLinkImpl implements SEOLink {
+public class LayoutSEOLinkImpl implements LayoutSEOLink {
 
-	public SEOLinkImpl(
+	public LayoutSEOLinkImpl(
 		String href, String hrefLang, Relationship relationship) {
 
 		if (Validator.isNull(href)) {

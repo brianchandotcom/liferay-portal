@@ -15,8 +15,6 @@
 package com.liferay.layout.seo.internal;
 
 import com.liferay.layout.seo.internal.configuration.SEOCompanyConfiguration;
-import com.liferay.layout.seo.kernel.SEOLink;
-import com.liferay.layout.seo.kernel.SEOLinkManager;
 import com.liferay.layout.seo.model.LayoutCanonicalURL;
 import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
 import com.liferay.petra.string.StringPool;
@@ -40,30 +38,31 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Cristina González
  */
-@Component(service = SEOLinkManager.class)
-public class SEOLinkManagerImpl implements SEOLinkManager {
+@Component(service = LayoutSEOLinkManager.class)
+public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 
 	@Override
-	public List<SEOLink> getLocalizedSEOLinks(
+	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		List<SEOLink> seoLinks = new ArrayList<>(alternateURLs.size() + 2);
+		List<LayoutSEOLink> seoLinks = new ArrayList<>(
+			alternateURLs.size() + 2);
 
 		seoLinks.add(
-			new SEOLinkImpl(
+			new LayoutSEOLinkImpl(
 				_html.escapeAttribute(
 					_getCanonicalURL(
 						layout, locale, canonicalURL, alternateURLs)),
-				null, SEOLink.Relationship.CANONICAL));
+				null, LayoutSEOLink.Relationship.CANONICAL));
 
 		alternateURLs.forEach(
 			(urlLocale, url) -> seoLinks.add(
-				new SEOLinkImpl(
+				new LayoutSEOLinkImpl(
 					_html.escapeAttribute(url),
 					LocaleUtil.toW3cLanguageId(urlLocale),
-					SEOLink.Relationship.ALTERNATE)));
+					LayoutSEOLink.Relationship.ALTERNATE)));
 
 		String defaultLocaleURL = alternateURLs.get(LocaleUtil.getDefault());
 
@@ -72,9 +71,9 @@ public class SEOLinkManagerImpl implements SEOLinkManager {
 		}
 
 		seoLinks.add(
-			new SEOLinkImpl(
+			new LayoutSEOLinkImpl(
 				_html.escapeAttribute(defaultLocaleURL), "x-default",
-				SEOLink.Relationship.ALTERNATE));
+				LayoutSEOLink.Relationship.ALTERNATE));
 
 		return seoLinks;
 	}

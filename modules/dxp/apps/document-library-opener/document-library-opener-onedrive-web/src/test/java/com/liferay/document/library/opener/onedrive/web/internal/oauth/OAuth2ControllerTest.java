@@ -148,6 +148,12 @@ public class OAuth2ControllerTest {
 	private PortletRequest _getMockPortletRequest(
 		HttpServletRequest httpServletRequest) {
 
+		Mockito.when(
+			_portal.getCurrentURL(httpServletRequest)
+		).thenReturn(
+			"currentURL"
+		);
+
 		PortletRequest portletRequest = Mockito.mock(PortletRequest.class);
 
 		Mockito.when(
@@ -160,12 +166,6 @@ public class OAuth2ControllerTest {
 			_portal.getOriginalServletRequest(Matchers.any())
 		).thenReturn(
 			httpServletRequest
-		);
-
-		Mockito.when(
-			_portal.getCurrentURL(httpServletRequest)
-		).thenReturn(
-			"currentURL"
 		);
 
 		return portletRequest;

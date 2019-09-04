@@ -84,7 +84,6 @@ public class CheckInInOneDriveMVCActionCommand extends BaseMVCActionCommand {
 			DLVersionNumberIncrease.valueOf(
 				actionRequest.getParameter("versionIncrease"),
 				DLVersionNumberIncrease.AUTOMATIC);
-
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

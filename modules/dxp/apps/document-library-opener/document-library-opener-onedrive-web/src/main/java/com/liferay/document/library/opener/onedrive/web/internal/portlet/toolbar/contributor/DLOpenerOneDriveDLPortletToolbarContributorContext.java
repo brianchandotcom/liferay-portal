@@ -127,7 +127,6 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 				ActionRequest.ACTION_NAME,
 				"/document_library/create_in_office365");
 			liferayPortletURL.setParameter(Constants.CMD, Constants.ADD);
-			liferayPortletURL.setParameter("contentType", contentType);
 
 			long repositoryId = BeanPropertiesUtil.getLong(
 				folder, "repositoryId",
@@ -141,6 +140,8 @@ public class DLOpenerOneDriveDLPortletToolbarContributorContext
 
 			liferayPortletURL.setParameter(
 				"folderId", String.valueOf(folderId));
+
+			liferayPortletURL.setParameter("contentType", contentType);
 
 			return liferayPortletURL.toString();
 		}

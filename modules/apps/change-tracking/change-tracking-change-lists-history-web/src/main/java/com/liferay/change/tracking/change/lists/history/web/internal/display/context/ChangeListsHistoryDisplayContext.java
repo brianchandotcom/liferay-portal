@@ -71,11 +71,6 @@ public class ChangeListsHistoryDisplayContext {
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
-		).put(
-			"urlProcessUsers",
-			_themeDisplay.getPortalURL() +
-				"/o/change-tracking-legacy/processes/users?companyId=" +
-					_themeDisplay.getCompanyId()
 		);
 
 		ResourceURL processesURL = PortletURLFactoryUtil.create(
@@ -85,6 +80,10 @@ public class ChangeListsHistoryDisplayContext {
 		processesURL.setResourceID("/change_lists_history/get_ct_processes");
 
 		soyContext.put("urlProcesses", processesURL.toString());
+
+		processesURL.setResourceID("/change_lists_history/get_ct_process_users");
+
+		soyContext.put("urlProcessUsers", processesURL.toString());
 
 		return soyContext;
 	}

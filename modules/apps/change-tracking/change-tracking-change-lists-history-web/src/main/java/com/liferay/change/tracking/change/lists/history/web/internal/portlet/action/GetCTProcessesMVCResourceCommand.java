@@ -23,7 +23,6 @@ import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -45,7 +43,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
 
@@ -74,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetCTProcessesMVCResourceCommand extends BaseMVCResourceCommand {
+public class GetCTProcessesMVCResourceCommand
+	extends BaseCTProcessMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -107,8 +105,8 @@ public class GetCTProcessesMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String statusLabel = backgroundTask.getStatusLabel();
 
-		if (statusLabel.equals(_TYPE_SUCCESSFUL)) {
-			statusLabel = _TYPE_PUBLISHED;
+		if (statusLabel.equals(TYPE_SUCCESSFUL)) {
+			statusLabel = TYPE_PUBLISHED;
 		}
 
 		return statusLabel;
@@ -160,7 +158,7 @@ public class GetCTProcessesMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<CTProcess> ctProcesses = _ctProcessLocalService.getCTProcesses(
-			themeDisplay.getCompanyId(), userId, keywords, _getStatus(type), 0,
+			themeDisplay.getCompanyId(), userId, keywords, getStatus(type), 0,
 			5, _getOrderByComparator(sort));
 
 		PortletURL detailsURL = PortletURLFactoryUtil.create(
@@ -207,35 +205,6 @@ public class GetCTProcessesMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return jsonArray;
 	}
-
-	private int _getStatus(String type) {
-		int status = 0;
-
-		if (_TYPE_ALL.equals(type)) {
-			status = WorkflowConstants.STATUS_ANY;
-		}
-		else if (_TYPE_FAILED.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_FAILED;
-		}
-		else if (_TYPE_IN_PROGRESS.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_IN_PROGRESS;
-		}
-		else if (_TYPE_PUBLISHED.equals(type)) {
-			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
-		}
-
-		return status;
-	}
-
-	private static final String _TYPE_ALL = "all";
-
-	private static final String _TYPE_FAILED = "failed";
-
-	private static final String _TYPE_IN_PROGRESS = "in-progress";
-
-	private static final String _TYPE_PUBLISHED = "published";
-
-	private static final String _TYPE_SUCCESSFUL = "successful";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCTProcessesMVCResourceCommand.class);

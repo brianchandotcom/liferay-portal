@@ -120,17 +120,20 @@ class ChangeListsHistory extends PortletBase {
 				});
 			});
 
-		let urlProcessUsers =
-			this.urlProcessUsers +
-			'&type=' +
-			this.filterStatus +
-			'&offset=0&limit=5';
+		const processUsersParameters = {
+			type: this.filterStatus,
+		};
 
 		if (this.keywords) {
-			urlProcessUsers = urlProcessUsers + '&keywords=' + this.keywords;
+			processUsersParameters.keywords = this.keywords;
 		}
 
-		fetch(urlProcessUsers)
+		const processUsersURL = createPortletURL(
+			this.urlProcessUsers,
+			processUsersParameters
+		);
+
+		fetch(processUsersURL.toString())
 			.then(r => r.json())
 			.then(response => this._populateProcessUsers(response))
 			.catch(error => {

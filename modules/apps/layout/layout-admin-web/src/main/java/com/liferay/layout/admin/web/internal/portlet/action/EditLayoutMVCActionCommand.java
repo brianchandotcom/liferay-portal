@@ -16,7 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.seo.service.LayoutCanonicalURLService;
+import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -150,7 +150,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
 
-		_layoutCanonicalURLService.updateLayoutCanonicalURL(
+		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, privateLayout, layoutId, useCustomCanonicalURL,
 			canonicalURLMap, serviceContext);
 
@@ -165,7 +165,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				draftLayout.isHidden(), draftLayout.getFriendlyURLMap(),
 				!deleteLogo, iconBytes, serviceContext);
 
-			_layoutCanonicalURLService.updateLayoutCanonicalURL(
+			_layoutSEOEntryService.updateLayoutSEOEntry(
 				groupId, privateLayout, draftLayout.getLayoutId(),
 				useCustomCanonicalURL, canonicalURLMap, serviceContext);
 		}
@@ -268,7 +268,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
-	private LayoutCanonicalURLService _layoutCanonicalURLService;
+	private LayoutSEOEntryService _layoutSEOEntryService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

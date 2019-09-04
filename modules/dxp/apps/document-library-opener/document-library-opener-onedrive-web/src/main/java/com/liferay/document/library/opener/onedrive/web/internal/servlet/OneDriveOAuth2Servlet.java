@@ -19,12 +19,16 @@ import com.github.scribejava.core.model.OAuth2AccessTokenErrorResponse;
 import com.liferay.document.library.opener.oauth.OAuth2State;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2StateUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+
+import java.net.SocketException;
 
 import java.util.Optional;
 
@@ -106,18 +110,30 @@ public class OneDriveOAuth2Servlet extends HttpServlet {
 
 				httpServletResponse.sendRedirect(oAuth2State.getSuccessURL());
 			}
-			catch (OAuth2AccessTokenErrorResponse oa2ater) {
+			catch (OAuth2AccessTokenErrorResponse | SocketException e) {
 				OAuth2StateUtil.cleanUp(httpServletRequest);
 
 				SessionErrors.add(httpServletRequest, "externalServiceFailed");
 
 				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
+
+				_log.error(e, e);
 			}
 			catch (Exception e) {
-				throw new IOException(e);
+				OAuth2StateUtil.cleanUp(httpServletRequest);
+
+				SessionErrors.add(
+					httpServletRequest, IOException.class.getName());
+
+				httpServletResponse.sendRedirect(oAuth2State.getFailureURL());
+
+				_log.error(e, e);
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OneDriveOAuth2Servlet.class);
 
 	private static final long serialVersionUID = 7759897747401129852L;
 

@@ -17,16 +17,21 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,6 +51,39 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
+
+	protected JSONObject addJournalArticle(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		try {
+			JournalArticle journalArticle = doAddJournalArticle(actionRequest);
+
+			jsonObject.put(
+				"classNameId",
+				_portal.getClassNameId(JournalArticle.class.getName())
+			).put(
+				"classPK", journalArticle.getResourcePrimKey()
+			).put(
+				"title", journalArticle.getTitle()
+			);
+		}
+		catch (Throwable t) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(t, t);
+			}
+
+			jsonObject.put(
+				"errorMessage",
+				LanguageUtil.get(
+					themeDisplay.getRequest(),
+					"the-web-content-article-could-not-be-created"));
+		}
+
+		return jsonObject;
+	}
 
 	@Override
 	protected void doProcessAction(

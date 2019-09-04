@@ -400,7 +400,7 @@ String signature = ParamUtil.getString(request, "signature");
 			</aui:form>
 		</div>
 
-		<aui:script use="aui-io,aui-template-deprecated,querystring-parse">
+		<aui:script use="aui-io,aui-template-deprecated,io-form,querystring-parse">
 			var REGEX_QUERY_STRING = new RegExp('([^?=&]+)(?:=([^&]*))?', 'g');
 
 			var form = A.one('#execute');

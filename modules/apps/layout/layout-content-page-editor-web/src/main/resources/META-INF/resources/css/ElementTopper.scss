@@ -20,6 +20,10 @@
 		opacity ease ($topperShowDuration * 0.667);
 	z-index: $topperZIndex;
 
+	.tbar-nav {
+		min-width: 44px;
+	}
+
 	&__drag-icon {
 		height: 16px;
 		width: 16px;

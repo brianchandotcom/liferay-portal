@@ -46,8 +46,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.portlet-info.short-title=Reports Display",
 		"javax.portlet.portlet-info.title=Reports Display",
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
-		"javax.portlet.supports.mime-type=text/html"
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user"
 	},
 	service = Portlet.class
 )

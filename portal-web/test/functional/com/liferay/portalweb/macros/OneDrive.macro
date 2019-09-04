@@ -3,22 +3,22 @@ definition {
 	macro editTitle {
 		Pause(locator1 = "10000");
 
-		SelectWindow(locator1 = "OneDrive#PAGE_TITLE");
+		SelectWindow(locator1 = "OneDrive#DOCUMENTS_PAGE_TITLE");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
-		Click(locator1 = "OneDrive#TITLE");
+		Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
 
 		Type(
-			locator1 = "OneDrive#TITLE",
+			locator1 = "OneDrive#DOCUMENTS_TITLE",
 			value1 = "${dmDocumentTitle}");
 
 		KeyPress(
-			locator1 = "OneDrive#TITLE",
+			locator1 = "OneDrive#DOCUMENTS_TITLE",
 			value1 = "\RETURN");
 
 		AssertTextPresent(
-			locator1 = "OneDrive#SAVE_STATUS",
+			locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS",
 			value1 = "Saved");
 
 		Navigator.closeWindow();

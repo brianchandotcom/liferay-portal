@@ -8,27 +8,22 @@
 <tr><td rowspan="1" colspan="3">OneDrive</td></tr>
 </thead>
 <tbody>
+<!--DOCUMENTS-->
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TITLE</td>
+	<td>DOCUMENTS_PAGE_TITLE</td>
 	<td>title=${key_documentTitle}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_STATUS</td>
+	<td>DOCUMENTS_SAVE_STATUS</td>
 	<td>//span[@id='BreadcrumbSaveStatus']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TITLE</td>
+	<td>DOCUMENTS_TITLE</td>
 	<td>//div[@id='BreadcrumbTitle']</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

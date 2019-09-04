@@ -17,39 +17,38 @@ package com.liferay.segments.asah.rest.internal.resource.v1_0;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant;
-import com.liferay.segments.asah.rest.dto.v1_0.RunExperiment;
-import com.liferay.segments.asah.rest.resource.v1_0.RunExperimentResource;
+import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
+
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
-
 /**
  * @author Javier Gamarra
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/run-experiment.properties",
-	scope = ServiceScope.PROTOTYPE, service = RunExperimentResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/experiment-run.properties",
+	scope = ServiceScope.PROTOTYPE, service = ExperimentRunResource.class
 )
-public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
-
+public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 	@Override
-	public RunExperiment postExperimentRun(
-			Long segmentsExperimentKey, RunExperiment runExperiment)
+	public ExperimentRun postExperimentRun(
+			Long segmentsExperimentKey, ExperimentRun experimentRun)
 		throws Exception {
 
-		ExperimentVariant[] experimentVariants = runExperiment.getVariants();
+		ExperimentVariant[] experimentVariants = experimentRun.getVariants();
 
 		Map<String, Double> segmentsExperienceKeySplitMap = new HashMap<>();
 
@@ -73,7 +72,7 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 		return _toRunExperiment(
 			_segmentsExperimentService.runSegmentsExperiment(
 				String.valueOf(segmentsExperimentKey),
-				runExperiment.getConfidenceLevel(),
+				experimentRun.getConfidenceLevel(),
 				segmentsExperienceKeySplitMap));
 	}
 
@@ -94,7 +93,7 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 		List<ExperimentVariant> experimentVariants = new ArrayList<>();
 
 		for (SegmentsExperimentRel segmentsExperimentRel :
-				segmentsExperimentRels) {
+			segmentsExperimentRels) {
 
 			ExperimentVariant experimentVariant = _toExperimentVariant(
 				segmentsExperimentRel);
@@ -105,8 +104,8 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 		return experimentVariants.toArray(new ExperimentVariant[0]);
 	}
 
-	private RunExperiment _toRunExperiment(
-			SegmentsExperiment segmentsExperiment)
+	private ExperimentRun _toRunExperiment(
+		SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
 		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
@@ -117,7 +116,7 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 			_segmentsExperimentRelService.getSegmentsExperimentRels(
 				segmentsExperiment.getSegmentsExperimentId());
 
-		return new RunExperiment() {
+		return new ExperimentRun() {
 			{
 				confidenceLevel = segmentsExperiment.getConfidenceLevel();
 				status = segmentsExperimentConstantsStatus.toString();
@@ -131,5 +130,4 @@ public class RunExperimentResourceImpl extends BaseRunExperimentResourceImpl {
 
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
-
 }

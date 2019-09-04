@@ -1,5 +1,6 @@
-// this file has been deprecated as of 7.2. It will be removed entirely in 7.3
-
+/**
+ * @deprecated As of Mueller (7.2.x)
+ */
 @mixin respond-to($types...) {
 	$maxWidth: -1;
 	$minWidth: -1;

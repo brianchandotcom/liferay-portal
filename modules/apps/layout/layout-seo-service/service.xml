@@ -3,11 +3,11 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.layout.seo">
 	<namespace>Layout</namespace>
-	<entity local-service="true" name="LayoutCanonicalURL" remote-service="true" uuid="true">
+	<entity local-service="true" name="LayoutSEOEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="layoutCanonicalURLId" primary="true" type="long" />
+		<column name="layoutSEOEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -31,7 +31,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_P_L" return-type="LayoutCanonicalURL" unique="true">
+		<finder name="G_P_L" return-type="LayoutSEOEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="layoutId" />

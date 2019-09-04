@@ -84,7 +84,8 @@ public class AsahFaroBackendClientImpl implements AsahFaroBackendClient {
 
 		_jsonWebServiceClient.doDelete(
 			StringUtil.replace(
-				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}", segmentsExperimentKey),
+				_PATH_EXPERIMENTS_EXPERIMENT, "{experimentId}",
+				segmentsExperimentKey),
 			new HashMap<>(), _headers);
 	}
 

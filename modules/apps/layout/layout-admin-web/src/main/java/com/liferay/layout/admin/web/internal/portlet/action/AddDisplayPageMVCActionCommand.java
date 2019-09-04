@@ -145,29 +145,26 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 				"redirectURL",
 				getRedirectURL(actionRequest, layoutPageTemplateEntry));
 		}
-		catch (NoSuchClassNameException nscne) {
-			errorJSONObject = JSONUtil.put(
-				"classNameId",
-				ResourceBundleUtil.getString(
-					resourceBundle, "invalid-content-type"));
-		}
-		catch (NoSuchClassTypeException nscte) {
-			errorJSONObject = JSONUtil.put(
-				"classTypeId",
-				ResourceBundleUtil.getString(
-					resourceBundle, "invalid-subtype"));
-		}
 		catch (PortalException pe) {
-			SessionErrors.add(
-				actionRequest, "layoutPageTemplateEntryNameInvalid");
+			if (pe instanceof NoSuchClassNameException) {
+				errorJSONObject = JSONUtil.put(
+					"classNameId",
+					ResourceBundleUtil.getString(
+						resourceBundle, "invalid-content-type"));
+			}
+			else if (pe instanceof NoSuchClassTypeException) {
+				errorJSONObject = JSONUtil.put(
+					"classTypeId",
+					ResourceBundleUtil.getString(
+						resourceBundle, "invalid-subtype"));
+			}
+			else {
+				JSONObject jsonObject =
+					_layoutPageTemplateEntryExceptionRequestHandler.
+						createErrorJSONObject(actionRequest, pe);
 
-			hideDefaultErrorMessage(actionRequest);
-
-			JSONObject jsonObject =
-				_layoutPageTemplateEntryExceptionRequestHandler.
-					createErrorJSONObject(actionRequest, pe);
-
-			errorJSONObject = JSONUtil.put("name", jsonObject.get("error"));
+				errorJSONObject = JSONUtil.put("name", jsonObject.get("error"));
+			}
 		}
 
 		return JSONUtil.put("error", errorJSONObject);

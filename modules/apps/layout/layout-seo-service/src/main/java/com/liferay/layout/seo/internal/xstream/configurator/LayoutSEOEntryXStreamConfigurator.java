@@ -30,8 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(service = XStreamConfigurator.class)
-public class LayoutSEOEntryXStreamConfigurator
-	implements XStreamConfigurator {
+public class LayoutSEOEntryXStreamConfigurator implements XStreamConfigurator {
 
 	@Override
 	public List<XStreamType> getAllowedXStreamTypes() {

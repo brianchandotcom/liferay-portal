@@ -42,6 +42,12 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	}
 
 	@Override
+	public int getGlobalUsageCount() {
+		return FragmentEntryLinkLocalServiceUtil.
+			getFragmentEntryLinksCountByFragmentEntryId(getFragmentEntryId());
+	}
+
+	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
 		if (Validator.isNotNull(_imagePreviewURL)) {
 			return _imagePreviewURL;

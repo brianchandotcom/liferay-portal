@@ -74,6 +74,16 @@ public class ConcatCheck extends StringConcatenationCheck {
 
 					previousLiteralStringDetailAST = grandChildDetailAST;
 				}
+
+				if (grandChildDetailAST.getType() == TokenTypes.PLUS) {
+					DetailAST literalStringDetailAST =
+						grandChildDetailAST.findFirstToken(
+							TokenTypes.STRING_LITERAL);
+
+					if (literalStringDetailAST != null) {
+						log(grandChildDetailAST, MSG_INCORRECT_PLUS);
+					}
+				}
 			}
 
 			childDetailAST = childDetailAST.getNextSibling();

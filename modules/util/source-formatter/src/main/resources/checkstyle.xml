@@ -128,6 +128,7 @@
 			<message key="end.character.invalid" value="When concatenating multiple literal strings, only the last literal string can end with ''{0}''" />
 			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
 			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />
+			<message key="plus.incorrect" value="Do not use ''+'' inside ''StringBundler.concat''" />
 			<message key="start.character.invalid" value="When concatenating multiple literal strings, only the first literal string can start with ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantNameCheck">

@@ -18,6 +18,8 @@
 
 			<property name="db.upgrade.client.jar" value="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
 			<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/logs/upgrade.log" />
+			<property name="db.upgrade.client.src.dir" value="${project.dir}/modules/util/portal-tools-db-upgrade-client" />
+			<property name="db.upgrade.client.dist.dir" value="${project.dir}/tools/sdk/dist" />
 		</sequential>
 	</macrodef>
 
@@ -204,6 +206,94 @@
 				<echo message="${java.error.available}: Unsupported major.minor version" />
 			</sequential>
 		</parallel>
+
+		<clean-database-upgrade-client />
+	</target>
+
+	<target name="check-upgrade-client-zip-content">
+		<get-database-upgrade-client-paths />
+
+		<delete dir="${db.upgrade.client.home}/" />
+
+		<sequential>
+			<gradle-execute dir="${db.upgrade.client.src.dir}" task="distZip" />
+
+			<unzip
+				dest="${db.upgrade.client.home}"
+			>
+				<fileset
+					dir="${db.upgrade.client.dist.dir}"
+					includes="**/portal-tools-db-upgrade-client*.zip"
+				/>
+			</unzip>
+
+			<delete>
+				<fileset
+					dir="${db.upgrade.client.dist.dir}"
+					includes="**/portal-tools-db-upgrade-client*.zip"
+				/>
+			</delete>
+
+			<if>
+				<available file="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
+				<then>
+					<echo message="com.liferay.portal.tools.db.upgrade.client.jar is present." />
+				</then>
+				<else>
+					<fail message="com.liferay.portal.tools.db.upgrade.client.jar is not present." />
+				</else>
+			</if>
+
+			<if>
+				<available file="${db.upgrade.client.home}/app-server.properties" />
+				<then>
+					<echo message="app-server.properties is present." />
+				</then>
+				<else>
+					<fail message="app-server.properties is not present." />
+				</else>
+			</if>
+
+			<if>
+				<available file="${db.upgrade.client.home}/db_upgrade.bat" />
+				<then>
+					<echo message="db_upgrade.bat is present." />
+				</then>
+				<else>
+					<fail message="db_upgrade.bat is not present." />
+				</else>
+			</if>
+
+			<if>
+				<available file="${db.upgrade.client.home}/db_upgrade.sh" />
+				<then>
+					<echo message="db_upgrade.sh is present." />
+				</then>
+				<else>
+					<fail message="db_upgrade.sh is not present." />
+				</else>
+			</if>
+
+			<if>
+				<available file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
+				<then>
+					<echo message="portal-upgrade-database.properties is present." />
+				</then>
+				<else>
+					<fail message="portal-upgrade-database.properties is not present." />
+				</else>
+			</if>
+
+			<if>
+				<available file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
+				<then>
+					<echo message="portal-upgrade-ext.properties is present." />
+				</then>
+				<else>
+					<fail message="portal-upgrade-ext.properties is not present." />
+				</else>
+			</if>
+		</sequential>
 
 		<clean-database-upgrade-client />
 	</target>

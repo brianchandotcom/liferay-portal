@@ -22,7 +22,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":private:apps:portal-search-tuning:portal-search-tuning-web-api")
-
-	jsCompile project(":apps:frontend-taglib:frontend-taglib")
-	jsCompile project(":apps:frontend-taglib:frontend-taglib-clay")
 }

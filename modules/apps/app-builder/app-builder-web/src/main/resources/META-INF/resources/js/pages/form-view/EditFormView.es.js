@@ -13,14 +13,13 @@
  */
 
 import React, {useState, useRef, useContext, useEffect} from 'react';
-import useEmptyDropTarget from './useEmptyDropTarget.es';
 import {AppContext} from '../../AppContext.es';
-import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import FieldTypeList from '../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../components/sidebar/Sidebar.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {useSidebarContent} from '../../hooks/index.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
+import LayoutBuilderManager from './LayoutBuilderManager.es';
 
 export default ({
 	dataDefinitionId,
@@ -107,7 +106,6 @@ export default ({
 	);
 
 	useSidebarContent(builderElementRef, isSidebarClosed);
-	useEmptyDropTarget(dataLayoutBuilder);
 
 	const handleCancel = () => {
 		if (newCustomObject) {
@@ -142,7 +140,7 @@ export default ({
 
 	return (
 		<>
-			<DragLayer />
+			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
 
 			<UpperToolbar>
 				<UpperToolbar.Input

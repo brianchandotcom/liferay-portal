@@ -14,12 +14,17 @@
 
 import {useEffect} from 'react';
 import {useDrop} from 'react-dnd';
+import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
+import dom from 'metal-dom';
 
-export default dataLayoutBuilder => {
-	const store = dataLayoutBuilder.getStore();
-	const {activePage} = store;
+const replaceColumn = node => {
+	if (node.parentNode) {
+		node.parentNode.replaceChild(node.cloneNode(true), node);
+	}
+};
 
-	const [{canDrop, overTarget}, dropEmpty] = useDrop({
+export default ({dataLayoutBuilder, node}) => {
+	const [{canDrop, overTarget}, dropColumn] = useDrop({
 		accept: 'fieldType',
 		collect: monitor => ({
 			canDrop: monitor.canDrop(),
@@ -27,43 +32,37 @@ export default dataLayoutBuilder => {
 		}),
 		drop: item => {
 			dataLayoutBuilder.dispatch('fieldAdded', {
-				addedToPlaceholder: true,
+				addedToPlaceholder: !!dom.closest(node, '.placeholder'),
 				fieldType: {
 					...item,
 					editable: true
 				},
-				indexes: {
-					columnIndex: 0,
-					pageIndex: activePage,
-					rowIndex: 0
-				}
+				indexes: getIndexes(node.parentElement)
 			});
 		}
 	});
 
 	useEffect(() => {
-		dropEmpty(document.querySelector('.ddm-empty-page'));
-	}, [activePage, dropEmpty]);
+		dropColumn(node);
+
+		return () => replaceColumn(node);
+	}, [dropColumn, node]);
 
 	useEffect(() => {
-		const emptyNode = document.querySelector('.ddm-empty-page');
+		const {classList} = node;
 
-		if (!emptyNode) {
-			return;
-		}
-
-		const {classList} = emptyNode;
-
-		if (canDrop) {
+		if (canDrop && classList.contains('ddm-empty-page')) {
 			classList.add('target-droppable');
-
-			if (overTarget) {
-				classList.add('target-over');
-			} else {
-				classList.remove('target-over');
-			}
 		} else {
 			classList.remove('target-droppable');
 		}
-	}, [canDrop, overTarget]);
+
+		if (overTarget) {
+			classList.add('target-over');
+		} else {
+			classList.remove('target-over');
+		}
+	}, [canDrop, node, overTarget]);
+
+	return null;
 };

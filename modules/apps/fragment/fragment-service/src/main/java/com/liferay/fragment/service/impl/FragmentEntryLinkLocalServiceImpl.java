@@ -359,6 +359,14 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntryLink> getFragmentEntryLinksByFragmentEntryId(
+		long fragmentEntryId) {
+
+		return fragmentEntryLinkPersistence.findByFragmentEntryId(
+			fragmentEntryId);
+	}
+
+	@Override
 	public int getFragmentEntryLinksCount(long groupId, long fragmentEntryId) {
 		return fragmentEntryLinkFinder.countByG_F(groupId, fragmentEntryId);
 	}
@@ -378,6 +386,14 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fragmentEntryLinkFinder.countByG_F_C_L(
 			groupId, fragmentEntryId, classNameId, layoutPageTemplateType);
+	}
+
+	@Override
+	public int getFragmentEntryLinksCountByFragmentEntryId(
+		long fragmentEntryId) {
+
+		return fragmentEntryLinkPersistence.countByFragmentEntryId(
+			fragmentEntryId);
 	}
 
 	@Override

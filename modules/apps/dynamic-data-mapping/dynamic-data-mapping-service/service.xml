@@ -227,11 +227,11 @@
 		<column name="formInstanceVersion" type="String" />
 		<column name="formInstanceRecordId" type="long" />
 		<column name="version" type="String" />
+		<column name="storageId" type="long" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
-		<column name="storageId" type="long" />
 
 		<!-- Finder methods -->
 

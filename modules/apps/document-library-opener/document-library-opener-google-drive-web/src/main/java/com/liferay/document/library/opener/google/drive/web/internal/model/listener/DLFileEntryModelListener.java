@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 
 	@Override
-	public void onAfterRemove(DLFileEntry dlFileEntry)
+	public void onBeforeRemove(DLFileEntry dlFileEntry)
 		throws ModelListenerException {
 
 		try {

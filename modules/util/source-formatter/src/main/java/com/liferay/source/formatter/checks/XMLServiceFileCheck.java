@@ -14,23 +14,14 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -69,8 +60,13 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 			String entityName = entityElement.attributeValue("name");
 
-			List<String> columnNames = _getColumnNames(
-				fileName, absolutePath, entityName);
+			List<String> columnNames = new ArrayList<>();
+
+			for (Element columnElement :
+					(List<Element>)entityElement.elements("column")) {
+
+				columnNames.add(columnElement.attributeValue("name"));
+			}
 
 			ServiceColumnElementComparator serviceColumnElementComparator =
 				new ServiceColumnElementComparator(columnNames);
@@ -114,96 +110,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 			new ServiceExceptionElementComparator());
 	}
 
-	private List<String> _getColumnNames(
-			String fileName, String absolutePath, String entityName)
-		throws IOException {
-
-		List<String> columnNames = new ArrayList<>();
-
-		String tablesContent = _getTablesContent(fileName, absolutePath);
-
-		if (tablesContent == null) {
-			return columnNames;
-		}
-
-		Pattern pattern = Pattern.compile(
-			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
-
-		Matcher matcher = pattern.matcher(tablesContent);
-
-		if (!matcher.find()) {
-			return columnNames;
-		}
-
-		String tableContent = matcher.group(1);
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(tableContent));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			line = StringUtil.trim(line);
-
-			String columnName = line.substring(0, line.indexOf(CharPool.SPACE));
-
-			columnName = StringUtil.replace(
-				columnName, CharPool.UNDERLINE, StringPool.BLANK);
-
-			columnNames.add(columnName);
-		}
-
-		return columnNames;
-	}
-
-	private synchronized String _getPortalTablesContent() throws IOException {
-		if (_portalTablesContent != null) {
-			return _portalTablesContent;
-		}
-
-		_portalTablesContent = getContent(
-			"sql/portal-tables.sql", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		return _portalTablesContent;
-	}
-
-	private String _getTablesContent(String fileName, String absolutePath)
-		throws IOException {
-
-		if (isPortalSource() &&
-			!isModulesFile(
-				absolutePath, getPluginsInsideModulesDirectoryNames())) {
-
-			return _getPortalTablesContent();
-		}
-
-		int pos = fileName.lastIndexOf(CharPool.SLASH);
-
-		String moduleOrPluginFolder = fileName.substring(0, pos);
-
-		String tablesContent = FileUtil.read(
-			new File(
-				moduleOrPluginFolder +
-					"/src/main/resources/META-INF/sql/tables.sql"));
-
-		if (tablesContent == null) {
-			tablesContent = FileUtil.read(
-				new File(
-					moduleOrPluginFolder + "/src/META-INF/sql/tables.sql"));
-		}
-
-		if (tablesContent == null) {
-			tablesContent = FileUtil.read(
-				new File(moduleOrPluginFolder + "/sql/tables.sql"));
-		}
-
-		return tablesContent;
-	}
-
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";
-
-	private String _portalTablesContent;
 
 	private class ServiceColumnElementComparator extends ElementComparator {
 

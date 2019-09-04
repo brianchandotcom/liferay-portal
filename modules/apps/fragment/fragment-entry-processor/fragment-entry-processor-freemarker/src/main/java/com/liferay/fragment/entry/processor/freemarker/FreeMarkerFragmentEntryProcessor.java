@@ -20,10 +20,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.util.FragmentEntryConfigUtil;
-import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -44,7 +42,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -121,10 +118,11 @@ public class FreeMarkerFragmentEntryProcessor
 
 		Map<String, Object> contextObjects = new HashMap<>();
 
-		JSONObject configurationValuesJSONObject = _getConfigurationJSONObject(
-			fragmentEntryLink.getConfiguration(),
-			fragmentEntryLink.getEditableValues(),
-			fragmentEntryProcessorContext.getSegmentsExperienceIds());
+		JSONObject configurationValuesJSONObject =
+			FragmentEntryConfigUtil.getConfigurationJSONObject(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryProcessorContext.getSegmentsExperienceIds());
 
 		contextObjects.put("configuration", configurationValuesJSONObject);
 
@@ -215,68 +213,6 @@ public class FreeMarkerFragmentEntryProcessor
 		catch (TemplateException te) {
 			throw new FragmentEntryContentException(_getMessage(te), te);
 		}
-	}
-
-	private JSONObject _getConfigurationJSONObject(
-			String configuration, String editableValues,
-			long[] segmentsExperienceIds)
-		throws JSONException {
-
-		JSONObject configurationDefaultValuesJSONObject =
-			FragmentEntryConfigUtil.getConfigurationDefaultValuesJSONObject(
-				configuration);
-
-		if (configurationDefaultValuesJSONObject == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		Class<?> clazz = getClass();
-
-		String className = clazz.getName();
-
-		JSONObject configurationValuesJSONObject =
-			editableValuesJSONObject.getJSONObject(className);
-
-		if (configurationValuesJSONObject == null) {
-			return configurationDefaultValuesJSONObject;
-		}
-
-		JSONObject configurationJSONObject = configurationValuesJSONObject;
-
-		if (FragmentEntryConfigUtil.isPersonalizationSupported(
-				configurationValuesJSONObject)) {
-
-			configurationJSONObject =
-				FragmentEntryConfigUtil.getSegmentedConfigurationValues(
-					segmentsExperienceIds, configurationValuesJSONObject);
-		}
-
-		List<FragmentConfigurationField> configurationFields =
-			FragmentEntryConfigUtil.getFragmentConfigurationFields(
-				configuration);
-
-		for (FragmentConfigurationField configurationField :
-				configurationFields) {
-
-			String name = configurationField.getName();
-
-			Object object = configurationJSONObject.get(name);
-
-			if (Validator.isNull(object)) {
-				continue;
-			}
-
-			configurationDefaultValuesJSONObject.put(
-				name,
-				FragmentEntryConfigUtil.getFieldValue(
-					configurationField,
-					configurationJSONObject.getString(name)));
-		}
-
-		return configurationDefaultValuesJSONObject;
 	}
 
 	private String _getMessage(TemplateException te) {

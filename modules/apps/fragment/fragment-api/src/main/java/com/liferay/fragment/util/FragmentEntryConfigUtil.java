@@ -61,6 +61,60 @@ public class FragmentEntryConfigUtil {
 		return defaultValuesJSONObject;
 	}
 
+	public static JSONObject getConfigurationJSONObject(
+			String configuration, String editableValues,
+			long[] segmentsExperienceIds)
+		throws JSONException {
+
+		JSONObject configurationDefaultValuesJSONObject =
+			getConfigurationDefaultValuesJSONObject(configuration);
+
+		if (configurationDefaultValuesJSONObject == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			editableValues);
+
+		JSONObject configurationValuesJSONObject =
+			editableValuesJSONObject.getJSONObject(
+				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+
+		if (configurationValuesJSONObject == null) {
+			return configurationDefaultValuesJSONObject;
+		}
+
+		JSONObject configurationJSONObject = configurationValuesJSONObject;
+
+		if (isPersonalizationSupported(configurationValuesJSONObject)) {
+			configurationJSONObject = getSegmentedConfigurationValues(
+				segmentsExperienceIds, configurationValuesJSONObject);
+		}
+
+		List<FragmentConfigurationField> configurationFields =
+			getFragmentConfigurationFields(configuration);
+
+		for (FragmentConfigurationField configurationField :
+				configurationFields) {
+
+			String name = configurationField.getName();
+
+			Object object = configurationJSONObject.get(name);
+
+			if (Validator.isNull(object)) {
+				continue;
+			}
+
+			configurationDefaultValuesJSONObject.put(
+				name,
+				getFieldValue(
+					configurationField,
+					configurationJSONObject.getString(name)));
+		}
+
+		return configurationDefaultValuesJSONObject;
+	}
+
 	public static Map<String, Object> getContextObjects(
 		JSONObject configurationValuesJSONObject, String configuration) {
 
@@ -141,8 +195,7 @@ public class FragmentEntryConfigUtil {
 
 		JSONObject configurationValuesJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor");
+				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (configurationValuesJSONObject == null) {
 			return null;
@@ -372,6 +425,10 @@ public class FragmentEntryConfigUtil {
 	}
 
 	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";
+
+	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
+		"com.liferay.fragment.entry.processor.freemarker." +
+			"FreeMarkerFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryConfigUtil.class);

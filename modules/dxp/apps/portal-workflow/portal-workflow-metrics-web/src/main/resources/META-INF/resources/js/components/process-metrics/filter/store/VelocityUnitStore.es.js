@@ -17,6 +17,14 @@ import moment from 'moment';
 import {TimeRangeContext} from './TimeRangeStore.es';
 import {usePrevious} from '../../../../shared/util/hooks.es';
 
+const velocityUnitConstants = {
+	days: 'Days',
+	hours: 'Hours',
+	months: 'Months',
+	weeks: 'Weeks',
+	years: 'Years'
+};
+
 const useVelocityUnit = velocityUnitKeys => {
 	const {getSelectedTimeRange} = useContext(TimeRangeContext);
 	const [velocityUnits, setVelocityUnits] = useState([]);
@@ -103,27 +111,27 @@ const getDefaultVelocityUnit = velocityUnits => {
 };
 
 const daysUnit = {
-	key: 'Days',
+	key: velocityUnitConstants.days,
 	name: Liferay.Language.get('inst-day')
 };
 
 const hoursUnit = {
-	key: 'Hours',
+	key: velocityUnitConstants.hours,
 	name: Liferay.Language.get('inst-hour')
 };
 
 const monthsUnit = {
-	key: 'Months',
+	key: velocityUnitConstants.months,
 	name: Liferay.Language.get('inst-month')
 };
 
 const weeksUnit = {
-	key: 'Weeks',
+	key: velocityUnitConstants.weeks,
 	name: Liferay.Language.get('inst-week')
 };
 
 const yearsUnit = {
-	key: 'Years',
+	key: velocityUnitConstants.years,
 	name: Liferay.Language.get('inst-year')
 };
 
@@ -147,4 +155,9 @@ const VelocityUnitProvider = ({children, velocityUnitKeys}) => {
 	);
 };
 
-export {VelocityUnitContext, VelocityUnitProvider, useVelocityUnit};
+export {
+	velocityUnitConstants,
+	VelocityUnitContext,
+	VelocityUnitProvider,
+	useVelocityUnit
+};

@@ -18,5 +18,5 @@ create table AppBuilderAppDeployment (
 	appBuilderAppDeploymentId LONG not null primary key,
 	appBuilderAppId LONG,
 	deploymentType VARCHAR(75) null,
-	settings_ VARCHAR(75) null
+	settings_ TEXT null
 );

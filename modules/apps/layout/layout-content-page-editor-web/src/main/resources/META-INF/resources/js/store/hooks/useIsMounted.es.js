@@ -24,7 +24,7 @@ export default function useIsMounted() {
 		return () => {
 			mountedRef.current = false;
 		};
-	});
+	}, []);
 
 	return isMounted;
 }

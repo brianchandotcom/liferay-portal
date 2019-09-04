@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.context,\
 	com.liferay.portal.kernel.test.junit,\
+	com.liferay.portal.kernel.test.portlet,\
 	com.liferay.portal.kernel.test.randomizerbumpers,\
 	com.liferay.portal.kernel.test.rule,\
 	com.liferay.portal.kernel.test.rule.callback,\

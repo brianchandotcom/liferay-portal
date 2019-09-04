@@ -17,7 +17,7 @@ package com.liferay.segments.asah.rest.resource.v1_0;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.segments.asah.rest.dto.v1_0.RunExperiment;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 
 import javax.annotation.Generated;
 
@@ -38,10 +38,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface RunExperimentResource {
+public interface ExperimentRunResource {
 
-	public RunExperiment postExperimentRun(
-			Long experimentId, RunExperiment runExperiment)
+	public ExperimentRun postExperimentRun(
+			Long experimentId, ExperimentRun experimentRun)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

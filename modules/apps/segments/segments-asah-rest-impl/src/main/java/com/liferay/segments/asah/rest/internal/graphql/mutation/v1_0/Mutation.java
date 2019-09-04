@@ -22,10 +22,10 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
-import com.liferay.segments.asah.rest.dto.v1_0.RunExperiment;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.dto.v1_0.Status;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
-import com.liferay.segments.asah.rest.resource.v1_0.RunExperimentResource;
+import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
 
 import javax.annotation.Generated;
@@ -52,12 +52,12 @@ public class Mutation {
 			experimentResourceComponentServiceObjects;
 	}
 
-	public static void setRunExperimentResourceComponentServiceObjects(
-		ComponentServiceObjects<RunExperimentResource>
-			runExperimentResourceComponentServiceObjects) {
+	public static void setExperimentRunResourceComponentServiceObjects(
+		ComponentServiceObjects<ExperimentRunResource>
+			experimentRunResourceComponentServiceObjects) {
 
-		_runExperimentResourceComponentServiceObjects =
-			runExperimentResourceComponentServiceObjects;
+		_experimentRunResourceComponentServiceObjects =
+			experimentRunResourceComponentServiceObjects;
 	}
 
 	public static void setStatusResourceComponentServiceObjects(
@@ -83,16 +83,16 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public RunExperiment createExperimentRun(
+	public ExperimentRun createExperimentRun(
 			@GraphQLName("experimentId") Long experimentId,
-			@GraphQLName("runExperiment") RunExperiment runExperiment)
+			@GraphQLName("experimentRun") ExperimentRun experimentRun)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_runExperimentResourceComponentServiceObjects,
+			_experimentRunResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			runExperimentResource -> runExperimentResource.postExperimentRun(
-				experimentId, runExperiment));
+			experimentRunResource -> experimentRunResource.postExperimentRun(
+				experimentId, experimentRun));
 	}
 
 	@GraphQLField
@@ -158,16 +158,16 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			RunExperimentResource runExperimentResource)
+			ExperimentRunResource experimentRunResource)
 		throws Exception {
 
-		runExperimentResource.setContextAcceptLanguage(_acceptLanguage);
-		runExperimentResource.setContextCompany(_company);
-		runExperimentResource.setContextHttpServletRequest(_httpServletRequest);
-		runExperimentResource.setContextHttpServletResponse(
+		experimentRunResource.setContextAcceptLanguage(_acceptLanguage);
+		experimentRunResource.setContextCompany(_company);
+		experimentRunResource.setContextHttpServletRequest(_httpServletRequest);
+		experimentRunResource.setContextHttpServletResponse(
 			_httpServletResponse);
-		runExperimentResource.setContextUriInfo(_uriInfo);
-		runExperimentResource.setContextUser(_user);
+		experimentRunResource.setContextUriInfo(_uriInfo);
+		experimentRunResource.setContextUser(_user);
 	}
 
 	private void _populateResourceContext(StatusResource statusResource)
@@ -183,8 +183,8 @@ public class Mutation {
 
 	private static ComponentServiceObjects<ExperimentResource>
 		_experimentResourceComponentServiceObjects;
-	private static ComponentServiceObjects<RunExperimentResource>
-		_runExperimentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ExperimentRunResource>
+		_experimentRunResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StatusResource>
 		_statusResourceComponentServiceObjects;
 

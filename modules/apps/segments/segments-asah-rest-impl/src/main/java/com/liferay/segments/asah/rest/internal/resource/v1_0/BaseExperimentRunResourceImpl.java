@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.TransformUtil;
-import com.liferay.segments.asah.rest.dto.v1_0.RunExperiment;
-import com.liferay.segments.asah.rest.resource.v1_0.RunExperimentResource;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
+import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -50,8 +50,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseRunExperimentResourceImpl
-	implements RunExperimentResource {
+public abstract class BaseExperimentRunResourceImpl
+	implements ExperimentRunResource {
 
 	/**
 	 * Invoke this method with the command line:
@@ -66,14 +66,14 @@ public abstract class BaseRunExperimentResourceImpl
 	)
 	@Path("/experiments/{experimentId}/run")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "RunExperiment")})
-	public RunExperiment postExperimentRun(
+	@Tags(value = {@Tag(name = "ExperimentRun")})
+	public ExperimentRun postExperimentRun(
 			@NotNull @Parameter(hidden = true) @PathParam("experimentId") Long
 				experimentId,
-			RunExperiment runExperiment)
+			ExperimentRun experimentRun)
 		throws Exception {
 
-		return new RunExperiment();
+		return new ExperimentRun();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -105,7 +105,7 @@ public abstract class BaseRunExperimentResourceImpl
 	}
 
 	protected void preparePatch(
-		RunExperiment runExperiment, RunExperiment existingRunExperiment) {
+		ExperimentRun experimentRun, ExperimentRun existingExperimentRun) {
 	}
 
 	protected <T, R> List<R> transform(

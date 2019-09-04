@@ -14,15 +14,15 @@
 
 package com.liferay.segments.asah.rest.client.serdes.v1_0;
 
+import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentVariant;
-import com.liferay.segments.asah.rest.client.dto.v1_0.RunExperiment;
 import com.liferay.segments.asah.rest.client.json.BaseJSONParser;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.annotation.Generated;
@@ -32,24 +32,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RunExperimentSerDes {
+public class ExperimentRunSerDes {
 
-	public static RunExperiment toDTO(String json) {
-		RunExperimentJSONParser runExperimentJSONParser =
-			new RunExperimentJSONParser();
+	public static ExperimentRun toDTO(String json) {
+		ExperimentRunJSONParser experimentRunJSONParser =
+			new ExperimentRunJSONParser();
 
-		return runExperimentJSONParser.parseToDTO(json);
+		return experimentRunJSONParser.parseToDTO(json);
 	}
 
-	public static RunExperiment[] toDTOs(String json) {
-		RunExperimentJSONParser runExperimentJSONParser =
-			new RunExperimentJSONParser();
+	public static ExperimentRun[] toDTOs(String json) {
+		ExperimentRunJSONParser experimentRunJSONParser =
+			new ExperimentRunJSONParser();
 
-		return runExperimentJSONParser.parseToDTOs(json);
+		return experimentRunJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(RunExperiment runExperiment) {
-		if (runExperiment == null) {
+	public static String toJSON(ExperimentRun experimentRun) {
+		if (experimentRun == null) {
 			return "null";
 		}
 
@@ -57,17 +57,17 @@ public class RunExperimentSerDes {
 
 		sb.append("{");
 
-		if (runExperiment.getConfidenceLevel() != null) {
+		if (experimentRun.getConfidenceLevel() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"confidenceLevel\": ");
 
-			sb.append(runExperiment.getConfidenceLevel());
+			sb.append(experimentRun.getConfidenceLevel());
 		}
 
-		if (runExperiment.getStatus() != null) {
+		if (experimentRun.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -76,12 +76,12 @@ public class RunExperimentSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(runExperiment.getStatus()));
+			sb.append(_escape(experimentRun.getStatus()));
 
 			sb.append("\"");
 		}
 
-		if (runExperiment.getVariants() != null) {
+		if (experimentRun.getVariants() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -90,10 +90,10 @@ public class RunExperimentSerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < runExperiment.getVariants().length; i++) {
-				sb.append(String.valueOf(runExperiment.getVariants()[i]));
+			for (int i = 0; i < experimentRun.getVariants().length; i++) {
+				sb.append(String.valueOf(experimentRun.getVariants()[i]));
 
-				if ((i + 1) < runExperiment.getVariants().length) {
+				if ((i + 1) < experimentRun.getVariants().length) {
 					sb.append(", ");
 				}
 			}
@@ -107,77 +107,77 @@ public class RunExperimentSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RunExperimentJSONParser runExperimentJSONParser =
-			new RunExperimentJSONParser();
+		ExperimentRunJSONParser experimentRunJSONParser =
+			new ExperimentRunJSONParser();
 
-		return runExperimentJSONParser.parseToMap(json);
+		return experimentRunJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(RunExperiment runExperiment) {
-		if (runExperiment == null) {
+	public static Map<String, String> toMap(ExperimentRun experimentRun) {
+		if (experimentRun == null) {
 			return null;
 		}
 
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new TreeMap<>();
 
-		if (runExperiment.getConfidenceLevel() == null) {
+		if (experimentRun.getConfidenceLevel() == null) {
 			map.put("confidenceLevel", null);
 		}
 		else {
 			map.put(
 				"confidenceLevel",
-				String.valueOf(runExperiment.getConfidenceLevel()));
+				String.valueOf(experimentRun.getConfidenceLevel()));
 		}
 
-		if (runExperiment.getStatus() == null) {
+		if (experimentRun.getStatus() == null) {
 			map.put("status", null);
 		}
 		else {
-			map.put("status", String.valueOf(runExperiment.getStatus()));
+			map.put("status", String.valueOf(experimentRun.getStatus()));
 		}
 
-		if (runExperiment.getVariants() == null) {
+		if (experimentRun.getVariants() == null) {
 			map.put("variants", null);
 		}
 		else {
-			map.put("variants", String.valueOf(runExperiment.getVariants()));
+			map.put("variants", String.valueOf(experimentRun.getVariants()));
 		}
 
 		return map;
 	}
 
-	public static class RunExperimentJSONParser
-		extends BaseJSONParser<RunExperiment> {
+	public static class ExperimentRunJSONParser
+		extends BaseJSONParser<ExperimentRun> {
 
 		@Override
-		protected RunExperiment createDTO() {
-			return new RunExperiment();
+		protected ExperimentRun createDTO() {
+			return new ExperimentRun();
 		}
 
 		@Override
-		protected RunExperiment[] createDTOArray(int size) {
-			return new RunExperiment[size];
+		protected ExperimentRun[] createDTOArray(int size) {
+			return new ExperimentRun[size];
 		}
 
 		@Override
 		protected void setField(
-			RunExperiment runExperiment, String jsonParserFieldName,
+			ExperimentRun experimentRun, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "confidenceLevel")) {
 				if (jsonParserFieldValue != null) {
-					runExperiment.setConfidenceLevel(
+					experimentRun.setConfidenceLevel(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					runExperiment.setStatus((String)jsonParserFieldValue);
+					experimentRun.setStatus((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "variants")) {
 				if (jsonParserFieldValue != null) {
-					runExperiment.setVariants(
+					experimentRun.setVariants(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(

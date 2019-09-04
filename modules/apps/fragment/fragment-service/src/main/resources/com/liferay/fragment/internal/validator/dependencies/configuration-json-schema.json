@@ -53,6 +53,18 @@
 					"then": {
 						"$ref": "#/definitions/fieldItemSelector"
 					}
+				},
+				{
+					"if": {
+						"properties": {
+							"type": {
+								"const": "text"
+							}
+						}
+					},
+					"then": {
+						"$ref": "#/definitions/fieldText"
+					}
 				}
 			],
 			"properties": {
@@ -255,6 +267,21 @@
 			],
 			"title": "The Items Schema",
 			"type": "object"
+		},
+		"fieldText": {
+			"properties": {
+				"typeOptions": {
+					"additionalProperties": false,
+					"properties": {
+						"placeholder": {
+							"title": "The Placeholder Schema",
+							"type": "string"
+						}
+					},
+					"title": "The Typeoptions Schema",
+					"type": "object"
+				}
+			}
 		}
 	},
 	"properties": {

@@ -17,7 +17,7 @@ package com.liferay.layout.seo.kernel;
 /**
  * @author Cristina González
  */
-public interface SEOLink {
+public interface LayoutSEOLink {
 
 	public String getHref();
 

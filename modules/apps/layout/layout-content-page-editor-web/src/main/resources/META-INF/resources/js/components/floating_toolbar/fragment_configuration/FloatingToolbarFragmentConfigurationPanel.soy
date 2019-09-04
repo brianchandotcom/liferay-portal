@@ -12,12 +12,7 @@
 					name: string,
 					label: string,
 					type: string,
-					typeOptions: [
-						validValues: list<[
-							label: string,
-							value: string
-						]>
-					]
+					typeOptions: ?
 				]>
 			]>
 		],
@@ -71,12 +66,7 @@
 			name: string,
 			label: string,
 			type: string,
-			typeOptions: [
-				validValues: list<[
-					label: string,
-					value: string
-				]>
-			]
+			typeOptions: ?
 		]>
 	]}
 	{@param handleChangeConfiguration: any}
@@ -106,12 +96,7 @@
 		name: string,
 		label: string,
 		type: string,
-		typeOptions: [
-			validValues: list<[
-				label: string,
-				value: string
-			]>
-		]
+		typeOptions: ?
 	]}
 
 	<div id="{$field.name}"></div>

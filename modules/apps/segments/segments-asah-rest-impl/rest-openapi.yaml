@@ -50,8 +50,7 @@ components:
         ExperimentVariant:
             properties:
                 id:
-                    format: int64
-                    type: integer
+                    type: string
                 trafficSplit:
                     format: double
                     maximum: 1

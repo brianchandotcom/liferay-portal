@@ -156,7 +156,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -231,7 +231,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -387,7 +387,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -445,7 +445,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 

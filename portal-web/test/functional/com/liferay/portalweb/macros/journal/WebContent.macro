@@ -59,7 +59,7 @@ definition {
 	}
 
 	macro addDraftPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD();
+		WebContentDisplayPortletNavigator.gotoAdd();
 
 		WebContent.addDraft(
 			webContentContent = "${webContentContent}",
@@ -144,7 +144,7 @@ definition {
 	}
 
 	macro addLocalizedPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoAdd(
 			portletNameTranslation = "${portletNameTranslation}",
 			structureName = "${localizedBasicWebContent}");
 
@@ -212,7 +212,7 @@ definition {
 	}
 
 	macro addPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(portletNameScoped = "${portletNameScoped}");
+		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = "${portletNameScoped}");
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
@@ -238,7 +238,7 @@ definition {
 	}
 
 	macro addStructuredPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(structureName = "${structureName}");
+		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${structureName}");
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
@@ -366,7 +366,7 @@ definition {
 	}
 
 	macro addWithGlobalStructurePGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(structureName = "${structureName}");
+		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${structureName}");
 
 		WebContent.addCP(webContentTitle = "${webContentTitle}");
 
@@ -675,7 +675,7 @@ definition {
 	}
 
 	macro addWithWorkflowPGViaWCD {
-		WebContentNavigator.gotoAddPGViaWCD(structureName = "${selectStructureName}");
+		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${selectStructureName}");
 
 		WebContent.addCP(
 			webContentContent = "${webContentContent}",
@@ -1535,7 +1535,7 @@ definition {
 	macro viewEditWCViaWCD {
 		AssertElementPresent(locator1 = "WCD#WEB_CONTENT_CONTENT");
 
-		WebContentNavigator.gotoArticleMenuPGViaWCD(webContentTitle = "${webContentTitle}");
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
 
 		AssertTextEquals(
 			key_menuItem = "Edit Web Content",

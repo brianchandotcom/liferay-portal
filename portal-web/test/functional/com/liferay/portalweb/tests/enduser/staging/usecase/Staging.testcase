@@ -998,7 +998,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WebContent Title");
 

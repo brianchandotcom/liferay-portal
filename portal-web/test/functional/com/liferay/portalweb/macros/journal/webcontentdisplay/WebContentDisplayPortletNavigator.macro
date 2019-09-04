@@ -1,0 +1,52 @@
+definition {
+
+	macro gotoAdd {
+		var portletName = "Web Content Display";
+
+		if (isSet(portletNameScoped)) {
+			var portletName = "${portletNameScoped}";
+		}
+
+		if (isSet(portletNameTranslation)) {
+			var portletName = "${portletNameTranslation}";
+		}
+
+		Portlet.clickPortletPlusIconPG(portletName = "${portletName}");
+
+		if (!(contains("${structureName}", "{structureName}"))) {
+			var structureName = "${structureName}";
+		}
+		else {
+			var structureName = "Basic Web Content";
+		}
+
+		var key_structureName = "${structureName}";
+
+		AssertClick(
+			locator1 = "WCD#ADD_STRUCTURED_WEB_CONTENT",
+			value1 = "${structureName}");
+
+		AssertVisible(locator1 = "TextInput#TITLE");
+	}
+
+	macro gotoArticleEllipsisMenu {
+		MouseOver(locator1 = "WCD#WEB_CONTENT_CONTENT");
+
+		MouseOver.mouseOverNotVisible(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+
+		Click(
+			key_webContentTitle = "${webContentTitle}",
+			locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+	}
+
+	macro gotoEdit {
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+		MenuItem.click(menuItem = "${menuItem}");
+
+		AssertVisible(locator1 = "TextInput#TITLE");
+	}
+
+}

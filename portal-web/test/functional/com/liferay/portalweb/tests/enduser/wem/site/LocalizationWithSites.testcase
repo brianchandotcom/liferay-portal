@@ -564,7 +564,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content1 Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Editar contenido web",
 			webContentTitle = "Web Content1 Title");
 

@@ -37,7 +37,7 @@ class TextField extends Component {
 				...state,
 				configurationValues: {
 					...state.configurationValues,
-					[this.field.name]: Liferay.Util.unescapeHTML(value)
+					[this.field.name]: value
 				}
 			};
 		}
@@ -56,7 +56,7 @@ class TextField extends Component {
 
 		this.emit('fieldValueChanged', {
 			name: this.field.name,
-			value: Liferay.Util.escapeHTML(`${targetElement.value}`)
+			value: `${targetElement.value}`
 		});
 	}
 }

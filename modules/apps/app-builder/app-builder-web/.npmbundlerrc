@@ -1,4 +1,11 @@
 {
+	"config": {
+		"imports": {
+			"dynamic-data-mapping-form-renderer": {
+				"/": ">=5.0.0"
+			}
+		}
+	},
 	"exclude": {
 		"react-dnd": [
 			"dist/**/*"

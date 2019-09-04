@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -149,6 +151,12 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				example = "${propertySchema.example}"
 			</#if>
 		)
+		<#if propertySchema.maximum??>
+			@DecimalMax("${propertySchema.maximum}")
+		</#if>
+		<#if propertySchema.minimum??>
+			@DecimalMin("${propertySchema.minimum}")
+		</#if>
 
 		<#assign capitalizedPropertyName = propertyName?cap_first />
 

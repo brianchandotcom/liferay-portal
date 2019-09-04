@@ -74,6 +74,14 @@ public class Schema {
 		return _items;
 	}
 
+	public Double getMaximum() {
+		return _maximum;
+	}
+
+	public Double getMinimum() {
+		return _minimum;
+	}
+
 	public List<Schema> getOneOfSchemas() {
 		return _oneOfSchemas;
 	}
@@ -151,6 +159,14 @@ public class Schema {
 		_items = items;
 	}
 
+	public void setMaximum(Double maximum) {
+		_maximum = maximum;
+	}
+
+	public void setMinimum(Double minimum) {
+		_minimum = minimum;
+	}
+
 	public void setOneOfSchemas(List<Schema> oneOfSchemas) {
 		_oneOfSchemas = oneOfSchemas;
 	}
@@ -191,6 +207,8 @@ public class Schema {
 	private String _example;
 	private String _format;
 	private Items _items;
+	private Double _maximum;
+	private Double _minimum;
 	private List<Schema> _oneOfSchemas;
 	private Map<String, Schema> _propertySchemas;
 	private boolean _readOnly;

@@ -45,6 +45,33 @@ import org.osgi.service.component.annotations.Reference;
 public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	@Override
+	public String doDelete(
+		String url, Map<String, String> parameters,
+		Map<String, String> headers) {
+
+		WebTarget webTarget = _client.target(_baseURI);
+
+		webTarget = webTarget.path(url);
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			webTarget = webTarget.queryParam(entry.getKey(), entry.getValue());
+		}
+
+		Invocation.Builder builder = webTarget.request(
+			MediaType.APPLICATION_JSON_TYPE);
+
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			builder.header(entry.getKey(), entry.getValue());
+		}
+
+		Response response = builder.delete();
+
+		_validateResponse(response);
+
+		return response.readEntity(String.class);
+	}
+
+	@Override
 	public String doGet(
 		String url, MultivaluedMap<String, Object> parameters,
 		Map<String, String> headers) {

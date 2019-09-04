@@ -39,8 +39,8 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 		soapModel.setAppBuilderAppDeploymentId(
 			model.getAppBuilderAppDeploymentId());
 		soapModel.setAppBuilderAppId(model.getAppBuilderAppId());
-		soapModel.setDeploymentType(model.getDeploymentType());
 		soapModel.setSettings(model.getSettings());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -120,14 +120,6 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 		_appBuilderAppId = appBuilderAppId;
 	}
 
-	public String getDeploymentType() {
-		return _deploymentType;
-	}
-
-	public void setDeploymentType(String deploymentType) {
-		_deploymentType = deploymentType;
-	}
-
 	public String getSettings() {
 		return _settings;
 	}
@@ -136,9 +128,17 @@ public class AppBuilderAppDeploymentSoap implements Serializable {
 		_settings = settings;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
 	private long _appBuilderAppDeploymentId;
 	private long _appBuilderAppId;
-	private String _deploymentType;
 	private String _settings;
+	private String _type;
 
 }

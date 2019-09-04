@@ -68,8 +68,8 @@ public class AppBuilderAppDeploymentModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"appBuilderAppDeploymentId", Types.BIGINT},
-		{"appBuilderAppId", Types.BIGINT}, {"deploymentType", Types.VARCHAR},
-		{"settings_", Types.CLOB}
+		{"appBuilderAppId", Types.BIGINT}, {"settings_", Types.CLOB},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -78,12 +78,12 @@ public class AppBuilderAppDeploymentModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("appBuilderAppDeploymentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appBuilderAppId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("deploymentType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,appBuilderAppId LONG,deploymentType VARCHAR(75) null,settings_ TEXT null)";
+		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,appBuilderAppId LONG,settings_ TEXT null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDeployment";
@@ -102,7 +102,7 @@ public class AppBuilderAppDeploymentModelImpl
 
 	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 1L;
 
-	public static final long DEPLOYMENTTYPE_COLUMN_BITMASK = 2L;
+	public static final long TYPE_COLUMN_BITMASK = 2L;
 
 	public static final long APPBUILDERAPPDEPLOYMENTID_COLUMN_BITMASK = 4L;
 
@@ -259,17 +259,16 @@ public class AppBuilderAppDeploymentModelImpl
 			(BiConsumer<AppBuilderAppDeployment, Long>)
 				AppBuilderAppDeployment::setAppBuilderAppId);
 		attributeGetterFunctions.put(
-			"deploymentType", AppBuilderAppDeployment::getDeploymentType);
-		attributeSetterBiConsumers.put(
-			"deploymentType",
-			(BiConsumer<AppBuilderAppDeployment, String>)
-				AppBuilderAppDeployment::setDeploymentType);
-		attributeGetterFunctions.put(
 			"settings", AppBuilderAppDeployment::getSettings);
 		attributeSetterBiConsumers.put(
 			"settings",
 			(BiConsumer<AppBuilderAppDeployment, String>)
 				AppBuilderAppDeployment::setSettings);
+		attributeGetterFunctions.put("type", AppBuilderAppDeployment::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<AppBuilderAppDeployment, String>)
+				AppBuilderAppDeployment::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -310,31 +309,6 @@ public class AppBuilderAppDeploymentModelImpl
 	}
 
 	@Override
-	public String getDeploymentType() {
-		if (_deploymentType == null) {
-			return "";
-		}
-		else {
-			return _deploymentType;
-		}
-	}
-
-	@Override
-	public void setDeploymentType(String deploymentType) {
-		_columnBitmask |= DEPLOYMENTTYPE_COLUMN_BITMASK;
-
-		if (_originalDeploymentType == null) {
-			_originalDeploymentType = _deploymentType;
-		}
-
-		_deploymentType = deploymentType;
-	}
-
-	public String getOriginalDeploymentType() {
-		return GetterUtil.getString(_originalDeploymentType);
-	}
-
-	@Override
 	public String getSettings() {
 		if (_settings == null) {
 			return "";
@@ -347,6 +321,31 @@ public class AppBuilderAppDeploymentModelImpl
 	@Override
 	public void setSettings(String settings) {
 		_settings = settings;
+	}
+
+	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (_originalType == null) {
+			_originalType = _type;
+		}
+
+		_type = type;
+	}
+
+	public String getOriginalType() {
+		return GetterUtil.getString(_originalType);
 	}
 
 	public long getColumnBitmask() {
@@ -389,8 +388,8 @@ public class AppBuilderAppDeploymentModelImpl
 		appBuilderAppDeploymentImpl.setAppBuilderAppDeploymentId(
 			getAppBuilderAppDeploymentId());
 		appBuilderAppDeploymentImpl.setAppBuilderAppId(getAppBuilderAppId());
-		appBuilderAppDeploymentImpl.setDeploymentType(getDeploymentType());
 		appBuilderAppDeploymentImpl.setSettings(getSettings());
+		appBuilderAppDeploymentImpl.setType(getType());
 
 		appBuilderAppDeploymentImpl.resetOriginalValues();
 
@@ -460,8 +459,8 @@ public class AppBuilderAppDeploymentModelImpl
 
 		appBuilderAppDeploymentModelImpl._setOriginalAppBuilderAppId = false;
 
-		appBuilderAppDeploymentModelImpl._originalDeploymentType =
-			appBuilderAppDeploymentModelImpl._deploymentType;
+		appBuilderAppDeploymentModelImpl._originalType =
+			appBuilderAppDeploymentModelImpl._type;
 
 		appBuilderAppDeploymentModelImpl._columnBitmask = 0;
 	}
@@ -477,21 +476,20 @@ public class AppBuilderAppDeploymentModelImpl
 		appBuilderAppDeploymentCacheModel.appBuilderAppId =
 			getAppBuilderAppId();
 
-		appBuilderAppDeploymentCacheModel.deploymentType = getDeploymentType();
-
-		String deploymentType =
-			appBuilderAppDeploymentCacheModel.deploymentType;
-
-		if ((deploymentType != null) && (deploymentType.length() == 0)) {
-			appBuilderAppDeploymentCacheModel.deploymentType = null;
-		}
-
 		appBuilderAppDeploymentCacheModel.settings = getSettings();
 
 		String settings = appBuilderAppDeploymentCacheModel.settings;
 
 		if ((settings != null) && (settings.length() == 0)) {
 			appBuilderAppDeploymentCacheModel.settings = null;
+		}
+
+		appBuilderAppDeploymentCacheModel.type = getType();
+
+		String type = appBuilderAppDeploymentCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			appBuilderAppDeploymentCacheModel.type = null;
 		}
 
 		return appBuilderAppDeploymentCacheModel;
@@ -578,9 +576,9 @@ public class AppBuilderAppDeploymentModelImpl
 	private long _appBuilderAppId;
 	private long _originalAppBuilderAppId;
 	private boolean _setOriginalAppBuilderAppId;
-	private String _deploymentType;
-	private String _originalDeploymentType;
 	private String _settings;
+	private String _type;
+	private String _originalType;
 	private long _columnBitmask;
 	private AppBuilderAppDeployment _escapedModel;
 

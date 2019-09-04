@@ -307,71 +307,71 @@ public class AppBuilderAppDeploymentUtil {
 	}
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or throws a <code>NoSuchAppDeploymentException</code> if it could not be found.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or throws a <code>NoSuchAppDeploymentException</code> if it could not be found.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the matching app builder app deployment
 	 * @throws NoSuchAppDeploymentException if a matching app builder app deployment could not be found
 	 */
-	public static AppBuilderAppDeployment findByA_D(
-			long appBuilderAppId, String deploymentType)
+	public static AppBuilderAppDeployment findByA_T(
+			long appBuilderAppId, String type)
 		throws com.liferay.app.builder.exception.NoSuchAppDeploymentException {
 
-		return getPersistence().findByA_D(appBuilderAppId, deploymentType);
+		return getPersistence().findByA_T(appBuilderAppId, type);
 	}
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the matching app builder app deployment, or <code>null</code> if a matching app builder app deployment could not be found
 	 */
-	public static AppBuilderAppDeployment fetchByA_D(
-		long appBuilderAppId, String deploymentType) {
+	public static AppBuilderAppDeployment fetchByA_T(
+		long appBuilderAppId, String type) {
 
-		return getPersistence().fetchByA_D(appBuilderAppId, deploymentType);
+		return getPersistence().fetchByA_T(appBuilderAppId, type);
 	}
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app deployment, or <code>null</code> if a matching app builder app deployment could not be found
 	 */
-	public static AppBuilderAppDeployment fetchByA_D(
-		long appBuilderAppId, String deploymentType, boolean useFinderCache) {
+	public static AppBuilderAppDeployment fetchByA_T(
+		long appBuilderAppId, String type, boolean useFinderCache) {
 
-		return getPersistence().fetchByA_D(
-			appBuilderAppId, deploymentType, useFinderCache);
+		return getPersistence().fetchByA_T(
+			appBuilderAppId, type, useFinderCache);
 	}
 
 	/**
-	 * Removes the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; from the database.
+	 * Removes the app builder app deployment where appBuilderAppId = &#63; and type = &#63; from the database.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the app builder app deployment that was removed
 	 */
-	public static AppBuilderAppDeployment removeByA_D(
-			long appBuilderAppId, String deploymentType)
+	public static AppBuilderAppDeployment removeByA_T(
+			long appBuilderAppId, String type)
 		throws com.liferay.app.builder.exception.NoSuchAppDeploymentException {
 
-		return getPersistence().removeByA_D(appBuilderAppId, deploymentType);
+		return getPersistence().removeByA_T(appBuilderAppId, type);
 	}
 
 	/**
-	 * Returns the number of app builder app deployments where appBuilderAppId = &#63; and deploymentType = &#63;.
+	 * Returns the number of app builder app deployments where appBuilderAppId = &#63; and type = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the number of matching app builder app deployments
 	 */
-	public static int countByA_D(long appBuilderAppId, String deploymentType) {
-		return getPersistence().countByA_D(appBuilderAppId, deploymentType);
+	public static int countByA_T(long appBuilderAppId, String type) {
+		return getPersistence().countByA_T(appBuilderAppId, type);
 	}
 
 	/**

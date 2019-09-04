@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.app.builder.service.persistence.AppBuilderAppFinder.findByS_D">
+	<sql id="com.liferay.app.builder.service.persistence.AppBuilderAppFinder.findByS_T">
 		<![CDATA[
 			SELECT
 				AppBuilderApp.appBuilderAppId

@@ -55,20 +55,6 @@ public class AppDeploymentSerDes {
 
 		sb.append("{");
 
-		if (appDeployment.getDeploymentType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"deploymentType\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(appDeployment.getDeploymentType()));
-
-			sb.append("\"");
-		}
-
 		if (appDeployment.getSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -77,6 +63,20 @@ public class AppDeploymentSerDes {
 			sb.append("\"settings\": ");
 
 			sb.append(_toJSON(appDeployment.getSettings()));
+		}
+
+		if (appDeployment.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(appDeployment.getType()));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -98,15 +98,6 @@ public class AppDeploymentSerDes {
 
 		Map<String, String> map = new HashMap<>();
 
-		if (appDeployment.getDeploymentType() == null) {
-			map.put("deploymentType", null);
-		}
-		else {
-			map.put(
-				"deploymentType",
-				String.valueOf(appDeployment.getDeploymentType()));
-		}
-
 		if (appDeployment.getSettings() == null) {
 			map.put("settings", null);
 		}
@@ -114,7 +105,52 @@ public class AppDeploymentSerDes {
 			map.put("settings", String.valueOf(appDeployment.getSettings()));
 		}
 
+		if (appDeployment.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(appDeployment.getType()));
+		}
+
 		return map;
+	}
+
+	public static class AppDeploymentJSONParser
+		extends BaseJSONParser<AppDeployment> {
+
+		@Override
+		protected AppDeployment createDTO() {
+			return new AppDeployment();
+		}
+
+		@Override
+		protected AppDeployment[] createDTOArray(int size) {
+			return new AppDeployment[size];
+		}
+
+		@Override
+		protected void setField(
+			AppDeployment appDeployment, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
+
+			if (Objects.equals(jsonParserFieldName, "settings")) {
+				if (jsonParserFieldValue != null) {
+					appDeployment.setSettings(
+						(Map)AppDeploymentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					appDeployment.setType((String)jsonParserFieldValue);
+				}
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Unsupported field name " + jsonParserFieldName);
+			}
+		}
+
 	}
 
 	private static String _escape(Object object) {
@@ -143,15 +179,10 @@ public class AppDeploymentSerDes {
 
 			Object value = entry.getValue();
 
-			Class valueClass = value.getClass();
+			Class<?> valueClass = value.getClass();
 
 			if (value instanceof Map) {
 				sb.append(_toJSON((Map)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape(entry.getValue()));
-				sb.append("\"");
 			}
 			else if (valueClass.isArray()) {
 				Object[] values = (Object[])value;
@@ -172,7 +203,7 @@ public class AppDeploymentSerDes {
 			}
 			else {
 				sb.append("\"");
-				sb.append(entry.getValue());
+				sb.append(_escape(entry.getValue()));
 				sb.append("\"");
 			}
 
@@ -184,45 +215,6 @@ public class AppDeploymentSerDes {
 		sb.append("}");
 
 		return sb.toString();
-	}
-
-	private static class AppDeploymentJSONParser
-		extends BaseJSONParser<AppDeployment> {
-
-		@Override
-		protected AppDeployment createDTO() {
-			return new AppDeployment();
-		}
-
-		@Override
-		protected AppDeployment[] createDTOArray(int size) {
-			return new AppDeployment[size];
-		}
-
-		@Override
-		protected void setField(
-			AppDeployment appDeployment, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
-
-			if (Objects.equals(jsonParserFieldName, "deploymentType")) {
-				if (jsonParserFieldValue != null) {
-					appDeployment.setDeploymentType(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "settings")) {
-				if (jsonParserFieldValue != null) {
-					appDeployment.setSettings(
-						(Map)AppDeploymentSerDes.toMap(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unsupported field name " + jsonParserFieldName);
-			}
-		}
-
 	}
 
 }

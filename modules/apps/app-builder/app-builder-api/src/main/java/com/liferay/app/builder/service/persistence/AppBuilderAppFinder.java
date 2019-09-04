@@ -23,6 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AppBuilderAppFinder {
 
-	public java.util.List<Long> findByS_D(String status, String deploymentType);
+	public java.util.List<Long> findByS_T(String status, String type);
 
 }

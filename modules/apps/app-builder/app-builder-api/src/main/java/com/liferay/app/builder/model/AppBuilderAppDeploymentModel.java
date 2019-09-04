@@ -83,21 +83,6 @@ public interface AppBuilderAppDeploymentModel
 	public void setAppBuilderAppId(long appBuilderAppId);
 
 	/**
-	 * Returns the deployment type of this app builder app deployment.
-	 *
-	 * @return the deployment type of this app builder app deployment
-	 */
-	@AutoEscape
-	public String getDeploymentType();
-
-	/**
-	 * Sets the deployment type of this app builder app deployment.
-	 *
-	 * @param deploymentType the deployment type of this app builder app deployment
-	 */
-	public void setDeploymentType(String deploymentType);
-
-	/**
 	 * Returns the settings of this app builder app deployment.
 	 *
 	 * @return the settings of this app builder app deployment
@@ -111,5 +96,20 @@ public interface AppBuilderAppDeploymentModel
 	 * @param settings the settings of this app builder app deployment
 	 */
 	public void setSettings(String settings);
+
+	/**
+	 * Returns the type of this app builder app deployment.
+	 *
+	 * @return the type of this app builder app deployment
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this app builder app deployment.
+	 *
+	 * @param type the type of this app builder app deployment
+	 */
+	public void setType(String type);
 
 }

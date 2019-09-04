@@ -28,7 +28,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public class LayoutSEOEntryImpl extends LayoutSEOEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a layout seo entry model instance should use the {@link com.liferay.layout.seo.model.LayoutSEOEntry} interface instead.

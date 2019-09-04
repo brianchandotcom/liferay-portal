@@ -19,6 +19,11 @@
 		padding: 0.5rem 1.25rem;
 	}
 
+	// LPS-99475
+	.list-group-item-action {
+		cursor: pointer;
+	}
+
 	.modal-body.inline-scroller .empty-collaborators {
 		height: 125px;
 		text-align: center;

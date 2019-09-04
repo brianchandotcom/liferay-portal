@@ -1322,27 +1322,6 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutSEOEntrys(
-			PortletDataContext portletDataContext, Layout layout)
-		throws PortletDataException {
-
-		List<Element> layoutSEOEntryElements =
-			portletDataContext.getReferenceDataElements(
-				layout, LayoutSEOEntry.class);
-
-		for (Element layoutSEOEntryElement : layoutSEOEntryElements) {
-			String layoutSEOEntryPath =
-				layoutSEOEntryElement.attributeValue("path");
-
-			LayoutSEOEntry layoutSEOEntry =
-				(LayoutSEOEntry)portletDataContext.getZipEntryAsObject(
-					layoutSEOEntryPath);
-
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutSEOEntry);
-		}
-	}
-
 	protected void importLayoutFriendlyURLs(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
@@ -1645,6 +1624,27 @@ public class LayoutStagedModelDataHandler
 		portletDataContext.setOldPlid(originalOldPlid);
 		portletDataContext.setPlid(originalPlid);
 		portletDataContext.setPortletId(originalPortletId);
+	}
+
+	protected void importLayoutSEOEntrys(
+			PortletDataContext portletDataContext, Layout layout)
+		throws PortletDataException {
+
+		List<Element> layoutSEOEntryElements =
+			portletDataContext.getReferenceDataElements(
+				layout, LayoutSEOEntry.class);
+
+		for (Element layoutSEOEntryElement : layoutSEOEntryElements) {
+			String layoutSEOEntryPath = layoutSEOEntryElement.attributeValue(
+				"path");
+
+			LayoutSEOEntry layoutSEOEntry =
+				(LayoutSEOEntry)portletDataContext.getZipEntryAsObject(
+					layoutSEOEntryPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, layoutSEOEntry);
+		}
 	}
 
 	protected void importLinkedLayout(
@@ -2126,10 +2126,6 @@ public class LayoutStagedModelDataHandler
 
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
-
-	@Reference
-	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
-
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
@@ -2143,6 +2139,10 @@ public class LayoutStagedModelDataHandler
 		_layoutPageTemplateStructureLocalService;
 
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
+
 	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
 

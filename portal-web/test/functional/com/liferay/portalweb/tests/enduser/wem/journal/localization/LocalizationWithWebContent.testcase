@@ -67,7 +67,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Editar contenido web",
 			webContentTitle = "WC Titulo");
 
@@ -91,7 +91,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Inhalt");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Webcontent bearbeiten",
 			webContentTitle = "WC Titel");
 
@@ -115,7 +115,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Pitoisuus");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Muokkaa web-sisältöä",
 			webContentTitle = "WC Otsikko");
 

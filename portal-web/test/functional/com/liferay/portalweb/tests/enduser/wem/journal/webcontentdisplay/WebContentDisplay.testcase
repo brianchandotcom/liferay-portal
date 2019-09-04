@@ -604,7 +604,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content WC WebContent Content WC WebContent Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -635,7 +635,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -661,7 +661,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -1109,7 +1109,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 

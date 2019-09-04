@@ -852,7 +852,7 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 

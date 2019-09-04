@@ -47,7 +47,7 @@ definition {
 			pageName = "Test Page Name",
 			siteName = "Test Site Name");
 
-		WebContentNavigator.gotoAddPGViaWCD();
+		WebContentDisplayPortletNavigator.gotoAdd();
 
 		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner");
 
@@ -65,7 +65,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "Space Program Academy of Continuing Education Dare to Dream out of this world");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Edit Web Content",
 			webContentTitle = "Basic S.P.A.C.E. Banner");
 
@@ -158,7 +158,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Contenido");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Editar contenido web",
 			webContentTitle = "WC Titulo");
 
@@ -278,7 +278,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC contenu WebContent");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "Modifier le contenu de Web",
 			webContentTitle = "WC WebContent Titre");
 
@@ -303,7 +303,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Text");
 
-		WebContentNavigator.gotoEditPGViaWCD(
+		WebContentDisplayPortletNavigator.gotoEdit(
 			menuItem = "编辑 Web 内容",
 			webContentTitle = "WC WebContent Title");
 

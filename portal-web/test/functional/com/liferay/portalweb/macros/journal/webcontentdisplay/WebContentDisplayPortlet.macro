@@ -67,7 +67,7 @@ definition {
 			WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = "${webContentTitle}");
 		}
 		else {
-			WebContentNavigator.gotoEditPGViaWCD(
+			WebContentDisplayPortletNavigator.gotoEdit(
 				menuItem = "${menuItem}",
 				webContentTitle = "${webContentTitle}");
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	macro gotoEditTemplate {
-		WebContentNavigator.gotoArticleMenuPGViaWCD(webContentTitle = "${webContentTitle}");
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
 
 		MenuItem.click(menuItem = "Edit Template");
 	}

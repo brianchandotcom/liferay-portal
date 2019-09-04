@@ -160,7 +160,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1795,7 +1795,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
@@ -2644,7 +2644,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		WebContent.openWebContentAdmin(
+		WebContentNavigator.openWebContentAdmin(
 			baseURL = "http://localhost:9080",
 			siteURLKey = "remote-site");
 
@@ -4087,7 +4087,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		WebContent.openWebContentAdmin(
+		WebContentNavigator.openWebContentAdmin(
 			baseURL = "http://localhost:9080",
 			siteURLKey = "remote-site");
 

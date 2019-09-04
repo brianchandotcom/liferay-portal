@@ -48,7 +48,7 @@ definition {
 	test PublishDisplayPageMapWebContentWithAssetPublisher {
 		property test.name.skip.portal.instance = "DisplayPagesWithRemoteStaging#PublishDisplayPageMapWebContentWithAssetPublisher";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -83,7 +83,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 

@@ -46,7 +46,7 @@ definition {
 			categoryName = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		Pause(locator1 = "3000");
 
@@ -58,7 +58,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -74,7 +74,7 @@ definition {
 			categoryNameList = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
 
@@ -142,7 +142,7 @@ definition {
 			pageVersioningEnabled = "true",
 			siteName = "Site Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -152,7 +152,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		WebContentNavigator.gotoAddCP();
 

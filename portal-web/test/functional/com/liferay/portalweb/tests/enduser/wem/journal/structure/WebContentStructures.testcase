@@ -28,7 +28,7 @@ definition {
 	test AddStructures {
 		property testray.component.names = "Training,Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -45,7 +45,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 1");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -62,7 +62,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 2");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -79,7 +79,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name 3");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -95,7 +95,7 @@ definition {
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -111,7 +111,7 @@ definition {
 				fieldName = StringUtil.replace("${structureFieldName}", " ", ""));
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -136,7 +136,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/en/");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -159,7 +159,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -172,7 +172,7 @@ definition {
 	test EditSubstructureDefaultValues {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -189,7 +189,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -210,7 +210,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name1");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -231,7 +231,7 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		NavItem.gotoStructures();
 
@@ -272,7 +272,7 @@ definition {
 	test ViewFavoriteStructure {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -293,7 +293,7 @@ definition {
 			var n = MathUtil.sum("${n}", "1");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoMoreStructuresViaPlusButton(pageMod = "8 of 17");
 
@@ -309,7 +309,7 @@ definition {
 			indexNumber = "1",
 			structureName = "WC Structure Name 9");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentStructures.viewFavoriteStructureViaPlusButton(structureName = "WC Structure Name 9");
 	}

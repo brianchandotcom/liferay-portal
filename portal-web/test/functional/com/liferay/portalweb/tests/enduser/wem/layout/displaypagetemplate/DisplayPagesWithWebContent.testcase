@@ -82,7 +82,7 @@ definition {
 		}
 
 		task ("Add a web content that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -202,7 +202,7 @@ definition {
 		property osgi.app.includes = "frontend-theme-fjord";
 
 		task ("Add a web content that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -262,7 +262,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -322,7 +322,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -374,7 +374,7 @@ definition {
 		}
 
 		task ("Add a draft status web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -386,7 +386,7 @@ definition {
 		}
 
 		task ("Preview the draft status web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
@@ -435,7 +435,7 @@ definition {
 		}
 
 		task ("Submit a web content article for publication") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -483,7 +483,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -557,7 +557,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -635,7 +635,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -694,7 +694,7 @@ definition {
 		}
 
 		task ("Add a web content article with a category and tag") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -734,7 +734,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -799,7 +799,7 @@ definition {
 	@priority = "5"
 	test ViewDisplayPageViaFriendlyURL {
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -871,7 +871,7 @@ definition {
 		}
 
 		task ("Add a web content article that uses the second display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -913,7 +913,7 @@ definition {
 		}
 
 		task ("Add a web content article that has no display page selected") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 

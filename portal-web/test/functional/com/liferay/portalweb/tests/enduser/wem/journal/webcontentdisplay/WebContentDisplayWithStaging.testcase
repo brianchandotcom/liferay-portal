@@ -58,7 +58,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title");
 
@@ -80,7 +80,7 @@ definition {
 			expiredContent = "true",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 

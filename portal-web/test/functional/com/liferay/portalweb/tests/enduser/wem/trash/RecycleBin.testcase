@@ -43,7 +43,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.deleteWithDisabledRB(entryTitle = "Web Content Title");
 	}
@@ -418,7 +418,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -471,7 +471,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -497,7 +497,7 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Article");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContent.viewWithStructureCP(
 			webContentText = "WC WebContent Text",
@@ -726,7 +726,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -741,7 +741,7 @@ definition {
 			assetType2 = "Web Content Article",
 			documentName = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -762,7 +762,7 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -793,7 +793,7 @@ definition {
 			webContentList = "Web Content Title Edit 1,Web Content Title Edit 2",
 			webContentTitle = "Web Content Title Edit 3");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -807,7 +807,7 @@ definition {
 			webContentTitle = "Web Content Title Edit 3",
 			webContentTitleEdit = "Web Content Title Edit Draft");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -820,7 +820,7 @@ definition {
 			assetRestoreLocation = "Home",
 			assetType = "Web Content Folder");
 
-		WebContent.openWebContentAdmin(siteURLKey = "site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",

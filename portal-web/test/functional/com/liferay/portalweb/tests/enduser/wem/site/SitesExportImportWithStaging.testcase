@@ -157,7 +157,7 @@ definition {
 		}
 
 		task ("Add a web content article that uses the display page to the first site") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-1-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-1-staging");
 
 			WebContentNavigator.gotoAddCP();
 

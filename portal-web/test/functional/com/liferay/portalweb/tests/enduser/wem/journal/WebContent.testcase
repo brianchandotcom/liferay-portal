@@ -28,7 +28,7 @@ definition {
 	test AddWebContentExpirationDate {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -53,7 +53,7 @@ definition {
 	test AddWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -86,11 +86,11 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
 
@@ -105,7 +105,7 @@ definition {
 			webContentStatus = "Expired",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -125,7 +125,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -136,7 +136,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent New Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = "WC WebContent New Title",
@@ -160,11 +160,11 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
@@ -175,7 +175,7 @@ definition {
 	test DeleteWebContentTitleEscapeCharacter {
 		property testray.component.names = "Web Content Administration,XSS";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -207,7 +207,7 @@ definition {
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		NavItem.gotoStructures();
 
@@ -224,7 +224,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "Basic Web Content Edit");
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		NavItem.gotoTemplates();
 
@@ -242,7 +242,7 @@ definition {
 
 		WebContentStructures.saveCP();
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		NavItem.gotoStructures();
 
@@ -254,7 +254,7 @@ definition {
 				fieldName = "${structureFieldName}");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "global");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
 		Navigator.gotoNavItem(navItem = "Templates");
 
@@ -274,7 +274,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -302,11 +302,11 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.searchCP(webContentTitle = "WC WebContent Title");
 
@@ -316,7 +316,7 @@ definition {
 			webContentContentEdit = "WC WebContent Content Edit",
 			webContentTitleEdit = "WC WebContent Title Edit");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
 
@@ -334,7 +334,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -345,7 +345,7 @@ definition {
 			webContentTitle = "WC WebContent Title",
 			webContentTitleEdit = "WC WebContent Title Edit");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title Edit");
 
@@ -369,7 +369,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -392,7 +392,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title Edit");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.expireSpecificVersionCP(webContentTitle = "WC WebContent Title Edit");
 
@@ -415,12 +415,12 @@ definition {
 
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3,");
 
 		for (var i : list "1,2,3") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title ${i}");
 
@@ -440,11 +440,11 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.expireCP(webContentTitleList = "WC WebContent Title");
 
@@ -475,13 +475,13 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveMultipleToFolderCP(
 			folderName = "WC Folder Name",
 			rowEntryCheckList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -505,13 +505,13 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToFolderCP(
 			folderName = "WC Folder Name",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -524,7 +524,7 @@ definition {
 	test MoveWebContentToFolderTraining {
 		property testray.component.names = "Training";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -536,19 +536,19 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.addCP(
 			folderDescription = "WC Folder Description",
 			folderName = "WC Folder Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToFolderCP(
 			folderName = "WC Folder Name",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.gotoCP(
 			folderName = "WC Folder Name",
@@ -582,7 +582,7 @@ definition {
 		}
 
 		task ("Edit the Web Content article and save it as draft") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -594,7 +594,7 @@ definition {
 		}
 
 		task ("View the usages of the Web Content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -645,7 +645,7 @@ definition {
 		}
 
 		task ("Edit the Web Content article and submit it for publication") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -657,7 +657,7 @@ definition {
 		}
 
 		task ("View the usages of the Web Content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -679,7 +679,7 @@ definition {
 	@priority = "5"
 	test PreviewScheduledWebContentInWCD {
 		task ("Add a web content article with a future display date") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -707,7 +707,7 @@ definition {
 		}
 
 		task ("View the usages of the Web Content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -735,7 +735,7 @@ definition {
 			title = "WC WebContent Title",
 			workflowAction = "DRAFT");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "DRAFT",
@@ -746,7 +746,7 @@ definition {
 			webContentStatus = "Draft",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -754,7 +754,7 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewApprovedStatus(webContentTitle = "WC WebContent Title");
 	}
@@ -768,17 +768,17 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.searchCP(
 			webContentFolder = "Home",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.searchNoResultsCP(
 			searchQuery = "WC2 WebContent2 Title2",
@@ -795,7 +795,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -866,7 +866,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -887,7 +887,7 @@ definition {
 	test ViewContentNotLostWithBlankTitle {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -898,14 +898,14 @@ definition {
 	test ViewDisplayStyleCP {
 		property testray.component.names = "Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewDisplayStyleCP(webContentTitle = "WC WebContent Title");
 	}
@@ -925,7 +925,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -941,7 +941,7 @@ definition {
 			categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5",
 			webContentTitle = "WC Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
 
@@ -963,7 +963,7 @@ definition {
 				vocabularyName = "Vocabulary Name ${index}");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1055,7 +1055,7 @@ definition {
 		}
 
 		task ("View the usages of the Web Content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -1131,7 +1131,7 @@ definition {
 		}
 
 		task ("View the usages of the Web Content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -1179,7 +1179,7 @@ definition {
 	test WebContentAdministrationPaginatingRelatedAssets {
 		property testray.component.names = "Related Assets,Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		for (var i : list "1,2,3,4,5,6") {
 			JSONWebcontent.addWebContent(
@@ -1188,7 +1188,7 @@ definition {
 				title = "WC WebContent ${i} Title");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent 6 Title");
 
@@ -1203,7 +1203,7 @@ definition {
 			itemsPerPage = "5 Entries",
 			numberOfPages = "Showing 1 to 5 of 6 entries.");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent 3 Title");
 

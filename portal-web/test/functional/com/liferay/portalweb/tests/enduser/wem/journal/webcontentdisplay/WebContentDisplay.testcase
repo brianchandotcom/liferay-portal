@@ -68,7 +68,7 @@ definition {
 
 		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -146,7 +146,7 @@ definition {
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -158,7 +158,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -186,7 +186,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Web Content Image Page");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -289,7 +289,7 @@ definition {
 
 		var dmDocumentURL = selenium.getElementValue("//input[contains(@id,'url')]");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -431,7 +431,7 @@ definition {
 	test AddWebContentViaAddContentPanel {
 		property testray.component.names = "Web Content Display,Training";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -462,7 +462,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Site Page Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -504,7 +504,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Display,Training";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -692,7 +692,7 @@ definition {
 	test SearchWebContent {
 		property testray.component.names = "Web Content Display";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1156,7 +1156,7 @@ definition {
 	test ViewWebContentDisplayPortletMessages {
 		property testray.component.names = "Web Content Display";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 

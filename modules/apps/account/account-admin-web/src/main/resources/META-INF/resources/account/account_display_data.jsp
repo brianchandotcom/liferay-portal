@@ -17,15 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
-
-AccountDisplay accountDisplay = null;
-
-if (accountEntryId > 0) {
-	AccountEntry accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryId);
-
-	accountDisplay = AccountDisplay.of(accountEntry);
-}
+AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
 %>
 
 <div class="sheet-section">
@@ -46,7 +38,7 @@ if (accountEntryId > 0) {
 					currentLogoURL='<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountDisplay.getLogoURL(themeDisplay) %>'
 					defaultLogo="<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
-					tempImageFileName="<%= String.valueOf(accountEntryId) %>"
+					tempImageFileName='<%= (accountDisplay == null) ? "0" : String.valueOf(accountDisplay.getAccountId()) %>'
 				/>
 			</div>
 		</aui:col>

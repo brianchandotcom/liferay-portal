@@ -17,28 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
+AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_DISPLAY);
 
-AccountEntry accountEntry = null;
-
-if (accountEntryId > 0) {
-	accountEntry = AccountEntryLocalServiceUtil.getAccountEntry(accountEntryId);
-}
-
-PortletURL viewURL = renderResponse.createRenderURL();
-
-String backURL = ParamUtil.getString(request, "backURL", viewURL.toString());
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
 
-PortletURL redirectURL = renderResponse.createRenderURL();
-
-redirectURL.setParameter("mvcPath", "/edit_account.jsp");
-redirectURL.setParameter("redirect", currentURL);
-redirectURL.setParameter("accountEntryId", String.valueOf(accountEntryId));
-
-renderResponse.setTitle((accountEntry == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountEntry.getName(), false));
+renderResponse.setTitle((accountDisplay == null) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountDisplay.getName(), false));
 %>
 
 <portlet:actionURL name="/account_admin/edit_account" var="editAccountURL" />
@@ -46,9 +32,9 @@ renderResponse.setTitle((accountEntry == null) ? LanguageUtil.get(request, "add-
 <liferay-frontend:edit-form
 	action="<%= editAccountURL %>"
 >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountEntry == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="accountEntryId" type="hidden" value="<%= accountEntryId %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (accountDisplay == null) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="accountEntryId" type="hidden" value='<%= (accountDisplay == null) ? "0" : String.valueOf(accountDisplay.getAccountId()) %>' />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<liferay-frontend:edit-form-body>
 		<h2 class="sheet-title">

@@ -15,10 +15,15 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
+import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
+import com.liferay.account.admin.web.internal.display.AccountDisplay;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -65,9 +70,27 @@ public class AccountDetailScreenNavigationCategory
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		long accountEntryId = ParamUtil.getLong(
+			httpServletRequest, "accountEntryId");
+
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			accountEntryId);
+
+		AccountDisplay accountDisplay = null;
+
+		if (accountEntry != null) {
+			accountDisplay = AccountDisplay.of(accountEntry);
+		}
+
+		httpServletRequest.setAttribute(
+			AccountWebKeys.ACCOUNT_DISPLAY, accountDisplay);
+
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse, "/account/detail.jsp");
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

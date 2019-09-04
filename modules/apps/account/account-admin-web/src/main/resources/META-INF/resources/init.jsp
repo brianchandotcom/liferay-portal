@@ -26,12 +26,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants" %><%@
+page import="com.liferay.account.admin.web.internal.constants.AccountWebKeys" %><%@
 page import="com.liferay.account.admin.web.internal.dao.search.AccountDisplaySearchContainerFactory" %><%@
 page import="com.liferay.account.admin.web.internal.display.AccountDisplay" %><%@
 page import="com.liferay.account.admin.web.internal.display.context.ViewAccountsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission" %><%@
-page import="com.liferay.account.model.AccountEntry" %><%@
-page import="com.liferay.account.service.AccountEntryLocalServiceUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -45,8 +44,6 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

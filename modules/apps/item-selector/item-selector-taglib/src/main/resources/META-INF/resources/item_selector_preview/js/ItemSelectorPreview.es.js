@@ -22,6 +22,7 @@ import Carousel from './Carousel.es';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
+		handleSelectedItem: PropTypes.func.isRequired,
 		headerTitle: PropTypes.string.isRequired,
 		links: PropTypes.string.isRequired,
 		selector: PropTypes.string
@@ -33,9 +34,10 @@ class ItemSelectorPreview extends Component {
 		let items = Array.from(document.querySelectorAll(this.props.links));
 
 		this.state = {
-			openViewer: false,
+			currentItem: null,
+			currentItemIndex: 0,
 			items: items,
-			selectedItemIndex: 0
+			openViewer: false
 		};
 
 		const selector = this.props.selector;
@@ -48,25 +50,41 @@ class ItemSelectorPreview extends Component {
 			}
 
 			cliclableItem.addEventListener('click', e => {
+				e.preventDefault();
+				e.stopPropagation();
+
 				this.setState({
-					openViewer: true,
-					selectedItemIndex: index
+					currentItem: item,
+					currentItemIndex: index,
+					openViewer: true
 				});
 			});
 		});
 	}
 
-	handleAdd = () => {
-		//TODO
-		this.setState({openViewer: false});
-	};
-
 	handleClose = () => {
 		this.setState({openViewer: false});
 	};
 
+	handleDone = () => {
+		this.setState({openViewer: false});
+
+		const selectedItem = this.state.currentItem;
+
+		console.log(selectedItem);
+
+		this.props.handleSelectedItem(selectedItem);
+	};
+
+	handleOnItemChange = (item, index) => {
+		this.setState({
+			currentItem: item,
+			currentItemIndex: index
+		})
+	};
+
 	render() {
-		const {openViewer, selectedItemIndex, items} = this.state;
+		const {openViewer, currentItemIndex, items} = this.state;
 
 		const spritemap =
 			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
@@ -77,14 +95,14 @@ class ItemSelectorPreview extends Component {
 					<div className="fullscreen item-selector-preview">
 						<ClayIconSpriteContext.Provider value={spritemap}>
 							<Header
-								handleAdd={this.handleAdd}
 								handleClose={this.handleClose}
+								handleDone={this.handleDone}
 								headerTitle={this.props.headerTitle}
 							/>
 							<Carousel
+								currentItemIndex={currentItemIndex}
 								items={items}
-								startIndex={selectedItemIndex}
-								circular={true}
+								onItemChange={this.handleOnItemChange}
 							/>
 						</ClayIconSpriteContext.Provider>
 					</div>

@@ -18,7 +18,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import React from "react";
 import PropTypes from "prop-types";
 
-const Header = ({handleAdd, handleClose, headerTitle}) => (
+const Header = ({handleClose, handleDone, headerTitle}) => (
 	<div className="navbar navigation-bar navigation-bar-light">
 		<div className="container-fluid header">
 			<ClayNavigationBar>
@@ -62,7 +62,7 @@ const Header = ({handleAdd, handleClose, headerTitle}) => (
 
 				<ClayButton
 					displayType="primary"
-					onClick={handleAdd}
+					onClick={handleDone}
 				>
 					{Liferay.Language.get('done')}
 				</ClayButton>

@@ -21,7 +21,10 @@ AUI.add(
 
 		A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE = A.PropertyBuilderAvailableField.prototype.FIELD_ITEM_TEMPLATE.replace(
 			/<\s*span[^>]*>(.*?)<\s*\/\s*span>/,
-			Liferay.Util.getLexiconIconTpl('{iconClass}')
+			Liferay.Util.getLexiconIconTpl(
+				'{iconClass}',
+				'property-builder-field-icon'
+			)
 		);
 
 		A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(

@@ -15,7 +15,7 @@ import ThemeContext from './ThemeContext.es';
 import {render} from 'frontend-js-react-web';
 
 function renderComponent({props, context}) {
-	render(
+	return (
 		<ThemeContext.Provider value={context}>
 			<div className="results-rankings-root">
 				<ResultsRankingForm {...props} />

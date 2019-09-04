@@ -28,7 +28,9 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 
 	const onChange = useCallback(
 		event => {
-			const selectedMappingId = event.target.selectedOptions[0].value;
+			const select = event.target;
+			const selectedMappingId =
+				select.options[select.selectedIndex].value;
 
 			const mappingType = props.mappingTypes.find(
 				mappingType => mappingType.id === selectedMappingId

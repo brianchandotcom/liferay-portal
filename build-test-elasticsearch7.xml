@@ -709,9 +709,9 @@ xpack.monitoring.collection.enabled: true</echo>
 			<then>
 				<sleep seconds="30" />
 
-				<start-x-pack-trial />
-
 				<set-x-pack-user-passwords />
+
+				<start-x-pack-trial />
 
 				<configure-portal-x-pack-osgi-properties />
 

@@ -14,23 +14,23 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.exception.NoSuchSEOEntryException;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.DateUtil;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the layout seo entry local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.LayoutSEOEntryLocalService</code> interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutSEOEntryLocalServiceBaseImpl
+ * @author Adolfo Pérez
  */
 @Component(
 	property = "model.class.name=com.liferay.layout.seo.model.LayoutSEOEntry",
@@ -39,9 +39,82 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutSEOEntryLocalServiceImpl
 	extends LayoutSEOEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.layout.seo.service.LayoutSEOEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public void deleteLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId)
+		throws NoSuchSEOEntryException {
+
+		layoutSEOEntryPersistence.removeByG_P_L(
+			groupId, privateLayout, layoutId);
+	}
+
+	@Override
+	public void deleteLayoutSEOEntry(String uuid, long groupId)
+		throws NoSuchSEOEntryException {
+
+		layoutSEOEntryPersistence.removeByUUID_G(uuid, groupId);
+	}
+
+	@Override
+	public LayoutSEOEntry fetchLayoutSEOEntry(
+		long groupId, boolean privateLayout, long layoutId) {
+
+		return layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+	}
+
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean enabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.fetchByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (layoutSEOEntry == null) {
+			return _addLayoutSEOEntry(
+				userId, groupId, privateLayout, layoutId, enabled,
+				canonicalURLMap, serviceContext);
+		}
+
+		layoutSEOEntry.setModifiedDate(DateUtil.newDate());
+		layoutSEOEntry.setEnabled(enabled);
+		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+
+		return layoutSEOEntryPersistence.update(layoutSEOEntry);
+	}
+
+	private LayoutSEOEntry _addLayoutSEOEntry(
+			long userId, long groupId, boolean privateLayout, long layoutId,
+			boolean enabled, Map<Locale, String> canonicalURLMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutSEOEntry layoutSEOEntry = layoutSEOEntryPersistence.create(
+			counterLocalService.increment());
+
+		layoutSEOEntry.setUuid(serviceContext.getUuid());
+		layoutSEOEntry.setGroupId(groupId);
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		layoutSEOEntry.setCompanyId(group.getCompanyId());
+
+		layoutSEOEntry.setUserId(userId);
+
+		Date now = DateUtil.newDate();
+
+		layoutSEOEntry.setCreateDate(now);
+		layoutSEOEntry.setModifiedDate(now);
+
+		layoutSEOEntry.setEnabled(enabled);
+		layoutSEOEntry.setCanonicalURLMap(canonicalURLMap);
+		layoutSEOEntry.setPrivateLayout(privateLayout);
+		layoutSEOEntry.setLayoutId(layoutId);
+
+		return layoutSEOEntryPersistence.update(layoutSEOEntry);
+	}
+
 }

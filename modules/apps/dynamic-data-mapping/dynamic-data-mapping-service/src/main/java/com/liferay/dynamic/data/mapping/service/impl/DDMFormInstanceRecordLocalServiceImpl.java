@@ -557,12 +557,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		ddmFormInstanceRecordVersion.setFormInstanceRecordId(
 			ddmFormInstanceRecord.getFormInstanceRecordId());
 		ddmFormInstanceRecordVersion.setVersion(version);
+		ddmFormInstanceRecordVersion.setStorageId(ddmStorageId);
 		ddmFormInstanceRecordVersion.setStatus(status);
 		ddmFormInstanceRecordVersion.setStatusByUserId(user.getUserId());
 		ddmFormInstanceRecordVersion.setStatusByUserName(user.getFullName());
 		ddmFormInstanceRecordVersion.setStatusDate(
 			ddmFormInstanceRecord.getModifiedDate());
-		ddmFormInstanceRecordVersion.setStorageId(ddmStorageId);
 
 		ddmFormInstanceRecordVersionPersistence.update(
 			ddmFormInstanceRecordVersion);

@@ -271,14 +271,8 @@ public class ContentPageEditorDisplayContext {
 			"languageId", themeDisplay.getLanguageId()
 		).put(
 			"layoutData", JSONFactoryUtil.createJSONObject(_getLayoutData())
-		);
-
-		Set<AssetEntry> mappedAssetEntries = ContentUtil.getMappedAssetEntries(
-			_groupId, themeDisplay.getPlid());
-
-		soyContext.put(
-			"mappedAssetEntries",
-			_getMappedAssetEntriesSoyContexts(mappedAssetEntries)
+		).put(
+			"mappedAssetEntries", _getMappedAssetEntriesSoyContexts()
 		).put(
 			"pageContents",
 			ContentUtil.getPageContentsJSONArray(
@@ -1116,10 +1110,13 @@ public class ContentPageEditorDisplayContext {
 		return lookAndFeelURL.toString();
 	}
 
-	private Set<SoyContext> _getMappedAssetEntriesSoyContexts(
-		Set<AssetEntry> assetEntries) {
+	private Set<SoyContext> _getMappedAssetEntriesSoyContexts()
+		throws PortalException {
 
 		Set<SoyContext> mappedAssetEntriesSoyContexts = new HashSet<>();
+
+		Set<AssetEntry> assetEntries = ContentUtil.getMappedAssetEntries(
+			_groupId, themeDisplay.getPlid());
 
 		for (AssetEntry assetEntry : assetEntries) {
 			SoyContext mappedAssetEntrySoyContext =

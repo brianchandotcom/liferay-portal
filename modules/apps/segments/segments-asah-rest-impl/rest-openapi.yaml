@@ -40,7 +40,7 @@ components:
                     minimum: 0
                     type: number
             type: object
-        RunExperiment:
+        ExperimentRun:
             properties:
                 confidenceLevel:
                     format: double
@@ -106,21 +106,21 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/RunExperiment"
+                            $ref: "#/components/schemas/ExperimentRun"
                     application/xml:
                         schema:
-                            $ref: "#/components/schemas/RunExperiment"
+                            $ref: "#/components/schemas/ExperimentRun"
             responses:
                 200:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/RunExperiment"
+                                $ref: "#/components/schemas/ExperimentRun"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/RunExperiment"
+                                $ref: "#/components/schemas/ExperimentRun"
                     description: ""
-            tags: ["RunExperiment"]
+            tags: ["ExperimentRun"]
     "/experiments/{experimentId}/status":
         post:
             operationId: postExperimentStatus

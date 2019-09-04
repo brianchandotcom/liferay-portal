@@ -85,11 +85,6 @@
 	<td>//div[contains(@class,'fragment-entry-link')]/section[${key_position}]//li[contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>FRAGMENT_HEADER_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'fragment-entry-link-wrapper')]//ul[contains(.,'${key_fragmentName}')]//li[contains(@class,'tbar-item')][2]/button</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

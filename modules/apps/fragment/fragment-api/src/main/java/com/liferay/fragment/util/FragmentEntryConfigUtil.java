@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -173,7 +174,7 @@ public class FragmentEntryConfigUtil {
 				dataType = "string";
 			}
 
-			return _getFieldValue(dataType, value);
+			return HtmlUtil.escape((String)_getFieldValue(dataType, value));
 		}
 
 		return _getFieldValue("string", value);

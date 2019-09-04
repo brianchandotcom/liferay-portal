@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -24,6 +25,9 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.image.ImageToolImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,6 +35,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -39,6 +44,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -46,6 +53,10 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -213,6 +224,34 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
+	}
+
+	private FileEntry _addImage(
+			String name, String url, ServiceContext serviceContext,
+			ThemeDisplay themeDisplay)
+		throws IOException, PortalException {
+
+		byte[] bytes;
+
+		if (url.startsWith("data:image/")) {
+			String[] urlParts = url.split(";base64,");
+
+			bytes = Base64.decode(urlParts[1]);
+		}
+		else {
+			URL imageURL = new URL(url);
+
+			bytes = FileUtil.getBytes(imageURL.openStream());
+		}
+
+		ImageTool imageTool = ImageToolImpl.getInstance();
+
+		Image image = imageTool.getImage(bytes);
+
+		return _dlAppLocalService.addFileEntry(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, image.getType(),
+			bytes, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

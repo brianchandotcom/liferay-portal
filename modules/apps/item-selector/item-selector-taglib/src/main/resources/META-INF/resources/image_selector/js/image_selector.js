@@ -230,25 +230,32 @@ AUI.add(
 				_onBrowseClick() {
 					var instance = this;
 
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-						after: {
-							selectedItemChange(event) {
-								var selectedItem = event.newVal;
+					Liferay.Loader.require(
+						'frontend-js-web/liferay/ItemSelectorDialog.es',
+						function(ItemSelectorDialog){
+							var itemSelectorDialog = new ItemSelectorDialog.default({
+								eventName: instance.get('itemSelectorEventName'),
+								url: instance.get('itemSelectorURL')
+							});
 
-								if (selectedItem) {
-									instance._updateImageData(
-										JSON.parse(selectedItem.value)
-									);
+							itemSelectorDialog.open();
 
-									Liferay.fire(STR_IMAGE_SELECTED);
+							itemSelectorDialog.on(
+								'selectedItemChange',
+								function(event) {
+									var selectedItem = event.selectedItem;
+
+									if (selectedItem) {
+										instance._updateImageData(
+											JSON.parse(selectedItem.value)
+										);
+
+										Liferay.fire(STR_IMAGE_SELECTED);
+									}
 								}
-							}
-						},
-						eventName: instance.get('itemSelectorEventName'),
-						url: instance.get('itemSelectorURL')
-					});
-
-					itemSelectorDialog.open();
+							);
+						}
+					);
 
 					instance._cancelTimer();
 				},

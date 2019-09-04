@@ -63,6 +63,10 @@ class DataLayoutBuilder extends Component {
 		return fieldTypes;
 	}
 
+	getProvider() {
+		return this.refs.layoutProvider;
+	}
+
 	getStore() {
 		return {
 			...this.refs.layoutProvider.state

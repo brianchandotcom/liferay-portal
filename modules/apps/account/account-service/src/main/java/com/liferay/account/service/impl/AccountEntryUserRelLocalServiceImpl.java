@@ -14,7 +14,9 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
+import com.liferay.account.service.persistence.AccountEntryUserRelPK;
 import com.liferay.portal.aop.AopService;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,9 +42,22 @@ public class AccountEntryUserRelLocalServiceImpl
 	extends AccountEntryUserRelLocalServiceBaseImpl {
 
 	/**
-	 * NOTE FOR DEVELOPERS:
+	 * Creates an AccountEntryUserRel and adds it to the database. An
+	 * AccountEntryUserRel is essentially an "AccountEntry membership".
 	 *
-	 * Never reference this class directly. Use <code>com.liferay.account.service.AccountEntryUserRelLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.account.service.AccountEntryUserRelLocalServiceUtil</code>.
+	 * @param accountEntryId the primary key of the AccountEntry
+	 * @param userId the primary key of the User
+	 * @return the AccountEntryUserRel
+	 * @review
 	 */
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRel(
+		long accountEntryId, long userId) {
+
+		AccountEntryUserRel accountEntryUserRel = createAccountEntryUserRel(
+			new AccountEntryUserRelPK(accountEntryId, userId));
+
+		return addAccountEntryUserRel(accountEntryUserRel);
+	}
 
 }

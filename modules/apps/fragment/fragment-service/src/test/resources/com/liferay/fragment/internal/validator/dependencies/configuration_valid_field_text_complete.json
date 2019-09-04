@@ -8,7 +8,10 @@
 					"description": "button-text",
 					"label": "Button Text",
 					"name": "buttonText",
-					"type": "text"
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Button Placeholder"
+					}
 				}
 			]
 		}

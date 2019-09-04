@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT</td>
-	<td>//div[@id='WACViewPanel']  | //div[contains(@id,'sheetContentDiv')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SAVE_STATUS</td>
 	<td>//span[@id='BreadcrumbSaveStatus']</td>
 	<td></td>

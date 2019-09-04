@@ -13,7 +13,9 @@ definition {
 			locator1 = "OneDrive#TITLE",
 			value1 = "${dmDocumentTitle}");
 
-		Click(locator1 = "OneDrive#CONTENT");
+		KeyPress(
+			locator1 = "OneDrive#TITLE",
+			value1 = "\RETURN");
 
 		AssertTextPresent(
 			locator1 = "OneDrive#SAVE_STATUS",

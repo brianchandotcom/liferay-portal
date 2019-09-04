@@ -84,7 +84,7 @@ public class DLKeyStoreManagerImpl extends BaseKeyStoreManagerImpl {
 		catch (Exception e) {
 			throw new KeyStoreException(
 				StringBundler.concat(
-					"Unable to load keystore ", getCompanyId() + "/",
+					"Unable to load keystore ", getCompanyId(), "/",
 					_SAML_KEYSTORE_PATH, ": ", e.getMessage()),
 				e);
 		}

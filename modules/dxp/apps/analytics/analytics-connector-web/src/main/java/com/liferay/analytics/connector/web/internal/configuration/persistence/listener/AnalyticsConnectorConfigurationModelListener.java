@@ -204,7 +204,7 @@ public class AnalyticsConnectorConfigurationModelListener
 			"com.liferay.portal.security.audit.storage.service.",
 			"AuditEventService#getAuditEvents\n",
 			ContactService.class.getName(), "#getContact\n",
-			CompanyService.class.getName() + "#updatePreferences\n",
+			CompanyService.class.getName(), "#updatePreferences\n",
 			GroupService.class.getName(), "#getGroup\n",
 			GroupService.class.getName(), "#getGroups\n",
 			GroupService.class.getName(), "#getGroupsCount\n",

@@ -34,7 +34,7 @@ public class OAuthServiceBundleActivator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		Filter filter = context.createFilter(
 			StringBundler.concat(
-				"(&(objectClass=" + ModuleServiceLifecycle.class.getName(), ")",
+				"(&(objectClass=", ModuleServiceLifecycle.class.getName(), ")",
 				ModuleServiceLifecycle.DATABASE_INITIALIZED, ")"));
 
 		_serviceTracker = new ServiceTracker<Object, Object>(

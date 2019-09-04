@@ -66,6 +66,10 @@ definition {
 		DMDocument.enableActionsMenuOnPortlet();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		OneDrive.deleteDocument(dmDocumentTitle = "Untitled.");
+
+		Navigator.openURL();
 	}
 
 	@description = "This test ensures that an Excel sheet can be added via the OneDrive editor."

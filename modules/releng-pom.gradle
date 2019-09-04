@@ -37,6 +37,10 @@ task testPomCompileOnly
 task testPomRelease
 task testPomThirdParty
 
+String pomCompileOnlyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only"
+String pomReleaseArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom"
+String pomThirdPartyArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.third.party"
+
 configurations {
 	pomProjectTemplates
 }
@@ -93,7 +97,7 @@ generatePomCompileOnly {
 	}
 
 	doLast {
-		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only")
+		Model model = _getModel(pomCompileOnlyArtifactId)
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -137,7 +141,7 @@ generatePomCompileOnly {
 
 generatePomRelease {
 	doLast {
-		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom")
+		Model model = _getModel(pomReleaseArtifactId)
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -230,7 +234,7 @@ generatePomRelease {
 
 generatePomThirdParty {
 	doLast {
-		Model model = _getModel("release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.third.party")
+		Model model = _getModel(pomThirdPartyArtifactId)
 
 		DependencyManagement dependencyManagement = new DependencyManagement()
 
@@ -278,32 +282,26 @@ generatePomThirdParty {
 
 testPomCompileOnly {
 	doLast {
-		String artifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.compile.only"
-
 		Boolean excludeLiferayDependencies = true
 
-		_testPom(artifactId, version, excludeLiferayDependencies)
+		_testPom(pomCompileOnlyArtifactId, version, excludeLiferayDependencies)
 	}
 
 }
 
 testPomRelease {
 	doLast {
-		String artifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom"
-
 		Boolean excludeLiferayDependencies = true
 
-		_testPom(artifactId, version, excludeLiferayDependencies)
+		_testPom(pomReleaseArtifactId, version, excludeLiferayDependencies)
 	}
 }
 
 testPomThirdParty {
 	doLast {
-		String artifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".bom.third.party"
-
 		Boolean excludeLiferayDependencies = false
 
-		_testPom(artifactId, version, excludeLiferayDependencies)
+		_testPom(pomThirdPartyArtifactId, version, excludeLiferayDependencies)
 	}
 }
 

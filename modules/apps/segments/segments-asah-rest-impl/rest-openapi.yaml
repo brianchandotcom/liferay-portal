@@ -29,17 +29,6 @@ components:
                     format: int64
                     type: integer
             type: object
-        ExperimentVariant:
-            properties:
-                id:
-                    format: int64
-                    type: integer
-                trafficSplit:
-                    format: double
-                    maximum: 1
-                    minimum: 0
-                    type: number
-            type: object
         ExperimentRun:
             properties:
                 confidenceLevel:
@@ -57,6 +46,17 @@ components:
             required:
                 - confidenceLevel
                 - variants
+            type: object
+        ExperimentVariant:
+            properties:
+                id:
+                    format: int64
+                    type: integer
+                trafficSplit:
+                    format: double
+                    maximum: 1
+                    minimum: 0
+                    type: number
             type: object
         Status:
             properties:

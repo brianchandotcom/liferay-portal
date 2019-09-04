@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/alert": "3.0.0-milestone.3",
 		"@clayui/button": "3.0.0-milestone.3",
 		"@clayui/icon": "3.0.0-milestone.3",
 		"@clayui/modal": "3.0.0-milestone.3",

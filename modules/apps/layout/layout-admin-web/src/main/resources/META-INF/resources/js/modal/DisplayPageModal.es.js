@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate} from 'frontend-js-web';
 import ClayButton from '@clayui/button';
@@ -49,7 +50,14 @@ const DisplayPageModal = props => {
 							beforeScreenFlip: onClose
 						});
 					}
-				});
+				})
+				.catch(() =>
+					setError({
+						other: Liferay.Language.get(
+							'an-unexpected-error-occurred-while-creating-the-display-page'
+						)
+					})
+				);
 		},
 		[form, formSubmitURL, onClose]
 	);
@@ -60,6 +68,15 @@ const DisplayPageModal = props => {
 		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>{props.title}</ClayModal.Header>
 			<ClayModal.Body>
+				{error && error.other && (
+					<ClayAlert
+						displayType="danger"
+						onClose={() => {}}
+						title={Liferay.Language.get('error')}
+					>
+						{error.other}
+					</ClayAlert>
+				)}
 				{visible && (
 					<DisplayPageModalForm
 						displayPageName={props.displayPageName}

@@ -16,12 +16,11 @@
 
 import DocumentLibraryOpener from '../../../src/main/resources/META-INF/resources/js/main.es.js';
 
+const realSetTimeout = setTimeout;
+
 function replyAndWait({body = {}, ms}) {
 	return () => {
-		jest.useRealTimers();
-
-		setTimeout(() => {
-			jest.useFakeTimers();
+		realSetTimeout(() => {
 			jest.advanceTimersByTime(ms);
 		}, 0);
 
@@ -32,30 +31,45 @@ function replyAndWait({body = {}, ms}) {
 }
 
 describe('DocumentLibraryOpener', () => {
-	const windowOpenSpy = jest
-		.spyOn(window, 'open')
-		.mockImplementation(() => {});
-	global.Liferay.Util.openWindow = jest
-		.fn()
-		.mockImplementation((_, cb) => cb());
-	global.Liferay.Util.getWindow = () => ({hide: jest.fn()});
-	global.themeDisplay = {
-		getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
-	};
+	const FETCH_STATUS_URL = '//fecthStatusURL';
+	const STATUS_URL = '//statusURL';
+	const OFFICE365_EDIT_URL = '//office365EditURL';
+	let opener;
+
+	beforeEach(() => {
+		jest.spyOn(window, 'open').mockImplementation(() => {});
+		global.Liferay.Util.openWindow = jest
+			.fn()
+			.mockImplementation((_, cb) => cb());
+		global.Liferay.Util.getWindow = () => ({hide: jest.fn()});
+		global.themeDisplay = {
+			getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
+		};
+	});
+
+	afterEach(() => {
+		window.open.mockRestore();
+		delete global.Liferay.Util.openWindow;
+		delete global.Liferay.Util.getWindow;
+		delete global.themeDisplay;
+	});
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+	});
+
+	afterEach(() => {
+		jest.useRealTimers();
+	});
+
+	beforeEach(() => {
+		opener = new DocumentLibraryOpener({namespace: 'namespace'});
+		jest.spyOn(opener, 'showError');
+	});
 
 	describe('.edit()', () => {
-		const FETCH_STATUS_URL = '//fecthStatusURL';
-		const STATUS_URL = '//statusURL';
-		const OFFICE365_EDIT_URL = '//office365EditURL';
-		let opener;
-
-		describe('when all is fine at the first call', () => {
+		describe('when the background task finishes before the first polling request', () => {
 			beforeEach(() => {
-				windowOpenSpy.mockClear();
-				global.Liferay.Util.openWindow.mockClear();
-
-				opener = new DocumentLibraryOpener({namespace: 'namespace'});
-
 				fetch.mockResponses(
 					[
 						JSON.stringify({
@@ -76,7 +90,7 @@ describe('DocumentLibraryOpener', () => {
 				return opener.edit({formSubmitURL: FETCH_STATUS_URL});
 			});
 
-			it('Launches a modal with loading', () => {
+			it('opens the loading modal', () => {
 				expect(global.Liferay.Util.openWindow).toHaveBeenCalledTimes(1);
 				expect(
 					global.Liferay.Util.openWindow.mock.calls[0][0].dialog
@@ -86,27 +100,22 @@ describe('DocumentLibraryOpener', () => {
 				);
 			});
 
-			it('then fetches the status URL', () => {
+			it('then fetches the URL to get the task status URL', () => {
 				expect(fetch.mock.calls[0][0]).toBe(FETCH_STATUS_URL);
 			});
 
-			it('then queries the status URL', () => {
+			it('then fetches the task status URL', () => {
 				expect(fetch.mock.calls[1][0]).toBe(STATUS_URL);
 			});
 
-			it('windowOpenSpy', () => {
-				expect(windowOpenSpy).toHaveBeenCalledTimes(1);
-				expect(windowOpenSpy.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
+			it('and, since the task has already finished, navigates to the edit URL', () => {
+				expect(window.open).toHaveBeenCalledTimes(1);
+				expect(window.open.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
 			});
 		});
 
-		describe('when recive the pulling URL an pulling to it two times', () => {
+		describe('when the background task finishes right after the first polling request', () => {
 			beforeEach(() => {
-				windowOpenSpy.mockClear();
-				global.Liferay.Util.openWindow.mockClear();
-
-				opener = new DocumentLibraryOpener({namespace: 'namespace'});
-
 				fetch.mockResponses(
 					[
 						JSON.stringify({
@@ -135,7 +144,7 @@ describe('DocumentLibraryOpener', () => {
 				return opener.edit({formSubmitURL: FETCH_STATUS_URL});
 			});
 
-			it('Launches a modal with loading', () => {
+			it('opens the loading modal', () => {
 				expect(global.Liferay.Util.openWindow).toHaveBeenCalledTimes(1);
 				expect(
 					global.Liferay.Util.openWindow.mock.calls[0][0].dialog
@@ -145,60 +154,54 @@ describe('DocumentLibraryOpener', () => {
 				);
 			});
 
-			it('then fetches the status URL', () => {
+			it('then fetches the URL to get the task status URL', () => {
 				expect(fetch.mock.calls[0][0]).toBe(FETCH_STATUS_URL);
 			});
 
-			it('then queries the status URL and is not complete', () => {
+			it('then fetches the task status URL', () => {
 				expect(fetch.mock.calls[1][0]).toBe(STATUS_URL);
 			});
 
-			it('then queries the status URL and resolve', () => {
+			it('then fetches the task status URL again', () => {
 				expect(fetch.mock.calls[2][0]).toBe(STATUS_URL);
 			});
 
-			it('windowOpenSpy', () => {
-				expect(windowOpenSpy).toHaveBeenCalledTimes(1);
-				expect(windowOpenSpy.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
+			it('and, since the task has finished, navigates to the edit URL', () => {
+				expect(window.open).toHaveBeenCalledTimes(1);
+				expect(window.open.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
 			});
 		});
 
-		describe('when recive the pulling URL an pulling to it two times and FAILS', () => {
+		describe('when the background task fails right after the first polling request', () => {
 			beforeEach(() => {
-				windowOpenSpy.mockClear();
-				global.Liferay.Util.openWindow.mockClear();
-
-				opener = new DocumentLibraryOpener({namespace: 'namespace'});
-
-				fetch
-					.mockResponses(
-						[
-							JSON.stringify({
-								oneDriveBackgroundTaskStatusURL: STATUS_URL
-							})
-						],
-						[
-							replyAndWait({
-								body: {
-									complete: false
-								},
-								ms: 500
-							})
-						]
-					)
-					.mockResponse(
+				fetch.mockResponses(
+					[
+						JSON.stringify({
+							oneDriveBackgroundTaskStatusURL: STATUS_URL
+						})
+					],
+					[
+						replyAndWait({
+							body: {
+								complete: false
+							},
+							ms: 500
+						})
+					],
+					[
 						replyAndWait({
 							body: {
 								error: true
 							},
 							ms: 2000
 						})
-					);
+					]
+				);
 
 				return opener.edit({formSubmitURL: FETCH_STATUS_URL});
 			});
 
-			it('Launches a modal with loading', () => {
+			it('opens the loading modal', () => {
 				expect(global.Liferay.Util.openWindow).toHaveBeenCalledTimes(1);
 				expect(
 					global.Liferay.Util.openWindow.mock.calls[0][0].dialog
@@ -208,18 +211,19 @@ describe('DocumentLibraryOpener', () => {
 				);
 			});
 
-			it('then fetches the status URL', () => {
+			it('then fetches the URL to get the task status URL', () => {
 				expect(fetch.mock.calls[0][0]).toBe(FETCH_STATUS_URL);
 			});
 
-			it('then queries the status URL and is not complete', () => {
+			it('then fetches the task status URL', () => {
 				expect(fetch.mock.calls[1][0]).toBe(STATUS_URL);
 			});
 
-			it('then queries the status URL and FAILS', () => {
-				jest.spyOn(opener, 'showError');
-
+			it('then fetches the task status URL again', () => {
 				expect(fetch.mock.calls[2][0]).toBe(STATUS_URL);
+			});
+
+			it('and, since the task has failed, shows an error message', () => {
 				expect(opener.showError).toHaveBeenCalledTimes(1);
 			});
 		});

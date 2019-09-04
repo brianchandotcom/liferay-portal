@@ -116,7 +116,7 @@ public class VulcanConfigurationModelListener
 			getClass());
 
 		String message = ResourceBundleUtil.getString(
-			resourceBundle, "must-have-a-valid-path");
+			resourceBundle, "path-can-not-be-empty");
 
 		throw new Exception(message);
 	}

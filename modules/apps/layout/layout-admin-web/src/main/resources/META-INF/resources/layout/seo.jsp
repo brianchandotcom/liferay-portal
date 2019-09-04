@@ -89,14 +89,14 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<h4><liferay-ui:message key="canonical-url" /></h4>
 
 	<%
-		LayoutCanonicalURL selLayoutCanonicalURL = layoutsAdminDisplayContext.getSelLayoutCanonicalURL();
+	LayoutSEOEntry selLayoutSEOEntry = layoutsAdminDisplayContext.getSelLayoutSEOEntry();
 	%>
 
 	<c:choose>
-		<c:when test="<%= selLayoutCanonicalURL != null %>">
-			<aui:model-context bean="<%= selLayoutCanonicalURL %>" model="<%= LayoutCanonicalURL.class %>" />
+		<c:when test="<%= selLayoutSEOEntry != null %>">
+			<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
 
-			<aui:input checked="<%= selLayoutCanonicalURL.isEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
+			<aui:input checked="<%= selLayoutSEOEntry.isEnabled() %>" helpMessage="use-custom-canonical-url-help" id="useCustomCanonicalURL" label="use-custom-canonical-url" name="useCustomCanonicalURL" type="toggle-switch" />
 
 			<div id="<portlet:namespace />customCanonicalURLSettings">
 				<aui:input name="canonicalURL" placeholder="canonical-url">

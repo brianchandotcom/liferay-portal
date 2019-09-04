@@ -22,8 +22,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -355,7 +355,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	private ImageLocalService _imageLocalService;
 
 	@Reference
-	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
@@ -421,31 +421,31 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				_targetLayout.getGroupId(), _targetLayout.isPrivateLayout(),
 				_targetLayout.getLayoutId(), _sourceLayout.getTypeSettings());
 
-			LayoutCanonicalURL layoutCanonicalURL =
-				_layoutCanonicalURLLocalService.fetchLayoutCanonicalURL(
+			LayoutSEOEntry layoutSEOEntry =
+				_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 					_sourceLayout.getGroupId(), _sourceLayout.isPrivateLayout(),
 					_sourceLayout.getLayoutId());
 
-			if (layoutCanonicalURL == null) {
-				LayoutCanonicalURL targetLayoutCanonicalURL =
-					_layoutCanonicalURLLocalService.fetchLayoutCanonicalURL(
+			if (layoutSEOEntry == null) {
+				LayoutSEOEntry targetLayoutSEOEntry =
+					_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 						_targetLayout.getGroupId(),
 						_targetLayout.isPrivateLayout(),
 						_targetLayout.getLayoutId());
 
-				if (targetLayoutCanonicalURL != null) {
-					_layoutCanonicalURLLocalService.deleteLayoutCanonicalURL(
+				if (targetLayoutSEOEntry != null) {
+					_layoutSEOEntryLocalService.deleteLayoutSEOEntry(
 						_targetLayout.getGroupId(),
 						_targetLayout.isPrivateLayout(),
 						_targetLayout.getLayoutId());
 				}
 			}
 			else {
-				_layoutCanonicalURLLocalService.updateLayoutCanonicalURL(
+				_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 					_targetLayout.getUserId(), _targetLayout.getGroupId(),
 					_targetLayout.isPrivateLayout(),
-					_targetLayout.getLayoutId(), layoutCanonicalURL.isEnabled(),
-					layoutCanonicalURL.getCanonicalURLMap(), serviceContext);
+					_targetLayout.getLayoutId(), layoutSEOEntry.isEnabled(),
+					layoutSEOEntry.getCanonicalURLMap(), serviceContext);
 			}
 
 			return _layoutLocalService.updateIconImage(

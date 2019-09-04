@@ -20,6 +20,8 @@
 		<field name="appBuilderAppDeploymentId" type="long" />
 		<field name="appBuilderAppId" type="long" />
 		<field name="deploymentType" type="String" />
-		<field name="settings" type="String" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

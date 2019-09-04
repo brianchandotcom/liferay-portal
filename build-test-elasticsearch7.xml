@@ -375,16 +375,6 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</exec>
 
 			<echo>${curl.output}</echo>
-
-			<if>
-				<contains string="${curl.output}" substring="You Know, for Search" />
-				<then>
-					<echo>Elasticsearch started with X-Pack Security.</echo>
-				</then>
-				<else>
-					<fail>Elasticsearch failed to start with X-Pack Security.</fail>
-				</else>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -399,6 +389,19 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</exec>
 
 			<echo>${curl.output.trial}</echo>
+
+			<if>
+				<and>
+					<contains string="${curl.output}" substring="You Know, for Search" />
+					<contains string="${curl.output.trial}" substring="&quot;trial_was_started&quot; : true" />
+				</and>
+				<then>
+					<echo>Elasticsearch started with X-Pack Security.</echo>
+				</then>
+				<else>
+					<fail>Elasticsearch failed to start with X-Pack Security.</fail>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

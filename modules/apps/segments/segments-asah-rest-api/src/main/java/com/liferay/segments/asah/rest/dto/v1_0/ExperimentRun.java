@@ -41,11 +41,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("RunExperiment")
+@GraphQLName("ExperimentRun")
 @JsonFilter("Liferay.Vulcan")
 @Schema(requiredProperties = {"confidenceLevel", "variants"})
-@XmlRootElement(name = "RunExperiment")
-public class RunExperiment {
+@XmlRootElement(name = "ExperimentRun")
+public class ExperimentRun {
 
 	@Schema
 	public Double getConfidenceLevel() {
@@ -139,13 +139,13 @@ public class RunExperiment {
 			return true;
 		}
 
-		if (!(object instanceof RunExperiment)) {
+		if (!(object instanceof ExperimentRun)) {
 			return false;
 		}
 
-		RunExperiment runExperiment = (RunExperiment)object;
+		ExperimentRun experimentRun = (ExperimentRun)object;
 
-		return Objects.equals(toString(), runExperiment.toString());
+		return Objects.equals(toString(), experimentRun.toString());
 	}
 
 	@Override

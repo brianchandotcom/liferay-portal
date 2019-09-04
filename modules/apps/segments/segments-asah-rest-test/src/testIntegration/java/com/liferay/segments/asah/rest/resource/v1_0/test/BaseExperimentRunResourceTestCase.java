@@ -41,11 +41,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.segments.asah.rest.client.dto.v1_0.RunExperiment;
+import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.client.http.HttpInvoker;
 import com.liferay.segments.asah.rest.client.pagination.Page;
-import com.liferay.segments.asah.rest.client.resource.v1_0.RunExperimentResource;
-import com.liferay.segments.asah.rest.client.serdes.v1_0.RunExperimentSerDes;
+import com.liferay.segments.asah.rest.client.resource.v1_0.ExperimentRunResource;
+import com.liferay.segments.asah.rest.client.serdes.v1_0.ExperimentRunSerDes;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -78,7 +78,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseRunExperimentResourceTestCase {
+public abstract class BaseExperimentRunResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -99,11 +99,11 @@ public abstract class BaseRunExperimentResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_runExperimentResource.setContextCompany(testCompany);
+		_experimentRunResource.setContextCompany(testCompany);
 
-		RunExperimentResource.Builder builder = RunExperimentResource.builder();
+		ExperimentRunResource.Builder builder = ExperimentRunResource.builder();
 
-		runExperimentResource = builder.locale(
+		experimentRunResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -132,13 +132,13 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 		};
 
-		RunExperiment runExperiment1 = randomRunExperiment();
+		ExperimentRun experimentRun1 = randomExperimentRun();
 
-		String json = objectMapper.writeValueAsString(runExperiment1);
+		String json = objectMapper.writeValueAsString(experimentRun1);
 
-		RunExperiment runExperiment2 = RunExperimentSerDes.toDTO(json);
+		ExperimentRun experimentRun2 = ExperimentRunSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(runExperiment1, runExperiment2));
+		Assert.assertTrue(equals(experimentRun1, experimentRun2));
 	}
 
 	@Test
@@ -158,10 +158,10 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 		};
 
-		RunExperiment runExperiment = randomRunExperiment();
+		ExperimentRun experimentRun = randomExperimentRun();
 
-		String json1 = objectMapper.writeValueAsString(runExperiment);
-		String json2 = RunExperimentSerDes.toJSON(runExperiment);
+		String json1 = objectMapper.writeValueAsString(experimentRun);
+		String json2 = ExperimentRunSerDes.toJSON(experimentRun);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -171,39 +171,39 @@ public abstract class BaseRunExperimentResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		RunExperiment runExperiment = randomRunExperiment();
+		ExperimentRun experimentRun = randomExperimentRun();
 
-		runExperiment.setStatus(regex);
+		experimentRun.setStatus(regex);
 
-		String json = RunExperimentSerDes.toJSON(runExperiment);
+		String json = ExperimentRunSerDes.toJSON(experimentRun);
 
 		Assert.assertFalse(json.contains(regex));
 
-		runExperiment = RunExperimentSerDes.toDTO(json);
+		experimentRun = ExperimentRunSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, runExperiment.getStatus());
+		Assert.assertEquals(regex, experimentRun.getStatus());
 	}
 
 	@Test
 	public void testPostExperimentRun() throws Exception {
-		RunExperiment randomRunExperiment = randomRunExperiment();
+		ExperimentRun randomExperimentRun = randomExperimentRun();
 
-		RunExperiment postRunExperiment =
-			testPostExperimentRun_addRunExperiment(randomRunExperiment);
+		ExperimentRun postExperimentRun =
+			testPostExperimentRun_addExperimentRun(randomExperimentRun);
 
-		assertEquals(randomRunExperiment, postRunExperiment);
-		assertValid(postRunExperiment);
+		assertEquals(randomExperimentRun, postExperimentRun);
+		assertValid(postExperimentRun);
 	}
 
-	protected RunExperiment testPostExperimentRun_addRunExperiment(
-			RunExperiment runExperiment)
+	protected ExperimentRun testPostExperimentRun_addExperimentRun(
+			ExperimentRun experimentRun)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected RunExperiment testGraphQLRunExperiment_addRunExperiment()
+	protected ExperimentRun testGraphQLExperimentRun_addExperimentRun()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -219,38 +219,38 @@ public abstract class BaseRunExperimentResourceTestCase {
 	}
 
 	protected void assertEquals(
-		RunExperiment runExperiment1, RunExperiment runExperiment2) {
+		ExperimentRun experimentRun1, ExperimentRun experimentRun2) {
 
 		Assert.assertTrue(
-			runExperiment1 + " does not equal " + runExperiment2,
-			equals(runExperiment1, runExperiment2));
+			experimentRun1 + " does not equal " + experimentRun2,
+			equals(experimentRun1, experimentRun2));
 	}
 
 	protected void assertEquals(
-		List<RunExperiment> runExperiments1,
-		List<RunExperiment> runExperiments2) {
+		List<ExperimentRun> experimentRuns1,
+		List<ExperimentRun> experimentRuns2) {
 
-		Assert.assertEquals(runExperiments1.size(), runExperiments2.size());
+		Assert.assertEquals(experimentRuns1.size(), experimentRuns2.size());
 
-		for (int i = 0; i < runExperiments1.size(); i++) {
-			RunExperiment runExperiment1 = runExperiments1.get(i);
-			RunExperiment runExperiment2 = runExperiments2.get(i);
+		for (int i = 0; i < experimentRuns1.size(); i++) {
+			ExperimentRun experimentRun1 = experimentRuns1.get(i);
+			ExperimentRun experimentRun2 = experimentRuns2.get(i);
 
-			assertEquals(runExperiment1, runExperiment2);
+			assertEquals(experimentRun1, experimentRun2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<RunExperiment> runExperiments1,
-		List<RunExperiment> runExperiments2) {
+		List<ExperimentRun> experimentRuns1,
+		List<ExperimentRun> experimentRuns2) {
 
-		Assert.assertEquals(runExperiments1.size(), runExperiments2.size());
+		Assert.assertEquals(experimentRuns1.size(), experimentRuns2.size());
 
-		for (RunExperiment runExperiment1 : runExperiments1) {
+		for (ExperimentRun experimentRun1 : experimentRuns1) {
 			boolean contains = false;
 
-			for (RunExperiment runExperiment2 : runExperiments2) {
-				if (equals(runExperiment1, runExperiment2)) {
+			for (ExperimentRun experimentRun2 : experimentRuns2) {
+				if (equals(experimentRun1, experimentRun2)) {
 					contains = true;
 
 					break;
@@ -258,19 +258,19 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				runExperiments2 + " does not contain " + runExperiment1,
+				experimentRuns2 + " does not contain " + experimentRun1,
 				contains);
 		}
 	}
 
 	protected void assertEqualsJSONArray(
-		List<RunExperiment> runExperiments, JSONArray jsonArray) {
+		List<ExperimentRun> experimentRuns, JSONArray jsonArray) {
 
-		for (RunExperiment runExperiment : runExperiments) {
+		for (ExperimentRun experimentRun : experimentRuns) {
 			boolean contains = false;
 
 			for (Object object : jsonArray) {
-				if (equalsJSONObject(runExperiment, (JSONObject)object)) {
+				if (equalsJSONObject(experimentRun, (JSONObject)object)) {
 					contains = true;
 
 					break;
@@ -278,18 +278,18 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				jsonArray + " does not contain " + runExperiment, contains);
+				jsonArray + " does not contain " + experimentRun, contains);
 		}
 	}
 
-	protected void assertValid(RunExperiment runExperiment) {
+	protected void assertValid(ExperimentRun experimentRun) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("confidenceLevel", additionalAssertFieldName)) {
-				if (runExperiment.getConfidenceLevel() == null) {
+				if (experimentRun.getConfidenceLevel() == null) {
 					valid = false;
 				}
 
@@ -297,7 +297,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 
 			if (Objects.equals("status", additionalAssertFieldName)) {
-				if (runExperiment.getStatus() == null) {
+				if (experimentRun.getStatus() == null) {
 					valid = false;
 				}
 
@@ -305,7 +305,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 			}
 
 			if (Objects.equals("variants", additionalAssertFieldName)) {
-				if (runExperiment.getVariants() == null) {
+				if (experimentRun.getVariants() == null) {
 					valid = false;
 				}
 
@@ -320,12 +320,12 @@ public abstract class BaseRunExperimentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<RunExperiment> page) {
+	protected void assertValid(Page<ExperimentRun> page) {
 		boolean valid = false;
 
-		java.util.Collection<RunExperiment> runExperiments = page.getItems();
+		java.util.Collection<ExperimentRun> experimentRuns = page.getItems();
 
-		int size = runExperiments.size();
+		int size = experimentRuns.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -360,9 +360,9 @@ public abstract class BaseRunExperimentResourceTestCase {
 	}
 
 	protected boolean equals(
-		RunExperiment runExperiment1, RunExperiment runExperiment2) {
+		ExperimentRun experimentRun1, ExperimentRun experimentRun2) {
 
-		if (runExperiment1 == runExperiment2) {
+		if (experimentRun1 == experimentRun2) {
 			return true;
 		}
 
@@ -371,8 +371,8 @@ public abstract class BaseRunExperimentResourceTestCase {
 
 			if (Objects.equals("confidenceLevel", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						runExperiment1.getConfidenceLevel(),
-						runExperiment2.getConfidenceLevel())) {
+						experimentRun1.getConfidenceLevel(),
+						experimentRun2.getConfidenceLevel())) {
 
 					return false;
 				}
@@ -382,8 +382,8 @@ public abstract class BaseRunExperimentResourceTestCase {
 
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						runExperiment1.getStatus(),
-						runExperiment2.getStatus())) {
+						experimentRun1.getStatus(),
+						experimentRun2.getStatus())) {
 
 					return false;
 				}
@@ -393,8 +393,8 @@ public abstract class BaseRunExperimentResourceTestCase {
 
 			if (Objects.equals("variants", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						runExperiment1.getVariants(),
-						runExperiment2.getVariants())) {
+						experimentRun1.getVariants(),
+						experimentRun2.getVariants())) {
 
 					return false;
 				}
@@ -411,12 +411,12 @@ public abstract class BaseRunExperimentResourceTestCase {
 	}
 
 	protected boolean equalsJSONObject(
-		RunExperiment runExperiment, JSONObject jsonObject) {
+		ExperimentRun experimentRun, JSONObject jsonObject) {
 
 		for (String fieldName : getAdditionalAssertFieldNames()) {
 			if (Objects.equals("confidenceLevel", fieldName)) {
 				if (!Objects.equals(
-						runExperiment.getConfidenceLevel(),
+						experimentRun.getConfidenceLevel(),
 						(Double)jsonObject.getDouble("confidenceLevel"))) {
 
 					return false;
@@ -427,7 +427,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 
 			if (Objects.equals("status", fieldName)) {
 				if (!Objects.equals(
-						runExperiment.getStatus(),
+						experimentRun.getStatus(),
 						(String)jsonObject.getString("status"))) {
 
 					return false;
@@ -446,13 +446,13 @@ public abstract class BaseRunExperimentResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_runExperimentResource instanceof EntityModelResource)) {
+		if (!(_experimentRunResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_runExperimentResource;
+			(EntityModelResource)_experimentRunResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -481,7 +481,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, RunExperiment runExperiment) {
+		EntityField entityField, String operator, ExperimentRun experimentRun) {
 
 		StringBundler sb = new StringBundler();
 
@@ -500,7 +500,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 
 		if (entityFieldName.equals("status")) {
 			sb.append("'");
-			sb.append(String.valueOf(runExperiment.getStatus()));
+			sb.append(String.valueOf(experimentRun.getStatus()));
 			sb.append("'");
 
 			return sb.toString();
@@ -532,8 +532,8 @@ public abstract class BaseRunExperimentResourceTestCase {
 		return httpResponse.getContent();
 	}
 
-	protected RunExperiment randomRunExperiment() throws Exception {
-		return new RunExperiment() {
+	protected ExperimentRun randomExperimentRun() throws Exception {
+		return new ExperimentRun() {
 			{
 				confidenceLevel = RandomTestUtil.randomDouble();
 				status = RandomTestUtil.randomString();
@@ -541,17 +541,17 @@ public abstract class BaseRunExperimentResourceTestCase {
 		};
 	}
 
-	protected RunExperiment randomIrrelevantRunExperiment() throws Exception {
-		RunExperiment randomIrrelevantRunExperiment = randomRunExperiment();
+	protected ExperimentRun randomIrrelevantExperimentRun() throws Exception {
+		ExperimentRun randomIrrelevantExperimentRun = randomExperimentRun();
 
-		return randomIrrelevantRunExperiment;
+		return randomIrrelevantExperimentRun;
 	}
 
-	protected RunExperiment randomPatchRunExperiment() throws Exception {
-		return randomRunExperiment();
+	protected ExperimentRun randomPatchExperimentRun() throws Exception {
+		return randomExperimentRun();
 	}
 
-	protected RunExperimentResource runExperimentResource;
+	protected ExperimentRunResource experimentRunResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -611,7 +611,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseRunExperimentResourceTestCase.class);
+		BaseExperimentRunResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -628,7 +628,7 @@ public abstract class BaseRunExperimentResourceTestCase {
 	private static DateFormat _dateFormat;
 
 	@Inject
-	private com.liferay.segments.asah.rest.resource.v1_0.RunExperimentResource
-		_runExperimentResource;
+	private com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource
+		_experimentRunResource;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.segments.asah.rest.client.resource.v1_0;
 
-import com.liferay.segments.asah.rest.client.dto.v1_0.RunExperiment;
+import com.liferay.segments.asah.rest.client.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.client.http.HttpInvoker;
 
 import java.util.LinkedHashMap;
@@ -30,18 +30,18 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface RunExperimentResource {
+public interface ExperimentRunResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public RunExperiment postExperimentRun(
-			Long experimentId, RunExperiment runExperiment)
+	public ExperimentRun postExperimentRun(
+			Long experimentId, ExperimentRun experimentRun)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postExperimentRunHttpResponse(
-			Long experimentId, RunExperiment runExperiment)
+			Long experimentId, ExperimentRun experimentRun)
 		throws Exception;
 
 	public static class Builder {
@@ -53,8 +53,8 @@ public interface RunExperimentResource {
 			return this;
 		}
 
-		public RunExperimentResource build() {
-			return new RunExperimentResourceImpl(this);
+		public ExperimentRunResource build() {
+			return new ExperimentRunResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -97,15 +97,15 @@ public interface RunExperimentResource {
 
 	}
 
-	public static class RunExperimentResourceImpl
-		implements RunExperimentResource {
+	public static class ExperimentRunResourceImpl
+		implements ExperimentRunResource {
 
-		public RunExperiment postExperimentRun(
-				Long experimentId, RunExperiment runExperiment)
+		public ExperimentRun postExperimentRun(
+				Long experimentId, ExperimentRun experimentRun)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postExperimentRunHttpResponse(experimentId, runExperiment);
+				postExperimentRunHttpResponse(experimentId, experimentRun);
 
 			String content = httpResponse.getContent();
 
@@ -117,7 +117,7 @@ public interface RunExperimentResource {
 
 			try {
 				return com.liferay.segments.asah.rest.client.serdes.v1_0.
-					RunExperimentSerDes.toDTO(content);
+					ExperimentRunSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -129,12 +129,12 @@ public interface RunExperimentResource {
 		}
 
 		public HttpInvoker.HttpResponse postExperimentRunHttpResponse(
-				Long experimentId, RunExperiment runExperiment)
+				Long experimentId, ExperimentRun experimentRun)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(runExperiment.toString(), "application/json");
+			httpInvoker.body(experimentRun.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -167,12 +167,12 @@ public interface RunExperimentResource {
 			return httpInvoker.invoke();
 		}
 
-		private RunExperimentResourceImpl(Builder builder) {
+		private ExperimentRunResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			RunExperimentResource.class.getName());
+			ExperimentRunResource.class.getName());
 
 		private Builder _builder;
 

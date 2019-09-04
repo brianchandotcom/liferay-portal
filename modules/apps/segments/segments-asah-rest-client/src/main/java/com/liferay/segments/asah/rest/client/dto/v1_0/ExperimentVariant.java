@@ -28,15 +28,15 @@ import javax.annotation.Generated;
 @Generated("")
 public class ExperimentVariant {
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -45,7 +45,7 @@ public class ExperimentVariant {
 		}
 	}
 
-	protected Long id;
+	protected String id;
 
 	public Double getTrafficSplit() {
 		return trafficSplit;

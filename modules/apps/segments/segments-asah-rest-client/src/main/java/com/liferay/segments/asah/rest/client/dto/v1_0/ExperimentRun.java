@@ -15,7 +15,7 @@
 package com.liferay.segments.asah.rest.client.dto.v1_0;
 
 import com.liferay.segments.asah.rest.client.function.UnsafeSupplier;
-import com.liferay.segments.asah.rest.client.serdes.v1_0.RunExperimentSerDes;
+import com.liferay.segments.asah.rest.client.serdes.v1_0.ExperimentRunSerDes;
 
 import java.util.Objects;
 
@@ -26,7 +26,7 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class RunExperiment {
+public class ExperimentRun {
 
 	public Double getConfidenceLevel() {
 		return confidenceLevel;
@@ -97,13 +97,13 @@ public class RunExperiment {
 			return true;
 		}
 
-		if (!(object instanceof RunExperiment)) {
+		if (!(object instanceof ExperimentRun)) {
 			return false;
 		}
 
-		RunExperiment runExperiment = (RunExperiment)object;
+		ExperimentRun experimentRun = (ExperimentRun)object;
 
-		return Objects.equals(toString(), runExperiment.toString());
+		return Objects.equals(toString(), experimentRun.toString());
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class RunExperiment {
 	}
 
 	public String toString() {
-		return RunExperimentSerDes.toJSON(this);
+		return ExperimentRunSerDes.toJSON(this);
 	}
 
 }

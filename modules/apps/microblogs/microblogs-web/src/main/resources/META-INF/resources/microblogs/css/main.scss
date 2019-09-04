@@ -135,7 +135,7 @@ $microblogs-border-color: #eaeaea;
 
 			.content {
 				@include hyphens();
-				@include overflow-wrap();
+				@include word-wrap();
 			}
 		}
 

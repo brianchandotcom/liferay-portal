@@ -19,6 +19,7 @@ import React, {Component} from 'react';
 
 import Header from './Header.es';
 import Carousel from './Carousel.es';
+import Footer from './Footer.es';
 
 class ItemSelectorPreview extends Component {
 	static propTypes = {
@@ -80,14 +81,16 @@ class ItemSelectorPreview extends Component {
 		this.setState({
 			currentItem: item,
 			currentItemIndex: index
-		})
+		});
 	};
 
 	render() {
-		const {openViewer, currentItemIndex, items} = this.state;
+		const {openViewer, currentItemIndex, currentItem, items} = this.state;
 
 		const spritemap =
 			Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
+
+		const itemName = currentItem ? currentItem.dataset.title : '';
 
 		return (
 			<>
@@ -103,6 +106,12 @@ class ItemSelectorPreview extends Component {
 								currentItemIndex={currentItemIndex}
 								items={items}
 								onItemChange={this.handleOnItemChange}
+							/>
+
+							<Footer
+								title={itemName}
+								currentIndex={currentItemIndex}
+								totalItems={items.length}
 							/>
 						</ClayIconSpriteContext.Provider>
 					</div>

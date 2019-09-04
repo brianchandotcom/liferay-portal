@@ -45,34 +45,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class AppDeployment {
 
 	@Schema
-	public String getDeploymentType() {
-		return deploymentType;
-	}
-
-	public void setDeploymentType(String deploymentType) {
-		this.deploymentType = deploymentType;
-	}
-
-	@JsonIgnore
-	public void setDeploymentType(
-		UnsafeSupplier<String, Exception> deploymentTypeUnsafeSupplier) {
-
-		try {
-			deploymentType = deploymentTypeUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String deploymentType;
-
-	@Schema
 	public Map<String, Object> getSettings() {
 		return settings;
 	}
@@ -99,6 +71,32 @@ public class AppDeployment {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, Object> settings;
+
+	@Schema
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {
@@ -127,20 +125,6 @@ public class AppDeployment {
 
 		sb.append("{");
 
-		if (deploymentType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"deploymentType\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(deploymentType));
-
-			sb.append("\"");
-		}
-
 		if (settings != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -149,6 +133,20 @@ public class AppDeployment {
 			sb.append("\"settings\": ");
 
 			sb.append(_toJSON(settings));
+		}
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

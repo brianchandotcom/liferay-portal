@@ -57,10 +57,10 @@ public class AppBuilderAppDeploymentLocalServiceWrapper
 	@Override
 	public com.liferay.app.builder.model.AppBuilderAppDeployment
 		addAppBuilderAppDeployment(
-			long appBuilderAppId, String deploymentType, String settings) {
+			long appBuilderAppId, String settings, String type) {
 
 		return _appBuilderAppDeploymentLocalService.addAppBuilderAppDeployment(
-			appBuilderAppId, deploymentType, settings);
+			appBuilderAppId, settings, type);
 	}
 
 	/**
@@ -246,12 +246,11 @@ public class AppBuilderAppDeploymentLocalServiceWrapper
 
 	@Override
 	public com.liferay.app.builder.model.AppBuilderAppDeployment
-			getAppBuilderAppDeployment(
-				long appBuilderAppId, String deploymentType)
+			getAppBuilderAppDeployment(long appBuilderAppId, String type)
 		throws Exception {
 
 		return _appBuilderAppDeploymentLocalService.getAppBuilderAppDeployment(
-			appBuilderAppId, deploymentType);
+			appBuilderAppId, type);
 	}
 
 	/**

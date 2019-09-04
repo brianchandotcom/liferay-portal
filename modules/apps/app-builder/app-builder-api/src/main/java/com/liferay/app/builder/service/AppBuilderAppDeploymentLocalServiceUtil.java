@@ -56,10 +56,10 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 
 	public static com.liferay.app.builder.model.AppBuilderAppDeployment
 		addAppBuilderAppDeployment(
-			long appBuilderAppId, String deploymentType, String settings) {
+			long appBuilderAppId, String settings, String type) {
 
 		return getService().addAppBuilderAppDeployment(
-			appBuilderAppId, deploymentType, settings);
+			appBuilderAppId, settings, type);
 	}
 
 	/**
@@ -230,12 +230,10 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 	}
 
 	public static com.liferay.app.builder.model.AppBuilderAppDeployment
-			getAppBuilderAppDeployment(
-				long appBuilderAppId, String deploymentType)
+			getAppBuilderAppDeployment(long appBuilderAppId, String type)
 		throws Exception {
 
-		return getService().getAppBuilderAppDeployment(
-			appBuilderAppId, deploymentType);
+		return getService().getAppBuilderAppDeployment(appBuilderAppId, type);
 	}
 
 	/**

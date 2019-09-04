@@ -218,6 +218,11 @@ public interface CTProcessLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<CTProcess> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition);
 

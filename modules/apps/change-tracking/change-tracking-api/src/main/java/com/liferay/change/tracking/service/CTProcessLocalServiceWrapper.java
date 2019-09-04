@@ -266,6 +266,19 @@ public class CTProcessLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.change.tracking.model.CTProcess>
 		getCTProcesses(
+			long companyId, long userId, String keywords, int status, int start,
+			int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.change.tracking.model.CTProcess>
+					orderByComparator) {
+
+		return _ctProcessLocalService.getCTProcesses(
+			companyId, userId, keywords, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.change.tracking.model.CTProcess>
+		getCTProcesses(
 			long companyId, long userId, String keywords,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition<?>
 				queryDefinition) {

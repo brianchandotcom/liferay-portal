@@ -3925,7 +3925,36 @@ log.sanitizer.enabled=false</echo>
 								substring="&quot;test&quot;:"
 							/>
 							<then>
-								<gradle-execute dir="@{js.test.dir}/.." task="packageRunTest">
+								<propertyregex
+									global="false"
+									input="@{js.test.dir}"
+									override="yes"
+									property="js.test.subproject.path"
+									regexp="${project.dir}\/modules"
+									replace=""
+								/>
+
+								<propertyregex
+									global="true"
+									input="${js.test.subproject.path}"
+									override="yes"
+									property="js.test.subproject.path"
+									regexp="\/"
+									replace=":"
+								/>
+
+								<propertyregex
+									global="true"
+									input="${js.test.subproject.path}"
+									override="yes"
+									property="js.test.subproject.path"
+									regexp=":test"
+									replace=":packageRunTest"
+								/>
+
+								<echo message="${js.test.subproject.path}" />
+
+								<gradle-execute dir="modules" task="${js.test.subproject.path}">
 									<arg value="--continue" />
 									<arg value="--parallel" />
 								</gradle-execute>

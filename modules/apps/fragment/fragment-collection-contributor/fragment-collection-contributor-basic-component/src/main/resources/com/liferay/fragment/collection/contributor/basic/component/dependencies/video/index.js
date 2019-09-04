@@ -1,4 +1,3 @@
-let configuration = {};
 let handleProviderResize = () => {};
 
 let content = null;
@@ -145,16 +144,6 @@ const main = () => {
 	videoContainer = content.querySelector('.video-container');
 	errorMessage = content.querySelector('.error-message');
 	loadingIndicator = content.querySelector('.loading-animation');
-
-	configuration = {
-		autoPlay: content.dataset.autoPlay === 'true',
-		hideControls: content.dataset.hideControls === 'true',
-		loop: content.dataset.loop === 'true',
-		mute: content.dataset.mute === 'true',
-		url: content.dataset.url,
-		width: parseInt(content.dataset.width || 0, 10),
-		height: parseInt(content.dataset.height || 0, 10)
-	};
 
 	window.removeEventListener('resize', resize);
 

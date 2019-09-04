@@ -249,6 +249,19 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#list>
 
 						));
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
+
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+								0L
+							<#else>
+								null
+							</#if>
+							<#sep>, </#sep>
+						</#list>
+
+						));
 					</#if>
 				<#else>
 					Assert.assertTrue(false);

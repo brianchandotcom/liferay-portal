@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.layout.seo.model.LayoutCanonicalURL">
+	<model name="com.liferay.layout.seo.model.LayoutSEOEntry">
 		<field name="uuid" type="String" />
-		<field name="layoutCanonicalURLId" type="long" />
+		<field name="layoutSEOEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

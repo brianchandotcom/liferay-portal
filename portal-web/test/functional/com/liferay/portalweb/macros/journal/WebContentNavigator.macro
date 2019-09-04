@@ -29,12 +29,6 @@ definition {
 		AssertVisible(locator1 = "TextInput#TITLE");
 	}
 
-	macro gotoAddFeed {
-		Navigator.gotoNavItem(navItem = "Feeds");
-
-		LexiconEntry.gotoAdd();
-	}
-
 	macro gotoAddWithStructureCP {
 		LexiconEntry.gotoAdd();
 
@@ -60,14 +54,6 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 
 		AssertElementPresent(locator1 = "Icon#BACK");
-	}
-
-	macro gotoEditFeed {
-		Navigator.gotoNavItem(navItem = "Feeds");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "${feedName}");
 	}
 
 	macro gotoEditStructure {

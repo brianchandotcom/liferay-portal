@@ -238,22 +238,18 @@ public class DLOpenerGoogleDriveManager
 			String cmd, FileEntry fileEntry, long userId)
 		throws PortalException {
 
-		Map<String, Serializable> taskContextMap =
-			new HashMap<String, Serializable>() {
-				{
-					put(GoogleDriveBackgroundTaskConstants.CMD, cmd);
-					put(
-						GoogleDriveBackgroundTaskConstants.COMPANY_ID,
-						fileEntry.getCompanyId());
-					put(
-						BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,
-						true);
-					put(
-						GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
-						fileEntry.getFileEntryId());
-					put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
-				}
-			};
+		Map<String, Serializable> taskContextMap = new HashMap<>(5);
+
+		taskContextMap.put(GoogleDriveBackgroundTaskConstants.CMD, cmd);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.COMPANY_ID,
+			fileEntry.getCompanyId());
+		taskContextMap.put(
+			BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true);
+		taskContextMap.put(
+			GoogleDriveBackgroundTaskConstants.FILE_ENTRY_ID,
+			fileEntry.getFileEntryId());
+		taskContextMap.put(GoogleDriveBackgroundTaskConstants.USER_ID, userId);
 
 		return _backgroundTaskManager.addBackgroundTask(
 			userId, CompanyConstants.SYSTEM,

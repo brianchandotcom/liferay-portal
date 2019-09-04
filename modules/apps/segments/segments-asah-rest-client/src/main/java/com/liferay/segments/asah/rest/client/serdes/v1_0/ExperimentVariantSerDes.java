@@ -62,7 +62,11 @@ public class ExperimentVariantSerDes {
 
 			sb.append("\"id\": ");
 
-			sb.append(experimentVariant.getId());
+			sb.append("\"");
+
+			sb.append(_escape(experimentVariant.getId()));
+
+			sb.append("\"");
 		}
 
 		if (experimentVariant.getTrafficSplit() != null) {
@@ -135,8 +139,7 @@ public class ExperimentVariantSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					experimentVariant.setId(
-						Long.valueOf((String)jsonParserFieldValue));
+					experimentVariant.setId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "trafficSplit")) {

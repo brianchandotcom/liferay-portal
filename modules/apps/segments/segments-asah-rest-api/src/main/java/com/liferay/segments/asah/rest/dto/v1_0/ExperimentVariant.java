@@ -45,16 +45,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ExperimentVariant {
 
 	@Schema
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -68,7 +68,7 @@ public class ExperimentVariant {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long id;
+	protected String id;
 
 	@Schema
 	public Double getTrafficSplit() {
@@ -132,7 +132,11 @@ public class ExperimentVariant {
 
 			sb.append("\"id\": ");
 
-			sb.append(id);
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (trafficSplit != null) {

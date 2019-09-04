@@ -48,13 +48,7 @@ public class SegmentsExperimentModelListener
 	public void onAfterUpdate(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			!GetterUtil.getBoolean(
-				serviceContext.getAttribute("updateAsah"), true)) {
-
+		if (_isSkipEvent()) {
 			return;
 		}
 
@@ -94,6 +88,10 @@ public class SegmentsExperimentModelListener
 	public void onBeforeRemove(SegmentsExperiment segmentsExperiment)
 		throws ModelListenerException {
 
+		if (_isSkipEvent()) {
+			return;
+		}
+
 		try {
 			_asahSegmentsExperimentProcessor.processDeleteSegmentsExperiment(
 				segmentsExperiment);
@@ -114,6 +112,20 @@ public class SegmentsExperimentModelListener
 			_asahFaroBackendClientFactory, _companyLocalService,
 			_groupLocalService, _layoutLocalService, _portal,
 			_segmentsEntryLocalService, _segmentsExperienceLocalService);
+	}
+
+	private boolean _isSkipEvent() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			!GetterUtil.getBoolean(
+				serviceContext.getAttribute("updateAsah"), true)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

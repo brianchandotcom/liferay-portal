@@ -45,6 +45,9 @@ public interface SiteResource {
 	public Page<Site> getMyUserAccountSitesPage(Pagination pagination)
 		throws Exception;
 
+	public Site getSiteByFriendlyUrlPath(String friendlyUrlPath)
+		throws Exception;
+
 	public Site getSite(Long siteId) throws Exception;
 
 	public default void setContextAcceptLanguage(

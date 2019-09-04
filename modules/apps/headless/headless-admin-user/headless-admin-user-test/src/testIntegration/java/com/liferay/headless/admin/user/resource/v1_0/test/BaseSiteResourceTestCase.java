@@ -175,6 +175,7 @@ public abstract class BaseSiteResourceTestCase {
 		Site site = randomSite();
 
 		site.setDescription(regex);
+		site.setFriendlyUrlPath(regex);
 		site.setMembershipType(regex);
 		site.setName(regex);
 
@@ -185,6 +186,7 @@ public abstract class BaseSiteResourceTestCase {
 		site = SiteSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, site.getDescription());
+		Assert.assertEquals(regex, site.getFriendlyUrlPath());
 		Assert.assertEquals(regex, site.getMembershipType());
 		Assert.assertEquals(regex, site.getName());
 	}
@@ -192,6 +194,49 @@ public abstract class BaseSiteResourceTestCase {
 	@Test
 	public void testGetMyUserAccountSitesPage() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetSiteByFriendlyUrlPath() throws Exception {
+		Site postSite = testGetSiteByFriendlyUrlPath_addSite();
+
+		Site getSite = siteResource.getSiteByFriendlyUrlPath(
+			postSite.getFriendlyUrlPath());
+
+		assertEquals(postSite, getSite);
+		assertValid(getSite);
+	}
+
+	protected Site testGetSiteByFriendlyUrlPath_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
+		Site site = testGraphQLSite_addSite();
+
+		List<GraphQLField> graphQLFields = getGraphQLFields();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"byFriendlyUrlPath",
+				new HashMap<String, Object>() {
+					{
+						put("siteId", site.getId());
+					}
+				},
+				graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		Assert.assertTrue(
+			equalsJSONObject(
+				site, dataJSONObject.getJSONObject("byFriendlyUrlPath")));
 	}
 
 	@Test
@@ -339,6 +384,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (site.getFriendlyUrlPath() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("membershipType", additionalAssertFieldName)) {
 				if (site.getMembershipType() == null) {
 					valid = false;
@@ -451,6 +504,17 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getFriendlyUrlPath(),
+						site2.getFriendlyUrlPath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(site1.getId(), site2.getId())) {
 					return false;
@@ -499,6 +563,17 @@ public abstract class BaseSiteResourceTestCase {
 				if (!Objects.equals(
 						site.getDescription(),
 						(String)jsonObject.getString("description"))) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("friendlyUrlPath", fieldName)) {
+				if (!Objects.equals(
+						site.getFriendlyUrlPath(),
+						(String)jsonObject.getString("friendlyUrlPath"))) {
 
 					return false;
 				}
@@ -612,6 +687,14 @@ public abstract class BaseSiteResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("friendlyUrlPath")) {
+			sb.append("'");
+			sb.append(String.valueOf(site.getFriendlyUrlPath()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -663,6 +746,7 @@ public abstract class BaseSiteResourceTestCase {
 		return new Site() {
 			{
 				description = RandomTestUtil.randomString();
+				friendlyUrlPath = RandomTestUtil.randomString();
 				id = RandomTestUtil.randomLong();
 				membershipType = RandomTestUtil.randomString();
 				name = RandomTestUtil.randomString();

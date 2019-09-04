@@ -177,7 +177,7 @@ public class AppendCheck extends StringConcatenationCheck {
 				parameterDetailAST, true, TokenTypes.STRING_LITERAL);
 
 		if (!literalStringDetailASTList.isEmpty()) {
-			log(parameterDetailAST, _MSG_INCORRECT_PLUS);
+			log(parameterDetailAST, MSG_INCORRECT_PLUS);
 		}
 	}
 
@@ -225,7 +225,5 @@ public class AppendCheck extends StringConcatenationCheck {
 
 	private static final String _MSG_INCORRECT_LINE_BREAK =
 		"line.break.incorrect";
-
-	private static final String _MSG_INCORRECT_PLUS = "plus.incorrect";
 
 }

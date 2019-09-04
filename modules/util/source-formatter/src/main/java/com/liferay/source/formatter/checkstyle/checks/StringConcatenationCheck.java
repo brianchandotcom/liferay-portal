@@ -80,6 +80,8 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 	protected static final String MSG_COMBINE_LITERAL_STRINGS =
 		"literal.string.combine";
 
+	protected static final String MSG_INCORRECT_PLUS = "plus.incorrect";
+
 	protected static final String MSG_MOVE_LITERAL_STRING =
 		"literal.string.move";
 

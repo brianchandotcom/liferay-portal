@@ -20,54 +20,70 @@ import Arrow from "./Arrow.es";
 
 class Carousel extends Component {
 	static propTypes = {
+		currentItemIndex: PropTypes.number,
 		items: PropTypes.array.isRequired,
-		startIndex: PropTypes.number,
-		circular: PropTypes.bool
+		onItemChange: PropTypes.func,
+  	};
+
+  	static defaultProps = {
+  		onItemChange: () => {}
   	};
 
 	constructor(props) {
 		super(props);
 
+		const currentIndex = this.props.currentItemIndex;
+
 		this.state = {
-			currentIndex: this.props.startIndex
+			currentIndex: currentIndex,
+			currentItem: this.props.items[currentIndex]
 		};
-  	}
+  	};
 
 	previousSlide = () => {
-		const lastIndex = this.props.items.length - 1;
+		const items = this.props.items;
+
+		const lastIndex = items.length - 1;
 		const { currentIndex } = this.state;
 		const shouldResetIndex = currentIndex === 0;
 		const index = shouldResetIndex ? lastIndex : currentIndex - 1;
 
+		const currentItem = items[index];
+
 		this.setState({
-			currentIndex: index
+			currentIndex: index,
+			currentItem: currentItem
 		});
+
+		this.props.onItemChange(currentItem, index);
 	};
 
 	nextSlide = () => {
-		const lastIndex = this.props.items.length - 1;
+		const items = this.props.items;
+
+		const lastIndex = items.length - 1;
 		const { currentIndex } = this.state;
 		const shouldResetIndex = currentIndex === lastIndex;
 		const index = shouldResetIndex ? 0 : currentIndex + 1;
 
+		const currentItem = items[index];
+
 		this.setState({
-			currentIndex: index
+			currentIndex: index,
+			currentItem: currentItem
 		});
+
+		this.props.onItemChange(currentItem, index);
 	};
 
 	render() {
-		const items = this.props.items;
-
-		const currentItem = items[this.state.currentIndex];
-
-		console.log(currentItem.dataset.metadata)
+		const {currentItem} = this.state;
 
 		return (
 			<div className="carousel">
 				<Arrow
 					direction="left"
 					clickFunction={this.previousSlide}
-					glyph="&#9664;"
 				/>
 
 				<ImageSlide
@@ -77,7 +93,6 @@ class Carousel extends Component {
 				<Arrow
 					direction="right"
 					clickFunction={this.nextSlide}
-					glyph="&#9654;"
 				/>
 			</div>
 		);

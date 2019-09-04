@@ -69,6 +69,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 		ReactDOM.render(
 			<ItemSelectorPreview
+				handleSelectedItem = {this._onItemSelected.bind(this)}
 				headerTitle = {this.closeCaption}
 				links = ".item-preview"
 				selector = ".card-body"

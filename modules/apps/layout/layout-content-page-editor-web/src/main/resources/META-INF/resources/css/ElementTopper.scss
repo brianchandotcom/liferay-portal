@@ -28,6 +28,8 @@
 	&__icon {
 		fill: $topperColor;
 		padding: 0;
+		position: relative;
+		top: 1px;
 	}
 
 	&__item {

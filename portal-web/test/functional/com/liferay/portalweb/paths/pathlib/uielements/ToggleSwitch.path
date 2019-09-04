@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACCOUNT_STATUS</td>
+	<td>//label[contains(@for,'AccountsAdminPortlet')]/input[contains(@class,'toggle-switch')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE</td>
 	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>

@@ -91,20 +91,20 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				appDeployments = new AppDeployment[] {
 					new AppDeployment() {
 						{
-							deploymentType = "productMenu";
 							settings = new HashMap<>();
+							type = "productMenu";
 						}
 					},
 					new AppDeployment() {
 						{
-							deploymentType = "standalone";
 							settings = new HashMap<>();
+							type = "standalone";
 						}
 					},
 					new AppDeployment() {
 						{
-							deploymentType = "widget";
 							settings = new HashMap<>();
+							type = "widget";
 						}
 					}
 				};

@@ -82,7 +82,7 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 
 		return new ExperimentVariant() {
 			{
-				id = segmentsExperimentRel.getSegmentsExperimentRelId();
+				id = segmentsExperimentRel.getSegmentsExperienceKey();
 				trafficSplit = segmentsExperimentRel.getSplit();
 			}
 		};

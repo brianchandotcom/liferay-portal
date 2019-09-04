@@ -23,6 +23,7 @@
 			class="form-control form-control-sm"
 			data-onchange="{$_handleTextValueChanged}"
 			id="{$field.name}"
+			placeholder="{$field.typeOptions?.placeholder ?: ''}"
 			type="text"
 			value="{$configurationValues[$field.name]}"
 		{/let}

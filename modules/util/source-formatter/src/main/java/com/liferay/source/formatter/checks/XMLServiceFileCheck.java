@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -21,11 +22,15 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.tree.DefaultComment;
 
 /**
  * @author Hugo Huijser
@@ -59,6 +64,8 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 				(List<Element>)rootElement.elements("entity")) {
 
 			String entityName = entityElement.attributeValue("name");
+
+			_checkStatusColumns(fileName, entityElement, entityName);
 
 			List<String> columnNames = new ArrayList<>();
 
@@ -101,6 +108,68 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		checkElementOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
+	}
+
+	private void _checkStatusColumns(
+		String fileName, Element entityElement, String entityName) {
+
+		Iterator<Node> iterator = entityElement.nodeIterator();
+
+		boolean otherFields = false;
+		String previousColumnName = null;
+
+		while (iterator.hasNext()) {
+			Node node = (Node)iterator.next();
+
+			if (node instanceof DefaultComment) {
+				DefaultComment defaultComment = (DefaultComment)node;
+
+				if (Objects.equals(
+						defaultComment.asXML(), "<!-- Other fields -->")) {
+
+					otherFields = true;
+				}
+				else if (otherFields) {
+					return;
+				}
+			}
+			else if (otherFields && (node instanceof Element)) {
+				Element element = (Element)node;
+
+				if (!Objects.equals(element.getName(), "column")) {
+					continue;
+				}
+
+				String columnName = element.attributeValue("name");
+
+				if (_isStatusColumnName(previousColumnName) &&
+					!_isStatusColumnName(columnName)) {
+
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Incorrect order '", entityName, "#",
+							previousColumnName, "'. Status columns should ",
+							"come last in the category 'Other fields'."));
+				}
+
+				previousColumnName = columnName;
+			}
+		}
+	}
+
+	private boolean _isStatusColumnName(String columnName) {
+		if ((columnName != null) &&
+			(columnName.equals("status") ||
+			 columnName.equals("statusByUserId") ||
+			 columnName.equals("statusByUserName") ||
+			 columnName.equals("statusDate") ||
+			 columnName.equals("statusMessage"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =

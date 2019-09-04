@@ -77,7 +77,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			appBuilderAppDeployment.getSettings());
 
-		JSONArray jsonArray = jsonObject.getJSONArray("deployments");
+		JSONArray jsonArray = jsonObject.getJSONArray("scope");
 
 		if (jsonArray.length() == 2) {
 			_serviceRegistrationsMap.computeIfAbsent(

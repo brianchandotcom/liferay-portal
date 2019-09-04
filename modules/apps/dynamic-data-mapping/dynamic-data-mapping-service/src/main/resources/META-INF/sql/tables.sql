@@ -88,11 +88,11 @@ create table DDMFormInstanceRecordVersion (
 	formInstanceVersion VARCHAR(75) null,
 	formInstanceRecordId LONG,
 	version VARCHAR(75) null,
+	storageId LONG,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	storageId LONG
+	statusDate DATE null
 );
 
 create table DDMFormInstanceVersion (

@@ -49,11 +49,11 @@ public class DDMFormInstanceRecordVersionSoap implements Serializable {
 		soapModel.setFormInstanceVersion(model.getFormInstanceVersion());
 		soapModel.setFormInstanceRecordId(model.getFormInstanceRecordId());
 		soapModel.setVersion(model.getVersion());
+		soapModel.setStorageId(model.getStorageId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
-		soapModel.setStorageId(model.getStorageId());
 
 		return soapModel;
 	}
@@ -206,6 +206,14 @@ public class DDMFormInstanceRecordVersionSoap implements Serializable {
 		_version = version;
 	}
 
+	public long getStorageId() {
+		return _storageId;
+	}
+
+	public void setStorageId(long storageId) {
+		_storageId = storageId;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -238,14 +246,6 @@ public class DDMFormInstanceRecordVersionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	public long getStorageId() {
-		return _storageId;
-	}
-
-	public void setStorageId(long storageId) {
-		_storageId = storageId;
-	}
-
 	private long _mvccVersion;
 	private long _formInstanceRecordVersionId;
 	private long _groupId;
@@ -257,10 +257,10 @@ public class DDMFormInstanceRecordVersionSoap implements Serializable {
 	private String _formInstanceVersion;
 	private long _formInstanceRecordId;
 	private String _version;
+	private long _storageId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private long _storageId;
 
 }

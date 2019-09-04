@@ -157,6 +157,8 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 		newDDMFormInstanceRecordVersion.setVersion(
 			RandomTestUtil.randomString());
 
+		newDDMFormInstanceRecordVersion.setStorageId(RandomTestUtil.nextLong());
+
 		newDDMFormInstanceRecordVersion.setStatus(RandomTestUtil.nextInt());
 
 		newDDMFormInstanceRecordVersion.setStatusByUserId(
@@ -167,8 +169,6 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 
 		newDDMFormInstanceRecordVersion.setStatusDate(
 			RandomTestUtil.nextDate());
-
-		newDDMFormInstanceRecordVersion.setStorageId(RandomTestUtil.nextLong());
 
 		_ddmFormInstanceRecordVersions.add(
 			_persistence.update(newDDMFormInstanceRecordVersion));
@@ -214,6 +214,9 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 			existingDDMFormInstanceRecordVersion.getVersion(),
 			newDDMFormInstanceRecordVersion.getVersion());
 		Assert.assertEquals(
+			existingDDMFormInstanceRecordVersion.getStorageId(),
+			newDDMFormInstanceRecordVersion.getStorageId());
+		Assert.assertEquals(
 			existingDDMFormInstanceRecordVersion.getStatus(),
 			newDDMFormInstanceRecordVersion.getStatus());
 		Assert.assertEquals(
@@ -227,9 +230,6 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 				existingDDMFormInstanceRecordVersion.getStatusDate()),
 			Time.getShortTimestamp(
 				newDDMFormInstanceRecordVersion.getStatusDate()));
-		Assert.assertEquals(
-			existingDDMFormInstanceRecordVersion.getStorageId(),
-			newDDMFormInstanceRecordVersion.getStorageId());
 	}
 
 	@Test
@@ -311,9 +311,9 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 			"formInstanceRecordVersionId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"formInstanceId", true, "formInstanceVersion", true,
-			"formInstanceRecordId", true, "version", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true, "storageId", true);
+			"formInstanceRecordId", true, "version", true, "storageId", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -619,6 +619,8 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 
 		ddmFormInstanceRecordVersion.setVersion(RandomTestUtil.randomString());
 
+		ddmFormInstanceRecordVersion.setStorageId(RandomTestUtil.nextLong());
+
 		ddmFormInstanceRecordVersion.setStatus(RandomTestUtil.nextInt());
 
 		ddmFormInstanceRecordVersion.setStatusByUserId(
@@ -628,8 +630,6 @@ public class DDMFormInstanceRecordVersionPersistenceTest {
 			RandomTestUtil.randomString());
 
 		ddmFormInstanceRecordVersion.setStatusDate(RandomTestUtil.nextDate());
-
-		ddmFormInstanceRecordVersion.setStorageId(RandomTestUtil.nextLong());
 
 		_ddmFormInstanceRecordVersions.add(
 			_persistence.update(ddmFormInstanceRecordVersion));

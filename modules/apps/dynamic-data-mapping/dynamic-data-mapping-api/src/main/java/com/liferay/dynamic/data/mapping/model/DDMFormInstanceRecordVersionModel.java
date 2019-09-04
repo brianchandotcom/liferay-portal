@@ -237,6 +237,20 @@ public interface DDMFormInstanceRecordVersionModel
 	public void setVersion(String version);
 
 	/**
+	 * Returns the storage ID of this ddm form instance record version.
+	 *
+	 * @return the storage ID of this ddm form instance record version
+	 */
+	public long getStorageId();
+
+	/**
+	 * Sets the storage ID of this ddm form instance record version.
+	 *
+	 * @param storageId the storage ID of this ddm form instance record version
+	 */
+	public void setStorageId(long storageId);
+
+	/**
 	 * Returns the status of this ddm form instance record version.
 	 *
 	 * @return the status of this ddm form instance record version
@@ -316,20 +330,6 @@ public interface DDMFormInstanceRecordVersionModel
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
-
-	/**
-	 * Returns the storage ID of this ddm form instance record version.
-	 *
-	 * @return the storage ID of this ddm form instance record version
-	 */
-	public long getStorageId();
-
-	/**
-	 * Sets the storage ID of this ddm form instance record version.
-	 *
-	 * @param storageId the storage ID of this ddm form instance record version
-	 */
-	public void setStorageId(long storageId);
 
 	/**
 	 * Returns <code>true</code> if this ddm form instance record version is approved.

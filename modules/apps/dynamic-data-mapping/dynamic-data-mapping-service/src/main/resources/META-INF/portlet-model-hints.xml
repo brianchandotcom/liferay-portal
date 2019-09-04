@@ -104,11 +104,11 @@
 		<field name="formInstanceVersion" type="String" />
 		<field name="formInstanceRecordId" type="long" />
 		<field name="version" type="String" />
+		<field name="storageId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
-		<field name="storageId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion">
 		<field name="mvccVersion" type="long" />

@@ -60,11 +60,11 @@ public class DDMFormInstanceRecordVersionWrapper
 		attributes.put("formInstanceVersion", getFormInstanceVersion());
 		attributes.put("formInstanceRecordId", getFormInstanceRecordId());
 		attributes.put("version", getVersion());
+		attributes.put("storageId", getStorageId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("storageId", getStorageId());
 
 		return attributes;
 	}
@@ -140,6 +140,12 @@ public class DDMFormInstanceRecordVersionWrapper
 			setVersion(version);
 		}
 
+		Long storageId = (Long)attributes.get("storageId");
+
+		if (storageId != null) {
+			setStorageId(storageId);
+		}
+
 		Integer status = (Integer)attributes.get("status");
 
 		if (status != null) {
@@ -162,12 +168,6 @@ public class DDMFormInstanceRecordVersionWrapper
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		Long storageId = (Long)attributes.get("storageId");
-
-		if (storageId != null) {
-			setStorageId(storageId);
 		}
 	}
 

@@ -90,6 +90,24 @@ public class SegmentsExperimentModelListener
 		}
 	}
 
+	@Override
+	public void onBeforeRemove(SegmentsExperiment segmentsExperiment)
+		throws ModelListenerException {
+
+		try {
+			_asahSegmentsExperimentProcessor.processDeleteSegmentsExperiment(
+				segmentsExperiment);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to delete segments experiment " +
+					segmentsExperiment.getSegmentsExperimentId(),
+					e);
+			}
+		}
+	}
+
 	@Activate
 	protected void activate() {
 		_asahSegmentsExperimentProcessor = new AsahSegmentsExperimentProcessor(

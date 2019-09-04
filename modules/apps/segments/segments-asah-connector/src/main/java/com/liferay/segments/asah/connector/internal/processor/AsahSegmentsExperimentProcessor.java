@@ -85,6 +85,32 @@ public class AsahSegmentsExperimentProcessor {
 		segmentsExperiment.setSegmentsExperimentKey(experiment.getId());
 	}
 
+	public void processDeleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment)
+		throws PortalException {
+
+		if (segmentsExperiment == null) {
+			return;
+		}
+
+		Optional<AsahFaroBackendClient> asahFaroBackendClientOptional =
+			_asahFaroBackendClientFactory.createAsahFaroBackendClient();
+
+		if (!asahFaroBackendClientOptional.isPresent()) {
+			return;
+		}
+
+		_asahFaroBackendClient = asahFaroBackendClientOptional.get();
+
+		_asahFaroBackendClient.deleteExperiment(
+			ExperimentUtil.toExperiment(
+				_companyLocalService, _asahFaroBackendClient.getDataSourceId(),
+				_groupLocalService, _layoutLocalService,
+				LocaleUtil.getSiteDefault(), _portal,
+				_segmentsEntryLocalService, _segmentsExperienceLocalService,
+				segmentsExperiment));
+	}
+
 	public void processUpdateSegmentsExperiment(
 			SegmentsExperiment segmentsExperiment)
 		throws PortalException {

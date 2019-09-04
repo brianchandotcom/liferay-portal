@@ -179,8 +179,8 @@ public class ArquillianTest {
 			message,
 			message.startsWith(
 				StringBundler.concat(
-					AssertionError.class.getName(), ": ",
-					"Expected test to throw " + IOException.class)));
+					AssertionError.class.getName(), ": Expected test to throw ",
+					IOException.class)));
 	}
 
 	@Test

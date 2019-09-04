@@ -269,7 +269,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 			Matchers.eq(
 				StringBundler.concat(
 					"[...] ", _EXCERPT_BODY, " [...] <a href=", _SOURCE_URI,
-					">", _READ_MORE + "</a>")),
+					">", _READ_MORE, "</a>")),
 			Mockito.<ServiceContextFunction>any()
 		);
 	}

@@ -1,8 +1,6 @@
 @component-name = "portal-wcm"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.journal.content.search.web.internal.portlet.JournalContentSearchPortlet.config";
-	property osgi.module.configurations = "com.liferay.portlet.display-category=&quot;category.cms&quot;";
 	property osgi.modules.includes = "journal-content-search-web";
 	property portal.release = "true";
 	property portal.upstream = "true";

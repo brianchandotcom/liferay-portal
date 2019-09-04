@@ -18,9 +18,13 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -54,17 +58,19 @@ portletDisplay.setURLBack(redirect);
 		<div id="<%= synonymSetsRootElementId %>">
 			<span aria-hidden="true" class="loading-animation"></span>
 		</div>
+
+		<%
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("formName", renderResponse.getNamespace() + "synonymSetsForm");
+		data.put("inputName", renderResponse.getNamespace() + "newSynonymSet");
+		data.put("originalInputName", renderResponse.getNamespace() + "originalSynonymSet");
+		data.put("synonymSets", synonymSets);
+		%>
+
+		<react:component
+			data="<%= data %>"
+			module="js/SynonymSetsApp.es"
+		/>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>
-
-<aui:script require='<%= npmResolvedPackageName + "/js/index-synonym-sets.es as SynonymSets" %>'>
-	SynonymSets.default(
-		'<%= synonymSetsRootElementId %>',
-		{
-			formName: '<%= renderResponse.getNamespace() + "synonymSetsForm" %>',
-			inputName: '<%= renderResponse.getNamespace() + "newSynonymSet" %>',
-			originalInputName: '<%= renderResponse.getNamespace() + "originalSynonymSet" %>',
-			synonymSets: '<%= synonymSets %>'
-		}
-	);
-</aui:script>

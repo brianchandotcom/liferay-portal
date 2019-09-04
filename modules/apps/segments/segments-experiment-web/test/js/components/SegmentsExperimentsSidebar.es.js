@@ -39,7 +39,7 @@ function _renderSegmentsExperimentsSidebarComponent({
 	initialSegmentsExperiences = [],
 	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
-	segmentsExperimentsUtil = {},
+	APIService = {},
 	selectedSegmentsExperienceId,
 	type = 'content'
 } = {}) {
@@ -49,22 +49,22 @@ function _renderSegmentsExperimentsSidebarComponent({
 		deleteVariant = () => {},
 		editExperiment = () => {},
 		editVariant = () => {}
-	} = segmentsExperimentsUtil;
+	} = APIService;
 
 	return render(
 		<SegmentsExperimentsContext.Provider
 			value={{
-				page: {
-					classNameId,
-					classPK,
-					type
-				},
-				segmentsExperimentsUtil: {
+				APIService: {
 					createExperiment,
 					createVariant,
 					deleteVariant,
 					editExperiment,
 					editVariant
+				},
+				page: {
+					classNameId,
+					classPK,
+					type
 				}
 			}}
 		>
@@ -253,12 +253,12 @@ describe('Variants', () => {
 			getByText,
 			getByLabelText
 		} = _renderSegmentsExperimentsSidebarComponent({
+			APIService: {
+				createVariant: createVariantMock
+			},
 			initialSegmentsExperiences: segmentsExperiences,
 			initialSegmentsExperiment: segmentsExperiment,
 			initialSegmentsVariants: segmentsVariants,
-			segmentsExperimentsUtil: {
-				createVariant: createVariantMock
-			},
 			selectedSegmentsExperienceId:
 				segmentsExperiment.segmentsExperimentId
 		});

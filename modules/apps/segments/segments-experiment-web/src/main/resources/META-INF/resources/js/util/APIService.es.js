@@ -15,11 +15,7 @@
 import PropTypes from 'prop-types';
 import {fetch} from 'frontend-js-web';
 
-function SegmentsExperimentsUtil({
-	endpoints,
-	namespace,
-	contentPageEditorNamespace
-}) {
+function APIService({endpoints, namespace, contentPageEditorNamespace}) {
 	const {
 		createSegmentsExperimentURL,
 		createSegmentsVariantURL,
@@ -32,55 +28,35 @@ function SegmentsExperimentsUtil({
 	} = endpoints;
 
 	function createExperiment(body) {
-		return fetch(createSegmentsExperimentURL, {
+		return _fetchWithError(createSegmentsExperimentURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
-			});
+		});
 	}
 
 	function createVariant(body) {
-		return fetch(createSegmentsVariantURL, {
+		return _fetchWithError(createSegmentsVariantURL, {
 			body: _getFormDataRequest(body, contentPageEditorNamespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
-			});
+		});
 	}
 
 	function deleteExperiment(body) {
-		return fetch(deleteSegmentsExperimentURL, {
+		return _fetchWithError(deleteSegmentsExperimentURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(response => {
-				if (response.error) throw response.error;
-				return response;
-			});
+		});
 	}
 
 	function deleteVariant(body) {
-		return fetch(deleteSegmentsVariantURL, {
+		return _fetchWithError(deleteSegmentsVariantURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(response => {
-				if (response.error) throw response.error;
-				return response;
-			});
+		});
 	}
 
 	function editExperiment(body) {
@@ -97,42 +73,27 @@ function SegmentsExperimentsUtil({
 	}
 
 	function editExperimentStatus(body) {
-		return fetch(editSegmentsExperimentStatusURL, {
+		return _fetchWithError(editSegmentsExperimentStatusURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
-			});
+		});
 	}
 
 	function editVariant(body) {
-		return fetch(editSegmentsVariantURL, {
+		return _fetchWithError(editSegmentsVariantURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(response => {
-				if (response.error) throw response.error;
-				return response;
-			});
+		});
 	}
 
 	function runExperiment(body) {
-		return fetch(runSegmentsExperimentURL, {
+		return _fetchWithError(runSegmentsExperimentURL, {
 			body: _getFormDataRequest(body, namespace),
 			credentials: 'include',
 			method: 'POST'
-		})
-			.then(response => response.json())
-			.then(objectResponse => {
-				if (objectResponse.error) throw objectResponse.error;
-				return objectResponse;
-			});
+		});
 	}
 
 	return {
@@ -147,7 +108,7 @@ function SegmentsExperimentsUtil({
 	};
 }
 
-SegmentsExperimentsUtil.propTypes = {
+APIService.propTypes = {
 	contentPageEditorNamespace: PropTypes.string.isRequired,
 	endpoints: PropTypes.shape({
 		createSegmentsExperimentURL: PropTypes.string.isRequired,
@@ -161,7 +122,7 @@ SegmentsExperimentsUtil.propTypes = {
 	namespace: PropTypes.string.isRequired
 };
 
-export default SegmentsExperimentsUtil;
+export default APIService;
 
 /**
  *
@@ -178,4 +139,16 @@ export function _getFormDataRequest(body, prefix, formData = new FormData()) {
 	});
 
 	return formData;
+}
+
+/**
+ * Wrapper to `fetch` function throwing an error when `error` is present in the response
+ */
+function _fetchWithError(url, options = {}) {
+	return fetch(url, options)
+		.then(response => response.json())
+		.then(objectResponse => {
+			if (objectResponse.error) throw objectResponse.error;
+			return objectResponse;
+		});
 }

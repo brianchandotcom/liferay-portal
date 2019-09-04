@@ -34,9 +34,8 @@ function SegmentsExperimentsSidebar({
 	initialSegmentsExperiment,
 	initialSelectedSegmentsExperienceId = '0'
 }) {
-	const {segmentsExperimentsUtil, page} = useContext(
-		SegmentsExperimentsContext
-	);
+	const {APIService, page} = useContext(SegmentsExperimentsContext);
+
 	const [creationModal, setCreationModal] = useState({active: false});
 	const [editionModal, setEditionModal] = useState({active: false});
 	const [segmentsExperiment, setSegmentsExperiment] = useState(
@@ -125,7 +124,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 		};
 
-		segmentsExperimentsUtil.deleteExperiment(body).then(() => {
+		APIService.deleteExperiment(body).then(() => {
 			navigateToExperience(initialSelectedSegmentsExperienceId);
 		});
 	}
@@ -149,8 +148,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperienceId
 		};
 
-		segmentsExperimentsUtil
-			.createExperiment(body)
+		APIService.createExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {
 					segmentsExperiment,
@@ -208,18 +206,16 @@ function SegmentsExperimentsSidebar({
 			status: STATUS_RUNNING
 		};
 
-		return segmentsExperimentsUtil
-			.runExperiment(body)
-			.then(function(response) {
-				const {segmentsExperiment} = response;
-				const updatedVariants = variants.map(variant => ({
-					...variant,
-					split: splitVariantsMap[variant.segmentsExperimentRelId]
-				}));
+		return APIService.runExperiment(body).then(function(response) {
+			const {segmentsExperiment} = response;
+			const updatedVariants = variants.map(variant => ({
+				...variant,
+				split: splitVariantsMap[variant.segmentsExperimentRelId]
+			}));
 
-				setSegmentsExperiment(segmentsExperiment);
-				setVariants(updatedVariants);
-			});
+			setSegmentsExperiment(segmentsExperiment);
+			setVariants(updatedVariants);
+		});
 	}
 
 	function _handleEditSegmentExperimentStatus(segmentsExperiment, status) {
@@ -228,8 +224,7 @@ function SegmentsExperimentsSidebar({
 			status
 		};
 
-		segmentsExperimentsUtil
-			.editExperimentStatus(body)
+		APIService.editExperimentStatus(body)
 			.then(function _successCallback(objectResponse) {
 				const {
 					confidenceLevel,
@@ -297,8 +292,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentId
 		};
 
-		segmentsExperimentsUtil
-			.editExperiment(body)
+		APIService.editExperiment(body)
 			.then(function _successCallback(objectResponse) {
 				const {
 					confidenceLevel,
@@ -356,7 +350,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 		};
 
-		segmentsExperimentsUtil.editExperiment(body).then(() => {
+		APIService.editExperiment(body).then(() => {
 			setSegmentsExperiment({
 				...segmentsExperiment,
 				goal: {...segmentsExperiment.goal, target: selector}
@@ -373,8 +367,7 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
 			};
 
-			segmentsExperimentsUtil
-				.createVariant(body)
+			APIService.createVariant(body)
 				.then(({segmentsExperimentRel}) => {
 					const {
 						name,
@@ -408,7 +401,7 @@ function SegmentsExperimentsSidebar({
 			segmentsExperimentRelId: variantId
 		};
 
-		segmentsExperimentsUtil.deleteVariant(body).then(() => {
+		APIService.deleteVariant(body).then(() => {
 			let variantExperienceId = null;
 
 			const newVariants = variants.filter(variant => {
@@ -435,8 +428,7 @@ function SegmentsExperimentsSidebar({
 				segmentsExperimentRelId: variantId
 			};
 
-			segmentsExperimentsUtil
-				.editVariant(body)
+			APIService.editVariant(body)
 				.then(({segmentsExperimentRel}) => {
 					setVariants(
 						variants.map(variant => {

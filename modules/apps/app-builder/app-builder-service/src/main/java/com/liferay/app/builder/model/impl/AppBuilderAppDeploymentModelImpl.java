@@ -69,7 +69,7 @@ public class AppBuilderAppDeploymentModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"appBuilderAppDeploymentId", Types.BIGINT},
 		{"appBuilderAppId", Types.BIGINT}, {"deploymentType", Types.VARCHAR},
-		{"settings_", Types.VARCHAR}
+		{"settings_", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,11 +79,11 @@ public class AppBuilderAppDeploymentModelImpl
 		TABLE_COLUMNS_MAP.put("appBuilderAppDeploymentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appBuilderAppId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deploymentType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,appBuilderAppId LONG,deploymentType VARCHAR(75) null,settings_ VARCHAR(75) null)";
+		"create table AppBuilderAppDeployment (appBuilderAppDeploymentId LONG not null primary key,appBuilderAppId LONG,deploymentType VARCHAR(75) null,settings_ TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table AppBuilderAppDeployment";

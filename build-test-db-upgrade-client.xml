@@ -234,65 +234,19 @@
 				/>
 			</delete>
 
-			<if>
-				<available file="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
-				<then>
-					<echo message="com.liferay.portal.tools.db.upgrade.client.jar is present." />
-				</then>
-				<else>
-					<fail message="com.liferay.portal.tools.db.upgrade.client.jar is not present." />
-				</else>
-			</if>
-
-			<if>
-				<available file="${db.upgrade.client.home}/app-server.properties" />
-				<then>
-					<echo message="app-server.properties is present." />
-				</then>
-				<else>
-					<fail message="app-server.properties is not present." />
-				</else>
-			</if>
-
-			<if>
-				<available file="${db.upgrade.client.home}/db_upgrade.bat" />
-				<then>
-					<echo message="db_upgrade.bat is present." />
-				</then>
-				<else>
-					<fail message="db_upgrade.bat is not present." />
-				</else>
-			</if>
-
-			<if>
-				<available file="${db.upgrade.client.home}/db_upgrade.sh" />
-				<then>
-					<echo message="db_upgrade.sh is present." />
-				</then>
-				<else>
-					<fail message="db_upgrade.sh is not present." />
-				</else>
-			</if>
-
-			<if>
-				<available file="${db.upgrade.client.home}/portal-upgrade-database.properties" />
-				<then>
-					<echo message="portal-upgrade-database.properties is present." />
-				</then>
-				<else>
-					<fail message="portal-upgrade-database.properties is not present." />
-				</else>
-			</if>
-
-			<if>
-				<available file="${db.upgrade.client.home}/portal-upgrade-ext.properties" />
-				<then>
-					<echo message="portal-upgrade-ext.properties is present." />
-				</then>
-				<else>
-					<fail message="portal-upgrade-ext.properties is not present." />
-				</else>
-			</if>
+			<for list="app-server.properties,com.liferay.portal.tools.db.upgrade.client.jar,db_upgrade.bat,db_upgrade.sh,portal-upgrade-database.properties,portal-upgrade-ext.properties" param="upgrade.file">
+				<sequential>
+					<if>
+						<available file="${db.upgrade.client.home}/@{upgrade.file}" />
+						<then>
+							<echo message="@{upgrade.file} is present." />
+						</then>
+						<else>
+							<fail message="@{upgrade.file} is not present." />
+						</else>
+					</if>
+				</sequential>
+			</for>
 		</sequential>
 
 		<clean-database-upgrade-client />

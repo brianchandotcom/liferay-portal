@@ -695,6 +695,8 @@ definition {
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = "5"
 	test ViewEditModeHeaderFooterTheme {
+		property test.name.skip.portal.instance = "ContentPages#ViewEditModeHeaderFooterTheme";
+
 		task ("Add a widget page to the site") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

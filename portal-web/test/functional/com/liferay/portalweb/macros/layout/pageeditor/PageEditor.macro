@@ -305,13 +305,13 @@ definition {
 	}
 
 	macro removeFragment {
-		MouseOver.mouseOverNotVisible(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
+		Click(
+			fragment_name = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_NAME");
 
 		Click(
 			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON");
+			locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_TOOLBAR_DELETE");
 
 		AssertElementNotPresent(
 			key_fragmentName = "${fragmentName}",

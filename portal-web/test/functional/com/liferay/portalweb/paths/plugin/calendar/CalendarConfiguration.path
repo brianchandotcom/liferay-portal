@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_USER_RSS</td>
-	<td>//ul[contains(@class,'lfr-nav nav')]//a[contains(.,'RSS')]</td>
+	<td>//ul[contains(@class,'nav')]//a[contains(.,'RSS')]</td>
 	<td></td>
 </tr>
 <tr>

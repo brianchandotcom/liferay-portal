@@ -409,7 +409,7 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAG_FIELD</td>
-	<td>//input[contains(@title,'Add Tags')]</td>
+	<td>//input[contains(@title,'Add Tags')] | //input[contains(@class,'form-control-inset')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -429,12 +429,12 @@
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAG_SPECIFIC</td>
-	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')] | //span[contains(@id, 'item-tag') and contains (., '${key_tagText}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_REMOVE_TAG_BUTTON_SPECIFIC</td>
-	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]/..//i[@class='icon icon-remove']</td>
+	<td>//li[contains(@class,'textboxlistentry')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagText}')]/..//i[@class='icon icon-remove'] | //span[contains(@id, 'item-tag') and contains (., 'asd')]//button[contains(@class, 'close')]</td>
 	<td></td>
 </tr>
 <tr>

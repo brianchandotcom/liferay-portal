@@ -458,6 +458,29 @@ definition {
 			rsvp = "${rsvp}");
 	}
 
+	macro addTag {
+		var key_tagText = "${tagText}";
+
+		Type.typePause(
+			locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
+			value1 = "${key_tagText}");
+
+		KeyPress.keyPress(
+			locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
+			value1 = "\RETURN");
+
+		if (IsElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON")) {
+			AssertClick(
+				locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON",
+				value1 = "Add");
+		}
+
+		AssertTextEquals(
+			locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
+			value1 = "${key_tagText}");
+
+	}
+
 	macro addViaDayView {
 		if (isSet(eventBlock)) {
 			CalendarScheduler.addViaDayViewDragAndDrop();
@@ -1194,35 +1217,11 @@ definition {
 
 		if (isSet(tagTextList)) {
 			for (var tagText : list "${tagTextList}") {
-				var key_tagText = "${tagText}";
-
-				Type.typePause(
-					locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
-					value1 = "${tagText}");
-
-				AssertClick(
-					locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON",
-					value1 = "Add");
-
-				AssertTextEquals(
-					locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
-					value1 = "${tagText}");
+				CalendarEvent.addTag(key_tagText = "${tagText}");
 			}
 		}
 		else {
-			var key_tagText = "${tagText}";
-
-			Type.typePause(
-				locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD",
-				value1 = "${tagText}");
-
-			AssertClick(
-				locator1 = "CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON",
-				value1 = "Add");
-
-			AssertTextEquals(
-				locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC",
-				value1 = "${tagText}");
+			CalendarEvent.addTag(key_tagText = "${tagText}");
 		}
 	}
 

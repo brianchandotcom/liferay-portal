@@ -37,9 +37,7 @@ public class DefaultTransactionExecutor
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		_commit(
-			_platformTransactionManager, transactionAttributeAdapter,
-			transactionStatusAdapter, null);
+		_commit(transactionAttributeAdapter, transactionStatusAdapter, null);
 	}
 
 	@Override
@@ -49,7 +47,7 @@ public class DefaultTransactionExecutor
 		throws Throwable {
 
 		TransactionStatusAdapter transactionStatusAdapter = _start(
-			_platformTransactionManager, transactionAttributeAdapter);
+			transactionAttributeAdapter);
 
 		T returnValue = null;
 
@@ -58,13 +56,11 @@ public class DefaultTransactionExecutor
 		}
 		catch (Throwable throwable) {
 			throw _rollback(
-				_platformTransactionManager, throwable,
-				transactionAttributeAdapter, transactionStatusAdapter);
+				throwable, transactionAttributeAdapter,
+				transactionStatusAdapter);
 		}
 
-		_commit(
-			_platformTransactionManager, transactionAttributeAdapter,
-			transactionStatusAdapter, null);
+		_commit(transactionAttributeAdapter, transactionStatusAdapter, null);
 
 		return returnValue;
 	}
@@ -82,19 +78,17 @@ public class DefaultTransactionExecutor
 		throws Throwable {
 
 		throw _rollback(
-			_platformTransactionManager, throwable, transactionAttributeAdapter,
-			transactionStatusAdapter);
+			throwable, transactionAttributeAdapter, transactionStatusAdapter);
 	}
 
 	@Override
 	public TransactionStatusAdapter start(
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
-		return _start(_platformTransactionManager, transactionAttributeAdapter);
+		return _start(transactionAttributeAdapter);
 	}
 
 	private void _commit(
-		PlatformTransactionManager platformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter,
 		Throwable applicationThrowable) {
@@ -102,7 +96,7 @@ public class DefaultTransactionExecutor
 		Throwable throwable = null;
 
 		try {
-			platformTransactionManager.commit(
+			_platformTransactionManager.commit(
 				transactionStatusAdapter.getTransactionStatus());
 		}
 		catch (Throwable t) {
@@ -130,14 +124,13 @@ public class DefaultTransactionExecutor
 	}
 
 	private Throwable _rollback(
-		PlatformTransactionManager platformTransactionManager,
 		Throwable throwable,
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
 		if (transactionAttributeAdapter.rollbackOn(throwable)) {
 			try {
-				platformTransactionManager.rollback(
+				_platformTransactionManager.rollback(
 					transactionStatusAdapter.getTransactionStatus());
 			}
 			catch (Throwable t) {
@@ -155,20 +148,19 @@ public class DefaultTransactionExecutor
 		}
 		else {
 			_commit(
-				platformTransactionManager, transactionAttributeAdapter,
-				transactionStatusAdapter, throwable);
+				transactionAttributeAdapter, transactionStatusAdapter,
+				throwable);
 		}
 
 		return throwable;
 	}
 
 	private TransactionStatusAdapter _start(
-		PlatformTransactionManager platformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
 		TransactionStatusAdapter transactionStatusAdapter =
 			new TransactionStatusAdapter(
-				platformTransactionManager.getTransaction(
+				_platformTransactionManager.getTransaction(
 					transactionAttributeAdapter));
 
 		TransactionExecutorThreadLocal.pushTransactionExecutor(this);

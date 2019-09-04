@@ -16,10 +16,10 @@
 		<sequential>
 			<property name="db.upgrade.client.home" value="${liferay.home}/tools/portal-tools-db-upgrade-client" />
 
+			<property name="db.upgrade.client.dist.dir" value="${project.dir}/tools/sdk/dist" />
 			<property name="db.upgrade.client.jar" value="${db.upgrade.client.home}/com.liferay.portal.tools.db.upgrade.client.jar" />
 			<property name="db.upgrade.client.log" value="${db.upgrade.client.home}/logs/upgrade.log" />
 			<property name="db.upgrade.client.src.dir" value="${project.dir}/modules/util/portal-tools-db-upgrade-client" />
-			<property name="db.upgrade.client.dist.dir" value="${project.dir}/tools/sdk/dist" />
 		</sequential>
 	</macrodef>
 

@@ -449,6 +449,9 @@ public abstract class BaseCollectionResourceTestCase {
 			404,
 			collectionResource.getCollectionHttpResponse(
 				collection.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404, collectionResource.getCollectionHttpResponse(0L, null));
 	}
 
 	protected Collection testDeleteCollection_addCollection() throws Exception {

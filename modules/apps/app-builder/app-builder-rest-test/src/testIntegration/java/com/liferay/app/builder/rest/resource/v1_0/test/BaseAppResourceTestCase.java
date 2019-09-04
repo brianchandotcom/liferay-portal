@@ -206,6 +206,8 @@ public abstract class BaseAppResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, appResource.getAppHttpResponse(app.getId()));
+
+		assertHttpResponseStatusCode(404, appResource.getAppHttpResponse(0L));
 	}
 
 	protected App testDeleteApp_addApp() throws Exception {

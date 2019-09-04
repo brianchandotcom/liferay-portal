@@ -582,6 +582,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			404,
 			messageBoardThreadResource.getMessageBoardThreadHttpResponse(
 				messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.getMessageBoardThreadHttpResponse(0L));
 	}
 
 	protected MessageBoardThread
@@ -773,6 +777,11 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			messageBoardThreadResource.
 				getMessageBoardThreadMyRatingHttpResponse(
 					messageBoardThread.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardThreadResource.
+				getMessageBoardThreadMyRatingHttpResponse(0L));
 	}
 
 	protected MessageBoardThread

@@ -215,6 +215,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			404,
 			documentFolderResource.getDocumentFolderHttpResponse(
 				documentFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404, documentFolderResource.getDocumentFolderHttpResponse(0L));
 	}
 
 	protected DocumentFolder testDeleteDocumentFolder_addDocumentFolder()

@@ -342,6 +342,11 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			knowledgeBaseAttachmentResource.
 				getKnowledgeBaseAttachmentHttpResponse(
 					knowledgeBaseAttachment.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseAttachmentHttpResponse(0L));
 	}
 
 	protected KnowledgeBaseAttachment

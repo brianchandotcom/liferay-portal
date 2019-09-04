@@ -221,6 +221,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			404,
 			blogPostingImageResource.getBlogPostingImageHttpResponse(
 				blogPostingImage.getId()));
+
+		assertHttpResponseStatusCode(
+			404, blogPostingImageResource.getBlogPostingImageHttpResponse(0L));
 	}
 
 	protected BlogPostingImage testDeleteBlogPostingImage_addBlogPostingImage()

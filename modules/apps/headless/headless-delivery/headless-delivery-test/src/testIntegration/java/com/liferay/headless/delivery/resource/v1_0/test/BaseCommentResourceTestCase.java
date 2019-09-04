@@ -496,6 +496,9 @@ public abstract class BaseCommentResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, commentResource.getCommentHttpResponse(comment.getId()));
+
+		assertHttpResponseStatusCode(
+			404, commentResource.getCommentHttpResponse(0L));
 	}
 
 	protected Comment testDeleteComment_addComment() throws Exception {

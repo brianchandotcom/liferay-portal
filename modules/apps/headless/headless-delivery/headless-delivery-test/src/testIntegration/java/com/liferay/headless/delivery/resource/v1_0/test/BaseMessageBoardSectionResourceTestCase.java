@@ -216,6 +216,10 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			404,
 			messageBoardSectionResource.getMessageBoardSectionHttpResponse(
 				messageBoardSection.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardSectionResource.getMessageBoardSectionHttpResponse(0L));
 	}
 
 	protected MessageBoardSection

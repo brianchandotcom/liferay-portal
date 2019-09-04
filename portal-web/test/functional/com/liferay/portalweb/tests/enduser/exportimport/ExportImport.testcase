@@ -1646,6 +1646,62 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
+	@description = "This is a use case for LPS-94738."
+	@priority = "4"
+	test ImportWCDReferenceAfterActivateStaging {
+		JSONGroup.addGroup(groupName = "Site Name A");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name A",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name A",
+			layoutName = "Test Page",
+			widgetName = "Web Content Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name A");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "WebContent Content",
+			webContentTitle = "WebContent Title");
+
+		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
+
+		LAR.exportSiteCP();
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		JSONGroup.deleteGroupByName(groupName = "Site Name A");
+
+		JSONGroup.addGroup(groupName = "Site Name B");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-b");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(siteName = "Site Name B");
+
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "site-name-b-staging");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name B");
+
+		WebContent.viewPGViaWCD(webContentContent = "WebContent Content");
+	}
+
 	@description = "This is a test for LPS-91233."
 	@priority = "3"
 	test PublishWebContentWithBrokenLink {

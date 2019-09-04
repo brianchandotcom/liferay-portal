@@ -232,9 +232,9 @@ class ChangeListsHistory extends PortletBase {
 			const viewURL = createPortletURL(this.baseURL);
 
 			const detailsParameters = {
-				mvcRenderCommandName: '/change_lists_history/view_details',
 				backURL: viewURL.toString(),
 				ctCollectionId: processEntry.ctcollection.ctCollectionId,
+				mvcRenderCommandName: '/change_lists_history/view_details',
 				orderByCol: 'title',
 				orderByType: 'desc'
 			};

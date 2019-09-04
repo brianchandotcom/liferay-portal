@@ -129,7 +129,7 @@ public class ReactRendererUtil {
 		javascriptSB.append(placeholderId);
 		javascriptSB.append(".default, ");
 		javascriptSB.append(
-			jsonSerializer.serialize(
+			jsonSerializer.serializeDeep(
 				_prepareData(componentDescriptor, data, httpServletRequest)));
 		javascriptSB.append(", '");
 		javascriptSB.append(placeholderId);

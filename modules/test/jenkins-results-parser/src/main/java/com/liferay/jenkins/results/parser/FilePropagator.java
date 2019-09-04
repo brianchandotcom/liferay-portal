@@ -31,6 +31,13 @@ public class FilePropagator {
 		String[] fileNames, String sourceDirName, String targetDirName,
 		List<String> targetSlaves) {
 
+		this(fileNames, sourceDirName, targetDirName, null, targetSlaves);
+	}
+
+	public FilePropagator(
+		String[] fileNames, String sourceDirName, String targetDirName,
+		String primaryTargetSlave, List<String> targetSlaves) {
+
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
@@ -39,6 +46,7 @@ public class FilePropagator {
 		}
 
 		_targetSlaves.addAll(targetSlaves);
+		_primaryTargetSlave = primaryTargetSlave;
 	}
 
 	public long getAverageThreadDuration() {
@@ -130,11 +138,7 @@ public class FilePropagator {
 
 		List<String> commands = new ArrayList<>();
 
-		String targetSlave = null;
-
 		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
-			targetSlave = _targetSlaves.get(0);
-
 			String sourceFileName = filePropagatorTask._sourceFileName;
 
 			System.out.println("Copying from source " + sourceFileName);
@@ -156,6 +160,17 @@ public class FilePropagator {
 				0, targetFileName.lastIndexOf("/"));
 
 			commands.add("ls -al " + targetDirName);
+		}
+
+		String targetSlave;
+
+		if (_primaryTargetSlave != null) {
+			targetSlave = _primaryTargetSlave;
+
+			_primaryTargetSlave = null;
+		}
+		else {
+			targetSlave = _targetSlaves.get(0);
 		}
 
 		try {
@@ -224,6 +239,7 @@ public class FilePropagator {
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
+	private String _primaryTargetSlave;
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;

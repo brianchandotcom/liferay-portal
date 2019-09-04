@@ -267,10 +267,9 @@ public class AppBuilderAppLocalServiceWrapper
 
 	@Override
 	public java.util.List<Long> getAppBuilderAppIds(
-		String status, String deploymentType) {
+		String status, String type) {
 
-		return _appBuilderAppLocalService.getAppBuilderAppIds(
-			status, deploymentType);
+		return _appBuilderAppLocalService.getAppBuilderAppIds(status, type);
 	}
 
 	/**

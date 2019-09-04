@@ -624,24 +624,23 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		_FINDER_COLUMN_APPBUILDERAPPID_APPBUILDERAPPID_2 =
 			"appBuilderAppDeployment.appBuilderAppId = ?";
 
-	private FinderPath _finderPathFetchByA_D;
-	private FinderPath _finderPathCountByA_D;
+	private FinderPath _finderPathFetchByA_T;
+	private FinderPath _finderPathCountByA_T;
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or throws a <code>NoSuchAppDeploymentException</code> if it could not be found.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or throws a <code>NoSuchAppDeploymentException</code> if it could not be found.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the matching app builder app deployment
 	 * @throws NoSuchAppDeploymentException if a matching app builder app deployment could not be found
 	 */
 	@Override
-	public AppBuilderAppDeployment findByA_D(
-			long appBuilderAppId, String deploymentType)
+	public AppBuilderAppDeployment findByA_T(long appBuilderAppId, String type)
 		throws NoSuchAppDeploymentException {
 
-		AppBuilderAppDeployment appBuilderAppDeployment = fetchByA_D(
-			appBuilderAppId, deploymentType);
+		AppBuilderAppDeployment appBuilderAppDeployment = fetchByA_T(
+			appBuilderAppId, type);
 
 		if (appBuilderAppDeployment == null) {
 			StringBundler msg = new StringBundler(6);
@@ -651,8 +650,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			msg.append("appBuilderAppId=");
 			msg.append(appBuilderAppId);
 
-			msg.append(", deploymentType=");
-			msg.append(deploymentType);
+			msg.append(", type=");
+			msg.append(type);
 
 			msg.append("}");
 
@@ -667,44 +666,44 @@ public class AppBuilderAppDeploymentPersistenceImpl
 	}
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the matching app builder app deployment, or <code>null</code> if a matching app builder app deployment could not be found
 	 */
 	@Override
-	public AppBuilderAppDeployment fetchByA_D(
-		long appBuilderAppId, String deploymentType) {
+	public AppBuilderAppDeployment fetchByA_T(
+		long appBuilderAppId, String type) {
 
-		return fetchByA_D(appBuilderAppId, deploymentType, true);
+		return fetchByA_T(appBuilderAppId, type, true);
 	}
 
 	/**
-	 * Returns the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the app builder app deployment where appBuilderAppId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching app builder app deployment, or <code>null</code> if a matching app builder app deployment could not be found
 	 */
 	@Override
-	public AppBuilderAppDeployment fetchByA_D(
-		long appBuilderAppId, String deploymentType, boolean useFinderCache) {
+	public AppBuilderAppDeployment fetchByA_T(
+		long appBuilderAppId, String type, boolean useFinderCache) {
 
-		deploymentType = Objects.toString(deploymentType, "");
+		type = Objects.toString(type, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {appBuilderAppId, deploymentType};
+			finderArgs = new Object[] {appBuilderAppId, type};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByA_D, finderArgs, this);
+				_finderPathFetchByA_T, finderArgs, this);
 		}
 
 		if (result instanceof AppBuilderAppDeployment) {
@@ -713,9 +712,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 			if ((appBuilderAppId !=
 					appBuilderAppDeployment.getAppBuilderAppId()) ||
-				!Objects.equals(
-					deploymentType,
-					appBuilderAppDeployment.getDeploymentType())) {
+				!Objects.equals(type, appBuilderAppDeployment.getType())) {
 
 				result = null;
 			}
@@ -726,17 +723,17 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 			query.append(_SQL_SELECT_APPBUILDERAPPDEPLOYMENT_WHERE);
 
-			query.append(_FINDER_COLUMN_A_D_APPBUILDERAPPID_2);
+			query.append(_FINDER_COLUMN_A_T_APPBUILDERAPPID_2);
 
-			boolean bindDeploymentType = false;
+			boolean bindType = false;
 
-			if (deploymentType.isEmpty()) {
-				query.append(_FINDER_COLUMN_A_D_DEPLOYMENTTYPE_3);
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_A_T_TYPE_3);
 			}
 			else {
-				bindDeploymentType = true;
+				bindType = true;
 
-				query.append(_FINDER_COLUMN_A_D_DEPLOYMENTTYPE_2);
+				query.append(_FINDER_COLUMN_A_T_TYPE_2);
 			}
 
 			String sql = query.toString();
@@ -752,8 +749,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 				qPos.add(appBuilderAppId);
 
-				if (bindDeploymentType) {
-					qPos.add(deploymentType);
+				if (bindType) {
+					qPos.add(type);
 				}
 
 				List<AppBuilderAppDeployment> list = q.list();
@@ -761,7 +758,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByA_D, finderArgs, list);
+							_finderPathFetchByA_T, finderArgs, list);
 					}
 				}
 				else {
@@ -771,12 +768,12 @@ public class AppBuilderAppDeploymentPersistenceImpl
 						if (_log.isWarnEnabled()) {
 							if (!useFinderCache) {
 								finderArgs = new Object[] {
-									appBuilderAppId, deploymentType
+									appBuilderAppId, type
 								};
 							}
 
 							_log.warn(
-								"AppBuilderAppDeploymentPersistenceImpl.fetchByA_D(long, String, boolean) with parameters (" +
+								"AppBuilderAppDeploymentPersistenceImpl.fetchByA_T(long, String, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -792,7 +789,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			}
 			catch (Exception e) {
 				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByA_D, finderArgs);
+					finderCache.removeResult(_finderPathFetchByA_T, finderArgs);
 				}
 
 				throw processException(e);
@@ -811,37 +808,37 @@ public class AppBuilderAppDeploymentPersistenceImpl
 	}
 
 	/**
-	 * Removes the app builder app deployment where appBuilderAppId = &#63; and deploymentType = &#63; from the database.
+	 * Removes the app builder app deployment where appBuilderAppId = &#63; and type = &#63; from the database.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the app builder app deployment that was removed
 	 */
 	@Override
-	public AppBuilderAppDeployment removeByA_D(
-			long appBuilderAppId, String deploymentType)
+	public AppBuilderAppDeployment removeByA_T(
+			long appBuilderAppId, String type)
 		throws NoSuchAppDeploymentException {
 
-		AppBuilderAppDeployment appBuilderAppDeployment = findByA_D(
-			appBuilderAppId, deploymentType);
+		AppBuilderAppDeployment appBuilderAppDeployment = findByA_T(
+			appBuilderAppId, type);
 
 		return remove(appBuilderAppDeployment);
 	}
 
 	/**
-	 * Returns the number of app builder app deployments where appBuilderAppId = &#63; and deploymentType = &#63;.
+	 * Returns the number of app builder app deployments where appBuilderAppId = &#63; and type = &#63;.
 	 *
 	 * @param appBuilderAppId the app builder app ID
-	 * @param deploymentType the deployment type
+	 * @param type the type
 	 * @return the number of matching app builder app deployments
 	 */
 	@Override
-	public int countByA_D(long appBuilderAppId, String deploymentType) {
-		deploymentType = Objects.toString(deploymentType, "");
+	public int countByA_T(long appBuilderAppId, String type) {
+		type = Objects.toString(type, "");
 
-		FinderPath finderPath = _finderPathCountByA_D;
+		FinderPath finderPath = _finderPathCountByA_T;
 
-		Object[] finderArgs = new Object[] {appBuilderAppId, deploymentType};
+		Object[] finderArgs = new Object[] {appBuilderAppId, type};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -850,17 +847,17 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 			query.append(_SQL_COUNT_APPBUILDERAPPDEPLOYMENT_WHERE);
 
-			query.append(_FINDER_COLUMN_A_D_APPBUILDERAPPID_2);
+			query.append(_FINDER_COLUMN_A_T_APPBUILDERAPPID_2);
 
-			boolean bindDeploymentType = false;
+			boolean bindType = false;
 
-			if (deploymentType.isEmpty()) {
-				query.append(_FINDER_COLUMN_A_D_DEPLOYMENTTYPE_3);
+			if (type.isEmpty()) {
+				query.append(_FINDER_COLUMN_A_T_TYPE_3);
 			}
 			else {
-				bindDeploymentType = true;
+				bindType = true;
 
-				query.append(_FINDER_COLUMN_A_D_DEPLOYMENTTYPE_2);
+				query.append(_FINDER_COLUMN_A_T_TYPE_2);
 			}
 
 			String sql = query.toString();
@@ -876,8 +873,8 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 				qPos.add(appBuilderAppId);
 
-				if (bindDeploymentType) {
-					qPos.add(deploymentType);
+				if (bindType) {
+					qPos.add(type);
 				}
 
 				count = (Long)q.uniqueResult();
@@ -897,14 +894,14 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_A_D_APPBUILDERAPPID_2 =
+	private static final String _FINDER_COLUMN_A_T_APPBUILDERAPPID_2 =
 		"appBuilderAppDeployment.appBuilderAppId = ? AND ";
 
-	private static final String _FINDER_COLUMN_A_D_DEPLOYMENTTYPE_2 =
-		"appBuilderAppDeployment.deploymentType = ?";
+	private static final String _FINDER_COLUMN_A_T_TYPE_2 =
+		"appBuilderAppDeployment.type = ?";
 
-	private static final String _FINDER_COLUMN_A_D_DEPLOYMENTTYPE_3 =
-		"(appBuilderAppDeployment.deploymentType IS NULL OR appBuilderAppDeployment.deploymentType = '')";
+	private static final String _FINDER_COLUMN_A_T_TYPE_3 =
+		"(appBuilderAppDeployment.type IS NULL OR appBuilderAppDeployment.type = '')";
 
 	public AppBuilderAppDeploymentPersistenceImpl() {
 		setModelClass(AppBuilderAppDeployment.class);
@@ -915,6 +912,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 		dbColumnNames.put("settings", "settings_");
+		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
 	}
@@ -931,10 +929,10 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			appBuilderAppDeployment.getPrimaryKey(), appBuilderAppDeployment);
 
 		finderCache.putResult(
-			_finderPathFetchByA_D,
+			_finderPathFetchByA_T,
 			new Object[] {
 				appBuilderAppDeployment.getAppBuilderAppId(),
-				appBuilderAppDeployment.getDeploymentType()
+				appBuilderAppDeployment.getType()
 			},
 			appBuilderAppDeployment);
 
@@ -1026,13 +1024,13 @@ public class AppBuilderAppDeploymentPersistenceImpl
 
 		Object[] args = new Object[] {
 			appBuilderAppDeploymentModelImpl.getAppBuilderAppId(),
-			appBuilderAppDeploymentModelImpl.getDeploymentType()
+			appBuilderAppDeploymentModelImpl.getType()
 		};
 
 		finderCache.putResult(
-			_finderPathCountByA_D, args, Long.valueOf(1), false);
+			_finderPathCountByA_T, args, Long.valueOf(1), false);
 		finderCache.putResult(
-			_finderPathFetchByA_D, args, appBuilderAppDeploymentModelImpl,
+			_finderPathFetchByA_T, args, appBuilderAppDeploymentModelImpl,
 			false);
 	}
 
@@ -1043,23 +1041,23 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 				appBuilderAppDeploymentModelImpl.getAppBuilderAppId(),
-				appBuilderAppDeploymentModelImpl.getDeploymentType()
+				appBuilderAppDeploymentModelImpl.getType()
 			};
 
-			finderCache.removeResult(_finderPathCountByA_D, args);
-			finderCache.removeResult(_finderPathFetchByA_D, args);
+			finderCache.removeResult(_finderPathCountByA_T, args);
+			finderCache.removeResult(_finderPathFetchByA_T, args);
 		}
 
 		if ((appBuilderAppDeploymentModelImpl.getColumnBitmask() &
-			 _finderPathFetchByA_D.getColumnBitmask()) != 0) {
+			 _finderPathFetchByA_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
 				appBuilderAppDeploymentModelImpl.getOriginalAppBuilderAppId(),
-				appBuilderAppDeploymentModelImpl.getOriginalDeploymentType()
+				appBuilderAppDeploymentModelImpl.getOriginalType()
 			};
 
-			finderCache.removeResult(_finderPathCountByA_D, args);
-			finderCache.removeResult(_finderPathFetchByA_D, args);
+			finderCache.removeResult(_finderPathCountByA_T, args);
+			finderCache.removeResult(_finderPathFetchByA_T, args);
 		}
 	}
 
@@ -1608,17 +1606,17 @@ public class AppBuilderAppDeploymentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppBuilderAppId",
 			new String[] {Long.class.getName()});
 
-		_finderPathFetchByA_D = new FinderPath(
+		_finderPathFetchByA_T = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled,
 			AppBuilderAppDeploymentImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByA_D",
+			"fetchByA_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			AppBuilderAppDeploymentModelImpl.APPBUILDERAPPID_COLUMN_BITMASK |
-			AppBuilderAppDeploymentModelImpl.DEPLOYMENTTYPE_COLUMN_BITMASK);
+			AppBuilderAppDeploymentModelImpl.TYPE_COLUMN_BITMASK);
 
-		_finderPathCountByA_D = new FinderPath(
+		_finderPathCountByA_T = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_D",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -1695,7 +1693,7 @@ public class AppBuilderAppDeploymentPersistenceImpl
 		AppBuilderAppDeploymentPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"settings"});
+		new String[] {"settings", "type"});
 
 	static {
 		try {

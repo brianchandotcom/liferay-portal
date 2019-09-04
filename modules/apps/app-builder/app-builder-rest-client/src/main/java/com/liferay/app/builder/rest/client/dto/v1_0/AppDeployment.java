@@ -29,27 +29,6 @@ import javax.annotation.Generated;
 @Generated("")
 public class AppDeployment {
 
-	public String getDeploymentType() {
-		return deploymentType;
-	}
-
-	public void setDeploymentType(String deploymentType) {
-		this.deploymentType = deploymentType;
-	}
-
-	public void setDeploymentType(
-		UnsafeSupplier<String, Exception> deploymentTypeUnsafeSupplier) {
-
-		try {
-			deploymentType = deploymentTypeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String deploymentType;
-
 	public Map<String, Object> getSettings() {
 		return settings;
 	}
@@ -70,6 +49,25 @@ public class AppDeployment {
 	}
 
 	protected Map<String, Object> settings;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String type;
 
 	@Override
 	public boolean equals(Object object) {

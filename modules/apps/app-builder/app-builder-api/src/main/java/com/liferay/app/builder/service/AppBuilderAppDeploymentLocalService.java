@@ -72,7 +72,7 @@ public interface AppBuilderAppDeploymentLocalService
 		AppBuilderAppDeployment appBuilderAppDeployment);
 
 	public AppBuilderAppDeployment addAppBuilderAppDeployment(
-		long appBuilderAppId, String deploymentType, String settings);
+		long appBuilderAppId, String settings, String type);
 
 	/**
 	 * Creates a new app builder app deployment with the primary key. Does not add the app builder app deployment to the database.
@@ -200,7 +200,7 @@ public interface AppBuilderAppDeploymentLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AppBuilderAppDeployment getAppBuilderAppDeployment(
-			long appBuilderAppId, String deploymentType)
+			long appBuilderAppId, String type)
 		throws Exception;
 
 	/**

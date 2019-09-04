@@ -71,10 +71,10 @@ public class AppBuilderAppDeploymentCacheModel
 		sb.append(appBuilderAppDeploymentId);
 		sb.append(", appBuilderAppId=");
 		sb.append(appBuilderAppId);
-		sb.append(", deploymentType=");
-		sb.append(deploymentType);
 		sb.append(", settings=");
 		sb.append(settings);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -89,18 +89,18 @@ public class AppBuilderAppDeploymentCacheModel
 			appBuilderAppDeploymentId);
 		appBuilderAppDeploymentImpl.setAppBuilderAppId(appBuilderAppId);
 
-		if (deploymentType == null) {
-			appBuilderAppDeploymentImpl.setDeploymentType("");
-		}
-		else {
-			appBuilderAppDeploymentImpl.setDeploymentType(deploymentType);
-		}
-
 		if (settings == null) {
 			appBuilderAppDeploymentImpl.setSettings("");
 		}
 		else {
 			appBuilderAppDeploymentImpl.setSettings(settings);
+		}
+
+		if (type == null) {
+			appBuilderAppDeploymentImpl.setType("");
+		}
+		else {
+			appBuilderAppDeploymentImpl.setType(type);
 		}
 
 		appBuilderAppDeploymentImpl.resetOriginalValues();
@@ -113,8 +113,8 @@ public class AppBuilderAppDeploymentCacheModel
 		appBuilderAppDeploymentId = objectInput.readLong();
 
 		appBuilderAppId = objectInput.readLong();
-		deploymentType = objectInput.readUTF();
 		settings = objectInput.readUTF();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -123,24 +123,24 @@ public class AppBuilderAppDeploymentCacheModel
 
 		objectOutput.writeLong(appBuilderAppId);
 
-		if (deploymentType == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(deploymentType);
-		}
-
 		if (settings == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(settings);
 		}
+
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
 	}
 
 	public long appBuilderAppDeploymentId;
 	public long appBuilderAppId;
-	public String deploymentType;
 	public String settings;
+	public String type;
 
 }

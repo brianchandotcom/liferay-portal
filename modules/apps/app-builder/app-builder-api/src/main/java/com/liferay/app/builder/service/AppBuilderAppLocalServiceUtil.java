@@ -253,9 +253,9 @@ public class AppBuilderAppLocalServiceUtil {
 	}
 
 	public static java.util.List<Long> getAppBuilderAppIds(
-		String status, String deploymentType) {
+		String status, String type) {
 
-		return getService().getAppBuilderAppIds(status, deploymentType);
+		return getService().getAppBuilderAppIds(status, type);
 	}
 
 	/**

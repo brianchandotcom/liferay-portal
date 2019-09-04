@@ -225,7 +225,7 @@ public interface AppBuilderAppLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Long> getAppBuilderAppIds(String status, String deploymentType);
+	public List<Long> getAppBuilderAppIds(String status, String type);
 
 	/**
 	 * Returns a range of all the app builder apps.

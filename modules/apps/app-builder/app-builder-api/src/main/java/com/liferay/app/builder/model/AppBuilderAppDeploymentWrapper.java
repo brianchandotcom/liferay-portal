@@ -49,8 +49,8 @@ public class AppBuilderAppDeploymentWrapper
 		attributes.put(
 			"appBuilderAppDeploymentId", getAppBuilderAppDeploymentId());
 		attributes.put("appBuilderAppId", getAppBuilderAppId());
-		attributes.put("deploymentType", getDeploymentType());
 		attributes.put("settings", getSettings());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -70,16 +70,16 @@ public class AppBuilderAppDeploymentWrapper
 			setAppBuilderAppId(appBuilderAppId);
 		}
 
-		String deploymentType = (String)attributes.get("deploymentType");
-
-		if (deploymentType != null) {
-			setDeploymentType(deploymentType);
-		}
-
 		String settings = (String)attributes.get("settings");
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -104,16 +104,6 @@ public class AppBuilderAppDeploymentWrapper
 	}
 
 	/**
-	 * Returns the deployment type of this app builder app deployment.
-	 *
-	 * @return the deployment type of this app builder app deployment
-	 */
-	@Override
-	public String getDeploymentType() {
-		return model.getDeploymentType();
-	}
-
-	/**
 	 * Returns the primary key of this app builder app deployment.
 	 *
 	 * @return the primary key of this app builder app deployment
@@ -131,6 +121,16 @@ public class AppBuilderAppDeploymentWrapper
 	@Override
 	public String getSettings() {
 		return model.getSettings();
+	}
+
+	/**
+	 * Returns the type of this app builder app deployment.
+	 *
+	 * @return the type of this app builder app deployment
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	@Override
@@ -159,16 +159,6 @@ public class AppBuilderAppDeploymentWrapper
 	}
 
 	/**
-	 * Sets the deployment type of this app builder app deployment.
-	 *
-	 * @param deploymentType the deployment type of this app builder app deployment
-	 */
-	@Override
-	public void setDeploymentType(String deploymentType) {
-		model.setDeploymentType(deploymentType);
-	}
-
-	/**
 	 * Sets the primary key of this app builder app deployment.
 	 *
 	 * @param primaryKey the primary key of this app builder app deployment
@@ -186,6 +176,16 @@ public class AppBuilderAppDeploymentWrapper
 	@Override
 	public void setSettings(String settings) {
 		model.setSettings(settings);
+	}
+
+	/**
+	 * Sets the type of this app builder app deployment.
+	 *
+	 * @param type the type of this app builder app deployment
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	@Override

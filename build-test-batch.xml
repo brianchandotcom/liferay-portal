@@ -3148,7 +3148,7 @@ log.sanitizer.enabled=false</echo>
 
 				<trycatch property="junit.failure.message">
 					<try>
-						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings" param="upgrade.test.target">
+						<for keepgoing="true" list="check-upgrade-client-gogoshell,check-upgrade-client-help,check-upgrade-client-java-version,check-upgrade-client-custom-log,check-upgrade-client-additional-settings,check-upgrade-client-zip-content" param="upgrade.test.target">
 							<sequential>
 								<ant antfile="build-test-db-upgrade-client.xml" target="@{upgrade.test.target}" />
 							</sequential>

@@ -71,18 +71,18 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 								name={`${props.namespace}classNameId`}
 								onChange={onChange}
 							>
-								<option
-									label={`-- ${Liferay.Language.get(
+								<option value="">
+									{`-- ${Liferay.Language.get(
 										'no-selected'
 									)} --`}
-									value=""
-								></option>
+								</option>
 								{props.mappingTypes.map(mappingType => (
 									<option
 										key={mappingType.id}
-										label={mappingType.label}
 										value={mappingType.id}
-									></option>
+									>
+										{mappingType.label}
+									</option>
 								))}
 							</select>
 						</FormField>
@@ -97,18 +97,18 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 									className="form-control"
 									name={`${props.namespace}classTypeId`}
 								>
-									<option
-										label={`-- ${Liferay.Language.get(
+									<option value="">
+										{`-- ${Liferay.Language.get(
 											'no-selected'
 										)} --`}
-										value=""
-									></option>
+									</option>
 									{subtypes.map(subtype => (
 										<option
 											key={subtype.id}
-											label={subtype.label}
 											value={subtype.id}
-										></option>
+										>
+											{subtype.label}
+										</option>
 									))}
 								</select>
 							</FormField>

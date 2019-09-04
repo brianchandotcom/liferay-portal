@@ -32,7 +32,7 @@ public class CTPersistenceHelperUtil {
 			return ctModel.isNew();
 		}
 
-		return _ctPersistenceHelper.isInsert(ctModel);
+		return ctPersistenceHelper.isInsert(ctModel);
 	}
 
 	public static <T extends CTModel<T>> boolean isProductionMode(
@@ -44,7 +44,7 @@ public class CTPersistenceHelperUtil {
 			return true;
 		}
 
-		return _ctPersistenceHelper.isProductionMode(ctModelClass);
+		return ctPersistenceHelper.isProductionMode(ctModelClass);
 	}
 
 	public static <T extends CTModel<T>> boolean isRemove(T ctModel) {
@@ -54,7 +54,7 @@ public class CTPersistenceHelperUtil {
 			return true;
 		}
 
-		return _ctPersistenceHelper.isRemove(ctModel);
+		return ctPersistenceHelper.isRemove(ctModel);
 	}
 
 	private CTPersistenceHelperUtil() {

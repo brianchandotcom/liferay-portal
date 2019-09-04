@@ -21,7 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppServiceWrapper;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.opener.constants.DLOpenerFileEntryReferenceConstants;
 import com.liferay.document.library.opener.constants.DLOpenerMimeTypes;
-import com.liferay.document.library.opener.google.drive.DLOpenerGoogleDriveFileReference;
+import com.liferay.document.library.opener.google.drive.web.internal.DLOpenerGoogleDriveFileReference;
 import com.liferay.document.library.opener.google.drive.web.internal.DLOpenerGoogleDriveManager;
 import com.liferay.document.library.opener.google.drive.web.internal.constants.DLOpenerGoogleDriveConstants;
 import com.liferay.document.library.opener.model.DLOpenerFileEntryReference;

@@ -36,10 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
-	service = CTSQLHelper.class
-)
+@Component(immediate = true, service = CTSQLHelper.class)
 public class CTSQLHelperImpl implements CTSQLHelper {
 
 	@Override

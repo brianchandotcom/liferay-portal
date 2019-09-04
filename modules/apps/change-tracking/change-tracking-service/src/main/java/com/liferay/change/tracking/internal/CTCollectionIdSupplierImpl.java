@@ -27,10 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Preston Crary
  */
-@Component(
-	immediate = true, property = "service.ranking:Integer=" + Integer.MAX_VALUE,
-	service = CTCollectionIdSupplier.class
-)
+@Component(immediate = true, service = CTCollectionIdSupplier.class)
 public class CTCollectionIdSupplierImpl implements CTCollectionIdSupplier {
 
 	@Override

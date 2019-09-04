@@ -254,7 +254,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								0L
+								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
+									0D
+								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+									0
+								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+									0L
+								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+									""
+								<#else>
+									null
+								</#if>
 							<#else>
 								null
 							</#if>

@@ -1,5 +1,32 @@
 definition {
 
+	macro deleteDocument {
+		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx");
+
+		Pause(locator1 = "10000");
+
+		MicrosoftLogin.accountSignIn(
+			userEmail = "${userName}",
+			userPassword = "${userPassword}",
+			windowTitle = "Sign in to your account");
+
+		MicrosoftLogin.confirmMicrosoftApp();
+
+		Pause(locator1 = "10000");
+
+		SelectWindow(locator1 = "OneDrive#PAGE_TITLE");
+
+		var key_documentTitle = "${dmDocumentTitle}";
+
+		if (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
+			Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
+
+			Click(locator1 = "OneDrive#DELETE");
+
+			Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
+		}
+	}
+
 	macro editTitle {
 		Pause(locator1 = "10000");
 

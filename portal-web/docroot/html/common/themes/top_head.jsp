@@ -38,15 +38,15 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 		alternateURLs = PortalUtil.getAlternateURLs(canonicalURL, themeDisplay, layout);
 	}
 
-	for (SEOLink seoLink : SEOLinkManagerUtil.getLocalizedSEOLinks(layout, PortalUtil.getLocale(request), canonicalURL, alternateURLs)) {
+	for (LayoutSEOLink layoutSEOLink : LayoutSEOLinkManagerUtil.getLocalizedLayoutSEOLinks(layout, PortalUtil.getLocale(request), canonicalURL, alternateURLs)) {
 %>
 
 		<c:choose>
-			<c:when test="<%= Validator.isNotNull(seoLink.getHrefLang()) %>">
-				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" hreflang="<%= seoLink.getHrefLang() %>" rel="<%= seoLink.getRelationship() %>" />
+			<c:when test="<%= Validator.isNotNull(layoutSEOLink.getHrefLang()) %>">
+				<link data-senna-track="temporary" href="<%= layoutSEOLink.getHref() %>" hreflang="<%= layoutSEOLink.getHrefLang() %>" rel="<%= layoutSEOLink.getRelationship() %>" />
 			</c:when>
 			<c:otherwise>
-				<link data-senna-track="temporary" href="<%= seoLink.getHref() %>" rel="<%= seoLink.getRelationship() %>" />
+				<link data-senna-track="temporary" href="<%= layoutSEOLink.getHref() %>" rel="<%= layoutSEOLink.getRelationship() %>" />
 			</c:otherwise>
 		</c:choose>
 

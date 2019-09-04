@@ -35,7 +35,7 @@ AccountDisplay accountDisplay = (AccountDisplay)request.getAttribute(AccountWebK
 		<aui:col width="<%= 40 %>">
 			<div class="text-center">
 				<liferay-ui:logo-selector
-					currentLogoURL='<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountDisplay.getLogoURL(themeDisplay) %>'
+					currentLogoURL='<%= ((accountDisplay == null) || (accountDisplay.getLogoId() == 0)) ? themeDisplay.getPathImage() + "/organization_logo?img_id=0" : accountDisplay.getLogoURL(themeDisplay) %>'
 					defaultLogo="<%= (accountDisplay == null) || (accountDisplay.getLogoId() == 0) %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					tempImageFileName='<%= (accountDisplay == null) ? "0" : String.valueOf(accountDisplay.getAccountId()) %>'

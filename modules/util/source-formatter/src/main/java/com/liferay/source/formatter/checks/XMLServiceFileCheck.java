@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.comparator.ElementComparator;
 import com.liferay.source.formatter.checks.util.SourceUtil;
@@ -62,6 +63,12 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 
 		for (Element entityElement :
 				(List<Element>)rootElement.elements("entity")) {
+
+			if (GetterUtil.getBoolean(
+					entityElement.attributeValue("deprecated"))) {
+
+				continue;
+			}
 
 			String entityName = entityElement.attributeValue("name");
 

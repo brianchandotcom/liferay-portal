@@ -1,7 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.9.9"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.9"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9.1"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.9.3"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils", version: "1.8.2"
 	testIntegrationCompile group: "commons-codec", name: "commons-codec", version: "1.10"

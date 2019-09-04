@@ -102,6 +102,15 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 	@Override
 	public List<CTProcess> getCTProcesses(
+		long companyId, long userId, String keywords, int status, int start,
+		int end, OrderByComparator<CTProcess> orderByComparator) {
+
+		return ctProcessFinder.findByC_U_N_D_S(
+			companyId, userId, keywords, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CTProcess> getCTProcesses(
 		long companyId, long userId, String keywords,
 		QueryDefinition<?> queryDefinition) {
 
@@ -109,15 +118,6 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 			companyId, userId, keywords, queryDefinition.getStatus(),
 			queryDefinition.getStart(), queryDefinition.getEnd(),
 			queryDefinition.getOrderByComparator());
-	}
-
-	@Override
-	public List<CTProcess> getCTProcesses(
-		long companyId, long userId, String keywords, int status, int start,
-		int end, OrderByComparator<CTProcess> orderByComparator) {
-
-		return ctProcessFinder.findByC_U_N_D_S(
-			companyId, userId, keywords, status, start, end, orderByComparator);
 	}
 
 	private long _addBackgroundTask(

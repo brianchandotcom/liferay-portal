@@ -81,7 +81,8 @@ public class ChangeListsHistoryDisplayContext {
 
 		soyContext.put("urlProcesses", processesURL.toString());
 
-		processesURL.setResourceID("/change_lists_history/get_ct_process_users");
+		processesURL.setResourceID(
+			"/change_lists_history/get_ct_process_users");
 
 		soyContext.put("urlProcessUsers", processesURL.toString());
 

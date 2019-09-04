@@ -121,7 +121,7 @@ class ChangeListsHistory extends PortletBase {
 			});
 
 		const processUsersParameters = {
-			type: this.filterStatus,
+			type: this.filterStatus
 		};
 
 		if (this.keywords) {

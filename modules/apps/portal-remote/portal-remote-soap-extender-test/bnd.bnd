@@ -14,6 +14,6 @@ Import-Package:\
 	\
 	*
 -includeresource:\
-	cxf-rt-frontend-jaxws-[0-9]*.jar;lib:=true,\
-	cxf-rt-frontend-simple-[0-9]*.jar;lib:=true,\
-	cxf-rt-ws-policy-[0-9]*.jar;lib:=true
+	cxf-rt-frontend-jaxws-[0-9.]*.jar;lib:=true,\
+	cxf-rt-frontend-simple-[0-9.]*.jar;lib:=true,\
+	cxf-rt-ws-policy-[0-9.]*.jar;lib:=true

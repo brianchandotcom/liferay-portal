@@ -2,4 +2,4 @@ Bundle-Name: Liferay BND Invoker
 Bundle-SymbolicName: com.liferay.bnd.invoker
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.bnd.invoker
--includeresource: lib/bnd.jar=biz.aQute.bnd-[0-9]*.jar
+-includeresource: lib/bnd.jar=biz.aQute.bnd-[0-9.]*.jar

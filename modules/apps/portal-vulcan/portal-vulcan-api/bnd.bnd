@@ -24,4 +24,4 @@ Import-Package:\
 	!graphql.schema.*,\
 	\
 	*
--includeresource: @graphql-java-annotations-[0-9]*.jar!/graphql/annotations/annotationTypes/*
+-includeresource: @graphql-java-annotations-[0-9.]*.jar!/graphql/annotations/annotationTypes/*

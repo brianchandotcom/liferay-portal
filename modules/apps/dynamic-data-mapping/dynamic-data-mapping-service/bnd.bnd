@@ -13,4 +13,4 @@ Provide-Capability:\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\
 		resource.bundle.base.name="content.Language"
 -dsannotations-options: inherit
--includeresource: @poi-[0-9]*.jar
+-includeresource: @poi-[0-9.]*.jar

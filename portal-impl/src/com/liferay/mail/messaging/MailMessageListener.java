@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
 import com.liferay.portal.util.PropsValues;
 
@@ -133,7 +134,7 @@ public class MailMessageListener extends BaseMessageListener {
 					_log.warn(
 						StringBundler.concat(
 							"Email ", emailAddress, " will be ignored as it",
-							"is included in mail.send.blacklist"));
+							"is included in ", PropsKeys.MAIL_SEND_BLACKLIST));
 				}
 
 				return null;

@@ -345,8 +345,7 @@
 					img.src = imagePath;
 					if (r[2]) {
 						img.alt = r[2].replace(/~(.)/g, '$1');
-					}
-					else if (options && options.defaultImageText) {
+					} else if (options && options.defaultImageText) {
 						img.alt = options.defaultImageText;
 					}
 					node.appendChild(img);

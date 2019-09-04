@@ -33,8 +33,8 @@ components:
             properties:
                 confidenceLevel:
                     format: double
-                    maximum: 1
-                    minimum: 0
+                    maximum: 0.99
+                    minimum: 0.8
                     type: number
                 experimentVariants:
                     items:

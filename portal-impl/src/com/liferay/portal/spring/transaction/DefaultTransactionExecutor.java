@@ -48,9 +48,25 @@ public class DefaultTransactionExecutor
 			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
-		return _execute(
+		TransactionStatusAdapter transactionStatusAdapter = _start(
+			_platformTransactionManager, transactionAttributeAdapter);
+
+		T returnValue = null;
+
+		try {
+			returnValue = unsafeSupplier.get();
+		}
+		catch (Throwable throwable) {
+			throw _rollback(
+				_platformTransactionManager, throwable,
+				transactionAttributeAdapter, transactionStatusAdapter);
+		}
+
+		_commit(
 			_platformTransactionManager, transactionAttributeAdapter,
-			unsafeSupplier);
+			transactionStatusAdapter, null);
+
+		return returnValue;
 	}
 
 	@Override
@@ -111,33 +127,6 @@ public class DefaultTransactionExecutor
 
 			TransactionExecutorThreadLocal.popTransactionExecutor();
 		}
-	}
-
-	private <T> T _execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			UnsafeSupplier<T, Throwable> unsafeSupplier)
-		throws Throwable {
-
-		TransactionStatusAdapter transactionStatusAdapter = _start(
-			platformTransactionManager, transactionAttributeAdapter);
-
-		T returnValue = null;
-
-		try {
-			returnValue = unsafeSupplier.get();
-		}
-		catch (Throwable throwable) {
-			throw _rollback(
-				platformTransactionManager, throwable,
-				transactionAttributeAdapter, transactionStatusAdapter);
-		}
-
-		_commit(
-			platformTransactionManager, transactionAttributeAdapter,
-			transactionStatusAdapter, null);
-
-		return returnValue;
 	}
 
 	private Throwable _rollback(

@@ -784,6 +784,8 @@ public class PortletURLImpl
 	@Override
 	public void setResourceID(String resourceID) {
 		_resourceID = resourceID;
+
+		clearCache();
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class DefaultTransactionExecutor
 			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
-		TransactionStatusAdapter transactionStatusAdapter = _start(
+		TransactionStatusAdapter transactionStatusAdapter = start(
 			transactionAttributeAdapter);
 
 		T returnValue = null;
@@ -85,7 +85,17 @@ public class DefaultTransactionExecutor
 	public TransactionStatusAdapter start(
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
-		return _start(transactionAttributeAdapter);
+		TransactionStatusAdapter transactionStatusAdapter =
+			new TransactionStatusAdapter(
+				_platformTransactionManager.getTransaction(
+					transactionAttributeAdapter));
+
+		TransactionExecutorThreadLocal.pushTransactionExecutor(this);
+
+		TransactionLifecycleManager.fireTransactionCreatedEvent(
+			transactionAttributeAdapter, transactionStatusAdapter);
+
+		return transactionStatusAdapter;
 	}
 
 	private void _commit(
@@ -153,22 +163,6 @@ public class DefaultTransactionExecutor
 		}
 
 		return throwable;
-	}
-
-	private TransactionStatusAdapter _start(
-		TransactionAttributeAdapter transactionAttributeAdapter) {
-
-		TransactionStatusAdapter transactionStatusAdapter =
-			new TransactionStatusAdapter(
-				_platformTransactionManager.getTransaction(
-					transactionAttributeAdapter));
-
-		TransactionExecutorThreadLocal.pushTransactionExecutor(this);
-
-		TransactionLifecycleManager.fireTransactionCreatedEvent(
-			transactionAttributeAdapter, transactionStatusAdapter);
-
-		return transactionStatusAdapter;
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

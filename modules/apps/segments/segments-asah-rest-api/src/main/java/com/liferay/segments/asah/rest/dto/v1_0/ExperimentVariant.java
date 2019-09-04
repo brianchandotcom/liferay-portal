@@ -32,6 +32,9 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -71,6 +74,8 @@ public class ExperimentVariant {
 	protected String id;
 
 	@Schema
+	@DecimalMax("1")
+	@DecimalMin("0")
 	public Double getTrafficSplit() {
 		return trafficSplit;
 	}

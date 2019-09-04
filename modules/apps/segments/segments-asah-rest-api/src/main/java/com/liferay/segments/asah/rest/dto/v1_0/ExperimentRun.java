@@ -32,6 +32,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -48,6 +50,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ExperimentRun {
 
 	@Schema
+	@DecimalMax("0.99")
+	@DecimalMin("0.8")
 	public Double getConfidenceLevel() {
 		return confidenceLevel;
 	}

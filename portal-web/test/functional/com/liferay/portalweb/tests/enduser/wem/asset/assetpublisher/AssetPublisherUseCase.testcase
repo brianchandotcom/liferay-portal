@@ -422,7 +422,7 @@ definition {
 	test AssetPublisherFilterAndOrderByFieldType {
 		property testray.component.names = "Training";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -441,7 +441,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -452,7 +452,7 @@ definition {
 			templateFile = "simple_all_fields_template.txt",
 			templateName = "WC Template Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -467,7 +467,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content1 Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content1 Title");
 
@@ -482,7 +482,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -497,7 +497,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content2 Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content2 Title");
 
@@ -512,7 +512,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -527,7 +527,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content3 Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content3 Title");
 
@@ -542,7 +542,7 @@ definition {
 
 		PortletEntry.publish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -612,7 +612,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure1 Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -622,7 +622,7 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template11 Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure1 Name");
 
@@ -672,7 +672,7 @@ definition {
 			assetContent = "Web Content5 Text",
 			assetTitle = "Web Content5 Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -1148,7 +1148,7 @@ definition {
 			userLoginEmailAddress = "author1ea@liferay.com",
 			userLoginFullName = "author1 author1");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1173,7 +1173,7 @@ definition {
 			userLoginEmailAddress = "author2ea@liferay.com",
 			userLoginFullName = "author2 author2");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -1299,7 +1299,7 @@ definition {
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",

@@ -90,7 +90,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -276,7 +276,7 @@ definition {
 		}
 
 		task ("Add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -382,7 +382,7 @@ definition {
 		}
 
 		task ("As the super admin user, add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -420,7 +420,7 @@ definition {
 		}
 
 		task ("As the second user, edit the web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -496,7 +496,7 @@ definition {
 		}
 
 		task ("Add a web content article with tags that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.addArticleCP(
 				webContentContent = "Webcontent Content",
@@ -624,7 +624,7 @@ definition {
 
 		Button.clickPublish();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -705,7 +705,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 

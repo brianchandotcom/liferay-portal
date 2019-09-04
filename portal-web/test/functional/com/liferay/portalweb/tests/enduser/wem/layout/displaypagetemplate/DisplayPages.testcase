@@ -344,7 +344,7 @@ definition {
 		}
 
 		task ("Add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContent.addArticleCP(
 				webContentContent = "Webcontent Content",

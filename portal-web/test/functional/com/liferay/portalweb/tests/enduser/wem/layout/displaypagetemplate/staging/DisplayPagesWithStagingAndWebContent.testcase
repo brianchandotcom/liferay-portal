@@ -78,7 +78,7 @@ definition {
 	@priority = "4"
 	test DeactivateStagingAfterPublish {
 		task ("Add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -132,7 +132,7 @@ definition {
 	@priority = "5"
 	test PublishDisplayPage {
 		task ("Add a web content article that uses the display page") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -202,7 +202,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -282,7 +282,7 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContent.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
 
 			WebContentNavigator.gotoAddCP();
 

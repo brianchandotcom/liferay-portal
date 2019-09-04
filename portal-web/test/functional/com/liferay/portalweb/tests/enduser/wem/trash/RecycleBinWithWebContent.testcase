@@ -32,7 +32,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -51,7 +51,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewDefaultCP(webContentTitle = "WC WebContent Title");
 	}
@@ -68,7 +68,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -91,11 +91,11 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewDefaultCP(webContentTitle = "WC WebContent Title");
 
@@ -114,7 +114,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -130,7 +130,7 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -148,7 +148,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -156,7 +156,7 @@ definition {
 
 		RecycleBin.undoMoveToRecycleBin();
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -172,7 +172,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
@@ -188,7 +188,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinViaDeleteIconCP();
 
@@ -203,7 +203,7 @@ definition {
 			folderName = "WC Folder Name",
 			groupName = "Test Site Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -220,7 +220,7 @@ definition {
 			folderName = "WC Folder Name",
 			groupName = "Test Site Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentFolder.moveToRecycleBinCP(
 			assetType = "Web Content Folder",
@@ -238,7 +238,7 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",

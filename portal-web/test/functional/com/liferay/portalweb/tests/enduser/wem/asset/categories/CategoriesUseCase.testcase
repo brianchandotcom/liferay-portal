@@ -90,7 +90,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Bar,Search Results");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -359,7 +359,7 @@ definition {
 	test AddVocabularyWithAssetSubtype {
 		property testray.component.names = "Categories,Web Content Administration";
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -390,7 +390,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -439,7 +439,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -483,13 +483,13 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addFailWithoutRequiredCategoryAssetTypeCP(vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -522,7 +522,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -681,7 +681,7 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -692,7 +692,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -700,7 +700,7 @@ definition {
 			categoryNameList = "Category Name 1",
 			webContentTitle = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -714,7 +714,7 @@ definition {
 			allowMultipleCategories = "true",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -724,7 +724,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title Multiple Categories");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title Multiple Categories");
 
@@ -746,7 +746,7 @@ definition {
 			title = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -762,7 +762,7 @@ definition {
 
 		WebContent.viewCategorizationCategoryCP(categoryNameList = "Category Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContent.copyCP(webContentTitle = "Web Content Title");
 
@@ -800,7 +800,7 @@ definition {
 			title = "Subcategory Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -816,7 +816,7 @@ definition {
 			categoryNameList = "Category Name",
 			vocabularyName = "Vocabulary Name");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -882,7 +882,7 @@ definition {
 			assetContent = "Web Content Content",
 			assetTitle = "Subcategory WC Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "import-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -890,7 +890,7 @@ definition {
 			categoryNameList = "Category Name",
 			webContentTitle = "Web Content Title");
 
-		WebContent.openWebContentAdmin(siteURLKey = "import-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "import-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Subcategory WC Title");
 
@@ -1243,7 +1243,7 @@ definition {
 			parentSiteName = "${parentSiteName}",
 			siteName = "Child SiteName");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -1255,7 +1255,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Child SiteName");
 
-		WebContent.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Content Title");
 

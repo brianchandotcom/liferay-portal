@@ -384,14 +384,14 @@ private void _testPom(String artifactId, String version, Boolean excludeLiferayD
 	assert pomNode.dependencyManagement.dependencies.dependency.size() > 0
 	assert pomNode.developers.developer.size() > 0
 	assert pomNode.groupId.text() == "com.liferay.portal"
-	assert pomNode.licenses.license.size() == 1
 	assert pomNode.licenses.license.name.text().matches(/LGPL 2\.\d+/)
+	assert pomNode.licenses.license.size() == 1
 	assert pomNode.licenses.license.url.text().matches(/http:\/\/www\.gnu\.org\/.*/)
 	assert pomNode.modelVersion.text() == "4.0.0"
 	assert pomNode.packaging.text() == "pom"
-	assert pomNode.repositories.repository.size() == 1
 	assert pomNode.repositories.repository.id.text() == "liferay-public-releases"
 	assert pomNode.repositories.repository.name.text() == "Liferay Public Releases"
+	assert pomNode.repositories.repository.size() == 1
 	assert pomNode.repositories.repository.url.text() == "https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases/"
 	assert pomNode.scm.connection.text() == "scm:git:git@github.com:liferay/liferay-portal.git"
 	assert pomNode.scm.developerConnection.text() == "scm:git:git@github.com:liferay/liferay-portal.git"

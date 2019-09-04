@@ -69,10 +69,8 @@ public class AppBuilderAppLocalServiceImpl
 	}
 
 	@Override
-	public List<Long> getAppBuilderAppIds(
-		String status, String deploymentType) {
-
-		return appBuilderAppFinder.findByS_D(status, deploymentType);
+	public List<Long> getAppBuilderAppIds(String status, String type) {
+		return appBuilderAppFinder.findByS_T(status, type);
 	}
 
 	@Override

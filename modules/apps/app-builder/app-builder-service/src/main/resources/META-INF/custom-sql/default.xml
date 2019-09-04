@@ -13,7 +13,7 @@
 				AppBuilderApp.appBuilderAppId = AppBuilderAppDeployment.appBuilderAppId
 			WHERE
 				(AppBuilderApp.status = ?) AND
-				(AppBuilderAppDeployment.deploymentType = ?)
+				(AppBuilderAppDeployment.type_ = ?)
 		]]>
 	</sql>
 </custom-sql>

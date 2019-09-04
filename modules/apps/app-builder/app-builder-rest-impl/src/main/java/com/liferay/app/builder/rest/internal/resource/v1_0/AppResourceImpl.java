@@ -265,8 +265,8 @@ public class AppResourceImpl
 
 		for (AppDeployment appDeployment : appDeployments) {
 			_appBuilderAppDeploymentLocalService.addAppBuilderAppDeployment(
-				app.getId(), appDeployment.getDeploymentType(),
-				_toJSONString(appDeployment.getSettings()));
+				app.getId(), _toJSONString(appDeployment.getSettings()),
+				appDeployment.getType());
 		}
 	}
 
@@ -306,10 +306,9 @@ public class AppResourceImpl
 			appDeployments.add(
 				new AppDeployment() {
 					{
-						deploymentType =
-							appBuilderAppDeployment.getDeploymentType();
 						settings = _toSettings(
 							appBuilderAppDeployment.getSettings());
+						type = appBuilderAppDeployment.getType();
 					}
 				});
 		}

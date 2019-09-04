@@ -1,3 +1,5 @@
+// this file has been deprecated as of 7.2. It will be removed entirely in 7.3
+
 @mixin media-query($min, $max: null) {
 	$maxWidth: -1;
 	$minWidth: -1;
@@ -33,6 +35,8 @@
 			@content;
 		}
 	}
+
+	@warn "media-query has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }
 
 // Shortcuts
@@ -41,22 +45,30 @@
 	@include media-query(xs) {
 		@content;
 	}
+
+	@warn "xs has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }
 
 @mixin sm {
 	@include media-query(sm) {
 		@content;
 	}
+
+	@warn "sm has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }
 
 @mixin md {
 	@include media-query(md) {
 		@content;
 	}
+
+	@warn "md has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }
 
 @mixin lg {
 	@include media-query(lg) {
 		@content;
 	}
+
+	@warn "lg has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }

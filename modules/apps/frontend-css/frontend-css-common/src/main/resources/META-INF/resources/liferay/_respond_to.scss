@@ -1,4 +1,4 @@
-// Deprecated
+// this file has been deprecated as of 7.2. It will be removed entirely in 7.3
 
 @mixin respond-to($types...) {
 	$maxWidth: -1;
@@ -43,4 +43,6 @@
 			@content;
 		}
 	}
+
+	@warn "respond-to has been deprecated as of 7.2. It will be removed entirely in 7.3";
 }

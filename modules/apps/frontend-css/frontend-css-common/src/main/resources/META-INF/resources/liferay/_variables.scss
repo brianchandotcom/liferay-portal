@@ -1,3 +1,5 @@
+// this file has been deprecated as of 7.2. It will be removed entirely in 7.3
+
 $screen-lg: 1200px !default;
 $screen-lg-min: $screen-lg;
 $screen-lg-desktop: $screen-lg-min;
@@ -24,8 +26,6 @@ $media-query-sizes: (
 	md: $screen-md,
 	lg: $screen-lg
 );
-
-// Deprecated
 
 $breakpoint_phone: 768px !default;
 $breakpoint_tablet: 980px !default;

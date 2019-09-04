@@ -282,26 +282,20 @@ generatePomThirdParty {
 
 testPomCompileOnly {
 	doLast {
-		Boolean excludeLiferayDependencies = true
-
-		_testPom(pomCompileOnlyArtifactId, version, excludeLiferayDependencies)
+		_testPom(pomCompileOnlyArtifactId, version, true)
 	}
 
 }
 
 testPomRelease {
 	doLast {
-		Boolean excludeLiferayDependencies = true
-
-		_testPom(pomReleaseArtifactId, version, excludeLiferayDependencies)
+		_testPom(pomReleaseArtifactId, version, true)
 	}
 }
 
 testPomThirdParty {
 	doLast {
-		Boolean excludeLiferayDependencies = false
-
-		_testPom(pomThirdPartyArtifactId, version, excludeLiferayDependencies)
+		_testPom(pomThirdPartyArtifactId, version, false)
 	}
 }
 
@@ -384,9 +378,7 @@ private String _isDigitalExperiencePlatform() {
 private void _testPom(String artifactId, String version, Boolean excludeLiferayDependencies) {
 	File pom = new File(buildDir, "${artifactId}-${version}.pom")
 
-	String pomText = pom.text
-
-	Node pomNode = new XmlParser().parseText(pomText)
+	Node pomNode = new XmlParser().parseText(pom.text)
 
 	assert pomNode.artifactId.text() == artifactId
 	assert pomNode.dependencyManagement.dependencies.dependency.size() > 0

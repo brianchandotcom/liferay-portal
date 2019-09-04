@@ -88,6 +88,11 @@ class ItemSelectorDialog extends Component {
 			},
 			this._onItemSelected.bind(this)
 		);
+
+		Liferay.on(eventName + 'AddItem', () => {
+			this._selectedItem = this._currentItem;
+			this.close();
+		});
 	}
 
 	/**

@@ -423,6 +423,8 @@ components:
                     $ref: "#/components/schemas/Creator"
                 description:
                     type: string
+                friendlyUrlPath:
+                    type: string
                 id:
                     format: int64
                     type: integer
@@ -1077,6 +1079,25 @@ paths:
                                 type: array
                     description: ""
             tags: ["SegmentUser"]
+    "/sites/by-friendly-url-path/{friendlyUrlPath}":
+        get:
+            operationId: getSiteByFriendlyUrlPath
+            parameters:
+                - in: path
+                  name: friendlyUrlPath
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description: ""
     "/sites/{siteId}":
         get:
             operationId: getSite

@@ -14,23 +14,22 @@
 
 package com.liferay.layout.seo.service.impl;
 
+import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.base.LayoutSEOEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * The implementation of the layout seo entry remote service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.layout.seo.service.LayoutSEOEntryService</code> interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see LayoutSEOEntryServiceBaseImpl
+ * @author Adolfo Pérez
  */
 @Component(
 	property = {
@@ -41,9 +40,21 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LayoutSEOEntryServiceImpl extends LayoutSEOEntryServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.layout.seo.service.LayoutSEOEntryServiceUtil</code> to access the layout seo entry remote service.
-	 */
+	@Override
+	public LayoutSEOEntry updateLayoutSEOEntry(
+			long groupId, boolean privateLayout, long layoutId, boolean enabled,
+			Map<Locale, String> canonicalURLMap, ServiceContext serviceContext)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		return layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			getUserId(), groupId, privateLayout, layoutId, enabled,
+			canonicalURLMap, serviceContext);
+	}
+
 }

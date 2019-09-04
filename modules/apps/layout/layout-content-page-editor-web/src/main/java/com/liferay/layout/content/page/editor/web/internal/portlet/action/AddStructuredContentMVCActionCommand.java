@@ -15,23 +15,41 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -83,6 +101,107 @@ public class AddStructuredContentMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return jsonObject;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	protected JournalArticle doAddJournalArticle(ActionRequest actionRequest)
+		throws Exception {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Creating article " +
+					MapUtil.toString(actionRequest.getParameterMap()));
+		}
+
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		String serializedDDMFormValues = GetterUtil.getString(
+			serviceContext.getAttribute("ddmFormValues"));
+
+		JSONObject serializedDDMFormValuesJSONObject =
+			JSONFactoryUtil.createJSONObject(serializedDDMFormValues);
+
+		JSONArray fieldValuesJSONArray =
+			serializedDDMFormValuesJSONObject.getJSONArray("fieldValues");
+
+		JSONArray updatedFieldValuesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String title = ParamUtil.getString(actionRequest, "title");
+
+		for (int i = 0; i < fieldValuesJSONArray.length(); i++) {
+			JSONObject fieldValueJSONObject =
+				fieldValuesJSONArray.getJSONObject(i);
+
+			String fieldName = fieldValueJSONObject.getString("name");
+
+			if (fieldName.equals("-")) {
+				continue;
+			}
+
+			String fieldValue = fieldValueJSONObject.getString("value");
+
+			String fieldType = ddmStructure.getFieldType(fieldName);
+
+			if (fieldType.equals("ddm-image")) {
+				String imageName = title + " - " + fieldName;
+
+				FileEntry fileEntry = _addImage(
+					imageName, fieldValue, serviceContext, themeDisplay);
+
+				JSONObject imageFieldValueJSONObject = JSONUtil.put(
+					"groupId", fileEntry.getGroupId()
+				).put(
+					"title", imageName
+				).put(
+					"uuid", fileEntry.getUuid()
+				);
+
+				JSONObject imageFieldJSONObject = JSONUtil.put(
+					"name", fieldName
+				).put(
+					"value", imageFieldValueJSONObject.toString()
+				);
+
+				fieldValueJSONObject = imageFieldJSONObject;
+			}
+
+			updatedFieldValuesJSONArray.put(fieldValueJSONObject);
+		}
+
+		serializedDDMFormValuesJSONObject.put(
+			"fieldValues", updatedFieldValuesJSONArray);
+
+		serviceContext.setAttribute(
+			"ddmFormValues", serializedDDMFormValuesJSONObject.toJSONString());
+
+		Fields fields = _ddm.getFields(ddmStructureId, serviceContext);
+
+		String content = _journalConverter.getContent(ddmStructure, fields);
+
+		Map<Locale, String> titleMap = new HashMap<Locale, String>() {
+			{
+				put(
+					LocaleUtil.fromLanguageId(
+						LocalizationUtil.getDefaultLanguageId(content)),
+					title);
+			}
+		};
+
+		return _journalArticleService.addArticle(
+			themeDisplay.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, titleMap, null,
+			content, ddmStructure.getStructureKey(), null, serviceContext);
 	}
 
 	@Override

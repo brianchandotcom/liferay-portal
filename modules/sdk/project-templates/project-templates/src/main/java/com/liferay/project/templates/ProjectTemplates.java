@@ -223,7 +223,7 @@ public class ProjectTemplates {
 				jCommander.setProgramName("java -jar " + jarPath.getFileName());
 			}
 
-			jCommander.parse(args);
+			jCommander.parseWithoutValidation(args);
 
 			String template = projectTemplatesArgs.getTemplate();
 

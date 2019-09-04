@@ -41,8 +41,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.web.internal.exportimport.data.handler.util.LayoutPageTemplateStructureDataHandlerUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.seo.model.LayoutCanonicalURL;
-import com.liferay.layout.seo.service.LayoutCanonicalURLLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -326,14 +326,14 @@ public class LayoutStagedModelDataHandler
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
-		LayoutCanonicalURL layoutCanonicalURL =
-			_layoutCanonicalURLLocalService.fetchLayoutCanonicalURL(
+		LayoutSEOEntry layoutSEOEntry =
+			_layoutSEOEntryLocalService.fetchLayoutSEOEntry(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 
-		if (layoutCanonicalURL != null) {
+		if (layoutSEOEntry != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, layout, layoutCanonicalURL,
+				portletDataContext, layout, layoutSEOEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
@@ -805,7 +805,7 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutCanonicalURLs(portletDataContext, layout);
+		importLayoutSEOEntrys(portletDataContext, layout);
 
 		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
@@ -1322,24 +1322,24 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
-	protected void importLayoutCanonicalURLs(
+	protected void importLayoutSEOEntrys(
 			PortletDataContext portletDataContext, Layout layout)
 		throws PortletDataException {
 
-		List<Element> layoutCanonicalURLElements =
+		List<Element> layoutSEOEntryElements =
 			portletDataContext.getReferenceDataElements(
-				layout, LayoutCanonicalURL.class);
+				layout, LayoutSEOEntry.class);
 
-		for (Element layoutCanonicalURLElement : layoutCanonicalURLElements) {
-			String layoutCanonicalURLPath =
-				layoutCanonicalURLElement.attributeValue("path");
+		for (Element layoutSEOEntryElement : layoutSEOEntryElements) {
+			String layoutSEOEntryPath =
+				layoutSEOEntryElement.attributeValue("path");
 
-			LayoutCanonicalURL layoutCanonicalURL =
-				(LayoutCanonicalURL)portletDataContext.getZipEntryAsObject(
-					layoutCanonicalURLPath);
+			LayoutSEOEntry layoutSEOEntry =
+				(LayoutSEOEntry)portletDataContext.getZipEntryAsObject(
+					layoutSEOEntryPath);
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutCanonicalURL);
+				portletDataContext, layoutSEOEntry);
 		}
 	}
 
@@ -2128,7 +2128,7 @@ public class LayoutStagedModelDataHandler
 	private ImageLocalService _imageLocalService;
 
 	@Reference
-	private LayoutCanonicalURLLocalService _layoutCanonicalURLLocalService;
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 	private LayoutLocalService _layoutLocalService;

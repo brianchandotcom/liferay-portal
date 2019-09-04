@@ -9,6 +9,14 @@ definition {
 
 		PortletEntry.inputName(name = "${accountName}");
 
+		if (isSet(accountDescription)) {
+			PortletEntry.inputDescription(description = "${accountDescription}");
+		}
+
+		if ("${accountStatus}" == "Inactive") {
+			Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#ACCOUNT_STATUS");
+		}
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();

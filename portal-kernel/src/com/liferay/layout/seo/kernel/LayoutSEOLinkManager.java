@@ -24,9 +24,9 @@ import java.util.Map;
 /**
  * @author Cristina González
  */
-public interface SEOLinkManager {
+public interface LayoutSEOLinkManager {
 
-	public List<SEOLink> getLocalizedSEOLinks(
+	public List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException;

@@ -25,20 +25,20 @@ import java.util.Map;
 /**
  * @author Cristina González
  */
-public class SEOLinkManagerUtil {
+public class LayoutSEOLinkManagerUtil {
 
-	public static List<SEOLink> getLocalizedSEOLinks(
+	public static List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		return _seoLinkManager.getLocalizedSEOLinks(
+		return _layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
 			layout, locale, canonicalURL, alternateURLs);
 	}
 
-	private static volatile SEOLinkManager _seoLinkManager =
+	private static volatile LayoutSEOLinkManager _layoutSEOLinkManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
-			SEOLinkManager.class, SEOLinkManagerUtil.class, "_seoLinkManager",
-			false);
+			LayoutSEOLinkManager.class, LayoutSEOLinkManagerUtil.class,
+			"_layoutSEOLinkManager", false);
 
 }

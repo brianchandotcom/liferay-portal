@@ -20,20 +20,20 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
-
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
@@ -43,6 +43,7 @@ import java.util.Map;
 	scope = ServiceScope.PROTOTYPE, service = ExperimentRunResource.class
 )
 public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
+
 	@Override
 	public ExperimentRun postExperimentRun(
 			Long segmentsExperimentKey, ExperimentRun experimentRun)
@@ -93,7 +94,7 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 		List<ExperimentVariant> experimentVariants = new ArrayList<>();
 
 		for (SegmentsExperimentRel segmentsExperimentRel :
-			segmentsExperimentRels) {
+				segmentsExperimentRels) {
 
 			ExperimentVariant experimentVariant = _toExperimentVariant(
 				segmentsExperimentRel);
@@ -105,7 +106,7 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 	}
 
 	private ExperimentRun _toRunExperiment(
-		SegmentsExperiment segmentsExperiment)
+			SegmentsExperiment segmentsExperiment)
 		throws PortalException {
 
 		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
@@ -130,4 +131,5 @@ public class ExperimentRunResourceImpl extends BaseExperimentRunResourceImpl {
 
 	@Reference
 	private SegmentsExperimentService _segmentsExperimentService;
+
 }

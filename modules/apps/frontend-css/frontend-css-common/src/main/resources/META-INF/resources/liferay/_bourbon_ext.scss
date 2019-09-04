@@ -1,0 +1,15 @@
+@mixin force-wrap {
+	white-space: -hp-pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: pre-line;
+	white-space: pre-wrap;
+	white-space: pre;
+	word-wrap: break-word;
+}
+
+@mixin hyphenation {
+	@include hyphens(auto);
+	@include word-wrap;
+}

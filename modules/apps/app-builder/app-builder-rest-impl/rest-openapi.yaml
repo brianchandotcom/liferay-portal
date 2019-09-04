@@ -39,12 +39,12 @@ components:
             type: object
         AppDeployment:
             properties:
-                deploymentType:
-                    type: string
                 settings:
                     additionalProperties:
                         type: object
                     type: object
+                type:
+                    type: string
             type: object
 info:
     description: ""

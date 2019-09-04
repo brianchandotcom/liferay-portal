@@ -57,17 +57,17 @@
 		<!-- Other fields -->
 
 		<column name="appBuilderAppId" type="long" />
-		<column name="deploymentType" type="String" />
 		<column name="settings" type="String" />
+		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 
 		<finder name="AppBuilderAppId" return-type="Collection">
 			<finder-column name="appBuilderAppId" />
 		</finder>
-		<finder name="A_D" return-type="AppBuilderAppDeployment">
+		<finder name="A_T" return-type="AppBuilderAppDeployment">
 			<finder-column name="appBuilderAppId" />
-			<finder-column name="deploymentType" />
+			<finder-column name="type" />
 		</finder>
 	</entity>
 	<exceptions>

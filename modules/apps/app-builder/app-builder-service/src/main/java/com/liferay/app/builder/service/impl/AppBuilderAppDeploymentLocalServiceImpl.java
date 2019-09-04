@@ -34,15 +34,15 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 
 	@Override
 	public AppBuilderAppDeployment addAppBuilderAppDeployment(
-		long appBuilderAppId, String deploymentType, String settings) {
+		long appBuilderAppId, String settings, String type) {
 
 		AppBuilderAppDeployment appBuilderAppDeployment =
 			appBuilderAppDeploymentPersistence.create(
 				counterLocalService.increment());
 
 		appBuilderAppDeployment.setAppBuilderAppId(appBuilderAppId);
-		appBuilderAppDeployment.setDeploymentType(deploymentType);
 		appBuilderAppDeployment.setSettings(settings);
+		appBuilderAppDeployment.setType(type);
 
 		return appBuilderAppDeploymentPersistence.update(
 			appBuilderAppDeployment);
@@ -50,11 +50,11 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 
 	@Override
 	public AppBuilderAppDeployment getAppBuilderAppDeployment(
-			long appBuilderAppId, String deploymentType)
+			long appBuilderAppId, String type)
 		throws Exception {
 
-		return appBuilderAppDeploymentPersistence.findByA_D(
-			appBuilderAppId, deploymentType);
+		return appBuilderAppDeploymentPersistence.findByA_T(
+			appBuilderAppId, type);
 	}
 
 	@Override

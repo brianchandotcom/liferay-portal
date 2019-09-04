@@ -37,21 +37,21 @@ public class AppBuilderAppFinderImpl
 
 	public static final String APP_BUILDER_APP_ID = "appBuilderAppId";
 
-	public static final String FIND_BY_S_D =
-		AppBuilderAppFinder.class.getName() + ".findByS_D";
+	public static final String FIND_BY_S_T =
+		AppBuilderAppFinder.class.getName() + ".findByS_T";
 
 	@Override
-	public List<Long> findByS_D(String status, String deploymentType) {
-		return doFindByS_D(status, deploymentType);
+	public List<Long> findByS_T(String status, String type) {
+		return doFindByS_T(status, type);
 	}
 
-	protected List<Long> doFindByS_D(String status, String deploymentType) {
+	protected List<Long> doFindByS_T(String status, String type) {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_S_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_S_T);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -60,7 +60,7 @@ public class AppBuilderAppFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(status);
-			qPos.add(deploymentType);
+			qPos.add(type);
 
 			return (List<Long>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

@@ -78,8 +78,6 @@ $c: '.ddm-form-builder';
 
 			&.targetOver,
 			&.target-over {
-				border-color: $active-drop-blue;
-				border-style: solid;
 				color: $light-blue-500;
 
 				.ddm-empty-page-message {
@@ -106,7 +104,8 @@ $c: '.ddm-form-builder';
 			&.targetOver,
 			&.target-over {
 				background-color: $light-blue-100;
-				border-color: $light-blue-200;
+				border-color: $active-drop-blue;
+				border-style: solid;
 			}
 		}
 	}

@@ -9,14 +9,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portal.spring.aop.DynamicProxyCreator" factory-method="getDynamicProxyCreator" />
-	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="counterTransactionExecutor">
+	<bean class="com.liferay.portal.spring.transaction.CounterTransactionExecutor" id="counterTransactionExecutor">
 		<constructor-arg>
 			<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
 				<constructor-arg ref="counterDataSource" />
 				<constructor-arg ref="counterHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>
-		<constructor-arg value="true" />
 	</bean>
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">
 		<property name="transactionLifecycleListeners">

@@ -27,8 +27,8 @@ import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
+import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.spring.transaction.TransactionExecutor;
-import com.liferay.portal.spring.transaction.TransactionExecutorFactory;
 import com.liferay.portal.spring.transaction.TransactionInvokerImpl;
 import com.liferay.portal.spring.transaction.TransactionManagerFactory;
 
@@ -118,10 +118,9 @@ public class AopConfigurableApplicationContextConfigurator
 				(DefaultSingletonBeanRegistry)configurableListableBeanFactory;
 
 			TransactionExecutor transactionExecutor =
-				TransactionExecutorFactory.createTransactionExecutor(
+				new DefaultTransactionExecutor(
 					_getPlatformTransactionManager(
-						configurableListableBeanFactory),
-					false);
+						configurableListableBeanFactory));
 
 			configurableListableBeanFactory.registerSingleton(
 				"transactionExecutor", transactionExecutor);

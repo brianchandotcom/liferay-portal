@@ -21,6 +21,53 @@ import {useSidebarContent} from '../../hooks/index.es';
 import {addItem, getItem, updateItem} from '../../utils/client.es';
 import LayoutBuilderManager from './LayoutBuilderManager.es';
 
+const saveDataLayoutBuilder = ({
+	dataDefinition,
+	dataDefinitionId,
+	dataLayout,
+	dataLayoutBuilder,
+	dataLayoutId
+}) => {
+	const {pages} = dataLayoutBuilder.getStore();
+	const {definition, layout} = dataLayoutBuilder.getDefinitionAndLayout(
+		pages
+	);
+
+	dataDefinition = {
+		...definition,
+		name: dataDefinition.name
+	};
+
+	dataLayout = {
+		...layout,
+		dataDefinitionId,
+		name: dataLayout.name
+	};
+
+	const updateDefinition = updateItem(
+		`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`,
+		dataDefinition
+	);
+
+	if (dataLayoutId) {
+		return Promise.all([
+			updateItem(
+				`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`,
+				dataLayout
+			),
+			updateDefinition
+		]);
+	} else {
+		return Promise.all([
+			addItem(
+				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
+				dataLayout
+			),
+			updateDefinition
+		]);
+	}
+};
+
 export default ({
 	dataDefinitionId,
 	dataLayoutBuilder,
@@ -28,86 +75,15 @@ export default ({
 	dataLayoutId,
 	newCustomObject
 }) => {
-	const fieldTypes = dataLayoutBuilder.getFieldTypes();
-
-	const [state, setState] = useState({
-		dataLayout: null
-	});
-
-	const onInput = event => {
-		const name = event.target.value;
-
-		setState(prevState => ({
-			...prevState,
-			dataLayout: {
-				...prevState.dataLayout,
-				name: {
-					en_US: name
-				}
-			}
-		}));
-	};
-
-	const validate = () => {
-		const {dataLayout} = state;
-
-		if (!dataLayout) {
-			return null;
-		}
-
-		const name = dataLayout.name.en_US.trim();
-
-		if (name === '') {
-			return null;
-		}
-
-		return {
-			...dataLayout,
-			name: {
-				en_US: name
-			},
-			paginationMode: 'wizard'
-		};
-	};
+	const [dataDefinition, setDataDefinition] = useState({});
+	const [dataLayout, setDataLayout] = useState({name: {}});
+	const [keywords, setKeywords] = useState('');
+	const [sidebarClosed, setSidebarClosed] = useState(false);
 
 	const {basePortletURL} = useContext(AppContext);
 	const listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
 
-	const onSave = () => {
-		const dataLayout = validate();
-
-		if (dataLayout === null) {
-			return;
-		}
-
-		if (dataLayoutId) {
-			updateItem(
-				`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`,
-				dataLayout
-			).then(() => {
-				window.location.href = `${listUrl}`;
-			});
-		} else {
-			addItem(
-				`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}/data-layouts`,
-				dataLayout
-			).then(() => {
-				window.location.href = `${listUrl}`;
-			});
-		}
-	};
-
-	const [isSidebarClosed, setSidebarClosed] = useState(false);
-
-	const handleSidebarToggle = closed => setSidebarClosed(closed);
-
-	const builderElementRef = useRef(
-		document.querySelector(`#${dataLayoutBuilderElementId}`)
-	);
-
-	useSidebarContent(builderElementRef, isSidebarClosed);
-
-	const handleCancel = () => {
+	const onCancel = () => {
 		if (newCustomObject) {
 			Liferay.Util.navigate(basePortletURL);
 		} else {
@@ -115,16 +91,17 @@ export default ({
 		}
 	};
 
-	useEffect(() => {
-		if (dataLayoutId) {
-			getItem(`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`).then(
-				dataLayout => setState({dataLayout})
-			);
-		}
-	}, [dataDefinitionId, dataLayoutId]);
+	const onInput = ({target}) => {
+		const {value} = target;
 
-	const {dataLayout} = state;
-	const {name: {en_US: dataLayoutName = ''} = {}} = dataLayout || {};
+		setDataLayout({
+			...dataLayout,
+			name: {
+				...(dataLayout.name || {}),
+				en_US: value
+			}
+		});
+	};
 
 	const onKeyDown = event => {
 		if (event.keyCode === 13) {
@@ -134,14 +111,44 @@ export default ({
 		}
 	};
 
-	const submitDisabled = dataLayoutName.trim() === '';
+	const onSave = () => {
+		saveDataLayoutBuilder({
+			dataDefinition,
+			dataDefinitionId,
+			dataLayout,
+			dataLayoutBuilder,
+			dataLayoutId
+		}).then(() => {
+			window.location.href = `${listUrl}`;
+		});
+	};
 
-	const [keywords, setKeywords] = useState('');
+	const builderElementRef = useRef(
+		document.querySelector(`#${dataLayoutBuilderElementId}`)
+	);
+
+	useSidebarContent(builderElementRef, sidebarClosed);
+
+	useEffect(() => {
+		if (dataLayoutId) {
+			getItem(`/o/data-engine/v1.0/data-layouts/${dataLayoutId}`).then(
+				dataLayout => setDataLayout(dataLayout)
+			);
+		}
+	}, [dataLayoutId]);
+
+	useEffect(() => {
+		getItem(
+			`/o/data-engine/v1.0/data-definitions/${dataDefinitionId}`
+		).then(dataDefinition => setDataDefinition(dataDefinition));
+	}, [dataDefinitionId]);
+
+	const {
+		name: {en_US: dataLayoutName = ''}
+	} = dataLayout;
 
 	return (
 		<>
-			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
-
 			<UpperToolbar>
 				<UpperToolbar.Input
 					onInput={onInput}
@@ -152,31 +159,37 @@ export default ({
 				<UpperToolbar.Group>
 					<UpperToolbar.Button
 						displayType="secondary"
-						onClick={handleCancel}
+						onClick={onCancel}
 					>
 						{Liferay.Language.get('cancel')}
 					</UpperToolbar.Button>
 
 					<UpperToolbar.Button
-						disabled={submitDisabled}
+						disabled={dataLayoutName.trim() === ''}
 						onClick={onSave}
 					>
 						{Liferay.Language.get('save')}
 					</UpperToolbar.Button>
 				</UpperToolbar.Group>
 			</UpperToolbar>
-			<Sidebar onSearch={setKeywords} onToggle={handleSidebarToggle}>
+
+			<Sidebar
+				onSearch={setKeywords}
+				onToggle={closed => setSidebarClosed(closed)}
+			>
 				<Sidebar.Body>
 					<Sidebar.Tab tabs={[Liferay.Language.get('fields')]} />
 
 					<Sidebar.TabContent>
 						<FieldTypeList
-							fieldTypes={fieldTypes}
+							fieldTypes={dataLayoutBuilder.getFieldTypes()}
 							keywords={keywords}
 						/>
 					</Sidebar.TabContent>
 				</Sidebar.Body>
 			</Sidebar>
+
+			<LayoutBuilderManager dataLayoutBuilder={dataLayoutBuilder} />
 		</>
 	);
 };

@@ -33,16 +33,18 @@ long accountEntryId = accountDisplay.getAccountId();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<portlet:renderURL var="editAccountURL">
-		<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
-		<portlet:param name="backURL" value="<%= currentURL %>" />
-		<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
-	</portlet:renderURL>
+	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editAccountURL">
+			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
+		</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		url="<%= editAccountURL %>"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			url="<%= editAccountURL %>"
+		/>
+	</c:if>
 
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/account_admin/delete_account" var="deleteAccountURL">

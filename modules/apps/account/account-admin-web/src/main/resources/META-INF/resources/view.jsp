@@ -53,6 +53,12 @@ ViewAccountsManagementToolbarDisplayContext viewAccountsManagementToolbarDisplay
 					<portlet:param name="accountEntryId" value="<%= String.valueOf(accountDisplay.getAccountId()) %>" />
 				</portlet:renderURL>
 
+				<%
+				if (!AccountEntryPermission.contains(permissionChecker, accountDisplay.getAccountId(), ActionKeys.UPDATE)) {
+					rowURL = null;
+				}
+				%>
+
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
 					href="<%= rowURL %>"

@@ -50,7 +50,7 @@ const EditTableView = ({
 		title = Liferay.Language.get('edit-table-view');
 	}
 
-	const onAddField = fieldName => {
+	const onAddColumn = fieldName => {
 		setState(prevState => ({
 			...prevState,
 			dataListView: {
@@ -223,7 +223,7 @@ const EditTableView = ({
 									name: field.fieldType
 								}))}
 								keywords={keywords}
-								onAddField={onAddField}
+								onAddColumn={onAddColumn}
 							/>
 						</Sidebar.TabContent>
 					</Sidebar.Body>
@@ -237,7 +237,7 @@ const EditTableView = ({
 					<div className="container table-view-container">
 						<DropZone
 							columns={columns}
-							onAddColumn={onAddField}
+							onAddColumn={onAddColumn}
 							onRemoveColumn={onRemoveColumn}
 						/>
 					</div>

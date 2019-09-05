@@ -27,7 +27,7 @@ export default props => {
 		icon,
 		label,
 		name,
-		onAddField = () => {}
+		onAddColumn = () => {}
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
@@ -52,7 +52,7 @@ export default props => {
 			return;
 		}
 
-		onAddField(label);
+		onAddColumn(label);
 	};
 
 	return (

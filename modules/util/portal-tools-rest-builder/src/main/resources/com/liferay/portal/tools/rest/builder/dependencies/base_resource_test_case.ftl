@@ -1520,8 +1520,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
 			graphQLFields.add(new GraphQLField(additionalAssertFieldName));
 		}

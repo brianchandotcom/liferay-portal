@@ -30,7 +30,7 @@ public interface CTService<T extends CTModel<T>> {
 	@Transactional(enabled = false)
 	public Class<T> getModelClass();
 
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Throwable.class)
 	public <R, E extends Throwable> R updateWithUnsafeFunction(
 			UnsafeFunction<CTPersistence<T>, R, E> updateUnsafeFunction)
 		throws E;

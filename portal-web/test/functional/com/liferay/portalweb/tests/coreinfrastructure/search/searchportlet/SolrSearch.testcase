@@ -1543,26 +1543,11 @@ definition {
 			title = "organic",
 			vocabularyName = "Fruit Vocabulary");
 
-		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
-		var portalURL = PropsUtil.get("portal.url");
 		var webContentFolderName1 = "WC Folder Name 1";
 
-		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName1} \
-				-d description=''
-		''';
-
-		var webContentFolderId1 = JSONCurlUtil.post(
-			"${curl}",
-			"$.[?(@['name'] == '${webContentFolderName1}')]['folderId']"
-		);
-
-		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "[&quot;", "");
-		var webContentFolderId1 = StringUtil.replace("${webContentFolderId1}", "&quot;]", "");
+		JSONWebcontent.addFolder(
+			folderName = "${webContentFolderName1}",
+			groupName = "Guest");
 
 		var organicCategoryId = JSONCategory.getCategoryId(
 			categoryName = "organic",
@@ -1574,42 +1559,27 @@ definition {
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 1",
-			folderId = "${webContentFolderId1}",
+			folderName = "${webContentFolderName1}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
 			title = "apple");
 
 		var webContentFolderName2 = "WC Folder Name 2";
 
-		var curl = '''
-			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u test@liferay.com:test \
-				-d groupId=${liferaySiteId} \
-				-d parentFolderId=0 \
-				-d name=${webContentFolderName2} \
-				-d description=''
-		''';
-
-		var webContentFolderId2 = JSONCurlUtil.post(
-			"${curl}",
-			"$.[?(@['name'] == '${webContentFolderName2}')]['folderId']"
-		);
-
-		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "[&quot;", "");
-		var webContentFolderId2 = StringUtil.replace("${webContentFolderId2}", "&quot;]", "");
+		JSONWebcontent.addFolder(
+			folderName = "${webContentFolderName2}",
+			groupName = "Guest");
 
 		var webContentserviceContext1 = '''{"assetTagNames": ["fresh"]}''';
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content 2",
-			folderId = "${webContentFolderId2}",
+			folderName = "${webContentFolderName2}",
 			groupName = "Guest",
 			serviceContext = "${webContentserviceContext1}",
 			title = "orange");
 
 		JSONGroup.addGroup(groupName = "New Site");
-
-		var newSiteId = JSONGroupAPI._getGroupIdByName(groupName = "New Site");
 
 		SitePages.openPagesAdmin(siteURLKey = "New Site");
 
@@ -1809,6 +1779,8 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
+		var liferaySiteId = JSONGroupAPI._getGroupIdByName(groupName = "Guest");
+
 		var siteName = TestCase.getSiteName();
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
@@ -1817,6 +1789,8 @@ definition {
 			facetValueName = "${siteName}",
 			searchURL = "${testSearchURL}"
 		);
+
+		var newSiteId = JSONGroupAPI._getGroupIdByName(groupName = "New Site");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "site",
@@ -1844,10 +1818,14 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
 
+		var webContentFolderId2 = JSONWebcontent.getFolderIdByFolderName(
+			folderName = "${webContentFolderName2}",
+			groupName = "Guest");
+
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
-			facetValueName = "WC Folder Name 2",
+			facetValueName = "${webContentFolderName2}",
 			searchURL = "${testSearchURL}"
 		);
 
@@ -1872,7 +1850,7 @@ definition {
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId2}",
-			facetValueName = "WC Folder Name 2",
+			facetValueName = "${webContentFolderName2}",
 			searchURL = "${testSearchURL}"
 		);
 
@@ -1904,10 +1882,14 @@ definition {
 			searchURL = "${testSearchURL}"
 		);
 
+		var webContentFolderId1 = JSONWebcontent.getFolderIdByFolderName(
+			folderName = "${webContentFolderName1}",
+			groupName = "Guest");
+
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetClass = "folder",
 			facetValue = "${webContentFolderId1}",
-			facetValueName = "WC Folder Name 1",
+			facetValueName = "${webContentFolderName1}",
 			searchURL = "${testSearchURL}"
 		);
 

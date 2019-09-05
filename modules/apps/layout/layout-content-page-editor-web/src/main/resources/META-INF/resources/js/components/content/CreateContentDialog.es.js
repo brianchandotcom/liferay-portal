@@ -100,9 +100,9 @@ class CreateContentDialog extends Component {
 						.filter(field => field.fragmentEntryLinkId)
 						.forEach(field => {
 							let fragmentEntryLink =
-								updatedFragmentEntryLinks.get(
+								updatedFragmentEntryLinks[
 									field.fragmentEntryLinkId
-								) ||
+								] ||
 								this.fragmentEntryLinks[
 									field.fragmentEntryLinkId
 								];

@@ -126,42 +126,42 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
 	}
 
-	macro contentPageAddExperience {
+	macro addExperience {
 		var key_experienceName = "${experienceName}";
 
-		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_LABEL");
 
-		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_DEFAULT_BUTTON_NAME");
+		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
-		Click(locator1 = "PageEditor#NEW_EXPERIENCE_BUTTON");
+		Click(locator1 = "PageEditor#EXPERIENCE_NEW_BUTTON");
 
 		Type(
-			locator1 = "PageEditor#CONTENT_PAGE_NEW_EXPERIENCE_NAME",
+			locator1 = "PageEditor#EXPERIENCE_NAME",
 			value1 = "${experienceName}");
 
 		Button.clickSave();
 
 		AssertClick(
-			locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_BUTTON_NAME",
+			locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME",
 			value1 = "${experienceName}");
 
 		AssertElementPresent(
 			key_experienceName = "${experienceName}",
-			locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM");
+			locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 	}
 
-	macro contentPageChangeExperience {
+	macro changeExperience {
 		var key_experienceName = "${changeExperienceName}";
 
-		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_LABEL");
 
-		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+		Click(locator1 = "PageEditor#EXPERIENCE_LABEL");
 
-		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM");
+		Click(locator1 = "PageEditor#EXPERIENCE_SELECT_ITEM");
 
 		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 
-		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_BUTTON_NAME");
+		AssertElementPresent(locator1 = "PageEditor#EXPERIENCE_BUTTON_NAME");
 	}
 
 	macro deleteComment {

@@ -205,34 +205,34 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CONTENT_PAGE_ADD_EXPERIENCE-->
+<!--EXPERIENCE-->
 <tr>
-	<td>CONTENT_PAGE_EXPERIENCE_BUTTON_NAME</td>
+	<td>EXPERIENCE_BUTTON_NAME</td>
 	<td>//div[contains(@class,'segments-experience-selector')]/button[contains(.,'${key_experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PAGE_EXPERIENCE_DEFAULT_BUTTON_NAME</td>
+	<td>EXPERIENCE_DEFAULT_BUTTON_NAME</td>
 	<td>//div[contains(@class,'segments-experience-selector')]/button[contains(.,'Default')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM</td>
+	<td>EXPERIENCE_SELECT_ITEM</td>
 	<td>//span[contains(@class,'truncate-text')]/strong[contains(.,'${key_experienceName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PAGE_EXPERIENCE_LABEL</td>
+	<td>EXPERIENCE_LABEL</td>
 	<td>//div[contains(@class,'segments-experience-selector')]/label[contains(.,'Experience')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_PAGE_NEW_EXPERIENCE_NAME</td>
+	<td>EXPERIENCE_NAME</td>
 	<td>//input[@name='experienceName']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NEW_EXPERIENCE_BUTTON</td>
+	<td>EXPERIENCE_NEW_BUTTON</td>
 	<td>//button[contains(.,'New Experience')]</td>
 	<td></td>
 </tr>

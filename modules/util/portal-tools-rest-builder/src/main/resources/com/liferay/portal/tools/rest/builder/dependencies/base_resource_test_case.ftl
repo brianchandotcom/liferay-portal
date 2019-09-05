@@ -201,7 +201,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		generateGetMultipartFilesMethod = false
 		javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
-		randomDataTypes = ["Boolean", "Double", "Long", "String"]
+		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
@@ -1736,6 +1736,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#list properties?keys as propertyName>
 					<#if stringUtil.equals(propertyName, "siteId")>
 						${propertyName} = testGroup.getGroupId();
+					<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+						${propertyName} = RandomTestUtil.randomInt();
 					<#elseif randomDataTypes?seq_contains(properties[propertyName])>
 						${propertyName} = RandomTestUtil.random${properties[propertyName]}();
 					<#elseif stringUtil.equals(properties[propertyName], "Date")>

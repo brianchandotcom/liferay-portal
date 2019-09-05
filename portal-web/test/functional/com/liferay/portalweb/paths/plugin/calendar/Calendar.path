@@ -221,7 +221,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_MENULIST_ARROW</td>
-	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,"${key_siteName}'s Calendars")]//i[@class='icon-caret-down']</td>
+	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,"${key_siteName}'s Calendars")]//span[contains(@class,'calendar-list-item-arrow')]</td>
 	<td></td>
 </tr>
 <tr>

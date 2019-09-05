@@ -237,6 +237,13 @@ class ResultsRankingForm extends Component {
 		);
 
 	/**
+	 * Sets the search query in html in case of title having escaped characters.
+	 */
+	_getSearchQuery = () => {
+		return {__html: this.props.searchQuery};
+	};
+
+	/**
 	 * Gets the visible data results to show in the visible tab. Organizes the
 	 * pinned results on to top first and then the remaining unpinned and not
 	 * hidden results.
@@ -647,7 +654,7 @@ class ResultsRankingForm extends Component {
 	render() {
 		const {namespace} = this.context;
 
-		const {cancelUrl, fetchDocumentsSearchUrl, searchQuery} = this.props;
+		const {cancelUrl, fetchDocumentsSearchUrl} = this.props;
 
 		const {
 			aliases,
@@ -708,7 +715,10 @@ class ResultsRankingForm extends Component {
 				<div className="container-fluid container-fluid-max-xl container-form-lg results-rankings-container">
 					<div className="sheet sheet-lg form-section-header">
 						<label>{Liferay.Language.get('query')}</label>
-						<h2 className="sheet-title">{`${searchQuery}`}</h2>
+						<h2
+							className="sheet-title"
+							dangerouslySetInnerHTML={this._getSearchQuery()}
+						></h2>
 
 						<Alias
 							keywords={aliases}

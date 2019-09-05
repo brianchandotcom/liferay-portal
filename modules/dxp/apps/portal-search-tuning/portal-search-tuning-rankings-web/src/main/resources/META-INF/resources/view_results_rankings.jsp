@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.constants.ResultRankingsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingEntryDisplayContext" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.display.context.RankingPortletDisplayContext" %>
@@ -85,7 +86,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 			>
 				<div class="list-group-title">
 					<a href="<%= rowURL %>">
-						<%= rankingEntryDisplayContext.getKeywords() %>
+						<%= HtmlUtil.escape(rankingEntryDisplayContext.getKeywords()) %>
 					</a>
 				</div>
 			</liferay-ui:search-container-column-text>

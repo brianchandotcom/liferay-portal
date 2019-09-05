@@ -18,45 +18,51 @@ import DropDown from './DropDown.es';
 
 const {Body, Cell, Head, Row} = ClayTable;
 
-export default ({actions, columns, items}) => {
+const Table = ({actions, columns, forwardRef, items}) => {
 	return (
-		<ClayTable hover={false}>
-			<Head>
-				<Row>
-					{columns.map((column, index) => (
-						<Cell
-							className={index > 0 && 'table-cell-expand-smaller'}
-							expanded={index === 0}
-							headingCell
-							key={index}
-						>
-							{column.value}
-						</Cell>
-					))}
-					{actions && <Cell>{''}</Cell>}
-				</Row>
-			</Head>
-			<Body>
-				{items.map(item => (
-					<Row data-testid="item" key={item.id}>
+		<div ref={forwardRef}>
+			<ClayTable hover={false}>
+				<Head>
+					<Row>
 						{columns.map((column, index) => (
 							<Cell
 								className={
 									index > 0 && 'table-cell-expand-smaller'
 								}
 								expanded={index === 0}
-								headingTitle={index === 0}
+								headingCell
 								key={index}
 							>
-								{item[column.key]}
+								{column.value}
 							</Cell>
 						))}
-						<Cell>
-							<DropDown actions={actions} item={item} />
-						</Cell>
+						{actions && <Cell>{''}</Cell>}
 					</Row>
-				))}
-			</Body>
-		</ClayTable>
+				</Head>
+				<Body>
+					{items.map(item => (
+						<Row data-testid="item" key={item.id}>
+							{columns.map((column, index) => (
+								<Cell
+									className={
+										index > 0 && 'table-cell-expand-smaller'
+									}
+									expanded={index === 0}
+									headingTitle={index === 0}
+									key={index}
+								>
+									{item[column.key]}
+								</Cell>
+							))}
+							<Cell>
+								<DropDown actions={actions} item={item} />
+							</Cell>
+						</Row>
+					))}
+				</Body>
+			</ClayTable>
+		</div>
 	);
 };
+
+export default Table;

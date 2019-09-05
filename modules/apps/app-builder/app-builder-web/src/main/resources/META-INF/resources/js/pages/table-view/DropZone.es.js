@@ -13,6 +13,7 @@
  */
 
 import React from 'react';
+import {useDrop} from 'react-dnd';
 import Button from '../../components/button/Button.es';
 import Table from '../../components/table/Table.es';
 
@@ -35,10 +36,21 @@ const generateItem = (columns, index) =>
 		{}
 	);
 
-const DropZone = ({columns, onRemoveColumn}) => {
+const DropZone = ({columns, onAddColumn, onRemoveColumn}) => {
+	const [{canDrop, overTarget}, drop] = useDrop({
+		accept: 'fieldType',
+		collect: monitor => ({
+			canDrop: monitor.canDrop(),
+			overTarget: monitor.isOver()
+		}),
+		drop: item => {
+			onAddColumn(item.label);
+		}
+	});
+
 	if (columns.length == 0) {
 		return (
-			<div className="empty-drop-zone">
+			<div className="empty-drop-zone" ref={drop}>
 				{Liferay.Language.get(
 					'drag-columns-from-the-sidebar-and-drop-here'
 				)}
@@ -68,6 +80,7 @@ const DropZone = ({columns, onRemoveColumn}) => {
 					</div>
 				)
 			}))}
+			forwardRef={drop}
 			items={generateItems(columns)}
 		/>
 	);

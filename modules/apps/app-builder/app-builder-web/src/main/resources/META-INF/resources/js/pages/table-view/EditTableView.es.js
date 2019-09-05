@@ -237,6 +237,7 @@ const EditTableView = ({
 					<div className="container table-view-container">
 						<DropZone
 							columns={columns}
+							onAddColumn={onAddField}
 							onRemoveColumn={onRemoveColumn}
 						/>
 					</div>

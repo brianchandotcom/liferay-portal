@@ -180,7 +180,7 @@ public class ArquillianTest {
 			message.startsWith(
 				StringBundler.concat(
 					AssertionError.class.getName(), ": Expected test to throw ",
-					IOException.class)));
+					String.valueOf(IOException.class))));
 	}
 
 	@Test

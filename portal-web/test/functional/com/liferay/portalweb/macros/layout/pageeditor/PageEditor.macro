@@ -126,6 +126,30 @@ definition {
 		AssertElementPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLAPSED");
 	}
 
+	macro contentPageAddExperience {
+		var key_experienceName = "${experienceName}";
+
+		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+
+		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_DEFAULT_BUTTON_NAME");
+
+		Click(locator1 = "PageEditor#NEW_EXPERIENCE_BUTTON");
+
+		Type(
+			locator1 = "PageEditor#CONTENT_PAGE_NEW_EXPERIENCE_NAME",
+			value1 = "${experienceName}");
+
+		Button.clickSave();
+
+		AssertClick(
+			locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_BUTTON_NAME",
+			value1 = "${experienceName}");
+
+		AssertElementPresent(
+			key_experienceName = "${experienceName}",
+			locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM");
+	}
+
 	macro deleteComment {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 

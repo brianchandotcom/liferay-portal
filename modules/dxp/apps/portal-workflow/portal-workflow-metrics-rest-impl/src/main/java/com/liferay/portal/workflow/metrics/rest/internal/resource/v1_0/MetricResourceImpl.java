@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,8 +48,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import javax.ws.rs.core.Context;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -74,9 +71,9 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		LocalDateTime endLocalDateTime = LocalDateTime.ofInstant(
-			dateEnd.toInstant(), ZoneId.of(_user.getTimeZoneId()));
+			dateEnd.toInstant(), ZoneId.of(contextUser.getTimeZoneId()));
 		LocalDateTime startLocalDateTime = LocalDateTime.ofInstant(
-			dateStart.toInstant(), ZoneId.of(_user.getTimeZoneId()));
+			dateStart.toInstant(), ZoneId.of(contextUser.getTimeZoneId()));
 
 		DateRangeAggregation dateRangeAggregation = _createDateRangeAggregation(
 			endLocalDateTime, startLocalDateTime);
@@ -302,8 +299,5 @@ public class MetricResourceImpl extends BaseMetricResourceImpl {
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;
-
-	@Context
-	private User _user;
 
 }

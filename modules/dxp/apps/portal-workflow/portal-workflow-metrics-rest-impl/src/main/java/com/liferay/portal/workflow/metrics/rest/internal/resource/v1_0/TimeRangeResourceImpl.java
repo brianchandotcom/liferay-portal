@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.TimeRangeUtil;
@@ -24,8 +23,6 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,9 +54,9 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 
 		timeRange.setDefaultTimeRange(_isDefault(id));
 		timeRange.setDateEnd(
-			TimeRangeUtil.getEndDate(id, _user.getTimeZoneId()));
+			TimeRangeUtil.getEndDate(id, contextUser.getTimeZoneId()));
 		timeRange.setDateStart(
-			TimeRangeUtil.getStartDate(id, _user.getTimeZoneId()));
+			TimeRangeUtil.getStartDate(id, contextUser.getTimeZoneId()));
 		timeRange.setId(id);
 		timeRange.setName(_getName(id));
 
@@ -123,8 +120,5 @@ public class TimeRangeResourceImpl extends BaseTimeRangeResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Context
-	private User _user;
 
 }

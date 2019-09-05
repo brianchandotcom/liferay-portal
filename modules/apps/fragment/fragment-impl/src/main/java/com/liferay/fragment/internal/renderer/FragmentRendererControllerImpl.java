@@ -248,14 +248,14 @@ public class FragmentRendererControllerImpl
 					fieldsJSONArray.iterator();
 
 				fieldsIterator.forEachRemaining(
-					fieldJSONObject -> _translateConfigurationFields(
+					fieldJSONObject -> _translateConfigurationField(
 						fieldJSONObject, resourceBundle));
 			});
 
 		return jsonObject.toString();
 	}
 
-	private void _translateConfigurationFields(
+	private void _translateConfigurationField(
 		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
 
 		String fieldLabel = fieldJSONObject.getString("label");

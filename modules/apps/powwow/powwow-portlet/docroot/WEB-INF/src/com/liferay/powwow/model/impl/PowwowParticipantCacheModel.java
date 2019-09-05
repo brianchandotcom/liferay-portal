@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing PowwowParticipant in entity cache.
  *
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public class PowwowParticipantCacheModel
 	implements CacheModel<PowwowParticipant>, Externalizable {
 

@@ -29,15 +29,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing BackgroundTask in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class BackgroundTaskCacheModel
 	implements CacheModel<BackgroundTask>, Externalizable, MVCCModel {
 

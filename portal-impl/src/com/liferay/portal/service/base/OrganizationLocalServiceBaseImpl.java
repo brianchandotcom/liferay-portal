@@ -77,8 +77,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the organization local service.
  *
@@ -90,7 +88,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.OrganizationLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class OrganizationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements OrganizationLocalService, IdentifiableOSGiService {

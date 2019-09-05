@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMStructureLayout service. Represents a row in the &quot;DDMStructureLayout&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMStructureLayout
  * @generated
  */
-@ProviderType
 public abstract class DDMStructureLayoutBaseImpl
 	extends DDMStructureLayoutModelImpl implements DDMStructureLayout {
 

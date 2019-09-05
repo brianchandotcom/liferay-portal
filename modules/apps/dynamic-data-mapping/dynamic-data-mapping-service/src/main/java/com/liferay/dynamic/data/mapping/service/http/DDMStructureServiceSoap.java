@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DDMStructureServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMStructureServiceHttp
  * @generated
  */
-@ProviderType
 public class DDMStructureServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap

@@ -16,8 +16,6 @@ package com.liferay.document.library.opener.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLOpenerFileEntryReferenceLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLOpenerFileEntryReferenceLocalService
  * @generated
  */
-@ProviderType
 public class DLOpenerFileEntryReferenceLocalServiceWrapper
 	implements DLOpenerFileEntryReferenceLocalService,
 			   ServiceWrapper<DLOpenerFileEntryReferenceLocalService> {

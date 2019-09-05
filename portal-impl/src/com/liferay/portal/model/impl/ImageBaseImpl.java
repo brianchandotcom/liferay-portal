@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Image service. Represents a row in the &quot;Image&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Image
  * @generated
  */
-@ProviderType
 public abstract class ImageBaseImpl extends ImageModelImpl implements Image {
 
 	/*

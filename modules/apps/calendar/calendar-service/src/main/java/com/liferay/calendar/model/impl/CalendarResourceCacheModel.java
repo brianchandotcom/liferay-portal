@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing CalendarResource in entity cache.
  *
  * @author Eduardo Lundgren
  * @generated
  */
-@ProviderType
 public class CalendarResourceCacheModel
 	implements CacheModel<CalendarResource>, Externalizable {
 

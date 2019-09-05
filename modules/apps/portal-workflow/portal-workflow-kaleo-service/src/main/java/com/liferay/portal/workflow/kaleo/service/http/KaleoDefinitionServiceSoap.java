@@ -20,8 +20,6 @@ import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>KaleoDefinitionServiceUtil</code> service
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class KaleoDefinitionServiceSoap {
 
 	/**

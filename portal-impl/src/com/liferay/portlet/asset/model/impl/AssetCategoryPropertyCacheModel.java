@@ -26,8 +26,6 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing AssetCategoryProperty in entity cache.
  *
@@ -36,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class AssetCategoryPropertyCacheModel
 	implements CacheModel<AssetCategoryProperty>, Externalizable {
 

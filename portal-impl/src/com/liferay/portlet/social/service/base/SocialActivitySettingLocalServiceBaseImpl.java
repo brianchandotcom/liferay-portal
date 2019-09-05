@@ -49,8 +49,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the social activity setting local service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SocialActivitySettingLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SocialActivitySettingLocalService, IdentifiableOSGiService {

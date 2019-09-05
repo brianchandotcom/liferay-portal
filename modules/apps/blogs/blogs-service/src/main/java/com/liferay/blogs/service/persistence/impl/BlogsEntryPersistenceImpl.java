@@ -69,7 +69,6 @@ import java.util.Set;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -86,7 +85,6 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 @Component(service = BlogsEntryPersistence.class)
-@ProviderType
 public class BlogsEntryPersistenceImpl
 	extends BasePersistenceImpl<BlogsEntry> implements BlogsEntryPersistence {
 

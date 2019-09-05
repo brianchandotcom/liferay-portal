@@ -20,8 +20,6 @@ import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceU
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>WeDeployAuthAppServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WeDeployAuthAppServiceHttp
  * @generated
  */
-@ProviderType
 public class WeDeployAuthAppServiceSoap {
 
 	public static

@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>AssetVocabularyServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetVocabularyServiceHttp
  * @generated
  */
-@ProviderType
 public class AssetVocabularyServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetVocabularySoap

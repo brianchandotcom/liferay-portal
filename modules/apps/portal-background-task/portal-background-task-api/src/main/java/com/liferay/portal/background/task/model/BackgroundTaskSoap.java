@@ -21,15 +21,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.background.task.service.http.BackgroundTaskServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class BackgroundTaskSoap implements Serializable {
 
 	public static BackgroundTaskSoap toSoapModel(BackgroundTask model) {

@@ -16,13 +16,10 @@ package com.liferay.document.library.kernel.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class DLFolderFinderUtil {
 
 	public static int countF_FE_FS_ByG_F_M_M(

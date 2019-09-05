@@ -16,8 +16,6 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for PowwowMeeting. This utility wraps
  * <code>com.liferay.powwow.service.impl.PowwowMeetingServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeetingService
  * @generated
  */
-@ProviderType
 public class PowwowMeetingServiceUtil {
 
 	/*

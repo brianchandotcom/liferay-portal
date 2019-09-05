@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DDMFormInstanceLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMFormInstanceLocalService
  * @generated
  */
-@ProviderType
 public class DDMFormInstanceLocalServiceWrapper
 	implements DDMFormInstanceLocalService,
 			   ServiceWrapper<DDMFormInstanceLocalService> {

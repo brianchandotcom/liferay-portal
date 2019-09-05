@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link OAuth2ScopeGrant}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ScopeGrant
  * @generated
  */
-@ProviderType
 public class OAuth2ScopeGrantWrapper
 	extends BaseModelWrapper<OAuth2ScopeGrant>
 	implements OAuth2ScopeGrant, ModelWrapper<OAuth2ScopeGrant> {

@@ -57,7 +57,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -71,7 +70,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.segments.service.impl.SegmentsEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SegmentsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SegmentsEntryLocalService, AopService, IdentifiableOSGiService {

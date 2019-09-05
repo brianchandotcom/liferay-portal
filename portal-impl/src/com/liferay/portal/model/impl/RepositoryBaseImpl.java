@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Repository service. Represents a row in the &quot;Repository&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Repository
  * @generated
  */
-@ProviderType
 public abstract class RepositoryBaseImpl
 	extends RepositoryModelImpl implements Repository {
 

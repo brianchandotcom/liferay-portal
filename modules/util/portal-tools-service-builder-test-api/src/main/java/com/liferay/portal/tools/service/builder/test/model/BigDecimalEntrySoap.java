@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.Serializable;
 
 import java.math.BigDecimal;
@@ -29,7 +27,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class BigDecimalEntrySoap implements Serializable {
 
 	public static BigDecimalEntrySoap toSoapModel(BigDecimalEntry model) {

@@ -43,8 +43,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the CTPreferences service. Represents a row in the &quot;CTPreferences&quot; database table, with each column mapped to a property of this class.
  *
@@ -56,7 +54,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CTPreferencesImpl
  * @generated
  */
-@ProviderType
 public class CTPreferencesModelImpl
 	extends BaseModelImpl<CTPreferences> implements CTPreferencesModel {
 

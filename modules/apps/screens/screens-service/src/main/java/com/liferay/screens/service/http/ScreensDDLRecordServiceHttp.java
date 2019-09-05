@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.screens.service.ScreensDDLRecordServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>ScreensDDLRecordServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDLRecordServiceSoap
  * @generated
  */
-@ProviderType
 public class ScreensDDLRecordServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONObject getDDLRecord(

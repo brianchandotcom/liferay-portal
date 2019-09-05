@@ -17,8 +17,6 @@ package com.liferay.push.notifications.model.impl;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the PushNotificationsDevice service. Represents a row in the &quot;PushNotificationsDevice&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PushNotificationsDevice
  * @generated
  */
-@ProviderType
 public abstract class PushNotificationsDeviceBaseImpl
 	extends PushNotificationsDeviceModelImpl
 	implements PushNotificationsDevice {

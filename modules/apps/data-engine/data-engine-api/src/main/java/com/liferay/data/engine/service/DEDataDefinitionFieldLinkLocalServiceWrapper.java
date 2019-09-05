@@ -16,8 +16,6 @@ package com.liferay.data.engine.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DEDataDefinitionFieldLinkLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DEDataDefinitionFieldLinkLocalService
  * @generated
  */
-@ProviderType
 public class DEDataDefinitionFieldLinkLocalServiceWrapper
 	implements DEDataDefinitionFieldLinkLocalService,
 			   ServiceWrapper<DEDataDefinitionFieldLinkLocalService> {

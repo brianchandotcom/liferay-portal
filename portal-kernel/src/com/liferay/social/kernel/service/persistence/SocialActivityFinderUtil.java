@@ -16,13 +16,10 @@ package com.liferay.social.kernel.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class SocialActivityFinderUtil {
 
 	public static int countByGroupId(long groupId) {

@@ -21,8 +21,6 @@ import com.liferay.screens.service.ScreensDDLRecordServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensDDLRecordServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDLRecordServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensDDLRecordServiceSoap {
 
 	public static String getDDLRecord(long ddlRecordId, String locale)

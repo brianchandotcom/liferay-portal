@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.layout.page.template.service.http.LayoutPageTemplateStructureServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class LayoutPageTemplateStructureSoap implements Serializable {
 
 	public static LayoutPageTemplateStructureSoap toSoapModel(

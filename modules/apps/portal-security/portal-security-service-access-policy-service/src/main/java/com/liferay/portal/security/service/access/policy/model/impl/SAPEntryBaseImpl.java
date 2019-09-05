@@ -17,8 +17,6 @@ package com.liferay.portal.security.service.access.policy.model.impl;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SAPEntry service. Represents a row in the &quot;SAPEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SAPEntry
  * @generated
  */
-@ProviderType
 public abstract class SAPEntryBaseImpl
 	extends SAPEntryModelImpl implements SAPEntry {
 

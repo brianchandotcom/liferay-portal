@@ -16,8 +16,6 @@ package com.liferay.polls.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PollsVoteLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PollsVoteLocalService
  * @generated
  */
-@ProviderType
 public class PollsVoteLocalServiceWrapper
 	implements PollsVoteLocalService, ServiceWrapper<PollsVoteLocalService> {
 

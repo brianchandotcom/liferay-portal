@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link UserGroupRoleLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupRoleLocalService
  * @generated
  */
-@ProviderType
 public class UserGroupRoleLocalServiceWrapper
 	implements UserGroupRoleLocalService,
 			   ServiceWrapper<UserGroupRoleLocalService> {
@@ -290,7 +288,7 @@ public class UserGroupRoleLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _userGroupRoleLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -412,7 +410,8 @@ public class UserGroupRoleLocalServiceWrapper
 	}
 
 	@Override
-	public boolean hasUserGroupRole(long userId, long groupId, String roleName)
+	public boolean hasUserGroupRole(
+			long userId, long groupId, java.lang.String roleName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupRoleLocalService.hasUserGroupRole(
@@ -421,7 +420,8 @@ public class UserGroupRoleLocalServiceWrapper
 
 	@Override
 	public boolean hasUserGroupRole(
-			long userId, long groupId, String roleName, boolean inherit)
+			long userId, long groupId, java.lang.String roleName,
+			boolean inherit)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupRoleLocalService.hasUserGroupRole(

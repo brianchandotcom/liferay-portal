@@ -16,8 +16,6 @@ package com.liferay.bookmarks.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link BookmarksEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BookmarksEntryLocalService
  * @generated
  */
-@ProviderType
 public class BookmarksEntryLocalServiceWrapper
 	implements BookmarksEntryLocalService,
 			   ServiceWrapper<BookmarksEntryLocalService> {

@@ -16,8 +16,6 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for PowwowParticipant. This utility wraps
  * <code>com.liferay.powwow.service.impl.PowwowParticipantLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowParticipantLocalService
  * @generated
  */
-@ProviderType
 public class PowwowParticipantLocalServiceUtil {
 
 	/*

@@ -16,8 +16,6 @@ package com.liferay.push.notifications.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PushNotificationsDeviceService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PushNotificationsDeviceService
  * @generated
  */
-@ProviderType
 public class PushNotificationsDeviceServiceWrapper
 	implements PushNotificationsDeviceService,
 			   ServiceWrapper<PushNotificationsDeviceService> {

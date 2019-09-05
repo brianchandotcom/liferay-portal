@@ -16,8 +16,6 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLFileEntryTypeService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileEntryTypeService
  * @generated
  */
-@ProviderType
 public class DLFileEntryTypeServiceWrapper
 	implements DLFileEntryTypeService, ServiceWrapper<DLFileEntryTypeService> {
 

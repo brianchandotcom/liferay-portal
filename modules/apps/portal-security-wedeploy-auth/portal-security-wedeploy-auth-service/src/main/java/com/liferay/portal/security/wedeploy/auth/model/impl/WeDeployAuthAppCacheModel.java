@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing WeDeployAuthApp in entity cache.
  *
  * @author Supritha Sundaram
  * @generated
  */
-@ProviderType
 public class WeDeployAuthAppCacheModel
 	implements CacheModel<WeDeployAuthApp>, Externalizable {
 

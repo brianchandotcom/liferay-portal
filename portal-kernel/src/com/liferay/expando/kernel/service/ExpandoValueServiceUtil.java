@@ -16,8 +16,6 @@ package com.liferay.expando.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for ExpandoValue. This utility wraps
  * <code>com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoValueService
  * @generated
  */
-@ProviderType
 public class ExpandoValueServiceUtil {
 
 	/*

@@ -16,8 +16,6 @@ package com.liferay.message.boards.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MBStatsUserLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBStatsUserLocalService
  * @generated
  */
-@ProviderType
 public class MBStatsUserLocalServiceWrapper
 	implements MBStatsUserLocalService,
 			   ServiceWrapper<MBStatsUserLocalService> {

@@ -48,8 +48,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the powwow meeting service.
  *
@@ -60,7 +58,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public class PowwowMeetingPersistenceImpl
 	extends BasePersistenceImpl<PowwowMeeting>
 	implements PowwowMeetingPersistence {

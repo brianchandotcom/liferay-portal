@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link UserGroupRole}.
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupRole
  * @generated
  */
-@ProviderType
 public class UserGroupRoleWrapper
 	extends BaseModelWrapper<UserGroupRole>
 	implements UserGroupRole, ModelWrapper<UserGroupRole> {

@@ -16,8 +16,6 @@ package com.liferay.segments.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SegmentsEntryRelService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsEntryRelService
  * @generated
  */
-@ProviderType
 public class SegmentsEntryRelServiceWrapper
 	implements SegmentsEntryRelService,
 			   ServiceWrapper<SegmentsEntryRelService> {

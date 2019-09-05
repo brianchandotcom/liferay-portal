@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the UserGroup service. Represents a row in the &quot;UserGroup&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroup
  * @generated
  */
-@ProviderType
 public abstract class UserGroupBaseImpl
 	extends UserGroupModelImpl implements UserGroup {
 

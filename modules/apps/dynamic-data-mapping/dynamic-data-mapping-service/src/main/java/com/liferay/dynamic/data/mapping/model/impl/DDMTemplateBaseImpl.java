@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMTemplate service. Represents a row in the &quot;DDMTemplate&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMTemplate
  * @generated
  */
-@ProviderType
 public abstract class DDMTemplateBaseImpl
 	extends DDMTemplateModelImpl implements DDMTemplate {
 

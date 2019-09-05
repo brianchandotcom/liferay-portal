@@ -17,8 +17,6 @@ package com.liferay.change.tracking.model.impl;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the CTEntry service. Represents a row in the &quot;CTEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CTEntry
  * @generated
  */
-@ProviderType
 public abstract class CTEntryBaseImpl
 	extends CTEntryModelImpl implements CTEntry {
 

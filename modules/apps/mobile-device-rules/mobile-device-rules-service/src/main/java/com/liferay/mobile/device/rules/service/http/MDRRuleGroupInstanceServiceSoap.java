@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>MDRRuleGroupInstanceServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MDRRuleGroupInstanceServiceHttp
  * @generated
  */
-@ProviderType
 public class MDRRuleGroupInstanceServiceSoap {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupInstanceSoap

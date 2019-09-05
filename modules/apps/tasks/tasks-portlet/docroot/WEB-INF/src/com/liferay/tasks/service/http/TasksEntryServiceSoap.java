@@ -20,8 +20,6 @@ import com.liferay.tasks.service.TasksEntryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>TasksEntryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class TasksEntryServiceSoap {
 
 	public static com.liferay.tasks.model.TasksEntrySoap addTasksEntry(

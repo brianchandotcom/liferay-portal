@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SAPEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SAPEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class SAPEntryServiceHttp {
 
 	public static

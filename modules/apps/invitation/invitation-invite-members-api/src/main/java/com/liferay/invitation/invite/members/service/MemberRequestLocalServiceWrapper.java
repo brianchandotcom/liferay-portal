@@ -16,8 +16,6 @@ package com.liferay.invitation.invite.members.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MemberRequestLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MemberRequestLocalService
  * @generated
  */
-@ProviderType
 public class MemberRequestLocalServiceWrapper
 	implements MemberRequestLocalService,
 			   ServiceWrapper<MemberRequestLocalService> {

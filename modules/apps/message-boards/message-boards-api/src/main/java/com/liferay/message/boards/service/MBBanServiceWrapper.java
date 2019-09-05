@@ -16,8 +16,6 @@ package com.liferay.message.boards.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MBBanService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBBanService
  * @generated
  */
-@ProviderType
 public class MBBanServiceWrapper
 	implements MBBanService, ServiceWrapper<MBBanService> {
 

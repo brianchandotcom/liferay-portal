@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMTemplateVersion service. Represents a row in the &quot;DDMTemplateVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMTemplateVersion
  * @generated
  */
-@ProviderType
 public abstract class DDMTemplateVersionBaseImpl
 	extends DDMTemplateVersionModelImpl implements DDMTemplateVersion {
 

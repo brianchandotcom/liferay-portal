@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link LayoutSetBranch}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutSetBranch
  * @generated
  */
-@ProviderType
 public class LayoutSetBranchWrapper
 	extends BaseModelWrapper<LayoutSetBranch>
 	implements LayoutSetBranch, ModelWrapper<LayoutSetBranch> {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link UserGroupRoleService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupRoleService
  * @generated
  */
-@ProviderType
 public class UserGroupRoleServiceWrapper
 	implements UserGroupRoleService, ServiceWrapper<UserGroupRoleService> {
 
@@ -67,7 +65,7 @@ public class UserGroupRoleServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _userGroupRoleService.getOSGiServiceIdentifier();
 	}
 

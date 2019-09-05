@@ -44,8 +44,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the OAuth2ApplicationScopeAliases service. Represents a row in the &quot;OAuth2ApplicationScopeAliases&quot; database table, with each column mapped to a property of this class.
  *
@@ -57,7 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ApplicationScopeAliasesImpl
  * @generated
  */
-@ProviderType
 public class OAuth2ApplicationScopeAliasesModelImpl
 	extends BaseModelImpl<OAuth2ApplicationScopeAliases>
 	implements OAuth2ApplicationScopeAliasesModel {

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DLTrashServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLTrashServiceHttp
  * @generated
  */
-@ProviderType
 public class DLTrashServiceSoap {
 
 	/**

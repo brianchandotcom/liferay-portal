@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link ResourceLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ResourceLocalService
  * @generated
  */
-@ProviderType
 public class ResourceLocalServiceWrapper
 	implements ResourceLocalService, ServiceWrapper<ResourceLocalService> {
 
@@ -86,7 +84,7 @@ public class ResourceLocalServiceWrapper
 
 	@Override
 	public void addModelResources(
-			long companyId, long groupId, long userId, String name,
+			long companyId, long groupId, long userId, java.lang.String name,
 			long primKey,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
@@ -113,8 +111,9 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void addModelResources(
-			long companyId, long groupId, long userId, String name,
-			long primKey, String[] groupPermissions, String[] guestPermissions)
+			long companyId, long groupId, long userId, java.lang.String name,
+			long primKey, java.lang.String[] groupPermissions,
+			java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addModelResources(
@@ -124,8 +123,8 @@ public class ResourceLocalServiceWrapper
 
 	@Override
 	public void addModelResources(
-			long companyId, long groupId, long userId, String name,
-			String primKey,
+			long companyId, long groupId, long userId, java.lang.String name,
+			java.lang.String primKey,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -151,9 +150,9 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void addModelResources(
-			long companyId, long groupId, long userId, String name,
-			String primKey, String[] groupPermissions,
-			String[] guestPermissions)
+			long companyId, long groupId, long userId, java.lang.String name,
+			java.lang.String primKey, java.lang.String[] groupPermissions,
+			java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addModelResources(
@@ -181,7 +180,7 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void addResources(
-			long companyId, long groupId, long userId, String name,
+			long companyId, long groupId, long userId, java.lang.String name,
 			long primKey, boolean portletActions, boolean addGroupPermissions,
 			boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -211,9 +210,9 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void addResources(
-			long companyId, long groupId, long userId, String name,
-			String primKey, boolean portletActions, boolean addGroupPermissions,
-			boolean addGuestPermissions)
+			long companyId, long groupId, long userId, java.lang.String name,
+			java.lang.String primKey, boolean portletActions,
+			boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addResources(
@@ -234,7 +233,8 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void addResources(
-			long companyId, long groupId, String name, boolean portletActions)
+			long companyId, long groupId, java.lang.String name,
+			boolean portletActions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.addResources(
@@ -243,7 +243,8 @@ public class ResourceLocalServiceWrapper
 
 	@Override
 	public void copyModelResources(
-			long companyId, String name, long oldPrimKey, long newPrimKey)
+			long companyId, java.lang.String name, long oldPrimKey,
+			long newPrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.copyModelResources(
@@ -278,7 +279,7 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void deleteResource(
-			long companyId, String name, int scope, long primKey)
+			long companyId, java.lang.String name, int scope, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.deleteResource(companyId, name, scope, primKey);
@@ -296,7 +297,8 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void deleteResource(
-			long companyId, String name, int scope, String primKey)
+			long companyId, java.lang.String name, int scope,
+			java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.deleteResource(companyId, name, scope, primKey);
@@ -308,7 +310,7 @@ public class ResourceLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _resourceLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -325,7 +327,8 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Resource getResource(
-		long companyId, String name, int scope, String primKey) {
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey) {
 
 		return _resourceLocalService.getResource(
 			companyId, name, scope, primKey);
@@ -351,7 +354,7 @@ public class ResourceLocalServiceWrapper
 	public boolean hasUserPermissions(
 			long userId, long resourceId,
 			java.util.List<com.liferay.portal.kernel.model.Resource> resources,
-			String actionId, long[] roleIds)
+			java.lang.String actionId, long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _resourceLocalService.hasUserPermissions(
@@ -389,7 +392,7 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void updateResources(
-			long companyId, long groupId, String name, long primKey,
+			long companyId, long groupId, java.lang.String name, long primKey,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -412,8 +415,9 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void updateResources(
-			long companyId, long groupId, String name, long primKey,
-			String[] groupPermissions, String[] guestPermissions)
+			long companyId, long groupId, java.lang.String name, long primKey,
+			java.lang.String[] groupPermissions,
+			java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.updateResources(
@@ -434,7 +438,8 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void updateResources(
-			long companyId, long groupId, String name, String primKey,
+			long companyId, long groupId, java.lang.String name,
+			java.lang.String primKey,
 			com.liferay.portal.kernel.service.permission.ModelPermissions
 				modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -457,8 +462,9 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void updateResources(
-			long companyId, long groupId, String name, String primKey,
-			String[] groupPermissions, String[] guestPermissions)
+			long companyId, long groupId, java.lang.String name,
+			java.lang.String primKey, java.lang.String[] groupPermissions,
+			java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_resourceLocalService.updateResources(
@@ -481,8 +487,8 @@ public class ResourceLocalServiceWrapper
 	 */
 	@Override
 	public void updateResources(
-		long companyId, String name, int scope, String primKey,
-		String newPrimKey) {
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, java.lang.String newPrimKey) {
 
 		_resourceLocalService.updateResources(
 			companyId, name, scope, primKey, newPrimKey);

@@ -39,8 +39,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the ExpandoRow service. Represents a row in the &quot;ExpandoRow&quot; database table, with each column mapped to a property of this class.
  *
@@ -52,7 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoRowImpl
  * @generated
  */
-@ProviderType
 public class ExpandoRowModelImpl
 	extends BaseModelImpl<ExpandoRow> implements ExpandoRowModel {
 

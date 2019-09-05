@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>AccountEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AccountEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class AccountEntryServiceHttp {
 
 	public static com.liferay.account.model.AccountEntry addAccountEntry(

@@ -19,15 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.expando.service.http.ExpandoValueServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class ExpandoValueSoap implements Serializable {
 
 	public static ExpandoValueSoap toSoapModel(ExpandoValue model) {

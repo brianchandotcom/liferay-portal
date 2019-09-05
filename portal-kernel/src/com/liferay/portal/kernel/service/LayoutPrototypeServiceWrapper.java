@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link LayoutPrototypeService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutPrototypeService
  * @generated
  */
-@ProviderType
 public class LayoutPrototypeServiceWrapper
 	implements LayoutPrototypeService, ServiceWrapper<LayoutPrototypeService> {
 
@@ -35,8 +33,8 @@ public class LayoutPrototypeServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutPrototype addLayoutPrototype(
-			java.util.Map<java.util.Locale, String> nameMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
+			java.util.Map<java.util.Locale, java.lang.String> nameMap,
+			java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 			boolean active, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -73,14 +71,14 @@ public class LayoutPrototypeServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _layoutPrototypeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutPrototype>
 			search(
-				long companyId, Boolean active,
+				long companyId, java.lang.Boolean active,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.kernel.model.LayoutPrototype> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -92,8 +90,9 @@ public class LayoutPrototypeServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutPrototype
 			updateLayoutPrototype(
 				long layoutPrototypeId,
-				java.util.Map<java.util.Locale, String> nameMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
+				java.util.Map<java.util.Locale, java.lang.String> nameMap,
+				java.util.Map<java.util.Locale, java.lang.String>
+					descriptionMap,
 				boolean active, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

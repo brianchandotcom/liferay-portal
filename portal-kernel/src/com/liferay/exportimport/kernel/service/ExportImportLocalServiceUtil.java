@@ -16,8 +16,6 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for ExportImport. This utility wraps
  * <code>com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExportImportLocalService
  * @generated
  */
-@ProviderType
 public class ExportImportLocalServiceUtil {
 
 	/*

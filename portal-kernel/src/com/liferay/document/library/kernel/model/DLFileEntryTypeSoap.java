@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.documentlibrary.service.http.DLFileEntryTypeServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class DLFileEntryTypeSoap implements Serializable {
 
 	public static DLFileEntryTypeSoap toSoapModel(DLFileEntryType model) {

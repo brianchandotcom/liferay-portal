@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PortletPreferencesServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortletPreferencesServiceHttp
  * @generated
  */
-@ProviderType
 public class PortletPreferencesServiceSoap {
 
 	public static void deleteArchivedPreferences(long portletItemId)

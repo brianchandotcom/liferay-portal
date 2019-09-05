@@ -17,8 +17,6 @@ package com.liferay.portlet.asset.model.impl;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AssetLink service. Represents a row in the &quot;AssetLink&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetLink
  * @generated
  */
-@ProviderType
 public abstract class AssetLinkBaseImpl
 	extends AssetLinkModelImpl implements AssetLink {
 

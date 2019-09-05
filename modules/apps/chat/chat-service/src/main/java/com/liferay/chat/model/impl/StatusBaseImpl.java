@@ -17,8 +17,6 @@ package com.liferay.chat.model.impl;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.StatusLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Status service. Represents a row in the &quot;Chat_Status&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Status
  * @generated
  */
-@ProviderType
 public abstract class StatusBaseImpl extends StatusModelImpl implements Status {
 
 	/*

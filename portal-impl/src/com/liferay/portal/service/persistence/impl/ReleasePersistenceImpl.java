@@ -50,8 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the release service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class ReleasePersistenceImpl
 	extends BasePersistenceImpl<Release> implements ReleasePersistence {
 

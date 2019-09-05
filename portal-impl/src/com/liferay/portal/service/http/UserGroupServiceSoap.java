@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.UserGroupServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>UserGroupServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupServiceHttp
  * @generated
  */
-@ProviderType
 public class UserGroupServiceSoap {
 
 	/**

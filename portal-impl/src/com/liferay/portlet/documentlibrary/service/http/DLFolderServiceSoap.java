@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DLFolderServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFolderServiceHttp
  * @generated
  */
-@ProviderType
 public class DLFolderServiceSoap {
 
 	public static com.liferay.document.library.kernel.model.DLFolderSoap

@@ -20,8 +20,6 @@ import com.liferay.portal.security.audit.storage.service.AuditEventServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>AuditEventServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AuditEventServiceHttp
  * @generated
  */
-@ProviderType
 public class AuditEventServiceSoap {
 
 	public static

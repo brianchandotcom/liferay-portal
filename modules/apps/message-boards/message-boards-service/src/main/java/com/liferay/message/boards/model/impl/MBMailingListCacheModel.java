@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing MBMailingList in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class MBMailingListCacheModel
 	implements CacheModel<MBMailingList>, Externalizable {
 

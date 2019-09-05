@@ -55,7 +55,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -69,7 +68,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.polls.service.impl.PollsVoteLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class PollsVoteLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements PollsVoteLocalService, AopService, IdentifiableOSGiService {

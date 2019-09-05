@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.sharing.service.SharingEntryServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SharingEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharingEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class SharingEntryServiceHttp {
 
 	public static com.liferay.sharing.model.SharingEntry

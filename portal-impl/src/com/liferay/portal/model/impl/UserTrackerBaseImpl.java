@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the UserTracker service. Represents a row in the &quot;UserTracker&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserTracker
  * @generated
  */
-@ProviderType
 public abstract class UserTrackerBaseImpl
 	extends UserTrackerModelImpl implements UserTracker {
 

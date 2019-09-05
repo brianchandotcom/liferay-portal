@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link PluginSettingLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PluginSettingLocalService
  * @generated
  */
-@ProviderType
 public class PluginSettingLocalServiceWrapper
 	implements PluginSettingLocalService,
 			   ServiceWrapper<PluginSettingLocalService> {
@@ -48,7 +46,8 @@ public class PluginSettingLocalServiceWrapper
 	}
 
 	@Override
-	public void checkPermission(long userId, String pluginId, String pluginType)
+	public void checkPermission(
+			long userId, java.lang.String pluginId, java.lang.String pluginType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_pluginSettingLocalService.checkPermission(
@@ -232,7 +231,7 @@ public class PluginSettingLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _pluginSettingLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -261,7 +260,8 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting getPluginSetting(
-		long companyId, String pluginId, String pluginType) {
+		long companyId, java.lang.String pluginId,
+		java.lang.String pluginType) {
 
 		return _pluginSettingLocalService.getPluginSetting(
 			companyId, pluginId, pluginType);
@@ -297,7 +297,7 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public boolean hasPermission(
-		long userId, String pluginId, String pluginType) {
+		long userId, java.lang.String pluginId, java.lang.String pluginType) {
 
 		return _pluginSettingLocalService.hasPermission(
 			userId, pluginId, pluginType);
@@ -305,8 +305,8 @@ public class PluginSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-		long companyId, String pluginId, String pluginType, String roles,
-		boolean active) {
+		long companyId, java.lang.String pluginId, java.lang.String pluginType,
+		java.lang.String roles, boolean active) {
 
 		return _pluginSettingLocalService.updatePluginSetting(
 			companyId, pluginId, pluginType, roles, active);

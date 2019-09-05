@@ -17,8 +17,6 @@ package com.liferay.portal.security.audit.storage.model.impl;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.service.AuditEventLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AuditEvent service. Represents a row in the &quot;Audit_AuditEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AuditEvent
  * @generated
  */
-@ProviderType
 public abstract class AuditEventBaseImpl
 	extends AuditEventModelImpl implements AuditEvent {
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -54,7 +52,6 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class LocalizedEntryPersistenceImpl
 	extends BasePersistenceImpl<LocalizedEntry>
 	implements LocalizedEntryPersistence {

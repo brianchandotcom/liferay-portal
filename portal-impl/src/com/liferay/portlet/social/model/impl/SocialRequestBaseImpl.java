@@ -17,8 +17,6 @@ package com.liferay.portlet.social.model.impl;
 import com.liferay.social.kernel.model.SocialRequest;
 import com.liferay.social.kernel.service.SocialRequestLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SocialRequest service. Represents a row in the &quot;SocialRequest&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialRequest
  * @generated
  */
-@ProviderType
 public abstract class SocialRequestBaseImpl
 	extends SocialRequestModelImpl implements SocialRequest {
 

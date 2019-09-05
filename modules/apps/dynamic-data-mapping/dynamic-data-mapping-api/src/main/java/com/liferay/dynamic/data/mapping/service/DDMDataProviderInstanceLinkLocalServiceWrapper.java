@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DDMDataProviderInstanceLinkLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMDataProviderInstanceLinkLocalService
  * @generated
  */
-@ProviderType
 public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	implements DDMDataProviderInstanceLinkLocalService,
 			   ServiceWrapper<DDMDataProviderInstanceLinkLocalService> {

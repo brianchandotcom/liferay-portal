@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KaleoTimerInstanceTokenLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTimerInstanceTokenLocalService
  * @generated
  */
-@ProviderType
 public class KaleoTimerInstanceTokenLocalServiceWrapper
 	implements KaleoTimerInstanceTokenLocalService,
 			   ServiceWrapper<KaleoTimerInstanceTokenLocalService> {

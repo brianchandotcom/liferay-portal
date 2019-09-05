@@ -17,8 +17,6 @@ package com.liferay.asset.category.property.model.impl;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AssetCategoryProperty service. Represents a row in the &quot;AssetCategoryProperty&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetCategoryProperty
  * @generated
  */
-@ProviderType
 public abstract class AssetCategoryPropertyBaseImpl
 	extends AssetCategoryPropertyModelImpl implements AssetCategoryProperty {
 

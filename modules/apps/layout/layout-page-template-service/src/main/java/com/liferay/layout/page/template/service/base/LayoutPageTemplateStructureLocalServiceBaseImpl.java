@@ -54,7 +54,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,7 +67,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.layout.page.template.service.impl.LayoutPageTemplateStructureLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class LayoutPageTemplateStructureLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements LayoutPageTemplateStructureLocalService, AopService,

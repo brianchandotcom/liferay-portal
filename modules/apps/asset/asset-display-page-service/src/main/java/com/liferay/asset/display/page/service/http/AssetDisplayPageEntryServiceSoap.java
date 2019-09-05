@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>AssetDisplayPageEntryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetDisplayPageEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class AssetDisplayPageEntryServiceSoap {
 
 	public static com.liferay.asset.display.page.model.AssetDisplayPageEntrySoap

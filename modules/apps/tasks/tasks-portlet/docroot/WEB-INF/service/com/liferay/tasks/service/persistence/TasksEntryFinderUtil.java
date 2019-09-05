@@ -16,13 +16,10 @@ package com.liferay.tasks.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ryan Park
  * @generated
  */
-@ProviderType
 public class TasksEntryFinderUtil {
 
 	public static int countByG_U_P_A_S_T_N(

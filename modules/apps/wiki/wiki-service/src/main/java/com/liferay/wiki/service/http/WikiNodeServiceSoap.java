@@ -20,8 +20,6 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>WikiNodeServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WikiNodeServiceHttp
  * @generated
  */
-@ProviderType
 public class WikiNodeServiceSoap {
 
 	public static com.liferay.wiki.model.WikiNodeSoap addNode(

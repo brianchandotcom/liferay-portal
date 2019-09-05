@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link SharingEntry}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharingEntry
  * @generated
  */
-@ProviderType
 public class SharingEntryWrapper
 	extends BaseModelWrapper<SharingEntry>
 	implements SharingEntry, ModelWrapper<SharingEntry> {

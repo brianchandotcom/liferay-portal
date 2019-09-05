@@ -46,7 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.oauth2.provider.service.impl.OAuth2ApplicationLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class OAuth2ApplicationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements OAuth2ApplicationLocalService, AopService,

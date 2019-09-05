@@ -14,7 +14,6 @@
 
 package com.liferay.calendar.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -31,7 +30,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see CalendarNotificationTemplateService
  * @generated
  */
-@ProviderType
 public class CalendarNotificationTemplateServiceUtil {
 
 	/*

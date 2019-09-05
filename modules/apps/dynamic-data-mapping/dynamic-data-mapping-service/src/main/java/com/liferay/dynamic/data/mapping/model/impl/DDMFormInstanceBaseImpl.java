@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMFormInstance service. Represents a row in the &quot;DDMFormInstance&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMFormInstance
  * @generated
  */
-@ProviderType
 public abstract class DDMFormInstanceBaseImpl
 	extends DDMFormInstanceModelImpl implements DDMFormInstance {
 

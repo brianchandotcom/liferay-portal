@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.push.notifications.service.http.PushNotificationsDeviceServiceSoap}.
  *
  * @author Bruno Farache
  * @generated
  */
-@ProviderType
 public class PushNotificationsDeviceSoap implements Serializable {
 
 	public static PushNotificationsDeviceSoap toSoapModel(

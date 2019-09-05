@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.CountryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>CountryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CountryServiceHttp
  * @generated
  */
-@ProviderType
 public class CountryServiceSoap {
 
 	public static com.liferay.portal.kernel.model.CountrySoap addCountry(

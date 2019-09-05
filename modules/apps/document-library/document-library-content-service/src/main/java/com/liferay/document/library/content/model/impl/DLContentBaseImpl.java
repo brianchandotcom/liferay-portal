@@ -17,8 +17,6 @@ package com.liferay.document.library.content.model.impl;
 import com.liferay.document.library.content.model.DLContent;
 import com.liferay.document.library.content.service.DLContentLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DLContent service. Represents a row in the &quot;DLContent&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLContent
  * @generated
  */
-@ProviderType
 public abstract class DLContentBaseImpl
 	extends DLContentModelImpl implements DLContent {
 

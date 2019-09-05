@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.PortletServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PortletServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortletServiceHttp
  * @generated
  */
-@ProviderType
 public class PortletServiceSoap {
 
 	public static String getWARPortlets() throws RemoteException {

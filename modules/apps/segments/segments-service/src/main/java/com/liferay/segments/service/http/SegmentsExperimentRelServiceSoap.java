@@ -20,8 +20,6 @@ import com.liferay.segments.service.SegmentsExperimentRelServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SegmentsExperimentRelServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsExperimentRelServiceHttp
  * @generated
  */
-@ProviderType
 public class SegmentsExperimentRelServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperimentRelSoap

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>PortalServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalServiceSoap
  * @generated
  */
-@ProviderType
 public class PortalServiceHttp {
 
 	public static String getAutoDeployDirectory(HttpPrincipal httpPrincipal) {

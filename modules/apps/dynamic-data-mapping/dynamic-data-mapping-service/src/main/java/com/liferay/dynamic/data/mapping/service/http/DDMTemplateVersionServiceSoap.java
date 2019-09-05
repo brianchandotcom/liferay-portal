@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DDMTemplateVersionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMTemplateVersionServiceHttp
  * @generated
  */
-@ProviderType
 public class DDMTemplateVersionServiceSoap {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap

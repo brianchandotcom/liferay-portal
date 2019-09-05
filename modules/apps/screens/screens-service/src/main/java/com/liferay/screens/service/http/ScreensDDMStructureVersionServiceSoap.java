@@ -20,8 +20,6 @@ import com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensDDMStructureVersionServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDMStructureVersionServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensDDMStructureVersionServiceSoap {
 
 	public static String getDDMStructureVersion(long structureId)

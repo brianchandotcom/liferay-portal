@@ -14,8 +14,6 @@
 
 package com.liferay.external.data.source.test.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @see TestEntityLocalService
  * @generated
  */
-@ProviderType
 public class TestEntityLocalServiceWrapper
 	implements TestEntityLocalService, ServiceWrapper<TestEntityLocalService> {
 

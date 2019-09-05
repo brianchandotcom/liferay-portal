@@ -17,8 +17,6 @@ package com.liferay.segments.model.impl;
 import com.liferay.segments.model.SegmentsEntryRel;
 import com.liferay.segments.service.SegmentsEntryRelLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SegmentsEntryRel service. Represents a row in the &quot;SegmentsEntryRel&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsEntryRel
  * @generated
  */
-@ProviderType
 public abstract class SegmentsEntryRelBaseImpl
 	extends SegmentsEntryRelModelImpl implements SegmentsEntryRel {
 

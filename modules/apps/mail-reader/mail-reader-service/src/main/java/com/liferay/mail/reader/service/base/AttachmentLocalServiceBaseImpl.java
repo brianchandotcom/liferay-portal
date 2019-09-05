@@ -49,7 +49,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -63,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.mail.reader.service.impl.AttachmentLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class AttachmentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AttachmentLocalService, AopService, IdentifiableOSGiService {

@@ -17,8 +17,6 @@ package com.liferay.trash.model.impl;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the TrashEntry service. Represents a row in the &quot;TrashEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TrashEntry
  * @generated
  */
-@ProviderType
 public abstract class TrashEntryBaseImpl
 	extends TrashEntryModelImpl implements TrashEntry {
 

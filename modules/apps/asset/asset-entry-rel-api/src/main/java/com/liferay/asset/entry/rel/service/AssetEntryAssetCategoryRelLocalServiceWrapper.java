@@ -16,8 +16,6 @@ package com.liferay.asset.entry.rel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetEntryAssetCategoryRelLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetEntryAssetCategoryRelLocalService
  * @generated
  */
-@ProviderType
 public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	implements AssetEntryAssetCategoryRelLocalService,
 			   ServiceWrapper<AssetEntryAssetCategoryRelLocalService> {

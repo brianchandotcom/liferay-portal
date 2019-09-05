@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DLFileEntryTypeServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileEntryTypeServiceHttp
  * @generated
  */
-@ProviderType
 public class DLFileEntryTypeServiceSoap {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryTypeSoap

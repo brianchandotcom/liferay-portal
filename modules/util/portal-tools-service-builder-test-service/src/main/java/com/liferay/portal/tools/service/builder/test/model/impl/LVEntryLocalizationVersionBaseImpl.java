@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion;
 
 /**
@@ -30,7 +28,6 @@ import com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVe
  * @see LVEntryLocalizationVersion
  * @generated
  */
-@ProviderType
 public abstract class LVEntryLocalizationVersionBaseImpl
 	extends LVEntryLocalizationVersionModelImpl
 	implements LVEntryLocalizationVersion {

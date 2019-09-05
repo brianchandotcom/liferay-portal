@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link AddressLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AddressLocalService
  * @generated
  */
-@ProviderType
 public class AddressLocalServiceWrapper
 	implements AddressLocalService, ServiceWrapper<AddressLocalService> {
 
@@ -46,10 +44,11 @@ public class AddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Address addAddress(
-			long userId, String className, long classPK, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long typeId, boolean mailing,
-			boolean primary, ServiceContext serviceContext)
+			long userId, java.lang.String className, long classPK,
+			java.lang.String street1, java.lang.String street2,
+			java.lang.String street3, java.lang.String city,
+			java.lang.String zip, long regionId, long countryId, long typeId,
+			boolean mailing, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressLocalService.addAddress(
@@ -99,7 +98,7 @@ public class AddressLocalServiceWrapper
 
 	@Override
 	public void deleteAddresses(
-		long companyId, String className, long classPK) {
+		long companyId, java.lang.String className, long classPK) {
 
 		_addressLocalService.deleteAddresses(companyId, className, classPK);
 	}
@@ -220,7 +219,7 @@ public class AddressLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Address
-		fetchAddressByUuidAndCompanyId(String uuid, long companyId) {
+		fetchAddressByUuidAndCompanyId(java.lang.String uuid, long companyId) {
 
 		return _addressLocalService.fetchAddressByUuidAndCompanyId(
 			uuid, companyId);
@@ -257,7 +256,7 @@ public class AddressLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Address getAddressByUuidAndCompanyId(
-			String uuid, long companyId)
+			java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressLocalService.getAddressByUuidAndCompanyId(
@@ -291,7 +290,7 @@ public class AddressLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
-		long companyId, String className, long classPK) {
+		long companyId, java.lang.String className, long classPK) {
 
 		return _addressLocalService.getAddresses(companyId, className, classPK);
 	}
@@ -329,7 +328,7 @@ public class AddressLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _addressLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -356,8 +355,9 @@ public class AddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId, long typeId,
+			long addressId, java.lang.String street1, java.lang.String street2,
+			java.lang.String street3, java.lang.String city,
+			java.lang.String zip, long regionId, long countryId, long typeId,
 			boolean mailing, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

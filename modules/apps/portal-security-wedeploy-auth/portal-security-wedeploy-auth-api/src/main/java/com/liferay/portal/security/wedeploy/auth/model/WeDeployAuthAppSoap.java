@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.security.wedeploy.auth.service.http.WeDeployAuthAppServiceSoap}.
  *
  * @author Supritha Sundaram
  * @generated
  */
-@ProviderType
 public class WeDeployAuthAppSoap implements Serializable {
 
 	public static WeDeployAuthAppSoap toSoapModel(WeDeployAuthApp model) {

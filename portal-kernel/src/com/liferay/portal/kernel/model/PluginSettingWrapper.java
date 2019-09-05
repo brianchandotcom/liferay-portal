@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link PluginSetting}.
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PluginSetting
  * @generated
  */
-@ProviderType
 public class PluginSettingWrapper
 	extends BaseModelWrapper<PluginSetting>
 	implements PluginSetting, ModelWrapper<PluginSetting> {

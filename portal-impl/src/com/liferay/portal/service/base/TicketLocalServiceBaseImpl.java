@@ -47,8 +47,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the ticket local service.
  *
@@ -60,7 +58,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.TicketLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class TicketLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements TicketLocalService, IdentifiableOSGiService {

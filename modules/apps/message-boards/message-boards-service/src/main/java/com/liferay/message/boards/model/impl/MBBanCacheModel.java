@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing MBBan in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	@Override

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>OrganizationServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OrganizationServiceHttp
  * @generated
  */
-@ProviderType
 public class OrganizationServiceSoap {
 
 	/**

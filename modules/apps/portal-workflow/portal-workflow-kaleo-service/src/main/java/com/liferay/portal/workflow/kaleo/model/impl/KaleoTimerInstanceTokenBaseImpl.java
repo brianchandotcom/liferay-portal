@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoTimerInstanceToken service. Represents a row in the &quot;KaleoTimerInstanceToken&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTimerInstanceToken
  * @generated
  */
-@ProviderType
 public abstract class KaleoTimerInstanceTokenBaseImpl
 	extends KaleoTimerInstanceTokenModelImpl
 	implements KaleoTimerInstanceToken {

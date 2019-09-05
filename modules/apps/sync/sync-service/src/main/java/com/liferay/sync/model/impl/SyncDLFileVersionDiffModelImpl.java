@@ -41,8 +41,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the SyncDLFileVersionDiff service. Represents a row in the &quot;SyncDLFileVersionDiff&quot; database table, with each column mapped to a property of this class.
  *
@@ -54,7 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLFileVersionDiffImpl
  * @generated
  */
-@ProviderType
 public class SyncDLFileVersionDiffModelImpl
 	extends BaseModelImpl<SyncDLFileVersionDiff>
 	implements SyncDLFileVersionDiffModel {

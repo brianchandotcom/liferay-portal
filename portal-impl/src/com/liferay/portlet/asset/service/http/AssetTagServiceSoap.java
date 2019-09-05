@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>AssetTagServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetTagServiceHttp
  * @generated
  */
-@ProviderType
 public class AssetTagServiceSoap {
 
 	public static com.liferay.asset.kernel.model.AssetTagSoap addTag(

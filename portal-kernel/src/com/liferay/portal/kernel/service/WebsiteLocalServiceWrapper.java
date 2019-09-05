@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link WebsiteLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WebsiteLocalService
  * @generated
  */
-@ProviderType
 public class WebsiteLocalServiceWrapper
 	implements WebsiteLocalService, ServiceWrapper<WebsiteLocalService> {
 
@@ -33,8 +31,9 @@ public class WebsiteLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website addWebsite(
-			long userId, String className, long classPK, String url,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long userId, java.lang.String className, long classPK,
+			java.lang.String url, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteLocalService.addWebsite(
@@ -106,7 +105,9 @@ public class WebsiteLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteWebsites(long companyId, String className, long classPK) {
+	public void deleteWebsites(
+		long companyId, java.lang.String className, long classPK) {
+
 		_websiteLocalService.deleteWebsites(companyId, className, classPK);
 	}
 
@@ -215,7 +216,7 @@ public class WebsiteLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Website
-		fetchWebsiteByUuidAndCompanyId(String uuid, long companyId) {
+		fetchWebsiteByUuidAndCompanyId(java.lang.String uuid, long companyId) {
 
 		return _websiteLocalService.fetchWebsiteByUuidAndCompanyId(
 			uuid, companyId);
@@ -251,7 +252,7 @@ public class WebsiteLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _websiteLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -287,7 +288,7 @@ public class WebsiteLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Website getWebsiteByUuidAndCompanyId(
-			String uuid, long companyId)
+			java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteLocalService.getWebsiteByUuidAndCompanyId(
@@ -321,7 +322,7 @@ public class WebsiteLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
-		long companyId, String className, long classPK) {
+		long companyId, java.lang.String className, long classPK) {
 
 		return _websiteLocalService.getWebsites(companyId, className, classPK);
 	}
@@ -338,7 +339,7 @@ public class WebsiteLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Website updateWebsite(
-			long websiteId, String url, long typeId, boolean primary)
+			long websiteId, java.lang.String url, long typeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _websiteLocalService.updateWebsite(

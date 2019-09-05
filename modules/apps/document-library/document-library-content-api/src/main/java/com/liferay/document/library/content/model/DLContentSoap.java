@@ -21,15 +21,12 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class DLContentSoap implements Serializable {
 
 	public static DLContentSoap toSoapModel(DLContent model) {

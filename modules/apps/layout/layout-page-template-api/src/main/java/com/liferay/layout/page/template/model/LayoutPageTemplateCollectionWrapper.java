@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link LayoutPageTemplateCollection}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutPageTemplateCollection
  * @generated
  */
-@ProviderType
 public class LayoutPageTemplateCollectionWrapper
 	extends BaseModelWrapper<LayoutPageTemplateCollection>
 	implements LayoutPageTemplateCollection,

@@ -80,8 +80,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the layout local service.
  *
@@ -93,7 +91,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.LayoutLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class LayoutLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements LayoutLocalService, IdentifiableOSGiService {

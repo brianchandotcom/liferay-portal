@@ -16,8 +16,6 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link StagingService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see StagingService
  * @generated
  */
-@ProviderType
 public class StagingServiceWrapper
 	implements StagingService, ServiceWrapper<StagingService> {
 

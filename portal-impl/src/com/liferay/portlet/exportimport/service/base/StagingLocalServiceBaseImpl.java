@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the staging local service.
  *
@@ -54,7 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class StagingLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements StagingLocalService, IdentifiableOSGiService {

@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.tasks.service.http.TasksEntryServiceSoap}.
  *
  * @author Ryan Park
  * @generated
  */
-@ProviderType
 public class TasksEntrySoap implements Serializable {
 
 	public static TasksEntrySoap toSoapModel(TasksEntry model) {

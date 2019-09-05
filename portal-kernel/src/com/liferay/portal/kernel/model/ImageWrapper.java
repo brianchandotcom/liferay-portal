@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Image}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Image
  * @generated
  */
-@ProviderType
 public class ImageWrapper
 	extends BaseModelWrapper<Image> implements Image, ModelWrapper<Image> {
 

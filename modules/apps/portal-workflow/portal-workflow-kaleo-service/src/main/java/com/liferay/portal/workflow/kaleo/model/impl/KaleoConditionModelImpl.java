@@ -44,8 +44,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the KaleoCondition service. Represents a row in the &quot;KaleoCondition&quot; database table, with each column mapped to a property of this class.
  *
@@ -57,7 +55,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoConditionImpl
  * @generated
  */
-@ProviderType
 public class KaleoConditionModelImpl
 	extends BaseModelImpl<KaleoCondition> implements KaleoConditionModel {
 

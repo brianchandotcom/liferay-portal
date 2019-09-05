@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link OrgLaborService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OrgLaborService
  * @generated
  */
-@ProviderType
 public class OrgLaborServiceWrapper
 	implements OrgLaborService, ServiceWrapper<OrgLaborService> {
 
@@ -73,7 +71,7 @@ public class OrgLaborServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _orgLaborService.getOSGiServiceIdentifier();
 	}
 

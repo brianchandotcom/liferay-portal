@@ -16,8 +16,6 @@ package com.liferay.knowledge.base.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KBTemplateLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBTemplateLocalService
  * @generated
  */
-@ProviderType
 public class KBTemplateLocalServiceWrapper
 	implements KBTemplateLocalService, ServiceWrapper<KBTemplateLocalService> {
 

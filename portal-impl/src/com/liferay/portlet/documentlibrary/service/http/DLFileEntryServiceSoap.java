@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DLFileEntryServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class DLFileEntryServiceSoap {
 
 	public static com.liferay.document.library.kernel.model.DLFileVersionSoap

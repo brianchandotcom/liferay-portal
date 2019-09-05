@@ -70,8 +70,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the announcements entry local service.
  *
@@ -83,7 +81,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AnnouncementsEntryLocalService, IdentifiableOSGiService {

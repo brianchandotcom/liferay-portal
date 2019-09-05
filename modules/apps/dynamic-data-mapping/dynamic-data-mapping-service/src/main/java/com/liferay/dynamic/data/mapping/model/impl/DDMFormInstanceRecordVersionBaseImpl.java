@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMFormInstanceRecordVersion service. Represents a row in the &quot;DDMFormInstanceRecordVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMFormInstanceRecordVersion
  * @generated
  */
-@ProviderType
 public abstract class DDMFormInstanceRecordVersionBaseImpl
 	extends DDMFormInstanceRecordVersionModelImpl
 	implements DDMFormInstanceRecordVersion {

@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the LayoutFriendlyURL service. Represents a row in the &quot;LayoutFriendlyURL&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutFriendlyURL
  * @generated
  */
-@ProviderType
 public abstract class LayoutFriendlyURLBaseImpl
 	extends LayoutFriendlyURLModelImpl implements LayoutFriendlyURL {
 

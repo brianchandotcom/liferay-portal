@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the ServiceComponent service. Represents a row in the &quot;ServiceComponent&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ServiceComponent
  * @generated
  */
-@ProviderType
 public abstract class ServiceComponentBaseImpl
 	extends ServiceComponentModelImpl implements ServiceComponent {
 

@@ -43,8 +43,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the asset tag stats service.
  *
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class AssetTagStatsPersistenceImpl
 	extends BasePersistenceImpl<AssetTagStats>
 	implements AssetTagStatsPersistence {

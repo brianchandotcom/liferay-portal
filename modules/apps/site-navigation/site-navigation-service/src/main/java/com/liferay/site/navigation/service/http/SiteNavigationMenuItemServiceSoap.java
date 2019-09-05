@@ -20,8 +20,6 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SiteNavigationMenuItemServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SiteNavigationMenuItemServiceHttp
  * @generated
  */
-@ProviderType
 public class SiteNavigationMenuItemServiceSoap {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap

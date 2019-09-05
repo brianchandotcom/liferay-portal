@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Entry}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Entry
  * @generated
  */
-@ProviderType
 public class EntryWrapper
 	extends BaseModelWrapper<Entry> implements Entry, ModelWrapper<Entry> {
 

@@ -16,8 +16,6 @@ package com.liferay.blogs.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link BlogsStatsUserLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BlogsStatsUserLocalService
  * @generated
  */
-@ProviderType
 public class BlogsStatsUserLocalServiceWrapper
 	implements BlogsStatsUserLocalService,
 			   ServiceWrapper<BlogsStatsUserLocalService> {

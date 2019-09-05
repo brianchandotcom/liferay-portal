@@ -26,15 +26,12 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing OrgGroupRole in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class OrgGroupRoleCacheModel
 	implements CacheModel<OrgGroupRole>, Externalizable, MVCCModel {
 

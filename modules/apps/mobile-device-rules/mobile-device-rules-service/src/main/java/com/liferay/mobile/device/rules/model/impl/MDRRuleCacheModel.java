@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing MDRRule in entity cache.
  *
  * @author Edward C. Han
  * @generated
  */
-@ProviderType
 public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 	@Override

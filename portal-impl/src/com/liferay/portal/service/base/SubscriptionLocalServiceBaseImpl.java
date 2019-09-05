@@ -46,8 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the subscription local service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public abstract class SubscriptionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SubscriptionLocalService, IdentifiableOSGiService {

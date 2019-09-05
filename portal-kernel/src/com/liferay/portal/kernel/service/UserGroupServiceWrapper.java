@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link UserGroupService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupService
  * @generated
  */
-@ProviderType
 public class UserGroupServiceWrapper
 	implements UserGroupService, ServiceWrapper<UserGroupService> {
 
@@ -74,7 +72,8 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup addUserGroup(
-			String name, String description, ServiceContext serviceContext)
+			java.lang.String name, java.lang.String description,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.addUserGroup(
@@ -123,7 +122,7 @@ public class UserGroupServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _userGroupService.getOSGiServiceIdentifier();
 	}
 
@@ -148,7 +147,8 @@ public class UserGroupServiceWrapper
 	 * @return the user group with the name
 	 */
 	@Override
-	public com.liferay.portal.kernel.model.UserGroup getUserGroup(String name)
+	public com.liferay.portal.kernel.model.UserGroup getUserGroup(
+			java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.getUserGroup(name);
@@ -164,13 +164,14 @@ public class UserGroupServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.UserGroup>
-		getUserGroups(long companyId, String name, int start, int end) {
+		getUserGroups(
+			long companyId, java.lang.String name, int start, int end) {
 
 		return _userGroupService.getUserGroups(companyId, name, start, end);
 	}
 
 	@Override
-	public int getUserGroupsCount(long companyId, String name) {
+	public int getUserGroupsCount(long companyId, java.lang.String name) {
 		return _userGroupService.getUserGroupsCount(companyId, name);
 	}
 
@@ -227,8 +228,8 @@ public class UserGroupServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
-			long userGroupId, String name, String description,
-			ServiceContext serviceContext)
+			long userGroupId, java.lang.String name,
+			java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userGroupService.updateUserGroup(

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -54,7 +52,6 @@ import java.util.function.Function;
  * @see LocalizedEntryLocalizationImpl
  * @generated
  */
-@ProviderType
 public class LocalizedEntryLocalizationModelImpl
 	extends BaseModelImpl<LocalizedEntryLocalization>
 	implements LocalizedEntryLocalizationModel {

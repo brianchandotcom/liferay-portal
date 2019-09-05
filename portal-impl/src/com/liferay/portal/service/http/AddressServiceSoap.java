@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.AddressServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>AddressServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AddressServiceHttp
  * @generated
  */
-@ProviderType
 public class AddressServiceSoap {
 
 	public static com.liferay.portal.kernel.model.AddressSoap addAddress(

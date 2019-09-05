@@ -16,8 +16,6 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetVocabularyLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetVocabularyLocalService
  * @generated
  */
-@ProviderType
 public class AssetVocabularyLocalServiceWrapper
 	implements AssetVocabularyLocalService,
 			   ServiceWrapper<AssetVocabularyLocalService> {

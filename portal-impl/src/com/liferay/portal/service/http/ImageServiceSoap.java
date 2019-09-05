@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ImageServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ImageServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ImageServiceHttp
  * @generated
  */
-@ProviderType
 public class ImageServiceSoap {
 
 	public static com.liferay.portal.kernel.model.ImageSoap getImage(

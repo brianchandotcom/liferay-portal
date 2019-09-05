@@ -50,8 +50,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the asset category property service.
  *
@@ -64,7 +62,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class AssetCategoryPropertyPersistenceImpl
 	extends BasePersistenceImpl<AssetCategoryProperty>
 	implements AssetCategoryPropertyPersistence {

@@ -17,8 +17,6 @@ package com.liferay.message.boards.model.impl;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the MBDiscussion service. Represents a row in the &quot;MBDiscussion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBDiscussion
  * @generated
  */
-@ProviderType
 public abstract class MBDiscussionBaseImpl
 	extends MBDiscussionModelImpl implements MBDiscussion {
 

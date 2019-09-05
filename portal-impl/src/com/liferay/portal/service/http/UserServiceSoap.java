@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>UserServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserServiceHttp
  * @generated
  */
-@ProviderType
 public class UserServiceSoap {
 
 	/**

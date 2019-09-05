@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for Account. This utility wraps
  * <code>com.liferay.portal.service.impl.AccountServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AccountService
  * @generated
  */
-@ProviderType
 public class AccountServiceUtil {
 
 	/*

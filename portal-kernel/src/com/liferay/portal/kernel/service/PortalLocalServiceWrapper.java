@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link PortalLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalLocalService
  * @generated
  */
-@ProviderType
 public class PortalLocalServiceWrapper
 	implements PortalLocalService, ServiceWrapper<PortalLocalService> {
 
@@ -37,7 +35,7 @@ public class PortalLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _portalLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -20,8 +20,6 @@ import com.liferay.screens.service.ScreensCommentServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensCommentServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensCommentServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensCommentServiceSoap {
 
 	public static String addComment(String className, long classPK, String body)

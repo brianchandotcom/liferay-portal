@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>JournalFolderServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalFolderServiceSoap
  * @generated
  */
-@ProviderType
 public class JournalFolderServiceHttp {
 
 	public static com.liferay.journal.model.JournalFolder addFolder(

@@ -16,8 +16,6 @@ package com.liferay.opensocial.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for Gadget. This utility wraps
  * <code>com.liferay.opensocial.service.impl.GadgetServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see GadgetService
  * @generated
  */
-@ProviderType
 public class GadgetServiceUtil {
 
 	/*

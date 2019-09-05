@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link VirtualHostLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see VirtualHostLocalService
  * @generated
  */
-@ProviderType
 public class VirtualHostLocalServiceWrapper
 	implements VirtualHostLocalService,
 			   ServiceWrapper<VirtualHostLocalService> {
@@ -206,7 +204,7 @@ public class VirtualHostLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost fetchVirtualHost(
-		String hostname) {
+		java.lang.String hostname) {
 
 		return _virtualHostLocalService.fetchVirtualHost(hostname);
 	}
@@ -231,7 +229,7 @@ public class VirtualHostLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _virtualHostLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -268,7 +266,7 @@ public class VirtualHostLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost getVirtualHost(
-			String hostname)
+			java.lang.String hostname)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _virtualHostLocalService.getVirtualHost(hostname);
@@ -304,7 +302,7 @@ public class VirtualHostLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, String hostname) {
+		long companyId, long layoutSetId, java.lang.String hostname) {
 
 		return _virtualHostLocalService.updateVirtualHost(
 			companyId, layoutSetId, hostname);

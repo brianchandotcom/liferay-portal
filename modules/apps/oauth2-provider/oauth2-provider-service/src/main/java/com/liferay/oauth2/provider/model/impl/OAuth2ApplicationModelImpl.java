@@ -49,8 +49,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the OAuth2Application service. Represents a row in the &quot;OAuth2Application&quot; database table, with each column mapped to a property of this class.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class OAuth2ApplicationModelImpl
 	extends BaseModelImpl<OAuth2Application> implements OAuth2ApplicationModel {
 

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Counter}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Counter
  * @generated
  */
-@ProviderType
 public class CounterWrapper
 	extends BaseModelWrapper<Counter>
 	implements Counter, ModelWrapper<Counter> {

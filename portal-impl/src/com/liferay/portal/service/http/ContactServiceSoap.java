@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ContactServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ContactServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ContactServiceHttp
  * @generated
  */
-@ProviderType
 public class ContactServiceSoap {
 
 	public static com.liferay.portal.kernel.model.ContactSoap[]

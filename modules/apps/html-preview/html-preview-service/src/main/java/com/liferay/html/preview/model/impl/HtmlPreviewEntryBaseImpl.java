@@ -17,8 +17,6 @@ package com.liferay.html.preview.model.impl;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the HtmlPreviewEntry service. Represents a row in the &quot;HtmlPreviewEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see HtmlPreviewEntry
  * @generated
  */
-@ProviderType
 public abstract class HtmlPreviewEntryBaseImpl
 	extends HtmlPreviewEntryModelImpl implements HtmlPreviewEntry {
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>DDMTemplateServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMTemplateServiceSoap
  * @generated
  */
-@ProviderType
 public class DDMTemplateServiceHttp {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplate

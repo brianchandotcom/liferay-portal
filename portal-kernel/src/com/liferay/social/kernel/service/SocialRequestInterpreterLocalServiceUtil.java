@@ -16,8 +16,6 @@ package com.liferay.social.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for SocialRequestInterpreter. This utility wraps
  * <code>com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialRequestInterpreterLocalService
  * @generated
  */
-@ProviderType
 public class SocialRequestInterpreterLocalServiceUtil {
 
 	/*

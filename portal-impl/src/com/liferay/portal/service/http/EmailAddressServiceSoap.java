@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.EmailAddressServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>EmailAddressServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see EmailAddressServiceHttp
  * @generated
  */
-@ProviderType
 public class EmailAddressServiceSoap {
 
 	public static com.liferay.portal.kernel.model.EmailAddressSoap

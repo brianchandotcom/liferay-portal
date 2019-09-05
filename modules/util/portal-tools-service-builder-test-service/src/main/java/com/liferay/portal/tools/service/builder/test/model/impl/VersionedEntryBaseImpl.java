@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntry;
@@ -33,7 +31,6 @@ import com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocal
  * @see VersionedEntry
  * @generated
  */
-@ProviderType
 public abstract class VersionedEntryBaseImpl
 	extends VersionedEntryModelImpl implements VersionedEntry {
 

@@ -19,13 +19,10 @@ import com.liferay.petra.string.StringBundler;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class OrgGroupRolePK
 	implements Comparable<OrgGroupRolePK>, Serializable {
 

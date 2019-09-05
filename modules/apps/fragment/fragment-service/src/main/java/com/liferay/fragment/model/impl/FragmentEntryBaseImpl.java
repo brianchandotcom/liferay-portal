@@ -17,8 +17,6 @@ package com.liferay.fragment.model.impl;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the FragmentEntry service. Represents a row in the &quot;FragmentEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FragmentEntry
  * @generated
  */
-@ProviderType
 public abstract class FragmentEntryBaseImpl
 	extends FragmentEntryModelImpl implements FragmentEntry {
 

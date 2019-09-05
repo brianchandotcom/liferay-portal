@@ -22,8 +22,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link ExpandoColumn}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoColumn
  * @generated
  */
-@ProviderType
 public class ExpandoColumnWrapper
 	extends BaseModelWrapper<ExpandoColumn>
 	implements ExpandoColumn, ModelWrapper<ExpandoColumn> {

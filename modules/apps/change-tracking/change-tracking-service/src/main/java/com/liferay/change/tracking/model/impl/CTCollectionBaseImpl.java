@@ -17,8 +17,6 @@ package com.liferay.change.tracking.model.impl;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the CTCollection service. Represents a row in the &quot;CTCollection&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CTCollection
  * @generated
  */
-@ProviderType
 public abstract class CTCollectionBaseImpl
 	extends CTCollectionModelImpl implements CTCollection {
 

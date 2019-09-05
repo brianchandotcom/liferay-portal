@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the PortalPreferences service. Represents a row in the &quot;PortalPreferences&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalPreferences
  * @generated
  */
-@ProviderType
 public abstract class PortalPreferencesBaseImpl
 	extends PortalPreferencesModelImpl implements PortalPreferences {
 

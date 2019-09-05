@@ -20,8 +20,6 @@ import com.liferay.push.notifications.service.PushNotificationsDeviceServiceUtil
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PushNotificationsDeviceServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PushNotificationsDeviceServiceHttp
  * @generated
  */
-@ProviderType
 public class PushNotificationsDeviceServiceSoap {
 
 	public static

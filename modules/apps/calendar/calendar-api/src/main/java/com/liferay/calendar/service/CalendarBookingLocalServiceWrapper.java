@@ -16,8 +16,6 @@ package com.liferay.calendar.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link CalendarBookingLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CalendarBookingLocalService
  * @generated
  */
-@ProviderType
 public class CalendarBookingLocalServiceWrapper
 	implements CalendarBookingLocalService,
 			   ServiceWrapper<CalendarBookingLocalService> {

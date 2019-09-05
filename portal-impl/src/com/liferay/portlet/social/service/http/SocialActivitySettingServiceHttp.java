@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.social.kernel.service.SocialActivitySettingServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SocialActivitySettingServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialActivitySettingServiceSoap
  * @generated
  */
-@ProviderType
 public class SocialActivitySettingServiceHttp {
 
 	public static com.liferay.social.kernel.model.SocialActivityDefinition

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @see UADPartialEntryLocalService
  * @generated
  */
-@ProviderType
 public class UADPartialEntryLocalServiceWrapper
 	implements UADPartialEntryLocalService,
 			   ServiceWrapper<UADPartialEntryLocalService> {

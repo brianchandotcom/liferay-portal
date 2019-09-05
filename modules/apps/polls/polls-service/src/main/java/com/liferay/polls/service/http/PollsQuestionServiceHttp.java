@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>PollsQuestionServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PollsQuestionServiceSoap
  * @generated
  */
-@ProviderType
 public class PollsQuestionServiceHttp {
 
 	public static com.liferay.polls.model.PollsQuestion addQuestion(

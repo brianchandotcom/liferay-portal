@@ -16,8 +16,6 @@ package com.liferay.calendar.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link CalendarNotificationTemplateService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CalendarNotificationTemplateService
  * @generated
  */
-@ProviderType
 public class CalendarNotificationTemplateServiceWrapper
 	implements CalendarNotificationTemplateService,
 			   ServiceWrapper<CalendarNotificationTemplateService> {

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.RegionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>RegionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RegionServiceHttp
  * @generated
  */
-@ProviderType
 public class RegionServiceSoap {
 
 	public static com.liferay.portal.kernel.model.RegionSoap addRegion(

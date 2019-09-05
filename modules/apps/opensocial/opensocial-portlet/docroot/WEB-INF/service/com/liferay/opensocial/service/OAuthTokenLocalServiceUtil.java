@@ -16,8 +16,6 @@ package com.liferay.opensocial.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for OAuthToken. This utility wraps
  * <code>com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthTokenLocalService
  * @generated
  */
-@ProviderType
 public class OAuthTokenLocalServiceUtil {
 
 	/*

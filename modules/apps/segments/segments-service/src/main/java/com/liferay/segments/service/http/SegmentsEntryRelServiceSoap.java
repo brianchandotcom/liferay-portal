@@ -20,8 +20,6 @@ import com.liferay.segments.service.SegmentsEntryRelServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SegmentsEntryRelServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsEntryRelServiceHttp
  * @generated
  */
-@ProviderType
 public class SegmentsEntryRelServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsEntryRelSoap

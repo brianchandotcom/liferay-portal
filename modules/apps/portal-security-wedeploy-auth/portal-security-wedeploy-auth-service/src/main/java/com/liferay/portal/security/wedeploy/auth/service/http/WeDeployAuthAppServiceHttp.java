@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>WeDeployAuthAppServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WeDeployAuthAppServiceSoap
  * @generated
  */
-@ProviderType
 public class WeDeployAuthAppServiceHttp {
 
 	public static

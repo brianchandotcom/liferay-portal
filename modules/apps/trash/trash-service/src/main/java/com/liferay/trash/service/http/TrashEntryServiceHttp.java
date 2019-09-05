@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.trash.service.TrashEntryServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>TrashEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TrashEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class TrashEntryServiceHttp {
 
 	public static void deleteEntries(HttpPrincipal httpPrincipal, long groupId)

@@ -16,8 +16,6 @@ package com.liferay.document.library.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLFileVersionPreviewLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileVersionPreviewLocalService
  * @generated
  */
-@ProviderType
 public class DLFileVersionPreviewLocalServiceWrapper
 	implements DLFileVersionPreviewLocalService,
 			   ServiceWrapper<DLFileVersionPreviewLocalService> {

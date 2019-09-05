@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SegmentsExperienceServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsExperienceServiceHttp
  * @generated
  */
-@ProviderType
 public class SegmentsExperienceServiceSoap {
 
 	public static com.liferay.segments.model.SegmentsExperienceSoap

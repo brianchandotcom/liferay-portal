@@ -65,8 +65,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the document library file version local service.
  *
@@ -78,7 +76,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DLFileVersionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DLFileVersionLocalService, IdentifiableOSGiService {

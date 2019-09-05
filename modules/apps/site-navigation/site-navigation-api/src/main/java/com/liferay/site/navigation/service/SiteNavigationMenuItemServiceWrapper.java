@@ -16,8 +16,6 @@ package com.liferay.site.navigation.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SiteNavigationMenuItemService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SiteNavigationMenuItemService
  * @generated
  */
-@ProviderType
 public class SiteNavigationMenuItemServiceWrapper
 	implements SiteNavigationMenuItemService,
 			   ServiceWrapper<SiteNavigationMenuItemService> {

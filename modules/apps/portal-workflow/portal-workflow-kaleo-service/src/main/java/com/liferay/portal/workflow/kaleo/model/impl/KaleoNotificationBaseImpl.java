@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoNotification service. Represents a row in the &quot;KaleoNotification&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoNotification
  * @generated
  */
-@ProviderType
 public abstract class KaleoNotificationBaseImpl
 	extends KaleoNotificationModelImpl implements KaleoNotification {
 

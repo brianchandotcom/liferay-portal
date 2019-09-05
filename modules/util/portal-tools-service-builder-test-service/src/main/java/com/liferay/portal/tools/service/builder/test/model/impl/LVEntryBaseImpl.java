@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntry;
@@ -33,7 +31,6 @@ import com.liferay.portal.tools.service.builder.test.service.LVEntryLocalService
  * @see LVEntry
  * @generated
  */
-@ProviderType
 public abstract class LVEntryBaseImpl
 	extends LVEntryModelImpl implements LVEntry {
 

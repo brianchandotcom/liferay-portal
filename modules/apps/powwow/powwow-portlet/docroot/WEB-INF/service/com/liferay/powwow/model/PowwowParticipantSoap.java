@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.powwow.service.http.PowwowParticipantServiceSoap}.
  *
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public class PowwowParticipantSoap implements Serializable {
 
 	public static PowwowParticipantSoap toSoapModel(PowwowParticipant model) {

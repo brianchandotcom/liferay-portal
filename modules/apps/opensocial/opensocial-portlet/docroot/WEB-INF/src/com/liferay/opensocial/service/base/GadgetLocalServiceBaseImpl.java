@@ -57,8 +57,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the gadget local service.
  *
@@ -70,7 +68,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.opensocial.service.impl.GadgetLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class GadgetLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements GadgetLocalService, IdentifiableOSGiService {

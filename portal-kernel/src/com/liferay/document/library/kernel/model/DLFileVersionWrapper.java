@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link DLFileVersion}.
@@ -34,7 +32,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileVersion
  * @generated
  */
-@ProviderType
 public class DLFileVersionWrapper
 	extends BaseModelWrapper<DLFileVersion>
 	implements DLFileVersion, ModelWrapper<DLFileVersion> {

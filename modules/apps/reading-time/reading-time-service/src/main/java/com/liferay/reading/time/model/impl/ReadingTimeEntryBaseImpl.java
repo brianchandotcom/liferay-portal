@@ -17,8 +17,6 @@ package com.liferay.reading.time.model.impl;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.service.ReadingTimeEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the ReadingTimeEntry service. Represents a row in the &quot;ReadingTimeEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ReadingTimeEntry
  * @generated
  */
-@ProviderType
 public abstract class ReadingTimeEntryBaseImpl
 	extends ReadingTimeEntryModelImpl implements ReadingTimeEntry {
 

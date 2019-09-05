@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link PollsQuestion}.
@@ -34,7 +32,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PollsQuestion
  * @generated
  */
-@ProviderType
 public class PollsQuestionWrapper
 	extends BaseModelWrapper<PollsQuestion>
 	implements PollsQuestion, ModelWrapper<PollsQuestion> {

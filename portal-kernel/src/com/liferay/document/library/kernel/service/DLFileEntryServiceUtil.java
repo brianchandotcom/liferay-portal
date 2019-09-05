@@ -16,8 +16,6 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for DLFileEntry. This utility wraps
  * <code>com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileEntryService
  * @generated
  */
-@ProviderType
 public class DLFileEntryServiceUtil {
 
 	/*

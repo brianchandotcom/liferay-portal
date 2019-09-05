@@ -16,8 +16,6 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ExportImportService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExportImportService
  * @generated
  */
-@ProviderType
 public class ExportImportServiceWrapper
 	implements ExportImportService, ServiceWrapper<ExportImportService> {
 

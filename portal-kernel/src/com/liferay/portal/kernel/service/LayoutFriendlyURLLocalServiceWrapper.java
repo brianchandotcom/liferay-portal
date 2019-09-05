@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link LayoutFriendlyURLLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutFriendlyURLLocalService
  * @generated
  */
-@ProviderType
 public class LayoutFriendlyURLLocalServiceWrapper
 	implements LayoutFriendlyURLLocalService,
 			   ServiceWrapper<LayoutFriendlyURLLocalService> {
@@ -54,8 +52,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 			addLayoutFriendlyURL(
 				long userId, long companyId, long groupId, long plid,
-				boolean privateLayout, String friendlyURL, String languageId,
-				ServiceContext serviceContext)
+				boolean privateLayout, java.lang.String friendlyURL,
+				java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(
@@ -68,7 +66,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 			addLayoutFriendlyURLs(
 				long userId, long companyId, long groupId, long plid,
 				boolean privateLayout,
-				java.util.Map<java.util.Locale, String> friendlyURLMap,
+				java.util.Map<java.util.Locale, java.lang.String>
+					friendlyURLMap,
 				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -124,7 +123,9 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteLayoutFriendlyURL(long plid, String languageId) {
+	public void deleteLayoutFriendlyURL(
+		long plid, java.lang.String languageId) {
+
 		_layoutFriendlyURLLocalService.deleteLayoutFriendlyURL(
 			plid, languageId);
 	}
@@ -240,7 +241,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 		fetchFirstLayoutFriendlyURL(
-			long groupId, boolean privateLayout, String friendlyURL) {
+			long groupId, boolean privateLayout, java.lang.String friendlyURL) {
 
 		return _layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
 			groupId, privateLayout, friendlyURL);
@@ -257,8 +258,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 		fetchLayoutFriendlyURL(
-			long groupId, boolean privateLayout, String friendlyURL,
-			String languageId) {
+			long groupId, boolean privateLayout, java.lang.String friendlyURL,
+			java.lang.String languageId) {
 
 		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
 			groupId, privateLayout, friendlyURL, languageId);
@@ -266,7 +267,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
-		fetchLayoutFriendlyURL(long plid, String languageId) {
+		fetchLayoutFriendlyURL(long plid, java.lang.String languageId) {
 
 		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
 			plid, languageId);
@@ -275,7 +276,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 		fetchLayoutFriendlyURL(
-			long plid, String languageId, boolean useDefault) {
+			long plid, java.lang.String languageId, boolean useDefault) {
 
 		return _layoutFriendlyURLLocalService.fetchLayoutFriendlyURL(
 			plid, languageId, useDefault);
@@ -290,7 +291,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
-		fetchLayoutFriendlyURLByUuidAndGroupId(String uuid, long groupId) {
+		fetchLayoutFriendlyURLByUuidAndGroupId(
+			java.lang.String uuid, long groupId) {
 
 		return _layoutFriendlyURLLocalService.
 			fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
@@ -339,7 +341,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
-			getLayoutFriendlyURL(long plid, String languageId)
+			getLayoutFriendlyURL(long plid, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
@@ -349,7 +351,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 			getLayoutFriendlyURL(
-				long plid, String languageId, boolean useDefault)
+				long plid, java.lang.String languageId, boolean useDefault)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURL(
@@ -366,7 +368,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
-			getLayoutFriendlyURLByUuidAndGroupId(String uuid, long groupId)
+			getLayoutFriendlyURLByUuidAndGroupId(
+				java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutFriendlyURLLocalService.
@@ -374,10 +377,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<Long, String> getLayoutFriendlyURLs(
-		com.liferay.portal.kernel.model.Group siteGroup,
-		java.util.List<com.liferay.portal.kernel.model.Layout> layouts,
-		String languageId) {
+	public java.util.Map<java.lang.Long, java.lang.String>
+		getLayoutFriendlyURLs(
+			com.liferay.portal.kernel.model.Group siteGroup,
+			java.util.List<com.liferay.portal.kernel.model.Layout> layouts,
+			java.lang.String languageId) {
 
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 			siteGroup, layouts, languageId);
@@ -411,7 +415,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
 		getLayoutFriendlyURLs(
-			long plid, String friendlyURL, int start, int end) {
+			long plid, java.lang.String friendlyURL, int start, int end) {
 
 		return _layoutFriendlyURLLocalService.getLayoutFriendlyURLs(
 			plid, friendlyURL, start, end);
@@ -426,7 +430,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
-		getLayoutFriendlyURLsByUuidAndCompanyId(String uuid, long companyId) {
+		getLayoutFriendlyURLsByUuidAndCompanyId(
+			java.lang.String uuid, long companyId) {
 
 		return _layoutFriendlyURLLocalService.
 			getLayoutFriendlyURLsByUuidAndCompanyId(uuid, companyId);
@@ -445,7 +450,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL>
 		getLayoutFriendlyURLsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
+			java.lang.String uuid, long companyId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.LayoutFriendlyURL>
 					orderByComparator) {
@@ -471,7 +476,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _layoutFriendlyURLLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -503,8 +508,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL
 			updateLayoutFriendlyURL(
 				long userId, long companyId, long groupId, long plid,
-				boolean privateLayout, String friendlyURL, String languageId,
-				ServiceContext serviceContext)
+				boolean privateLayout, java.lang.String friendlyURL,
+				java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(
@@ -517,7 +522,8 @@ public class LayoutFriendlyURLLocalServiceWrapper
 			updateLayoutFriendlyURLs(
 				long userId, long companyId, long groupId, long plid,
 				boolean privateLayout,
-				java.util.Map<java.util.Locale, String> friendlyURLMap,
+				java.util.Map<java.util.Locale, java.lang.String>
+					friendlyURLMap,
 				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

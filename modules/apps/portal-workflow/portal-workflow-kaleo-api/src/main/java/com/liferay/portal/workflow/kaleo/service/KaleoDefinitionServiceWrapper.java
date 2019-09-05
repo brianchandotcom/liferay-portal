@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KaleoDefinitionService}.
  *
@@ -27,7 +25,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class KaleoDefinitionServiceWrapper
 	implements KaleoDefinitionService, ServiceWrapper<KaleoDefinitionService> {
 

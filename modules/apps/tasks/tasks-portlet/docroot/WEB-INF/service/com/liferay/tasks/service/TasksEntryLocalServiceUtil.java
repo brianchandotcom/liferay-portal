@@ -16,8 +16,6 @@ package com.liferay.tasks.service;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for TasksEntry. This utility wraps
  * <code>com.liferay.tasks.service.impl.TasksEntryLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntryLocalService
  * @generated
  */
-@ProviderType
 public class TasksEntryLocalServiceUtil {
 
 	/*

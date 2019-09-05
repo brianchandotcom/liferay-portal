@@ -16,8 +16,6 @@ package com.liferay.reading.time.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ReadingTimeEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ReadingTimeEntryService
  * @generated
  */
-@ProviderType
 public class ReadingTimeEntryServiceWrapper
 	implements ReadingTimeEntryService,
 			   ServiceWrapper<ReadingTimeEntryService> {

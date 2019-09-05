@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>OAuth2ApplicationServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ApplicationServiceSoap
  * @generated
  */
-@ProviderType
 public class OAuth2ApplicationServiceHttp {
 
 	public static com.liferay.oauth2.provider.model.OAuth2Application

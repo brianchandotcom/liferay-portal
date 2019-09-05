@@ -16,8 +16,6 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLFileEntryMetadataLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileEntryMetadataLocalService
  * @generated
  */
-@ProviderType
 public class DLFileEntryMetadataLocalServiceWrapper
 	implements DLFileEntryMetadataLocalService,
 			   ServiceWrapper<DLFileEntryMetadataLocalService> {

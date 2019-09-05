@@ -17,8 +17,6 @@ package com.liferay.fragment.model.impl;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the FragmentCollection service. Represents a row in the &quot;FragmentCollection&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FragmentCollection
  * @generated
  */
-@ProviderType
 public abstract class FragmentCollectionBaseImpl
 	extends FragmentCollectionModelImpl implements FragmentCollection {
 

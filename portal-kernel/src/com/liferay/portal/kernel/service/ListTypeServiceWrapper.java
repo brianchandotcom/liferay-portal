@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link ListTypeService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ListTypeService
  * @generated
  */
-@ProviderType
 public class ListTypeServiceWrapper
 	implements ListTypeService, ServiceWrapper<ListTypeService> {
 
@@ -40,14 +38,14 @@ public class ListTypeServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ListType getListType(
-		String name, String type) {
+		java.lang.String name, java.lang.String type) {
 
 		return _listTypeService.getListType(name, type);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ListType>
-		getListTypes(String type) {
+		getListTypes(java.lang.String type) {
 
 		return _listTypeService.getListTypes(type);
 	}
@@ -58,19 +56,20 @@ public class ListTypeServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _listTypeService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void validate(long listTypeId, long classNameId, String type)
+	public void validate(
+			long listTypeId, long classNameId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_listTypeService.validate(listTypeId, classNameId, type);
 	}
 
 	@Override
-	public void validate(long listTypeId, String type)
+	public void validate(long listTypeId, java.lang.String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_listTypeService.validate(listTypeId, type);

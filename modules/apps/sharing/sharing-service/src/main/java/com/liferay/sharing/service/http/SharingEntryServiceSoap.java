@@ -20,8 +20,6 @@ import com.liferay.sharing.service.SharingEntryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SharingEntryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharingEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class SharingEntryServiceSoap {
 
 	/**

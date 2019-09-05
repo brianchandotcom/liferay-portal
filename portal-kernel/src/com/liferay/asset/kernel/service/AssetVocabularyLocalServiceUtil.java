@@ -16,8 +16,6 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for AssetVocabulary. This utility wraps
  * <code>com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetVocabularyLocalService
  * @generated
  */
-@ProviderType
 public class AssetVocabularyLocalServiceUtil {
 
 	/*

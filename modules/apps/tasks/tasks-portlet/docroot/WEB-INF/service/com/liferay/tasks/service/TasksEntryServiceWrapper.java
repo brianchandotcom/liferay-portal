@@ -16,8 +16,6 @@ package com.liferay.tasks.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link TasksEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntryService
  * @generated
  */
-@ProviderType
 public class TasksEntryServiceWrapper
 	implements TasksEntryService, ServiceWrapper<TasksEntryService> {
 

@@ -49,8 +49,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the workflow instance link local service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements WorkflowInstanceLinkLocalService, IdentifiableOSGiService {

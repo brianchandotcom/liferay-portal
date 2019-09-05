@@ -16,8 +16,6 @@ package com.liferay.screens.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ScreensDDLRecordService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDLRecordService
  * @generated
  */
-@ProviderType
 public class ScreensDDLRecordServiceWrapper
 	implements ScreensDDLRecordService,
 			   ServiceWrapper<ScreensDDLRecordService> {

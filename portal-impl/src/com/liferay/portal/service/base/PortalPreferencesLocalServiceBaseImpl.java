@@ -46,8 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the portal preferences local service.
  *
@@ -59,7 +57,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class PortalPreferencesLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements PortalPreferencesLocalService, IdentifiableOSGiService {

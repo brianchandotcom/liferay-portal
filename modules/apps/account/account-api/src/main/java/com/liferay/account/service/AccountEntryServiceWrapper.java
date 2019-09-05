@@ -16,8 +16,6 @@ package com.liferay.account.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AccountEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AccountEntryService
  * @generated
  */
-@ProviderType
 public class AccountEntryServiceWrapper
 	implements AccountEntryService, ServiceWrapper<AccountEntryService> {
 

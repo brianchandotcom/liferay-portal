@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for PluginSetting. This utility wraps
  * <code>com.liferay.portal.service.impl.PluginSettingLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PluginSettingLocalService
  * @generated
  */
-@ProviderType
 public class PluginSettingLocalServiceUtil {
 
 	/*

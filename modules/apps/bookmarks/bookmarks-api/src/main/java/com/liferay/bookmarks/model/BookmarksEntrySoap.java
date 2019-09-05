@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.bookmarks.service.http.BookmarksEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class BookmarksEntrySoap implements Serializable {
 
 	public static BookmarksEntrySoap toSoapModel(BookmarksEntry model) {

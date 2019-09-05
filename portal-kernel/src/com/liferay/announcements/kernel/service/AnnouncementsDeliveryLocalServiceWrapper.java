@@ -16,8 +16,6 @@ package com.liferay.announcements.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AnnouncementsDeliveryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AnnouncementsDeliveryLocalService
  * @generated
  */
-@ProviderType
 public class AnnouncementsDeliveryLocalServiceWrapper
 	implements AnnouncementsDeliveryLocalService,
 			   ServiceWrapper<AnnouncementsDeliveryLocalService> {

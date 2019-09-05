@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link KaleoDefinitionVersion}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoDefinitionVersion
  * @generated
  */
-@ProviderType
 public class KaleoDefinitionVersionWrapper
 	extends BaseModelWrapper<KaleoDefinitionVersion>
 	implements KaleoDefinitionVersion, ModelWrapper<KaleoDefinitionVersion> {

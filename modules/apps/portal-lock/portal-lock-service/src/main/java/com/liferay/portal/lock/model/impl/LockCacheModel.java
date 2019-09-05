@@ -27,15 +27,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Lock in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class LockCacheModel
 	implements CacheModel<Lock>, Externalizable, MVCCModel {
 

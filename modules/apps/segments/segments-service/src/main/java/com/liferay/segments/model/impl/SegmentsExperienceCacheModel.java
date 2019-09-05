@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing SegmentsExperience in entity cache.
  *
  * @author Eduardo Garcia
  * @generated
  */
-@ProviderType
 public class SegmentsExperienceCacheModel
 	implements CacheModel<SegmentsExperience>, Externalizable {
 

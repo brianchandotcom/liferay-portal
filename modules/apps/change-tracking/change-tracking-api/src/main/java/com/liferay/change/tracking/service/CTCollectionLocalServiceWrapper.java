@@ -16,8 +16,6 @@ package com.liferay.change.tracking.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link CTCollectionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CTCollectionLocalService
  * @generated
  */
-@ProviderType
 public class CTCollectionLocalServiceWrapper
 	implements CTCollectionLocalService,
 			   ServiceWrapper<CTCollectionLocalService> {

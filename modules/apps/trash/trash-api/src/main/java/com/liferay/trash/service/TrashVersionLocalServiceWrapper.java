@@ -16,8 +16,6 @@ package com.liferay.trash.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link TrashVersionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TrashVersionLocalService
  * @generated
  */
-@ProviderType
 public class TrashVersionLocalServiceWrapper
 	implements TrashVersionLocalService,
 			   ServiceWrapper<TrashVersionLocalService> {

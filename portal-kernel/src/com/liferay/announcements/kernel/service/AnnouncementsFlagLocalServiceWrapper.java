@@ -16,8 +16,6 @@ package com.liferay.announcements.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AnnouncementsFlagLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AnnouncementsFlagLocalService
  * @generated
  */
-@ProviderType
 public class AnnouncementsFlagLocalServiceWrapper
 	implements AnnouncementsFlagLocalService,
 			   ServiceWrapper<AnnouncementsFlagLocalService> {

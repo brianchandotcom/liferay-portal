@@ -20,8 +20,6 @@ import com.liferay.social.kernel.service.SocialActivityServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SocialActivityServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialActivityServiceHttp
  * @generated
  */
-@ProviderType
 public class SocialActivityServiceSoap {
 
 	/**

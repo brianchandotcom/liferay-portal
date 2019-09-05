@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>MDRRuleGroupServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MDRRuleGroupServiceHttp
  * @generated
  */
-@ProviderType
 public class MDRRuleGroupServiceSoap {
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroupSoap

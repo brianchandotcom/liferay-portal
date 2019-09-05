@@ -20,8 +20,6 @@ import com.liferay.sync.service.SyncDLObjectServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SyncDLObjectServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLObjectServiceHttp
  * @generated
  */
-@ProviderType
 public class SyncDLObjectServiceSoap {
 
 	public static com.liferay.sync.model.SyncDLObjectSoap addFolder(

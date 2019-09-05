@@ -16,8 +16,6 @@ package com.liferay.journal.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link JournalFolderLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalFolderLocalService
  * @generated
  */
-@ProviderType
 public class JournalFolderLocalServiceWrapper
 	implements JournalFolderLocalService,
 			   ServiceWrapper<JournalFolderLocalService> {

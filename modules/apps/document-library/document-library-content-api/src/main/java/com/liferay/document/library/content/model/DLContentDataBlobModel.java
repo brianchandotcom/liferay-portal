@@ -16,8 +16,6 @@ package com.liferay.document.library.content.model;
 
 import java.sql.Blob;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The Blob model class for lazy loading the data column in DLContent.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLContent
  * @generated
  */
-@ProviderType
 public class DLContentDataBlobModel {
 
 	public DLContentDataBlobModel() {

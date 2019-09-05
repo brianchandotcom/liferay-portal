@@ -16,8 +16,6 @@ package com.liferay.knowledge.base.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KBFolderLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBFolderLocalService
  * @generated
  */
-@ProviderType
 public class KBFolderLocalServiceWrapper
 	implements KBFolderLocalService, ServiceWrapper<KBFolderLocalService> {
 

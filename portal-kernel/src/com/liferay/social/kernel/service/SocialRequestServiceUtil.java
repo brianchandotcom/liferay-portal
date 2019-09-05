@@ -16,8 +16,6 @@ package com.liferay.social.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for SocialRequest. This utility wraps
  * <code>com.liferay.portlet.social.service.impl.SocialRequestServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialRequestService
  * @generated
  */
-@ProviderType
 public class SocialRequestServiceUtil {
 
 	/*

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ExpandoColumnServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoColumnServiceHttp
  * @generated
  */
-@ProviderType
 public class ExpandoColumnServiceSoap {
 
 	public static com.liferay.expando.kernel.model.ExpandoColumnSoap addColumn(

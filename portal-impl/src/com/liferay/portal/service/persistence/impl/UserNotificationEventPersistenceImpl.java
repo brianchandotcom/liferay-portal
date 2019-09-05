@@ -49,8 +49,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the user notification event service.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserNotificationEventPersistenceImpl
 	extends BasePersistenceImpl<UserNotificationEvent>
 	implements UserNotificationEventPersistence {

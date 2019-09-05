@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link TicketLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TicketLocalService
  * @generated
  */
-@ProviderType
 public class TicketLocalServiceWrapper
 	implements TicketLocalService, ServiceWrapper<TicketLocalService> {
 
@@ -33,8 +31,8 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Ticket addDistinctTicket(
-		long companyId, String className, long classPK, int type,
-		String extraInfo, java.util.Date expirationDate,
+		long companyId, java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
 		ServiceContext serviceContext) {
 
 		return _ticketLocalService.addDistinctTicket(
@@ -44,8 +42,8 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Ticket addTicket(
-		long companyId, String className, long classPK, int type,
-		String extraInfo, java.util.Date expirationDate,
+		long companyId, java.lang.String className, long classPK, int type,
+		java.lang.String extraInfo, java.util.Date expirationDate,
 		ServiceContext serviceContext) {
 
 		return _ticketLocalService.addTicket(
@@ -210,7 +208,9 @@ public class TicketLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket fetchTicket(String key) {
+	public com.liferay.portal.kernel.model.Ticket fetchTicket(
+		java.lang.String key) {
+
 		return _ticketLocalService.fetchTicket(key);
 	}
 
@@ -234,7 +234,7 @@ public class TicketLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _ticketLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -261,7 +261,8 @@ public class TicketLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket getTicket(String key)
+	public com.liferay.portal.kernel.model.Ticket getTicket(
+			java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ticketLocalService.getTicket(key);
@@ -287,7 +288,7 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
-		long companyId, String className, long classPK, int type) {
+		long companyId, java.lang.String className, long classPK, int type) {
 
 		return _ticketLocalService.getTickets(
 			companyId, className, classPK, type);
@@ -295,7 +296,7 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
-		String className, long classPK, int type) {
+		java.lang.String className, long classPK, int type) {
 
 		return _ticketLocalService.getTickets(className, classPK, type);
 	}
@@ -312,8 +313,8 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Ticket updateTicket(
-			long ticketId, String className, long classPK, int type,
-			String extraInfo, java.util.Date expirationDate)
+			long ticketId, java.lang.String className, long classPK, int type,
+			java.lang.String extraInfo, java.util.Date expirationDate)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ticketLocalService.updateTicket(

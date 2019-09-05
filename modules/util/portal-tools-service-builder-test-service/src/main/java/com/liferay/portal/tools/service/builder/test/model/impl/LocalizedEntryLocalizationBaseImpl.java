@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization;
 
 /**
@@ -30,7 +28,6 @@ import com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocaliz
  * @see LocalizedEntryLocalization
  * @generated
  */
-@ProviderType
 public abstract class LocalizedEntryLocalizationBaseImpl
 	extends LocalizedEntryLocalizationModelImpl
 	implements LocalizedEntryLocalization {

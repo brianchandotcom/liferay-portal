@@ -46,8 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the image local service.
  *
@@ -59,7 +57,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.ImageLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class ImageLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ImageLocalService, IdentifiableOSGiService {

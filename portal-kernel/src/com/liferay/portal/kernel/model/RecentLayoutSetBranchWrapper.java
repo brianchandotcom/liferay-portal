@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link RecentLayoutSetBranch}.
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RecentLayoutSetBranch
  * @generated
  */
-@ProviderType
 public class RecentLayoutSetBranchWrapper
 	extends BaseModelWrapper<RecentLayoutSetBranch>
 	implements RecentLayoutSetBranch, ModelWrapper<RecentLayoutSetBranch> {

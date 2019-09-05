@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link AMImageEntry}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AMImageEntry
  * @generated
  */
-@ProviderType
 public class AMImageEntryWrapper
 	extends BaseModelWrapper<AMImageEntry>
 	implements AMImageEntry, ModelWrapper<AMImageEntry> {

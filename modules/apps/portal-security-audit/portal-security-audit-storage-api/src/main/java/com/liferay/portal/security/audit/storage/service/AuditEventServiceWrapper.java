@@ -16,8 +16,6 @@ package com.liferay.portal.security.audit.storage.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AuditEventService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AuditEventService
  * @generated
  */
-@ProviderType
 public class AuditEventServiceWrapper
 	implements AuditEventService, ServiceWrapper<AuditEventService> {
 

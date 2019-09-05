@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>AnnouncementsEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AnnouncementsEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class AnnouncementsEntryServiceHttp {
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link WebDAVPropsLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WebDAVPropsLocalService
  * @generated
  */
-@ProviderType
 public class WebDAVPropsLocalServiceWrapper
 	implements WebDAVPropsLocalService,
 			   ServiceWrapper<WebDAVPropsLocalService> {
@@ -87,7 +85,7 @@ public class WebDAVPropsLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteWebDAVProps(String className, long classPK) {
+	public void deleteWebDAVProps(java.lang.String className, long classPK) {
 		_webDAVPropsLocalService.deleteWebDAVProps(className, classPK);
 	}
 
@@ -221,7 +219,7 @@ public class WebDAVPropsLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _webDAVPropsLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -250,7 +248,7 @@ public class WebDAVPropsLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps getWebDAVProps(
-		long companyId, String className, long classPK) {
+		long companyId, java.lang.String className, long classPK) {
 
 		return _webDAVPropsLocalService.getWebDAVProps(
 			companyId, className, classPK);

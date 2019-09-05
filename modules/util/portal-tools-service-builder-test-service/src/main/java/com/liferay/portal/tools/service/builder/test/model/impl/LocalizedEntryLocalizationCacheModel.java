@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -33,7 +31,6 @@ import java.io.ObjectOutput;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class LocalizedEntryLocalizationCacheModel
 	implements CacheModel<LocalizedEntryLocalization>, Externalizable,
 			   MVCCModel {

@@ -16,8 +16,6 @@ package com.liferay.flags.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link FlagsEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FlagsEntryService
  * @generated
  */
-@ProviderType
 public class FlagsEntryServiceWrapper
 	implements FlagsEntryService, ServiceWrapper<FlagsEntryService> {
 

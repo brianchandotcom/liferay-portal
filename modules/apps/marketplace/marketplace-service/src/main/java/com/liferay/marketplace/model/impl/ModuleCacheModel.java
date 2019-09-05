@@ -24,15 +24,12 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Module in entity cache.
  *
  * @author Ryan Park
  * @generated
  */
-@ProviderType
 public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 
 	@Override

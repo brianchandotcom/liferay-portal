@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing TasksEntry in entity cache.
  *
  * @author Ryan Park
  * @generated
  */
-@ProviderType
 public class TasksEntryCacheModel
 	implements CacheModel<TasksEntry>, Externalizable {
 

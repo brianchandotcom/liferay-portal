@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DDLRecordSetVersionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDLRecordSetVersionServiceHttp
  * @generated
  */
-@ProviderType
 public class DDLRecordSetVersionServiceSoap {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSetVersionSoap

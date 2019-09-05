@@ -16,13 +16,10 @@ package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class AssetVocabularyFinderUtil {
 
 	public static int countByG_N(long groupId, String name) {

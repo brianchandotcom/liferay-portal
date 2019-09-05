@@ -16,8 +16,6 @@ package com.liferay.portal.lock.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link LockLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LockLocalService
  * @generated
  */
-@ProviderType
 public class LockLocalServiceWrapper
 	implements LockLocalService, ServiceWrapper<LockLocalService> {
 

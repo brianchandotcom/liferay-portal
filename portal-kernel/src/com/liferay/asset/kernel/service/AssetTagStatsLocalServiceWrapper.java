@@ -16,8 +16,6 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetTagStatsLocalService}.
  *
@@ -28,7 +26,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class AssetTagStatsLocalServiceWrapper
 	implements AssetTagStatsLocalService,
 			   ServiceWrapper<AssetTagStatsLocalService> {

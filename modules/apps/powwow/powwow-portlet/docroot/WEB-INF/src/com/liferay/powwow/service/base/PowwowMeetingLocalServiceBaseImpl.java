@@ -51,8 +51,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the powwow meeting local service.
  *
@@ -64,7 +62,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.powwow.service.impl.PowwowMeetingLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class PowwowMeetingLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements PowwowMeetingLocalService, IdentifiableOSGiService {

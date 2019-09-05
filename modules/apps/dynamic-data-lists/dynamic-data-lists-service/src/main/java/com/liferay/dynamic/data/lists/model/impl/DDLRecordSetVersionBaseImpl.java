@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.lists.model.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetVersionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDLRecordSetVersion service. Represents a row in the &quot;DDLRecordSetVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDLRecordSetVersion
  * @generated
  */
-@ProviderType
 public abstract class DDLRecordSetVersionBaseImpl
 	extends DDLRecordSetVersionModelImpl implements DDLRecordSetVersion {
 

@@ -48,8 +48,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the user notification event local service.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.UserNotificationEventLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class UserNotificationEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements UserNotificationEventLocalService, IdentifiableOSGiService {

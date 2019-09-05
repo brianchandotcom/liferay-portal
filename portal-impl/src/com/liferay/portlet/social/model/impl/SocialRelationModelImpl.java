@@ -41,8 +41,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the SocialRelation service. Represents a row in the &quot;SocialRelation&quot; database table, with each column mapped to a property of this class.
  *
@@ -54,7 +52,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialRelationImpl
  * @generated
  */
-@ProviderType
 public class SocialRelationModelImpl
 	extends BaseModelImpl<SocialRelation> implements SocialRelationModel {
 

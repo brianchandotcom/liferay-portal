@@ -17,8 +17,6 @@ package com.liferay.blogs.model.impl;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the BlogsEntry service. Represents a row in the &quot;BlogsEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BlogsEntry
  * @generated
  */
-@ProviderType
 public abstract class BlogsEntryBaseImpl
 	extends BlogsEntryModelImpl implements BlogsEntry {
 

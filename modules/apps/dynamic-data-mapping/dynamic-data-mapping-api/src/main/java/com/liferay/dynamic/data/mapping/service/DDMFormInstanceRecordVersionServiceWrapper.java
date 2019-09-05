@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.mapping.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DDMFormInstanceRecordVersionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMFormInstanceRecordVersionService
  * @generated
  */
-@ProviderType
 public class DDMFormInstanceRecordVersionServiceWrapper
 	implements DDMFormInstanceRecordVersionService,
 			   ServiceWrapper<DDMFormInstanceRecordVersionService> {

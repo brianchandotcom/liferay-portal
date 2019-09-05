@@ -16,8 +16,6 @@ package com.liferay.marketplace.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AppLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AppLocalService
  * @generated
  */
-@ProviderType
 public class AppLocalServiceWrapper
 	implements AppLocalService, ServiceWrapper<AppLocalService> {
 

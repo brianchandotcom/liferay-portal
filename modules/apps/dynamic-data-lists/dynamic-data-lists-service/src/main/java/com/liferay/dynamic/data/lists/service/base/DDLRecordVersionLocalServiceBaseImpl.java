@@ -48,7 +48,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,7 +61,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DDLRecordVersionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DDLRecordVersionLocalService, AopService,

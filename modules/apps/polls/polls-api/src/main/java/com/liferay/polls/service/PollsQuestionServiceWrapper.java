@@ -16,8 +16,6 @@ package com.liferay.polls.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PollsQuestionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PollsQuestionService
  * @generated
  */
-@ProviderType
 public class PollsQuestionServiceWrapper
 	implements PollsQuestionService, ServiceWrapper<PollsQuestionService> {
 

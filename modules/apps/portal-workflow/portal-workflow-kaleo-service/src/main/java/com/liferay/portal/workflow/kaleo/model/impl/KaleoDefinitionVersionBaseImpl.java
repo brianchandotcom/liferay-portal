@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoDefinitionVersion service. Represents a row in the &quot;KaleoDefinitionVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoDefinitionVersion
  * @generated
  */
-@ProviderType
 public abstract class KaleoDefinitionVersionBaseImpl
 	extends KaleoDefinitionVersionModelImpl implements KaleoDefinitionVersion {
 

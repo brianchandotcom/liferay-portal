@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.segments.service.http.SegmentsExperimentRelServiceSoap}.
  *
  * @author Eduardo Garcia
  * @generated
  */
-@ProviderType
 public class SegmentsExperimentRelSoap implements Serializable {
 
 	public static SegmentsExperimentRelSoap toSoapModel(

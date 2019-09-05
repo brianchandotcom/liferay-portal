@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>ScreensJournalArticleServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensJournalArticleServiceSoap
  * @generated
  */
-@ProviderType
 public class ScreensJournalArticleServiceHttp {
 
 	public static String getJournalArticleContent(

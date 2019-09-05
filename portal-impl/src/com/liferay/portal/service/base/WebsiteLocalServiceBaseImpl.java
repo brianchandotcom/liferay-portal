@@ -58,8 +58,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the website local service.
  *
@@ -71,7 +69,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.WebsiteLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class WebsiteLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements WebsiteLocalService, IdentifiableOSGiService {

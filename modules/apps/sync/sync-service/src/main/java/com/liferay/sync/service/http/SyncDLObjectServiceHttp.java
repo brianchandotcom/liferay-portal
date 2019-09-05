@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.sync.service.SyncDLObjectServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SyncDLObjectServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLObjectServiceSoap
  * @generated
  */
-@ProviderType
 public class SyncDLObjectServiceHttp {
 
 	public static com.liferay.sync.model.SyncDLObject addFileEntry(

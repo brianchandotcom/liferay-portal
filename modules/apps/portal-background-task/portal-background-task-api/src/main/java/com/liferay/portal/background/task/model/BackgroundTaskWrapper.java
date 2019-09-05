@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link BackgroundTask}.
@@ -34,7 +32,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BackgroundTask
  * @generated
  */
-@ProviderType
 public class BackgroundTaskWrapper
 	extends BaseModelWrapper<BackgroundTask>
 	implements BackgroundTask, ModelWrapper<BackgroundTask> {

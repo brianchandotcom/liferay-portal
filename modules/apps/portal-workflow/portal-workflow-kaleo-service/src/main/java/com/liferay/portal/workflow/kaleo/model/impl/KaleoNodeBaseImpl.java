@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoNode service. Represents a row in the &quot;KaleoNode&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoNode
  * @generated
  */
-@ProviderType
 public abstract class KaleoNodeBaseImpl
 	extends KaleoNodeModelImpl implements KaleoNode {
 

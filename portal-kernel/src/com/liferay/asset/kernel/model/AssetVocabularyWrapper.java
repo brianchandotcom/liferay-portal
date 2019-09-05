@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link AssetVocabulary}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetVocabulary
  * @generated
  */
-@ProviderType
 public class AssetVocabularyWrapper
 	extends BaseModelWrapper<AssetVocabulary>
 	implements AssetVocabulary, ModelWrapper<AssetVocabulary> {

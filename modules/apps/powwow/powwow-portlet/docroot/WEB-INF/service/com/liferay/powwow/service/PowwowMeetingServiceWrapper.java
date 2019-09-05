@@ -16,8 +16,6 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PowwowMeetingService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeetingService
  * @generated
  */
-@ProviderType
 public class PowwowMeetingServiceWrapper
 	implements PowwowMeetingService, ServiceWrapper<PowwowMeetingService> {
 

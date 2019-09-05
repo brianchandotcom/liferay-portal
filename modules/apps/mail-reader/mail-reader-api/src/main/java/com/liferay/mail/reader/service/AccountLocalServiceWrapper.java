@@ -16,8 +16,6 @@ package com.liferay.mail.reader.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AccountLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AccountLocalService
  * @generated
  */
-@ProviderType
 public class AccountLocalServiceWrapper
 	implements AccountLocalService, ServiceWrapper<AccountLocalService> {
 

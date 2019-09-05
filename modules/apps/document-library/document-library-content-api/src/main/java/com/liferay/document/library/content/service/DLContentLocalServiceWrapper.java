@@ -16,8 +16,6 @@ package com.liferay.document.library.content.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLContentLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLContentLocalService
  * @generated
  */
-@ProviderType
 public class DLContentLocalServiceWrapper
 	implements DLContentLocalService, ServiceWrapper<DLContentLocalService> {
 

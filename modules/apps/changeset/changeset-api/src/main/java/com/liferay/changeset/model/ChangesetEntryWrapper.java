@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link ChangesetEntry}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ChangesetEntry
  * @generated
  */
-@ProviderType
 public class ChangesetEntryWrapper
 	extends BaseModelWrapper<ChangesetEntry>
 	implements ChangesetEntry, ModelWrapper<ChangesetEntry> {

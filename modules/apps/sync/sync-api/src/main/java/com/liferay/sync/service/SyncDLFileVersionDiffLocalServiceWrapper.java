@@ -16,8 +16,6 @@ package com.liferay.sync.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SyncDLFileVersionDiffLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLFileVersionDiffLocalService
  * @generated
  */
-@ProviderType
 public class SyncDLFileVersionDiffLocalServiceWrapper
 	implements SyncDLFileVersionDiffLocalService,
 			   ServiceWrapper<SyncDLFileVersionDiffLocalService> {

@@ -14,8 +14,6 @@
 
 package com.liferay.external.data.source.test.service.persistence.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.external.data.source.test.exception.NoSuchTestEntityException;
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.model.impl.TestEntityImpl;
@@ -57,7 +55,6 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class TestEntityPersistenceImpl
 	extends BasePersistenceImpl<TestEntity> implements TestEntityPersistence {
 

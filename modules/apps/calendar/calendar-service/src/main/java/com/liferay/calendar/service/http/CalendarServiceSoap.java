@@ -24,8 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>CalendarServiceUtil</code> service
@@ -65,7 +63,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CalendarServiceHttp
  * @generated
  */
-@ProviderType
 public class CalendarServiceSoap {
 
 	public static com.liferay.calendar.model.CalendarSoap addCalendar(

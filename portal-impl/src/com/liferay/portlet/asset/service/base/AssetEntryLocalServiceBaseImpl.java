@@ -60,8 +60,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the asset entry local service.
  *
@@ -73,7 +71,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class AssetEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AssetEntryLocalService, IdentifiableOSGiService {

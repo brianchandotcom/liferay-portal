@@ -47,8 +47,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the user ID mapper service.
  *
@@ -59,7 +57,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserIdMapperPersistenceImpl
 	extends BasePersistenceImpl<UserIdMapper>
 	implements UserIdMapperPersistence {

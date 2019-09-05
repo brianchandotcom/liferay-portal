@@ -16,8 +16,6 @@ package com.liferay.exportimport.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ExportImportConfigurationLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExportImportConfigurationLocalService
  * @generated
  */
-@ProviderType
 public class ExportImportConfigurationLocalServiceWrapper
 	implements ExportImportConfigurationLocalService,
 			   ServiceWrapper<ExportImportConfigurationLocalService> {

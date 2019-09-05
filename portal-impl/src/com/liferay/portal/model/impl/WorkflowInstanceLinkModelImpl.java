@@ -48,8 +48,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the WorkflowInstanceLink service. Represents a row in the &quot;WorkflowInstanceLink&quot; database table, with each column mapped to a property of this class.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WorkflowInstanceLinkImpl
  * @generated
  */
-@ProviderType
 public class WorkflowInstanceLinkModelImpl
 	extends BaseModelImpl<WorkflowInstanceLink>
 	implements WorkflowInstanceLinkModel {

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Organization service. Represents a row in the &quot;Organization_&quot; database table, with each column mapped to a property of this class.
  *
@@ -36,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Organization
  * @generated
  */
-@ProviderType
 public abstract class OrganizationBaseImpl
 	extends OrganizationModelImpl implements Organization {
 

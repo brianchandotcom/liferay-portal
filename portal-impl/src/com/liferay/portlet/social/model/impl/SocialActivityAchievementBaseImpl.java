@@ -17,8 +17,6 @@ package com.liferay.portlet.social.model.impl;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
 import com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SocialActivityAchievement service. Represents a row in the &quot;SocialActivityAchievement&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialActivityAchievement
  * @generated
  */
-@ProviderType
 public abstract class SocialActivityAchievementBaseImpl
 	extends SocialActivityAchievementModelImpl
 	implements SocialActivityAchievement {

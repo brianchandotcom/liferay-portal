@@ -48,8 +48,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the social relation local service.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SocialRelationLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SocialRelationLocalService, IdentifiableOSGiService {

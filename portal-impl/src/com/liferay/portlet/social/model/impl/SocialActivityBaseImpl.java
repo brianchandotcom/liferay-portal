@@ -17,8 +17,6 @@ package com.liferay.portlet.social.model.impl;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SocialActivity service. Represents a row in the &quot;SocialActivity&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SocialActivity
  * @generated
  */
-@ProviderType
 public abstract class SocialActivityBaseImpl
 	extends SocialActivityModelImpl implements SocialActivity {
 

@@ -17,8 +17,6 @@ package com.liferay.journal.model.impl;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the JournalFeed service. Represents a row in the &quot;JournalFeed&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalFeed
  * @generated
  */
-@ProviderType
 public abstract class JournalFeedBaseImpl
 	extends JournalFeedModelImpl implements JournalFeed {
 

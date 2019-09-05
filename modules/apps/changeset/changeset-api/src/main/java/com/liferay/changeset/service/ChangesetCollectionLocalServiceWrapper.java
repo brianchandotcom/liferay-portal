@@ -16,8 +16,6 @@ package com.liferay.changeset.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ChangesetCollectionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ChangesetCollectionLocalService
  * @generated
  */
-@ProviderType
 public class ChangesetCollectionLocalServiceWrapper
 	implements ChangesetCollectionLocalService,
 			   ServiceWrapper<ChangesetCollectionLocalService> {

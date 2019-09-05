@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link PluginSettingService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PluginSettingService
  * @generated
  */
-@ProviderType
 public class PluginSettingServiceWrapper
 	implements PluginSettingService, ServiceWrapper<PluginSettingService> {
 
@@ -39,14 +37,14 @@ public class PluginSettingServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _pluginSettingService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.PluginSetting updatePluginSetting(
-			long companyId, String pluginId, String pluginType, String roles,
-			boolean active)
+			long companyId, java.lang.String pluginId,
+			java.lang.String pluginType, java.lang.String roles, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _pluginSettingService.updatePluginSetting(

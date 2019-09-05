@@ -20,8 +20,6 @@ import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensRatingsEntryServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensRatingsEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensRatingsEntryServiceSoap {
 
 	public static String deleteRatingsEntry(

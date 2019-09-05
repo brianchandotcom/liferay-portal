@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Account service. Represents a row in the &quot;Account_&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Account
  * @generated
  */
-@ProviderType
 public abstract class AccountBaseImpl
 	extends AccountModelImpl implements Account {
 

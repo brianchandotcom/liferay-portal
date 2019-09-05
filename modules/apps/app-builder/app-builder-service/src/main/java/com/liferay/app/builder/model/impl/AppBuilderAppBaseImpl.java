@@ -17,8 +17,6 @@ package com.liferay.app.builder.model.impl;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AppBuilderApp service. Represents a row in the &quot;AppBuilderApp&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AppBuilderApp
  * @generated
  */
-@ProviderType
 public abstract class AppBuilderAppBaseImpl
 	extends AppBuilderAppModelImpl implements AppBuilderApp {
 

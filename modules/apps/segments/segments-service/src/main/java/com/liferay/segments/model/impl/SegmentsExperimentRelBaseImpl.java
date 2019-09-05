@@ -17,8 +17,6 @@ package com.liferay.segments.model.impl;
 import com.liferay.segments.model.SegmentsExperimentRel;
 import com.liferay.segments.service.SegmentsExperimentRelLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SegmentsExperimentRel service. Represents a row in the &quot;SegmentsExperimentRel&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsExperimentRel
  * @generated
  */
-@ProviderType
 public abstract class SegmentsExperimentRelBaseImpl
 	extends SegmentsExperimentRelModelImpl implements SegmentsExperimentRel {
 

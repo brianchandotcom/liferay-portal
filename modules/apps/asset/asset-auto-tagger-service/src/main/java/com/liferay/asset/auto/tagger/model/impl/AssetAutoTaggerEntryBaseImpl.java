@@ -17,8 +17,6 @@ package com.liferay.asset.auto.tagger.model.impl;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AssetAutoTaggerEntry service. Represents a row in the &quot;AssetAutoTaggerEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetAutoTaggerEntry
  * @generated
  */
-@ProviderType
 public abstract class AssetAutoTaggerEntryBaseImpl
 	extends AssetAutoTaggerEntryModelImpl implements AssetAutoTaggerEntry {
 

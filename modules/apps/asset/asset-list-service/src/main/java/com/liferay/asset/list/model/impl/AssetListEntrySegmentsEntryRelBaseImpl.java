@@ -17,8 +17,6 @@ package com.liferay.asset.list.model.impl;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AssetListEntrySegmentsEntryRel service. Represents a row in the &quot;AssetListEntrySegmentsEntryRel&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetListEntrySegmentsEntryRel
  * @generated
  */
-@ProviderType
 public abstract class AssetListEntrySegmentsEntryRelBaseImpl
 	extends AssetListEntrySegmentsEntryRelModelImpl
 	implements AssetListEntrySegmentsEntryRel {

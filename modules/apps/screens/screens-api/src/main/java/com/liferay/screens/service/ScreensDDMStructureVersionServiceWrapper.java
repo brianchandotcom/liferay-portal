@@ -16,8 +16,6 @@ package com.liferay.screens.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ScreensDDMStructureVersionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDMStructureVersionService
  * @generated
  */
-@ProviderType
 public class ScreensDDMStructureVersionServiceWrapper
 	implements ScreensDDMStructureVersionService,
 			   ServiceWrapper<ScreensDDMStructureVersionService> {

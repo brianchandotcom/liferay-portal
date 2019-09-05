@@ -40,8 +40,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the DLSyncEvent service. Represents a row in the &quot;DLSyncEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -53,7 +51,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLSyncEventImpl
  * @generated
  */
-@ProviderType
 public class DLSyncEventModelImpl
 	extends BaseModelImpl<DLSyncEvent> implements DLSyncEventModel {
 

@@ -48,8 +48,6 @@ import com.liferay.trash.kernel.service.persistence.TrashVersionPersistence;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the dl app helper local service.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DLAppHelperLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DLAppHelperLocalService, IdentifiableOSGiService {

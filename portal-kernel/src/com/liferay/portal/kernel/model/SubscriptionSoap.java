@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class SubscriptionSoap implements Serializable {
 
 	public static SubscriptionSoap toSoapModel(Subscription model) {

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>LayoutPageTemplateEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutPageTemplateEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class LayoutPageTemplateEntryServiceHttp {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry

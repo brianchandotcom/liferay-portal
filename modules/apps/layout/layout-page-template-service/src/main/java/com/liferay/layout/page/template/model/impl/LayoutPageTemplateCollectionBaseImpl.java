@@ -17,8 +17,6 @@ package com.liferay.layout.page.template.model.impl;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the LayoutPageTemplateCollection service. Represents a row in the &quot;LayoutPageTemplateCollection&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutPageTemplateCollection
  * @generated
  */
-@ProviderType
 public abstract class LayoutPageTemplateCollectionBaseImpl
 	extends LayoutPageTemplateCollectionModelImpl
 	implements LayoutPageTemplateCollection {

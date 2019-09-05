@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.security.service.access.policy.service.http.SAPEntryServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class SAPEntrySoap implements Serializable {
 
 	public static SAPEntrySoap toSoapModel(SAPEntry model) {

@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoTaskInstanceToken service. Represents a row in the &quot;KaleoTaskInstanceToken&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTaskInstanceToken
  * @generated
  */
-@ProviderType
 public abstract class KaleoTaskInstanceTokenBaseImpl
 	extends KaleoTaskInstanceTokenModelImpl implements KaleoTaskInstanceToken {
 

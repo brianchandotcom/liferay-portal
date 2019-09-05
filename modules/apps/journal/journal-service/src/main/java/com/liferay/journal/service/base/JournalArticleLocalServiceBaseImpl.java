@@ -67,7 +67,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -81,7 +80,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.journal.service.impl.JournalArticleLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class JournalArticleLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements JournalArticleLocalService, AopService, IdentifiableOSGiService {

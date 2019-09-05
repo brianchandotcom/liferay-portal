@@ -64,8 +64,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the user group local service.
  *
@@ -77,7 +75,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.UserGroupLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class UserGroupLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements UserGroupLocalService, IdentifiableOSGiService {

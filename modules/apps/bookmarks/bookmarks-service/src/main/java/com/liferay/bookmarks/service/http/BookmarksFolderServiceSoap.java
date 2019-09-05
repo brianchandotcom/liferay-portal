@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>BookmarksFolderServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BookmarksFolderServiceHttp
  * @generated
  */
-@ProviderType
 public class BookmarksFolderServiceSoap {
 
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap addFolder(

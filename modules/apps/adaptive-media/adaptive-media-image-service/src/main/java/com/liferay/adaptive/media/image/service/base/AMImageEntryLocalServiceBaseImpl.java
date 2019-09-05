@@ -46,7 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,7 +59,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.adaptive.media.image.service.impl.AMImageEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class AMImageEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AMImageEntryLocalService, AopService, IdentifiableOSGiService {

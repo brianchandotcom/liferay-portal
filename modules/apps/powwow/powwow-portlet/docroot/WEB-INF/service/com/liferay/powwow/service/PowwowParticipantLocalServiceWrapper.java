@@ -16,8 +16,6 @@ package com.liferay.powwow.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PowwowParticipantLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowParticipantLocalService
  * @generated
  */
-@ProviderType
 public class PowwowParticipantLocalServiceWrapper
 	implements PowwowParticipantLocalService,
 			   ServiceWrapper<PowwowParticipantLocalService> {

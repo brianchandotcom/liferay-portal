@@ -16,15 +16,12 @@ package com.liferay.asset.kernel.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @deprecated
  * @generated
  */
 @Deprecated
-@ProviderType
 public class AssetCategoryPropertyFinderUtil {
 
 	public static int countByG_K(long groupId, String key) {

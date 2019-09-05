@@ -17,8 +17,6 @@ package com.liferay.oauth2.provider.model.impl;
 import com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the OAuth2ApplicationScopeAliases service. Represents a row in the &quot;OAuth2ApplicationScopeAliases&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ApplicationScopeAliases
  * @generated
  */
-@ProviderType
 public abstract class OAuth2ApplicationScopeAliasesBaseImpl
 	extends OAuth2ApplicationScopeAliasesModelImpl
 	implements OAuth2ApplicationScopeAliases {

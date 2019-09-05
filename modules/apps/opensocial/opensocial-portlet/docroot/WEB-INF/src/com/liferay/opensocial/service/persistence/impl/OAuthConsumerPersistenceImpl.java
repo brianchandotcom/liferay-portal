@@ -48,8 +48,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the o auth consumer service.
  *
@@ -60,7 +58,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class OAuthConsumerPersistenceImpl
 	extends BasePersistenceImpl<OAuthConsumer>
 	implements OAuthConsumerPersistence {

@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link BlogsEntry}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BlogsEntry
  * @generated
  */
-@ProviderType
 public class BlogsEntryWrapper
 	extends BaseModelWrapper<BlogsEntry>
 	implements BlogsEntry, ModelWrapper<BlogsEntry> {

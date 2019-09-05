@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link SegmentsExperimentRel}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsExperimentRel
  * @generated
  */
-@ProviderType
 public class SegmentsExperimentRelWrapper
 	extends BaseModelWrapper<SegmentsExperimentRel>
 	implements SegmentsExperimentRel, ModelWrapper<SegmentsExperimentRel> {

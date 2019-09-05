@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.PluginSettingServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PluginSettingServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PluginSettingServiceHttp
  * @generated
  */
-@ProviderType
 public class PluginSettingServiceSoap {
 
 	public static com.liferay.portal.kernel.model.PluginSettingSoap

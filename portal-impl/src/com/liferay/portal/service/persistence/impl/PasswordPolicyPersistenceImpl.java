@@ -55,8 +55,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the password policy service.
  *
@@ -67,7 +65,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class PasswordPolicyPersistenceImpl
 	extends BasePersistenceImpl<PasswordPolicy>
 	implements PasswordPolicyPersistence {

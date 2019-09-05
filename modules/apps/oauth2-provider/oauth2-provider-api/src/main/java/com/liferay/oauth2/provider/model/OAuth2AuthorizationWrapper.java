@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link OAuth2Authorization}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2Authorization
  * @generated
  */
-@ProviderType
 public class OAuth2AuthorizationWrapper
 	extends BaseModelWrapper<OAuth2Authorization>
 	implements OAuth2Authorization, ModelWrapper<OAuth2Authorization> {

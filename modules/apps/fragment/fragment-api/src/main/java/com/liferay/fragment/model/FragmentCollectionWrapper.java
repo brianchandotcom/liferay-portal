@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link FragmentCollection}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FragmentCollection
  * @generated
  */
-@ProviderType
 public class FragmentCollectionWrapper
 	extends BaseModelWrapper<FragmentCollection>
 	implements FragmentCollection, ModelWrapper<FragmentCollection> {

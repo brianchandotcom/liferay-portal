@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>KBFolderServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBFolderServiceHttp
  * @generated
  */
-@ProviderType
 public class KBFolderServiceSoap {
 
 	public static com.liferay.knowledge.base.model.KBFolderSoap addKBFolder(

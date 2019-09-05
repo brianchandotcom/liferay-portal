@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the dl trash local service.
  *
@@ -41,7 +39,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DLTrashLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DLTrashLocalService, IdentifiableOSGiService {

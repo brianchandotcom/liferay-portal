@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoTaskForm service. Represents a row in the &quot;KaleoTaskForm&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTaskForm
  * @generated
  */
-@ProviderType
 public abstract class KaleoTaskFormBaseImpl
 	extends KaleoTaskFormModelImpl implements KaleoTaskForm {
 

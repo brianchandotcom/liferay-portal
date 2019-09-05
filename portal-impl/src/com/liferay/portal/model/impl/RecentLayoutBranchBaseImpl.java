@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.RecentLayoutBranch;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the RecentLayoutBranch service. Represents a row in the &quot;RecentLayoutBranch&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RecentLayoutBranch
  * @generated
  */
-@ProviderType
 public abstract class RecentLayoutBranchBaseImpl
 	extends RecentLayoutBranchModelImpl implements RecentLayoutBranch {
 

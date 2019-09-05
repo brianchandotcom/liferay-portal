@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link PermissionService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PermissionService
  * @generated
  */
-@ProviderType
 public class PermissionServiceWrapper
 	implements PermissionService, ServiceWrapper<PermissionService> {
 
@@ -39,7 +37,8 @@ public class PermissionServiceWrapper
 	 * @param primKey the primary key of the service
 	 */
 	@Override
-	public void checkPermission(long groupId, String name, long primKey)
+	public void checkPermission(
+			long groupId, java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_permissionService.checkPermission(groupId, name, primKey);
@@ -53,7 +52,8 @@ public class PermissionServiceWrapper
 	 * @param primKey the primary key of the service
 	 */
 	@Override
-	public void checkPermission(long groupId, String name, String primKey)
+	public void checkPermission(
+			long groupId, java.lang.String name, java.lang.String primKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_permissionService.checkPermission(groupId, name, primKey);
@@ -65,7 +65,7 @@ public class PermissionServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _permissionService.getOSGiServiceIdentifier();
 	}
 

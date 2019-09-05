@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ExportImportServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExportImportServiceHttp
  * @generated
  */
-@ProviderType
 public class ExportImportServiceSoap {
 
 	public static long exportLayoutsAsFileInBackground(

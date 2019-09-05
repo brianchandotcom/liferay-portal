@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link AccountService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AccountService
  * @generated
  */
-@ProviderType
 public class AccountServiceWrapper
 	implements AccountService, ServiceWrapper<AccountService> {
 
@@ -37,7 +35,7 @@ public class AccountServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _accountService.getOSGiServiceIdentifier();
 	}
 

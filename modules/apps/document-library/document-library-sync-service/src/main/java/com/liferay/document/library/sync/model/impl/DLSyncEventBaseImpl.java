@@ -17,8 +17,6 @@ package com.liferay.document.library.sync.model.impl;
 import com.liferay.document.library.sync.model.DLSyncEvent;
 import com.liferay.document.library.sync.service.DLSyncEventLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DLSyncEvent service. Represents a row in the &quot;DLSyncEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLSyncEvent
  * @generated
  */
-@ProviderType
 public abstract class DLSyncEventBaseImpl
 	extends DLSyncEventModelImpl implements DLSyncEvent {
 

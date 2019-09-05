@@ -16,8 +16,6 @@ package com.liferay.mobile.device.rules.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MDRRuleGroupService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MDRRuleGroupService
  * @generated
  */
-@ProviderType
 public class MDRRuleGroupServiceWrapper
 	implements MDRRuleGroupService, ServiceWrapper<MDRRuleGroupService> {
 

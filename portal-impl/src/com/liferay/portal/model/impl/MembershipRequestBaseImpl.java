@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the MembershipRequest service. Represents a row in the &quot;MembershipRequest&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MembershipRequest
  * @generated
  */
-@ProviderType
 public abstract class MembershipRequestBaseImpl
 	extends MembershipRequestModelImpl implements MembershipRequest {
 

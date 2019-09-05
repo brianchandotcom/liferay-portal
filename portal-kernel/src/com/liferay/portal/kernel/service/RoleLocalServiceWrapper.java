@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link RoleLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RoleLocalService
  * @generated
  */
-@ProviderType
 public class RoleLocalServiceWrapper
 	implements RoleLocalService, ServiceWrapper<RoleLocalService> {
 
@@ -79,10 +77,11 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role addRole(
-			long userId, String className, long classPK, String name,
-			java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap, int type,
-			String subtype, ServiceContext serviceContext)
+			long userId, java.lang.String className, long classPK,
+			java.lang.String name,
+			java.util.Map<java.util.Locale, java.lang.String> titleMap,
+			java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+			int type, java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.addRole(
@@ -413,7 +412,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role fetchRole(
-		long companyId, String name) {
+		long companyId, java.lang.String name) {
 
 		return _roleLocalService.fetchRole(companyId, name);
 	}
@@ -427,7 +426,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role fetchRoleByUuidAndCompanyId(
-		String uuid, long companyId) {
+		java.lang.String uuid, long companyId) {
 
 		return _roleLocalService.fetchRoleByUuidAndCompanyId(uuid, companyId);
 	}
@@ -525,8 +524,8 @@ public class RoleLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		getGroupRolesAndTeamRoles(
-			long companyId, String keywords,
-			java.util.List<String> excludedNames, int[] types,
+			long companyId, java.lang.String keywords,
+			java.util.List<java.lang.String> excludedNames, int[] types,
 			long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return _roleLocalService.getGroupRolesAndTeamRoles(
@@ -536,8 +535,9 @@ public class RoleLocalServiceWrapper
 
 	@Override
 	public int getGroupRolesAndTeamRolesCount(
-		long companyId, String keywords, java.util.List<String> excludedNames,
-		int[] types, long excludedTeamRoleId, long teamGroupId) {
+		long companyId, java.lang.String keywords,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return _roleLocalService.getGroupRolesAndTeamRolesCount(
 			companyId, keywords, excludedNames, types, excludedTeamRoleId,
@@ -562,7 +562,7 @@ public class RoleLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _roleLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -587,8 +587,10 @@ public class RoleLocalServiceWrapper
 	 long, String, int, String)
 	 */
 	@Override
-	public java.util.Map<String, java.util.List<String>> getResourceRoles(
-		long companyId, String name, int scope, String primKey) {
+	public java.util.Map<java.lang.String, java.util.List<java.lang.String>>
+		getResourceRoles(
+			long companyId, java.lang.String name, int scope,
+			java.lang.String primKey) {
 
 		return _roleLocalService.getResourceRoles(
 			companyId, name, scope, primKey);
@@ -610,8 +612,8 @@ public class RoleLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role>
 		getResourceRoles(
-			long companyId, String name, int scope, String primKey,
-			String actionId) {
+			long companyId, java.lang.String name, int scope,
+			java.lang.String primKey, java.lang.String actionId) {
 
 		return _roleLocalService.getResourceRoles(
 			companyId, name, scope, primKey, actionId);
@@ -645,7 +647,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role getRole(
-			long companyId, String name)
+			long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.getRole(companyId, name);
@@ -661,7 +663,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role getRoleByUuidAndCompanyId(
-			String uuid, long companyId)
+			java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.getRoleByUuidAndCompanyId(uuid, companyId);
@@ -694,7 +696,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-		int type, String subtype) {
+		int type, java.lang.String subtype) {
 
 		return _roleLocalService.getRoles(type, subtype);
 	}
@@ -758,7 +760,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getSubtypeRoles(
-		String subtype) {
+		java.lang.String subtype) {
 
 		return _roleLocalService.getSubtypeRoles(subtype);
 	}
@@ -770,7 +772,7 @@ public class RoleLocalServiceWrapper
 	 * @return the number of roles of the subtype
 	 */
 	@Override
-	public int getSubtypeRolesCount(String subtype) {
+	public int getSubtypeRolesCount(java.lang.String subtype) {
 		return _roleLocalService.getSubtypeRolesCount(subtype);
 	}
 
@@ -1060,7 +1062,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public boolean hasUserRole(
-			long userId, long companyId, String name, boolean inherited)
+			long userId, long companyId, java.lang.String name,
+			boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.hasUserRole(
@@ -1086,7 +1089,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public boolean hasUserRoles(
-			long userId, long companyId, String[] names, boolean inherited)
+			long userId, long companyId, java.lang.String[] names,
+			boolean inherited)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.hasUserRoles(
@@ -1103,7 +1107,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role loadFetchRole(
-		long companyId, String name) {
+		long companyId, java.lang.String name) {
 
 		return _roleLocalService.loadFetchRole(companyId, name);
 	}
@@ -1117,7 +1121,7 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role loadGetRole(
-			long companyId, String name)
+			long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.loadGetRole(companyId, name);
@@ -1152,7 +1156,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> search(
-		long companyId, String keywords, Integer[] types, int start, int end,
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> obc) {
 
@@ -1192,8 +1197,9 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> search(
-		long companyId, String keywords, Integer[] types,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> obc) {
 
@@ -1230,8 +1236,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> search(
-		long companyId, String name, String description, Integer[] types,
-		int start, int end,
+		long companyId, java.lang.String name, java.lang.String description,
+		java.lang.Integer[] types, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> obc) {
 
@@ -1271,8 +1277,10 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> search(
-		long companyId, String name, String description, Integer[] types,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		long companyId, java.lang.String name, java.lang.String description,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> obc) {
 
@@ -1290,7 +1298,9 @@ public class RoleLocalServiceWrapper
 	 * @return the number of matching roles
 	 */
 	@Override
-	public int searchCount(long companyId, String keywords, Integer[] types) {
+	public int searchCount(
+		long companyId, java.lang.String keywords, java.lang.Integer[] types) {
+
 		return _roleLocalService.searchCount(companyId, keywords, types);
 	}
 
@@ -1307,8 +1317,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String keywords, Integer[] types,
-		java.util.LinkedHashMap<String, Object> params) {
+		long companyId, java.lang.String keywords, java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 
 		return _roleLocalService.searchCount(
 			companyId, keywords, types, params);
@@ -1325,7 +1335,8 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String name, String description, Integer[] types) {
+		long companyId, java.lang.String name, java.lang.String description,
+		java.lang.Integer[] types) {
 
 		return _roleLocalService.searchCount(
 			companyId, name, description, types);
@@ -1346,8 +1357,9 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public int searchCount(
-		long companyId, String name, String description, Integer[] types,
-		java.util.LinkedHashMap<String, Object> params) {
+		long companyId, java.lang.String name, java.lang.String description,
+		java.lang.Integer[] types,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 
 		return _roleLocalService.searchCount(
 			companyId, name, description, types, params);
@@ -1399,10 +1411,10 @@ public class RoleLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.Role updateRole(
-			long roleId, String name,
-			java.util.Map<java.util.Locale, String> titleMap,
-			java.util.Map<java.util.Locale, String> descriptionMap,
-			String subtype, ServiceContext serviceContext)
+			long roleId, java.lang.String name,
+			java.util.Map<java.util.Locale, java.lang.String> titleMap,
+			java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+			java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _roleLocalService.updateRole(

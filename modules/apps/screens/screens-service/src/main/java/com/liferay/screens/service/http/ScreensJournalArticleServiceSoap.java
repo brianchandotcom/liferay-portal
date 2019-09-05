@@ -21,8 +21,6 @@ import com.liferay.screens.service.ScreensJournalArticleServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensJournalArticleServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensJournalArticleServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensJournalArticleServiceSoap {
 
 	public static String getJournalArticleContent(long classPK, String locale)

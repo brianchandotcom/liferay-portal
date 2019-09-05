@@ -16,8 +16,6 @@ package com.liferay.asset.display.page.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetDisplayPageEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetDisplayPageEntryService
  * @generated
  */
-@ProviderType
 public class AssetDisplayPageEntryServiceWrapper
 	implements AssetDisplayPageEntryService,
 			   ServiceWrapper<AssetDisplayPageEntryService> {

@@ -14,8 +14,6 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil;
 
@@ -31,7 +29,6 @@ import com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil;
  * @see TestEntity
  * @generated
  */
-@ProviderType
 public abstract class TestEntityBaseImpl
 	extends TestEntityModelImpl implements TestEntity {
 

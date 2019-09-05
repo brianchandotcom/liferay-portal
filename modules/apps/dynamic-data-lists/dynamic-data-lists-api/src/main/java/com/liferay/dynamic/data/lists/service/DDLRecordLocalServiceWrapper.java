@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.lists.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DDLRecordLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDLRecordLocalService
  * @generated
  */
-@ProviderType
 public class DDLRecordLocalServiceWrapper
 	implements DDLRecordLocalService, ServiceWrapper<DDLRecordLocalService> {
 

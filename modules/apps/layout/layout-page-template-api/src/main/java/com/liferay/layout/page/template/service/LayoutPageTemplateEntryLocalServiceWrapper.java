@@ -16,8 +16,6 @@ package com.liferay.layout.page.template.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link LayoutPageTemplateEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutPageTemplateEntryLocalService
  * @generated
  */
-@ProviderType
 public class LayoutPageTemplateEntryLocalServiceWrapper
 	implements LayoutPageTemplateEntryLocalService,
 			   ServiceWrapper<LayoutPageTemplateEntryLocalService> {

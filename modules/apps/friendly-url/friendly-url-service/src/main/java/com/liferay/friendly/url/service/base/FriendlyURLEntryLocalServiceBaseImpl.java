@@ -60,7 +60,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -74,7 +73,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class FriendlyURLEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements FriendlyURLEntryLocalService, AopService,

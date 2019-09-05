@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link ImageLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ImageLocalService
  * @generated
  */
-@ProviderType
 public class ImageLocalServiceWrapper
 	implements ImageLocalService, ServiceWrapper<ImageLocalService> {
 
@@ -273,7 +271,7 @@ public class ImageLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _imageLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -316,8 +314,8 @@ public class ImageLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Image updateImage(
-			long imageId, byte[] bytes, String type, int height, int width,
-			int size)
+			long imageId, byte[] bytes, java.lang.String type, int height,
+			int width, int size)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.updateImage(

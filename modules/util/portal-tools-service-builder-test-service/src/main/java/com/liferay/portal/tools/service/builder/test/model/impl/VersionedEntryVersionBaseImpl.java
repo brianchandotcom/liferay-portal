@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion;
 
 /**
@@ -30,7 +28,6 @@ import com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion
  * @see VersionedEntryVersion
  * @generated
  */
-@ProviderType
 public abstract class VersionedEntryVersionBaseImpl
 	extends VersionedEntryVersionModelImpl implements VersionedEntryVersion {
 

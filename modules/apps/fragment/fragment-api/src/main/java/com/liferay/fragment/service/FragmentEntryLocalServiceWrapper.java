@@ -16,8 +16,6 @@ package com.liferay.fragment.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link FragmentEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FragmentEntryLocalService
  * @generated
  */
-@ProviderType
 public class FragmentEntryLocalServiceWrapper
 	implements FragmentEntryLocalService,
 			   ServiceWrapper<FragmentEntryLocalService> {

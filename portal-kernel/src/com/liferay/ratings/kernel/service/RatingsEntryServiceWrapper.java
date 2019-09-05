@@ -16,8 +16,6 @@ package com.liferay.ratings.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link RatingsEntryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RatingsEntryService
  * @generated
  */
-@ProviderType
 public class RatingsEntryServiceWrapper
 	implements RatingsEntryService, ServiceWrapper<RatingsEntryService> {
 

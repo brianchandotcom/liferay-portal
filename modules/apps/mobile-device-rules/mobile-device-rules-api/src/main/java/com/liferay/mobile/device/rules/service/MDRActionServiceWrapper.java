@@ -16,8 +16,6 @@ package com.liferay.mobile.device.rules.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MDRActionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MDRActionService
  * @generated
  */
-@ProviderType
 public class MDRActionServiceWrapper
 	implements MDRActionService, ServiceWrapper<MDRActionService> {
 

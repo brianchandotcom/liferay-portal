@@ -16,8 +16,6 @@ package com.liferay.opensocial.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link GadgetService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see GadgetService
  * @generated
  */
-@ProviderType
 public class GadgetServiceWrapper
 	implements GadgetService, ServiceWrapper<GadgetService> {
 

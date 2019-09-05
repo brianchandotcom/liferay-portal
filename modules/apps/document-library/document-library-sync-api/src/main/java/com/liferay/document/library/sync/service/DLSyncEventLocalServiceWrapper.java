@@ -16,8 +16,6 @@ package com.liferay.document.library.sync.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLSyncEventLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLSyncEventLocalService
  * @generated
  */
-@ProviderType
 public class DLSyncEventLocalServiceWrapper
 	implements DLSyncEventLocalService,
 			   ServiceWrapper<DLSyncEventLocalService> {

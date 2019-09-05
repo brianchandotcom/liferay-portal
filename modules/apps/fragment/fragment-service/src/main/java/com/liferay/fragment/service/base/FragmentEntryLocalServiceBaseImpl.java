@@ -64,7 +64,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -78,7 +77,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.fragment.service.impl.FragmentEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class FragmentEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements FragmentEntryLocalService, AopService, IdentifiableOSGiService {

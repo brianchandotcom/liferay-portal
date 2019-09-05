@@ -17,8 +17,6 @@ package com.liferay.message.boards.model.impl;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBThreadFlagLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the MBThreadFlag service. Represents a row in the &quot;MBThreadFlag&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBThreadFlag
  * @generated
  */
-@ProviderType
 public abstract class MBThreadFlagBaseImpl
 	extends MBThreadFlagModelImpl implements MBThreadFlag {
 

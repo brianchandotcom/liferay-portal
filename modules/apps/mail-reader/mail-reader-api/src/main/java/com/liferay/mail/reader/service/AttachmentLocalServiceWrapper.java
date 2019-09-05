@@ -16,8 +16,6 @@ package com.liferay.mail.reader.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AttachmentLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AttachmentLocalService
  * @generated
  */
-@ProviderType
 public class AttachmentLocalServiceWrapper
 	implements AttachmentLocalService, ServiceWrapper<AttachmentLocalService> {
 

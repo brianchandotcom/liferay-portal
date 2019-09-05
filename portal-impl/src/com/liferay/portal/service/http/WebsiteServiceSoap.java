@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.WebsiteServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>WebsiteServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WebsiteServiceHttp
  * @generated
  */
-@ProviderType
 public class WebsiteServiceSoap {
 
 	public static com.liferay.portal.kernel.model.WebsiteSoap addWebsite(

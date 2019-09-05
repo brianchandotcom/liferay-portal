@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>OAuth2ApplicationServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ApplicationServiceHttp
  * @generated
  */
-@ProviderType
 public class OAuth2ApplicationServiceSoap {
 
 	public static com.liferay.oauth2.provider.model.OAuth2ApplicationSoap

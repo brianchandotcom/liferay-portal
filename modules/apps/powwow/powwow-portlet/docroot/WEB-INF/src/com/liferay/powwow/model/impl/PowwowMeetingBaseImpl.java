@@ -17,8 +17,6 @@ package com.liferay.powwow.model.impl;
 import com.liferay.powwow.model.PowwowMeeting;
 import com.liferay.powwow.service.PowwowMeetingLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the PowwowMeeting service. Represents a row in the &quot;PowwowMeeting&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeeting
  * @generated
  */
-@ProviderType
 public abstract class PowwowMeetingBaseImpl
 	extends PowwowMeetingModelImpl implements PowwowMeeting {
 

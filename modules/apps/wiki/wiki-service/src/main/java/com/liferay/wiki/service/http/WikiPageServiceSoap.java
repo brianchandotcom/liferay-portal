@@ -21,8 +21,6 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>WikiPageServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WikiPageServiceHttp
  * @generated
  */
-@ProviderType
 public class WikiPageServiceSoap {
 
 	public static com.liferay.wiki.model.WikiPageSoap addPage(

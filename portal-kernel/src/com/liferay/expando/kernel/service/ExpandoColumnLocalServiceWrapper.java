@@ -16,8 +16,6 @@ package com.liferay.expando.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ExpandoColumnLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoColumnLocalService
  * @generated
  */
-@ProviderType
 public class ExpandoColumnLocalServiceWrapper
 	implements ExpandoColumnLocalService,
 			   ServiceWrapper<ExpandoColumnLocalService> {

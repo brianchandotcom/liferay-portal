@@ -50,8 +50,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the tasks entry service.
  *
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Ryan Park
  * @generated
  */
-@ProviderType
 public class TasksEntryPersistenceImpl
 	extends BasePersistenceImpl<TasksEntry> implements TasksEntryPersistence {
 

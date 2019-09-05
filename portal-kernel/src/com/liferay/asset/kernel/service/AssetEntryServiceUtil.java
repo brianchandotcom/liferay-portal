@@ -16,8 +16,6 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for AssetEntry. This utility wraps
  * <code>com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetEntryService
  * @generated
  */
-@ProviderType
 public class AssetEntryServiceUtil {
 
 	/*

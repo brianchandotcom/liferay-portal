@@ -17,8 +17,6 @@ package com.liferay.calendar.model.impl;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Calendar service. Represents a row in the &quot;Calendar&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Calendar
  * @generated
  */
-@ProviderType
 public abstract class CalendarBaseImpl
 	extends CalendarModelImpl implements Calendar {
 

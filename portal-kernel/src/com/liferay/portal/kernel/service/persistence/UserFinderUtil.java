@@ -16,13 +16,10 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserFinderUtil {
 
 	public static java.util.Map<Long, Integer> countByGroups(

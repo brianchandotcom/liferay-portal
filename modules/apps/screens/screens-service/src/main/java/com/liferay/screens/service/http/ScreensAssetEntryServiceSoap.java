@@ -21,8 +21,6 @@ import com.liferay.screens.service.ScreensAssetEntryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ScreensAssetEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensAssetEntryServiceHttp
  * @generated
  */
-@ProviderType
 public class ScreensAssetEntryServiceSoap {
 
 	public static String getAssetEntries(

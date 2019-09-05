@@ -46,8 +46,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the contact service.
  *
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class ContactPersistenceImpl
 	extends BasePersistenceImpl<Contact> implements ContactPersistence {
 

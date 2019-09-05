@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>WikiNodeServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WikiNodeServiceSoap
  * @generated
  */
-@ProviderType
 public class WikiNodeServiceHttp {
 
 	public static com.liferay.wiki.model.WikiNode addNode(

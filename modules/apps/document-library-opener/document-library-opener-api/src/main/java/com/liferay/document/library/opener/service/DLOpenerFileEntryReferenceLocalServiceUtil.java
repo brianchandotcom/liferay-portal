@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.opener.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -31,7 +30,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see DLOpenerFileEntryReferenceLocalService
  * @generated
  */
-@ProviderType
 public class DLOpenerFileEntryReferenceLocalServiceUtil {
 
 	/*

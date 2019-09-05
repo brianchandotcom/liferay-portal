@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ListTypeServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ListTypeServiceHttp
  * @generated
  */
-@ProviderType
 public class ListTypeServiceSoap {
 
 	public static com.liferay.portal.kernel.model.ListTypeSoap getListType(

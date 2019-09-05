@@ -17,8 +17,6 @@ package com.liferay.marketplace.model.impl;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Module service. Represents a row in the &quot;Marketplace_Module&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Module
  * @generated
  */
-@ProviderType
 public abstract class ModuleBaseImpl extends ModuleModelImpl implements Module {
 
 	/*

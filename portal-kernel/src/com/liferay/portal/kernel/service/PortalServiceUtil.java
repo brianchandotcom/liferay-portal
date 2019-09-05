@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the remote service utility for Portal. This utility wraps
  * <code>com.liferay.portal.service.impl.PortalServiceImpl</code> and is an
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalService
  * @generated
  */
-@ProviderType
 public class PortalServiceUtil {
 
 	/*

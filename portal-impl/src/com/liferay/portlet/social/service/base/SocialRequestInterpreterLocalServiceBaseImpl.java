@@ -28,8 +28,6 @@ import com.liferay.social.kernel.service.SocialRequestInterpreterLocalService;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the social request interpreter local service.
  *
@@ -41,7 +39,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements SocialRequestInterpreterLocalService, IdentifiableOSGiService {

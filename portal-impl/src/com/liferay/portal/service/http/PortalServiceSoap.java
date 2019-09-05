@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.PortalServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PortalServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalServiceHttp
  * @generated
  */
-@ProviderType
 public class PortalServiceSoap {
 
 	public static String getAutoDeployDirectory() throws RemoteException {

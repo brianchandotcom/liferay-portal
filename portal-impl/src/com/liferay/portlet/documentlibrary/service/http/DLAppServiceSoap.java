@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>DLAppServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLAppServiceHttp
  * @generated
  */
-@ProviderType
 public class DLAppServiceSoap {
 
 	/**

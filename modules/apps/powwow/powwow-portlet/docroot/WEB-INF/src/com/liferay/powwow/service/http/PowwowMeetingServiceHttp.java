@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>PowwowMeetingServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeetingServiceSoap
  * @generated
  */
-@ProviderType
 public class PowwowMeetingServiceHttp {
 
 	public static com.liferay.powwow.model.PowwowMeeting addPowwowMeeting(

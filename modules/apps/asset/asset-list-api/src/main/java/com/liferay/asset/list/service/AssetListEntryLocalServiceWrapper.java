@@ -16,8 +16,6 @@ package com.liferay.asset.list.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetListEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetListEntryLocalService
  * @generated
  */
-@ProviderType
 public class AssetListEntryLocalServiceWrapper
 	implements AssetListEntryLocalService,
 			   ServiceWrapper<AssetListEntryLocalService> {

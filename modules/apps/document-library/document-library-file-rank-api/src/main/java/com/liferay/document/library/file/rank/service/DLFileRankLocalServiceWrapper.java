@@ -16,8 +16,6 @@ package com.liferay.document.library.file.rank.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DLFileRankLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFileRankLocalService
  * @generated
  */
-@ProviderType
 public class DLFileRankLocalServiceWrapper
 	implements DLFileRankLocalService, ServiceWrapper<DLFileRankLocalService> {
 

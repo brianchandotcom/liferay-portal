@@ -16,8 +16,6 @@ package com.liferay.portal.security.service.access.policy.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SAPEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SAPEntryLocalService
  * @generated
  */
-@ProviderType
 public class SAPEntryLocalServiceWrapper
 	implements SAPEntryLocalService, ServiceWrapper<SAPEntryLocalService> {
 

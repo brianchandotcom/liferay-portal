@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link TeamService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TeamService
  * @generated
  */
-@ProviderType
 public class TeamServiceWrapper
 	implements TeamService, ServiceWrapper<TeamService> {
 
@@ -33,7 +31,7 @@ public class TeamServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Team addTeam(
-			long groupId, String name, String description,
+			long groupId, java.lang.String name, java.lang.String description,
 			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -61,7 +59,7 @@ public class TeamServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _teamService.getOSGiServiceIdentifier();
 	}
 
@@ -74,7 +72,7 @@ public class TeamServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Team getTeam(
-			long groupId, String name)
+			long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamService.getTeam(groupId, name);
@@ -105,8 +103,9 @@ public class TeamServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Team> search(
-		long groupId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params, int start, int end,
+		long groupId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Team> obc) {
 
@@ -116,15 +115,15 @@ public class TeamServiceWrapper
 
 	@Override
 	public int searchCount(
-		long groupId, String name, String description,
-		java.util.LinkedHashMap<String, Object> params) {
+		long groupId, java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 
 		return _teamService.searchCount(groupId, name, description, params);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Team updateTeam(
-			long teamId, String name, String description)
+			long teamId, java.lang.String name, java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _teamService.updateTeam(teamId, name, description);

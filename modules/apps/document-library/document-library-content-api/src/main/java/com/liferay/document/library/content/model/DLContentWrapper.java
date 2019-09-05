@@ -22,8 +22,6 @@ import java.sql.Blob;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link DLContent}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLContent
  * @generated
  */
-@ProviderType
 public class DLContentWrapper
 	extends BaseModelWrapper<DLContent>
 	implements DLContent, ModelWrapper<DLContent> {

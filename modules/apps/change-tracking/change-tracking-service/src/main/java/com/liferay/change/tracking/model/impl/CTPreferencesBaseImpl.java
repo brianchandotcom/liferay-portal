@@ -17,8 +17,6 @@ package com.liferay.change.tracking.model.impl;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the CTPreferences service. Represents a row in the &quot;CTPreferences&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see CTPreferences
  * @generated
  */
-@ProviderType
 public abstract class CTPreferencesBaseImpl
 	extends CTPreferencesModelImpl implements CTPreferences {
 

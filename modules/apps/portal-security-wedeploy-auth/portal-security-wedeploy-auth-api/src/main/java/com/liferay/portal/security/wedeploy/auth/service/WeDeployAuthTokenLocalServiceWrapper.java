@@ -16,8 +16,6 @@ package com.liferay.portal.security.wedeploy.auth.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link WeDeployAuthTokenLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WeDeployAuthTokenLocalService
  * @generated
  */
-@ProviderType
 public class WeDeployAuthTokenLocalServiceWrapper
 	implements WeDeployAuthTokenLocalService,
 			   ServiceWrapper<WeDeployAuthTokenLocalService> {

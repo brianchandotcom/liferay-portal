@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for UserGroupRole. This utility wraps
  * <code>com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserGroupRoleLocalService
  * @generated
  */
-@ProviderType
 public class UserGroupRoleLocalServiceUtil {
 
 	/*

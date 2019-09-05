@@ -47,7 +47,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -61,7 +60,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.changeset.service.impl.ChangesetEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class ChangesetEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ChangesetEntryLocalService, AopService, IdentifiableOSGiService {

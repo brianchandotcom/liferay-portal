@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link ResourceActionLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ResourceActionLocalService
  * @generated
  */
-@ProviderType
 public class ResourceActionLocalServiceWrapper
 	implements ResourceActionLocalService,
 			   ServiceWrapper<ResourceActionLocalService> {
@@ -49,7 +47,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction addResourceAction(
-		String name, String actionId, long bitwiseValue) {
+		java.lang.String name, java.lang.String actionId, long bitwiseValue) {
 
 		return _resourceActionLocalService.addResourceAction(
 			name, actionId, bitwiseValue);
@@ -62,14 +60,14 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public void checkResourceActions(
-		String name, java.util.List<String> actionIds) {
+		java.lang.String name, java.util.List<java.lang.String> actionIds) {
 
 		_resourceActionLocalService.checkResourceActions(name, actionIds);
 	}
 
 	@Override
 	public void checkResourceActions(
-		String name, java.util.List<String> actionIds,
+		java.lang.String name, java.util.List<java.lang.String> actionIds,
 		boolean addDefaultActions) {
 
 		_resourceActionLocalService.checkResourceActions(
@@ -231,7 +229,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction fetchResourceAction(
-		String name, String actionId) {
+		java.lang.String name, java.lang.String actionId) {
 
 		return _resourceActionLocalService.fetchResourceAction(name, actionId);
 	}
@@ -256,7 +254,7 @@ public class ResourceActionLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _resourceActionLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -285,7 +283,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.ResourceAction getResourceAction(
-			String name, String actionId)
+			java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _resourceActionLocalService.getResourceAction(name, actionId);
@@ -311,7 +309,7 @@ public class ResourceActionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.ResourceAction>
-		getResourceActions(String name) {
+		getResourceActions(java.lang.String name) {
 
 		return _resourceActionLocalService.getResourceActions(name);
 	}
@@ -327,7 +325,7 @@ public class ResourceActionLocalServiceWrapper
 	}
 
 	@Override
-	public int getResourceActionsCount(String name) {
+	public int getResourceActionsCount(java.lang.String name) {
 		return _resourceActionLocalService.getResourceActionsCount(name);
 	}
 

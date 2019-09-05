@@ -17,8 +17,6 @@ package com.liferay.friendly.url.model.impl;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the FriendlyURLEntry service. Represents a row in the &quot;FriendlyURLEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see FriendlyURLEntry
  * @generated
  */
-@ProviderType
 public abstract class FriendlyURLEntryBaseImpl
 	extends FriendlyURLEntryModelImpl implements FriendlyURLEntry {
 

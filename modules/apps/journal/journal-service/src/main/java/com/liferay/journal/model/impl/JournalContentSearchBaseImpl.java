@@ -17,8 +17,6 @@ package com.liferay.journal.model.impl;
 import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the JournalContentSearch service. Represents a row in the &quot;JournalContentSearch&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalContentSearch
  * @generated
  */
-@ProviderType
 public abstract class JournalContentSearchBaseImpl
 	extends JournalContentSearchModelImpl implements JournalContentSearch {
 

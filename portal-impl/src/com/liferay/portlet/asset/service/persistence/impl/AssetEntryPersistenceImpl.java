@@ -60,8 +60,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the asset entry service.
  *
@@ -72,7 +70,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class AssetEntryPersistenceImpl
 	extends BasePersistenceImpl<AssetEntry> implements AssetEntryPersistence {
 

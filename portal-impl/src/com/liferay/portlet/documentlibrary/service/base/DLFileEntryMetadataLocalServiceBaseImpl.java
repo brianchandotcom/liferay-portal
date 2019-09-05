@@ -50,8 +50,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the document library file entry metadata local service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DLFileEntryMetadataLocalService, IdentifiableOSGiService {

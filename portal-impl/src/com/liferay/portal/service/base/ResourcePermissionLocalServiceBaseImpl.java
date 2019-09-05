@@ -50,8 +50,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the resource permission local service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class ResourcePermissionLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ResourcePermissionLocalService, IdentifiableOSGiService {

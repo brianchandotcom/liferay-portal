@@ -17,8 +17,6 @@ package com.liferay.knowledge.base.model.impl;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KBFolder service. Represents a row in the &quot;KBFolder&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBFolder
  * @generated
  */
-@ProviderType
 public abstract class KBFolderBaseImpl
 	extends KBFolderModelImpl implements KBFolder {
 

@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the PortletItem service. Represents a row in the &quot;PortletItem&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortletItem
  * @generated
  */
-@ProviderType
 public abstract class PortletItemBaseImpl
 	extends PortletItemModelImpl implements PortletItem {
 

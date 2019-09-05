@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link KaleoNotification}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoNotification
  * @generated
  */
-@ProviderType
 public class KaleoNotificationWrapper
 	extends BaseModelWrapper<KaleoNotification>
 	implements KaleoNotification, ModelWrapper<KaleoNotification> {

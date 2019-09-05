@@ -27,15 +27,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing DDLRecordSet in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class DDLRecordSetCacheModel
 	implements CacheModel<DDLRecordSet>, Externalizable, MVCCModel {
 

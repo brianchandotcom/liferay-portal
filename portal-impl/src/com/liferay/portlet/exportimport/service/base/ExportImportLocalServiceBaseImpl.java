@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the export import local service.
  *
@@ -46,7 +44,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class ExportImportLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ExportImportLocalService, IdentifiableOSGiService {

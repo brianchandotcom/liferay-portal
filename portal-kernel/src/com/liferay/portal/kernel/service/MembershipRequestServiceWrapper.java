@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link MembershipRequestService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MembershipRequestService
  * @generated
  */
-@ProviderType
 public class MembershipRequestServiceWrapper
 	implements MembershipRequestService,
 			   ServiceWrapper<MembershipRequestService> {
@@ -37,7 +35,8 @@ public class MembershipRequestServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.MembershipRequest
 			addMembershipRequest(
-				long groupId, String comments, ServiceContext serviceContext)
+				long groupId, java.lang.String comments,
+				ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _membershipRequestService.addMembershipRequest(
@@ -66,14 +65,14 @@ public class MembershipRequestServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _membershipRequestService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public void updateStatus(
-			long membershipRequestId, String reviewComments, long statusId,
-			ServiceContext serviceContext)
+			long membershipRequestId, java.lang.String reviewComments,
+			long statusId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_membershipRequestService.updateStatus(

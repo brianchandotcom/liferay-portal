@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>KBArticleServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBArticleServiceHttp
  * @generated
  */
-@ProviderType
 public class KBArticleServiceSoap {
 
 	public static com.liferay.knowledge.base.model.KBArticleSoap addKBArticle(

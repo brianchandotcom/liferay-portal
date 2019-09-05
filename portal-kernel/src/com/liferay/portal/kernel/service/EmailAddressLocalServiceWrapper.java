@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link EmailAddressLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see EmailAddressLocalService
  * @generated
  */
-@ProviderType
 public class EmailAddressLocalServiceWrapper
 	implements EmailAddressLocalService,
 			   ServiceWrapper<EmailAddressLocalService> {
@@ -49,8 +47,9 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
-			long userId, String className, long classPK, String address,
-			long typeId, boolean primary, ServiceContext serviceContext)
+			long userId, java.lang.String className, long classPK,
+			java.lang.String address, long typeId, boolean primary,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.addEmailAddress(
@@ -101,7 +100,7 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public void deleteEmailAddresses(
-		long companyId, String className, long classPK) {
+		long companyId, java.lang.String className, long classPK) {
 
 		_emailAddressLocalService.deleteEmailAddresses(
 			companyId, className, classPK);
@@ -224,7 +223,8 @@ public class EmailAddressLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress
-		fetchEmailAddressByUuidAndCompanyId(String uuid, long companyId) {
+		fetchEmailAddressByUuidAndCompanyId(
+			java.lang.String uuid, long companyId) {
 
 		return _emailAddressLocalService.fetchEmailAddressByUuidAndCompanyId(
 			uuid, companyId);
@@ -262,7 +262,8 @@ public class EmailAddressLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress
-			getEmailAddressByUuidAndCompanyId(String uuid, long companyId)
+			getEmailAddressByUuidAndCompanyId(
+				java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.getEmailAddressByUuidAndCompanyId(
@@ -296,7 +297,8 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.EmailAddress>
-		getEmailAddresses(long companyId, String className, long classPK) {
+		getEmailAddresses(
+			long companyId, java.lang.String className, long classPK) {
 
 		return _emailAddressLocalService.getEmailAddresses(
 			companyId, className, classPK);
@@ -335,7 +337,7 @@ public class EmailAddressLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _emailAddressLocalService.getOSGiServiceIdentifier();
 	}
 
@@ -362,7 +364,8 @@ public class EmailAddressLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			long emailAddressId, java.lang.String address, long typeId,
+			boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _emailAddressLocalService.updateEmailAddress(

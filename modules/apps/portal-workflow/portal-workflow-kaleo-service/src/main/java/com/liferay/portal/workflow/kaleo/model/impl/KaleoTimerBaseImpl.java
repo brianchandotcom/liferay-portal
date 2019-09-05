@@ -17,8 +17,6 @@ package com.liferay.portal.workflow.kaleo.model.impl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 import com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KaleoTimer service. Represents a row in the &quot;KaleoTimer&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTimer
  * @generated
  */
-@ProviderType
 public abstract class KaleoTimerBaseImpl
 	extends KaleoTimerModelImpl implements KaleoTimer {
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>MDRRuleServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MDRRuleServiceSoap
  * @generated
  */
-@ProviderType
 public class MDRRuleServiceHttp {
 
 	public static com.liferay.mobile.device.rules.model.MDRRule addRule(

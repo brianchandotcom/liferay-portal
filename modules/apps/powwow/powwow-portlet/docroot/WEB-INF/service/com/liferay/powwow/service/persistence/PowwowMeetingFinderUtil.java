@@ -16,13 +16,10 @@ package com.liferay.powwow.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public class PowwowMeetingFinderUtil {
 
 	public static int countByU_S(long userId, int[] statuses) {

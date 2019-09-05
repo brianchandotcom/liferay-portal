@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.segments.service.SegmentsEntryRelServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SegmentsEntryRelServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsEntryRelServiceSoap
  * @generated
  */
-@ProviderType
 public class SegmentsEntryRelServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsEntryRel

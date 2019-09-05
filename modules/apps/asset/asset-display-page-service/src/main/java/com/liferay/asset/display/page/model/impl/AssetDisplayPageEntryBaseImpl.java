@@ -17,8 +17,6 @@ package com.liferay.asset.display.page.model.impl;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AssetDisplayPageEntry service. Represents a row in the &quot;AssetDisplayPageEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetDisplayPageEntry
  * @generated
  */
-@ProviderType
 public abstract class AssetDisplayPageEntryBaseImpl
 	extends AssetDisplayPageEntryModelImpl implements AssetDisplayPageEntry {
 

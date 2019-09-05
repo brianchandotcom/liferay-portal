@@ -46,8 +46,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The base model implementation for the MemberRequest service. Represents a row in the &quot;IM_MemberRequest&quot; database table, with each column mapped to a property of this class.
  *
@@ -59,7 +57,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MemberRequestImpl
  * @generated
  */
-@ProviderType
 public class MemberRequestModelImpl
 	extends BaseModelImpl<MemberRequest> implements MemberRequestModel {
 

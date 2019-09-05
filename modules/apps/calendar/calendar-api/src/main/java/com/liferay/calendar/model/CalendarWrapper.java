@@ -22,8 +22,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Calendar}.
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Calendar
  * @generated
  */
-@ProviderType
 public class CalendarWrapper
 	extends BaseModelWrapper<Calendar>
 	implements Calendar, ModelWrapper<Calendar> {

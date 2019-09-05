@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>DDLRecordVersionServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDLRecordVersionServiceSoap
  * @generated
  */
-@ProviderType
 public class DDLRecordVersionServiceHttp {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion

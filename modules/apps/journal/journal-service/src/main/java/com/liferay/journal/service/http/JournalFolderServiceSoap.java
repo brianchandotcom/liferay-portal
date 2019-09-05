@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>JournalFolderServiceUtil</code> service
@@ -62,7 +60,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalFolderServiceHttp
  * @generated
  */
-@ProviderType
 public class JournalFolderServiceSoap {
 
 	public static com.liferay.journal.model.JournalFolderSoap addFolder(

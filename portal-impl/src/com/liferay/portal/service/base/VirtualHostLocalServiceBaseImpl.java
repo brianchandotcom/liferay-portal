@@ -50,8 +50,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the virtual host local service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.VirtualHostLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class VirtualHostLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements VirtualHostLocalService, IdentifiableOSGiService {

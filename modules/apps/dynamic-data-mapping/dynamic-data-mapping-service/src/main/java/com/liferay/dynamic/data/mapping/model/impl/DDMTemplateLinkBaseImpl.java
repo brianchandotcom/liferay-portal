@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the DDMTemplateLink service. Represents a row in the &quot;DDMTemplateLink&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDMTemplateLink
  * @generated
  */
-@ProviderType
 public abstract class DDMTemplateLinkBaseImpl
 	extends DDMTemplateLinkModelImpl implements DDMTemplateLink {
 

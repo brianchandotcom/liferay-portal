@@ -17,8 +17,6 @@ package com.liferay.site.navigation.model.impl;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SiteNavigationMenu service. Represents a row in the &quot;SiteNavigationMenu&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SiteNavigationMenu
  * @generated
  */
-@ProviderType
 public abstract class SiteNavigationMenuBaseImpl
 	extends SiteNavigationMenuModelImpl implements SiteNavigationMenu {
 

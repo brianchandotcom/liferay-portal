@@ -51,8 +51,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the powwow participant service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public class PowwowParticipantPersistenceImpl
 	extends BasePersistenceImpl<PowwowParticipant>
 	implements PowwowParticipantPersistence {

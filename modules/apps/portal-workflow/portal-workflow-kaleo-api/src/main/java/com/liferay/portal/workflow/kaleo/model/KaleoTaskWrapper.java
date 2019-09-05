@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link KaleoTask}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoTask
  * @generated
  */
-@ProviderType
 public class KaleoTaskWrapper
 	extends BaseModelWrapper<KaleoTask>
 	implements KaleoTask, ModelWrapper<KaleoTask> {

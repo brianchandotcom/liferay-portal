@@ -17,8 +17,6 @@ package com.liferay.knowledge.base.model.impl;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the KBArticle service. Represents a row in the &quot;KBArticle&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KBArticle
  * @generated
  */
-@ProviderType
 public abstract class KBArticleBaseImpl
 	extends KBArticleModelImpl implements KBArticle {
 

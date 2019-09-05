@@ -17,8 +17,6 @@ package com.liferay.oauth2.provider.model.impl;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the OAuth2Authorization service. Represents a row in the &quot;OAuth2Authorization&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2Authorization
  * @generated
  */
-@ProviderType
 public abstract class OAuth2AuthorizationBaseImpl
 	extends OAuth2AuthorizationModelImpl implements OAuth2Authorization {
 

@@ -46,8 +46,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the cluster group local service.
  *
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public abstract class ClusterGroupLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements ClusterGroupLocalService, IdentifiableOSGiService {

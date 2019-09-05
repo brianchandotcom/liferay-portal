@@ -23,8 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link PowwowMeeting}.
@@ -34,7 +32,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeeting
  * @generated
  */
-@ProviderType
 public class PowwowMeetingWrapper
 	extends BaseModelWrapper<PowwowMeeting>
 	implements PowwowMeeting, ModelWrapper<PowwowMeeting> {

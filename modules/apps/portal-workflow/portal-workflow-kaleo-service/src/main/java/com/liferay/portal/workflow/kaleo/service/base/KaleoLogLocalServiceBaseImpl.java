@@ -65,7 +65,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -79,7 +78,6 @@ import org.osgi.service.component.annotations.Reference;
  * @see com.liferay.portal.workflow.kaleo.service.impl.KaleoLogLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class KaleoLogLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements KaleoLogLocalService, AopService, IdentifiableOSGiService {

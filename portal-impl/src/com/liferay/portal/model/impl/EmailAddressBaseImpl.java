@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the EmailAddress service. Represents a row in the &quot;EmailAddress&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see EmailAddress
  * @generated
  */
-@ProviderType
 public abstract class EmailAddressBaseImpl
 	extends EmailAddressModelImpl implements EmailAddress {
 

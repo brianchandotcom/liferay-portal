@@ -16,8 +16,6 @@ package com.liferay.document.library.kernel.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the local service utility for DLFolder. This utility wraps
  * <code>com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl</code> and
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DLFolderLocalService
  * @generated
  */
-@ProviderType
 public class DLFolderLocalServiceUtil {
 
 	/*

@@ -17,8 +17,6 @@ package com.liferay.message.boards.model.impl;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the MBMessage service. Represents a row in the &quot;MBMessage&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBMessage
  * @generated
  */
-@ProviderType
 public abstract class MBMessageBaseImpl
 	extends MBMessageModelImpl implements MBMessage {
 

@@ -64,8 +64,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the user group service.
  *
@@ -76,7 +74,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserGroupPersistenceImpl
 	extends BasePersistenceImpl<UserGroup> implements UserGroupPersistence {
 

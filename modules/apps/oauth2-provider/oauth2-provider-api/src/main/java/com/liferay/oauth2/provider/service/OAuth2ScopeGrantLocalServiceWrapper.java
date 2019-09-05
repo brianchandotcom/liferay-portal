@@ -16,8 +16,6 @@ package com.liferay.oauth2.provider.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link OAuth2ScopeGrantLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuth2ScopeGrantLocalService
  * @generated
  */
-@ProviderType
 public class OAuth2ScopeGrantLocalServiceWrapper
 	implements OAuth2ScopeGrantLocalService,
 			   ServiceWrapper<OAuth2ScopeGrantLocalService> {

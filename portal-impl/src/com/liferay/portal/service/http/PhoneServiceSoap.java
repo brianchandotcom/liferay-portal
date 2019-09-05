@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.PhoneServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PhoneServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PhoneServiceHttp
  * @generated
  */
-@ProviderType
 public class PhoneServiceSoap {
 
 	public static com.liferay.portal.kernel.model.PhoneSoap addPhone(

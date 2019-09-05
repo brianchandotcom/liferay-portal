@@ -43,8 +43,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the recent layout revision service.
  *
@@ -55,7 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class RecentLayoutRevisionPersistenceImpl
 	extends BasePersistenceImpl<RecentLayoutRevision>
 	implements RecentLayoutRevisionPersistence {

@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link LayoutRevision}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutRevision
  * @generated
  */
-@ProviderType
 public class LayoutRevisionWrapper
 	extends BaseModelWrapper<LayoutRevision>
 	implements LayoutRevision, ModelWrapper<LayoutRevision> {

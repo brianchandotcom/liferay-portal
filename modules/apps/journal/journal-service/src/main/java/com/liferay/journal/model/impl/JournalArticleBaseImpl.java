@@ -17,8 +17,6 @@ package com.liferay.journal.model.impl;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the JournalArticle service. Represents a row in the &quot;JournalArticle&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalArticle
  * @generated
  */
-@ProviderType
 public abstract class JournalArticleBaseImpl
 	extends JournalArticleModelImpl implements JournalArticle {
 

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.RepositoryServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>RepositoryServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RepositoryServiceHttp
  * @generated
  */
-@ProviderType
 public class RepositoryServiceSoap {
 
 	public static void checkRepository(long repositoryId)

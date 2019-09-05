@@ -16,8 +16,6 @@ package com.liferay.chat.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link StatusLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see StatusLocalService
  * @generated
  */
-@ProviderType
 public class StatusLocalServiceWrapper
 	implements StatusLocalService, ServiceWrapper<StatusLocalService> {
 

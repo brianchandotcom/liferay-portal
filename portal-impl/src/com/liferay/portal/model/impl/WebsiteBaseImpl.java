@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Website service. Represents a row in the &quot;Website&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Website
  * @generated
  */
-@ProviderType
 public abstract class WebsiteBaseImpl
 	extends WebsiteModelImpl implements Website {
 

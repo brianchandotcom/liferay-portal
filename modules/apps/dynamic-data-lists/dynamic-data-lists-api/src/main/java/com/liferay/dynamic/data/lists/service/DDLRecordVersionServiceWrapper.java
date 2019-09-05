@@ -16,8 +16,6 @@ package com.liferay.dynamic.data.lists.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DDLRecordVersionService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DDLRecordVersionService
  * @generated
  */
-@ProviderType
 public class DDLRecordVersionServiceWrapper
 	implements DDLRecordVersionService,
 			   ServiceWrapper<DDLRecordVersionService> {

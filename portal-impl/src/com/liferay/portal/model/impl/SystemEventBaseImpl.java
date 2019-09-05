@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SystemEvent service. Represents a row in the &quot;SystemEvent&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SystemEvent
  * @generated
  */
-@ProviderType
 public abstract class SystemEventBaseImpl
 	extends SystemEventModelImpl implements SystemEvent {
 

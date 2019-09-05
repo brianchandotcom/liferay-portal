@@ -20,8 +20,6 @@ import com.liferay.powwow.service.PowwowMeetingServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>PowwowMeetingServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeetingServiceHttp
  * @generated
  */
-@ProviderType
 public class PowwowMeetingServiceSoap {
 
 	public static com.liferay.powwow.model.PowwowMeetingSoap

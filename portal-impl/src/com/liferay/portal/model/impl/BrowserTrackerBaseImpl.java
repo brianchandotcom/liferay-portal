@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.BrowserTracker;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the BrowserTracker service. Represents a row in the &quot;BrowserTracker&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BrowserTracker
  * @generated
  */
-@ProviderType
 public abstract class BrowserTrackerBaseImpl
 	extends BrowserTrackerModelImpl implements BrowserTracker {
 

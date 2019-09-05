@@ -47,8 +47,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the asset category property local service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements AssetCategoryPropertyLocalService, IdentifiableOSGiService {

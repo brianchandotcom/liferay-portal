@@ -26,8 +26,6 @@ import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>JournalArticleServiceUtil</code> service
@@ -67,7 +65,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see JournalArticleServiceHttp
  * @generated
  */
-@ProviderType
 public class JournalArticleServiceSoap {
 
 	/**

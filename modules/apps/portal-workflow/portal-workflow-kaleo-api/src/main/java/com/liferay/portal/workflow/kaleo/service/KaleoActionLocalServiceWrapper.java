@@ -16,8 +16,6 @@ package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link KaleoActionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see KaleoActionLocalService
  * @generated
  */
-@ProviderType
 public class KaleoActionLocalServiceWrapper
 	implements KaleoActionLocalService,
 			   ServiceWrapper<KaleoActionLocalService> {

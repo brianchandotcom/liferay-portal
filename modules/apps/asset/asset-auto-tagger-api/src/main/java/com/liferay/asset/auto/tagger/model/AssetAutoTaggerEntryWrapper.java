@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link AssetAutoTaggerEntry}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetAutoTaggerEntry
  * @generated
  */
-@ProviderType
 public class AssetAutoTaggerEntryWrapper
 	extends BaseModelWrapper<AssetAutoTaggerEntry>
 	implements AssetAutoTaggerEntry, ModelWrapper<AssetAutoTaggerEntry> {

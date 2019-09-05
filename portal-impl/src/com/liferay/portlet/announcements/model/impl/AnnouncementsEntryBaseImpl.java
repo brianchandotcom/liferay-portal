@@ -17,8 +17,6 @@ package com.liferay.portlet.announcements.model.impl;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AnnouncementsEntry service. Represents a row in the &quot;AnnouncementsEntry&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AnnouncementsEntry
  * @generated
  */
-@ProviderType
 public abstract class AnnouncementsEntryBaseImpl
 	extends AnnouncementsEntryModelImpl implements AnnouncementsEntry {
 

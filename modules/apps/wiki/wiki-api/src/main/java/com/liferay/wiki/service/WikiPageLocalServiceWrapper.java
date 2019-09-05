@@ -16,8 +16,6 @@ package com.liferay.wiki.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link WikiPageLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WikiPageLocalService
  * @generated
  */
-@ProviderType
 public class WikiPageLocalServiceWrapper
 	implements WikiPageLocalService, ServiceWrapper<WikiPageLocalService> {
 

@@ -16,8 +16,6 @@ package com.liferay.microblogs.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link MicroblogsEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MicroblogsEntryLocalService
  * @generated
  */
-@ProviderType
 public class MicroblogsEntryLocalServiceWrapper
 	implements MicroblogsEntryLocalService,
 			   ServiceWrapper<MicroblogsEntryLocalService> {

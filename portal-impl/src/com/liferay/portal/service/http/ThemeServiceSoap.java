@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ThemeServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ThemeServiceUtil</code> service
@@ -50,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ThemeServiceHttp
  * @generated
  */
-@ProviderType
 public class ThemeServiceSoap {
 
 	public static String getWARThemes() throws RemoteException {

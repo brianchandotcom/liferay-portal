@@ -17,8 +17,6 @@ package com.liferay.sync.model.impl;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SyncDLObject service. Represents a row in the &quot;SyncDLObject&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLObject
  * @generated
  */
-@ProviderType
 public abstract class SyncDLObjectBaseImpl
 	extends SyncDLObjectModelImpl implements SyncDLObject {
 

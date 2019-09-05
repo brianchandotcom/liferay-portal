@@ -77,8 +77,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the document library file entry local service.
  *
@@ -90,7 +88,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class DLFileEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements DLFileEntryLocalService, IdentifiableOSGiService {

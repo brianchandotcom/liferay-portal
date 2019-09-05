@@ -20,8 +20,6 @@ import com.liferay.sync.service.SyncDeviceServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>SyncDeviceServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDeviceServiceHttp
  * @generated
  */
-@ProviderType
 public class SyncDeviceServiceSoap {
 
 	public static com.liferay.sync.model.SyncDeviceSoap registerSyncDevice(

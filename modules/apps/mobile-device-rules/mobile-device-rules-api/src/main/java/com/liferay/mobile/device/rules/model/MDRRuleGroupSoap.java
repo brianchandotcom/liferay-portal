@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.mobile.device.rules.service.http.MDRRuleGroupServiceSoap}.
  *
  * @author Edward C. Han
  * @generated
  */
-@ProviderType
 public class MDRRuleGroupSoap implements Serializable {
 
 	public static MDRRuleGroupSoap toSoapModel(MDRRuleGroup model) {

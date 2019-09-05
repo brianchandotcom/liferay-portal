@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry;
 import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalServiceUtil;
 
@@ -31,7 +29,6 @@ import com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntry
  * @see NestedSetsTreeEntry
  * @generated
  */
-@ProviderType
 public abstract class NestedSetsTreeEntryBaseImpl
 	extends NestedSetsTreeEntryModelImpl implements NestedSetsTreeEntry {
 

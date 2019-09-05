@@ -50,8 +50,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the plugin setting local service.
  *
@@ -63,7 +61,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.PluginSettingLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class PluginSettingLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements PluginSettingLocalService, IdentifiableOSGiService {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link LayoutSetService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutSetService
  * @generated
  */
-@ProviderType
 public class LayoutSetServiceWrapper
 	implements LayoutSetService, ServiceWrapper<LayoutSetService> {
 
@@ -37,7 +35,7 @@ public class LayoutSetServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _layoutSetService.getOSGiServiceIdentifier();
 	}
 
@@ -63,7 +61,7 @@ public class LayoutSetServiceWrapper
 	public void updateLayoutSetPrototypeLinkEnabled(
 			long groupId, boolean privateLayout,
 			boolean layoutSetPrototypeLinkEnabled,
-			String layoutSetPrototypeUuid)
+			java.lang.String layoutSetPrototypeUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_layoutSetService.updateLayoutSetPrototypeLinkEnabled(
@@ -110,8 +108,8 @@ public class LayoutSetServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateLookAndFeel(
-			long groupId, boolean privateLayout, String themeId,
-			String colorSchemeId, String css)
+			long groupId, boolean privateLayout, java.lang.String themeId,
+			java.lang.String colorSchemeId, java.lang.String css)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateLookAndFeel(
@@ -120,7 +118,7 @@ public class LayoutSetServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateSettings(
-			long groupId, boolean privateLayout, String settings)
+			long groupId, boolean privateLayout, java.lang.String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateSettings(
@@ -129,7 +127,7 @@ public class LayoutSetServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSet updateVirtualHost(
-			long groupId, boolean privateLayout, String virtualHost)
+			long groupId, boolean privateLayout, java.lang.String virtualHost)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutSetService.updateVirtualHost(

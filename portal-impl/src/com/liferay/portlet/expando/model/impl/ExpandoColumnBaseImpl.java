@@ -17,8 +17,6 @@ package com.liferay.portlet.expando.model.impl;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the ExpandoColumn service. Represents a row in the &quot;ExpandoColumn&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExpandoColumn
  * @generated
  */
-@ProviderType
 public abstract class ExpandoColumnBaseImpl
 	extends ExpandoColumnModelImpl implements ExpandoColumn {
 

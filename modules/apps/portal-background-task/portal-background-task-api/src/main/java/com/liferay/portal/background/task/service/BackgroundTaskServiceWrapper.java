@@ -16,8 +16,6 @@ package com.liferay.portal.background.task.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link BackgroundTaskService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see BackgroundTaskService
  * @generated
  */
-@ProviderType
 public class BackgroundTaskServiceWrapper
 	implements BackgroundTaskService, ServiceWrapper<BackgroundTaskService> {
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.screens.service.ScreensDDMStructureVersionServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>ScreensDDMStructureVersionServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScreensDDMStructureVersionServiceSoap
  * @generated
  */
-@ProviderType
 public class ScreensDDMStructureVersionServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONObject

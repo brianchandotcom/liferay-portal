@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.ratings.kernel.service.RatingsEntryServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>RatingsEntryServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RatingsEntryServiceSoap
  * @generated
  */
-@ProviderType
 public class RatingsEntryServiceHttp {
 
 	public static void deleteEntry(

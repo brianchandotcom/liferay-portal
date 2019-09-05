@@ -16,8 +16,6 @@ package com.liferay.asset.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link AssetCategoryService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AssetCategoryService
  * @generated
  */
-@ProviderType
 public class AssetCategoryServiceWrapper
 	implements AssetCategoryService, ServiceWrapper<AssetCategoryService> {
 

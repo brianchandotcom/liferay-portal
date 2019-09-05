@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.calendar.service.http.CalendarBookingServiceSoap}.
  *
  * @author Eduardo Lundgren
  * @generated
  */
-@ProviderType
 public class CalendarBookingSoap implements Serializable {
 
 	public static CalendarBookingSoap toSoapModel(CalendarBooking model) {

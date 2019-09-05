@@ -19,15 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class VirtualHostSoap implements Serializable {
 
 	public static VirtualHostSoap toSoapModel(VirtualHost model) {

@@ -21,15 +21,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.UserGroupGroupRoleServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserGroupGroupRoleSoap implements Serializable {
 
 	public static UserGroupGroupRoleSoap toSoapModel(UserGroupGroupRole model) {

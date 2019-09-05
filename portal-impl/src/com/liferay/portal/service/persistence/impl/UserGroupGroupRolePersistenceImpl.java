@@ -46,8 +46,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the user group group role service.
  *
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class UserGroupGroupRolePersistenceImpl
 	extends BasePersistenceImpl<UserGroupGroupRole>
 	implements UserGroupGroupRolePersistence {

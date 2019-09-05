@@ -16,8 +16,6 @@ package com.liferay.sharing.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SharingEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SharingEntryLocalService
  * @generated
  */
-@ProviderType
 public class SharingEntryLocalServiceWrapper
 	implements SharingEntryLocalService,
 			   ServiceWrapper<SharingEntryLocalService> {

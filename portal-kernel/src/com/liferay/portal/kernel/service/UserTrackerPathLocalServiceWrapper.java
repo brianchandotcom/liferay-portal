@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link UserTrackerPathLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see UserTrackerPathLocalService
  * @generated
  */
-@ProviderType
 public class UserTrackerPathLocalServiceWrapper
 	implements UserTrackerPathLocalService,
 			   ServiceWrapper<UserTrackerPathLocalService> {
@@ -224,7 +222,7 @@ public class UserTrackerPathLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _userTrackerPathLocalService.getOSGiServiceIdentifier();
 	}
 

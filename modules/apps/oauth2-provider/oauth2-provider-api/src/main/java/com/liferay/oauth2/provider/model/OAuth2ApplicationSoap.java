@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.oauth2.provider.service.http.OAuth2ApplicationServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class OAuth2ApplicationSoap implements Serializable {
 
 	public static OAuth2ApplicationSoap toSoapModel(OAuth2Application model) {

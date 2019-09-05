@@ -16,8 +16,6 @@ package com.liferay.portal.instances.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link PortalInstancesLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PortalInstancesLocalService
  * @generated
  */
-@ProviderType
 public class PortalInstancesLocalServiceWrapper
 	implements PortalInstancesLocalService,
 			   ServiceWrapper<PortalInstancesLocalService> {

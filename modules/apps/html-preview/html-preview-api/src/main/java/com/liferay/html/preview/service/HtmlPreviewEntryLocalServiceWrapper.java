@@ -16,8 +16,6 @@ package com.liferay.html.preview.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link HtmlPreviewEntryLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see HtmlPreviewEntryLocalService
  * @generated
  */
-@ProviderType
 public class HtmlPreviewEntryLocalServiceWrapper
 	implements HtmlPreviewEntryLocalService,
 			   ServiceWrapper<HtmlPreviewEntryLocalService> {

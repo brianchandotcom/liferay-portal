@@ -16,8 +16,6 @@ package com.liferay.subscription.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SubscriptionLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SubscriptionLocalService
  * @generated
  */
-@ProviderType
 public class SubscriptionLocalServiceWrapper
 	implements SubscriptionLocalService,
 			   ServiceWrapper<SubscriptionLocalService> {

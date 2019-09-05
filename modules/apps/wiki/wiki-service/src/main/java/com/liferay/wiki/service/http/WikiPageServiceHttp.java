@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>WikiPageServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WikiPageServiceSoap
  * @generated
  */
-@ProviderType
 public class WikiPageServiceHttp {
 
 	public static com.liferay.wiki.model.WikiPage addPage(

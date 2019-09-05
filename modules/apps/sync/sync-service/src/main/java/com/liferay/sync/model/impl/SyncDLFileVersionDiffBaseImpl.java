@@ -17,8 +17,6 @@ package com.liferay.sync.model.impl;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the SyncDLFileVersionDiff service. Represents a row in the &quot;SyncDLFileVersionDiff&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDLFileVersionDiff
  * @generated
  */
-@ProviderType
 public abstract class SyncDLFileVersionDiffBaseImpl
 	extends SyncDLFileVersionDiffModelImpl implements SyncDLFileVersionDiff {
 

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.segments.service.SegmentsExperimentServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SegmentsExperimentServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SegmentsExperimentServiceSoap
  * @generated
  */
-@ProviderType
 public class SegmentsExperimentServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsExperiment

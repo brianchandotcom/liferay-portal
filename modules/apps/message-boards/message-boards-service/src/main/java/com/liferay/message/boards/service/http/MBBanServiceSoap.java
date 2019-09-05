@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>MBBanServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MBBanServiceHttp
  * @generated
  */
-@ProviderType
 public class MBBanServiceSoap {
 
 	public static com.liferay.message.boards.model.MBBanSoap addBan(

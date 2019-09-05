@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the portal local service.
  *
@@ -42,7 +40,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see com.liferay.portal.service.impl.PortalLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class PortalLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
 	implements PortalLocalService, IdentifiableOSGiService {

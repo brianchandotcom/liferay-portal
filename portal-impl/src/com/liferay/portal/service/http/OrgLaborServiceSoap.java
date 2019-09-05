@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.OrgLaborServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>OrgLaborServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OrgLaborServiceHttp
  * @generated
  */
-@ProviderType
 public class OrgLaborServiceSoap {
 
 	public static com.liferay.portal.kernel.model.OrgLaborSoap addOrgLabor(

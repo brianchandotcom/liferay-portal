@@ -38,8 +38,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The persistence implementation for the cluster group service.
  *
@@ -52,7 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class ClusterGroupPersistenceImpl
 	extends BasePersistenceImpl<ClusterGroup>
 	implements ClusterGroupPersistence {

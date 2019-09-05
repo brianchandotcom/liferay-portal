@@ -16,8 +16,6 @@ package com.liferay.data.engine.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link DEDataListViewLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see DEDataListViewLocalService
  * @generated
  */
-@ProviderType
 public class DEDataListViewLocalServiceWrapper
 	implements DEDataListViewLocalService,
 			   ServiceWrapper<DEDataListViewLocalService> {

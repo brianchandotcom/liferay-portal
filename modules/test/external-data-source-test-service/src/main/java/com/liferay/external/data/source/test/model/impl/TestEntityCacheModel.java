@@ -14,8 +14,6 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.external.data.source.test.model.TestEntity;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -32,7 +30,6 @@ import java.io.ObjectOutput;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class TestEntityCacheModel
 	implements CacheModel<TestEntity>, Externalizable {
 

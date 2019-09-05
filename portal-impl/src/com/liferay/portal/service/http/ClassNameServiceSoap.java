@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>ClassNameServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ClassNameServiceHttp
  * @generated
  */
-@ProviderType
 public class ClassNameServiceSoap {
 
 	public static com.liferay.portal.kernel.model.ClassNameSoap

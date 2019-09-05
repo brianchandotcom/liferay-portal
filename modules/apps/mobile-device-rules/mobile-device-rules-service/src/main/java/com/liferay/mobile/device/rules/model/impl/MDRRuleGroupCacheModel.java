@@ -26,15 +26,12 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing MDRRuleGroup in entity cache.
  *
  * @author Edward C. Han
  * @generated
  */
-@ProviderType
 public class MDRRuleGroupCacheModel
 	implements CacheModel<MDRRuleGroup>, Externalizable {
 

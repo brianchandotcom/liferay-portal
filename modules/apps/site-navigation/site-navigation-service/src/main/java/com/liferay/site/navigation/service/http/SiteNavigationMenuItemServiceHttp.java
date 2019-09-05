@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the HTTP utility for the
  * <code>SiteNavigationMenuItemServiceUtil</code> service
@@ -51,7 +49,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SiteNavigationMenuItemServiceSoap
  * @generated
  */
-@ProviderType
 public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem

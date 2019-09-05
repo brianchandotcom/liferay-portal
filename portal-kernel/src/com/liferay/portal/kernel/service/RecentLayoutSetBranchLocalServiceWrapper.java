@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.service;
 
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * Provides a wrapper for {@link RecentLayoutSetBranchLocalService}.
@@ -23,7 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see RecentLayoutSetBranchLocalService
  * @generated
  */
-@ProviderType
 public class RecentLayoutSetBranchLocalServiceWrapper
 	implements RecentLayoutSetBranchLocalService,
 			   ServiceWrapper<RecentLayoutSetBranchLocalService> {
@@ -259,7 +257,7 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getOSGiServiceIdentifier() {
+	public java.lang.String getOSGiServiceIdentifier() {
 		return _recentLayoutSetBranchLocalService.getOSGiServiceIdentifier();
 	}
 

@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services, specifically {@link com.liferay.asset.category.property.service.http.AssetCategoryPropertyServiceSoap}.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class AssetCategoryPropertySoap implements Serializable {
 
 	public static AssetCategoryPropertySoap toSoapModel(

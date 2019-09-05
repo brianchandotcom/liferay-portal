@@ -16,8 +16,6 @@ package com.liferay.sync.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link SyncDeviceService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see SyncDeviceService
  * @generated
  */
-@ProviderType
 public class SyncDeviceServiceWrapper
 	implements SyncDeviceService, ServiceWrapper<SyncDeviceService> {
 

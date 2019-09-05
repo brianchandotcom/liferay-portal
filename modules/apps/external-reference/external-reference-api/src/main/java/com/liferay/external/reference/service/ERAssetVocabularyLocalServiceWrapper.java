@@ -16,8 +16,6 @@ package com.liferay.external.reference.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a wrapper for {@link ERAssetVocabularyLocalService}.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ERAssetVocabularyLocalService
  * @generated
  */
-@ProviderType
 public class ERAssetVocabularyLocalServiceWrapper
 	implements ERAssetVocabularyLocalService,
 			   ServiceWrapper<ERAssetVocabularyLocalService> {

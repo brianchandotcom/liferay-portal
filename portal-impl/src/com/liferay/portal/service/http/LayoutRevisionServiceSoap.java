@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.service.LayoutRevisionServiceUtil;
 
 import java.rmi.RemoteException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the SOAP utility for the
  * <code>LayoutRevisionServiceUtil</code> service
@@ -61,7 +59,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see LayoutRevisionServiceHttp
  * @generated
  */
-@ProviderType
 public class LayoutRevisionServiceSoap {
 
 	public static com.liferay.portal.kernel.model.LayoutRevisionSoap

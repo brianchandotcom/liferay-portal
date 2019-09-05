@@ -17,8 +17,6 @@ package com.liferay.mail.reader.model.impl;
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Folder service. Represents a row in the &quot;Mail_Folder&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Folder
  * @generated
  */
-@ProviderType
 public abstract class FolderBaseImpl extends FolderModelImpl implements Folder {
 
 	/*

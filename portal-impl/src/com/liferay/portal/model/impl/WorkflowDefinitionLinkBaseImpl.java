@@ -17,8 +17,6 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the WorkflowDefinitionLink service. Represents a row in the &quot;WorkflowDefinitionLink&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see WorkflowDefinitionLink
  * @generated
  */
-@ProviderType
 public abstract class WorkflowDefinitionLinkBaseImpl
 	extends WorkflowDefinitionLinkModelImpl implements WorkflowDefinitionLink {
 

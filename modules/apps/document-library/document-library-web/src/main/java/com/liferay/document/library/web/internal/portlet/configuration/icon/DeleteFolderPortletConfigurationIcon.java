@@ -20,9 +20,12 @@ import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -161,6 +164,13 @@ public class DeleteFolderPortletConfigurationIcon
 				themeDisplay.getScopeGroupId(), folder.getFolderId(),
 				ActionKeys.DELETE);
 		}
+		catch (PrincipalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return false;
+		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
 		}
@@ -179,6 +189,9 @@ public class DeleteFolderPortletConfigurationIcon
 			throw new RuntimeException(pe);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeleteFolderPortletConfigurationIcon.class);
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;

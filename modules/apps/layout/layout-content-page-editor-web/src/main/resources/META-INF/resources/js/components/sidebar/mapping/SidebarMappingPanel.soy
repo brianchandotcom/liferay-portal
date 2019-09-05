@@ -4,7 +4,14 @@
  * SidebarMappingPanel
  */
 {template .render}
-	{@param? store: ?}
+	{@param? selectedMappingTypes: [
+		subtype: [
+			label: string
+		],
+		type: [
+			label: string
+		]
+	]}
 
 	<div class="sidebar-mapping">
 		{call com.liferay.layout.content.page.editor.web.FragmentsEditorSidebarContent.sidebarHeader}
@@ -13,14 +20,22 @@
 			{/param}
 		{/call}
 
-		<div class="pb-3 px-3">
-			<p class="pb-2 small text-secondary">
-				{msg desc=""}select-the-content-source-for-this-display-page-template{/msg}
+		<div class="px-3">
+			<p class="text-secondary small mb-4">
+				{msg desc=""}content-source-selected-for-this-display-page-template{/msg}
 			</p>
 
-			{call com.liferay.layout.content.page.editor.web.SidebarSelectMappingTypeForm.render}
-				{param store: $store /}
-			{/call}
+			<div class="d-flex flex-column mb-4">
+				<p class="list-group-title">{msg desc=""}content-type{/msg}:</p>
+				<p class="small mb-0">{$selectedMappingTypes.type.label}</p>
+			</div>
+
+			{if isNonnull($selectedMappingTypes.subtype)}
+				<div class="d-flex flex-column">
+					<p class="list-group-title">{msg desc=""}subtype{/msg}:</p>
+					<p class="small">{$selectedMappingTypes.subtype.label}</p>
+				</div>
+			{/if}
 		</div>
 	</div>
 {/template}

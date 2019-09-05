@@ -15,15 +15,20 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 
-import '../../mapping_type/SidebarSelectMappingTypeForm.es';
 import templates from './SidebarMappingPanel.soy';
+import getConnectedComponent from '../../../store/ConnectedComponent.es';
 
 /**
  * SidebarMappingPanel
  */
 class SidebarMappingPanel extends Component {}
 
-Soy.register(SidebarMappingPanel, templates);
+const ConnectedSidebarMappingPanel = getConnectedComponent(
+	SidebarMappingPanel,
+	['selectedMappingTypes']
+);
 
-export {SidebarMappingPanel};
-export default SidebarMappingPanel;
+Soy.register(ConnectedSidebarMappingPanel, templates);
+
+export {ConnectedSidebarMappingPanel, SidebarMappingPanel};
+export default ConnectedSidebarMappingPanel;

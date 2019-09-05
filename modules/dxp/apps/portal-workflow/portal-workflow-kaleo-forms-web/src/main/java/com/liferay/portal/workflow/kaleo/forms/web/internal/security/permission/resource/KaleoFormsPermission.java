@@ -12,12 +12,11 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.forms.service.permission;
+package com.liferay.portal.workflow.kaleo.forms.web.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsConstants;
 
@@ -25,21 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
- * @deprecated As of Mueller (7.2.x), with no direct replacement
+ * @author Dante Wang
  */
-@Component(
-	property = "resource.name=" + KaleoFormsConstants.RESOURCE_NAME,
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class KaleoFormsPermission extends BaseResourcePermissionChecker {
+@Component(immediate = true, service = {})
+public class KaleoFormsPermission {
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
+		if (!contains(permissionChecker, groupId, actionId)) {
+			throw new PrincipalException();
+		}
 	}
 
 	public static boolean contains(
@@ -47,14 +43,6 @@ public class KaleoFormsPermission extends BaseResourcePermissionChecker {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

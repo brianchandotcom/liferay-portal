@@ -85,10 +85,6 @@ public class WikiPageResourceImpl
 		com.liferay.wiki.model.WikiPage wikiPage =
 			_wikiPageLocalService.getPageByPageId(wikiPageId);
 
-		_wikiPageModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), wikiPage,
-			ActionKeys.DELETE);
-
 		_wikiPageService.deletePage(wikiPage.getNodeId(), wikiPage.getTitle());
 	}
 

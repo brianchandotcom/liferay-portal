@@ -1099,50 +1099,58 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature), schemaVarNames)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
-				List<GraphQLField> graphQLFields = new ArrayList<>();
+				<#if !properties?keys?seq_contains("id")>
+					Assert.assertTrue(false);
+				<#else>
+					List<GraphQLField> graphQLFields = new ArrayList<>();
 
-				List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+					List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
 
-				graphQLFields.add(new GraphQLField("items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+					graphQLFields.add(new GraphQLField("items", itemsGraphQLFields.toArray(new GraphQLField[0])));
 
-				graphQLFields.add(new GraphQLField("page"));
-				graphQLFields.add(new GraphQLField("totalCount"));
+					graphQLFields.add(new GraphQLField("page"));
+					graphQLFields.add(new GraphQLField("totalCount"));
 
-				GraphQLField graphQLField = new GraphQLField(
-					"query",
-					new GraphQLField(
-						"${schemaVarNames}",
-						new HashMap<String, Object>() {
-							{
-								put("page", 1);
-								put("pageSize", 2);
-								<#if javaMethodSignature.methodName?contains("Site")>
-									put("siteId", testGroup.getGroupId());
-								</#if>
-							}
-						},
-						graphQLFields.toArray(new GraphQLField[0])));
+					GraphQLField graphQLField = new GraphQLField(
+						"query",
+						new GraphQLField(
+							"${schemaVarNames}",
+							new HashMap<String, Object>() {
+								{
+									<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+										<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+											put("page", 1);
+											put("pageSize", 2);
+										</#if>
+									</#list>
+									<#if javaMethodSignature.methodName?contains("Site")>
+										put("siteId", testGroup.getGroupId());
+									</#if>
+								}
+							},
+							graphQLFields.toArray(new GraphQLField[0])));
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
 
-				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+					JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
-				JSONObject ${schemaVarNames}JSONObject = dataJSONObject.getJSONObject("${schemaVarNames}");
+					JSONObject ${schemaVarNames}JSONObject = dataJSONObject.getJSONObject("${schemaVarNames}");
 
-				Assert.assertEquals(0, ${schemaVarNames}JSONObject.get("totalCount"));
+					Assert.assertEquals(0, ${schemaVarNames}JSONObject.get("totalCount"));
 
-				${schemaName} ${schemaVarName}1 = testGraphQL${schemaName}_add${schemaName}();
-				${schemaName} ${schemaVarName}2 = testGraphQL${schemaName}_add${schemaName}();
+					${schemaName} ${schemaVarName}1 = testGraphQL${schemaName}_add${schemaName}();
+					${schemaName} ${schemaVarName}2 = testGraphQL${schemaName}_add${schemaName}();
 
-				jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
+					jsonObject = JSONFactoryUtil.createJSONObject(invoke(graphQLField.toString()));
 
-				dataJSONObject = jsonObject.getJSONObject("data");
+					dataJSONObject = jsonObject.getJSONObject("data");
 
-					${schemaVarNames}JSONObject = dataJSONObject.getJSONObject("${schemaVarNames}");
+						${schemaVarNames}JSONObject = dataJSONObject.getJSONObject("${schemaVarNames}");
 
-				Assert.assertEquals(2, ${schemaVarNames}JSONObject.get("totalCount"));
+					Assert.assertEquals(2, ${schemaVarNames}JSONObject.get("totalCount"));
 
-				assertEqualsJSONArray(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), ${schemaVarNames}JSONObject.getJSONArray("items"));
+					assertEqualsJSONArray(Arrays.asList(${schemaVarName}1, ${schemaVarName}2), ${schemaVarNames}JSONObject.getJSONArray("items"));
+				</#if>
 			}
 		<#elseif freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?ends_with(schemaName)>
 			@Test
@@ -1158,7 +1166,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 							"${freeMarkerTool.getGraphQLPropertyName(javaMethodSignature)}",
 							new HashMap<String, Object>() {
 								{
-									put("${schemaVarName}Id", ${schemaVarName}.getId());
+									<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+										<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+											put("${javaMethodParameter.parameterName}", ${schemaVarName}.
+											<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+												getId
+											<#else>
+												get${javaMethodParameter.parameterName?cap_first}
+											</#if>
+											());
+										</#if>
+									</#list>
 								}
 							},
 							graphQLFields.toArray(new GraphQLField[0])));
@@ -1234,70 +1252,72 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#list>
 	</#list>
 
-	<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
-		protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
-			return testGraphQL${schemaName}_add${schemaName}(random${schemaName}());
-		}
-
-		protected ${schemaName} testGraphQL${schemaName}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
-			StringBuilder sb = new StringBuilder("{");
-
-			for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
-				<#list properties?keys as propertyName>
-					<#if randomDataTypes?seq_contains(properties[propertyName])>
-						if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
-							sb.append(additionalAssertFieldName);
-							sb.append(": ");
-
-							Object value = ${schemaVarName}.get${propertyName?cap_first}();
-
-							if (value instanceof String) {
-								sb.append("\"");
-								sb.append(value);
-								sb.append("\"");
-							}
-							else {
-								sb.append(value);
-							}
-
-							sb.append(", ");
-						}
-					</#if>
-				</#list>
+	<#if properties?keys?seq_contains("id")>
+		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
+			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
+				return testGraphQL${schemaName}_add${schemaName}(random${schemaName}());
 			}
 
-			sb.append("}");
+			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
+				StringBuilder sb = new StringBuilder("{");
 
-			List<GraphQLField> graphQLFields = getGraphQLFields();
+				for (String additionalAssertFieldName : getAdditionalAssertFieldNames()) {
+					<#list properties?keys as propertyName>
+						<#if randomDataTypes?seq_contains(properties[propertyName])>
+							if (Objects.equals("${propertyName}", additionalAssertFieldName)) {
+								sb.append(additionalAssertFieldName);
+								sb.append(": ");
 
-			GraphQLField graphQLField = new GraphQLField(
-				"mutation",
-				new GraphQLField(
-					"createSite${schemaName}",
-					new HashMap<String, Object>() {
-						{
-							put("siteId", testGroup.getGroupId());
-							put("${schemaVarName}", sb.toString());
-						}
-					},
-					graphQLFields.toArray(new GraphQLField[0])
-				)
-			);
+								Object value = ${schemaVarName}.get${propertyName?cap_first}();
 
-			JSONDeserializer<${schemaName}> jsonDeserializer = JSONFactoryUtil.createJSONDeserializer();
+								if (value instanceof String) {
+									sb.append("\"");
+									sb.append(value);
+									sb.append("\"");
+								}
+								else {
+									sb.append(value);
+								}
 
-			String object = invoke(graphQLField.toString());
+								sb.append(", ");
+							}
+						</#if>
+					</#list>
+				}
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+				sb.append("}");
 
-			JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+				List<GraphQLField> graphQLFields = getGraphQLFields();
 
-			return jsonDeserializer.deserialize(String.valueOf(dataJSONObject.getJSONObject("createSite${schemaName}")), ${schemaName}.class);
-		}
-	<#else>
-		protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
-			throw new UnsupportedOperationException("This method needs to be implemented");
-		}
+				GraphQLField graphQLField = new GraphQLField(
+					"mutation",
+					new GraphQLField(
+						"createSite${schemaName}",
+						new HashMap<String, Object>() {
+							{
+								put("siteId", testGroup.getGroupId());
+								put("${schemaVarName}", sb.toString());
+							}
+						},
+						graphQLFields.toArray(new GraphQLField[0])
+					)
+				);
+
+				JSONDeserializer<${schemaName}> jsonDeserializer = JSONFactoryUtil.createJSONDeserializer();
+
+				String object = invoke(graphQLField.toString());
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(object);
+
+				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+				return jsonDeserializer.deserialize(String.valueOf(dataJSONObject.getJSONObject("createSite${schemaName}")), ${schemaName}.class);
+			}
+		<#else>
+			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
+				throw new UnsupportedOperationException("This method needs to be implemented");
+			}
+		</#if>
 	</#if>
 
 	protected void assertHttpResponseStatusCode(int expectedHttpResponseStatusCode, HttpInvoker.HttpResponse actualHttpResponse) {

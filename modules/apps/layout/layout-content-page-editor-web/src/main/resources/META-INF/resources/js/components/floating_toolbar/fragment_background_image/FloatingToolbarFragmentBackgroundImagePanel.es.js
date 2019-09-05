@@ -17,15 +17,11 @@ import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import './FloatingToolbarFragmentBackgroundImagePanelDelegateTemplate.soy';
-import {
-	BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-	DEFAULT_LANGUAGE_ID_KEY
-} from '../../../utils/constants';
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../utils/constants';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
-import {prefixSegmentsExperienceId} from '../../../utils/prefixSegmentsExperienceId.es';
 import {openImageSelector} from '../../../utils/FragmentsEditorDialogUtils';
 import templates from './FloatingToolbarFragmentBackgroundImagePanel.soy';
-import {updateEditableValueAction} from '../../../actions/updateEditableValue.es';
+import {updateEditableValueContentAction} from '../../../actions/updateEditableValue.es';
 
 /**
  * FloatingToolbarFragmentBackgroundImagePanel
@@ -59,17 +55,12 @@ class FloatingToolbarFragmentBackgroundImagePanel extends Component {
 	 */
 	_updateFragmentBackgroundImage(image) {
 		this.store.dispatch(
-			updateEditableValueAction({
-				editableId: this.item.editableId,
-				editableValueContent: image,
-				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				fragmentEntryLinkId: this.item.fragmentEntryLinkId,
-				processor: BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
-				segmentsExperienceId: prefixSegmentsExperienceId(
-					this.segmentsExperienceId ||
-						this.defaultSegmentsExperienceId
-				)
-			})
+			updateEditableValueContentAction(
+				this.item.fragmentEntryLinkId,
+				BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+				this.item.editableId,
+				image
+			)
 		);
 	}
 }

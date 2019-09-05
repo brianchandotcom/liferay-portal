@@ -29,7 +29,6 @@ import {
 } from '../../actions/actions.es';
 import debouncedAlert from '../../utils/debouncedAlert.es';
 import {
-	DEFAULT_LANGUAGE_ID_KEY,
 	EDITABLE_FIELD_CONFIG_KEYS,
 	EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 	FLOATING_TOOLBAR_BUTTONS,
@@ -52,10 +51,10 @@ import {
 	shouldUpdateOnChangeProperties,
 	shouldUpdatePureComponent
 } from '../../utils/FragmentsEditorComponentUtils.es';
-import {updateEditableValueAction} from '../../actions/updateEditableValue.es';
 import FloatingToolbar from '../floating_toolbar/FloatingToolbar.es';
 import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
 import templates from './FragmentEditableField.soy';
+import {updateEditableValueContentAction} from '../../actions/updateEditableValue.es';
 
 /**
  * @type {number}
@@ -409,10 +408,6 @@ class FragmentEditableField extends PortletBase {
 	 * @private
 	 */
 	_handleEditableChanged(newValue) {
-		const editableValueSegmentsExperienceId =
-			prefixSegmentsExperienceId(this.segmentsExperienceId) ||
-			prefixSegmentsExperienceId(this.defaultSegmentsExperienceId);
-
 		if (this.type === 'image') {
 			this.store
 				.dispatch(enableSavingChangesStatusAction())
@@ -430,14 +425,12 @@ class FragmentEditableField extends PortletBase {
 		}
 
 		this.store.dispatch(
-			updateEditableValueAction({
-				editableId: this.editableId,
-				editableValueContent: newValue,
-				editableValueId: this.languageId || DEFAULT_LANGUAGE_ID_KEY,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				processor: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				segmentsExperienceId: editableValueSegmentsExperienceId
-			})
+			updateEditableValueContentAction(
+				this.fragmentEntryLinkId,
+				EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				this.editableId,
+				newValue
+			)
 		);
 	}
 

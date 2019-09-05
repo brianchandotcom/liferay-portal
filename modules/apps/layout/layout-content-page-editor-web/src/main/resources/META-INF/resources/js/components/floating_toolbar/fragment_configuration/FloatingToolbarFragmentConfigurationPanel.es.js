@@ -25,7 +25,7 @@ import './FloatingToolbarFragmentConfigurationPanelDelegateTemplate.soy';
 import {getConnectedComponent} from '../../../store/ConnectedComponent.es';
 import {deleteIn, setIn} from '../../../utils/FragmentsEditorUpdateUtils.es';
 import templates from './FloatingToolbarFragmentConfigurationPanel.soy';
-import {updateConfigurationValueAction} from '../../../actions/updateEditableValue.es';
+import {updateFragmentConfigurationAction} from '../../../actions/updateEditableValue.es';
 
 /**
  * FloatingToolbarFragmentConfigurationPanel
@@ -76,10 +76,9 @@ class FloatingToolbarFragmentConfigurationPanel extends Component {
 	 */
 	_sendConfiguration(configurationValues) {
 		this.store.dispatch(
-			updateConfigurationValueAction(
+			updateFragmentConfigurationAction(
 				this.item.fragmentEntryLinkId,
-				configurationValues,
-				this.segmentsExperienceId || this.defaultSegmentsExperienceId
+				configurationValues
 			)
 		);
 	}

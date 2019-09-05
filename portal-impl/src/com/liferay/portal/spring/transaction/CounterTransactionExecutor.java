@@ -44,8 +44,8 @@ public class CounterTransactionExecutor
 			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
-		TransactionStatusAdapter transactionStatusAdapter = _start(
-			_platformTransactionManager, transactionAttributeAdapter);
+		TransactionStatusAdapter transactionStatusAdapter = start(
+			transactionAttributeAdapter);
 
 		T returnValue = null;
 
@@ -84,7 +84,9 @@ public class CounterTransactionExecutor
 	public TransactionStatusAdapter start(
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
-		return _start(_platformTransactionManager, transactionAttributeAdapter);
+		return new TransactionStatusAdapter(
+			_platformTransactionManager.getTransaction(
+				transactionAttributeAdapter));
 	}
 
 	private void _commit(
@@ -125,15 +127,6 @@ public class CounterTransactionExecutor
 		}
 
 		return throwable;
-	}
-
-	private TransactionStatusAdapter _start(
-		PlatformTransactionManager platformTransactionManager,
-		TransactionAttributeAdapter transactionAttributeAdapter) {
-
-		return new TransactionStatusAdapter(
-			platformTransactionManager.getTransaction(
-				transactionAttributeAdapter));
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

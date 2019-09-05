@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.document.library.opener.onedrive.web.internal.handler;
+package com.liferay.document.library.opener.onedrive.web.internal.exception.mapper;
 
 import com.liferay.document.library.opener.onedrive.web.internal.exception.GraphServicePortalException;
 

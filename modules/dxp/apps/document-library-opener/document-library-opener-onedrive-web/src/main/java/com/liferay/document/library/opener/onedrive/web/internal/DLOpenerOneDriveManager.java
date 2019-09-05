@@ -20,8 +20,8 @@ import com.liferay.document.library.opener.onedrive.web.internal.background.task
 import com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.DLOpenerOneDriveConstants;
 import com.liferay.document.library.opener.onedrive.web.internal.constants.OneDriveBackgroundTaskConstants;
+import com.liferay.document.library.opener.onedrive.web.internal.exception.mapper.GraphServiceExceptionPortalExceptionMapper;
 import com.liferay.document.library.opener.onedrive.web.internal.graph.IAuthenticationProviderImpl;
-import com.liferay.document.library.opener.onedrive.web.internal.handler.GraphServiceExceptionPortalExceptionMapper;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.AccessToken;
 import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Manager;
 import com.liferay.document.library.opener.service.DLOpenerFileEntryReferenceLocalService;

@@ -79,7 +79,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		}
 
 		long segmentsExperienceId = _getSelectedSegmentsExperienceId(
-			httpServletRequest, themeDisplay.isSignedIn());
+			httpServletRequest, themeDisplay);
 
 		if (segmentsExperienceId != -1) {
 			return new long[] {segmentsExperienceId};
@@ -209,6 +209,12 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			StringPool.BLANK
 		);
 
+		return _getSegmentsExperienceId(groupId, segmentsExperienceKey);
+	}
+
+	private long _getSegmentsExperienceId(
+		long groupId, String segmentsExperienceKey) {
+
 		if (Objects.equals(
 				segmentsExperienceKey,
 				SegmentsExperienceConstants.KEY_DEFAULT)) {
@@ -244,29 +250,36 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	}
 
 	private long _getSelectedSegmentsExperienceId(
-		HttpServletRequest httpServletRequest, boolean signedIn) {
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
-		if (!signedIn) {
+		if (!themeDisplay.isSignedIn()) {
 			return -1;
 		}
 
 		long selectedSegmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId", -1);
 
-		if ((selectedSegmentsExperienceId != -1) &&
-			(selectedSegmentsExperienceId !=
-				SegmentsExperienceConstants.ID_DEFAULT)) {
+		if (selectedSegmentsExperienceId != -1) {
+			if (selectedSegmentsExperienceId ==
+					SegmentsExperienceConstants.ID_DEFAULT) {
+
+				return selectedSegmentsExperienceId;
+			}
 
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					selectedSegmentsExperienceId);
 
-			if (segmentsExperience == null) {
-				return -1;
+			if (segmentsExperience != null) {
+				return selectedSegmentsExperienceId;
 			}
 		}
 
-		return selectedSegmentsExperienceId;
+		String selectedSegmentsExperienceKey = ParamUtil.getString(
+			httpServletRequest, "segmentsExperienceKey");
+
+		return _getSegmentsExperienceId(
+			themeDisplay.getScopeGroupId(), selectedSegmentsExperienceKey);
 	}
 
 	private void _setCookie(

@@ -262,6 +262,21 @@ public class SegmentsExperimentDisplayContext {
 		return _segmentsExperienceId;
 	}
 
+	public String getWinnerSegmentsExperienceId() {
+		if (_segmentsExperiment == null) {
+			return "";
+		}
+
+		long winnerSegmentsExperienceId =
+			_segmentsExperiment.getWinnerSegmentsExperienceId();
+
+		if (winnerSegmentsExperienceId == -1) {
+			return "";
+		}
+
+		return String.valueOf(winnerSegmentsExperienceId);
+	}
+
 	private Optional<SegmentsExperiment> _getActiveSegmentsExperimentOptional(
 			long segmentsExperienceId)
 		throws PortalException {

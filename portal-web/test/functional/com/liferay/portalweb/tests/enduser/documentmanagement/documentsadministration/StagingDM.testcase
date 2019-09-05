@@ -333,7 +333,7 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-99265. It ensures that staged document file cannot be shared unless published to Live."
+	@description = "This test covers LPS-99265. It ensures that a staged document file cannot be shared unless it is first published to Live."
 	@priority = "4"
 	test ShareDMDocumentOnLiveSite {
 		JSONUser.addUser(

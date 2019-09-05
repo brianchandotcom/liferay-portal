@@ -358,7 +358,7 @@ definition {
 			value1 = "${rowEntry}");
 	}
 
-	@description = "This test covers LPS-99265. It ensures that staged blogs entry cannot be shared unless published to Live."
+	@description = "This test covers LPS-99265. It ensures that a staged blogs entry cannot be shared unless it is first published to Live."
 	@priority = "4"
 	test ShareBlogsEntryOnLiveSite {
 		JSONUser.addUser(

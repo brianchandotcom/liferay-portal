@@ -211,6 +211,14 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.baseline") {
+			if (!project.path.endsWith("-api") && !project.path.endsWith("-spi")) {
+				baseline {
+					enabled = false
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.js.module.config.generator") {
 			downloadLiferayModuleConfigGenerator {
 				enabled = false

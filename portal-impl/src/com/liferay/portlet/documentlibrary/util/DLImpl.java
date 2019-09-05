@@ -163,14 +163,15 @@ public class DLImpl implements DL {
 		StringBundler sb = new StringBundler((folders.size() * 3) + 5);
 
 		sb.append(themeDisplay.translate("home"));
-		sb.append(StringPool.SPACE);
 
 		for (Folder curFolder : folders) {
+			sb.append(StringPool.SPACE);
 			sb.append(StringPool.RAQUO_CHAR);
 			sb.append(StringPool.SPACE);
 			sb.append(curFolder.getName());
 		}
 
+		sb.append(StringPool.SPACE);
 		sb.append(StringPool.RAQUO_CHAR);
 		sb.append(StringPool.SPACE);
 		sb.append(folder.getName());

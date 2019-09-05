@@ -35,6 +35,10 @@ public class VersionUtilTest {
 		Assert.assertTrue("7.1.10.1", VersionUtil.isDXPVersion("7.1.10.1"));
 		Assert.assertTrue(
 			"7.1.10.fp21", VersionUtil.isDXPVersion("7.1.10.fp21"));
+		Assert.assertTrue(
+			"7.1.10.fp1-1", VersionUtil.isDXPVersion("7.1.10.fp1-1"));
+		Assert.assertTrue(
+			"7.1.10.fp123-456", VersionUtil.isDXPVersion("7.1.10.fp123-456"));
 	}
 
 	@Test

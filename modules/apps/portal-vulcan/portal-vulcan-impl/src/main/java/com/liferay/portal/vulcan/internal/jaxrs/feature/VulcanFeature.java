@@ -30,13 +30,13 @@ import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.ContextContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
-import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.SiteValidatorContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.TransactionContainerRequestFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AcceptLanguageContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.CompanyContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FieldsQueryParamContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationContextProvider;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SiteParamConverterProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
@@ -139,7 +139,7 @@ public class VulcanFeature implements Feature {
 		featureContext.register(
 			new NestedFieldsWriterInterceptor(_bundleContext));
 		featureContext.register(
-			new SiteValidatorContainerRequestFilter(_groupLocalService));
+			new SiteParamConverterProvider(_groupLocalService));
 
 		featureContext.register(
 			new SortContextProvider(_language, _portal, _sortParserProvider));

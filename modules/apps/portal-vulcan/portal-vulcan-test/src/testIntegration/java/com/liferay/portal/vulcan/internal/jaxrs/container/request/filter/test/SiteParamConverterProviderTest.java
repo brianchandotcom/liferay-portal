@@ -58,7 +58,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class SiteValidatorContainerRequestFilterTest {
+public class SiteParamConverterProviderTest {
 
 	@ClassRule
 	@Rule
@@ -79,8 +79,7 @@ public class SiteValidatorContainerRequestFilterTest {
 
 		_serviceRegistration = registry.registerService(
 			Application.class,
-			new SiteValidatorContainerRequestFilterTest.TestApplication(),
-			properties);
+			new SiteParamConverterProviderTest.TestApplication(), properties);
 	}
 
 	@After

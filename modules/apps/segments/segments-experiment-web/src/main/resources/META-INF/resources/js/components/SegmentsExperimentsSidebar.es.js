@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState, useContext} from 'react';
+import React, {useContext, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import SegmentsExperiments from './SegmentsExperiments.es';
 import SegmentsExperimentsModal from './SegmentsExperimentsModal.es';
@@ -30,6 +30,35 @@ import {
 	STATUS_COMPLETED,
 	STATUS_TERMINATED
 } from '../util/statuses.es';
+import {reducer} from '../util/reducer.es';
+import {
+	closeCreationModal,
+	closeEditionModal,
+	openEditionModal,
+	openCreationModal,
+	addSegmentsExperiment,
+	updateSegmentsExperiment,
+	addVariant,
+	updateVariant,
+	updateVariants
+} from '../util/actions.es';
+
+const DEFAULT_STATE = {
+	createExperimentModal: {active: false},
+	editExperimentModal: {active: false},
+	experiences: [],
+	experiment: null,
+	selectedExperienceId: null,
+	variants: [],
+	winnerVariant: null
+};
+
+function getInitialState(state) {
+	return {
+		...DEFAULT_STATE,
+		...state
+	};
+}
 
 function SegmentsExperimentsSidebar({
 	initialGoals,
@@ -40,19 +69,30 @@ function SegmentsExperimentsSidebar({
 	winnerSegmentsVariantId
 }) {
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
+	const [state, dispatch] = useReducer(
+		reducer,
+		{
+			experiment: initialSegmentsExperiment,
+			selectedExperienceId: initialSelectedSegmentsExperienceId,
+			variants: initialSegmentsVariants.map(initialVariant => {
+				if (
+					winnerSegmentsVariantId ===
+					initialVariant.segmentsExperienceId
+				)
+					return {...initialVariant, winner: true};
+				return initialVariant;
+			}),
+			winnerVariant: winnerSegmentsVariantId
+		},
+		getInitialState
+	);
 
-	const [creationModal, setCreationModal] = useState({active: false});
-	const [editionModal, setEditionModal] = useState({active: false});
-	const [segmentsExperiment, setSegmentsExperiment] = useState(
-		initialSegmentsExperiment
-	);
-	const [variants, setVariants] = useState(
-		initialSegmentsVariants.map(initialVariant => {
-			if (winnerSegmentsVariantId === initialVariant.segmentsExperienceId)
-				return {...initialVariant, winner: true};
-			return initialVariant;
-		})
-	);
+	const {
+		createExperimentModal,
+		editExperimentModal,
+		experiment,
+		variants
+	} = state;
 
 	return page.type === 'content' ? (
 		<div className="p-3">
@@ -74,37 +114,43 @@ function SegmentsExperimentsSidebar({
 				onVariantEdition={_handleVariantEdition}
 				onWinnerExperiencePublishing={_handleWinnerExperiencePublishing}
 				segmentsExperiences={initialSegmentsExperiences}
-				segmentsExperiment={segmentsExperiment}
+				segmentsExperiment={experiment}
 				selectedSegmentsExperienceId={
 					initialSelectedSegmentsExperienceId
 				}
 				variants={variants}
 			/>
-			{creationModal.active && (
+			{createExperimentModal.active && (
 				<SegmentsExperimentsModal
-					active={creationModal.active}
-					description={creationModal.description}
-					error={creationModal.error}
+					active={createExperimentModal.active}
+					description={createExperimentModal.description}
+					error={createExperimentModal.error}
 					goals={initialGoals}
 					handleClose={_handleModalClose}
-					name={creationModal.name}
+					name={createExperimentModal.name}
 					onSave={_handleExperimentCreation}
-					segmentsExperienceId={creationModal.segmentsExperienceId}
+					segmentsExperienceId={
+						createExperimentModal.segmentsExperienceId
+					}
 					title={Liferay.Language.get('create-new-test')}
 				/>
 			)}
-			{editionModal.active && (
+			{editExperimentModal.active && (
 				<SegmentsExperimentsModal
-					active={editionModal.active}
-					description={editionModal.description}
-					error={editionModal.error}
-					goal={editionModal.goal.value}
+					active={editExperimentModal.active}
+					description={editExperimentModal.description}
+					error={editExperimentModal.error}
+					goal={editExperimentModal.goal}
 					goals={initialGoals}
 					handleClose={_handleEditModalClose}
-					name={editionModal.name}
+					name={editExperimentModal.name}
 					onSave={_handleExperimentEdition}
-					segmentsExperienceId={editionModal.segmentsExperienceId}
-					segmentsExperimentId={editionModal.segmentsExperimentId}
+					segmentsExperienceId={
+						editExperimentModal.segmentsExperienceId
+					}
+					segmentsExperimentId={
+						editExperimentModal.segmentsExperimentId
+					}
 					title={Liferay.Language.get('edit-test')}
 				/>
 			)}
@@ -113,28 +159,21 @@ function SegmentsExperimentsSidebar({
 		<UnsupportedSegmentsExperiments />
 	);
 
-	function _handleCreateSegmentsExperiment(experienceId) {
-		setCreationModal({
-			active: true,
-			segmentsExperienceId: experienceId
-		});
+	function _handleCreateSegmentsExperiment(_experienceId) {
+		dispatch(openCreationModal());
 	}
 
 	function _handleModalClose() {
-		setCreationModal({
-			active: false
-		});
+		dispatch(closeCreationModal());
 	}
 
 	function _handleEditModalClose() {
-		setEditionModal({
-			active: false
-		});
+		dispatch(closeEditionModal());
 	}
 
 	function _handleDeleteSegmentsExperiment() {
 		const body = {
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+			segmentsExperimentId: experiment.segmentsExperimentId
 		};
 
 		APIService.deleteExperiment(body).then(() => {
@@ -180,41 +219,40 @@ function SegmentsExperimentsSidebar({
 					status
 				} = segmentsExperiment;
 
-				setVariants([{...segmentsExperimentRel, control: true}]);
+				dispatch(addVariant(segmentsExperimentRel));
 
-				setCreationModal({
-					active: false
-				});
+				dispatch(closeCreationModal());
 
-				setSegmentsExperiment({
-					confidenceLevel,
-					description,
-					editable,
-					goal,
-					name,
-					segmentsEntryName,
-					segmentsExperienceId,
-					segmentsExperimentId,
-					status
-				});
+				dispatch(
+					addSegmentsExperiment({
+						confidenceLevel,
+						description,
+						editable,
+						goal,
+						name,
+						segmentsEntryName,
+						segmentsExperienceId,
+						segmentsExperimentId,
+						status
+					})
+				);
 			})
 			.catch(function _errorCallback() {
-				setCreationModal({
-					active: true,
-					description: experimentData.description,
-					editable: experimentData.editable,
-					error: Liferay.Language.get('create-test-error'),
-					name: experimentData.name,
-					segmentsEntryName: experimentData.segmentsEntryName,
-					segmentsExperienceId: experimentData.segmentsExperienceId
-				});
+				dispatch(
+					openCreationModal({
+						description,
+						error: Liferay.Language.get('create-test-error'),
+						name,
+						segmentsExperienceId
+					})
+				);
 			});
 	}
 
 	function _handleRunExperiment({splitVariantsMap, confidenceLevel}) {
 		const body = {
 			confidenceLevel,
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			segmentsExperimentId: experiment.segmentsExperimentId,
 			segmentsExperimentRels: JSON.stringify(splitVariantsMap),
 			status: STATUS_RUNNING
 		};
@@ -226,42 +264,27 @@ function SegmentsExperimentsSidebar({
 				split: splitVariantsMap[variant.segmentsExperimentRelId]
 			}));
 
-			setSegmentsExperiment(segmentsExperiment);
-			setVariants(updatedVariants);
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
+			dispatch(updateVariants(updatedVariants));
 		});
 	}
 
-	function _handleEditSegmentExperimentStatus(segmentsExperiment, status) {
+	function _handleEditSegmentExperimentStatus(experimentData, status) {
 		const body = {
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			segmentsExperimentId: experimentData.segmentsExperimentId,
 			status
 		};
 
 		APIService.editExperimentStatus(body)
 			.then(function _successCallback(objectResponse) {
-				const {
-					confidenceLevel,
-					description,
-					editable,
-					goal,
-					name,
-					segmentsEntryName,
-					segmentsExperienceId,
-					segmentsExperimentId,
-					status
-				} = objectResponse.segmentsExperiment;
+				const {editable, status} = objectResponse.segmentsExperiment;
 
-				setSegmentsExperiment({
-					confidenceLevel,
-					description,
-					editable,
-					goal,
-					name,
-					segmentsEntryName,
-					segmentsExperienceId,
-					segmentsExperimentId,
-					status
-				});
+				dispatch(
+					updateSegmentsExperiment({
+						editable,
+						status
+					})
+				);
 			})
 			.catch(function _errorCallback() {
 				Liferay.Util.openToast({
@@ -275,17 +298,7 @@ function SegmentsExperimentsSidebar({
 	}
 
 	function _handleEditSegmentsExperiment() {
-		setEditionModal({
-			active: true,
-			description: segmentsExperiment.description,
-			editable: segmentsExperiment.editable,
-			goal: segmentsExperiment.goal,
-			name: segmentsExperiment.name,
-			segmentsEntryName: segmentsExperiment.segmentsEntryName,
-			segmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
-			status: segmentsExperiment.status
-		});
+		dispatch(openEditionModal());
 	}
 
 	function _handleExperimentEdition(experimentData) {
@@ -319,34 +332,37 @@ function SegmentsExperimentsSidebar({
 					status
 				} = objectResponse.segmentsExperiment;
 
-				setEditionModal({
-					active: false
-				});
+				dispatch(closeEditionModal());
 
-				setSegmentsExperiment({
-					confidenceLevel,
-					description,
-					editable,
-					goal,
-					name,
-					segmentsEntryName,
-					segmentsExperienceId,
-					segmentsExperimentId,
-					status
-				});
+				dispatch(
+					updateSegmentsExperiment({
+						confidenceLevel,
+						description,
+						editable,
+						goal,
+						name,
+						segmentsEntryName,
+						segmentsExperienceId,
+						segmentsExperimentId,
+						status
+					})
+				);
 			})
 			.catch(function _errorCallback() {
-				setEditionModal({
-					active: true,
-					description: experimentData.description,
-					editable: experimentData.editable,
-					error: Liferay.Language.get('edit-test-error'),
-					name: experimentData.name,
-					segmentsEntryName: experimentData.segmentsEntryName,
-					segmentsExperienceId: experimentData.segmentsExperienceId,
-					segmentsExperimentId: experimentData.segmentsExperimentId,
-					status: experimentData.status
-				});
+				dispatch(
+					openEditionModal({
+						description: experimentData.description,
+						editable: experimentData.editable,
+						error: Liferay.Language.get('edit-test-error'),
+						name: experimentData.name,
+						segmentsEntryName: experimentData.segmentsEntryName,
+						segmentsExperienceId:
+							experimentData.segmentsExperienceId,
+						segmentsExperimentId:
+							experimentData.segmentsExperimentId,
+						status: experimentData.status
+					})
+				);
 			});
 	}
 
@@ -356,7 +372,7 @@ function SegmentsExperimentsSidebar({
 
 	function _handleExperimentDiscard() {
 		const body = {
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			segmentsExperimentId: experiment.segmentsExperimentId,
 			status: STATUS_TERMINATED
 		};
 
@@ -367,18 +383,19 @@ function SegmentsExperimentsSidebar({
 
 	function _handleTargetChange(selector) {
 		const body = {
-			description: segmentsExperiment.description,
-			goal: segmentsExperiment.goal.value,
+			description: experiment.description,
+			goal: experiment.goal.value,
 			goalTarget: selector,
-			name: segmentsExperiment.name,
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+			name: experiment.name,
+			segmentsExperimentId: experiment.segmentsExperimentId
 		};
 
 		APIService.editExperiment(body).then(() => {
-			setSegmentsExperiment({
-				...segmentsExperiment,
-				goal: {...segmentsExperiment.goal, target: selector}
-			});
+			dispatch(
+				updateSegmentsExperiment({
+					goal: {...experiment.goal, target: selector}
+				})
+			);
 		});
 	}
 
@@ -388,7 +405,7 @@ function SegmentsExperimentsSidebar({
 				classNameId: page.classNameId,
 				classPK: page.classPK,
 				name,
-				segmentsExperimentId: segmentsExperiment.segmentsExperimentId
+				segmentsExperimentId: experiment.segmentsExperimentId
 			};
 
 			APIService.createVariant(body)
@@ -401,17 +418,17 @@ function SegmentsExperimentsSidebar({
 						split
 					} = segmentsExperimentRel;
 
-					setVariants([
-						...variants,
-						{
+					dispatch(
+						addVariant({
 							control: false,
 							name,
 							segmentsExperienceId,
 							segmentsExperimentId,
 							segmentsExperimentRelId,
 							split
-						}
-					]);
+						})
+					);
+
 					resolve();
 				})
 				.catch(error => reject(error));
@@ -438,7 +455,7 @@ function SegmentsExperimentsSidebar({
 			if (variantExperienceId === initialSelectedSegmentsExperienceId) {
 				navigateToExperience(initialSelectedSegmentsExperienceId);
 			} else {
-				setVariants(newVariants);
+				dispatch(updateVariants(newVariants));
 			}
 		});
 	}
@@ -454,20 +471,15 @@ function SegmentsExperimentsSidebar({
 
 			APIService.editVariant(body)
 				.then(({segmentsExperimentRel}) => {
-					setVariants(
-						variants.map(variant => {
-							if (
-								segmentsExperimentRel.segmentsExperimentRelId ===
-								variant.segmentsExperimentRelId
-							) {
-								return {
-									...variant,
-									name: segmentsExperimentRel.name
-								};
-							}
-							return variant;
+					dispatch(
+						updateVariant({
+							changes: {
+								name: segmentsExperimentRel.name
+							},
+							variantId
 						})
 					);
+
 					resolve();
 				})
 				.catch(() => {
@@ -479,12 +491,12 @@ function SegmentsExperimentsSidebar({
 	function _handleWinnerExperiencePublishing() {
 		const body = {
 			segmentsExperienceId: winnerSegmentsVariantId,
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			segmentsExperimentId: experiment.segmentsExperimentId,
 			status: STATUS_COMPLETED
 		};
 
 		APIService.publishExperience(body).then(({segmentsExperiment}) => {
-			setSegmentsExperiment(segmentsExperiment);
+			dispatch(updateSegmentsExperiment(segmentsExperiment));
 		});
 	}
 }

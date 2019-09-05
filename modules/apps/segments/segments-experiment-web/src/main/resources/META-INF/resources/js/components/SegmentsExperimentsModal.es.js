@@ -40,7 +40,7 @@ function SegmentsExperimentsModal({
 	});
 	const [inputDescription, setInputDescription] = useState(description);
 	const [inputGoal, setInputGoal] = useState(
-		goal || (goals[0] && goals[0].value)
+		(goal && goal.value) || (goals[0] && goals[0].value)
 	);
 	const [inputName, setInputName] = useState(name);
 	const [invalidForm, setInvalidForm] = useState(false);

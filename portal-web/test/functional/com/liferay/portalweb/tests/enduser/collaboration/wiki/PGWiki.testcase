@@ -124,53 +124,6 @@ definition {
 	}
 
 	@priority = "4"
-	test AddFrontPageWithAttachments {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		for (var attachmentFileName : list "Document_1.jpg,Document_2.mp3,Document_3.doc") {
-			WikiPage.addAttachmentViaPageEdit(
-				attachmentFileName = "${attachmentFileName}",
-				wikiPageTitle = "FrontPage");
-
-			Navigator.gotoPage(pageName = "Wiki Test Page");
-
-			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-		}
-
-		WikiPage.viewAttachmentPGViaEdit(
-			attachmentFileName = "Document_1.jpg",
-			attachmentFileSize = "13 KB",
-			numberOfAttachments = "3",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiPage.viewAttachmentPGViaEdit(
-			attachmentFileName = "Document_2.mp3",
-			attachmentFileSize = "864 B",
-			numberOfAttachments = "3",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiPage.viewAttachmentPGViaEdit(
-			attachmentFileName = "Document_3.doc",
-			attachmentFileSize = "24 KB",
-			numberOfAttachments = "3",
-			wikiPageTitle = "FrontPage");
-	}
-
-	@priority = "4"
 	test AddFrontPageChildPageFormatHTML {
 
 		var welcomeToLiferay = '''
@@ -204,34 +157,6 @@ definition {
 		WikiPage.viewChildPagePG(
 			wikiChildPageContent = "Welcome to LIFERAY",
 			wikiChildPageTitle = "Wiki FrontPage Child Page Title");
-	}
-
-	@priority = "5"
-	test AddFrontPageWithChildPages {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		for (var childPageCount : list "1,2,3") {
-			WikiPage.addChildPagePG(
-				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
-				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title",
-				wikiPageTitle = "FrontPage");
-		}
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		for (var childPageCount : list "1,2,3") {
-			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-			WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title");
-
-			WikiPage.viewChildPagePG(
-				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
-				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title");
-		}
 	}
 
 	@priority = "4"
@@ -364,6 +289,81 @@ definition {
 	}
 
 	@priority = "4"
+	test AddFrontPageWithAttachments {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		for (var attachmentFileName : list "Document_1.jpg,Document_2.mp3,Document_3.doc") {
+			WikiPage.addAttachmentViaPageEdit(
+				attachmentFileName = "${attachmentFileName}",
+				wikiPageTitle = "FrontPage");
+
+			Navigator.gotoPage(pageName = "Wiki Test Page");
+
+			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+		}
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_1.jpg",
+			attachmentFileSize = "13 KB",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_2.mp3",
+			attachmentFileSize = "864 B",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage");
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		WikiPage.viewAttachmentPGViaEdit(
+			attachmentFileName = "Document_3.doc",
+			attachmentFileSize = "24 KB",
+			numberOfAttachments = "3",
+			wikiPageTitle = "FrontPage");
+	}
+
+	@priority = "5"
+	test AddFrontPageWithChildPages {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiPage.addFrontPagePG(wikiPageContent = "Wiki FrontPage Content");
+
+		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+		for (var childPageCount : list "1,2,3") {
+			WikiPage.addChildPagePG(
+				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
+				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title",
+				wikiPageTitle = "FrontPage");
+		}
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		for (var childPageCount : list "1,2,3") {
+			WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
+
+			WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title");
+
+			WikiPage.viewChildPagePG(
+				wikiChildPageContent = "Wiki FrontPage Child Page${childPageCount} Content",
+				wikiChildPageTitle = "Wiki FrontPage Child Page${childPageCount} Title");
+		}
+	}
+
+	@priority = "4"
 	test AddFrontPageWithCreoleFormat {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
@@ -410,34 +410,6 @@ definition {
 			wikiPageRevision = "1.1",
 			wikiPageTitle = "FrontPage",
 			wikiPageUsername = "Test Test");
-	}
-
-	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
-	@priority = "4"
-	test AddPageWithImageViaURL {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoFrontPagePG();
-
-		WikiNavigator.gotoBodyLinkPG(wikiPageContent = "This page is empty. Edit it to add some text.");
-
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
-
-		ItemSelector.addFromURL(
-			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
-			navTab = "URL");
-
-		AssertElementPresent(
-			key_contentImageName = "Document_1.jpg",
-			locator1 = "Wiki#CONTENT_IMAGE_NAME");
-
-		PortletEntry.publish();
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		AssertElementPresent(
-			key_contentImageName = "Document_1.jpg",
-			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
 	@priority = "5"
@@ -508,33 +480,32 @@ definition {
 			wikiPageTitle = "Wiki Page Title");
 	}
 
-	@priority = "5"
-	test AddWikiPages {
-		property testray.component.names = "Training";
+	@description = "This test covers LPS-95711. It ensures that an image can be added to the front page via URL."
+	@priority = "4"
+	test AddPageWithImageViaURL {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoFrontPagePG();
+
+		WikiNavigator.gotoBodyLinkPG(wikiPageContent = "This page is empty. Edit it to add some text.");
+
+		ItemSelector.gotoItemSelectorViaAlloyEditor();
+
+		ItemSelector.addFromURL(
+			imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+			navTab = "URL");
+
+		AssertElementPresent(
+			key_contentImageName = "Document_1.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
+
+		PortletEntry.publish();
 
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		WikiNavigator.gotoAllPagesPG();
-
-		for (var entryCount : list "1,2,3") {
-			WikiPage.addPG(
-				wikiPageContent = "Wiki Page${entryCount} Content",
-				wikiPageTitle = "Wiki Page${entryCount} Title");
-		}
-
-		for (var entryCount : list "1,2,3") {
-			Navigator.gotoPage(pageName = "Wiki Test Page");
-
-			WikiNavigator.gotoPG(
-				wikiPageContent = "Wiki Page${entryCount} Content",
-				wikiPageRevision = "1.0",
-				wikiPageTitle = "Wiki Page${entryCount} Title",
-				wikiPageUsername = "Test Test");
-
-			WikiPage.viewPG(
-				wikiPageContent = "Wiki Page${entryCount} Content",
-				wikiPageTitle = "Wiki Page${entryCount} Title");
-		}
+		AssertElementPresent(
+			key_contentImageName = "Document_1.jpg",
+			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
 	@priority = "4"
@@ -592,6 +563,35 @@ definition {
 			attachmentFileName = "Document_1.jpg",
 			wikiPageContent = "Wiki Page Content",
 			wikiPageTitle = "Wiki Page Title");
+	}
+
+	@priority = "5"
+	test AddWikiPages {
+		property testray.component.names = "Training";
+
+		Navigator.gotoPage(pageName = "Wiki Test Page");
+
+		WikiNavigator.gotoAllPagesPG();
+
+		for (var entryCount : list "1,2,3") {
+			WikiPage.addPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageTitle = "Wiki Page${entryCount} Title");
+		}
+
+		for (var entryCount : list "1,2,3") {
+			Navigator.gotoPage(pageName = "Wiki Test Page");
+
+			WikiNavigator.gotoPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageRevision = "1.0",
+				wikiPageTitle = "Wiki Page${entryCount} Title",
+				wikiPageUsername = "Test Test");
+
+			WikiPage.viewPG(
+				wikiPageContent = "Wiki Page${entryCount} Content",
+				wikiPageTitle = "Wiki Page${entryCount} Title");
+		}
 	}
 
 	@priority = "5"

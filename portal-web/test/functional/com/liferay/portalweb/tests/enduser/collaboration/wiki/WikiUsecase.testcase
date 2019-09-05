@@ -198,6 +198,17 @@ definition {
 			value1 = "Sweet Potatoes");
 	}
 
+	@priority = "4"
+	test NavigationPortletSmoke {
+		Navigator.openURL(pageName = "Wiki Test Page");
+
+		Portlet.addPG(portletName = "Tree Menu");
+
+		AntCommand.antCommand(
+			locator1 = "build-test.xml",
+			value1 = "remove-plugin -Dplugin.name=wiki-navigation-portlet");
+	}
+
 	@priority = "5"
 	test RateAndEditPageComment {
 		Navigator.openURL();
@@ -356,28 +367,6 @@ definition {
 	}
 
 	@priority = "4"
-	test SearchFrontPageAttachments {
-		WikiPage.addFrontPagePG(
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki FrontPage Content");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addAttachmentViaPageEdit(
-			attachmentFileName = "Document_1.txt",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.searchPG(searchTerm = "document");
-
-		WikiPage.viewSearchResultsPG(
-			wikiAttachment = "true",
-			wikiAttachmentBody = "Document_1.txt",
-			wikiPageTitle = "FrontPage");
-	}
-
-	@priority = "4"
 	test SearchChildPageComment {
 		WikiPage.addFrontPagePG(
 			wikiNodeName = "Main",
@@ -406,25 +395,26 @@ definition {
 			wikiPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@priority = "3"
-	test ViewNoXSSViaAddPage {
+	@priority = "4"
+	test SearchFrontPageAttachments {
+		WikiPage.addFrontPagePG(
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki FrontPage Content");
+
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		WikiPage.editFrontPagePG(wikiPageContentEdit = '''<script>alert(123);</script>''');
+		WikiPage.addAttachmentViaPageEdit(
+			attachmentFileName = "Document_1.txt",
+			wikiPageTitle = "FrontPage");
 
-		AssertClick(
-			locator1 = "Link#EDIT",
-			value1 = "Edit");
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		AssertAlertNotPresent();
+		WikiPage.searchPG(searchTerm = "document");
 
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		WikiPage.viewSearchResultsPG(
+			wikiAttachment = "true",
+			wikiAttachmentBody = "Document_1.txt",
+			wikiPageTitle = "FrontPage");
 	}
 
 	@priority = "4"
@@ -470,15 +460,25 @@ definition {
 			pathLocator = "CURRENT_LOCATION");
 	}
 
-	@priority = "4"
-	test NavigationPortletSmoke {
-		Navigator.openURL(pageName = "Wiki Test Page");
+	@priority = "3"
+	test ViewNoXSSViaAddPage {
+		Navigator.gotoPage(pageName = "Wiki Test Page");
 
-		Portlet.addPG(portletName = "Tree Menu");
+		WikiPage.editFrontPagePG(wikiPageContentEdit = '''<script>alert(123);</script>''');
 
-		AntCommand.antCommand(
-			locator1 = "build-test.xml",
-			value1 = "remove-plugin -Dplugin.name=wiki-navigation-portlet");
+		AssertClick(
+			locator1 = "Link#EDIT",
+			value1 = "Edit");
+
+		AssertAlertNotPresent();
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
 }

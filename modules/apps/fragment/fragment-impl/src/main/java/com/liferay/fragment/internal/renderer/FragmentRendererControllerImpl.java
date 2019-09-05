@@ -222,7 +222,7 @@ public class FragmentRendererControllerImpl
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		return FragmentEntryConfigUtil.translateConfigurationFields(
+		return FragmentEntryConfigUtil.translateConfiguration(
 			jsonObject, resourceBundle);
 	}
 

@@ -305,7 +305,7 @@ public class FragmentEntryConfigUtil {
 		return false;
 	}
 
-	public static String translateConfigurationFields(
+	public static String translateConfiguration(
 		JSONObject jsonObject, ResourceBundle resourceBundle) {
 
 		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");

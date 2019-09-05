@@ -35,7 +35,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AppBuilderAppDeploymentPersistence
 	extends BasePersistence<AppBuilderAppDeployment> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AppBuilderAppDeploymentUtil} to access the app builder app deployment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.

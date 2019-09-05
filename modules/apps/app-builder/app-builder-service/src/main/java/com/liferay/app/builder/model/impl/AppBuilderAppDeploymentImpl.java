@@ -14,8 +14,6 @@
 
 package com.liferay.app.builder.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the AppBuilderAppDeployment service. Represents a row in the &quot;AppBuilderAppDeployment&quot; database table, with each column mapped to a property of this class.
  *
@@ -25,7 +23,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AppBuilderAppDeploymentImpl
 	extends AppBuilderAppDeploymentBaseImpl {
 

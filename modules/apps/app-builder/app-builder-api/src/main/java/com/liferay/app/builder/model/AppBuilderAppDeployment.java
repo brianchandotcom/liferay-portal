@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AppBuilderAppDeployment
 	extends AppBuilderAppDeploymentModel, PersistedModel {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.app.builder.model.impl.AppBuilderAppDeploymentImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

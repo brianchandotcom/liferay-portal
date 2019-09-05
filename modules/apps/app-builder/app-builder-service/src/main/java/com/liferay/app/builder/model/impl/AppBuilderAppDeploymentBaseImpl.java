@@ -17,8 +17,6 @@ package com.liferay.app.builder.model.impl;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the AppBuilderAppDeployment service. Represents a row in the &quot;AppBuilderAppDeployment&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,12 +29,11 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see AppBuilderAppDeployment
  * @generated
  */
-@ProviderType
 public abstract class AppBuilderAppDeploymentBaseImpl
 	extends AppBuilderAppDeploymentModelImpl
 	implements AppBuilderAppDeployment {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this class directly. All methods that expect a app builder app deployment model instance should use the <code>AppBuilderAppDeployment</code> interface instead.

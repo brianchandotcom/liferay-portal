@@ -55,7 +55,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AppBuilderAppDeploymentLocalService
 	extends BaseLocalService, PersistedModelLocalService {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link AppBuilderAppDeploymentLocalServiceUtil} to access the app builder app deployment local service. Add custom service methods to <code>com.liferay.app.builder.service.impl.AppBuilderAppDeploymentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.

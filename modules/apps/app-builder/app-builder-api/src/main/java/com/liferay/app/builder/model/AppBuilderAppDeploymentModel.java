@@ -34,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface AppBuilderAppDeploymentModel
 	extends BaseModel<AppBuilderAppDeployment> {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. All methods that expect a app builder app deployment model instance should use the {@link AppBuilderAppDeployment} interface instead.

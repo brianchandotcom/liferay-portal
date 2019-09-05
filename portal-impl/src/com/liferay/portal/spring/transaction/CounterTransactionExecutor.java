@@ -53,9 +53,9 @@ public class CounterTransactionExecutor
 			returnValue = unsafeSupplier.get();
 		}
 		catch (Throwable throwable) {
-			throw _rollback(
-				_platformTransactionManager, throwable,
-				transactionAttributeAdapter, transactionStatusAdapter);
+			rollback(
+				throwable, transactionAttributeAdapter,
+				transactionStatusAdapter);
 		}
 
 		_commit(_platformTransactionManager, transactionStatusAdapter);
@@ -75,9 +75,30 @@ public class CounterTransactionExecutor
 			TransactionStatusAdapter transactionStatusAdapter)
 		throws Throwable {
 
-		throw _rollback(
-			_platformTransactionManager, throwable, transactionAttributeAdapter,
-			transactionStatusAdapter);
+		if (transactionAttributeAdapter.rollbackOn(throwable)) {
+			try {
+				_platformTransactionManager.rollback(
+					transactionStatusAdapter.getTransactionStatus());
+			}
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
+
+				throw t;
+			}
+		}
+		else {
+			try {
+				_platformTransactionManager.commit(
+					transactionStatusAdapter.getTransactionStatus());
+			}
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
+
+				throw t;
+			}
+		}
+
+		throw throwable;
 	}
 
 	@Override
@@ -95,38 +116,6 @@ public class CounterTransactionExecutor
 
 		platformTransactionManager.commit(
 			transactionStatusAdapter.getTransactionStatus());
-	}
-
-	private Throwable _rollback(
-		PlatformTransactionManager platformTransactionManager,
-		Throwable throwable,
-		TransactionAttributeAdapter transactionAttributeAdapter,
-		TransactionStatusAdapter transactionStatusAdapter) {
-
-		if (transactionAttributeAdapter.rollbackOn(throwable)) {
-			try {
-				platformTransactionManager.rollback(
-					transactionStatusAdapter.getTransactionStatus());
-			}
-			catch (Throwable t) {
-				t.addSuppressed(throwable);
-
-				throw t;
-			}
-		}
-		else {
-			try {
-				platformTransactionManager.commit(
-					transactionStatusAdapter.getTransactionStatus());
-			}
-			catch (Throwable t) {
-				t.addSuppressed(throwable);
-
-				throw t;
-			}
-		}
-
-		return throwable;
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

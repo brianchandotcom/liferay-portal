@@ -93,22 +93,6 @@ definition {
 		task ("Assert the copied section fragment is present") {
 			FragmentsAdmin.viewEntryPresent(entry = "Fragment Name (Copy)");
 		}
-
-		task ("Assert the copied section fragment retained the HTML from the original section fragment by asserting the preview in the fragment editor") {
-			FragmentsAdmin.gotoEntry(entry = "Fragment Name (Copy)");
-
-			Pause(locator1 = "3000");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-			Pause(locator1 = "3000");
-
-			AssertTextEquals(
-				locator1 = "//div[contains(@id,'fragment')]",
-				value1 = "test");
-
-			SelectFrameTop();
-		}
 	}
 
 	@description = "Fragments can be deleted."

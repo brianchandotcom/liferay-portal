@@ -1063,13 +1063,6 @@ definition {
 		Site.addBlankCP(siteName = "New Site");
 
 		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Site Page");
-
-		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
 			portlet = "Workflow");
@@ -1110,14 +1103,14 @@ definition {
 			portlet = "Workflow");
 
 		Workflow.viewConfigurationSelected(
-			workflowDefinition = "Single Approver",
+			workflowDefinition = "Default: Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
 		Workflow.viewConfigurationSelected(
 			workflowDefinition = "No Workflow",
 			workflowResourceValue = "Calendar Event");
 
-		Navigator.openSiteURL(siteName = "New Site");
+		ProductMenu.gotoSite(site = "New Site");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1125,7 +1118,7 @@ definition {
 			portlet = "Workflow");
 
 		Workflow.viewConfigurationSelected(
-			workflowDefinition = "Single Approver",
+			workflowDefinition = "Default: Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
 		Workflow.viewConfigurationSelected(

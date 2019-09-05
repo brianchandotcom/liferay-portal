@@ -18,6 +18,7 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.internal.portlet.action.ActionUtil;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -172,7 +173,7 @@ public class DeleteFolderPortletConfigurationIcon
 			return false;
 		}
 		catch (PortalException pe) {
-			throw new RuntimeException(pe);
+			return ReflectionUtil.throwException(pe);
 		}
 	}
 

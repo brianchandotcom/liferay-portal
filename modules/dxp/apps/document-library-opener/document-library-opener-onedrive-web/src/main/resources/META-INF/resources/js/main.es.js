@@ -89,7 +89,7 @@ class DocumentLibraryOpener {
 	}) {
 		this._refreshAfterNavigate = refresh;
 
-		this._showLoading({dialogMessage, pollingURL});
+		return this._showLoading({dialogMessage, pollingURL});
 	}
 
 	_hideLoading() {

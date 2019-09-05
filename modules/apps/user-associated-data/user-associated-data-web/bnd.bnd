@@ -2,3 +2,4 @@ Bundle-Name: Liferay User Associated Data Web
 Bundle-SymbolicName: com.liferay.user.associated.data.web
 Bundle-Version: 5.0.0
 -dsannotations-options: inherit
+Web-ContextPath: /user-associated-data-web

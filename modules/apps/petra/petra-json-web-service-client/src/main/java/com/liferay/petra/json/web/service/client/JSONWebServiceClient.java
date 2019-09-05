@@ -23,13 +23,10 @@ import java.util.Map;
 
 import org.apache.http.NameValuePair;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ivica Cardic
  * @author Igor Beslic
  */
-@ProviderType
 public interface JSONWebServiceClient {
 
 	public void destroy();

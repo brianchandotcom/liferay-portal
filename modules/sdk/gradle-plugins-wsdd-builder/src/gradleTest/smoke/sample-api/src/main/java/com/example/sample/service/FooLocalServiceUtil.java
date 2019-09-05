@@ -34,7 +34,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see com.example.sample.service.impl.FooLocalServiceImpl
  * @generated
  */
-@ProviderType
 public class FooLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

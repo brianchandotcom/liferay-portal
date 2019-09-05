@@ -48,7 +48,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntryLocalServiceUtil
  * @generated
  */
-@ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}

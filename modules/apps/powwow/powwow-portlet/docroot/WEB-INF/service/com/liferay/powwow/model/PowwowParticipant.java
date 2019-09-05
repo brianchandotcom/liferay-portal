@@ -28,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ImplementationClassName("com.liferay.powwow.model.impl.PowwowParticipantImpl")
-@ProviderType
 public interface PowwowParticipant
 	extends PersistedModel, PowwowParticipantModel {
 

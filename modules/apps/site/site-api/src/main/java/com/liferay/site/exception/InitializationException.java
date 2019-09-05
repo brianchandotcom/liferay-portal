@@ -16,12 +16,9 @@ package com.liferay.site.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@ProviderType
 public class InitializationException extends PortalException {
 
 	public InitializationException() {

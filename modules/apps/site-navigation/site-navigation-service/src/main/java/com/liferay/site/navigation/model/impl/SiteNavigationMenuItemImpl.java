@@ -14,12 +14,9 @@
 
 package com.liferay.site.navigation.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SiteNavigationMenuItemImpl extends SiteNavigationMenuItemBaseImpl {
 
 	public SiteNavigationMenuItemImpl() {

@@ -31,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthTokenUtil
  * @generated
  */
-@ProviderType
 public interface OAuthTokenPersistence extends BasePersistence<OAuthToken> {
 
 	/*

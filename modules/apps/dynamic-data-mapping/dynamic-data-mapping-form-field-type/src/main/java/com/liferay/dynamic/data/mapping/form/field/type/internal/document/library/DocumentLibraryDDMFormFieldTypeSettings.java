@@ -22,8 +22,6 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Pedro Queiroz
  */
@@ -74,7 +72,6 @@ import org.osgi.annotation.versioning.ProviderType;
 		)
 	}
 )
-@ProviderType
 public interface DocumentLibraryDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 }

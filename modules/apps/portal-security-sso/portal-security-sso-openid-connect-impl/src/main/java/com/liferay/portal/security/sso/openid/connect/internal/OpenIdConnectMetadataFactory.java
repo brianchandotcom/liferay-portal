@@ -19,12 +19,9 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceExcept
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public interface OpenIdConnectMetadataFactory {
 
 	public OIDCClientMetadata getOIDCClientMetadata();

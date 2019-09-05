@@ -18,8 +18,6 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author David Arques
  */
@@ -29,7 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
 	localization = "content/Language",
 	name = "segments-service-configuration-name"
 )
-@ProviderType
 public interface SegmentsServiceConfiguration {
 
 	@Meta.AD(

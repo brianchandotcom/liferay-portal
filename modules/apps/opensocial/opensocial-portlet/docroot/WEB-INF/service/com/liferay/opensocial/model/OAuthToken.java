@@ -28,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ImplementationClassName("com.liferay.opensocial.model.impl.OAuthTokenImpl")
-@ProviderType
 public interface OAuthToken extends OAuthTokenModel, PersistedModel {
 
 	/*

@@ -40,7 +40,6 @@ import java.util.List;
  * @see com.example.sample.service.persistence.impl.FooPersistenceImpl
  * @generated
  */
-@ProviderType
 public class FooUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

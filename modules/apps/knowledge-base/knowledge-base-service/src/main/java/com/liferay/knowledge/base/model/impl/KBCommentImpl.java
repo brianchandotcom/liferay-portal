@@ -17,13 +17,10 @@ package com.liferay.knowledge.base.model.impl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.knowledge.base.model.KBComment;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Peter Shin
  * @author Daniel Kocsis
  */
-@ProviderType
 public class KBCommentImpl extends KBCommentBaseImpl {
 
 	public KBCommentImpl() {

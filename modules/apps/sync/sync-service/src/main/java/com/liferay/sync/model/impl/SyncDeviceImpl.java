@@ -25,12 +25,9 @@ import com.liferay.sync.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shinn Lok
  */
-@ProviderType
 public class SyncDeviceImpl extends SyncDeviceBaseImpl {
 
 	@Override

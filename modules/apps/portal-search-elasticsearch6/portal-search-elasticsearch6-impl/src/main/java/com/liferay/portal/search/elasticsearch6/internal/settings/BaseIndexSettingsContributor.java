@@ -18,12 +18,9 @@ import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributo
 import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
 import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
 public class BaseIndexSettingsContributor implements IndexSettingsContributor {
 
 	public BaseIndexSettingsContributor(int priority) {

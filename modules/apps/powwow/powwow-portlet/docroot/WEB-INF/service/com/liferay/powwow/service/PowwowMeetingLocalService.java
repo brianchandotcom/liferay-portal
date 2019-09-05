@@ -50,7 +50,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowMeetingLocalServiceUtil
  * @generated
  */
-@ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}

@@ -38,7 +38,6 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
@@ -46,7 +45,6 @@ import org.osgi.service.component.ComponentContext;
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public abstract class BasePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
 

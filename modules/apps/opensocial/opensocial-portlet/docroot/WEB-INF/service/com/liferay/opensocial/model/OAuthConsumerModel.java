@@ -33,7 +33,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthConsumer
  * @generated
  */
-@ProviderType
 public interface OAuthConsumerModel
 	extends BaseModel<OAuthConsumer>, ShardedModel {
 

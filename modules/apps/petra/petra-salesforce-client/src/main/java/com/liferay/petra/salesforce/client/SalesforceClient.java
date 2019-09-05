@@ -16,14 +16,11 @@ package com.liferay.petra.salesforce.client;
 
 import com.sforce.ws.ConnectorConfig;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Shin
  * @author Rachael Koestartyo
  */
-@ProviderType
 public interface SalesforceClient {
 
 	public String getAuthEndpoint();

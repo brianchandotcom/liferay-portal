@@ -28,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ImplementationClassName("com.liferay.opensocial.model.impl.GadgetImpl")
-@ProviderType
 public interface Gadget extends GadgetModel, PersistedModel {
 
 	/*

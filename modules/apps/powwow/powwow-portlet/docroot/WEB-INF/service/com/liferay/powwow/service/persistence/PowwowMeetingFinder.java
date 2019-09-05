@@ -20,7 +20,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Shinn Lok
  * @generated
  */
-@ProviderType
 public interface PowwowMeetingFinder {
 
 	public int countByU_S(long userId, int[] statuses);

@@ -23,12 +23,9 @@ import com.liferay.portal.kernel.messaging.Message;
 
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public abstract class BaseExportImportLifecycleMessageListener
 	extends BaseMessageListener {
 

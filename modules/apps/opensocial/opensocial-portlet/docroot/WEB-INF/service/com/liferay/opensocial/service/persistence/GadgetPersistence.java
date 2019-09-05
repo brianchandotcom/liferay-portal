@@ -31,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see GadgetUtil
  * @generated
  */
-@ProviderType
 public interface GadgetPersistence extends BasePersistence<Gadget> {
 
 	/*

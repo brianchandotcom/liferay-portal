@@ -31,7 +31,6 @@ import com.example.sample.service.FooLocalServiceUtil;
  * @see Foo
  * @generated
  */
-@ProviderType
 public abstract class FooBaseImpl extends FooModelImpl implements Foo {
 	/*
 	 * NOTE FOR DEVELOPERS:

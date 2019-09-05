@@ -42,7 +42,6 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -292,7 +291,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		return scopesAliases;
 	}
 
-	@ProviderType
 	public interface ScopeLocatorConfigurationProvider {
 
 		public ScopeLocatorConfiguration getScopeLocatorConfiguration();

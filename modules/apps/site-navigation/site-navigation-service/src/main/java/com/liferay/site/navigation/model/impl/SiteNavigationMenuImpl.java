@@ -17,12 +17,9 @@ package com.liferay.site.navigation.model.impl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SiteNavigationMenuImpl extends SiteNavigationMenuBaseImpl {
 
 	@Override

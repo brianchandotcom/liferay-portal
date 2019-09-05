@@ -31,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowParticipantUtil
  * @generated
  */
-@ProviderType
 public interface PowwowParticipantPersistence
 	extends BasePersistence<PowwowParticipant> {
 

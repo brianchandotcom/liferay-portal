@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @see FooService
  * @generated
  */
-@ProviderType
 public class FooServiceWrapper implements FooService,
 	ServiceWrapper<FooService> {
 	public FooServiceWrapper(FooService fooService) {

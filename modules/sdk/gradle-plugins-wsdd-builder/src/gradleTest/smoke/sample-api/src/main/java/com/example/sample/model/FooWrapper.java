@@ -39,7 +39,6 @@ import java.util.Objects;
  * @see Foo
  * @generated
  */
-@ProviderType
 public class FooWrapper implements Foo, ModelWrapper<Foo> {
 	public FooWrapper(Foo foo) {
 		_foo = foo;

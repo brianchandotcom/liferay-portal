@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public interface OpenIdConnectUserInfoProcessor {
 
 	public long processUserInfo(UserInfo userInfo, long companyId)

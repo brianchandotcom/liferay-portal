@@ -44,6 +44,5 @@ import aQute.bnd.annotation.ProviderType;
  * @see com.example.sample.service.FooServiceUtil
  * @generated
  */
-@ProviderType
 public class FooServiceHttp {
 }

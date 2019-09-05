@@ -14,8 +14,6 @@
 
 package com.example.sample.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * The extended model implementation for the Foo service. Represents a row in
  * the &quot;Sample_Foo&quot; database table, with each column mapped to a
@@ -29,7 +27,6 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class FooImpl extends FooBaseImpl {
 
 	/**

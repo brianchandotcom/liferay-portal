@@ -34,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntry
  * @generated
  */
-@ProviderType
 public interface TasksEntryModel
 	extends BaseModel<TasksEntry>, GroupedModel, ShardedModel {
 

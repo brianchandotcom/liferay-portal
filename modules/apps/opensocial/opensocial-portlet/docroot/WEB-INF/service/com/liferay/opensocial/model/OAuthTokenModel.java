@@ -34,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthToken
  * @generated
  */
-@ProviderType
 public interface OAuthTokenModel
 	extends AuditedModel, BaseModel<OAuthToken>, ShardedModel {
 

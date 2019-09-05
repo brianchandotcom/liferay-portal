@@ -37,7 +37,6 @@ import java.util.Date;
  * @see Foo
  * @generated
  */
-@ProviderType
 public class FooCacheModel implements CacheModel<Foo>, Externalizable {
 	@Override
 	public boolean equals(Object obj) {

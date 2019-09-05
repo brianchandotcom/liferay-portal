@@ -63,7 +63,6 @@ import java.util.Map;
  * @generated
  */
 @JSON(strict = true)
-@ProviderType
 public class FooModelImpl extends BaseModelImpl<Foo> implements FooModel {
 	/*
 	 * NOTE FOR DEVELOPERS:

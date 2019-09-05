@@ -16,12 +16,9 @@ package com.liferay.site.navigation.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchMenuItemException extends NoSuchModelException {
 
 	public NoSuchMenuItemException() {

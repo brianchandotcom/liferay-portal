@@ -34,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see PowwowServer
  * @generated
  */
-@ProviderType
 public interface PowwowServerModel
 	extends AuditedModel, BaseModel<PowwowServer>, ShardedModel {
 

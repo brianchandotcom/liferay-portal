@@ -29,7 +29,6 @@ import java.util.List;
  * @see com.example.sample.service.http.FooServiceSoap
  * @generated
  */
-@ProviderType
 public class FooSoap implements Serializable {
 	public static FooSoap toSoapModel(Foo model) {
 		FooSoap soapModel = new FooSoap();

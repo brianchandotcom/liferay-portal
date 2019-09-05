@@ -14,8 +14,6 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import aQute.bnd.annotation.ProviderType;
-
 import java.io.File;
 
 import org.gradle.api.Plugin;
@@ -24,7 +22,6 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-@ProviderType
 public interface ProjectConfigurator extends Plugin<Project> {
 
 	public void configureRootProject(

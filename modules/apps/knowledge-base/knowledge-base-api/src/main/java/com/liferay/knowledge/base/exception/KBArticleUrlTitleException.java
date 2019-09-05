@@ -17,12 +17,9 @@ package com.liferay.knowledge.base.exception;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class KBArticleUrlTitleException extends PortalException {
 
 	public KBArticleUrlTitleException() {

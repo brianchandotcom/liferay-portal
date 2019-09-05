@@ -18,8 +18,6 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Adolfo Pérez
  */
@@ -28,7 +26,6 @@ import org.osgi.annotation.versioning.ProviderType;
 	id = "com.liferay.sharing.internal.configuration.SharingSystemConfiguration",
 	localization = "content/Language", name = "sharing-configuration-name"
 )
-@ProviderType
 public interface SharingSystemConfiguration {
 
 	/**

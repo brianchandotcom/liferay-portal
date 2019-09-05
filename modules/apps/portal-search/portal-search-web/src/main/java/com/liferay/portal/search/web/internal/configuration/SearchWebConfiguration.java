@@ -18,8 +18,6 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Adam Brandizzi
  * @author André de Oliveira
@@ -29,7 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
 	id = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration",
 	localization = "content/Language", name = "search-web-configuration-name"
 )
-@ProviderType
 public interface SearchWebConfiguration {
 
 	@Meta.AD(

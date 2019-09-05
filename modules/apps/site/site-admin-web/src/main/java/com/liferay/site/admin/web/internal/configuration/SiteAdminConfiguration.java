@@ -18,8 +18,6 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Vendel Töreki
  */
@@ -28,7 +26,6 @@ import org.osgi.annotation.versioning.ProviderType;
 	id = "com.liferay.site.admin.web.internal.configuration.SiteAdminConfiguration",
 	localization = "content/Language", name = "site-admin-configuration-name"
 )
-@ProviderType
 public interface SiteAdminConfiguration {
 
 	@Meta.AD(

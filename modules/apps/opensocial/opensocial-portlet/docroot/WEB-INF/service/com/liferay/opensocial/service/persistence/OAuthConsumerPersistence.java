@@ -31,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see OAuthConsumerUtil
  * @generated
  */
-@ProviderType
 public interface OAuthConsumerPersistence
 	extends BasePersistence<OAuthConsumer> {
 

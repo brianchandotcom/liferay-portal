@@ -14,7 +14,6 @@
 
 package com.liferay.segments.asah.connector.internal.configuration;
 
-import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -28,7 +27,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	localization = "content/Language",
 	name = "segments-asah-connector-configuration-name"
 )
-@ProviderType
 public interface SegmentsAsahConfiguration {
 
 	@Meta.AD(

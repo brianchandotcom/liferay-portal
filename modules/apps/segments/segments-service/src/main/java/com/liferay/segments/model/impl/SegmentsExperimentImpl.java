@@ -34,8 +34,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the SegmentsExperiment service. Represents a row in the &quot;SegmentsExperiment&quot; database table, with each column mapped to a property of this class.
  *
@@ -45,7 +43,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Eduardo García
  */
-@ProviderType
 public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 
 	/**

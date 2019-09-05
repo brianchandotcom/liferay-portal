@@ -31,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see TasksEntryUtil
  * @generated
  */
-@ProviderType
 public interface TasksEntryPersistence extends BasePersistence<TasksEntry> {
 
 	/*

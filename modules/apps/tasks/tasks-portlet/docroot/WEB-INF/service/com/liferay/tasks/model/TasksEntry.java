@@ -28,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ImplementationClassName("com.liferay.tasks.model.impl.TasksEntryImpl")
-@ProviderType
 public interface TasksEntry extends PersistedModel, TasksEntryModel {
 
 	/*

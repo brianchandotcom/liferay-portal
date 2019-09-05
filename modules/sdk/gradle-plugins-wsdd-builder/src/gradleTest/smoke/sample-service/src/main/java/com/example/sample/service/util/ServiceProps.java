@@ -26,7 +26,6 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class ServiceProps {
 	public static void addProperties(Properties properties) {
 		_instance._configuration.addProperties(properties);

@@ -34,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Gadget
  * @generated
  */
-@ProviderType
 public interface GadgetModel
 	extends BaseModel<Gadget>, ShardedModel, StagedModel {
 

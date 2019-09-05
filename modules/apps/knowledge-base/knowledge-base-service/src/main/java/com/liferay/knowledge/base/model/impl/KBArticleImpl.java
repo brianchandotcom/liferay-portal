@@ -39,13 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class KBArticleImpl extends KBArticleBaseImpl {
 
 	public KBArticleImpl() {

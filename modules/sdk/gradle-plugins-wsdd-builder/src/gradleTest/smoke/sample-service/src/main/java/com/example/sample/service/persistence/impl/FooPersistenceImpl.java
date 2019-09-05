@@ -68,7 +68,6 @@ import java.util.Set;
  * @see com.example.sample.service.persistence.FooUtil
  * @generated
  */
-@ProviderType
 public class FooPersistenceImpl extends BasePersistenceImpl<Foo>
 	implements FooPersistence {
 	/*

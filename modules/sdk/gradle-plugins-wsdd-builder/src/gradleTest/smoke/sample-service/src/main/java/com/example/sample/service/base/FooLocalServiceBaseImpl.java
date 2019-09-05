@@ -73,7 +73,6 @@ import javax.sql.DataSource;
  * @see com.example.sample.service.FooLocalServiceUtil
  * @generated
  */
-@ProviderType
 public abstract class FooLocalServiceBaseImpl extends BaseLocalServiceImpl
 	implements FooLocalService, IdentifiableOSGiService {
 	/*

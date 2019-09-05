@@ -32,13 +32,10 @@ import com.sforce.ws.ConnectionException;
 import java.util.Calendar;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Shin
  */
-@ProviderType
 public interface SalesforcePartnerClient extends SalesforceClient {
 
 	public List<SaveResult> create(SObject[] sObjects)

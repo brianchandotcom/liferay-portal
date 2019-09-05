@@ -29,10 +29,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.concurrent.Callable;
@@ -138,29 +136,6 @@ public class DiscardDraftLayoutMVCActionCommand extends BaseMVCActionCommand {
 					layout = _layoutLocalService.getLayout(
 						layoutPageTemplateEntry.getPlid());
 				}
-			}
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-
-			if (layoutPageTemplateEntry != null) {
-				LayoutPermissionUtil.check(
-					themeDisplay.getPermissionChecker(), layout.getPlid(),
-					ActionKeys.UPDATE);
-
-				UnicodeProperties typeSettingsProperties =
-					layout.getTypeSettingsProperties();
-
-				long classNameId = GetterUtil.getLong(
-					typeSettingsProperties.getProperty("assetClassNameId"));
-				long classTypeId = GetterUtil.getLong(
-					typeSettingsProperties.getProperty("assetClassTypeId"));
-
-				_layoutPageTemplateEntryLocalService.
-					updateLayoutPageTemplateEntry(
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						classNameId, classTypeId);
 			}
 
 			LayoutPermissionUtil.check(

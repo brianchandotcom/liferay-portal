@@ -251,12 +251,6 @@ public class FragmentRendererControllerImpl
 	private String _translateConfigurationFields(
 		JSONObject jsonObject, Locale locale) {
 
-		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
-
-		if (fieldSetsJSONArray == null) {
-			return StringPool.BLANK;
-		}
-
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
@@ -265,6 +259,18 @@ public class FragmentRendererControllerImpl
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
+
+		return _translateConfigurationFields(jsonObject, resourceBundle);
+	}
+
+	private String _translateConfigurationFields(
+		JSONObject jsonObject, ResourceBundle resourceBundle) {
+
+		JSONArray fieldSetsJSONArray = jsonObject.getJSONArray("fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return StringPool.BLANK;
+		}
 
 		Iterator<JSONObject> iterator = fieldSetsJSONArray.iterator();
 

@@ -39,10 +39,11 @@ public class SharepointRestRepositoryConnectedAppProvider
 
 	@Override
 	public ConnectedApp getConnectedApp(User user) throws PortalException {
-		if (_sharepointOAuth2TokenEntryLocalService.
-				getUserSharepointOAuth2TokenEntriesCount(user.getUserId()) ==
-					0) {
+		int count =
+			_sharepointOAuth2TokenEntryLocalService.
+				getUserSharepointOAuth2TokenEntriesCount(user.getUserId());
 
+		if (count == 0) {
 			return null;
 		}
 

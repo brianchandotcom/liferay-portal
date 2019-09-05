@@ -52,6 +52,51 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Cancel Accounts Name");
 	}
 
+	@priority = "4"
+	test DeactivateAccount {
+		for (var accountNumber : list "1,2,3") {
+			ProductMenu.gotoPortlet(
+				category = "Accounts",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+			Accounts.addCP(
+				accountDescription = "Accounts Name ${accountNumber} Description",
+				accountName = "Accounts Name ${accountNumber} for Test");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deactivateAccount(accountName = "Accounts Name 1 for Test");
+
+		Accounts.viewDeactivateAccount(accountName = "Accounts Name 1 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deactivateAccount(
+			accountName = "Accounts Name 2 for Test",
+			deactivateType = "Hide Icon");
+
+		Accounts.viewDeactivateAccount(accountName = "Accounts Name 2 for Test");
+
+		ProductMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.deactivateAccount(
+			accountName = "Accounts Name 3 for Test",
+			deactivateType = "Management Toolbar");
+
+		Accounts.viewDeactivateAccount(accountName = "Accounts Name 3 for Test");
+	}
+
 	@priority = "5"
 	test Smoke {
 		ProductMenu.gotoPortlet(

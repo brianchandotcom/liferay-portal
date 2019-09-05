@@ -150,6 +150,20 @@ definition {
 			locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM");
 	}
 
+	macro contentPageChangeExperience {
+		var key_experienceName = "${changeExperienceName}";
+
+		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+
+		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_LABEL");
+
+		Click(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_SELECT_EXPERIENCE_ITEM");
+
+		Click(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
+
+		AssertElementPresent(locator1 = "PageEditor#CONTENT_PAGE_EXPERIENCE_BUTTON_NAME");
+	}
+
 	macro deleteComment {
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_ELLIPSIS");
 

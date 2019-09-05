@@ -16,13 +16,15 @@ package com.liferay.portal.workflow.kaleo.forms.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsConstants;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPairs;
 import com.liferay.portal.workflow.kaleo.forms.service.base.KaleoProcessServiceBaseImpl;
-import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission;
 import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoProcessPermission;
 
 import java.util.List;
@@ -68,7 +70,7 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KaleoFormsPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, KaleoFormsActionKeys.ADD_PROCESS);
 
 		return kaleoProcessLocalService.addKaleoProcess(
@@ -210,5 +212,11 @@ public class KaleoProcessServiceImpl extends KaleoProcessServiceBaseImpl {
 			ddmTemplateId, workflowDefinitionName, workflowDefinitionVersion,
 			kaleoTaskFormPairs, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				KaleoProcessServiceImpl.class, "_portletResourcePermission",
+				KaleoFormsConstants.RESOURCE_NAME);
 
 }

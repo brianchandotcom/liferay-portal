@@ -15,10 +15,8 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -60,35 +58,28 @@ public class GetFragmentEntryUsagesMVCResourceCommand
 		long fragmentEntryId = ParamUtil.getLong(
 			resourceRequest, "fragmentEntryId");
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+		JSONObject jsonObject = JSONUtil.put(
+			"usages",
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksCountByFragmentEntryId(fragmentEntryId));
 
 		int siteCount = 0;
-		int usageCount = 0;
 
-		if (fragmentEntry != null) {
-			List<FragmentEntryLink> fragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksByFragmentEntryId(fragmentEntryId);
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksByFragmentEntryId(fragmentEntryId);
 
-			if (ListUtil.isNotEmpty(fragmentEntryLinks)) {
-				usageCount = fragmentEntryLinks.size();
+		if (ListUtil.isNotEmpty(fragmentEntryLinks)) {
+			Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
 
-				Stream<FragmentEntryLink> stream = fragmentEntryLinks.stream();
+			Map<Long, Long> sites = stream.collect(
+				Collectors.groupingBy(
+					FragmentEntryLink::getGroupId, Collectors.counting()));
 
-				Map<Long, Long> sites = stream.collect(
-					Collectors.groupingBy(
-						FragmentEntryLink::getGroupId, Collectors.counting()));
-
-				siteCount = sites.size();
-			}
+			siteCount = sites.size();
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"usages", usageCount
-		).put(
-			"sites", siteCount
-		);
+		jsonObject.put("sites", siteCount);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
@@ -96,8 +87,5 @@ public class GetFragmentEntryUsagesMVCResourceCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 }

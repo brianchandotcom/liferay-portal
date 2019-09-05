@@ -166,7 +166,9 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				layoutPageTemplateEntry.getClassName());
 
-		if (assetRendererFactory == null) {
+		if ((assetRendererFactory == null) ||
+			!assetRendererFactory.isSupportsClassTypes()) {
+
 			return null;
 		}
 
@@ -218,9 +220,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		String subtypeLabel = _getMappingSubtypeLabel();
 
-		if ((layoutPageTemplateEntry.getClassTypeId() >= 0) &&
-			Validator.isNotNull(subtypeLabel)) {
-
+		if (Validator.isNotNull(subtypeLabel)) {
 			SoyContext subtypeSoyContext =
 				SoyContextFactoryUtil.createSoyContext();
 

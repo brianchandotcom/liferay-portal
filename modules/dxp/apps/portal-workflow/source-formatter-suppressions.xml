@@ -5,8 +5,6 @@
 		<suppress checks="FactoryCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-forms-service/src/main/java/com/liferay/portal/workflow/kaleo/forms/internal/upgrade/v1_1_0/UpgradeKaleoProcess\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-forms-api/src/main/java/com/liferay/portal/workflow/kaleo/forms/service/permission/KaleoFormsDDMPermissionSupport\.java" />
-		<suppress checks="JavaModuleComponentCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-forms-api/src/main/java/com/liferay/portal/workflow/kaleo/forms/service/permission/KaleoFormsPermission\.java" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/private/apps/portal-workflow/portal-workflow-kaleo-designer-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="modules/private/apps/portal-workflow/portal-workflow-metrics-web/package\.json" />
 	</source-check>

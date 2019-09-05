@@ -212,6 +212,42 @@ public class FragmentRendererControllerImpl
 		return fragmentRenderer;
 	}
 
+	private void _translateConfigurationField(
+		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
+
+		String fieldLabel = fieldJSONObject.getString("label");
+
+		fieldJSONObject.put(
+			"label", LanguageUtil.get(resourceBundle, fieldLabel, fieldLabel));
+
+		String type = fieldJSONObject.getString("type");
+
+		if (!Objects.equals(type, "select")) {
+			return;
+		}
+
+		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
+			"typeOptions");
+
+		JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
+			"validValues");
+
+		Iterator<JSONObject> validValuesIterator =
+			validValuesJSONArray.iterator();
+
+		validValuesIterator.forEachRemaining(
+			validValueJSONObject -> {
+				String value = validValueJSONObject.getString("value");
+
+				String key = value;
+
+				String label = validValueJSONObject.getString("label", key);
+
+				validValueJSONObject.put(
+					"label", LanguageUtil.get(resourceBundle, label, key));
+			});
+	}
+
 	private String _translateConfigurationFields(
 		JSONObject jsonObject, Locale locale) {
 
@@ -253,42 +289,6 @@ public class FragmentRendererControllerImpl
 			});
 
 		return jsonObject.toString();
-	}
-
-	private void _translateConfigurationField(
-		JSONObject fieldJSONObject, ResourceBundle resourceBundle) {
-
-		String fieldLabel = fieldJSONObject.getString("label");
-
-		fieldJSONObject.put(
-			"label", LanguageUtil.get(resourceBundle, fieldLabel, fieldLabel));
-
-		String type = fieldJSONObject.getString("type");
-
-		if (!Objects.equals(type, "select")) {
-			return;
-		}
-
-		JSONObject typeOptionsJSONObject = fieldJSONObject.getJSONObject(
-			"typeOptions");
-
-		JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
-			"validValues");
-
-		Iterator<JSONObject> validValuesIterator =
-			validValuesJSONArray.iterator();
-
-		validValuesIterator.forEachRemaining(
-			validValueJSONObject -> {
-				String value = validValueJSONObject.getString("value");
-
-				String key = value;
-
-				String label = validValueJSONObject.getString("label", key);
-
-				validValueJSONObject.put(
-					"label", LanguageUtil.get(resourceBundle, label, key));
-			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

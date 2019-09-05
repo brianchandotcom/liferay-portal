@@ -62,26 +62,8 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 
-		byte[] logoBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		int status = 0;
-
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		if (active) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-		else {
-			status = WorkflowConstants.STATUS_INACTIVE;
-		}
+		byte[] logoBytes = _getLogoBytes(actionRequest);
+		int status = _getStatus(actionRequest);
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
@@ -133,37 +115,40 @@ public class EditAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		long accountEntryId = ParamUtil.getLong(
 			actionRequest, "accountEntryId");
-
 		long parentAccountEntryId = ParamUtil.getInteger(
 			actionRequest, "parentAccountEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
-		byte[] logoBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		int status = 0;
-
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
-
-		if (active) {
-			status = WorkflowConstants.STATUS_APPROVED;
-		}
-		else {
-			status = WorkflowConstants.STATUS_INACTIVE;
-		}
+		byte[] logoBytes = _getLogoBytes(actionRequest);
+		int status = _getStatus(actionRequest);
 
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
 			logoBytes, status);
+	}
+
+	private byte[] _getLogoBytes(ActionRequest actionRequest) throws Exception {
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId == 0) {
+			return null;
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+		return FileUtil.getBytes(fileEntry.getContentStream());
+	}
+
+	private int _getStatus(ActionRequest actionRequest) {
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		if (active) {
+			return WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return WorkflowConstants.STATUS_INACTIVE;
 	}
 
 	@Reference

@@ -27,10 +27,10 @@ export default ({fieldTypes, keywords, onAddField}) => {
 
 			return regex.test(description) || regex.test(label);
 		})
-		.map(fieldType => (
+		.map((fieldType, index) => (
 			<FieldType
 				{...fieldType}
-				key={fieldType.name}
+				key={`${fieldType.name}_${index}`}
 				onAddField={onAddField}
 			/>
 		));

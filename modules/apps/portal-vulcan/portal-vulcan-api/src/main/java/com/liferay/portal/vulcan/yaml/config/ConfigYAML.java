@@ -67,6 +67,14 @@ public class ConfigYAML {
 		return _forcePredictableSchemaPropertyName;
 	}
 
+	public boolean isGraphQLGeneration() {
+		return _graphQLGeneration;
+	}
+
+	public boolean isRestGeneration() {
+		return _restGeneration;
+	}
+
 	public boolean isWarningsEnabled() {
 		return _warningsEnabled;
 	}
@@ -111,6 +119,10 @@ public class ConfigYAML {
 			forcePredictableSchemaPropertyName;
 	}
 
+	public void setGraphQLGeneration(boolean graphQLGeneration) {
+		_graphQLGeneration = graphQLGeneration;
+	}
+
 	public void setImplDir(String implDir) {
 		_implDir = implDir;
 	}
@@ -121,6 +133,10 @@ public class ConfigYAML {
 
 	public void setLicenseURL(String licenseURL) {
 		_licenseURL = licenseURL;
+	}
+
+	public void setRestGeneration(boolean restGeneration) {
+		_restGeneration = restGeneration;
 	}
 
 	public void setTestDir(String testDir) {
@@ -139,10 +155,12 @@ public class ConfigYAML {
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId = true;
 	private boolean _forcePredictableSchemaPropertyName = true;
+	private boolean _graphQLGeneration = true;
 	private String _implDir = "src/main/java";
 	private String _licenseName = "Apache 2.0";
 	private String _licenseURL =
 		"http://www.apache.org/licenses/LICENSE-2.0.html";
+	private boolean _restGeneration = true;
 	private String _testDir;
 	private boolean _warningsEnabled = true;
 

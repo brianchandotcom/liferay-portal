@@ -1,12 +1,12 @@
 import {
 	fetch,
+	navigate,
 	openSimpleInputModal,
-	openToast,
-	navigate
+	openToast
 } from 'frontend-js-web';
 
-var TIME_POLLING = 500;
-var TIME_SHOW_MSG = 2000;
+const TIME_POLLING = 500;
+const TIME_SHOW_MSG = 2000;
 const DEFAULT_ERROR = Liferay.Language.get('an-unexpected-error-occurred');
 
 class DocumentLibraryOpener {
@@ -17,79 +17,6 @@ class DocumentLibraryOpener {
 		this._documentURL = '';
 		this._isTimeConsumed = false;
 		this._refreshAfterNavigate = false;
-	}
-
-	createWithName({dialogTitle, formSubmitURL}) {
-		openSimpleInputModal({
-			alert: {
-				message: Liferay.Language.get(
-					'the-document-has-been-checked-out-please-on-finish-editing-check-in-the-document-to-save-changes-into-the-document-library'
-				),
-				style: 'info',
-				title: Liferay.Language.get('info')
-			},
-			dialogTitle,
-			formSubmitURL,
-			mainFieldLabel: Liferay.Language.get('title'),
-			mainFieldName: 'title',
-			namespace: this._namespace,
-			spritemap:
-				Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
-		}).on('formSuccess', serverResponseContent => {
-			if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
-				this.open({
-					dialogMessage: serverResponseContent.dialogMessage,
-					pollingURL:
-						serverResponseContent.oneDriveBackgroundTaskStatusURL,
-					refresh: true
-				});
-			}
-		});
-	}
-
-	edit({formSubmitURL}) {
-		const loadingPromise = this._showLoading({
-			dialogMessage: Liferay.Language.get(
-				'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
-			)
-		});
-
-		const fetchPromise = fetch(formSubmitURL)
-			.then(response => {
-				if (!response.ok) {
-					throw DEFAULT_ERROR;
-				}
-
-				return response.json();
-			})
-			.then(response => {
-				if (response.redirectURL) {
-					navigate(response.redirectURL);
-				} else if (response.oneDriveBackgroundTaskStatusURL) {
-					return this._polling({
-						pollingURL: response.oneDriveBackgroundTaskStatusURL
-					});
-				} else if (response.error) {
-					throw response.error.errorMessage || DEFAULT_ERROR;
-				}
-			})
-			.catch(error => {
-				this._showError(error);
-			});
-
-		return Promise.all([loadingPromise, fetchPromise]);
-	}
-
-	open({
-		dialogMessage = Liferay.Language.get(
-			'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
-		),
-		pollingURL,
-		refresh = false
-	}) {
-		this._refreshAfterNavigate = refresh;
-
-		return this._showLoading({dialogMessage, pollingURL});
 	}
 
 	_hideLoading() {
@@ -176,6 +103,79 @@ class DocumentLibraryOpener {
 				}
 			);
 		});
+	}
+
+	createWithName({dialogTitle, formSubmitURL}) {
+		openSimpleInputModal({
+			alert: {
+				message: Liferay.Language.get(
+					'the-document-has-been-checked-out-please-on-finish-editing-check-in-the-document-to-save-changes-into-the-document-library'
+				),
+				style: 'info',
+				title: Liferay.Language.get('info')
+			},
+			dialogTitle,
+			formSubmitURL,
+			mainFieldLabel: Liferay.Language.get('title'),
+			mainFieldName: 'title',
+			namespace: this._namespace,
+			spritemap:
+				Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
+		}).on('formSuccess', serverResponseContent => {
+			if (serverResponseContent.oneDriveBackgroundTaskStatusURL) {
+				this.open({
+					dialogMessage: serverResponseContent.dialogMessage,
+					pollingURL:
+						serverResponseContent.oneDriveBackgroundTaskStatusURL,
+					refresh: true
+				});
+			}
+		});
+	}
+
+	edit({formSubmitURL}) {
+		const loadingPromise = this._showLoading({
+			dialogMessage: Liferay.Language.get(
+				'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
+			)
+		});
+
+		const fetchPromise = fetch(formSubmitURL)
+			.then(response => {
+				if (!response.ok) {
+					throw DEFAULT_ERROR;
+				}
+
+				return response.json();
+			})
+			.then(response => {
+				if (response.redirectURL) {
+					navigate(response.redirectURL);
+				} else if (response.oneDriveBackgroundTaskStatusURL) {
+					return this._polling({
+						pollingURL: response.oneDriveBackgroundTaskStatusURL
+					});
+				} else if (response.error) {
+					throw response.error.errorMessage || DEFAULT_ERROR;
+				}
+			})
+			.catch(error => {
+				this._showError(error);
+			});
+
+		return Promise.all([loadingPromise, fetchPromise]);
+	}
+
+	open({
+		dialogMessage = Liferay.Language.get(
+			'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
+		),
+		pollingURL,
+		refresh = false
+	}) {
+		this._refreshAfterNavigate = refresh;
+
+		return this._showLoading({dialogMessage, pollingURL});
 	}
 }
 

@@ -86,7 +86,7 @@ public class OAuth2Controller {
 			}
 			else {
 				JSONPortletResponseUtil.writeJSON(
-					t, r,  oAuth2Result.getResponse());
+					t, r, oAuth2Result.getResponse());
 			}
 		}
 		catch (PortalException pe) {

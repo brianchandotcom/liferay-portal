@@ -46,6 +46,11 @@ describe('DocumentLibraryOpener', () => {
 		global.themeDisplay = {
 			getPathThemeImages: jest.fn().mockImplementation(() => '//images/')
 		};
+
+		jest.useFakeTimers();
+
+		opener = new DocumentLibraryOpener({namespace: 'namespace'});
+		jest.spyOn(opener, '_showError');
 	});
 
 	afterEach(() => {
@@ -54,19 +59,8 @@ describe('DocumentLibraryOpener', () => {
 		delete global.Liferay.Util.getWindow;
 		delete global.themeDisplay;
 		delete global.Liferay.Portlet.refresh;
-	});
 
-	beforeEach(() => {
-		jest.useFakeTimers();
-	});
-
-	afterEach(() => {
 		jest.useRealTimers();
-	});
-
-	beforeEach(() => {
-		opener = new DocumentLibraryOpener({namespace: 'namespace'});
-		jest.spyOn(opener, '_showError');
 	});
 
 	describe('.edit()', () => {
@@ -245,9 +239,9 @@ describe('DocumentLibraryOpener', () => {
 				]);
 
 				return opener.open({
-					pollingURL: STATUS_URL,
 					dialogMessage:
-						'you-are-being-redirected-to-an-external-editor-to-create-this-document'
+						'you-are-being-redirected-to-an-external-editor-to-create-this-document',
+					pollingURL: STATUS_URL
 				});
 			});
 
@@ -288,9 +282,9 @@ describe('DocumentLibraryOpener', () => {
 				]);
 
 				return opener.open({
-					pollingURL: STATUS_URL,
 					dialogMessage:
 						'you-are-being-redirected-to-an-external-editor-to-create-this-document',
+					pollingURL: STATUS_URL,
 					refresh: true
 				});
 			});

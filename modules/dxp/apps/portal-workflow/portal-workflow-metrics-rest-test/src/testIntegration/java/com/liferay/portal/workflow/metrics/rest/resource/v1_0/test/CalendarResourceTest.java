@@ -15,6 +15,9 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.Calendar;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
@@ -24,6 +27,8 @@ import com.liferay.portal.workflow.metrics.sla.calendar.WorkflowMetricsSLACalend
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,12 +80,97 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 
 		Assert.assertEquals(calendars.toString(), 1, calendars.size());
 
-		Calendar defaultCalendar = calendars.get(0);
+		assertEquals(_getDefaultCalendar(), calendars.get(0));
 
-		Assert.assertEquals(true, defaultCalendar.getDefaultCalendar());
-		Assert.assertEquals("default", defaultCalendar.getKey());
-		Assert.assertEquals("24/7", defaultCalendar.getTitle());
+		_registerCustomCalendar();
 
+		calendarsPage = calendarResource.getCalendarsPage();
+
+		calendars = (List<Calendar>)calendarsPage.getItems();
+
+		Assert.assertEquals(calendars.toString(), 2, calendars.size());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(_getDefaultCalendar(), _getCustomCalendar()),
+			calendars);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetCalendarsPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"calendars", graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject calendarsJSONObject = dataJSONObject.getJSONObject(
+			"calendars");
+
+		Assert.assertEquals(1, calendarsJSONObject.get("totalCount"));
+
+		JSONArray itemsJSONArray = calendarsJSONObject.getJSONArray("items");
+
+		equalsJSONObject(
+			_getDefaultCalendar(), itemsJSONArray.getJSONObject(0));
+
+		_registerCustomCalendar();
+
+		jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		dataJSONObject = jsonObject.getJSONObject("data");
+
+		calendarsJSONObject = dataJSONObject.getJSONObject("calendars");
+
+		Assert.assertEquals(2, calendarsJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			Arrays.asList(_getDefaultCalendar(), _getCustomCalendar()),
+			calendarsJSONObject.getJSONArray("items"));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"defaultCalendar", "key", "title"};
+	}
+
+	private Calendar _getCustomCalendar() {
+		return new Calendar() {
+			{
+				defaultCalendar = false;
+				key = "custom";
+				title = "Custom";
+			}
+		};
+	}
+
+	private Calendar _getDefaultCalendar() {
+		return new Calendar() {
+			{
+				defaultCalendar = true;
+				key = "default";
+				title = "24/7";
+			}
+		};
+	}
+
+	private void _registerCustomCalendar() {
 		_serviceRegistration = _bundleContext.registerService(
 			WorkflowMetricsSLACalendar.class,
 			new WorkflowMetricsSLACalendar() {
@@ -112,22 +202,6 @@ public class CalendarResourceTest extends BaseCalendarResourceTestCase {
 					put("sla.calendar.key", "custom");
 				}
 			});
-
-		calendarsPage = calendarResource.getCalendarsPage();
-
-		calendars = (List<Calendar>)calendarsPage.getItems();
-
-		Assert.assertEquals(calendars.toString(), 2, calendars.size());
-
-		for (Calendar calendar : calendars) {
-			if (calendar.getDefaultCalendar()) {
-				continue;
-			}
-
-			Assert.assertEquals(false, calendar.getDefaultCalendar());
-			Assert.assertEquals("custom", calendar.getKey());
-			Assert.assertEquals("Custom", calendar.getTitle());
-		}
 	}
 
 	private static BundleContext _bundleContext;

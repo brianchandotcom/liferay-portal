@@ -185,6 +185,11 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		return process;
 	}
 
+	@Override
+	protected Process testGraphQLProcess_addProcess() throws Exception {
+		return testGetProcess_addProcess();
+	}
+
 	private void _deleteProcesses() throws Exception {
 		for (Process process : _processes) {
 			_workflowMetricsRESTTestHelper.deleteProcess(

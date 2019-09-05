@@ -138,6 +138,11 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		return _process.getId();
 	}
 
+	@Override
+	protected Instance testGraphQLInstance_addInstance() throws Exception {
+		return testGetProcessInstance_addInstance();
+	}
+
 	private void _deleteInstances() throws Exception {
 		for (Instance instance : _instances) {
 			_workflowMetricsRESTTestHelper.deleteInstance(

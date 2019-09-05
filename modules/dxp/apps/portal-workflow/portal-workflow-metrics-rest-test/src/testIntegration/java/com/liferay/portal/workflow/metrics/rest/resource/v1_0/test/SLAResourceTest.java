@@ -183,6 +183,11 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 	}
 
 	@Override
+	protected SLA testGraphQLSLA_addSLA() throws Exception {
+		return testGetSLA_addSLA();
+	}
+
+	@Override
 	protected SLA testPostProcessSLA_addSLA(SLA sla) throws Exception {
 		sla = super.testPostProcessSLA_addSLA(sla);
 

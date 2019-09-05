@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.workflow.metrics.rest.client.dto.v1_0.TimeRange;
 import com.liferay.portal.workflow.metrics.rest.client.pagination.Page;
 
@@ -36,12 +38,54 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 	public void testGetTimeRangesPage() throws Exception {
 		Page<TimeRange> timeRangesPage = timeRangeResource.getTimeRangesPage();
 
-		List<TimeRange> timeRanges1 =
-			(List<TimeRange>)timeRangesPage.getItems();
+		List<TimeRange> timeRanges = (List<TimeRange>)timeRangesPage.getItems();
 
-		Assert.assertEquals(timeRanges1.toString(), 7, timeRanges1.size());
+		Assert.assertEquals(timeRanges.toString(), 7, timeRanges.size());
 
-		List<TimeRange> timeRanges2 = new ArrayList<TimeRange>() {
+		assertEquals(_getDefaultTimeRanges(), timeRanges);
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetTimeRangesPage() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		List<GraphQLField> itemsGraphQLFields = getGraphQLFields();
+
+		graphQLFields.add(
+			new GraphQLField(
+				"items", itemsGraphQLFields.toArray(new GraphQLField[0])));
+
+		graphQLFields.add(new GraphQLField("page"));
+		graphQLFields.add(new GraphQLField("totalCount"));
+
+		GraphQLField graphQLField = new GraphQLField(
+			"query",
+			new GraphQLField(
+				"timeRanges", graphQLFields.toArray(new GraphQLField[0])));
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			invoke(graphQLField.toString()));
+
+		JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+		JSONObject timeRangesJSONObject = dataJSONObject.getJSONObject(
+			"timeRanges");
+
+		Assert.assertEquals(7, timeRangesJSONObject.get("totalCount"));
+
+		assertEqualsJSONArray(
+			_getDefaultTimeRanges(),
+			timeRangesJSONObject.getJSONArray("items"));
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"defaultTimeRange", "id"};
+	}
+
+	private List<TimeRange> _getDefaultTimeRanges() {
+		return new ArrayList<TimeRange>() {
 			{
 				add(
 					new TimeRange() {
@@ -94,13 +138,6 @@ public class TimeRangeResourceTest extends BaseTimeRangeResourceTestCase {
 					});
 			}
 		};
-
-		assertEquals(timeRanges1, timeRanges2);
-	}
-
-	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"defaultTimeRange", "id"};
 	}
 
 }

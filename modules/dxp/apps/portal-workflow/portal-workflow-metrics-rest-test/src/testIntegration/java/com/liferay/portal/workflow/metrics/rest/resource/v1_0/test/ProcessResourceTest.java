@@ -35,6 +35,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -136,6 +137,18 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 		String title = processResource.getProcessTitle(process.getId());
 
 		Assert.assertEquals(process.getTitle(), title);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProcess() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProcessesPage() throws Exception {
 	}
 
 	@Override

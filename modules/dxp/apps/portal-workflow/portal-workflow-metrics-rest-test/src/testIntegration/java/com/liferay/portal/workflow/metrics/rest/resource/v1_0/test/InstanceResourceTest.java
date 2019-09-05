@@ -35,6 +35,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -94,6 +95,12 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetProcessInstance() throws Exception {
 	}
 
 	@Override

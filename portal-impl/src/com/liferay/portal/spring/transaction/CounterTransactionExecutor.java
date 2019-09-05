@@ -35,7 +35,8 @@ public class CounterTransactionExecutor
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		_commit(_platformTransactionManager, transactionStatusAdapter);
+		_platformTransactionManager.commit(
+			transactionStatusAdapter.getTransactionStatus());
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class CounterTransactionExecutor
 				transactionStatusAdapter);
 		}
 
-		_commit(_platformTransactionManager, transactionStatusAdapter);
+		commit(transactionAttributeAdapter, transactionStatusAdapter);
 
 		return returnValue;
 	}
@@ -108,14 +109,6 @@ public class CounterTransactionExecutor
 		return new TransactionStatusAdapter(
 			_platformTransactionManager.getTransaction(
 				transactionAttributeAdapter));
-	}
-
-	private void _commit(
-		PlatformTransactionManager platformTransactionManager,
-		TransactionStatusAdapter transactionStatusAdapter) {
-
-		platformTransactionManager.commit(
-			transactionStatusAdapter.getTransactionStatus());
 	}
 
 	private final PlatformTransactionManager _platformTransactionManager;

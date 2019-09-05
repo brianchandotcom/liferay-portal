@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types';
 import ClayButton from '@clayui/button';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
@@ -24,6 +24,9 @@ import {
 	STATUS_TERMINATED,
 	STATUS_FINISHED_WINNER
 } from '../util/statuses.es';
+import SegmentsExperimentsContext from '../context.es';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 
 function _experimentReady(experiment, variants) {
 	if (variants.length <= 1) return false;
@@ -41,6 +44,9 @@ function SegmentsExperimentsActions({
 	variants
 }) {
 	const [reviewModalVisible, setReviewModalVisible] = useState(false);
+	const {viewSegmentsExperimentDetailsURL} = useContext(
+		SegmentsExperimentsContext
+	);
 
 	const readyToRun = _experimentReady(segmentsExperiment, variants);
 
@@ -58,9 +64,6 @@ function SegmentsExperimentsActions({
 
 			{segmentsExperiment.status.value === STATUS_RUNNING && (
 				<>
-					<ClayButton className="w-100 mb-3" disabled>
-						{Liferay.Language.get('view-data-in-analytics-cloud')}
-					</ClayButton>
 					<ClayButton
 						className="w-100 mb-3"
 						displayType="secondary"
@@ -137,6 +140,17 @@ function SegmentsExperimentsActions({
 					variants={variants}
 					visible={reviewModalVisible}
 				/>
+			)}
+			{viewSegmentsExperimentDetailsURL && (
+				<ClayLink
+					className="btn btn-secondary btn-sm w-100 mt-3"
+					displayType="secondary"
+					href={viewSegmentsExperimentDetailsURL}
+					target="_blank"
+				>
+					{Liferay.Language.get('view-data-in-analytics-cloud')}
+					<ClayIcon className="ml-2" symbol="shortcut" />
+				</ClayLink>
 			)}
 		</>
 	);

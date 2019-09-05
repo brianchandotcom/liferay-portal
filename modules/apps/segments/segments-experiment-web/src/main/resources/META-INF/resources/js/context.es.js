@@ -44,11 +44,13 @@ SegmentsExperimentsContext.Provider.propTypes = {
 		editVariant: PropTypes.func.isRequired,
 		runExperiment: PropTypes.func.isRequired
 	}),
+	editVariantLayoutURL: PropTypes.string,
 	page: PropTypes.shape({
 		classNameId: PropTypes.string.isRequired,
 		classPK: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired
-	})
+	}),
+	viewSegmentsExperimentDetailsURL: PropTypes.string
 };
 
 export default SegmentsExperimentsContext;

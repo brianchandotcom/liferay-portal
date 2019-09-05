@@ -712,6 +712,10 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 				layoutPageTemplateEntryId, previewFileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			updateLayoutPageTemplateEntry(

@@ -294,6 +294,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 			long layoutPageTemplateEntryId, long previewFileEntryId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;

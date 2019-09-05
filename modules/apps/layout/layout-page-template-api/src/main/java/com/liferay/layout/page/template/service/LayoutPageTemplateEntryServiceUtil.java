@@ -522,6 +522,10 @@ public class LayoutPageTemplateEntryServiceUtil {
 			layoutPageTemplateEntryId, previewFileEntryId);
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x)
+	 */
+	@Deprecated
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			updateLayoutPageTemplateEntry(
 				long layoutPageTemplateEntryId, long classNameId,

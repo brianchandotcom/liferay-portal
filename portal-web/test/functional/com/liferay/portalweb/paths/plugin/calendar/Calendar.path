@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>MY_CALENDARS_MENULIST_ARROW</td>
-	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,'My Calendars')]//i[@class='icon-caret-down']</td>
+	<td>//div[contains(@class,'calendar-portlet-list') and contains(.,'My Calendars')]//span[contains(@class,'calendar-list-item-arrow')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -78,7 +78,7 @@ public class VersionUtil {
 	}
 
 	private static final Pattern _dxpVersionPattern = Pattern.compile(
-		"^[0-9]\\.[0-9]\\.[1-9][0-9](\\.(fp)?[0-9]+)?$");
+		"^[0-9]\\.[0-9]\\.[1-9][0-9](\\.(fp)?[0-9]+(-[0-9]+)?)?$");
 	private static final Pattern _externalVersionPattern = Pattern.compile(
 		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
 

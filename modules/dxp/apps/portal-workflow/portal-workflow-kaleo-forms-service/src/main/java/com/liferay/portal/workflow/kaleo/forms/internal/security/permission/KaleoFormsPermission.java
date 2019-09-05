@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.workflow.kaleo.forms.service.permission;
+package com.liferay.portal.workflow.kaleo.forms.internal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;

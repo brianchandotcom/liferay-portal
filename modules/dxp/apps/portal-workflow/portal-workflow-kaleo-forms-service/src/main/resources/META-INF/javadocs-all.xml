@@ -1995,7 +1995,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoFormsPermission</name>
-		<type>com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission</type>
+		<type>com.liferay.portal.workflow.kaleo.forms.internal.security.permission.KaleoFormsPermission</type>
 		<author><![CDATA[Marcellus Tavares]]></author>
 		<method>
 			<name>check</name>

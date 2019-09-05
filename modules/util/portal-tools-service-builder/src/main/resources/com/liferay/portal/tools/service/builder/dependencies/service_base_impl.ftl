@@ -1,7 +1,5 @@
 package ${packagePath}.service.base;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
-
 import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -138,8 +136,6 @@ import org.osgi.service.component.annotations.Reference;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-	@ProviderType
 	public abstract class ${entity.name}LocalServiceBaseImpl extends BaseLocalServiceImpl implements ${entity.name}LocalService,
 	<#if dependencyInjectorDS>
 		AopService,

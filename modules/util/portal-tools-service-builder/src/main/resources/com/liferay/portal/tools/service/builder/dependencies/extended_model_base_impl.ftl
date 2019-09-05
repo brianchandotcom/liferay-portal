@@ -1,6 +1,5 @@
 package ${packagePath}.model.impl;
 
-import ${serviceBuilder.getCompatJavaClassName("ProviderType")};
 import ${serviceBuilder.getCompatJavaClassName("StringBundler")};
 
 import ${apiPackagePath}.model.${entity.name};
@@ -35,8 +34,6 @@ import ${apiPackagePath}.model.${entity.name};
 <#if classDeprecated>
 	@Deprecated
 </#if>
-
-@ProviderType
 public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl implements ${entity.name} {
 
 	/*

@@ -23,8 +23,10 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.document.library.uad.test.DLFolderUADTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -33,11 +35,8 @@ import com.liferay.user.associated.data.test.util.BaseUADDisplayTestCase;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,22 +54,23 @@ public class DLFileEntryUADDisplayTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		DLFileEntryUADTestUtil.cleanUpDependencies(
-			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
-			_dlFileEntries);
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
 	public void testGetParentContainerId() throws Exception {
 		assertParentContainerId(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_dlFolder = DLFolderUADTestUtil.addDLFolder(
+		DLFolder dlFolder = DLFolderUADTestUtil.addDLFolder(
 			_dlAppLocalService, _dlFolderLocalService,
-			TestPropsValues.getUserId());
+			TestPropsValues.getUserId(), _group.getGroupId());
 
-		assertParentContainerId(_dlFolder.getFolderId());
+		assertParentContainerId(dlFolder.getFolderId());
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -80,21 +80,15 @@ public class DLFileEntryUADDisplayTest
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
+		return DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
-			userId);
-
-		_dlFileEntries.add(dlFileEntry);
-
-		return dlFileEntry;
+			userId, _group.getGroupId());
 	}
 
 	protected void assertParentContainerId(long dlFolderId) throws Exception {
 		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, dlFolderId,
-			TestPropsValues.getUserId());
-
-		_dlFileEntries.add(dlFileEntry);
+			TestPropsValues.getUserId(), _group.getGroupId());
 
 		Serializable parentContainerId = _uadDisplay.getParentContainerId(
 			dlFileEntry);
@@ -110,17 +104,14 @@ public class DLFileEntryUADDisplayTest
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
-	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
-
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
-	@DeleteAfterTestRun
-	private DLFolder _dlFolder;
-
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject(filter = "component.name=*.DLFileEntryUADDisplay")
 	private UADDisplay<DLFileEntry> _uadDisplay;

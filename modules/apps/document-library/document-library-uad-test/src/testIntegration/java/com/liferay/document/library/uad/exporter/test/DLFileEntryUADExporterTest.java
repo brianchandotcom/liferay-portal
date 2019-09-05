@@ -20,8 +20,10 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -31,11 +33,10 @@ import com.liferay.user.associated.data.test.util.BaseUADExporterTestCase;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,11 +54,12 @@ public class DLFileEntryUADExporterTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@After
-	public void tearDown() throws Exception {
-		DLFileEntryUADTestUtil.cleanUpDependencies(
-			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
-			_dlFileEntries);
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Override
@@ -76,13 +78,9 @@ public class DLFileEntryUADExporterTest
 
 	@Override
 	protected DLFileEntry addBaseModel(long userId) throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
+		return DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
-			userId);
-
-		_dlFileEntries.add(dlFileEntry);
-
-		return dlFileEntry;
+			userId, _group.getGroupId());
 	}
 
 	@Override
@@ -98,14 +96,14 @@ public class DLFileEntryUADExporterTest
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	@DeleteAfterTestRun
-	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();
-
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject(filter = "component.name=*.DLFileEntryUADExporter")
 	private UADExporter _uadExporter;

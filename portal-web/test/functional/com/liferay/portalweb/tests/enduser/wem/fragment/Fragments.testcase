@@ -258,24 +258,11 @@ definition {
 				workflowStatus = "Draft");
 		}
 
-		task ("Edit the second section fragment") {
-			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name 2");
-
-			var htmlSnippet = '''
-<html>${line.separator}
-<div>${line.separator}
-<span class="test">This is a test.</span>${line.separator}
-</div>${line.separator}
-</html>''';
-
-			Type.typeAceEditorNoError(
-				locator1 = "FragmentEditor#HTML_EDITOR",
-				value1 = "${htmlSnippet}");
-		}
-
 		task ("Publish the second section fragment") {
-			PortletEntry.publish();
+			FragmentsEditor.publish();
 		}
+
+		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name 2");
 
 		task ("Assert the second section fragment can no longer be saved as draft") {
 			AssertElementNotPresent(locator1 = "Button#SAVE_AS_DRAFT");

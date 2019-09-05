@@ -347,7 +347,9 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<exec executable="curl" outputproperty="curl.output.trial">
 				<arg value="-k" />
 				<arg value="-X POST" />
-				<arg value="https://localhost:9200/_xpack/license/start_trial?acknowledge=true" />
+				<arg value="-ku" />
+				<arg value="elastic:${elastic.xpack.elastic.user.password}" />
+				<arg value="https://localhost:9200/_xpack/license/start_trial?acknowledge=true&amp;pretty" />
 			</exec>
 
 			<echo>${curl.output.trial}</echo>
@@ -611,9 +613,9 @@ xpack.monitoring.collection.enabled: true</echo>
 			<then>
 				<sleep seconds="30" />
 
-				<start-x-pack-trial />
-
 				<set-x-pack-user-passwords />
+
+				<start-x-pack-trial />
 
 				<configure-portal-x-pack-osgi-properties />
 

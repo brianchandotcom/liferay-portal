@@ -139,7 +139,9 @@ public class RESTBuilder {
 		context.put("stringUtil", StringUtil_IW.getInstance());
 		context.put("validator", Validator_IW.getInstance());
 
-		_createApplicationFile(context);
+		if (_configYAML.isGenerateREST()) {
+			_createApplicationFile(context);
+		}
 
 		if (Validator.isNotNull(_configYAML.getClientDir())) {
 			_createClientBaseJSONParserFile(context);
@@ -182,9 +184,12 @@ public class RESTBuilder {
 
 			context.put("openAPIYAML", openAPIYAML);
 
-			_createGraphQLMutationFile(context, escapedVersion);
-			_createGraphQLQueryFile(context, escapedVersion);
-			_createGraphQLServletDataFile(context, escapedVersion);
+			if (_configYAML.isGenerateGraphQL()) {
+				_createGraphQLMutationFile(context, escapedVersion);
+				_createGraphQLQueryFile(context, escapedVersion);
+				_createGraphQLServletDataFile(context, escapedVersion);
+			}
+
 			_createOpenAPIResourceFile(context, escapedVersion);
 			_createPropertiesFile(context, escapedVersion, "openapi");
 

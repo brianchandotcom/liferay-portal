@@ -43,7 +43,7 @@ definition {
 
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file via item selector."
 	@priority = "4"
-	test ActivateInitialStagingWithWikiAttachment {
+	test ActivateInitialStagingWithAttachment {
 		ProductMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteDeleteWikiFrontpage {
+	test DeleteFrontPage {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@priority = "5"
-	test importWikiLARLinkNode {
+	test ImportLARLinkNode {
 		property testray.component.names = "Training";
 
 		ProductMenu.gotoPortlet(
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@priority = "5"
-	test RestoreDeleteWikiFrontpage {
+	test RestoreDeletedFrontPage {
 		property portal.acceptance = "true";
 
 		Navigator.openURL();
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@priority = "4"
-	test SearchWikiAttachments {
+	test SearchFrontPageAttachments {
 		WikiPage.addFrontPagePG(
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki FrontPage Content");
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@priority = "4"
-	test SearchWikiComment {
+	test SearchChildPageComment {
 		WikiPage.addFrontPagePG(
 			wikiNodeName = "Main",
 			wikiPageContent = "Wiki FrontPage Content");
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@priority = "3"
-	test ViewNoWikiXSSviaAddPage {
+	test ViewNoXSSViaAddPage {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		WikiPage.editFrontPagePG(wikiPageContentEdit = '''<script>alert(123);</script>''');
@@ -492,7 +492,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewWikiDraftPagesViaBreadcrumb {
+	test ViewDraftPagesViaBreadcrumb {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 
 		Portlet.addPG(portletName = "Breadcrumb");
@@ -535,7 +535,7 @@ definition {
 	}
 
 	@priority = "4"
-	test WikiNavigationPortletSmoke {
+	test NavigationPortletSmoke {
 		Navigator.openURL(pageName = "Wiki Test Page");
 
 		Portlet.addPG(portletName = "Tree Menu");

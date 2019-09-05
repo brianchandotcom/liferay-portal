@@ -123,7 +123,7 @@ definition {
 			roleTitle = "Board Member",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Space Program Academy of Continuing Education");
+		ProductMenu.gotoSite(site = "Space Program Academy of Continuing Education");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -175,7 +175,7 @@ definition {
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
-				workflowAssetTitle = "Document_1.doc",
+				workflowAssetTitle = "Document",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
 		}
@@ -198,7 +198,7 @@ definition {
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
-				workflowAssetTitle = "Document_2.doc",
+				workflowAssetTitle = "Document",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
 		}
@@ -221,7 +221,7 @@ definition {
 
 			Workflow.approveTaskByActions(
 				boardWorkflowTask = "${i}",
-				workflowAssetTitle = "Document_3.doc",
+				workflowAssetTitle = "Document",
 				workflowAssetType = "Document",
 				workflowTask = "Board Member Review ${i}");
 		}
@@ -232,7 +232,7 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openSiteURL(siteName = "Space Program Academy of Continuing Education");
+		ProductMenu.gotoSite(site = "Space Program Academy of Continuing Education");
 
 		for (var entryCount : list "1,2,3") {
 			ProductMenu.gotoPortlet(

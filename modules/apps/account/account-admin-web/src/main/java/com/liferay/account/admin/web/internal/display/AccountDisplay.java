@@ -47,9 +47,8 @@ public class AccountDisplay {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/account_entry_logo?img_id=");
-		sb.append(String.valueOf(_logoId));
+		sb.append(getLogoId());
 		sb.append("&t=");
-		sb.append("/account_entry_logo?img_id=");
 		sb.append(WebServerServletTokenUtil.getToken(_logoId));
 
 		return sb.toString();

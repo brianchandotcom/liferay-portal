@@ -126,8 +126,8 @@ public class VulcanConfigurationModelListener
 		throws Exception {
 
 		String filterString = String.format(
-			"(&(path=%s)(service.factoryPid=%s))",
-			path, VulcanConfiguration.class.getName());
+			"(&(path=%s)(service.factoryPid=%s))", path,
+			VulcanConfiguration.class.getName());
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);

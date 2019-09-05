@@ -173,7 +173,9 @@ describe('AddResult', () => {
 		expect(onAddResultSubmit.mock.calls.length).toBe(1);
 	});
 
-	it('shows next page results in the modal after navigation is pressed', async () => {
+	/* Temporarily disable pagination test (LPS-101090) until
+	'show more results' bug (LPS-96397) is fixed. */
+	xit('shows next page results in the modal after navigation is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
 		const {getByTestId, getByText} = render(
@@ -207,7 +209,9 @@ describe('AddResult', () => {
 		expect(modal).toHaveTextContent('399 This is a Web Content Example');
 	});
 
-	it('updates results count in the modal after page delta is pressed', async () => {
+	/* Temporarily disable pagination test (LPS-101090) until
+	'show more results' bug (LPS-96397) is fixed. */
+	xit('updates results count in the modal after page delta is pressed', async () => {
 		const onAddResultSubmit = jest.fn();
 
 		const {getByTestId, getByText} = render(

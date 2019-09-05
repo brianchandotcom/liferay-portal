@@ -15,14 +15,12 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import getCN from 'classnames';
 import Item from '../list/Item.es';
-import PaginationBar from './PaginationBar.es';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {ClayCheckbox} from '@clayui/form';
 import {sub} from '../../utils/language.es';
 
 function AddResultModal({
-	DELTAS,
 	addResultSearchQuery,
 	addResultSelectedIds,
 	dataLoading,
@@ -30,8 +28,6 @@ function AddResultModal({
 	handleAllCheckbox,
 	handleClearAllSelected,
 	handleClose,
-	handleDeltaChange,
-	handlePageChange,
 	handleSearchChange,
 	handleSearchEnter,
 	handleSearchKeyDown,
@@ -230,6 +226,10 @@ function AddResultModal({
 										</ul>
 									</div>
 
+									{/*
+									Temporarily hide pagination bar (LPS-101090) until
+									'show more results' bug (LPS-96397) is fixed.
+
 									<div className="add-result-container">
 										<PaginationBar
 											deltas={DELTAS}
@@ -240,6 +240,7 @@ function AddResultModal({
 											totalItems={results.total}
 										/>
 									</div>
+									*/}
 								</>
 							) : (
 								renderEmptyState()

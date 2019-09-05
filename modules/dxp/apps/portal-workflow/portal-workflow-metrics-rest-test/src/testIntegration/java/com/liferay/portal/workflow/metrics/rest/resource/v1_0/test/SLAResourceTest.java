@@ -50,7 +50,7 @@ public class SLAResourceTest extends BaseSLAResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseTaskResourceTestCase.setUpClass();
+		BaseSLAResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);

@@ -56,7 +56,7 @@ public class MetricResourceTest extends BaseMetricResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseTaskResourceTestCase.setUpClass();
+		BaseMetricResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);

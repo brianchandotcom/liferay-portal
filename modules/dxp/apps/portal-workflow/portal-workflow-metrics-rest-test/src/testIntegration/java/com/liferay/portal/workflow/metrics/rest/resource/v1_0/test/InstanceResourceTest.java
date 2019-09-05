@@ -46,7 +46,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseTaskResourceTestCase.setUpClass();
+		BaseInstanceResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);

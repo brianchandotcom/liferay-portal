@@ -41,7 +41,7 @@ public class NodeResourceTest extends BaseNodeResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseTaskResourceTestCase.setUpClass();
+		BaseNodeResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);

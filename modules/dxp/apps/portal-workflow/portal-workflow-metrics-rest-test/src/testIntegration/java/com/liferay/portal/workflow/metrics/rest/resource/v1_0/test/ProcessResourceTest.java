@@ -46,7 +46,7 @@ public class ProcessResourceTest extends BaseProcessResourceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseTaskResourceTestCase.setUpClass();
+		BaseProcessResourceTestCase.setUpClass();
 
 		_workflowMetricsRESTTestHelper = new WorkflowMetricsRESTTestHelper(
 			_queries, _searchEngineAdapter);

@@ -16,6 +16,9 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Accounts.tearDownCP();
+		}
 	}
 
 	@priority = "4"

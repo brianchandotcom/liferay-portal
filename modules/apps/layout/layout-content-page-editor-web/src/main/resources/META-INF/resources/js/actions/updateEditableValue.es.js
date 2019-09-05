@@ -207,11 +207,16 @@ const _getSegmentsExperienceId = getState => {
 const _mergeChange = (editableValues, change) => {
 	if (!change.content) {
 		return updateIn(editableValues, change.path, editable => {
-			if (editable && editable.defaultValue) {
-				return {
+			let newEditable = undefined;
+
+			if (editable && (editable.defaultValue || editable.config)) {
+				newEditable = {
+					config: editable.config,
 					defaultValue: editable.defaultValue
 				};
 			}
+
+			return newEditable;
 		});
 	}
 

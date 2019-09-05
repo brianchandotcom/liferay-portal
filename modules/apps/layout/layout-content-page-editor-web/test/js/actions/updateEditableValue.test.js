@@ -58,16 +58,19 @@ describe('updateEditableValuesAction', () => {
 				fieldIdSample: {
 					classNameId: 'classNameId.jpg',
 					classPK: 'classPK.jpg',
+					config: {},
 					defaultValue: 'defaultValue.jpg',
 					fieldId: 'fieldId.jpg'
 				},
 
 				mappedFieldSample: {
+					config: {},
 					defaultValue: 'defaultValue.jpg',
 					mappedField: 'mappedField.jpg'
 				},
 
 				sample: {
+					config: {},
 					defaultValue: 'defaultValue.jpg',
 
 					people: {
@@ -85,16 +88,19 @@ describe('updateEditableValuesAction', () => {
 				fieldIdSample: {
 					classNameId: 'classNameId',
 					classPK: 'classPK',
+					config: {},
 					defaultValue: 'defaultValue',
 					fieldId: 'fieldId'
 				},
 
 				mappedFieldSample: {
+					config: {},
 					defaultValue: 'defaultValue',
 					mappedField: 'mappedField'
 				},
 
 				sample: {
+					config: {},
 					defaultValue: 'defaultValue',
 
 					people: {
@@ -142,7 +148,7 @@ describe('updateEditableValuesAction', () => {
 	});
 
 	describe('updateEditableValueContentAction', () => {
-		it('removes everything from the editable but existing segments/languages and defaultValue', () => {
+		it('removes everything from the editable but existing segments/languages, config and defaultValue', () => {
 			dispatch(
 				updateEditableValueContentAction(
 					fragmentId,
@@ -155,6 +161,7 @@ describe('updateEditableValuesAction', () => {
 			expect(
 				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR].fieldIdSample
 			).toEqual({
+				config: {},
 				defaultValue: 'defaultValue',
 
 				[segmentId]: {
@@ -176,6 +183,7 @@ describe('updateEditableValuesAction', () => {
 			expect(
 				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR].sample
 			).toEqual({
+				config: {},
 				defaultValue: 'defaultValue',
 
 				people: {
@@ -192,7 +200,7 @@ describe('updateEditableValuesAction', () => {
 	});
 
 	describe('updateEditableValueMappedFieldAction', () => {
-		it('removes everything from the editable but mappedField and defaultValue', () => {
+		it('removes everything from the editable but mappedField, config and defaultValue', () => {
 			dispatch(
 				updateEditableValueMappedFieldAction(
 					fragmentId,
@@ -205,6 +213,7 @@ describe('updateEditableValuesAction', () => {
 			expect(
 				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR].sample
 			).toEqual({
+				config: {},
 				defaultValue: 'defaultValue',
 				mappedField: 'newMappedField'
 			});
@@ -212,7 +221,7 @@ describe('updateEditableValuesAction', () => {
 	});
 
 	describe('updateEditableValueFieldIdAction', () => {
-		it('removes everything from the editable but defaultValue, classNameId, classPK and fieldId', () => {
+		it('removes everything from the editable but defaultValue, config, classNameId, classPK and fieldId', () => {
 			dispatch(
 				updateEditableValueFieldIdAction(
 					fragmentId,
@@ -231,6 +240,7 @@ describe('updateEditableValuesAction', () => {
 			).toEqual({
 				classNameId: 'classNameId',
 				classPK: 'classPK',
+				config: {},
 				defaultValue: 'defaultValue',
 				fieldId: 'fieldId'
 			});

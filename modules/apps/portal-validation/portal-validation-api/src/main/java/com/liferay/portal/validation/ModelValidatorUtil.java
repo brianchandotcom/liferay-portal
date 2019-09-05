@@ -16,12 +16,9 @@ package com.liferay.portal.validation;
 
 import com.liferay.portal.kernel.model.ClassedModel;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ModelValidatorUtil {
 
 	public static <T extends ClassedModel> ModelValidationResults validate(

@@ -31,7 +31,6 @@ import java.util.Map;
  * @see FileVersionPreview
  * @generated
  */
-@ProviderType
 public class FileVersionPreviewWrapper extends BaseModelWrapper<FileVersionPreview>
 	implements FileVersionPreview, ModelWrapper<FileVersionPreview> {
 	public FileVersionPreviewWrapper(FileVersionPreview fileVersionPreview) {

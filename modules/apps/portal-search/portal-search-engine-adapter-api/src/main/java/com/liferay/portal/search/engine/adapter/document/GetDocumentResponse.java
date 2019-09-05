@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.document;
 
 import com.liferay.portal.search.document.Document;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bryan Engler
  */
-@ProviderType
 public class GetDocumentResponse implements DocumentResponse {
 
 	public GetDocumentResponse(boolean exists) {

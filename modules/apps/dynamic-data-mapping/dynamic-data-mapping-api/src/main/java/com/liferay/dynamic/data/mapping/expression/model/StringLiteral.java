@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.expression.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Leonardo Barros
  */
-@ProviderType
 public class StringLiteral extends Term {
 
 	public StringLiteral(String value) {

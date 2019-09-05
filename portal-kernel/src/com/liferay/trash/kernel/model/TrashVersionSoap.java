@@ -30,7 +30,6 @@ import java.util.List;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashVersionSoap implements Serializable {
 	public static TrashVersionSoap toSoapModel(TrashVersion model) {
 		TrashVersionSoap soapModel = new TrashVersionSoap();

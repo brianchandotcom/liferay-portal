@@ -32,14 +32,11 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Julio Camarero
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
-@ProviderType
 public class TrashUtil {
 
 	public static void addBaseModelBreadcrumbEntries(

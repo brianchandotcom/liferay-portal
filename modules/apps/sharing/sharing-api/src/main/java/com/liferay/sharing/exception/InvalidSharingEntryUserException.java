@@ -16,12 +16,9 @@ package com.liferay.sharing.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class InvalidSharingEntryUserException extends PortalException {
 
 	public InvalidSharingEntryUserException() {

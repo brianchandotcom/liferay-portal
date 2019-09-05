@@ -16,12 +16,9 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class Order {
 
 	public static final String COUNT_METRIC_NAME = "_count";

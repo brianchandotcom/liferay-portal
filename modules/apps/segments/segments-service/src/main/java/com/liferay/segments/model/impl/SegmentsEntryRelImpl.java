@@ -14,8 +14,6 @@
 
 package com.liferay.segments.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the SegmentsEntryRel service.
  * Represents a row in the &quot;SegmentsEntryRel&quot; database table, with
@@ -29,7 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Eduardo García
  */
-@ProviderType
 public class SegmentsEntryRelImpl extends SegmentsEntryRelBaseImpl {
 
 	/**

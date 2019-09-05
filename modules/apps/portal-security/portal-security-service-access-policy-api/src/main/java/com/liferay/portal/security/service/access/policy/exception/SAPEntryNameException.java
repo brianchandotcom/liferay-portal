@@ -16,12 +16,9 @@ package com.liferay.portal.security.service.access.policy.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SAPEntryNameException extends PortalException {
 
 	public SAPEntryNameException() {

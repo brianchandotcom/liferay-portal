@@ -18,12 +18,9 @@ import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.metrics.StatsAggregation;
 import com.liferay.portal.search.internal.aggregation.BaseFieldAggregation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class StatsAggregationImpl
 	extends BaseFieldAggregation implements StatsAggregation {
 

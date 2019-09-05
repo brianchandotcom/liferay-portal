@@ -21,12 +21,9 @@ import com.liferay.staging.taglib.servlet.taglib.base.BaseCssTag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Péter Borkuti
  */
-@ProviderType
 public class PopoverTag extends BaseCssTag {
 
 	public String getId() {

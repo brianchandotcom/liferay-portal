@@ -45,13 +45,10 @@ import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
-@ProviderType
 public class WorkflowHandlerRegistryUtil {
 
 	public static List<WorkflowHandler<?>> getScopeableWorkflowHandlers() {

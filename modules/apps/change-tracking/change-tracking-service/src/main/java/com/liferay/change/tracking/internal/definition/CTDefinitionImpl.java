@@ -22,12 +22,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class CTDefinitionImpl<T extends BaseModel, U extends BaseModel>
 	implements CTDefinitionBuilderImpl.CTDefinitionExtended<T, U> {
 

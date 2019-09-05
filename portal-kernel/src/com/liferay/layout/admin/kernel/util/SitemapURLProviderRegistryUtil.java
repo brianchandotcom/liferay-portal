@@ -29,12 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class SitemapURLProviderRegistryUtil {
 
 	public static SitemapURLProvider getSitemapURLProvider(String className) {

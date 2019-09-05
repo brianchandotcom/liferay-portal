@@ -17,12 +17,9 @@ package com.liferay.portal.search.internal.aggregation.pipeline;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class AvgBucketPipelineAggregationImpl
 	extends BucketMetricsPipelineAggregationImpl
 	implements AvgBucketPipelineAggregation {

@@ -18,12 +18,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Dylan Rebelak
  */
-@ProviderType
 public class MultisearchSearchRequest
 	implements SearchRequest<MultisearchSearchResponse> {
 

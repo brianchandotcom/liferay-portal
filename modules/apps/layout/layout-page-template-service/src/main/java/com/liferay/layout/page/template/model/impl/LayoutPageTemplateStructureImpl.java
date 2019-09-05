@@ -23,12 +23,9 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import java.util.Arrays;
 import java.util.stream.LongStream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class LayoutPageTemplateStructureImpl
 	extends LayoutPageTemplateStructureBaseImpl {
 

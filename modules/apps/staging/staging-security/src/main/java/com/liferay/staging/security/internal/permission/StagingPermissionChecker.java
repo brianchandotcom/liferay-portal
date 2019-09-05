@@ -27,12 +27,9 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Tomas Polesovsky
  */
-@ProviderType
 public class StagingPermissionChecker implements PermissionChecker {
 
 	public StagingPermissionChecker(PermissionChecker permissionChecker) {

@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.document;
 
 import com.liferay.portal.kernel.search.Query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DeleteByQueryDocumentRequest
 	implements DocumentRequest<DeleteByQueryDocumentResponse> {
 

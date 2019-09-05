@@ -16,8 +16,6 @@ package com.liferay.sharing.model.impl;
 
 import com.liferay.sharing.security.permission.SharingEntryAction;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the {@code SharingEntry} service.
  * Represents a row in the {@code SharingEntry} database table, with each column
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SharingEntryImpl extends SharingEntryBaseImpl {
 
 	/**

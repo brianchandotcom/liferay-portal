@@ -17,12 +17,9 @@ package com.liferay.portal.search.engine.adapter.index;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class GetIndexIndexResponse implements IndexResponse {
 
 	public Map<String, List<String>> getAliases() {

@@ -28,7 +28,6 @@ import java.util.function.Function;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -38,7 +37,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	service = ExportImportPortletPreferencesProcessorHelper.class
 )
-@ProviderType
 public class ExportImportPortletPreferencesProcessorHelperImpl
 	implements ExportImportPortletPreferencesProcessorHelper {
 

@@ -14,11 +14,8 @@
 
 package com.liferay.change.tracking.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class CTPreferencesImpl extends CTPreferencesBaseImpl {
 }

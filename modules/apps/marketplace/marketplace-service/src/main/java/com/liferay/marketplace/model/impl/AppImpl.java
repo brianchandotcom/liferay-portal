@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
-@ProviderType
 public class AppImpl extends AppBaseImpl {
 
 	@Override

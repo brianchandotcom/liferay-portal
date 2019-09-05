@@ -30,12 +30,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Gergely Mathe
  */
-@ProviderType
 public class PermissionUpdateHandlerRegistryUtil {
 
 	public static PermissionUpdateHandler getPermissionUpdateHandler(

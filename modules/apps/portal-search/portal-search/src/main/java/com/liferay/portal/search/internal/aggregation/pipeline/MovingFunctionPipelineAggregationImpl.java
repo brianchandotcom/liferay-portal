@@ -19,12 +19,9 @@ import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggr
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 import com.liferay.portal.search.script.Script;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class MovingFunctionPipelineAggregationImpl
 	extends BasePipelineAggregation
 	implements MovingFunctionPipelineAggregation {

@@ -17,12 +17,9 @@ package com.liferay.asset.util.comparator;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Miguel Pastor
  */
-@ProviderType
 public class AssetTagCountComparator extends OrderByComparator<AssetTag> {
 
 	public static final String ORDER_BY_ASC = "AssetTag.assetCount ASC";

@@ -19,14 +19,11 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Represents a context to segment users based on their session criteria.
  *
  * @author Eduardo García
  */
-@ProviderType
 public class Context {
 
 	public static final String BROWSER = "browser";

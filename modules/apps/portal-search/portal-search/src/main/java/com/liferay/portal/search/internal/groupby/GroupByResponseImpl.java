@@ -22,12 +22,9 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class GroupByResponseImpl implements GroupByResponse, Serializable {
 
 	public GroupByResponseImpl(String field) {

@@ -16,12 +16,9 @@ package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Marcellus Tavares
  */
-@ProviderType
 public class DDMFormRenderingException extends PortalException {
 
 	public DDMFormRenderingException() {

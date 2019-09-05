@@ -18,12 +18,9 @@ import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.bucket.SamplerAggregation;
 import com.liferay.portal.search.internal.aggregation.BaseAggregation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class SamplerAggregationImpl
 	extends BaseAggregation implements SamplerAggregation {
 

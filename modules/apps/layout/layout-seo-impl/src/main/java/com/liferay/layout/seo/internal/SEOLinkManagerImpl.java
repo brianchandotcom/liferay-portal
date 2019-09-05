@@ -33,7 +33,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,7 +40,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(service = SEOLinkManager.class)
-@ProviderType
 public class SEOLinkManagerImpl implements SEOLinkManager {
 
 	@Override

@@ -26,8 +26,6 @@ import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the SegmentsExperimentRel service. Represents a row in the &quot;SegmentsExperimentRel&quot; database table, with each column mapped to a property of this class.
  *
@@ -37,7 +35,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Eduardo García
  */
-@ProviderType
 public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 
 	public SegmentsExperimentRelImpl() {

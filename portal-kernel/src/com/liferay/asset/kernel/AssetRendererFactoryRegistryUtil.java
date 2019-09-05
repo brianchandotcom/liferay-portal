@@ -33,13 +33,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bruno Farache
  * @author Marcellus Tavares
  */
-@ProviderType
 public class AssetRendererFactoryRegistryUtil {
 
 	public static List<AssetRendererFactory<?>> getAssetRendererFactories(

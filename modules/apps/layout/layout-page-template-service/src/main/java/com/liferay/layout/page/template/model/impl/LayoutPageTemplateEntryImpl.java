@@ -30,12 +30,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jürgen Kappler
  */
-@ProviderType
 public class LayoutPageTemplateEntryImpl
 	extends LayoutPageTemplateEntryBaseImpl {
 

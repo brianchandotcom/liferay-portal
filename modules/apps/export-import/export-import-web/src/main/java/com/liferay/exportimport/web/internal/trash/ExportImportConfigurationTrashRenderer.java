@@ -27,12 +27,9 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public class ExportImportConfigurationTrashRenderer
 	extends BaseJSPTrashRenderer {
 

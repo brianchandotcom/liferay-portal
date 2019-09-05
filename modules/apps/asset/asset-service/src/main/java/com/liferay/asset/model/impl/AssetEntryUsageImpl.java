@@ -14,11 +14,8 @@
 
 package com.liferay.asset.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Pavel Savinov
  */
-@ProviderType
 public class AssetEntryUsageImpl extends AssetEntryUsageBaseImpl {
 }

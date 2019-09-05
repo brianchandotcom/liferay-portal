@@ -17,12 +17,9 @@ package com.liferay.exportimport.kernel.exception;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Julio Camarero
  */
-@ProviderType
 public class MissingReferenceException extends PortalException {
 
 	public MissingReferenceException() {

@@ -26,13 +26,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@ProviderType
 public class FinderPath {
 
 	public FinderPath(

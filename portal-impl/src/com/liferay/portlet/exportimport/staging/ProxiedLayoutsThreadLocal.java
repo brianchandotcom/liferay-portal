@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Sergio Sánchez
  */
-@ProviderType
 public class ProxiedLayoutsThreadLocal {
 
 	public static void clearProxiedLayouts() {

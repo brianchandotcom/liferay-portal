@@ -23,12 +23,9 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class IndexWriterHelperUtil {
 
 	public static void addDocument(

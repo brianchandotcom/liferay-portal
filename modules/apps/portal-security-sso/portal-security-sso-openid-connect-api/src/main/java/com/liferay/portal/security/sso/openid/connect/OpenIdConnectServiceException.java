@@ -16,12 +16,9 @@ package com.liferay.portal.security.sso.openid.connect;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Thuong Dinh
  */
-@ProviderType
 public class OpenIdConnectServiceException extends PortalException {
 
 	public OpenIdConnectServiceException(String msg) {

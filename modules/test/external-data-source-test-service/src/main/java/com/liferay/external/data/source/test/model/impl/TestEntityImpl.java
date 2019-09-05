@@ -14,8 +14,6 @@
 
 package com.liferay.external.data.source.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * The extended model implementation for the TestEntity service. Represents a
  * row in the &quot;TestEntity&quot; database table, with each column mapped to
@@ -30,7 +28,6 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class TestEntityImpl extends TestEntityBaseImpl {
 
 	/**

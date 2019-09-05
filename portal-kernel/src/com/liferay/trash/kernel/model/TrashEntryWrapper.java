@@ -40,7 +40,6 @@ com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	public TrashEntryWrapper(TrashEntry trashEntry) {
 		_trashEntry = trashEntry;

@@ -16,12 +16,9 @@ package com.liferay.push.notifications.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bruno Farache
  */
-@ProviderType
 public class NoSuchDeviceException extends NoSuchModelException {
 
 	public NoSuchDeviceException() {

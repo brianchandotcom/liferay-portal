@@ -16,12 +16,9 @@ package com.liferay.exportimport.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Gergely Mathe
  */
-@ProviderType
 public class ExportImportIOException extends PortalException {
 
 	public static final int ADD_ZIP_ENTRY_BYTES = 2;

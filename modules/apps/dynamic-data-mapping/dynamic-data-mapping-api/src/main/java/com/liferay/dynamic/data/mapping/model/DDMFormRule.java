@@ -23,12 +23,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Leonardo Barros
  */
-@ProviderType
 public class DDMFormRule implements Serializable {
 
 	public DDMFormRule() {

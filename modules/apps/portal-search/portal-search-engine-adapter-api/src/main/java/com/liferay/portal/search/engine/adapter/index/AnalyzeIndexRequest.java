@@ -22,12 +22,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class AnalyzeIndexRequest implements IndexRequest<AnalyzeIndexResponse> {
 
 	@Override

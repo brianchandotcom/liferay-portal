@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.SignaturePackageKeyDSField;
 import com.liferay.digital.signature.model.field.builder.SignaturePackageKeyDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class SignaturePackageKeyDSFieldBuilderImpl
 	extends StyledDSFieldBuilderImpl<SignaturePackageKeyDSField>
 	implements SignaturePackageKeyDSFieldBuilder {

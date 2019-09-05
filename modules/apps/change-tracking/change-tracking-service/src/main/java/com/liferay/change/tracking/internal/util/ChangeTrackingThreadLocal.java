@@ -16,12 +16,9 @@ package com.liferay.change.tracking.internal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Gergely Mathe
  */
-@ProviderType
 public class ChangeTrackingThreadLocal {
 
 	public static boolean isModelUpdateInProgress() {

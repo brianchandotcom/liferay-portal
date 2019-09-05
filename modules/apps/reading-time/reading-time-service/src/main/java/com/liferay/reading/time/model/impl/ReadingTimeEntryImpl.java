@@ -14,12 +14,9 @@
 
 package com.liferay.reading.time.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class ReadingTimeEntryImpl extends ReadingTimeEntryBaseImpl {
 
 	public ReadingTimeEntryImpl() {

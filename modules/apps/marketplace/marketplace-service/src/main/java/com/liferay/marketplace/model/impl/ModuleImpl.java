@@ -16,13 +16,10 @@ package com.liferay.marketplace.model.impl;
 
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
-@ProviderType
 public class ModuleImpl extends ModuleBaseImpl {
 
 	@Override

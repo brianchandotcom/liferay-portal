@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.model.ClassedModel;
 
 import java.util.Collection;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class RelationshipManagerUtil {
 
 	public static <T extends ClassedModel> Collection<? extends ClassedModel>

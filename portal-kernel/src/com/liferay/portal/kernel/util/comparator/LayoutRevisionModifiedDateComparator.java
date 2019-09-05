@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Akos Thurzo
  */
-@ProviderType
 public class LayoutRevisionModifiedDateComparator
 	extends OrderByComparator<LayoutRevision> {
 

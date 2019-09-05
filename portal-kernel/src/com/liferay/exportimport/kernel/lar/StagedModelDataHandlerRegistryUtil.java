@@ -29,8 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a utility facade to the staged model data handler registry
  * framework.
@@ -39,7 +37,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @since  6.2
  */
-@ProviderType
 public class StagedModelDataHandlerRegistryUtil {
 
 	/**

@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Pavel Savinov
  */
-@ProviderType
 public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
 
 	@Override

@@ -20,12 +20,9 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Péter Borkuti
  */
-@ProviderType
 public class ProcessStatusTag extends IncludeTag {
 
 	public int getBackgroundTaskStatus() {

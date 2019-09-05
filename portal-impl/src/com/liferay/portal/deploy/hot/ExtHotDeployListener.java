@@ -46,12 +46,9 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class ExtHotDeployListener extends BaseHotDeployListener {
 
 	@Override

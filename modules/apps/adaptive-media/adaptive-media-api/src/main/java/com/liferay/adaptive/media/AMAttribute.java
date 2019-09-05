@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Represents a characteristic of an {@link AdaptiveMedia} instance (e.g., its
  * width, size, etc.). Instances are annotated by a processor type and by the
@@ -33,7 +31,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Adolfo Pérez
  */
-@ProviderType
 public final class AMAttribute<T, V> {
 
 	/**

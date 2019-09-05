@@ -16,12 +16,9 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class IndexStatusManagerThreadLocal {
 
 	public static boolean isIndexReadOnly() {

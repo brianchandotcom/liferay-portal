@@ -22,14 +22,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Arrays;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author James Lefeu
  * @author Peter Shin
  * @author Shuyang Zhou
  */
-@ProviderType
 public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 
 	public IndexMetadata(

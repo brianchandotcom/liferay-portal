@@ -16,12 +16,9 @@ package com.liferay.journal.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchArticleLocalizationException extends NoSuchModelException {
 
 	public NoSuchArticleLocalizationException() {

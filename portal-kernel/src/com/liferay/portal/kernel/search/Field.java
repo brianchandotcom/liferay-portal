@@ -30,15 +30,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bruno Farache
  * @author Brian Wing Shun Chan
  * @author Allen Chiang
  * @author Alex Wallace
  */
-@ProviderType
 public class Field implements Serializable {
 
 	public static final String ANY = StringPool.STAR;

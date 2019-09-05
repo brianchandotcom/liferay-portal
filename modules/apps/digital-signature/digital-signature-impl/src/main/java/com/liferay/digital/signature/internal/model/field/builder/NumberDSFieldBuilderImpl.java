@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.NumberDSField;
 import com.liferay.digital.signature.model.field.builder.NumberDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class NumberDSFieldBuilderImpl
 	extends UserEntryDSFieldBuilderImpl<NumberDSField>
 	implements NumberDSFieldBuilder {

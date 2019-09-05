@@ -20,12 +20,9 @@ import com.liferay.petra.string.StringPool;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ModelValidationResults {
 
 	public static FailureBuilder failure() {

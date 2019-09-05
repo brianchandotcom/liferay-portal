@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListenerFactory;
 import com.liferay.exportimport.kernel.lifecycle.ProcessAwareExportImportLifecycleListener;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -28,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = ExportImportLifecycleListenerFactory.class
 )
-@ProviderType
 public class DefaultExportImportLifecycleListernerFactory
 	implements ExportImportLifecycleListenerFactory {
 

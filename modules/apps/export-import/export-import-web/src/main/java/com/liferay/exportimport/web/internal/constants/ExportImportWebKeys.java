@@ -14,12 +14,9 @@
 
 package com.liferay.exportimport.web.internal.constants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportWebKeys {
 
 	public static final String EXPORT_IMPORT_CONFIGURATION_ID =

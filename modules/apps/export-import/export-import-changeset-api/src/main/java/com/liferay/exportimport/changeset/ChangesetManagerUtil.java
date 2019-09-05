@@ -14,12 +14,9 @@
 
 package com.liferay.exportimport.changeset;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ChangesetManagerUtil {
 
 	public static ChangesetManager getChangesetManager() {

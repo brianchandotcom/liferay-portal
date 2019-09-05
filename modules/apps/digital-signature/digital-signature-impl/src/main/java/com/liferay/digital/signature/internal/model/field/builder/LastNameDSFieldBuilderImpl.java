@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.LastNameDSField;
 import com.liferay.digital.signature.model.field.builder.LastNameDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class LastNameDSFieldBuilderImpl
 	extends StyledDSFieldBuilderImpl<LastNameDSField>
 	implements LastNameDSFieldBuilder {

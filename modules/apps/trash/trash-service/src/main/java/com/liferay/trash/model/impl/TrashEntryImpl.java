@@ -17,12 +17,9 @@ package com.liferay.trash.model.impl;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.trash.model.TrashEntry;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Zsolt Berentey
  */
-@ProviderType
 public class TrashEntryImpl extends TrashEntryBaseImpl {
 
 	@Override

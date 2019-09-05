@@ -74,14 +74,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Juan Fernández
  */
-@ProviderType
 public class PortalUtil {
 
 	/**

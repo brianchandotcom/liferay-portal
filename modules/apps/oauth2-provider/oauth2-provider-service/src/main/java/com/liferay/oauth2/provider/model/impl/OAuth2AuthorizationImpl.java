@@ -14,8 +14,6 @@
 
 package com.liferay.oauth2.provider.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the OAuth2Authorization service.
  * Represents a row in the &quot;OAuth2Authorization&quot; database table, with
@@ -30,7 +28,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 
 	/**

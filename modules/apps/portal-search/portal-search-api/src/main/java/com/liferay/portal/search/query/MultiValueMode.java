@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum MultiValueMode {
 
 	AVG, MAX, MEDIAN, MIN, SUM

@@ -14,14 +14,11 @@
 
 package com.liferay.external.data.source.test.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchTestEntityException extends NoSuchModelException {
 
 	public NoSuchTestEntityException() {

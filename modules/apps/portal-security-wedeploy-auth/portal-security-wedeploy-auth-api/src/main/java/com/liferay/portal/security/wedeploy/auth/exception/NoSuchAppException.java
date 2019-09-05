@@ -16,12 +16,9 @@ package com.liferay.portal.security.wedeploy.auth.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Supritha Sundaram
  */
-@ProviderType
 public class NoSuchAppException extends NoSuchModelException {
 
 	public NoSuchAppException() {

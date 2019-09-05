@@ -24,13 +24,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
  */
-@ProviderType
 public class MergeLayoutPrototypesThreadLocal {
 
 	public static void clearMergeComplete() {

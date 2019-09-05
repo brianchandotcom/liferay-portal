@@ -39,7 +39,6 @@ com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashVersionWrapper implements TrashVersion,
 	ModelWrapper<TrashVersion> {
 	public TrashVersionWrapper(TrashVersion trashVersion) {

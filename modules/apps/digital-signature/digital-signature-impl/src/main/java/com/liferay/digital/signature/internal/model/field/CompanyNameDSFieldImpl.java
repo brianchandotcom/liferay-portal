@@ -16,12 +16,9 @@ package com.liferay.digital.signature.internal.model.field;
 
 import com.liferay.digital.signature.model.field.CompanyNameDSField;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class CompanyNameDSFieldImpl
 	extends UserEntryDSFieldImpl<CompanyNameDSField>
 	implements CompanyNameDSField {

@@ -14,12 +14,9 @@
 
 package com.liferay.push.notifications.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Silvio Santos
  */
-@ProviderType
 public class PushNotificationsDeviceImpl
 	extends PushNotificationsDeviceBaseImpl {
 

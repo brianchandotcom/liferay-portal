@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.query.geolocation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum ShapeRelation {
 
 	CONTAINS, DISJOINT, INTERSECTS, WITHIN

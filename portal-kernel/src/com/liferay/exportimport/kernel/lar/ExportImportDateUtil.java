@@ -53,12 +53,9 @@ import java.util.TimeZone;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ExportImportDateUtil {
 
 	public static final String RANGE = "range";

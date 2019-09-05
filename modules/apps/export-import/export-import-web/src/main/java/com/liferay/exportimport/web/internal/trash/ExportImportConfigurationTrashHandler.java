@@ -32,7 +32,6 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -44,7 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
 	service = TrashHandler.class
 )
-@ProviderType
 public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 	@Override

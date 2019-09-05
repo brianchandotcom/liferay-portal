@@ -14,11 +14,8 @@
 
 package com.liferay.portal.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class RecentLayoutRevisionImpl extends RecentLayoutRevisionBaseImpl {
 }

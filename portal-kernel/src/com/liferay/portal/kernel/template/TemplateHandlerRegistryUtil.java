@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Juan Fernández
  */
-@ProviderType
 public class TemplateHandlerRegistryUtil {
 
 	public static long[] getClassNameIds() {

@@ -16,12 +16,9 @@ package com.liferay.html.preview.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class InvalidHtmlPreviewEntryMimeTypeException extends PortalException {
 
 	public InvalidHtmlPreviewEntryMimeTypeException() {

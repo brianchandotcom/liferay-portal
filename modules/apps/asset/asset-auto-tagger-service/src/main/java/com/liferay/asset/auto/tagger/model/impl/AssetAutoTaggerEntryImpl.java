@@ -14,12 +14,9 @@
 
 package com.liferay.asset.auto.tagger.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AssetAutoTaggerEntryImpl extends AssetAutoTaggerEntryBaseImpl {
 
 	public AssetAutoTaggerEntryImpl() {

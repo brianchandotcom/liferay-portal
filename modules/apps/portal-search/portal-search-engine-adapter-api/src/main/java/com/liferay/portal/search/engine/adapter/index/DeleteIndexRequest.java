@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.index;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DeleteIndexRequest implements IndexRequest<DeleteIndexResponse> {
 
 	public DeleteIndexRequest(String... indexNames) {

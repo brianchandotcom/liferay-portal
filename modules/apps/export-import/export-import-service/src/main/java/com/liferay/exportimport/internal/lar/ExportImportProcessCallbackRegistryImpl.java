@@ -18,7 +18,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 
 import java.util.concurrent.Callable;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = ExportImportProcessCallbackRegistry.class
 )
-@ProviderType
 public class ExportImportProcessCallbackRegistryImpl
 	implements ExportImportProcessCallbackRegistry {
 

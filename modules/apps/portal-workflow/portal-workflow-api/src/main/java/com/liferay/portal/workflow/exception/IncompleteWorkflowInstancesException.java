@@ -16,12 +16,9 @@ package com.liferay.portal.workflow.exception;
 
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Rafael Praxedes
  */
-@ProviderType
 public class IncompleteWorkflowInstancesException extends WorkflowException {
 
 	public IncompleteWorkflowInstancesException() {

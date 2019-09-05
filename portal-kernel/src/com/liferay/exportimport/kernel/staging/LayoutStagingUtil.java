@@ -24,12 +24,9 @@ import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  */
-@ProviderType
 public class LayoutStagingUtil {
 
 	public static LayoutRevision getLayoutRevision(Layout layout) {

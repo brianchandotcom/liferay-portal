@@ -23,15 +23,12 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Shuyang Zhou
  * @author     Alexander Chow
  * @deprecated As of Judson (7.1.x), with no direct replacement
  */
 @Deprecated
-@ProviderType
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	/**

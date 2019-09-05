@@ -19,14 +19,11 @@ import com.liferay.exportimport.kernel.lifecycle.BaseExportImportLifecycleListen
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Máté Thurzó
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
-@ProviderType
 public class CacheExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

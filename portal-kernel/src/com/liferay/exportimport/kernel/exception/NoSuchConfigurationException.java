@@ -16,12 +16,9 @@ package com.liferay.exportimport.kernel.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchConfigurationException extends NoSuchModelException {
 
 	public NoSuchConfigurationException() {

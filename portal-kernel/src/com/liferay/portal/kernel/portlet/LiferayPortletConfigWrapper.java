@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.model.Portlet;
 
 import javax.portlet.filter.PortletConfigWrapper;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public class LiferayPortletConfigWrapper
 	extends PortletConfigWrapper implements LiferayPortletConfig {
 

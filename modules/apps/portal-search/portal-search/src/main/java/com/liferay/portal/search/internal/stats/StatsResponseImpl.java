@@ -18,12 +18,9 @@ import com.liferay.portal.search.stats.StatsResponse;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class StatsResponseImpl implements Serializable, StatsResponse {
 
 	public StatsResponseImpl(

@@ -17,12 +17,9 @@ package com.liferay.portal.search.engine.adapter.snapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class GetSnapshotRepositoriesResponse implements SnapshotResponse {
 
 	public void addSnapshotRepositoryMetadata(

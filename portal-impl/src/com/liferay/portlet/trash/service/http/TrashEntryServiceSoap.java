@@ -66,7 +66,6 @@ import java.rmi.RemoteException;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashEntryServiceSoap {
 	/**
 	* Deletes the trash entries with the matching group ID considering

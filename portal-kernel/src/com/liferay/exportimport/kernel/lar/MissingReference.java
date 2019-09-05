@@ -23,12 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Zsolt Berentey
  */
-@ProviderType
 public class MissingReference implements Serializable {
 
 	public MissingReference(Element element) {

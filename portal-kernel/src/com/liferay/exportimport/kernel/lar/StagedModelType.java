@@ -20,12 +20,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Zsolt Berentey
  */
-@ProviderType
 public class StagedModelType {
 
 	public static final String REFERRER_CLASS_NAME_ALL =

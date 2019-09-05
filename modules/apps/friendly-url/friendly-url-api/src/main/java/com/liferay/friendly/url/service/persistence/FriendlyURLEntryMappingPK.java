@@ -26,7 +26,6 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class FriendlyURLEntryMappingPK implements Comparable<FriendlyURLEntryMappingPK>,
 	Serializable {
 	public long classNameId;

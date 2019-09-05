@@ -26,13 +26,10 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class ActionRequestFactory {
 
 	public static LiferayActionRequest create(

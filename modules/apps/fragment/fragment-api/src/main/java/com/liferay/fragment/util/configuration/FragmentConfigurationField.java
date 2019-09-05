@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Víctor Galán
  */
-@ProviderType
 public class FragmentConfigurationField {
 
 	public FragmentConfigurationField(JSONObject fieldJSONObject) {

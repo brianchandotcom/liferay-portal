@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.document;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Dylan Rebelak
  */
-@ProviderType
 public class DeleteDocumentResponse implements DocumentResponse {
 
 	public DeleteDocumentResponse(int status) {

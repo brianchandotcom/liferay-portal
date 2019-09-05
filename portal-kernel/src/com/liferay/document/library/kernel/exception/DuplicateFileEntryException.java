@@ -16,12 +16,9 @@ package com.liferay.document.library.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class DuplicateFileEntryException extends PortalException {
 
 	public DuplicateFileEntryException() {

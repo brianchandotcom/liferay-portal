@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import com.liferay.petra.string.StringPool;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class FlushIndexRequest implements IndexRequest<FlushIndexResponse> {
 
 	public FlushIndexRequest() {

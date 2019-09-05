@@ -32,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +51,6 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = LayoutsLocalPublisherMessageListener.class
 )
-@ProviderType
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
 

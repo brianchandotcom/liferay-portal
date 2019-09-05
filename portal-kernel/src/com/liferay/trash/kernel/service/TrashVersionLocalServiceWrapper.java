@@ -28,7 +28,6 @@ com.liferay.trash.service.impl.TrashVersionLocalServiceImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashVersionLocalServiceWrapper implements TrashVersionLocalService,
 	ServiceWrapper<TrashVersionLocalService> {
 	public TrashVersionLocalServiceWrapper(

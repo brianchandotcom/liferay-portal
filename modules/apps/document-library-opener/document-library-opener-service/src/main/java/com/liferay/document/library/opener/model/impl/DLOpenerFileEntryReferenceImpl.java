@@ -14,12 +14,9 @@
 
 package com.liferay.document.library.opener.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class DLOpenerFileEntryReferenceImpl
 	extends DLOpenerFileEntryReferenceBaseImpl {
 

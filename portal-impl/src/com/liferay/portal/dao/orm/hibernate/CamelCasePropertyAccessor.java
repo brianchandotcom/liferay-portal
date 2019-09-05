@@ -14,12 +14,9 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class CamelCasePropertyAccessor extends LiferayPropertyAccessor {
 
 	@Override

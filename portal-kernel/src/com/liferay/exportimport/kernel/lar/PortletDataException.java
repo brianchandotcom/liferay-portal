@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.Validator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  */
-@ProviderType
 public class PortletDataException extends PortalException {
 
 	public static final int COMPANY_BEING_DELETED = 25;

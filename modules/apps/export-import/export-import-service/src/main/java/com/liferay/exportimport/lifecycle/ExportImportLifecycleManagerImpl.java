@@ -31,7 +31,6 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -43,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = ExportImportLifecycleManager.class)
-@ProviderType
 public class ExportImportLifecycleManagerImpl
 	implements ExportImportLifecycleManager {
 

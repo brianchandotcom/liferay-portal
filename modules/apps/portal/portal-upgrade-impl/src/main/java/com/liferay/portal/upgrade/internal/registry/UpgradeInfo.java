@@ -20,13 +20,10 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Miguel Pastor
  * @author Carlos Sierra Andrés
  */
-@ProviderType
 public class UpgradeInfo {
 
 	public UpgradeInfo(

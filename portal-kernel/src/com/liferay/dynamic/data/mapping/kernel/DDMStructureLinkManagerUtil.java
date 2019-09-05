@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Rafael Praxedes
  */
-@ProviderType
 public class DDMStructureLinkManagerUtil {
 
 	public static DDMStructureLink addStructureLink(

@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -52,7 +51,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(immediate = true, service = PortletDataContextFactory.class)
-@ProviderType
 public class PortletDataContextFactoryImpl
 	implements PortletDataContextFactory {
 

@@ -14,11 +14,8 @@
 
 package com.liferay.document.library.sync.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class DLSyncEventImpl extends DLSyncEventBaseImpl {
 }

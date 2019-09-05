@@ -14,12 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class KaleoTaskFormImpl extends KaleoTaskFormBaseImpl {
 
 	public KaleoTaskFormImpl() {

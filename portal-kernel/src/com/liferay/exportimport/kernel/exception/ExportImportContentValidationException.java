@@ -20,12 +20,9 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Gergely Mathe
  */
-@ProviderType
 public class ExportImportContentValidationException extends PortalException {
 
 	public static final int ARTICLE_NOT_FOUND = 6;

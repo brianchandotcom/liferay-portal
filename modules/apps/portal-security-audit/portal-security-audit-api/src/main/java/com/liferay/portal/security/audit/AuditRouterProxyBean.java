@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class AuditRouterProxyBean extends BaseProxyBean implements AuditRouter {
 
 	@Override

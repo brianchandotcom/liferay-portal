@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.snapshot;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class CreateSnapshotResponse implements SnapshotResponse {
 
 	public CreateSnapshotResponse(SnapshotDetails snapshotDetails) {

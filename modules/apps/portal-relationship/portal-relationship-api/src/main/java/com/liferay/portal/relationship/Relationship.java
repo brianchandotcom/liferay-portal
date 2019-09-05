@@ -23,12 +23,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class Relationship<T extends ClassedModel> {
 
 	public Stream<? extends ClassedModel> getInboundRelatedModelStream(

@@ -56,7 +56,6 @@ import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashEntryServiceHttp {
 	public static void deleteEntries(HttpPrincipal httpPrincipal, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

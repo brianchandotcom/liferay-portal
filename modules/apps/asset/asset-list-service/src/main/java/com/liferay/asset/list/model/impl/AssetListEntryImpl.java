@@ -24,7 +24,6 @@ import com.liferay.asset.util.AssetHelper;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
@@ -32,7 +31,6 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Pavel Savinov
  */
-@ProviderType
 public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 
 	/**

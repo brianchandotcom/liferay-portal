@@ -23,12 +23,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public class PortletListTag extends IncludeTag {
 
 	public long getExportImportConfigurationId() {

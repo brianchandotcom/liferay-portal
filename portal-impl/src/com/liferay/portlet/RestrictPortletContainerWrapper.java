@@ -32,12 +32,9 @@ import javax.portlet.Event;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public class RestrictPortletContainerWrapper implements PortletContainer {
 
 	public static PortletContainer createRestrictPortletContainerWrapper(

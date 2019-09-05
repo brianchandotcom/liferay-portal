@@ -20,12 +20,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ChangesetEnvironment {
 
 	public static Builder create(long groupId, String portletId) {

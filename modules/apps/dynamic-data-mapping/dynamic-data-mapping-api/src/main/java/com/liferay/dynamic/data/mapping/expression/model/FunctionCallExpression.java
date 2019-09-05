@@ -20,12 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Leonardo Barros
  */
-@ProviderType
 public class FunctionCallExpression extends Expression {
 
 	public FunctionCallExpression(

@@ -16,12 +16,9 @@ package com.liferay.marketplace.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ryan Park
  */
-@ProviderType
 public class NoSuchModuleException extends NoSuchModelException {
 
 	public NoSuchModuleException() {

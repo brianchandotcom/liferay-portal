@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.model.StagedModel;
 
 import com.thoughtworks.xstream.security.TypePermission;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class XStreamStagedModelTypeHierarchyPermission
 	implements TypePermission {
 

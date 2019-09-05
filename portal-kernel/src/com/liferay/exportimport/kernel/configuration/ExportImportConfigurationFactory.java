@@ -32,12 +32,9 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public class ExportImportConfigurationFactory {
 
 	public static ExportImportConfiguration

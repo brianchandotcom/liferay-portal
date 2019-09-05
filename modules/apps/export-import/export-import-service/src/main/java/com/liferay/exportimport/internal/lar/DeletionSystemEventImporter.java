@@ -35,15 +35,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 /**
  * @author Zsolt Berentey
  */
-@ProviderType
 public class DeletionSystemEventImporter {
 
 	public static DeletionSystemEventImporter getInstance() {

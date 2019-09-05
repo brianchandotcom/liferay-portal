@@ -14,11 +14,8 @@
 
 package com.liferay.adaptive.media.image.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AMImageEntryImpl extends AMImageEntryBaseImpl {
 }

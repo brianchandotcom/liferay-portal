@@ -14,12 +14,9 @@
 
 package com.liferay.staging;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class StagingGroupHelperUtil {
 
 	public static StagingGroupHelper getStagingGroupHelper() {

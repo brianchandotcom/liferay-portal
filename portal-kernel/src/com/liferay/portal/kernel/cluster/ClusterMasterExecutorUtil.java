@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.Future;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class ClusterMasterExecutorUtil {
 
 	public static void addClusterMasterTokenTransitionListener(

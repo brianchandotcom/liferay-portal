@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.sso.openid.connect.constants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class OpenIdConnectProviderPropertyNames {
 
 	public static final String OPEN_ID_CONNECT_ENDPOINT_AUTH =

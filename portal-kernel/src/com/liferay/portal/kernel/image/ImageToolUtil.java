@@ -27,15 +27,12 @@ import java.io.OutputStream;
 
 import java.util.concurrent.Future;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The Image utility class.
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-@ProviderType
 public class ImageToolUtil {
 
 	/**

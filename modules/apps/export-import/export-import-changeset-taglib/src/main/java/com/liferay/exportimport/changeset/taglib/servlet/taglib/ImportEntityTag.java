@@ -19,12 +19,9 @@ import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Akos Thurzo
  */
-@ProviderType
 public class ImportEntityTag extends IncludeTag {
 
 	@Override

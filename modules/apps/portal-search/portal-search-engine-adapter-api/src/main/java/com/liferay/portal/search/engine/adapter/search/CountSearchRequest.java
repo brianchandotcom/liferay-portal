@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.search;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Dylan Rebelak
  */
-@ProviderType
 public class CountSearchRequest
 	extends BaseSearchRequest implements SearchRequest<CountSearchResponse> {
 

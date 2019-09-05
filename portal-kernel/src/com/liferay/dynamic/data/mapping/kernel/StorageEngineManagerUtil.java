@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Rafael Praxedes
  */
-@ProviderType
 public class StorageEngineManagerUtil {
 
 	public static long create(

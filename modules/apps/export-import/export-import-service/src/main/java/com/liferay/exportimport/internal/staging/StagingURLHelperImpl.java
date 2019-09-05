@@ -28,14 +28,12 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = StagingURLHelper.class)
-@ProviderType
 public class StagingURLHelperImpl implements StagingURLHelper {
 
 	@Override

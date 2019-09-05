@@ -23,13 +23,10 @@ import javax.portlet.filter.RenderRequestWrapper;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class RenderResponseFactory {
 
 	public static LiferayRenderResponse create() {

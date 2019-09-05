@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.Callable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportProcessCallbackRegistryUtil {
 
 	/**

@@ -20,12 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AttributesBuilder {
 
 	public AttributesBuilder(Object newBean, Object oldBean) {

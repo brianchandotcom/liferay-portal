@@ -17,12 +17,9 @@ package com.liferay.portal.search.engine.adapter.index;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class FlushIndexResponse implements IndexResponse {
 
 	public void addIndexRequestShardFailure(

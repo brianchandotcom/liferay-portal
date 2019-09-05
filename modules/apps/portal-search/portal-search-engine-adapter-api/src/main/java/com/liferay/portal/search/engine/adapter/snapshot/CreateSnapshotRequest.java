@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.snapshot;
 
 import com.liferay.petra.string.StringPool;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class CreateSnapshotRequest
 	implements SnapshotRequest<CreateSnapshotResponse> {
 

@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.index;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class CloseIndexResponse implements IndexResponse {
 
 	public CloseIndexResponse(boolean acknowledged) {

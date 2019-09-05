@@ -47,12 +47,9 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  */
-@ProviderType
 public class StagingUtil {
 
 	public static <T extends BaseModel> void addModelToChangesetCollection(

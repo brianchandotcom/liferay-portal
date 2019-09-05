@@ -18,12 +18,9 @@ import com.liferay.portal.search.document.Document;
 
 import java.util.function.Consumer;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class UpdateDocumentRequest
 	implements BulkableDocumentRequest<UpdateDocumentRequest>,
 			   DocumentRequest<UpdateDocumentResponse> {

@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.wedeploy.auth.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Supritha Sundaram
  */
-@ProviderType
 public class WeDeployAuthTokenImpl extends WeDeployAuthTokenBaseImpl {
 
 	public WeDeployAuthTokenImpl() {

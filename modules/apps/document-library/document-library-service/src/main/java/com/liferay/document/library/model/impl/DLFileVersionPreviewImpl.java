@@ -14,13 +14,10 @@
 
 package com.liferay.document.library.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Roberto Díaz
  * @author Adolfo Pérez
  */
-@ProviderType
 public class DLFileVersionPreviewImpl extends DLFileVersionPreviewBaseImpl {
 
 	public DLFileVersionPreviewImpl() {

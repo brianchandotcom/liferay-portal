@@ -20,12 +20,9 @@ import com.liferay.digital.signature.model.field.ListDSField;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class ListDSFieldImpl
 	extends UserEntryDSFieldImpl<ListDSField> implements ListDSField {
 

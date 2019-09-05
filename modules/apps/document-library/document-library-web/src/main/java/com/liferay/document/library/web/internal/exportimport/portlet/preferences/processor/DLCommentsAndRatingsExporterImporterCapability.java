@@ -23,7 +23,6 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -35,7 +34,6 @@ import org.osgi.service.component.annotations.Component;
 		Capability.class, DLCommentsAndRatingsExporterImporterCapability.class
 	}
 )
-@ProviderType
 public class DLCommentsAndRatingsExporterImporterCapability
 	implements Capability {
 

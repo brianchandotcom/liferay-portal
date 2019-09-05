@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Arrays;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class OAuth2ScopeGrantImpl extends OAuth2ScopeGrantBaseImpl {
 
 	@Override

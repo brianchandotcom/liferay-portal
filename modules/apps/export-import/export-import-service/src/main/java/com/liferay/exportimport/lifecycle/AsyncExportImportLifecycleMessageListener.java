@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = "destination.name=" + DestinationNames.EXPORT_IMPORT_LIFECYCLE_EVENT_ASYNC,
 	service = MessageListener.class
 )
-@ProviderType
 public class AsyncExportImportLifecycleMessageListener
 	extends BaseExportImportLifecycleMessageListener {
 

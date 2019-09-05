@@ -16,12 +16,9 @@ package com.liferay.change.tracking.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class CTCollectionDescriptionException extends PortalException {
 
 	public CTCollectionDescriptionException() {

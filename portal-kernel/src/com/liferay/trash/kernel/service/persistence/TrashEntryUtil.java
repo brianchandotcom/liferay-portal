@@ -42,7 +42,6 @@ com.liferay.trash.model.impl.TrashEntryImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashEntryUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

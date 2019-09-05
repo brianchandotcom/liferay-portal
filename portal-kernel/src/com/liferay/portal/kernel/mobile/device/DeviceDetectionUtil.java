@@ -21,13 +21,10 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Milen Dyankov
  * @author Raymond Augé
  */
-@ProviderType
 public class DeviceDetectionUtil {
 
 	public static Device detectDevice(HttpServletRequest httpServletRequest) {

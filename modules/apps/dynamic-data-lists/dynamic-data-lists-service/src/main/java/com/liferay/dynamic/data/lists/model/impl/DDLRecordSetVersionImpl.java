@@ -20,12 +20,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Leonardo Barros
  */
-@ProviderType
 public class DDLRecordSetVersionImpl extends DDLRecordSetVersionBaseImpl {
 
 	@Override

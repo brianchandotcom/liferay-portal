@@ -33,12 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Charles May
  */
-@ProviderType
 public class LayoutCache {
 
 	public Role getNameRole(long companyId, String roleName)

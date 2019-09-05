@@ -14,12 +14,9 @@
 
 package com.liferay.portal.tools.service.builder.test.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class LVEntryImpl extends LVEntryBaseImpl {
 
 	public LVEntryImpl() {

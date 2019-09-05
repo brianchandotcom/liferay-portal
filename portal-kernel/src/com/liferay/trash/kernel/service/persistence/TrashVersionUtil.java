@@ -41,7 +41,6 @@ com.liferay.trash.model.impl.TrashVersionImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashVersionUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

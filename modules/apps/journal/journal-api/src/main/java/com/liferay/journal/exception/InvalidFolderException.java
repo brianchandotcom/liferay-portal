@@ -20,12 +20,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jonathan McCann
  */
-@ProviderType
 public class InvalidFolderException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_CHILD_FOLDER = 1;

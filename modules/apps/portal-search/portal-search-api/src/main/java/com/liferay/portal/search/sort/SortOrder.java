@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.sort;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum SortOrder {
 
 	ASC, DESC

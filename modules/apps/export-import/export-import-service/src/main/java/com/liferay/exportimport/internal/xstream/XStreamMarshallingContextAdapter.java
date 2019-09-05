@@ -21,12 +21,9 @@ import com.thoughtworks.xstream.converters.MarshallingContext;
 
 import java.util.Iterator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class XStreamMarshallingContextAdapter
 	implements XStreamMarshallingContext {
 

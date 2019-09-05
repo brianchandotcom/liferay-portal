@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.FullNameDSField;
 import com.liferay.digital.signature.model.field.builder.FullNameDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class FullNameDSFieldBuilderImpl
 	extends StyledDSFieldBuilderImpl<FullNameDSField>
 	implements FullNameDSFieldBuilder {

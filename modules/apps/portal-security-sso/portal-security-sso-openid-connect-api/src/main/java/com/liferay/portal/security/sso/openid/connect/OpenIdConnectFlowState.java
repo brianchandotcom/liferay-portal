@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.sso.openid.connect;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public enum OpenIdConnectFlowState {
 
 	AUTH_COMPLETE, AUTH_REQUESTED, INITIALIZED, PORTAL_AUTH_COMPLETE

@@ -16,12 +16,9 @@ package com.liferay.bookmarks.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class EntryURLException extends PortalException {
 
 	public EntryURLException() {

@@ -31,13 +31,10 @@ import java.io.InputStream;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eudaldo Alonso
  * @author Alexander Chow
  */
-@ProviderType
 public class PortletFileRepositoryUtil {
 
 	public static void addPortletFileEntries(

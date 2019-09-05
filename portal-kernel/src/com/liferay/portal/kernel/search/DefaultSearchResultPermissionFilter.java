@@ -31,15 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Tina Tian
  * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter}
  */
 @Deprecated
-@ProviderType
 public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 

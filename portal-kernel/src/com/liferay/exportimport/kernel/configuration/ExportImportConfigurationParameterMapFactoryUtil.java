@@ -21,12 +21,9 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Akos Thurzo
  */
-@ProviderType
 public class ExportImportConfigurationParameterMapFactoryUtil {
 
 	public static Map<String, String[]> buildFullPublishParameterMap() {

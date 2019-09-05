@@ -36,7 +36,6 @@ com.liferay.trash.service.impl.TrashVersionLocalServiceImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashVersionLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

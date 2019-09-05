@@ -49,8 +49,6 @@ import javax.portlet.filter.HeaderFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  * @author Karthik Sudarshan
@@ -58,7 +56,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Philip Jones
  * @author Neil Griffin
  */
-@ProviderType
 public class MonitoringInvokerPortlet
 	implements InvokerFilterContainer, InvokerPortlet {
 

@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class AnalysisIndexResponseToken {
 
 	public AnalysisIndexResponseToken(String term) {

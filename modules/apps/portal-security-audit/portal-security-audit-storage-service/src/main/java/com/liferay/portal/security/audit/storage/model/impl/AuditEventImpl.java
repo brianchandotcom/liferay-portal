@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.audit.storage.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AuditEventImpl extends AuditEventBaseImpl {
 
 	public AuditEventImpl() {

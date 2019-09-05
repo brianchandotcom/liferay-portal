@@ -26,8 +26,6 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides a way to build a settings map for an {@link
  * com.liferay.exportimport.kernel.model.ExportImportConfiguration}, which can
@@ -37,7 +35,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Akos Thurzo
  * @since  7.0
  */
-@ProviderType
 public class ExportImportConfigurationSettingsMapFactoryUtil {
 
 	public static Map<String, Serializable> buildExportLayoutSettingsMap(

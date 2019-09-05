@@ -14,12 +14,9 @@
 
 package com.liferay.oauth2.provider.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class OAuth2ApplicationScopeAliasesImpl
 	extends OAuth2ApplicationScopeAliasesBaseImpl {
 }

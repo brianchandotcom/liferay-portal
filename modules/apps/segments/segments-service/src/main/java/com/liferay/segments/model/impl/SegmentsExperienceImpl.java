@@ -14,12 +14,9 @@
 
 package com.liferay.segments.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 
 	public SegmentsExperienceImpl() {

@@ -14,12 +14,9 @@
 
 package com.liferay.digital.signature.model.field;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum AnchorUnits {
 
 	CM, IN, MM, PIXELS

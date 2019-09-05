@@ -17,12 +17,9 @@ package com.liferay.exportimport.kernel.lar;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class PortletDataHandlerStatusMessageSenderUtil {
 
 	/**

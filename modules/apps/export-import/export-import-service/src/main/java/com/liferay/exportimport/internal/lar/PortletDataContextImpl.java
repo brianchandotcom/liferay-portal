@@ -138,8 +138,6 @@ import java.util.Set;
 
 import jodd.bean.BeanUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * Holds context information that is used during exporting and importing portlet
@@ -152,7 +150,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Alexander Chow
  * @author Máté Thurzó
  */
-@ProviderType
 public class PortletDataContextImpl implements PortletDataContext {
 
 	public PortletDataContextImpl(LockManager lockManager) {

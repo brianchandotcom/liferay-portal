@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import java.util.Date;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class PortletDataContextFactoryUtil {
 
 	public static PortletDataContext clonePortletDataContext(

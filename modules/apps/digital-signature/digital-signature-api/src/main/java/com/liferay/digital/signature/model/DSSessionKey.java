@@ -23,12 +23,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DSSessionKey {
 
 	public DSSessionKey(String dsSessionKeyString) {

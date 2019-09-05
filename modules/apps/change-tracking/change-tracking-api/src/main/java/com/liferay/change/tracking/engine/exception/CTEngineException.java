@@ -16,12 +16,9 @@ package com.liferay.change.tracking.engine.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Gergely Mathe
  */
-@ProviderType
 public class CTEngineException extends PortalException {
 
 	public CTEngineException(long companyId) {

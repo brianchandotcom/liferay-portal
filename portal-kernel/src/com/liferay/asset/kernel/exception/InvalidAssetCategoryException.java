@@ -23,12 +23,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Locale;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jürgen Kappler
  */
-@ProviderType
 public class InvalidAssetCategoryException extends PortalException {
 
 	public static final int CANNOT_MOVE_INTO_CHILD_CATEGORY = 1;

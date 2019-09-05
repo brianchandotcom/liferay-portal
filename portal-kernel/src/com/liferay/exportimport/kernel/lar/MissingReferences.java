@@ -19,12 +19,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Julio Camarero
  */
-@ProviderType
 public class MissingReferences implements Serializable {
 
 	public void add(MissingReference missingReference) {

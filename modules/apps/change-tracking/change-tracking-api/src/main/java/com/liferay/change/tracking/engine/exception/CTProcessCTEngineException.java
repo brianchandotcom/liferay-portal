@@ -14,12 +14,9 @@
 
 package com.liferay.change.tracking.engine.exception;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class CTProcessCTEngineException extends CTEngineException {
 
 	public CTProcessCTEngineException(

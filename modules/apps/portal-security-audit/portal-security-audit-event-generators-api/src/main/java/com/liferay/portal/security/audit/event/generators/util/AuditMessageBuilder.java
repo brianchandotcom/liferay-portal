@@ -28,13 +28,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AuditMessageBuilder {
 
 	public static AuditMessage buildAuditMessage(

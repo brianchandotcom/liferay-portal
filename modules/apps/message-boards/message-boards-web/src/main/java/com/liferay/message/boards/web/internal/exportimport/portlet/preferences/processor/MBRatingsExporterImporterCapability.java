@@ -23,7 +23,6 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -33,7 +32,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	service = {Capability.class, MBRatingsExporterImporterCapability.class}
 )
-@ProviderType
 public class MBRatingsExporterImporterCapability implements Capability {
 
 	@Override

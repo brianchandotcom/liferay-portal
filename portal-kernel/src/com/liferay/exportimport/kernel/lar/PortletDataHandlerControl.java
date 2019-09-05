@@ -21,12 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  */
-@ProviderType
 public class PortletDataHandlerControl {
 
 	public static String getNamespacedControlName(

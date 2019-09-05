@@ -16,12 +16,9 @@ package com.liferay.portal.kernel.search.background.task;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Andrew Betts
  */
-@ProviderType
 public class ReindexStatusMessageSenderUtil {
 
 	/**

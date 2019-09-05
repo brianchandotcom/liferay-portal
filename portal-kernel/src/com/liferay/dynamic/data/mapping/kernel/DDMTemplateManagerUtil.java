@@ -23,12 +23,9 @@ import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Marcellus Tavares
  */
-@ProviderType
 public class DDMTemplateManagerUtil {
 
 	public static DDMTemplate addTemplate(

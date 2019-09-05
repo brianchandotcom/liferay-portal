@@ -121,7 +121,6 @@ import java.util.stream.Stream;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -140,7 +139,6 @@ import org.xml.sax.XMLReader;
 	configurationPid = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration",
 	immediate = true, service = ExportImportHelper.class
 )
-@ProviderType
 public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override

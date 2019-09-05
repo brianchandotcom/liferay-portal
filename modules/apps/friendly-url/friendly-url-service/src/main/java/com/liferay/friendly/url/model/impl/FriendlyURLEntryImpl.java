@@ -24,12 +24,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Pavel Savinov
  */
-@ProviderType
 public class FriendlyURLEntryImpl extends FriendlyURLEntryBaseImpl {
 
 	@Override

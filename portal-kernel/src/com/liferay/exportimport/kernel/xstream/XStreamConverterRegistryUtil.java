@@ -26,12 +26,9 @@ import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class XStreamConverterRegistryUtil {
 
 	public static Set<XStreamConverter> getXStreamConverters() {

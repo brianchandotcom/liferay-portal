@@ -16,13 +16,10 @@ package com.liferay.portal.security.audit.event.generators.util;
 
 import com.liferay.petra.string.StringPool;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class Attribute {
 
 	public Attribute(String name) {

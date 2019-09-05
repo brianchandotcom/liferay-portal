@@ -14,8 +14,6 @@
 
 package com.liferay.changeset.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the ChangesetCollection service.
  * Represents a row in the &quot;ChangesetCollection&quot; database table, with
@@ -29,7 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class ChangesetCollectionImpl extends ChangesetCollectionBaseImpl {
 
 	/**

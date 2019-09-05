@@ -20,13 +20,10 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportConfigurationImpl
 	extends ExportImportConfigurationBaseImpl {
 

@@ -16,12 +16,9 @@ package com.liferay.marketplace.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Douglas Wong
  */
-@ProviderType
 public class FileExtensionException extends PortalException {
 
 	public FileExtensionException() {

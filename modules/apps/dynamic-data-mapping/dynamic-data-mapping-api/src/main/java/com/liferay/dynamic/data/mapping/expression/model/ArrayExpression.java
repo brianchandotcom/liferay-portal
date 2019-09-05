@@ -14,12 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.expression.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Rafael Praxedes
  */
-@ProviderType
 public class ArrayExpression extends Term {
 
 	public ArrayExpression(String arrayLiteral) {

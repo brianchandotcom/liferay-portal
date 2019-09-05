@@ -20,12 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 
 	@Override

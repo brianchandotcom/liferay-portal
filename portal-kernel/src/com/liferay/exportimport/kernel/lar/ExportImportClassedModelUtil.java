@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class ExportImportClassedModelUtil {
 
 	public static String getClassName(ClassedModel classedModel) {

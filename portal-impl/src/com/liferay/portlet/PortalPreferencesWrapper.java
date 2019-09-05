@@ -26,12 +26,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
 import javax.portlet.ValidatorException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Alexander Chow
  */
-@ProviderType
 public class PortalPreferencesWrapper
 	implements Cloneable, MVCCModel, PortletPreferences, Serializable {
 

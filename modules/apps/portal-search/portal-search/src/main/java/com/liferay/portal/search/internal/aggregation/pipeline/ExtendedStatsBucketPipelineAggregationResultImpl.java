@@ -17,12 +17,9 @@ package com.liferay.portal.search.internal.aggregation.pipeline;
 import com.liferay.portal.search.aggregation.pipeline.ExtendedStatsBucketPipelineAggregationResult;
 import com.liferay.portal.search.internal.aggregation.metrics.ExtendedStatsAggregationResultImpl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class ExtendedStatsBucketPipelineAggregationResultImpl
 	extends ExtendedStatsAggregationResultImpl
 	implements ExtendedStatsBucketPipelineAggregationResult {

@@ -14,12 +14,9 @@
 
 package com.liferay.digital.signature.model;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum DSSignerAcknowledgement {
 
 	ACCEPT, NO_INTERACTION, VIEW, VIEW_ACCEPT, VIEW_READ_ACCEPT

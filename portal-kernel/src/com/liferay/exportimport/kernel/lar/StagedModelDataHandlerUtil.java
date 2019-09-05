@@ -46,13 +46,10 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Máté Thurzó
  */
-@ProviderType
 public class StagedModelDataHandlerUtil {
 
 	public static void deleteStagedModel(

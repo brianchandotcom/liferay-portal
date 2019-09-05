@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportLifecycleEventFactoryUtil {
 
 	/**

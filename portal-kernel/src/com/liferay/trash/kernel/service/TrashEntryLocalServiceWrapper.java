@@ -28,7 +28,6 @@ com.liferay.trash.service.impl.TrashEntryLocalServiceImpl}
  * @generated
  */
 @Deprecated
-@ProviderType
 public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	ServiceWrapper<TrashEntryLocalService> {
 	public TrashEntryLocalServiceWrapper(

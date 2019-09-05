@@ -14,12 +14,9 @@
 
 package com.liferay.staging.constants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public class StagingProcessesWebKeys {
 
 	public static final String BRANCHING_ENABLED = "BRANCHING_ENABLED";

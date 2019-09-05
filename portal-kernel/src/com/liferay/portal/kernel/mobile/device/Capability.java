@@ -21,13 +21,10 @@ import java.io.Serializable;
 
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
  */
-@ProviderType
 public class Capability implements Serializable {
 
 	public Capability(String name, String value) {

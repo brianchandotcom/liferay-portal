@@ -29,12 +29,9 @@ import javax.portlet.PreferencesValidator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class PortletPreferencesFactoryUtil {
 
 	public static void checkControlPanelPortletPreferences(

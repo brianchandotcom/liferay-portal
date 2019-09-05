@@ -26,13 +26,10 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
  */
-@ProviderType
 public class VersionableName
 	implements Comparable<VersionableName>, Serializable {
 

@@ -20,14 +20,11 @@ import java.io.Serializable;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Daniel Kocsis
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
-@ProviderType
 public class ExportImportProcessCallbackLifecycleListener
 	extends BaseProcessExportImportLifecycleListener {
 

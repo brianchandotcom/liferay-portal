@@ -109,14 +109,11 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.pool.PoolStats;
 import org.apache.http.util.EntityUtils;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  * @author Shuyang Zhou
  */
-@ProviderType
 public class HttpImpl implements Http {
 
 	public HttpImpl() {

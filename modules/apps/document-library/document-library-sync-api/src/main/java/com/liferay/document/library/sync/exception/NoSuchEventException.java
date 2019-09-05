@@ -16,12 +16,9 @@ package com.liferay.document.library.sync.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class NoSuchEventException extends NoSuchModelException {
 
 	public NoSuchEventException() {

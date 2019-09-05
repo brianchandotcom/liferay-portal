@@ -26,12 +26,9 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public class HeaderRequestFactory {
 
 	public static LiferayHeaderRequest create(

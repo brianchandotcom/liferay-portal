@@ -24,12 +24,9 @@ import com.liferay.registry.RegistryUtil;
 
 import java.util.function.Function;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class ServiceLocator {
 
 	public static ServiceLocator getInstance() {

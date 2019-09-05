@@ -26,7 +26,6 @@ import java.io.Serializable;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class KaleoTaskFormInstancePK implements Comparable<KaleoTaskFormInstancePK>,
 	Serializable {
 	public long kaleoTaskFormInstanceId;

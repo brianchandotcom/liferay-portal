@@ -65,7 +65,6 @@ import java.util.Map;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,7 +75,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration",
 	immediate = true, service = AssetEntriesCheckerUtil.class
 )
-@ProviderType
 public class AssetEntriesCheckerUtil {
 
 	public void checkAssetEntries() throws Exception {

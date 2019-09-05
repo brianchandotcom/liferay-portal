@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.FormulaDSField;
 import com.liferay.digital.signature.model.field.builder.FormulaDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class FormulaDSFieldBuilderImpl
 	extends UserEntryDSFieldBuilderImpl<FormulaDSField>
 	implements FormulaDSFieldBuilder {

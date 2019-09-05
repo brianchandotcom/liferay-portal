@@ -19,14 +19,11 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Represents a segments criteria field.
  *
  * @author Eduardo García
  */
-@ProviderType
 public final class Field implements Comparable<Field>, Serializable {
 
 	public Field() {

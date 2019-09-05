@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.snapshot;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum SnapshotState {
 
 	FAILED((byte)2, true, false), IN_PROGRESS((byte)0, false, false),

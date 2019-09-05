@@ -22,12 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Péter Borkuti
  */
-@ProviderType
 public class CheckboxTag extends BaseCssTag {
 
 	/**

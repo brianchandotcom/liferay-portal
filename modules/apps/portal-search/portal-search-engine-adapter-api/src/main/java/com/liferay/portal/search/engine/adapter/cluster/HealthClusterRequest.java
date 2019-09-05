@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.engine.adapter.cluster;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Dylan Rebelak
  */
-@ProviderType
 public class HealthClusterRequest
 	implements ClusterRequest<HealthClusterResponse> {
 

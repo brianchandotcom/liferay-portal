@@ -27,12 +27,9 @@ import java.io.Serializable;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class DefaultEventAwareExportImportLifecycleListener
 	implements ExportImportLifecycleListener {
 

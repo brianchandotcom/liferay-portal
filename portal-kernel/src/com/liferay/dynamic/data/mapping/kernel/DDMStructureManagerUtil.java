@@ -26,12 +26,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Leonardo Barros
  */
-@ProviderType
 public class DDMStructureManagerUtil {
 
 	public static void addAttributes(

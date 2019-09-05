@@ -18,15 +18,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Daniel Kocsis
  * @deprecated As of Judson (7.1.x), moved to {@link
  *             com.liferay.portal.background.task.internal.lock.BackgroundTaskLockHelper}
  */
 @Deprecated
-@ProviderType
 public class BackgroundTaskLockHelperUtil {
 
 	public static boolean isLockedBackgroundTask(

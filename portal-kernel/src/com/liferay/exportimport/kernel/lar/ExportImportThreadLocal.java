@@ -16,12 +16,9 @@ package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class ExportImportThreadLocal {
 
 	public static boolean isDataDeletionImportInProcess() {

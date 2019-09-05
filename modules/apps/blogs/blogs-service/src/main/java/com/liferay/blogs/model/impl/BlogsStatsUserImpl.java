@@ -14,8 +14,6 @@
 
 package com.liferay.blogs.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the BlogsStatsUser service. Represents
  * a row in the &quot;BlogsStatsUser&quot; database table, with each column
@@ -29,7 +27,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class BlogsStatsUserImpl extends BlogsStatsUserBaseImpl {
 
 	/**

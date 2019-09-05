@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.document;
 
 import java.util.function.Consumer;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DeleteDocumentRequest
 	implements BulkableDocumentRequest<DeleteDocumentRequest>,
 			   DocumentRequest<DeleteDocumentResponse> {

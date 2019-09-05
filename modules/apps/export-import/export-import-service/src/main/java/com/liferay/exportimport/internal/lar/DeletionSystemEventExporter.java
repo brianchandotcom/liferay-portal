@@ -43,12 +43,9 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Zsolt Berentey
  */
-@ProviderType
 public class DeletionSystemEventExporter {
 
 	public static DeletionSystemEventExporter getInstance() {

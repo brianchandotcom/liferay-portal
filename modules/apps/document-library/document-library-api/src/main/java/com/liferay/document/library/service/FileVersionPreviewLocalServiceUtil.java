@@ -35,7 +35,6 @@ import org.osgi.util.tracker.ServiceTracker;
  * @see com.liferay.document.library.service.impl.FileVersionPreviewLocalServiceImpl
  * @generated
  */
-@ProviderType
 public class FileVersionPreviewLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

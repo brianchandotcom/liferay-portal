@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
@@ -34,7 +33,6 @@ import org.osgi.util.tracker.ServiceTracker;
 	immediate = true, property = "service.ranking:Integer=1000",
 	service = PermissionCheckerFactory.class
 )
-@ProviderType
 public class StagingPermissionCheckerFactory
 	implements PermissionCheckerFactory {
 

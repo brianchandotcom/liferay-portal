@@ -16,15 +16,12 @@ package com.liferay.dynamic.data.lists.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Thrown when the system identifies a violation of the Record Set Key unique
  * property.
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class RecordSetDuplicateRecordSetKeyException extends PortalException {
 
 	public RecordSetDuplicateRecordSetKeyException() {

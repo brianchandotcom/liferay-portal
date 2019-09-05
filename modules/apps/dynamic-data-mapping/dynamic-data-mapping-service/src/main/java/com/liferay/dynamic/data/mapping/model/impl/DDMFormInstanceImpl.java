@@ -29,12 +29,9 @@ import com.liferay.portal.kernel.model.cache.CacheField;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 
 	@Override

@@ -14,14 +14,11 @@
 
 package com.liferay.geolocation.exception;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class GeolocationException extends PortalException {
 
 	public GeolocationException() {

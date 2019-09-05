@@ -40,12 +40,9 @@ import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Preston Crary
  */
-@ProviderType
 public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 
 	@Override

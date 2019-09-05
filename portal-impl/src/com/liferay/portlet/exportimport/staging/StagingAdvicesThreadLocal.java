@@ -16,12 +16,9 @@ package com.liferay.portlet.exportimport.staging;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Raymond Augé
  */
-@ProviderType
 public class StagingAdvicesThreadLocal {
 
 	public static boolean isEnabled() {

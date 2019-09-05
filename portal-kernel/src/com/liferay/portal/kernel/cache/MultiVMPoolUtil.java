@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author     Brian Wing Shun Chan
  * @author     Michael Young
@@ -28,7 +26,6 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Deprecated
 @OSGiBeanProperties(service = MultiVMPoolUtil.class)
-@ProviderType
 public class MultiVMPoolUtil {
 
 	public static void clear() {

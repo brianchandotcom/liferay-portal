@@ -18,12 +18,9 @@ import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregation;
 import com.liferay.portal.search.internal.aggregation.BaseFieldAggregation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class CardinalityAggregationImpl
 	extends BaseFieldAggregation implements CardinalityAggregation {
 

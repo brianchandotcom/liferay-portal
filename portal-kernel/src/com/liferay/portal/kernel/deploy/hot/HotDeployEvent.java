@@ -37,15 +37,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Miguel Pastor
  */
-@ProviderType
 public class HotDeployEvent {
 
 	public HotDeployEvent(ServletContext servletContext) {

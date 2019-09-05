@@ -26,14 +26,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Represents a segment criteria as a composition of {@link Criterion} objects.
  *
  * @author Eduardo García
  */
-@ProviderType
 public final class Criteria implements Serializable {
 
 	public Criteria() {

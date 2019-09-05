@@ -18,12 +18,9 @@ import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregat
 import com.liferay.portal.search.aggregation.pipeline.GapPolicy;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DerivativePipelineAggregationImpl
 	extends BasePipelineAggregation implements DerivativePipelineAggregation {
 

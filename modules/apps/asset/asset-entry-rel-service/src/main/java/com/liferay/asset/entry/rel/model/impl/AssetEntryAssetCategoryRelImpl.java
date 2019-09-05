@@ -14,12 +14,9 @@
 
 package com.liferay.asset.entry.rel.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eudaldo Alonso
  */
-@ProviderType
 public class AssetEntryAssetCategoryRelImpl
 	extends AssetEntryAssetCategoryRelBaseImpl {
 }

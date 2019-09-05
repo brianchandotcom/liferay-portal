@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Máté Thurzó
  */
 @Component(service = ExportImportLifecycleListener.class)
-@ProviderType
 public class CascadeFileEntryTypesExportImportLifecycleListener
 	implements EventAwareExportImportLifecycleListener {
 

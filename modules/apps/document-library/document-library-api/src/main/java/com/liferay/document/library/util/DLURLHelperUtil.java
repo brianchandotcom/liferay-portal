@@ -22,12 +22,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Adolfo Pérez
  */
-@ProviderType
 public class DLURLHelperUtil {
 
 	public static DLURLHelper getDLURLHelper() {

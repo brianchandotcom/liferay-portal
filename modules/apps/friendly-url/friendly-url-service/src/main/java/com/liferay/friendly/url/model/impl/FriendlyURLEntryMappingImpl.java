@@ -14,12 +14,9 @@
 
 package com.liferay.friendly.url.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class FriendlyURLEntryMappingImpl
 	extends FriendlyURLEntryMappingBaseImpl {
 

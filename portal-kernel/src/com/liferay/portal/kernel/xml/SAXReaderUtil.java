@@ -28,12 +28,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SAXReaderUtil {
 
 	public static Attribute createAttribute(

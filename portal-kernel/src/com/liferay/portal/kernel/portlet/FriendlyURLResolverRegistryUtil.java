@@ -29,13 +29,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eduardo García
  * @author Raymond Augé
  */
-@ProviderType
 public class FriendlyURLResolverRegistryUtil {
 
 	public static FriendlyURLResolver getFriendlyURLResolver(

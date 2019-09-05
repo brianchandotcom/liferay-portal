@@ -20,12 +20,9 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 
 import java.util.Iterator;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class XStreamHierarchicalStreamReaderAdapter
 	implements XStreamHierarchicalStreamReader {
 

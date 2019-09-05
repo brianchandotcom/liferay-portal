@@ -16,15 +16,12 @@ package com.liferay.dynamic.data.lists.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Thrown when the system is unable to find the required DDM Structure set for a
  * Record Set.
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class RecordSetDDMStructureIdException extends PortalException {
 
 	public RecordSetDDMStructureIdException() {

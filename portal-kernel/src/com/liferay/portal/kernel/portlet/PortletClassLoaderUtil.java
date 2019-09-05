@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class PortletClassLoaderUtil {
 
 	public static ClassLoader getClassLoader() {

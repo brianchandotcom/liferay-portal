@@ -14,8 +14,6 @@
 
 package com.liferay.asset.list.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model implementation for the AssetListEntrySegmentsEntryRel
  * service. Represents a row in the &quot;AssetListEntrySegmentsEntryRel&quot;
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class AssetListEntrySegmentsEntryRelImpl
 	extends AssetListEntrySegmentsEntryRelBaseImpl {
 

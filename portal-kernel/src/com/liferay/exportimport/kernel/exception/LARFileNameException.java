@@ -16,12 +16,9 @@ package com.liferay.exportimport.kernel.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eric Min
  */
-@ProviderType
 public class LARFileNameException extends PortalException {
 
 	public LARFileNameException() {

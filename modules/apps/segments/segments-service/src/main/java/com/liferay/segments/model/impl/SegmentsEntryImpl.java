@@ -18,12 +18,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Eduardo García
  */
-@ProviderType
 public class SegmentsEntryImpl extends SegmentsEntryBaseImpl {
 
 	public SegmentsEntryImpl() {

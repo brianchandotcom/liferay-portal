@@ -16,12 +16,9 @@ package com.liferay.portal.search.engine.adapter.index;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Dylan Rebelak
  */
-@ProviderType
 public class GetFieldMappingIndexResponse implements IndexResponse {
 
 	public GetFieldMappingIndexResponse(Map<String, String> fieldMappings) {

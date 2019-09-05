@@ -20,14 +20,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Daniel Kocsis
  */
 @Component(immediate = true, service = ExportImportLifecycleEventFactory.class)
-@ProviderType
 public class ExportImportLifecycleEventFactoryImpl
 	implements ExportImportLifecycleEventFactory {
 

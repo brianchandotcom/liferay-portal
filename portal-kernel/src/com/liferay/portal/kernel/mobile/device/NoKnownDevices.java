@@ -18,15 +18,12 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Class represents unknown device
  *
  * @author Milen Dyankov
  * @author Michael C. Han
  */
-@ProviderType
 public class NoKnownDevices implements KnownDevices {
 
 	public static NoKnownDevices getInstance() {

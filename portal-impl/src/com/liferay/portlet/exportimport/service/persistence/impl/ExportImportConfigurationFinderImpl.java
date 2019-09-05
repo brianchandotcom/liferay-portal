@@ -34,12 +34,9 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.Iterator;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportConfigurationFinderImpl
 	extends ExportImportConfigurationFinderBaseImpl
 	implements ExportImportConfigurationFinder {

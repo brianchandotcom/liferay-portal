@@ -103,7 +103,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -125,7 +124,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.kernel.model.Layout",
 	service = {ExportImportController.class, LayoutImportController.class}
 )
-@ProviderType
 public class LayoutImportController implements ImportController {
 
 	@Override

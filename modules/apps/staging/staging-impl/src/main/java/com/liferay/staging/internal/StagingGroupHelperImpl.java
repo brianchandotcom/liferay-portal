@@ -38,7 +38,6 @@ import com.liferay.staging.StagingGroupHelper;
 import java.util.Collections;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,7 +45,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = StagingGroupHelper.class)
-@ProviderType
 public class StagingGroupHelperImpl implements StagingGroupHelper {
 
 	@Override

@@ -14,11 +14,8 @@
 
 package com.liferay.document.library.content.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class DLContentImpl extends DLContentBaseImpl {
 }

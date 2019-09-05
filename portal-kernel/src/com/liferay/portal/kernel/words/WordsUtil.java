@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.jazzy.InvalidWord;
 import java.util.List;
 import java.util.Set;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shinn Lok
  */
-@ProviderType
 public class WordsUtil {
 
 	public static List<InvalidWord> checkSpelling(String text) {

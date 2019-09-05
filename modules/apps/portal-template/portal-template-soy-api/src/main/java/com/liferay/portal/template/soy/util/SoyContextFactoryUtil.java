@@ -16,12 +16,9 @@ package com.liferay.portal.template.soy.util;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class SoyContextFactoryUtil {
 
 	public static SoyContext createSoyContext() {

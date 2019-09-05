@@ -23,12 +23,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Péter Borkuti
  */
-@ProviderType
 public class ProcessDateTag extends IncludeTag {
 
 	public Date getDate() {

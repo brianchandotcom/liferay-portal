@@ -32,7 +32,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @deprecated As of Judson (7.1.x)
  */
 @Deprecated
-@ProviderType
 public class NotificationExportImportLifecycleListener
 	extends BaseProcessExportImportLifecycleListener {
 

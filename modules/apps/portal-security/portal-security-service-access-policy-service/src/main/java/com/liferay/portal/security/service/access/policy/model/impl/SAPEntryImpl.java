@@ -26,12 +26,9 @@ import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 import java.util.List;
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SAPEntryImpl extends SAPEntryBaseImpl {
 
 	@Override

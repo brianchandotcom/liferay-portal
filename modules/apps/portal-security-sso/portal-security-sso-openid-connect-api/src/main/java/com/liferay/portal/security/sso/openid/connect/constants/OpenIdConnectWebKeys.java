@@ -14,12 +14,9 @@
 
 package com.liferay.portal.security.sso.openid.connect.constants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Thuong Dinh
  */
-@ProviderType
 public class OpenIdConnectWebKeys {
 
 	public static final String OPEN_ID_CONNECT_ACTION_URL =

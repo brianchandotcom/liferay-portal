@@ -28,12 +28,9 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 import javax.portlet.annotations.PortletSerializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class PortletURLWrapper implements PortletURL {
 
 	public PortletURLWrapper(PortletURL portletURL) {

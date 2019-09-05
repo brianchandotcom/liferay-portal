@@ -19,12 +19,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Akos Thurzo
  */
-@ProviderType
 public class LayoutsTreeUtil {
 
 	public static String getLayoutsJSON(

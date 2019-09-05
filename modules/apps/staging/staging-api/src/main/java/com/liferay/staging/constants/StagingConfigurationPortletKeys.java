@@ -14,12 +14,9 @@
 
 package com.liferay.staging.constants;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Levente Hudák
  */
-@ProviderType
 public class StagingConfigurationPortletKeys {
 
 	public static final String STAGING_CONFIGURATION =

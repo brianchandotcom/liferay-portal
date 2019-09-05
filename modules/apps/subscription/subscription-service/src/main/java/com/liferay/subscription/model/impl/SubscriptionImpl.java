@@ -14,12 +14,9 @@
 
 package com.liferay.subscription.model.impl;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class SubscriptionImpl extends SubscriptionBaseImpl {
 
 	public SubscriptionImpl() {

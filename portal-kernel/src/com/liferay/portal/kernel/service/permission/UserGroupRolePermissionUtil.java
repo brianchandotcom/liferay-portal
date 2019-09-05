@@ -19,13 +19,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-@ProviderType
 public class UserGroupRolePermissionUtil {
 
 	public static void check(

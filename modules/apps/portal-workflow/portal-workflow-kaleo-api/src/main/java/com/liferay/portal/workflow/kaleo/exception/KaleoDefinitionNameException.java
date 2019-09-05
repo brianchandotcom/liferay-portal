@@ -16,12 +16,9 @@ package com.liferay.portal.workflow.kaleo.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
 public class KaleoDefinitionNameException extends PortalException {
 
 	public KaleoDefinitionNameException() {

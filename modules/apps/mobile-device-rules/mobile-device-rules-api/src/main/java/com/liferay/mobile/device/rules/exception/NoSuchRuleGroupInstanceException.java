@@ -16,12 +16,9 @@ package com.liferay.mobile.device.rules.exception;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Edward C. Han
  */
-@ProviderType
 public class NoSuchRuleGroupInstanceException extends NoSuchModelException {
 
 	public NoSuchRuleGroupInstanceException() {

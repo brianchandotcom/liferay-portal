@@ -25,8 +25,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * See https://issues.liferay.com/browse/LEP-5943.
@@ -36,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-@ProviderType
 public class OpenSSOUtil {
 
 	public static Map<String, String> getAttributes(

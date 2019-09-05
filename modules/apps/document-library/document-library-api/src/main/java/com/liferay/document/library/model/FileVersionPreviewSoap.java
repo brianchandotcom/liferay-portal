@@ -27,7 +27,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @generated
  */
-@ProviderType
 public class FileVersionPreviewSoap implements Serializable {
 	public static FileVersionPreviewSoap toSoapModel(FileVersionPreview model) {
 		FileVersionPreviewSoap soapModel = new FileVersionPreviewSoap();

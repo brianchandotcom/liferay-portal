@@ -17,12 +17,9 @@ package com.liferay.portal.search.internal.aggregation.pipeline;
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregationResult;
 import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class DerivativePipelineAggregationResultImpl
 	extends BaseAggregationResult
 	implements DerivativePipelineAggregationResult {

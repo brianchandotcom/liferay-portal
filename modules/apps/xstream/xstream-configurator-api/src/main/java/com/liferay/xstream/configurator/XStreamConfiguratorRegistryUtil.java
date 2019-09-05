@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -37,7 +36,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Máté Thurzó
  */
 @Component(immediate = true, service = {})
-@ProviderType
 public class XStreamConfiguratorRegistryUtil {
 
 	public static ClassLoader getConfiguratorsClassLoader(

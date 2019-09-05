@@ -16,12 +16,9 @@ package com.liferay.dynamic.data.mapping.validator;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Marcellus Tavares
  */
-@ProviderType
 public class DDMFormValuesValidationException extends StorageException {
 
 	public DDMFormValuesValidationException() {

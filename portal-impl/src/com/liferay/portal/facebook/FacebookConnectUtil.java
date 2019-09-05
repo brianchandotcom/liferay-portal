@@ -22,14 +22,11 @@ import com.liferay.registry.ServiceTracker;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Wilson Man
  * @author Brian Wing Shun Chan
  * @author Mika Koivisto
  */
-@ProviderType
 public class FacebookConnectUtil {
 
 	public static String getAccessToken(

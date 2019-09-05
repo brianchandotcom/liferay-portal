@@ -27,12 +27,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Máté Thurzó
  */
-@ProviderType
 public class XStreamAliasRegistryUtil {
 
 	public static Map<Class<?>, String> getAliases() {

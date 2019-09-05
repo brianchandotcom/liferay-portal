@@ -14,12 +14,9 @@
 
 package com.liferay.portal.search.geolocation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum GeoValidationMethod {
 
 	COERCE, IGNORE_MALFORMED, STRICT

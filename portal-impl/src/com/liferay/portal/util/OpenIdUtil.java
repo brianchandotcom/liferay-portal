@@ -19,12 +19,9 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Jorge Ferrer
  */
-@ProviderType
 public class OpenIdUtil {
 
 	public static boolean isEnabled(long companyId) {

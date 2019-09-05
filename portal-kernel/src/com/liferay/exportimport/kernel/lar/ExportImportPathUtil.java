@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides utility methods for generating paths for entities being serialized
  * with the portal's export/import framework.
@@ -36,7 +34,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Daniel Kocsis
  * @since  6.2
  */
-@ProviderType
 public class ExportImportPathUtil {
 
 	/**

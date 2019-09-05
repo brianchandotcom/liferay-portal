@@ -17,7 +17,6 @@ package com.liferay.staging.portlet.data.handler.internal;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 
-import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=ALL", "service.ranking:Integer=-1"},
 	service = PortletDataHandler.class
 )
-@ProviderType
 public class DefaultPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 }

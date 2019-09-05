@@ -37,14 +37,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Raymond Augé
  */
-@ProviderType
 public class UpgradeProcessUtil {
 
 	public static String getDefaultLanguageId(long companyId)

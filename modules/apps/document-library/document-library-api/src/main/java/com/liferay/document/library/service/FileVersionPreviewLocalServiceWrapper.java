@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @see FileVersionPreviewLocalService
  * @generated
  */
-@ProviderType
 public class FileVersionPreviewLocalServiceWrapper
 	implements FileVersionPreviewLocalService,
 		ServiceWrapper<FileVersionPreviewLocalService> {

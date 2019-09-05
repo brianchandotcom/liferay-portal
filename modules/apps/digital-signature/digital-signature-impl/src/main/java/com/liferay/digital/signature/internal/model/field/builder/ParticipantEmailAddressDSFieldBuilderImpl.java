@@ -19,12 +19,9 @@ import com.liferay.digital.signature.model.field.DSField;
 import com.liferay.digital.signature.model.field.ParticipantEmailAddressDSField;
 import com.liferay.digital.signature.model.field.builder.ParticipantEmailAddressDSFieldBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class ParticipantEmailAddressDSFieldBuilderImpl
 	extends StyledDSFieldBuilderImpl<ParticipantEmailAddressDSField>
 	implements ParticipantEmailAddressDSFieldBuilder {

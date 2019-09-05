@@ -19,12 +19,9 @@ import com.liferay.exportimport.kernel.xstream.XStreamUnmarshallingContext;
 
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class XStreamUnmarshallingContextAdapter
 	implements XStreamUnmarshallingContext {
 

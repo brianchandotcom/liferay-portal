@@ -29,12 +29,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Shuyang Zhou
  */
-@ProviderType
 public class TableMapperFactory {
 
 	public static <L extends BaseModel<L>, R extends BaseModel<R>>

@@ -18,12 +18,9 @@ import com.liferay.petra.string.StringBundler;
 
 import java.io.Serializable;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public class Dimensions implements Serializable {
 
 	public static final Dimensions UNKNOWN = new Dimensions(-1, -1);

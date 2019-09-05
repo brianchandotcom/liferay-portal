@@ -24,12 +24,9 @@ import java.net.InetSocketAddress;
 
 import java.util.Objects;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Tina Tian
  */
-@ProviderType
 public class ClusterNode implements Serializable {
 
 	public ClusterNode(String clusterNodeId, InetAddress bindInetAddress) {

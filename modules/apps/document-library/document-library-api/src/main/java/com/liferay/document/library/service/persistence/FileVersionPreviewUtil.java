@@ -45,7 +45,6 @@ import java.util.Set;
  * @see com.liferay.document.library.service.persistence.impl.FileVersionPreviewPersistenceImpl
  * @generated
  */
-@ProviderType
 public class FileVersionPreviewUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:

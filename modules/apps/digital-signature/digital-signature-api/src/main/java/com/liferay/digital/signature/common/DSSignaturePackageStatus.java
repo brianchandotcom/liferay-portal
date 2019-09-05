@@ -14,12 +14,9 @@
 
 package com.liferay.digital.signature.common;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
 public enum DSSignaturePackageStatus {
 
 	COMPLETED("completed"), CREATED("created"), DECLINED("delined"),

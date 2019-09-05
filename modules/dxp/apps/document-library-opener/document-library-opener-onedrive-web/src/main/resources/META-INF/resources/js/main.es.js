@@ -11,17 +11,15 @@ const DEFAULT_ERROR = Liferay.Language.get('an-unexpected-error-occurred');
 
 class DocumentLibraryOpener {
 	constructor({namespace}) {
-		this.namespace = namespace;
+		this._namespace = namespace;
 
-		this.dialogLoadingId = `${namespace}OneDriveLoadingDialog`;
-		this.documentURL = '';
-		this.isTimeConsumed = false;
-		this.refreshAfterNavigate = false;
+		this._dialogLoadingId = `${namespace}OneDriveLoadingDialog`;
+		this._documentURL = '';
+		this._isTimeConsumed = false;
+		this._refreshAfterNavigate = false;
 	}
 
 	createWithName({dialogTitle, formSubmitURL}) {
-		const {namespace} = this;
-
 		openSimpleInputModal({
 			alert: {
 				message: Liferay.Language.get(
@@ -34,7 +32,7 @@ class DocumentLibraryOpener {
 			formSubmitURL,
 			mainFieldLabel: Liferay.Language.get('title'),
 			mainFieldName: 'title',
-			namespace,
+			namespace: this._namespace,
 			spritemap:
 				Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg'
 		}).on('formSuccess', serverResponseContent => {
@@ -50,7 +48,7 @@ class DocumentLibraryOpener {
 	}
 
 	edit({formSubmitURL}) {
-		const loadingPromise = this.showLoading({
+		const loadingPromise = this._showLoading({
 			dialogMessage: Liferay.Language.get(
 				'you-are-being-redirected-to-an-external-editor-to-edit-this-document'
 			)
@@ -68,7 +66,7 @@ class DocumentLibraryOpener {
 				if (response.redirectURL) {
 					navigate(response.redirectURL);
 				} else if (response.oneDriveBackgroundTaskStatusURL) {
-					return this.polling({
+					return this._polling({
 						pollingURL: response.oneDriveBackgroundTaskStatusURL
 					});
 				} else if (response.error) {
@@ -76,29 +74,10 @@ class DocumentLibraryOpener {
 				}
 			})
 			.catch(error => {
-				this.showError(error);
+				this._showError(error);
 			});
 
 		return Promise.all([loadingPromise, fetchPromise]);
-	}
-
-	hideLoading() {
-		this.documentURL = '';
-		this.isTimeConsumed = false;
-
-		Liferay.Util.getWindow(this.dialogLoadingId).hide();
-	}
-
-	navigate() {
-		if (this.documentURL && this.isTimeConsumed) {
-			window.open(this.documentURL);
-			this.hideLoading();
-
-			if (this.refreshAfterNavigate) {
-				this.refreshAfterNavigate = false;
-				Liferay.Portlet.refresh(`#p_p_id${this.namespace}`);
-			}
-		}
 	}
 
 	open({
@@ -108,12 +87,31 @@ class DocumentLibraryOpener {
 		pollingURL,
 		refresh = false
 	}) {
-		this.refreshAfterNavigate = refresh;
+		this._refreshAfterNavigate = refresh;
 
-		this.showLoading({dialogMessage, pollingURL});
+		this._showLoading({dialogMessage, pollingURL});
 	}
 
-	polling({pollingURL}) {
+	_hideLoading() {
+		this._documentURL = '';
+		this._isTimeConsumed = false;
+
+		Liferay.Util.getWindow(this._dialogLoadingId).hide();
+	}
+
+	_navigate() {
+		if (this._documentURL && this._isTimeConsumed) {
+			window.open(this._documentURL);
+			this._hideLoading();
+
+			if (this._refreshAfterNavigate) {
+				this._refreshAfterNavigate = false;
+				Liferay.Portlet.refresh(`#p_p_id${this._namespace}`);
+			}
+		}
+	}
+
+	_polling({pollingURL}) {
 		return fetch(pollingURL)
 			.then(response => {
 				if (!response.ok) {
@@ -124,25 +122,25 @@ class DocumentLibraryOpener {
 			})
 			.then(response => {
 				if (response.complete) {
-					this.documentURL = response.office365EditURL;
+					this._documentURL = response.office365EditURL;
 
-					this.navigate();
+					this._navigate();
 				} else if (response.error) {
 					throw DEFAULT_ERROR;
 				} else {
 					return new Promise(resolve => {
 						setTimeout(() => {
-							this.polling({pollingURL}).then(resolve);
+							this._polling({pollingURL}).then(resolve);
 						}, TIME_POLLING);
 					});
 				}
 			})
 			.catch(error => {
-				this.showError(error);
+				this._showError(error);
 			});
 	}
 
-	showError(message) {
+	_showError(message) {
 		openToast({
 			message,
 			title: Liferay.Language.get('error'),
@@ -150,7 +148,7 @@ class DocumentLibraryOpener {
 		});
 	}
 
-	showLoading({dialogMessage, pollingURL}) {
+	_showLoading({dialogMessage, pollingURL}) {
 		return new Promise(resolve => {
 			Liferay.Util.openWindow(
 				{
@@ -163,17 +161,17 @@ class DocumentLibraryOpener {
 						title: '',
 						width: 320
 					},
-					id: this.dialogLoadingId
+					id: this._dialogLoadingId
 				},
 				() => {
 					setTimeout(() => {
-						this.isTimeConsumed = true;
-						this.navigate();
+						this._isTimeConsumed = true;
+						this._navigate();
 						resolve();
 					}, TIME_SHOW_MSG);
 
 					if (pollingURL) {
-						this.polling({pollingURL});
+						this._polling({pollingURL});
 					}
 				}
 			);

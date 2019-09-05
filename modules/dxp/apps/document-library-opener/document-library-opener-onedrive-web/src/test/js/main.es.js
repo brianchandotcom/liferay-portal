@@ -64,7 +64,7 @@ describe('DocumentLibraryOpener', () => {
 
 	beforeEach(() => {
 		opener = new DocumentLibraryOpener({namespace: 'namespace'});
-		jest.spyOn(opener, 'showError');
+		jest.spyOn(opener, '_showError');
 	});
 
 	describe('.edit()', () => {
@@ -224,7 +224,7 @@ describe('DocumentLibraryOpener', () => {
 			});
 
 			it('and, since the task has failed, shows an error message', () => {
-				expect(opener.showError).toHaveBeenCalledTimes(1);
+				expect(opener._showError).toHaveBeenCalledTimes(1);
 			});
 		});
 	});

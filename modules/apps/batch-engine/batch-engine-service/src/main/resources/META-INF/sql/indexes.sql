@@ -1,1 +1,1 @@
-create index IX_D9E97E79 on BatchTask (uuid_[$COLUMN_LENGTH:75$], companyId);
+create index IX_B445235B on BatchEngineTask (uuid_[$COLUMN_LENGTH:75$], companyId);

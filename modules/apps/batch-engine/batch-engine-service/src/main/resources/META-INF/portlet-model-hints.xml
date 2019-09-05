@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.batch.engine.model.BatchTask">
+	<model name="com.liferay.batch.engine.model.BatchEngineTask">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="batchTaskId" type="long" />
+		<field name="batchEngineTaskId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="batchSize" type="long" />
 		<field name="className" type="String" />
-		<field name="version" type="String" />
 		<field name="content" type="Blob" />
 		<field name="contentType" type="String" />
-		<field name="operation" type="String" />
-		<field name="batchSize" type="long" />
-		<field name="startTime" type="Date" />
 		<field name="endTime" type="Date" />
-		<field name="status" type="String" />
 		<field name="errorMessage" type="String" />
+		<field name="executeStatus" type="String" />
+		<field name="operation" type="String" />
+		<field name="startTime" type="Date" />
+		<field name="version" type="String" />
 	</model>
 </model-hints>

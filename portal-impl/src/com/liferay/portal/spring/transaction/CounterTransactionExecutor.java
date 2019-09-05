@@ -44,9 +44,23 @@ public class CounterTransactionExecutor
 			UnsafeSupplier<T, Throwable> unsafeSupplier)
 		throws Throwable {
 
-		return _execute(
-			_platformTransactionManager, transactionAttributeAdapter,
-			unsafeSupplier);
+		TransactionStatusAdapter transactionStatusAdapter = _start(
+			_platformTransactionManager, transactionAttributeAdapter);
+
+		T returnValue = null;
+
+		try {
+			returnValue = unsafeSupplier.get();
+		}
+		catch (Throwable throwable) {
+			throw _rollback(
+				_platformTransactionManager, throwable,
+				transactionAttributeAdapter, transactionStatusAdapter);
+		}
+
+		_commit(_platformTransactionManager, transactionStatusAdapter);
+
+		return returnValue;
 	}
 
 	@Override
@@ -79,31 +93,6 @@ public class CounterTransactionExecutor
 
 		platformTransactionManager.commit(
 			transactionStatusAdapter.getTransactionStatus());
-	}
-
-	private <T> T _execute(
-			PlatformTransactionManager platformTransactionManager,
-			TransactionAttributeAdapter transactionAttributeAdapter,
-			UnsafeSupplier<T, Throwable> unsafeSupplier)
-		throws Throwable {
-
-		TransactionStatusAdapter transactionStatusAdapter = _start(
-			platformTransactionManager, transactionAttributeAdapter);
-
-		T returnValue = null;
-
-		try {
-			returnValue = unsafeSupplier.get();
-		}
-		catch (Throwable throwable) {
-			throw _rollback(
-				platformTransactionManager, throwable,
-				transactionAttributeAdapter, transactionStatusAdapter);
-		}
-
-		_commit(platformTransactionManager, transactionStatusAdapter);
-
-		return returnValue;
 	}
 
 	private Throwable _rollback(

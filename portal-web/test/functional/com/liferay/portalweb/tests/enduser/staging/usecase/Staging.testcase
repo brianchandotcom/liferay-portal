@@ -4096,4 +4096,35 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	@description = "This is a use case for LPS-98894."
+	@priority = "4"
+	test ViewSummaryScreenWithDraftPage {
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			panel = "Site Administration",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Site Name");
+
+		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
+
+		SitePages.addPublicPage(pageName = "Draft Page");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Draft Page",
+			siteName = "Site Name");
+
+		Page.viewWithWorkflowPG(workflowStatus = "Draft");
+
+		Staging.gotoPublishToLive(pleaseDoNotMarkAsReady = "true");
+
+		AssertTextEquals(
+			locator1 = "Staging#STAGING_CONTENT_COUNT",
+			value1 = "1");
+	}
+
 }

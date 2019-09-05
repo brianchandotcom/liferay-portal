@@ -170,34 +170,6 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
-	@priority = "5"
-	test AddFrontPageWithChildPage {
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiPage.addFrontPagePG(
-			wikiPageContent = "Wiki FrontPage Content",
-			wikiPageTitle = "FrontPage");
-
-		WikiPage.viewViewCount(viewCountNumber = "2");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiPage.addChildPagePG(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
-			wikiPageTitle = "FrontPage");
-
-		Navigator.gotoPage(pageName = "Wiki Test Page");
-
-		WikiNavigator.gotoPG(wikiPageTitle = "FrontPage");
-
-		WikiNavigator.gotoChildPagePG(wikiChildPageTitle = "Wiki FrontPage Child Page Title");
-
-		WikiPage.viewChildPagePG(
-			wikiChildPageContent = "Wiki FrontPage Child Page Content",
-			wikiChildPageTitle = "Wiki FrontPage Child Page Title");
-	}
-
 	@priority = "4"
 	test AddFrontPageChildPageFormatHTML {
 
@@ -234,7 +206,7 @@ definition {
 			wikiChildPageTitle = "Wiki FrontPage Child Page Title");
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AddFrontPageWithChildPages {
 		Navigator.gotoPage(pageName = "Wiki Test Page");
 

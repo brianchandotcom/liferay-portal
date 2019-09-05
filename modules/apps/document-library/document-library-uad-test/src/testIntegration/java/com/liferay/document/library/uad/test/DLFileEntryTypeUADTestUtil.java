@@ -42,7 +42,7 @@ public class DLFileEntryTypeUADTestUtil {
 
 	public static DLFileEntryType addDLFileEntryType(
 			DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-			Portal portal, long userId)
+			Portal portal, long userId, long groupId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -69,13 +69,13 @@ public class DLFileEntryTypeUADTestUtil {
 			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 
 		DDMStructure ddmStructure = DDMStructureManagerUtil.addStructure(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(), null,
-			classNameId, RandomTestUtil.randomString(), nameMap, descriptionMap,
-			ddmForm, StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			TestPropsValues.getUserId(), groupId, null, classNameId,
+			RandomTestUtil.randomString(), nameMap, descriptionMap, ddmForm,
+			StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 
 		return dlFileEntryTypeLocalService.addFileEntryType(
-			userId, TestPropsValues.getGroupId(), RandomTestUtil.randomString(),
+			userId, groupId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),
 			new long[] {ddmStructure.getStructureId()}, serviceContext);
 	}

@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -32,21 +31,23 @@ public class DLFolderUADTestUtil {
 
 	public static DLFolder addDLFolder(
 			DLAppLocalService dlAppLocalService,
-			DLFolderLocalService dlFolderLocalService, long userId)
+			DLFolderLocalService dlFolderLocalService, long userId,
+			long groupId)
 		throws Exception {
 
-		return addDLFolder(dlAppLocalService, dlFolderLocalService, userId, 0L);
+		return addDLFolder(
+			dlAppLocalService, dlFolderLocalService, userId, groupId, 0L);
 	}
 
 	public static DLFolder addDLFolder(
 			DLAppLocalService dlAppLocalService,
 			DLFolderLocalService dlFolderLocalService, long userId,
-			long parentFolderId)
+			long groupId, long parentFolderId)
 		throws Exception {
 
 		Folder folder = dlAppLocalService.addFolder(
-			userId, TestPropsValues.getGroupId(), parentFolderId,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			userId, groupId, parentFolderId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
 
 		return (DLFolder)folder.getModel();
@@ -55,11 +56,11 @@ public class DLFolderUADTestUtil {
 	public static DLFolder addDLFolderWithStatusByUserId(
 			DLAppLocalService dlAppLocalService,
 			DLFolderLocalService dlFolderLocalService, long userId,
-			long statusByUserId)
+			long groupId, long statusByUserId)
 		throws Exception {
 
 		DLFolder dlFolder = addDLFolder(
-			dlAppLocalService, dlFolderLocalService, userId);
+			dlAppLocalService, dlFolderLocalService, userId, groupId);
 
 		return dlFolderLocalService.updateStatus(
 			statusByUserId, dlFolder.getFolderId(),

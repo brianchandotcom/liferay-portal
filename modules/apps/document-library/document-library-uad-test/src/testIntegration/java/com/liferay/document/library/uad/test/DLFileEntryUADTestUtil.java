@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestDataConstants;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.ByteArrayInputStream;
@@ -42,24 +41,24 @@ public class DLFileEntryUADTestUtil {
 	public static DLFileEntry addDLFileEntry(
 			DLAppLocalService dlAppLocalService,
 			DLFileEntryLocalService dlFileEntryLocalService,
-			DLFolderLocalService dlFolderLocalService, long userId)
+			DLFolderLocalService dlFolderLocalService, long userId,
+			long groupId)
 		throws Exception {
 
 		DLFolder dlFolder = dlFolderLocalService.addFolder(
-			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
-			false, 0L, RandomTestUtil.randomString(),
+			userId, groupId, groupId, false, 0L, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false,
 			ServiceContextTestUtil.getServiceContext());
 
 		return addDLFileEntry(
 			dlAppLocalService, dlFileEntryLocalService, dlFolder.getFolderId(),
-			userId);
+			userId, groupId);
 	}
 
 	public static DLFileEntry addDLFileEntry(
 			DLAppLocalService dlAppLocalService,
 			DLFileEntryLocalService dlFileEntryLocalService, long dlFolderId,
-			long userId)
+			long userId, long groupId)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -70,10 +69,10 @@ public class DLFileEntryUADTestUtil {
 		InputStream is = new ByteArrayInputStream(bytes);
 
 		FileEntry fileEntry = dlAppLocalService.addFileEntry(
-			userId, TestPropsValues.getGroupId(), dlFolderId,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			is, bytes.length, serviceContext);
+			userId, groupId, dlFolderId, RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, is, bytes.length,
+			serviceContext);
 
 		return dlFileEntryLocalService.getFileEntry(fileEntry.getFileEntryId());
 	}

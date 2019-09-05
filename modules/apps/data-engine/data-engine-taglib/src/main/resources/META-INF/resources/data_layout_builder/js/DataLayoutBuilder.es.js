@@ -57,6 +57,88 @@ class DataLayoutBuilder extends Component {
 		this.refs.layoutProvider.dispatch(event, payload);
 	}
 
+	getDefinitionAndLayout(pages) {
+		const {availableLanguageIds, defaultLanguageId} = this.props;
+		const columnDefinitions = [];
+		const pagesVisitor = new PagesVisitor(pages);
+
+		const newPages = pagesVisitor.mapFields(
+			({fieldName, settingsContext}) => {
+				const columnConfig = {
+					customProperties: {}
+				};
+				const settingsContextVisitor = new PagesVisitor(
+					settingsContext.pages
+				);
+
+				settingsContextVisitor.mapFields(
+					({fieldName, localizable, localizedValue, value}) => {
+						if (fieldName === 'predefinedValue') {
+							fieldName = 'defaultValue';
+						} else if (fieldName === 'type') {
+							fieldName = 'fieldType';
+						}
+
+						if (localizable) {
+							if (this._isCustomProperty(fieldName)) {
+								columnConfig.customProperties[
+									fieldName
+								] = localizedValue;
+							} else {
+								columnConfig[fieldName] = localizedValue;
+							}
+						} else {
+							if (this._isCustomProperty(fieldName)) {
+								columnConfig.customProperties[
+									fieldName
+								] = value;
+							} else {
+								columnConfig[fieldName] = value;
+							}
+						}
+					},
+					false
+				);
+
+				columnDefinitions.push(columnConfig);
+
+				return fieldName;
+			},
+			false
+		);
+
+		return {
+			definition: {
+				availableLanguageIds,
+				dataDefinitionFields: columnDefinitions,
+				defaultLanguageId
+			},
+			layout: {
+				dataLayoutPages: newPages.map(page => {
+					const rows = page.rows.map(row => {
+						const columns = row.columns.map(column => {
+							return {
+								columnSize: column.size,
+								fieldNames: column.fields
+							};
+						});
+
+						return {
+							dataLayoutColumns: columns
+						};
+					});
+
+					return {
+						dataLayoutRows: rows,
+						description: page.localizedDescription,
+						title: page.localizedTitle
+					};
+				}),
+				paginationMode: 'wizard'
+			}
+		};
+	}
+
 	getFieldTypes() {
 		const {fieldTypes} = this.props;
 
@@ -114,6 +196,15 @@ class DataLayoutBuilder extends Component {
 		);
 	}
 
+	serialize(pages) {
+		const {definition, layout} = this.getDefinitionAndLayout(pages);
+
+		return {
+			definition: JSON.stringify(definition),
+			layout: JSON.stringify(layout)
+		};
+	}
+
 	_getTranslationManager() {
 		let promise;
 
@@ -139,7 +230,7 @@ class DataLayoutBuilder extends Component {
 				`#${dataLayoutInputId}`
 			);
 
-			const data = this._serialize(newVal);
+			const data = this.serialize(newVal);
 
 			dataLayoutInput.value = data.layout;
 			dataDefinitionInput.value = data.definition;
@@ -159,88 +250,6 @@ class DataLayoutBuilder extends Component {
 		];
 
 		return fields.indexOf(name) === -1;
-	}
-
-	_serialize(pages) {
-		const {availableLanguageIds, defaultLanguageId} = this.props;
-		const columnDefinitions = [];
-		const pagesVisitor = new PagesVisitor(pages);
-
-		const newPages = pagesVisitor.mapFields(
-			({fieldName, settingsContext}) => {
-				const columnConfig = {
-					customProperties: {}
-				};
-				const settingsContextVisitor = new PagesVisitor(
-					settingsContext.pages
-				);
-
-				settingsContextVisitor.mapFields(
-					({fieldName, localizable, localizedValue, value}) => {
-						if (fieldName === 'predefinedValue') {
-							fieldName = 'defaultValue';
-						} else if (fieldName === 'type') {
-							fieldName = 'fieldType';
-						}
-
-						if (localizable) {
-							if (this._isCustomProperty(fieldName)) {
-								columnConfig.customProperties[
-									fieldName
-								] = localizedValue;
-							} else {
-								columnConfig[fieldName] = localizedValue;
-							}
-						} else {
-							if (this._isCustomProperty(fieldName)) {
-								columnConfig.customProperties[
-									fieldName
-								] = value;
-							} else {
-								columnConfig[fieldName] = value;
-							}
-						}
-					},
-					false
-				);
-
-				columnDefinitions.push(columnConfig);
-
-				return fieldName;
-			},
-			false
-		);
-
-		return {
-			definition: JSON.stringify({
-				availableLanguageIds,
-				dataDefinitionFields: columnDefinitions,
-				defaultLanguageId
-			}),
-			layout: JSON.stringify({
-				dataLayoutPages: newPages.map(page => {
-					const rows = page.rows.map(row => {
-						const columns = row.columns.map(column => {
-							return {
-								columnSize: column.size,
-								fieldNames: column.fields
-							};
-						});
-
-						return {
-							dataLayoutColumns: columns
-						};
-					});
-
-					return {
-						dataLayoutRows: rows,
-						description: page.localizedDescription,
-						title: page.localizedTitle
-					};
-				}),
-				paginationMode: 'wizard'
-			})
-		};
 	}
 
 	_setContext(context) {
